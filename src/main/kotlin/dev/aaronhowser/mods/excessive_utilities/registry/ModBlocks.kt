@@ -206,6 +206,105 @@ object ModBlocks : AaronBlockRegistry() {
 	val RAINBOW_GENERATOR =
 		basicBlock("rainbow_generator")
 
+	// x8
+
+	val SURVIVALIST_GENERATOR_X8 =
+		basicBlock("survivalist_generator_x8")
+	val FURNACE_GENERATOR_X8 =
+		basicBlock("furnace_generator_x8")
+	val MAGMATIC_GENERATOR_X8 =
+		basicBlock("magmatic_generator_x8")
+	val ENDER_GENERATOR_X8 =
+		basicBlock("ender_generator_x8")
+	val HEATED_REDSTONE_GENERATOR_X8 =
+		basicBlock("heated_redstone_generator_x8")
+	val CULINARY_GENERATOR_X8 =
+		basicBlock("culinary_generator_x8")
+	val POTIONS_GENERATOR_X8 =
+		basicBlock("potions_generator_x8")
+	val SOLAR_GENERATOR_X8 =
+		basicBlock("solar_generator_x8")
+	val EXPLOSIVE_GENERATOR_X8 =
+		basicBlock("explosive_generator_x8")
+	val PINK_GENERATOR_X8 =
+		basicBlock("pink_generator_x8")
+	val HIGH_TEMPERATURE_FURNACE_GENERATOR_X8 =
+		basicBlock("high_temperature_furnace_generator_x8")
+	val NETHER_STAR_GENERATOR_X8 =
+		basicBlock("nether_star_generator_x8")
+	val DISENCHANTMENT_GENERATOR_X8 =
+		basicBlock("disenchantment_generator_x8")
+	val FROSTY_GENERATOR_X8 =
+		basicBlock("frosty_generator_x8")
+	val HALITOSIS_GENERATOR_X8 =
+		basicBlock("halitosis_generator_x8")
+	val SLIMEY_GENERATOR_X8 =
+		basicBlock("slimey_generator_x8")
+	val DEATH_GENERATOR_X8 =
+		basicBlock("death_generator_x8")
+	val RAINBOW_GENERATOR_X8 =
+		basicBlock("rainbow_generator_x8")
+
+	// x64
+
+	val SURVIVALIST_GENERATOR_X64 =
+		basicBlock("survivalist_generator_x64")
+	val FURNACE_GENERATOR_X64 =
+		basicBlock("furnace_generator_x64")
+	val MAGMATIC_GENERATOR_X64 =
+		basicBlock("magmatic_generator_x64")
+	val ENDER_GENERATOR_X64 =
+		basicBlock("ender_generator_x64")
+	val HEATED_REDSTONE_GENERATOR_X64 =
+		basicBlock("heated_redstone_generator_x64")
+	val CULINARY_GENERATOR_X64 =
+		basicBlock("culinary_generator_x64")
+	val POTIONS_GENERATOR_X64 =
+		basicBlock("potions_generator_x64")
+	val SOLAR_GENERATOR_X64 =
+		basicBlock("solar_generator_x64")
+	val EXPLOSIVE_GENERATOR_X64 =
+		basicBlock("explosive_generator_x64")
+	val PINK_GENERATOR_X64 =
+		basicBlock("pink_generator_x64")
+	val HIGH_TEMPERATURE_FURNACE_GENERATOR_X64 =
+		basicBlock("high_temperature_furnace_generator_x64")
+	val NETHER_STAR_GENERATOR_X64 =
+		basicBlock("nether_star_generator_x64")
+	val DISENCHANTMENT_GENERATOR_X64 =
+		basicBlock("disenchantment_generator_x64")
+	val FROSTY_GENERATOR_X64 =
+		basicBlock("frosty_generator_x64")
+	val HALITOSIS_GENERATOR_X64 =
+		basicBlock("halitosis_generator_x64")
+	val SLIMEY_GENERATOR_X64 =
+		basicBlock("slimey_generator_x64")
+	val DEATH_GENERATOR_X64 =
+		basicBlock("death_generator_x64")
+	val RAINBOW_GENERATOR_X64 =
+		basicBlock("rainbow_generator_x64")
+
+	// Terraformer
+
+	val TERRAFORMER =
+		basicBlock("terraformer")
+	val ANTENNA =
+		basicBlock("antenna")
+	val COOLER =
+		basicBlock("cooler")
+	val DEHOSTILIFIER =
+		basicBlock("dehostilifier")
+	val DEHUMIDIFIER =
+		basicBlock("dehumidifier")
+	val HEATER =
+		basicBlock("heater")
+	val HUMIDIFIER =
+		basicBlock("humidifier")
+	val MAGIC_ABSORPTION =
+		basicBlock("magic_absorption")
+	val MAGIC_INFUSER =
+		basicBlock("magic_infuser")
+
 	// Decor
 
 	val BLOCK_OF_BEDROCKIUM =
