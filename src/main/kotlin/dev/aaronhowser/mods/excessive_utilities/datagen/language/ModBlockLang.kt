@@ -9,7 +9,7 @@ object ModBlockLang {
 		provider.apply {
 			addBlock(ModBlocks.COMPRESSED_BLOCK, "Compressed Block")
 			addBlock(ModBlocks.ANGEL_BLOCK, "Angel Block")
-			addBlock(ModBlocks.BLACKOUT_CURTAIN, "Blockout Curtain")
+			addBlock(ModBlocks.BLACKOUT_CURTAIN, "Blackout Curtain")
 			addBlock(ModBlocks.ADVANCED_OBSERVER, "Advanced Observer")
 			addBlock(ModBlocks.CONVEYOR_BELT, "Conveyor Belt")
 			addBlock(ModBlocks.CURSED_EARTH, "Cursed Earth")

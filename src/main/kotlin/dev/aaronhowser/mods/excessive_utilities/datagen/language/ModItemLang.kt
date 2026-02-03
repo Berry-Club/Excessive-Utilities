@@ -85,6 +85,7 @@ object ModItemLang {
 			addItem(ModItems.WORLD_INTERACTION_UPGRADE, "World Interaction Upgrade")
 			addItem(ModItems.ITEM_FILTER, "Item Filter")
 			addItem(ModItems.ADVANCED_ITEM_FILTER, "Advanced Item Filter")
+			addItem(ModItems.FLUID_FILTER, "Fluid Filter")
 			addItem(ModItems.BREADTH_FIRST_SEARCH_UPGRADE, "Breadth-First Search Upgrade")
 			addItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE, "Depth-First Search Upgrade")
 			addItem(ModItems.PSEUDO_ROUND_ROBIN_UPGRADE, "Pseudo Round Robin Upgrade")
