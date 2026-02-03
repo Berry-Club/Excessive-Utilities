@@ -90,17 +90,17 @@ object ModItems : AaronItemRegistry() {
 	val CURSED_LASSO =
 		basic("cursed_lasso")
 	val WOODEN_SICKLE: DeferredItem<SickleItem> =
-		register("wooden_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.WOOD))
+		register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.WOOD) }
 	val STONE_SICKLE: DeferredItem<SickleItem> =
-		register("stone_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.STONE))
+		register("stone_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.STONE) }
 	val IRON_SICKLE: DeferredItem<SickleItem> =
-		register("iron_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.IRON))
+		register("iron_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
 	val GOLDEN_SICKLE: DeferredItem<SickleItem> =
-		register("golden_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.GOLD))
+		register("golden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.GOLD) }
 	val DIAMOND_SICKLE: DeferredItem<SickleItem> =
-		register("diamond_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.DIAMOND))
+		register("diamond_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.DIAMOND) }
 	val NETHERITE_SICKLE: DeferredItem<SickleItem> =
-		register("netherite_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.NETHERITE))
+		register("netherite_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.NETHERITE) }
 	val BUILDERS_WAND =
 		basic("builders_wand")
 	val CREATIVE_BUILDERS_WAND =
