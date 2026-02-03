@@ -15,6 +15,37 @@ class ModItemModelProvider(
 
 	private val handledItems: MutableSet<Item> = mutableSetOf()
 
+	private val skipThese = setOf(
+		ModItems.ANGEL_RING.get(),
+		ModItems.SOUL_FRAGMENT.get(),
+		ModItems.ENDER_SHARD.get(),
+		ModItems.LUNAR_REACTIVE_DUST.get(),
+		ModItems.OPINIUM_CORE.get(),
+		ModItems.UNSTABLE_INGOT.get(),
+		ModItems.SEMI_UNSTABLE_NUGGET.get(),
+		ModItems.MOBIUS_INGOT.get(),
+		ModItems.KLEIN_FLASK.get(),
+		ModItems.BIOME_MARKER.get(),
+		ModItems.COMPOUND_BOW.get(),
+		ModItems.CREATIVE_BUILDERS_WAND.get(),
+		ModItems.CREATIVE_DESTRUCTION_WAND.get(),
+		ModItems.FLAT_TRANSFER_NODE_ITEMS.get(),
+		ModItems.FLAT_TRANSFER_NODE_FLUIDS.get(),
+		ModItems.CURSED_LASSO.get(),
+		ModItems.GOLDEN_LASSO.get(),
+		ModItems.SUN_CRYSTAL.get(),
+		ModItems.HEALING_AXE.get(),
+		ModItems.REVERSING_HOE.get(),
+		ModItems.DESTRUCTION_PICKAXE.get(),
+		ModItems.PRECISION_SHEARS.get(),
+		ModItems.EROSION_SHOVEL.get(),
+		ModItems.ETHERIC_SWORD.get(),
+		ModItems.PAINTBRUSH.get(),
+		ModItems.KIKOKU.get(),
+		ModItems.LUX_SABER.get(),
+		ModItems.MAGICAL_BOOMERANG.get()
+	)
+
 	override fun registerModels() {
 		basicItems()
 	}
@@ -22,7 +53,7 @@ class ModItemModelProvider(
 	private fun basicItems() {
 		for (deferred in ModItems.ITEM_REGISTRY.entries) {
 			val item = deferred.get()
-			if (item in handledItems) continue
+			if (item in handledItems || item in skipThese) continue
 
 			if (item !is BlockItem) {
 				basicItem(item)

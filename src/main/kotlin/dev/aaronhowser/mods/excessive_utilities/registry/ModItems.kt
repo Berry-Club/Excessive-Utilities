@@ -153,10 +153,12 @@ object ModItems : AaronItemRegistry() {
 		basic("stack_upgrade")
 	val WORLD_INTERACTION_UPGRADE =
 		basic("world_interaction_upgrade")
-	val ITEM_FILTER_UPGRADE =
-		basic("item_filter_upgrade")
-	val ADVANCED_ITEM_FILTER_UPGRADE =
-		basic("advanced_item_filter_upgrade")
+	val ITEM_FILTER =
+		basic("item_filter")
+	val ADVANCED_ITEM_FILTER =
+		basic("advanced_item_filter")
+	val FLUID_FILTER =
+		basic("fluid_filter")
 	val BREADTH_FIRST_SEARCH_UPGRADE =
 		basic("breadth_first_search_upgrade")
 	val DEPTH_FIRST_SEARCH_UPGRADE =
