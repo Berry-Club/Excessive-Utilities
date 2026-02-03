@@ -19,6 +19,7 @@ class BedrockiumIngotItem(properties: Properties) : Item(properties) {
 	) {
 		if (level.isClientSide
 			|| entity !is LivingEntity
+			|| entity.hasInfiniteMaterials()
 			|| level.gameTime % 20L != 0L
 		) return
 
