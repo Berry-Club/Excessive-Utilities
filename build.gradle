@@ -1,164 +1,298 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
-    id 'java-library'
-    id 'idea'
-    id 'maven-publish'
-    id 'net.neoforged.moddev' version '1.0.11'
-
-    // Adds the Kotlin Gradle plugin
-    id 'org.jetbrains.kotlin.jvm' version '2.0.0'
-    // OPTIONAL Kotlin Serialization plugin
-    id 'org.jetbrains.kotlin.plugin.serialization' version '2.0.0'
+	id 'java-library'
+	id 'idea'
+	id 'maven-publish'
+	id 'net.neoforged.moddev' version '2.0.91'
+	id 'org.jetbrains.kotlin.jvm' version '2.1.21'
+	id "me.shedaniel.unified-publishing" version "0.1.+"
+	id 'org.moddedmc.wiki.toolkit' version '0.4.+'
 }
 
-version = mod_version
-group = mod_group_id
-base.archivesName = mod_id
+def ENV = System.getenv()
+def isLocal = !ENV.containsKey("GITHUB_RUN_NUMBER")
 
-// Mojang ships Java 21 to end users in 1.20.5+, so your mod should target Java 21.
+def archiveName = "${mod_id.replace("_", "-")}-${minecraft_version}"
+
+version = "${mod_version}-${isLocal ? "local.${Instant.now().epochSecond}" : "build.${ENV.GITHUB_RUN_NUMBER}"}"
+group = project.mod_group_id
+base.archivesName = archiveName
+
+println("Building version: ${version}")
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 compileKotlin.compilerOptions.jvmTarget = JvmTarget.JVM_21
 
-// Default run configurations.
-// These can be tweaked, removed, or duplicated as needed.
 neoForge {
-    // NeoForge version
-    version = neo_version
+	version = neo_version
 
-    // Add Parchment parameter mappings
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
-    }
+	validateAccessTransformers = true
 
-    // This line is optional. Access Transformers are automatically detected
-    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+	accessTransformers {
+		publish(project.file('src/main/resources/META-INF/accesstransformer.cfg'))
+	}
 
-    runs {
-        configureEach {
-            // Recommended logging data for a userdev environment
-            // The markers can be added/remove as needed separated by commas.
-            // "SCAN": For mods scan.
-            // "REGISTRIES": For firing of registry events.
-            // "REGISTRYDUMP": For getting the contents of all registries.
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
+	runs {
+		configureEach {
+			systemProperty 'forge.logging.markers', 'REGISTRIES'
 
-            // Recommended logging level for the console
-            logLevel = org.slf4j.event.Level.DEBUG
-        }
+			logLevel = org.slf4j.event.Level.DEBUG
+		}
 
-        client {
-            client()
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
+		"Client-One" {
+			client()
+			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 
-        server {
-            server()
-            programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
+			if (ENV.MC_CLIENT_ARGS) {
+				programArguments.addAll(ENV.MC_CLIENT_ARGS.split(' '))
+			}
 
-        // This run config launches GameTestServer and runs all registered gametests, then exits.
-        // By default, the server will crash when no gametests are provided.
-        // The gametest system is also enabled by default for other run configs under the /test command.
-        gameTestServer {
-            type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
+			gameDirectory = file 'runs/client'
+		}
 
-        data {
-            data()
-            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-            // workingDirectory project.file('run-data')
+		"Client-Two" {
+			client()
+			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-    }
+			gameDirectory = file 'runs/client'
 
-    mods {
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
-        }
-    }
+			if (ENV.MC_CLIENT_2_ARGS) {
+				programArguments.addAll(ENV.MC_CLIENT_2_ARGS.split(' '))
+			}
+		}
+
+		server {
+			server()
+			programArgument '--nogui'
+			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+
+			gameDirectory = file 'runs/server'
+		}
+
+		gameTestServer {
+			type = "gameTestServer"
+			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+		}
+
+		data {
+			data()
+
+			programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+
+			gameDirectory = file 'runs/client'
+		}
+
+		"Wiki-Export-Client" {
+			client()
+			gameDirectory = file 'runs/wiki_exporter'
+			systemProperty 'wiki_exporter.enabled', 'true'
+		}
+	}
+
+	mods {
+		"${mod_id}" {
+			sourceSet(sourceSets.main)
+		}
+	}
 }
 
-// Include resources generated by data generators.
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-// Sets up a dependency configuration called 'localRuntime'.
-// This configuration should be used instead of 'runtimeOnly' to declare
-// a dependency that will be present for runtime testing but that is
-// "optional", meaning it will not be pulled by dependents of this mod.
 configurations {
-    runtimeClasspath.extendsFrom localRuntime
+	runtimeClasspath.extendsFrom localRuntime
 }
 
 repositories {
-    // NeoForged MDK includes mavenLocal by default
-    mavenLocal()
-    // REQUIRED for using Kotlin for Forge
-    maven {
-        name = 'Kotlin for Forge'
-        url = 'https://thedarkcolour.github.io/KotlinForForge/'
-        content { includeGroup "thedarkcolour" }
-    }
+	mavenLocal()
+
+	maven {
+		name = 'Kotlin for Forge'
+		url = 'https://thedarkcolour.github.io/KotlinForForge/'
+	}
+
+	// For EMI
+	maven {
+		name = "TerraformersMC"
+		url = "https://maven.terraformersmc.com/"
+	}
+
+	// For Curios
+	repositories {
+		maven {
+			name = "Illusive Soulworks maven"
+			url = "https://maven.theillusivec4.top/"
+		}
+	}
+
+	// For Modonomicon
+	maven {
+		url "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/"
+		content {
+			includeGroup "com.klikli_dev"
+		}
+	}
+
+	// For Patchouli DataGen and Aaron
+	maven {
+		url "https://maven.latvian.dev/releases"
+		content {
+			includeGroup "dev.aaronhowser.mods"
+		}
+	}
+
+	maven { url 'https://maven.blamejared.com' }
+
+	maven { url "https://maven.sinytra.org" }
+
 }
 
 dependencies {
-    // Must use the '-neoforge' version on NeoForge. If on regular forge, omit the '-neoforge'
-    implementation 'thedarkcolour:kotlinforforge-neoforge:5.5.0'
+	implementation "thedarkcolour:kotlinforforge-neoforge:${kff_version}"
+
+	compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+	runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+
+	compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
+	runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
+
+	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:${modonomicon_version}") { transitive = false }
+
+	implementation "dev.aaronhowser.mods:patchoulidatagen-${pdg_version}"
+	implementation "dev.aaronhowser.mods:aaron-1.21.1:${aaron_lib_version}"
+
+	compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}:api"
+	runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+
+	runtimeOnly "org.sinytra:wiki-exporter-neoforge:2.2.1+1.21.1"
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
-// When "copyIdeResources" is enabled, this will also run before the game launches in IDE environments.
-// See https://docs.gradle.org/current/dsl/org.gradle.language.jvm.tasks.ProcessResources.html
 tasks.withType(ProcessResources).configureEach {
-    var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            neo_version_range      : neo_version_range,
-            loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : mod_version,
-            mod_authors            : mod_authors,
-            mod_description        : mod_description,
-    ]
-    inputs.properties replaceProperties
+	var replaceProperties = [
+			minecraft_version      : minecraft_version,
+			minecraft_version_range: minecraft_version_range,
+			neo_version            : neo_version,
+			neo_version_range      : neo_version_range,
+			loader_version_range   : loader_version_range,
+			mod_id                 : mod_id,
+			mod_name               : mod_name,
+			mod_license            : mod_license,
+			mod_version            : mod_version,
+			mod_authors            : mod_authors,
+			mod_description        : mod_description,
+			curios_version_range   : curios_version_range,
+			kff_version_range      : kff_version_range,
+			aaron_lib_version_range: aaron_lib_version_range
+	]
+	inputs.properties replaceProperties
 
-    filesMatching(['META-INF/neoforge.mods.toml']) {
-        expand replaceProperties
-    }
+	filesMatching(['META-INF/neoforge.mods.toml']) {
+		expand replaceProperties
+	}
 }
 
-// Example configuration to allow publishing using the maven-publish plugin
 publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
-    }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/repo"
-        }
-    }
+	publications {
+		mavenNeoForge(MavenPublication) {
+			artifactId = archiveName
+			from components.java
+		}
+	}
+
+	repositories {
+		if (ENV.MAVEN_URL && ENV.MAVEN_USERNAME && ENV.MAVEN_TOKEN) {
+			maven {
+				url = ENV.MAVEN_URL
+				credentials {
+					username = ENV.MAVEN_USERNAME
+					password = ENV.MAVEN_TOKEN
+				}
+			}
+		}
+	}
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+	options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
 }
 
-// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
 idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
+	module {
+		downloadSources = true
+		downloadJavadoc = true
+	}
+}
+
+java {
+	withSourcesJar()
+	withJavadocJar()
+}
+
+unifiedPublishing {
+	project {
+		displayName = "Irregular Implements ${project.minecraft_version} ${project.version}"
+		gameVersions = [project.minecraft_version]
+		gameLoaders = ["neoforge"]
+
+		changelog = "https://github.com/Berry-Club/Irregular-Implements/blob/master/CHANGELOG.md#" + project.mod_version.toString().replace(".", "")
+
+		mainPublication jar
+
+		relations {
+			depends {
+				curseforge = modrinth = "kotlin-for-forge"
+			}
+
+			depends {
+				curseforge = modrinth = "curios"
+			}
+
+			depends {
+				curseforge = modrinth = "aaron"
+			}
+
+			optional {
+				curseforge = modrinth = "patchouli"
+			}
+
+			optional {
+				curseforge = modrinth = "oracle-index"
+			}
+		}
+
+		if (ENV.CURSEFORGE_KEY) {
+			curseforge {
+				token = ENV.CURSEFORGE_KEY
+				id = project.curseforge_id
+			}
+		}
+
+		if (ENV.MODRINTH_TOKEN) {
+			modrinth {
+				token = ENV.MODRINTH_TOKEN
+				id = project.modrinth_id
+			}
+		}
+
+	}
+}
+
+wiki {
+	wikiAccessToken = ENV.MODDED_MC_WIKI_TOKEN
+
+	docs {
+		irregular_implements {
+			root = file('docs/irregular_implements')
+		}
+	}
+}
+
+tasks.named('processResources') {
+	from("$rootDir/docs") {
+		into "assets/oracle_index/books"
+		exclude "assets/items/**"
+	}
+	doLast {
+		println "processResources executed: wiki folder copied into assets/oracle_index"
+	}
 }
