@@ -8,7 +8,6 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.DeferredHolder
-import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
 
@@ -20,7 +19,7 @@ object ModCreativeModeTabs {
 	val MOD_TAB: DeferredHolder<CreativeModeTab, CreativeModeTab> = TABS_REGISTRY.register("creative_tab", Supplier {
 		CreativeModeTab.builder()
 			.title(ModItemLang.CREATIVE_TAB.toComponent())
-			.icon { (ModItems.ITEM_REGISTRY.entries.random() as DeferredItem).toStack() }
+			.icon { ModItems.HEALING_AXE.toStack() }
 			.displayItems { displayContext: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
 				val regularItems: List<Item> = ModItems.ITEM_REGISTRY.entries.map { it.get() }
 				val blockItems: Set<BlockItem> = regularItems.filterIsInstance<BlockItem>().toSet()
