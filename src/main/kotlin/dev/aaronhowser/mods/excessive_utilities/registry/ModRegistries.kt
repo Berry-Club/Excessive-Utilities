@@ -9,10 +9,13 @@ object ModRegistries {
 		val registries: List<DeferredRegister<*>> = listOf(
 			ModItems.ITEM_REGISTRY,
 			ModBlocks.BLOCK_REGISTRY,
-			ModCreativeModeTabs.TABS_REGISTRY
+			ModCreativeModeTabs.TABS_REGISTRY,
+			ModDataComponents.DATA_COMPONENT_REGISTRY
 		)
 
-		registries.forEach { it.register(modBus) }
+		for (registry in registries) {
+			registry.register(modBus)
+		}
 	}
 
 }

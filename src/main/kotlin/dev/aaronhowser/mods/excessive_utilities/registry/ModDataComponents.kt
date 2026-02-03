@@ -1,0 +1,20 @@
+package dev.aaronhowser.mods.excessive_utilities.registry
+
+import dev.aaronhowser.mods.aaron.registry.AaronDataComponentRegistry
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import net.minecraft.core.component.DataComponentType
+import net.minecraft.core.registries.Registries
+import net.neoforged.neoforge.registries.DeferredHolder
+import net.neoforged.neoforge.registries.DeferredRegister
+
+object ModDataComponents : AaronDataComponentRegistry() {
+
+	val DATA_COMPONENT_REGISTRY: DeferredRegister.DataComponents =
+		DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, ExcessiveUtilities.MOD_ID)
+
+	override fun getDataComponentRegistry(): DeferredRegister.DataComponents = DATA_COMPONENT_REGISTRY
+
+	val RADIUS: DeferredHolder<DataComponentType<*>, DataComponentType<UInt>> =
+		uint("radius")
+
+}
