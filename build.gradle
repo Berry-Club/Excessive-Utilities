@@ -230,11 +230,11 @@ java {
 
 unifiedPublishing {
 	project {
-		displayName = "Irregular Implements ${project.minecraft_version} ${project.version}"
+		displayName = "Excessive Utilities ${project.minecraft_version} ${project.version}"
 		gameVersions = [project.minecraft_version]
 		gameLoaders = ["neoforge"]
 
-		changelog = "https://github.com/Berry-Club/Irregular-Implements/blob/master/CHANGELOG.md#" + project.mod_version.toString().replace(".", "")
+		changelog = "https://github.com/Berry-Club/Excessive-Utilities/blob/master/CHANGELOG.md#" + project.mod_version.toString().replace(".", "")
 
 		mainPublication jar
 
@@ -281,8 +281,8 @@ wiki {
 	wikiAccessToken = ENV.MODDED_MC_WIKI_TOKEN
 
 	docs {
-		irregular_implements {
-			root = file('docs/irregular_implements')
+		excessive_utilities {
+			root = file('docs/excessive_utilities')
 		}
 	}
 }
