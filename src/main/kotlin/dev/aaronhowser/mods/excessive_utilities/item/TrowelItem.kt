@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.AaronExtensions.isHolder
 import net.minecraft.core.Holder
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ShovelItem
@@ -10,7 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantments
 class TrowelItem(properties: Properties) : ShovelItem(Tiers.IRON, properties) {
 
 	override fun getEnchantmentLevel(stack: ItemStack, enchantment: Holder<Enchantment>): Int {
-		if (enchantment == Enchantments.SILK_TOUCH) {
+		if (enchantment.isHolder(Enchantments.SILK_TOUCH)) {
 			return maxOf(1, super.getEnchantmentLevel(stack, enchantment))
 		}
 
