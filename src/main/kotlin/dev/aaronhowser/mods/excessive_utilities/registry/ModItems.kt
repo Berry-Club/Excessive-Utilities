@@ -50,7 +50,7 @@ object ModItems : AaronItemRegistry() {
 	val MOBIUS_INGOT =
 		basic("mobius_ingot")
 	val KLEIN_FLASK =
-		basic("klein_flask")
+		basic("klein_flask")a
 
 	// Plants
 
