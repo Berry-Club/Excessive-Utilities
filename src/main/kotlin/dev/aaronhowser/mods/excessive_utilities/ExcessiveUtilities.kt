@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities
 
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRegistries
+import net.minecraft.resources.ResourceLocation
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.common.Mod
@@ -21,6 +22,8 @@ class ExcessiveUtilities(
 
 		@JvmField
 		val LOGGER: Logger = LogManager.getLogger(MOD_ID)
+
+		fun modResource(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
 	}
 
 	init {
