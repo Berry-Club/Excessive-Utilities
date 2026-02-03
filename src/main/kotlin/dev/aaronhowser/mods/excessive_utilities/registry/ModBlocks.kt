@@ -167,6 +167,45 @@ object ModBlocks : AaronBlockRegistry() {
 	val TRASH_CAN_FLUID =
 		basicBlock("trash_can_fluid")
 
+	// FE Generators
+
+	val SURVIVALIST_GENERATOR =
+		basicBlock("survivalist_generator")
+	val FURNACE_GENERATOR =
+		basicBlock("furnace_generator")
+	val MAGMATIC_GENERATOR =
+		basicBlock("magmatic_generator")
+	val ENDER_GENERATOR =
+		basicBlock("ender_generator")
+	val HEATED_REDSTONE_GENERATOR =
+		basicBlock("heated_redstone_generator")
+	val CULINARY_GENERATOR =
+		basicBlock("culinary_generator")
+	val POTIONS_GENERATOR =
+		basicBlock("potions_generator")
+	val SOLAR_GENERATOR =
+		basicBlock("solar_generator")
+	val EXPLOSIVE_GENERATOR =
+		basicBlock("explosive_generator")
+	val PINK_GENERATOR =
+		basicBlock("pink_generator")
+	val HIGH_TEMPERATURE_FURNACE_GENERATOR =
+		basicBlock("high_temperature_furnace_generator")
+	val NETHER_STAR_GENERATOR =
+		basicBlock("nether_star_generator")
+	val DISENCHANTMENT_GENERATOR =
+		basicBlock("disenchantment_generator")
+	val FROSTY_GENERATOR =
+		basicBlock("frosty_generator")
+	val HALITOSIS_GENERATOR =
+		basicBlock("halitosis_generator")
+	val SLIMEY_GENERATOR =
+		basicBlock("slimey_generator")
+	val DEATH_GENERATOR =
+		basicBlock("death_generator")
+	val RAINBOW_GENERATOR =
+		basicBlock("rainbow_generator")
+
 	// Decor
 
 	val BLOCK_OF_BEDROCKIUM =
