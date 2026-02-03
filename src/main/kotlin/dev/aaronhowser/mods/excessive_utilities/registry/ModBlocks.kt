@@ -10,10 +10,87 @@ object ModBlocks : AaronBlockRegistry() {
 	override fun getBlockRegistry(): DeferredRegister.Blocks = BLOCK_REGISTRY
 	override fun getItemRegistry(): DeferredRegister.Items = ModItems.ITEM_REGISTRY
 
+	// Functional
+
 	val COMPRESSED_BLOCK =
 		basicBlock("compressed_block")
 	val SLIGHTLY_LARGER_CHEST =
 		basicBlock("slightly_larger_chest")
+	val MINI_CHEST =
+		basicBlock("mini_chest")
+	val ANGEL_BLOCK =
+		basicBlock("angel_block")
+	val BLACKOUT_CURTAIN =
+		basicBlock("blackout_curtain")
+	val ADVANCED_OBSERVER =
+		basicBlock("advanced_observer")
+	val CONVEYOR_BELT =
+		basicBlock("conveyor_belt")
+	val CURSED_EARTH =
+		basicBlock("cursed_earth")
+	val ENDER_COLLECTOR =
+		basicBlock("ender_collector")
+	val ENDER_CORE =
+		basicBlock("ender_core")
+	val ENDER_QUARRY =
+		basicBlock("ender_quarry")
+	val ENDER_FLUX_CRYSTAL =
+		basicBlock("ender_flux_crystal")
+	val ENDER_INFUSED_OBSIDIAN =
+		basicBlock("ender_infused_obsidian")
+	val ENDER_MARKER =
+		basicBlock("ender_marker")
+	val ENDER_THERMIC_PUMP =
+		basicBlock("ender_thermic_pump")
+	val MAGICAL_WOOD =
+		basicBlock("magical_wood")
+	val MAGNUM_TORCH =
+		basicBlock("magnum_torch")
+	val PEACEFUL_TABLE =
+		basicBlock("peaceful_table")
+	val DEEP_DARK_PORTAL =
+		basicBlock("deep_dark_portal")
+	val LAST_MILLENNIUM_PORTAL =
+		basicBlock("last_millennium_portal")
+	val QED =
+		basicBlock("qed")
+	val RAIN_MUFFLER =
+		basicBlock("rain_muffler")
+	val REDSTONE_CLOCK =
+		basicBlock("redstone_clock")
+	val SOUND_MUFFLER =
+		basicBlock("sound_muffler")
+	val TRADING_POST =
+		basicBlock("trading_post")
+	val TRASH_CAN =
+		basicBlock("trash_can")
+	val TRASH_CAN_ENERGY =
+		basicBlock("trash_can_energy")
+	val TRASH_CAN_FLUID =
+		basicBlock("trash_can_fluid")
+
+	// Upgrades
+
+	val UPGRADE_BASE =
+		basicBlock("upgrade_base")
+	val FORTUNE_UPGRADE =
+		basicBlock("fortune_upgrade")
+	val FORTUNE_TWO_UPGRADE =
+		basicBlock("fortune_two_upgrade")
+	val FORTUNE_THREE_UPGRADE =
+		basicBlock("fortune_three_upgrade")
+	val PUMP_UPGRADE =
+		basicBlock("pump_upgrade")
+	val SILK_TOUCH_UPGRADE =
+		basicBlock("silk_touch_upgrade")
+	val SPEED_UPGRADE =
+		basicBlock("speed_upgrade")
+	val SPEED_TWO_UPGRADE =
+		basicBlock("speed_two_upgrade")
+	val SPEED_THREE_UPGRADE =
+		basicBlock("speed_three_upgrade")
+	val WORLD_HOLE_UPGRADE =
+		basicBlock("world_hole_upgrade")
 
 	// Decor
 
