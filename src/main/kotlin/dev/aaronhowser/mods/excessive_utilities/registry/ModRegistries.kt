@@ -8,6 +8,7 @@ object ModRegistries {
 	fun register(modBus: IEventBus) {
 		val registries: List<DeferredRegister<*>> = listOf(
 			ModItems.ITEM_REGISTRY,
+			ModBlocks.BLOCK_REGISTRY
 		)
 
 		registries.forEach { it.register(modBus) }
