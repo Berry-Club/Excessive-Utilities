@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
@@ -20,10 +21,10 @@ object ModDataGen {
 		val existingFileHelper: ExistingFileHelper = event.existingFileHelper
 		val lookupProvider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
 
-//		generator.addProvider(
-//			event.includeClient(),
-//			ModItemModelProvider(output, existingFileHelper)
-//		)
+		generator.addProvider(
+			event.includeClient(),
+			ModItemModelProvider(output, existingFileHelper)
+		)
 //		generator.addProvider(
 //			event.includeClient(),
 //			ModBlockStateProvider(output, existingFileHelper)
