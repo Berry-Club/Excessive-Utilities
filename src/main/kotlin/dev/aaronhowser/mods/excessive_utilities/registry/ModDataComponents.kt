@@ -14,7 +14,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 
 	override fun getDataComponentRegistry(): DeferredRegister.DataComponents = DATA_COMPONENT_REGISTRY
 
-	val RADIUS: DeferredHolder<DataComponentType<*>, DataComponentType<UInt>> =
-		uint("radius")
+	val RADIUS: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
+		int("radius")
 
 }

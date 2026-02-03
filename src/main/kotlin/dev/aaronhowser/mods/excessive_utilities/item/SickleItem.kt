@@ -1,9 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.*
 import net.minecraft.world.level.Level
@@ -18,7 +20,27 @@ class SickleItem(properties: Properties) : Item(properties) {
 		pos: BlockPos,
 		miningEntity: LivingEntity
 	): Boolean {
-		return super.mineBlock(stack, level, state, pos, miningEntity)
+		if (!isCorrectToolForDrops(stack, state)) return false
+
+		if (level.isServerSide) {
+			val radius = stack.getOrDefault(ModDataComponents.RADIUS.get(), 1)
+			val blocks = BlockPos.betweenClosed(pos.offset(-radius, -radius, -radius), pos.offset(radius, radius, radius))
+
+			for (block in blocks) {
+				val stateThere = level.getBlockState(block)
+				if (isCorrectToolForDrops(stack, stateThere)) {
+					level.destroyBlock(block, true, miningEntity)
+
+					stack.hurtAndBreak(1, miningEntity, EquipmentSlot.MAINHAND)
+
+					if (stack.isEmpty) {
+						return true
+					}
+				}
+			}
+		}
+
+		return true
 	}
 
 	companion object {
@@ -31,13 +53,13 @@ class SickleItem(properties: Properties) : Item(properties) {
 				.component(
 					ModDataComponents.RADIUS.get(),
 					when (tier) {
-						Tiers.WOOD -> 1u
-						Tiers.STONE -> 2u
-						Tiers.GOLD -> 1u
-						Tiers.IRON -> 3u
-						Tiers.DIAMOND -> 4u
-						Tiers.NETHERITE -> 5u
-						else -> 1u
+						Tiers.WOOD -> 1
+						Tiers.STONE -> 2
+						Tiers.GOLD -> 1
+						Tiers.IRON -> 3
+						Tiers.DIAMOND -> 4
+						Tiers.NETHERITE -> 5
+						else -> 1
 					}
 				)
 				.durability(
