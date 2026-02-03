@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModBlockLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import net.minecraft.ChatFormatting
 import net.minecraft.data.PackOutput
@@ -14,6 +15,7 @@ class ModLanguageProvider(
 
 	override fun addTranslations() {
 		ModItemLang.add(this)
+		ModBlockLang.add(this)
 	}
 
 	companion object {

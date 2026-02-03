@@ -113,26 +113,26 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Upgrades
 
-	val UPGRADE_BASE =
-		basicBlock("upgrade_base")
-	val FORTUNE_UPGRADE =
-		basicBlock("fortune_upgrade")
-	val FORTUNE_TWO_UPGRADE =
-		basicBlock("fortune_two_upgrade")
-	val FORTUNE_THREE_UPGRADE =
-		basicBlock("fortune_three_upgrade")
-	val PUMP_UPGRADE =
-		basicBlock("pump_upgrade")
-	val SILK_TOUCH_UPGRADE =
-		basicBlock("silk_touch_upgrade")
-	val SPEED_UPGRADE =
-		basicBlock("speed_upgrade")
-	val SPEED_TWO_UPGRADE =
-		basicBlock("speed_two_upgrade")
-	val SPEED_THREE_UPGRADE =
-		basicBlock("speed_three_upgrade")
-	val WORLD_HOLE_UPGRADE =
-		basicBlock("world_hole_upgrade")
+	val ENDER_QUARRY_UPGRADE_BASE =
+		basicBlock("ender_quarry_upgrade_base")
+	val ENDER_QUARRY_FORTUNE_UPGRADE =
+		basicBlock("ender_quarry_fortune_upgrade")
+	val ENDER_QUARRY_FORTUNE_TWO_UPGRADE =
+		basicBlock("ender_quarry_fortune_two_upgrade")
+	val ENDER_QUARRY_FORTUNE_THREE_UPGRADE =
+		basicBlock("ender_quarry_fortune_three_upgrade")
+	val ENDER_QUARRY_PUMP_UPGRADE =
+		basicBlock("ender_quarry_pump_upgrade")
+	val ENDER_QUARRY_SILK_TOUCH_UPGRADE =
+		basicBlock("ender_quarry_silk_touch_upgrade")
+	val ENDER_QUARRY_SPEED_UPGRADE =
+		basicBlock("ender_quarry_speed_upgrade")
+	val ENDER_QUARRY_SPEED_TWO_UPGRADE =
+		basicBlock("ender_quarry_speed_two_upgrade")
+	val ENDER_QUARRY_SPEED_THREE_UPGRADE =
+		basicBlock("ender_quarry_speed_three_upgrade")
+	val ENDER_QUARRY_WORLD_HOLE_UPGRADE =
+		basicBlock("ender_quarry_world_hole_upgrade")
 
 	// Storage
 
