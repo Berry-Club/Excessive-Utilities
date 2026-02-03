@@ -136,16 +136,42 @@ object ModItems : AaronItemRegistry() {
 		basic("bag_of_holding")
 	val MAGICAL_APPLE =
 		basic("magical_apple")
-	val FLAT_TRANSFER_NODE_FLUIDS =
-		basic("flat_transfer_node_fluids")
-	val FLAT_TRANSFER_NODE_ITEMS =
-		basic("flat_transfer_node_items")
 	val PORTABLE_SCANNER =
 		basic("portable_scanner")
 	val SONAR_GOGGLES =
 		basic("sonar_goggles")
+	val FLAT_TRANSFER_NODE_FLUIDS =
+		basic("flat_transfer_node_fluids")
+	val FLAT_TRANSFER_NODE_ITEMS =
+		basic("flat_transfer_node_items")
+
+	// Transfer Node Upgrades
+
+	val SPEED_UPGRADE =
+		basic("speed_upgrade")
+	val STACK_UPGRADE =
+		basic("stack_upgrade")
+	val WORLD_INTERACTION_UPGRADE =
+		basic("world_interaction_upgrade")
+	val ITEM_FILTER_UPGRADE =
+		basic("item_filter_upgrade")
+	val ADVANCED_ITEM_FILTER_UPGRADE =
+		basic("advanced_item_filter_upgrade")
+	val BREADTH_FIRST_SEARCH_UPGRADE =
+		basic("breadth_first_search_upgrade")
+	val DEPTH_FIRST_SEARCH_UPGRADE =
+		basic("depth_first_search_upgrade")
+	val PSEUDO_ROUND_ROBIN_UPGRADE =
+		basic("pseudo_round_robin_upgrade")
+	val ENDER_RECEIVER =
+		basic("ender_receiver")
+	val ENDER_TRANSMITTER =
+		basic("ender_transmitter")
+	val CREATIVE_UPGRADE =
+		basic("creative_upgrade")
 
 	// Rings
+
 	val CHICKEN_WING_RING =
 		basic("chicken_wing_ring")
 	val RING_OF_THE_FLYING_SQUID =

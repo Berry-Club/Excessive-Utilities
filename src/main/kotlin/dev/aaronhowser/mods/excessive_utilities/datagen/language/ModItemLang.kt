@@ -80,6 +80,18 @@ object ModItemLang {
 			addItem(ModItems.RING_OF_THE_FLYING_SQUID, "Ring of the Flying Squid")
 			addItem(ModItems.ANGEL_RING, "Angel Ring")
 
+			addItem(ModItems.SPEED_UPGRADE, "Speed Upgrade")
+			addItem(ModItems.STACK_UPGRADE, "Stack Upgrade")
+			addItem(ModItems.WORLD_INTERACTION_UPGRADE, "World Interaction Upgrade")
+			addItem(ModItems.ITEM_FILTER_UPGRADE, "Item Filter")
+			addItem(ModItems.ADVANCED_ITEM_FILTER_UPGRADE, "Advanced Item Filter")
+			addItem(ModItems.BREADTH_FIRST_SEARCH_UPGRADE, "Breadth-First Search Upgrade")
+			addItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE, "Depth-First Search Upgrade")
+			addItem(ModItems.PSEUDO_ROUND_ROBIN_UPGRADE, "Pseudo Round Robin Upgrade")
+			addItem(ModItems.ENDER_RECEIVER, "Ender Receiver")
+			addItem(ModItems.ENDER_TRANSMITTER, "Ender Transmitter")
+			addItem(ModItems.CREATIVE_UPGRADE, "Creative Upgrade")
+
 		}
 	}
 
