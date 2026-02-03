@@ -86,7 +86,7 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("magical_snow_globe")
 	val MECHANICAL_MINER =
 		basicBlock("mechanical_miner")
-	val MECHANICAL_USER	=
+	val MECHANICAL_USER =
 		basicBlock("mechanical_user")
 	val POWER_OVERLOAD =
 		basicBlock("power_overload")
@@ -199,6 +199,32 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("lapis_caelestis")
 	val CHANDELIER =
 		basicBlock("chandelier")
+	val BEDROCK_BRICKS =
+		basicBlock("bedrock_bricks")
+	val BEDROCK_COBBLESTONE =
+		basicBlock("bedrock_cobblestone")
+	val BEDROCK_SLABS =
+		basicBlock("bedrock_slabs")
+	val BLUE_QUARTZ =
+		basicBlock("blue_quartz")
+	val BLOCK_OF_EVIL_INFUSED_IRON =
+		basicBlock("block_of_evil_infused_iron")
+	val STONEBURNT =
+		basicBlock("stoneburnt")
+	val TRUCHET =
+		basicBlock("truchet")
+	val QUARTZBURNT =
+		basicBlock("quartzburnt")
+	val RAINBOW_STONE =
+		basicBlock("rainbow_stone")
+	val MAGICAL_PLANKS =
+		basicBlock("magical_planks")
+	val DIAGONAL_WOOD =
+		basicBlock("diagonal_wood")
+	val BLOCK_OF_DEMON_METAL =
+		basicBlock("block_of_demon_metal")
+	val BLOCK_OF_ENCHANTED_METAL =
+		basicBlock("block_of_enchanted_metal")
 
 	// Glass
 
