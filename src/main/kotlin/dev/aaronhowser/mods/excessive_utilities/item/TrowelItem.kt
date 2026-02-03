@@ -2,11 +2,13 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.AaronExtensions.isHolder
 import net.minecraft.core.Holder
+import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.Tiers
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.ItemEnchantments
 
 class TrowelItem(properties: Properties) : ShovelItem(Tiers.IRON, properties) {
 
@@ -16,6 +18,12 @@ class TrowelItem(properties: Properties) : ShovelItem(Tiers.IRON, properties) {
 		}
 
 		return super.getEnchantmentLevel(stack, enchantment)
+	}
+
+	override fun getAllEnchantments(stack: ItemStack, lookup: HolderLookup.RegistryLookup<Enchantment>): ItemEnchantments {
+		val enchants = ItemEnchantments.Mutable(super.getAllEnchantments(stack, lookup))
+		enchants.upgrade(lookup.getOrThrow(Enchantments.SILK_TOUCH), 1)
+		return enchants.toImmutable()
 	}
 
 	companion object {
