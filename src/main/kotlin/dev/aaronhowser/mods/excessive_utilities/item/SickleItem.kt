@@ -24,7 +24,10 @@ class SickleItem(properties: Properties) : Item(properties) {
 
 		if (level.isServerSide) {
 			val radius = stack.getOrDefault(ModDataComponents.RADIUS.get(), 1)
-			val blocks = BlockPos.betweenClosed(pos.offset(-radius, -radius, -radius), pos.offset(radius, radius, radius))
+			val blocks = BlockPos.betweenClosed(
+				pos.offset(-radius, -radius, -radius),
+				pos.offset(radius, radius, radius)
+			)
 
 			for (block in blocks) {
 				val stateThere = level.getBlockState(block)
