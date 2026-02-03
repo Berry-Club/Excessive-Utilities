@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.BedrockiumIngotItem
+import dev.aaronhowser.mods.excessive_utilities.item.SickleItem
+import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -87,18 +89,18 @@ object ModItems : AaronItemRegistry() {
 		basic("golden_lasso")
 	val CURSED_LASSO =
 		basic("cursed_lasso")
-	val WOODEN_SICKLE =
-		basic("wooden_sickle")
-	val STONE_SICKLE =
-		basic("stone_sickle")
-	val IRON_SICKLE =
-		basic("iron_sickle")
-	val GOLDEN_SICKLE =
-		basic("golden_sickle")
-	val DIAMOND_SICKLE =
-		basic("diamond_sickle")
-	val NETHERITE_SICKLE =
-		basic("netherite_sickle")
+	val WOODEN_SICKLE: DeferredItem<SickleItem> =
+		register("wooden_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.WOOD))
+	val STONE_SICKLE: DeferredItem<SickleItem> =
+		register("stone_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.STONE))
+	val IRON_SICKLE: DeferredItem<SickleItem> =
+		register("iron_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.IRON))
+	val GOLDEN_SICKLE: DeferredItem<SickleItem> =
+		register("golden_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.GOLD))
+	val DIAMOND_SICKLE: DeferredItem<SickleItem> =
+		register("diamond_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.DIAMOND))
+	val NETHERITE_SICKLE: DeferredItem<SickleItem> =
+		register("netherite_sickle", ::SickleItem, SickleItem.getDefaultProperties(Tiers.NETHERITE))
 	val BUILDERS_WAND =
 		basic("builders_wand")
 	val CREATIVE_BUILDERS_WAND =
