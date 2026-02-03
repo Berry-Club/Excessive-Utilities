@@ -108,4 +108,49 @@ object ModItems : AaronItemRegistry() {
 	val CREATIVE_DESTRUCTION_WAND =
 		basic("creative_destruction_wand")
 
+	// Weapons
+
+	val KIKOKU =
+		basic("kikoku")
+	val FIRE_AXE =
+		basic("fire_axe")
+	val LUX_SABER =
+		basic("lux_saber")
+	val COMPOUND_BOW =
+		basic("compound_bow")
+	val MAGICAL_BOOMERANG =
+		basic("magical_boomerang")
+
+	// Misc
+	val HEATING_COIL =
+		basic("heating_coil")
+	val WIRELESS_RF_HEATING_COIL =
+		basic("wireless_rf_heating_coil")
+	val POWER_MANAGER =
+		basic("power_manager")
+	val SUN_CRYSTAL =
+		basic("sun_crystal")
+	val BIOME_MARKER =
+		basic("biome_marker")
+	val BAG_OF_HOLDING =
+		basic("bag_of_holding")
+	val MAGICAL_APPLE =
+		basic("magical_apple")
+	val FLAT_TRANSFER_NODE_FLUIDS =
+		basic("flat_transfer_node_fluids")
+	val FLAT_TRANSFER_NODE_ITEMS =
+		basic("flat_transfer_node_items")
+	val PORTABLE_SCANNER =
+		basic("portable_scanner")
+	val SONAR_GOGGLES =
+		basic("sonar_goggles")
+
+	// Rings
+	val CHICKEN_WING_RING =
+		basic("chicken_wing_ring")
+	val RING_OF_THE_FLYING_SQUID =
+		basic("ring_of_the_flying_squid")
+	val ANGEL_RING =
+		basic("angel_ring")
+
 }
