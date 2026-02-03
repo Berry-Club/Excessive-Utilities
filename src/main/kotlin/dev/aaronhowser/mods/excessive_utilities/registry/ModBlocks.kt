@@ -284,6 +284,27 @@ object ModBlocks : AaronBlockRegistry() {
 	val RAINBOW_GENERATOR_X64 =
 		basicBlock("rainbow_generator_x64")
 
+	// GP Generators
+
+	val MANUAL_MILL =
+		basicBlock("manual_mill")
+	val WATER_MILL =
+		basicBlock("water_mill")
+	val WIND_MILL =
+		basicBlock("wind_mill")
+	val FIRE_MILL =
+		basicBlock("fire_mill")
+	val LAVA_MILL =
+		basicBlock("lava_mill")
+	val SOLAR_PANEL =
+		basicBlock("solar_panel")
+	val LUNAR_PANEL =
+		basicBlock("lunar_panel")
+	val DRAGON_EGG_MILL =
+		basicBlock("dragon_egg_mill")
+	val CREATIVE_MILL =
+		basicBlock("creative_mill")
+
 	// Terraformer
 
 	val TERRAFORMER =

@@ -141,6 +141,16 @@ object ModBlockLang {
 			addBlock(ModBlocks.DEATH_GENERATOR_X64, "Death Generator x64")
 			addBlock(ModBlocks.RAINBOW_GENERATOR_X64, "Rainbow Generator! x64")
 
+			addBlock(ModBlocks.MANUAL_MILL, "Manual Mill")
+			addBlock(ModBlocks.WATER_MILL, "Water Mill")
+			addBlock(ModBlocks.WIND_MILL, "Wind Mill")
+			addBlock(ModBlocks.FIRE_MILL, "Fire Mill")
+			addBlock(ModBlocks.LAVA_MILL, "Lava Mill")
+			addBlock(ModBlocks.SOLAR_PANEL, "Solar Panel")
+			addBlock(ModBlocks.LUNAR_PANEL, "Lunar Panel")
+			addBlock(ModBlocks.DRAGON_EGG_MILL, "Dragon Egg Mill")
+			addBlock(ModBlocks.CREATIVE_MILL, "Creative Mill")
+
 			addBlock(ModBlocks.TERRAFORMER, "Terraformer")
 			addBlock(ModBlocks.ANTENNA, "Antenna")
 			addBlock(ModBlocks.COOLER, "Cooler")
