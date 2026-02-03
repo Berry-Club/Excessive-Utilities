@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.BedrockiumIngotItem
 import dev.aaronhowser.mods.excessive_utilities.item.SickleItem
+import dev.aaronhowser.mods.excessive_utilities.item.TrowelItem
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -77,8 +78,8 @@ object ModItems : AaronItemRegistry() {
 		basic("paintbrush")
 	val GLASS_CUTTER =
 		basic("glass_cutter")
-	val TROWEL =
-		basic("trowel")
+	val TROWEL: DeferredItem<TrowelItem> =
+		register("trowel", ::TrowelItem, TrowelItem.DEFAULT_PROPERTIES)
 	val WRENCH =
 		basic("wrench")
 	val WATERING_CAN =
