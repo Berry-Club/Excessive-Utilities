@@ -2,6 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput
@@ -54,15 +56,15 @@ object ModDataGen {
 //			event.includeServer(),
 //			ModDataPackProvider(output, lookupProvider)
 //		)
-//
-//		val blockTagProvider = generator.addProvider(
-//			event.includeServer(),
-//			ModBlockTagsProvider(output, lookupProvider, existingFileHelper)
-//		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModItemTagsProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
-//		)
+
+		val blockTagProvider = generator.addProvider(
+			event.includeServer(),
+			ModBlockTagsProvider(output, lookupProvider, existingFileHelper)
+		)
+		generator.addProvider(
+			event.includeServer(),
+			ModItemTagsProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
+		)
 //		generator.addProvider(
 //			event.includeServer(),
 //			ModFluidTagsProvider(output, lookupProvider, existingFileHelper)
