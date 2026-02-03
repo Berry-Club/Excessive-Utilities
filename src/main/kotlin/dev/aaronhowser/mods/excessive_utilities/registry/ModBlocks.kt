@@ -14,10 +14,6 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val COMPRESSED_BLOCK =
 		basicBlock("compressed_block")
-	val SLIGHTLY_LARGER_CHEST =
-		basicBlock("slightly_larger_chest")
-	val MINI_CHEST =
-		basicBlock("mini_chest")
 	val ANGEL_BLOCK =
 		basicBlock("angel_block")
 	val BLACKOUT_CURTAIN =
@@ -62,12 +58,58 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("sound_muffler")
 	val TRADING_POST =
 		basicBlock("trading_post")
-	val TRASH_CAN =
-		basicBlock("trash_can")
-	val TRASH_CAN_ENERGY =
-		basicBlock("trash_can_energy")
-	val TRASH_CAN_FLUID =
-		basicBlock("trash_can_fluid")
+	val WOODEN_SPIKE =
+		basicBlock("wooden_spike")
+	val IRON_SPIKE =
+		basicBlock("iron_spike")
+	val GOLDEN_SPIKE =
+		basicBlock("golden_spike")
+	val DIAMOND_SPIKE =
+		basicBlock("diamond_spike")
+	val NETHERITE_SPIKE =
+		basicBlock("netherite_spike")
+	val CREATIVE_SPIKE =
+		basicBlock("creative_spike")
+	val CREATIVE_HARVEST =
+		basicBlock("creative_harvest")
+	val ENDER_PORCUPINE =
+		basicBlock("ender_porcupine")
+	val INDEXER =
+		basicBlock("indexer")
+	val CRUSHER =
+		basicBlock("crusher")
+	val FURNACE =
+		basicBlock("furnace")
+	val MACHINE_BLOCK =
+		basicBlock("machine_block")
+	val MAGICAL_SNOW_GLOBE =
+		basicBlock("magical_snow_globe")
+	val MECHANICAL_MINER =
+		basicBlock("mechanical_miner")
+	val MECHANICAL_USER	=
+		basicBlock("mechanical_user")
+	val POWER_OVERLOAD =
+		basicBlock("power_overload")
+	val QUANTUM_QUARRY =
+		basicBlock("quantum_quarry")
+	val QUANTUM_QUARRY_ACTUATOR =
+		basicBlock("quantum_quarry_actuator")
+	val RED_ORCHID =
+		basicBlock("red_orchid")
+	val REDSTONE_LANTERN =
+		basicBlock("redstone_lantern")
+	val RESONATOR =
+		basicBlock("resonator")
+	val RESTURBED_MOB_SPAWNER =
+		basicBlock("resturbed_mob_spawner")
+	val SCANNER =
+		basicBlock("scanner")
+	val SCREEN =
+		basicBlock("screen")
+	val WIRELESS_RF_BATTERY =
+		basicBlock("wireless_rf_battery")
+	val WIRELESS_RF_TRANSMITTER =
+		basicBlock("wireless_rf_transmitter")
 
 	// Upgrades
 
@@ -91,6 +133,39 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("speed_three_upgrade")
 	val WORLD_HOLE_UPGRADE =
 		basicBlock("world_hole_upgrade")
+
+	// Storage
+
+	val SLIGHTLY_LARGER_CHEST =
+		basicBlock("slightly_larger_chest")
+	val MINI_CHEST =
+		basicBlock("mini_chest")
+	val PLAYER_CHEST =
+		basicBlock("player_chest")
+	val FILING_CABINET =
+		basicBlock("filing_cabinet")
+	val ADVANCED_FILING_CABINET =
+		basicBlock("advanced_filing_cabinet")
+	val STONE_DRUM =
+		basicBlock("stone_drum")
+	val IRON_DRUM =
+		basicBlock("iron_drum")
+	val REINFORCED_LARGE_DRUM =
+		basicBlock("reinforced_large_drum")
+	val DEMONICALLY_GARGANTUAN_DRUM =
+		basicBlock("demonically_gargantuan_drum")
+	val CREATIVE_DRUM =
+		basicBlock("creative_drum")
+	val CREATIVE_CHEST =
+		basicBlock("creative_chest")
+	val TRASH_CAN =
+		basicBlock("trash_can")
+	val TRASH_CAN_CHEST =
+		basicBlock("trash_can_chest")
+	val TRASH_CAN_ENERGY =
+		basicBlock("trash_can_energy")
+	val TRASH_CAN_FLUID =
+		basicBlock("trash_can_fluid")
 
 	// Decor
 
