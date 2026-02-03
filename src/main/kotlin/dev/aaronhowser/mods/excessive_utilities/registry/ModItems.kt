@@ -49,10 +49,39 @@ object ModItems : AaronItemRegistry() {
 		basic("semi_unstable_nugget")
 	val MOBIUS_INGOT =
 		basic("mobius_ingot")
+	val KLEIN_FLASK =
+		basic("klein_flask")
 
 	// Plants
 
 	val ENDER_LILY =
 		basic("ender_lily")
+
+	// Tools
+
+	val DESTRUCTION_PICKAXE =
+		basic("destruction_pickaxe")
+	val EROSION_SHOVEL =
+		basic("erosion_shovel")
+	val ETHERIC_SWORD =
+		basic("etheric_sword")
+	val HEALING_AXE =
+		basic("healing_axe")
+	val REVERSING_HOE =
+		basic("reversing_hoe")
+	val PRECISION_SHEARS =
+		basic("precision_shears")
+	val PAINTBRUSH =
+		basic("paintbrush")
+	val GLASS_CUTTER =
+		basic("glass_cutter")
+	val TROWEL =
+		basic("trowel")
+	val WRENCH =
+		basic("wrench")
+	val GOLDEN_LASSO =
+		basic("golden_lasso")
+	val CURSED_LASSO =
+		basic("cursed_lasso")
 
 }
