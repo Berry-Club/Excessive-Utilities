@@ -79,9 +79,33 @@ object ModItems : AaronItemRegistry() {
 		basic("trowel")
 	val WRENCH =
 		basic("wrench")
+	val WATERING_CAN =
+		basic("watering_can")
+	val REINFORCED_WATERING_CAN =
+		basic("reinforced_watering_can")
 	val GOLDEN_LASSO =
 		basic("golden_lasso")
 	val CURSED_LASSO =
 		basic("cursed_lasso")
+	val WOODEN_SICKLE =
+		basic("wooden_sickle")
+	val STONE_SICKLE =
+		basic("stone_sickle")
+	val IRON_SICKLE =
+		basic("iron_sickle")
+	val GOLDEN_SICKLE =
+		basic("golden_sickle")
+	val DIAMOND_SICKLE =
+		basic("diamond_sickle")
+	val NETHERITE_SICKLE =
+		basic("netherite_sickle")
+	val BUILDERS_WAND =
+		basic("builders_wand")
+	val CREATIVE_BUILDERS_WAND =
+		basic("creative_builders_wand")
+	val DESTRUCTION_WAND =
+		basic("destruction_wand")
+	val CREATIVE_DESTRUCTION_WAND =
+		basic("creative_destruction_wand")
 
 }
