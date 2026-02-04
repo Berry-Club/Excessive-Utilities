@@ -25,6 +25,7 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.extensions.IOwnedSpawner
 import net.neoforged.neoforge.event.EventHooks
+import net.neoforged.neoforge.items.ItemHandlerHelper
 import kotlin.jvm.optionals.getOrNull
 
 class PeacefulTableBlockEntity(
@@ -56,10 +57,13 @@ class PeacefulTableBlockEntity(
 		val drops = getDrops(mob)
 
 		for (drop in drops) {
-			val copy = drop.copy()
+			var copy = drop.copy()
 
+			for (inv in adjacentInventories) {
+				if (copy.isEmpty) break
 
-
+				copy = ItemHandlerHelper.insertItemStacked(inv, copy, false)
+			}
 		}
 
 	}
