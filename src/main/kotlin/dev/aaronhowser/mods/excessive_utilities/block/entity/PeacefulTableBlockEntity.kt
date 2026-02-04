@@ -173,6 +173,8 @@ class PeacefulTableBlockEntity(
 				true
 			)
 
+			if (mob.isPassenger || mob.isVehicle) return null
+
 			return mob
 		}
 
