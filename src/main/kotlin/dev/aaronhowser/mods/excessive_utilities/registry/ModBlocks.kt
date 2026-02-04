@@ -62,17 +62,62 @@ object ModBlocks : AaronBlockRegistry() {
 	val TRADING_POST =
 		basicBlock("trading_post")
 	val WOODEN_SPIKE =
-		registerBlock("wooden_spike") { SpikeBlock(damagePerHit = 1f, canKill = false, properties = BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)) }
+		registerBlock("wooden_spike") {
+			SpikeBlock(
+				damagePerHit = 1f,
+				canKill = false,
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)
+			)
+		}
+	val STONE_SPIKE =
+		registerBlock("stone_spike") {
+			SpikeBlock(
+				damagePerHit = 2f,
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE)
+			)
+		}
 	val IRON_SPIKE =
-		basicBlock("iron_spike")
+		registerBlock("iron_spike") {
+			SpikeBlock(
+				damagePerHit = 4f,
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+			)
+		}
 	val GOLDEN_SPIKE =
-		basicBlock("golden_spike")
+		registerBlock("golden_spike") {
+			SpikeBlock(
+				damagePerHit = 2f,
+				dropsExperience = true,
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK)
+			)
+		}
 	val DIAMOND_SPIKE =
-		basicBlock("diamond_spike")
+		registerBlock("diamond_spike") {
+			SpikeBlock(
+				damagePerHit = 8f,
+				dropsExperience = true,
+				killsAsPlayer = true,
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK)
+			)
+		}
 	val NETHERITE_SPIKE =
-		basicBlock("netherite_spike")
+		registerBlock("netherite_spike") {
+			SpikeBlock(
+				damagePerHit = 10f,
+				dropsExperience = true,
+				killsAsPlayer = true,
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK)
+			)
+		}
 	val CREATIVE_SPIKE =
-		basicBlock("creative_spike")
+		registerBlock("creative_spike") {
+			SpikeBlock(
+				damagePerHit = Float.MAX_VALUE,
+				dropsExperience = true,
+				killsAsPlayer = true,
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+			)
+		}
 	val CREATIVE_HARVEST =
 		basicBlock("creative_harvest")
 	val ENDER_PORCUPINE =

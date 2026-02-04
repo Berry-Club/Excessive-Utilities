@@ -31,6 +31,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.SOUND_MUFFLER, "Sound Muffler")
 			addBlock(ModBlocks.TRADING_POST, "Trading Post")
 			addBlock(ModBlocks.WOODEN_SPIKE, "Wooden Spike")
+			addBlock(ModBlocks.STONE_SPIKE, "Stone Spike")
 			addBlock(ModBlocks.IRON_SPIKE, "Iron Spike")
 			addBlock(ModBlocks.GOLDEN_SPIKE, "Golden Spike")
 			addBlock(ModBlocks.DIAMOND_SPIKE, "Diamond Spike")

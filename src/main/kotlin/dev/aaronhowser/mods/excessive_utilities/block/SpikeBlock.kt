@@ -18,7 +18,7 @@ class SpikeBlock(
 	val damagePerHit: Float,
 	val canKill: Boolean = true,
 	val dropsExperience: Boolean = false,
-	val killsAsPlayer: Boolean = false ,
+	val killsAsPlayer: Boolean = false,
 	properties: Properties
 ) : Block(properties) {
 
