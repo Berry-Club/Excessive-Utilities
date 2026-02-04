@@ -37,6 +37,8 @@ import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.lang.ref.WeakReference
 import java.util.*
 import kotlin.jvm.optionals.getOrNull
+import kotlin.math.max
+import kotlin.math.min
 
 class PeacefulTableBlockEntity(
 	pos: BlockPos,
@@ -96,6 +98,9 @@ class PeacefulTableBlockEntity(
 		}
 
 		val mob = getMobToSpawn(this) ?: return
+
+		if (!damageSword(sword, fakePlayer, mob)) return
+
 		val drops = getDrops(mob, fakePlayer)
 
 		for (drop in drops) {
@@ -176,6 +181,29 @@ class PeacefulTableBlockEntity(
 			if (mob.isPassenger || mob.isVehicle) return null
 
 			return mob
+		}
+
+		/**
+		 * @return true if the sword had enough health to kill the mob, false otherwise
+		 */
+		private fun damageSword(swordStack: ItemStack, fakePlayer: FakePlayer, mob: Mob): Boolean {
+			val damage = fakePlayer.getAttributeValue(Attributes.ATTACK_DAMAGE)
+			val armor = mob.getAttributeValue(Attributes.ARMOR)
+			val toughness = mob.getAttributeValue(Attributes.ARMOR_TOUGHNESS)
+
+			val damageReduction = min(
+				8.0,
+				max(
+					(4.0 / 5.0) * armor,
+					4.0 * armor - ((16.0 * damage) / (toughness + 8.0))
+				)
+			) / 100.0
+
+			val effectiveDamage = damage * (1.0 - damageReduction)
+			val hitsToKill = (mob.health / effectiveDamage).toInt()
+
+			swordStack.hurtAndBreak(hitsToKill, fakePlayer, EquipmentSlot.MAINHAND)
+			return !swordStack.isEmpty
 		}
 
 		private fun getDrops(mob: Mob, fakePlayer: FakePlayer): List<ItemStack> {
