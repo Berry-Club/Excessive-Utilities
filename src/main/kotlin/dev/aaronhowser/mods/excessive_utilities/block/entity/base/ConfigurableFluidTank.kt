@@ -74,7 +74,7 @@ open class ConfigurableFluidTank(
 		return drain(resource.amount, action)
 	}
 
-	protected fun onContentsChanged() {}
+	protected open fun onContentsChanged() {}
 
 	override fun getTanks(): Int = 1
 	override fun getTankCapacity(tank: Int): Int = capacity

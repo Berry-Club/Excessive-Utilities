@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.excessive_utilities.block.entity.base.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -24,6 +25,11 @@ class DrumBlockEntity(
 			else -> IntSupplier { 0 }
 		}
 
-	val capacity: Int get() = capacityGetter.asInt
+	val tank: ConfigurableFluidTank =
+		object : ConfigurableFluidTank(capacityGetter) {
+			override fun onContentsChanged() {
+				setChanged()
+			}
+		}
 
 }
