@@ -49,11 +49,27 @@ open class ConfigurableFluidTank(
 	}
 
 	override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack {
-		TODO("Not yet implemented")
+		var drained = maxDrain
+
+		if (fluid.amount < drained) {
+			drained = fluid.amount
+		}
+
+		val stack = fluid.copyWithAmount(drained)
+		if (action.execute() && drained > 0) {
+			fluid.shrink(drained)
+			onContentsChanged()
+		}
+
+		return stack
 	}
 
 	override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
-		TODO("Not yet implemented")
+		if (resource.isEmpty || !FluidStack.isSameFluidSameComponents(resource, fluid)) {
+			return FluidStack.EMPTY
+		}
+
+		return drain(resource.amount, action)
 	}
 
 	protected fun onContentsChanged() {}
