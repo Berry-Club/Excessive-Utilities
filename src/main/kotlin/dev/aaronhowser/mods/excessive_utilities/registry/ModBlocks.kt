@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.BlackoutCurtainBlock
 import dev.aaronhowser.mods.excessive_utilities.block.SpikeBlock
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -20,7 +21,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val COMPRESSED_BLOCK =
 		basicBlock("compressed_block")
 	val ANGEL_BLOCK =
-		basicBlock("angel_block")
+		registerBlockWithoutItem("angel_block") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)) }
 	val BLACKOUT_CURTAIN: DeferredBlock<BlackoutCurtainBlock> =
 		registerBlock("blackout_curtain", ::BlackoutCurtainBlock)
 	val ADVANCED_OBSERVER =

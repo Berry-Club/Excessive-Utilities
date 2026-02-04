@@ -148,6 +148,8 @@ object ModItems : AaronItemRegistry() {
 		basic("flat_transfer_node_fluids")
 	val FLAT_TRANSFER_NODE_ITEMS =
 		basic("flat_transfer_node_items")
+	val ANGEL_BLOCK_ITEM: DeferredItem<AngelBlockItem> =
+		register("angel_block", ::AngelBlockItem)
 
 	// Transfer Node Upgrades
 

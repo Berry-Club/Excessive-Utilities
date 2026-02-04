@@ -16,6 +16,7 @@ class ModBlockStateProvider(
 ) : BlockStateProvider(output, ExcessiveUtilities.MOD_ID, existingFileHelper) {
 
 	override fun registerStatesAndModels() {
+		singleTextureBlocks()
 		blackoutCurtain()
 	}
 
@@ -129,6 +130,16 @@ class ModBlockStateProvider(
 
 		}
 
+	}
+
+	fun singleTextureBlocks() {
+		val blocks = listOf(
+			ModBlocks.ANGEL_BLOCK.get()
+		)
+
+		for (block in blocks) {
+			simpleBlockWithItem(block, cubeAll(block))
+		}
 	}
 
 	private fun name(block: Block): String {
