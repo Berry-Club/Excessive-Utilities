@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Difficulty
 import net.minecraft.world.DifficultyInstance
@@ -13,12 +14,14 @@ import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.entity.MobSpawnType
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.SwordItem
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.extensions.IOwnedSpawner
 import net.neoforged.neoforge.event.EventHooks
@@ -30,8 +33,34 @@ class PeacefulTableBlockEntity(
 ) : BlockEntity(ModBlockEntityTypes.PEACEFUL_TABLE.get(), pos, blockState), IOwnedSpawner {
 
 	private fun tick() {
+		val level = this.level as? ServerLevel ?: return
+		if (level.difficulty != Difficulty.PEACEFUL) return
+
+		val adjacentInventories = Direction.entries
+			.mapNotNull { direction ->
+				level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos.relative(direction), direction.opposite)
+			}
+
+		val sword = adjacentInventories
+			.asSequence()
+			.flatMap { inventory ->
+				(0 until inventory.slots).asSequence().map { inventory.getStackInSlot(it) }
+			}
+			.firstOrNull { it.item is SwordItem }
+
+		if (sword == null) {
+			return
+		}
+
 		val mob = getMobToSpawn(this) ?: return
 		val drops = getDrops(mob)
+
+		for (drop in drops) {
+			val copy = drop.copy()
+
+
+
+		}
 
 	}
 
