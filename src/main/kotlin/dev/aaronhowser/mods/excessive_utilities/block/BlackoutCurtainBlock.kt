@@ -9,10 +9,21 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class BlackoutCurtainBlock : IronBarsBlock(Properties.ofFullCopy(Blocks.BLACK_WOOL)) {
+class BlackoutCurtainBlock : IronBarsBlock(
+	Properties.ofFullCopy(Blocks.BLACK_WOOL)
+		.noOcclusion()
+		.isValidSpawn(Blocks::never)
+		.isRedstoneConductor(Blocks::never)
+		.isSuffocating(Blocks::never)
+		.isViewBlocking(Blocks::never)
+) {
 
 	override fun getCollisionShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		return Shapes.empty()
+	}
+
+	override fun propagatesSkylightDown(state: BlockState, reader: BlockGetter, pos: BlockPos): Boolean {
+		return false
 	}
 
 }
