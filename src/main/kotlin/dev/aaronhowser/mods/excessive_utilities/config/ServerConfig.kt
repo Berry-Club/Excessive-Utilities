@@ -7,6 +7,9 @@ class ServerConfig(
 	private val builder: ModConfigSpec.Builder
 ) {
 
+	lateinit var chandelierRadius: ModConfigSpec.IntValue
+	lateinit var magnumTorchRadius: ModConfigSpec.IntValue
+
 	lateinit var heatingCoilBurnTime: ModConfigSpec.IntValue
 	lateinit var heatingCoilBurnCost: ModConfigSpec.IntValue
 	lateinit var heatingCoilMaxEnergy: ModConfigSpec.IntValue
@@ -18,6 +21,14 @@ class ServerConfig(
 
 	private fun general() {
 
+		chandelierRadius = builder
+			.comment("The radius in blocks that a Chandelier prevents monster spawns.")
+			.defineInRange("chandelierRadius", 16, 1, Int.MAX_VALUE)
+
+		magnumTorchRadius = builder
+			.comment("The radius in blocks that a Magnum Torch prevents monster spawns.")
+			.defineInRange("magnumTorchRadius", 64, 1, Int.MAX_VALUE)
+
 	}
 
 	private fun heatingCoil() {
@@ -25,15 +36,15 @@ class ServerConfig(
 
 		heatingCoilBurnTime = builder
 			.comment("The number of ticks a Heating Coil will burn in a Furnace.")
-			.defineInRange("burn_time", 20, 1, Int.MAX_VALUE)
+			.defineInRange("heatingCoilBurnTime", 20, 1, Int.MAX_VALUE)
 
 		heatingCoilBurnCost = builder
 			.comment("How much FE will be spent when a Heating Coil is used as Furnace fuel.")
-			.defineInRange("burn_cost", 50, 1, Int.MAX_VALUE)
+			.defineInRange("heatingCoilBurnCost", 50, 1, Int.MAX_VALUE)
 
 		heatingCoilMaxEnergy = builder
 			.comment("The maximum amount of FE a Heating Coil can store.")
-			.defineInRange("max_energy", 1_500_000, 1, Int.MAX_VALUE)
+			.defineInRange("heatingCoilMaxEnergy", 1_500_000, 1, Int.MAX_VALUE)
 
 		builder.pop()
 	}

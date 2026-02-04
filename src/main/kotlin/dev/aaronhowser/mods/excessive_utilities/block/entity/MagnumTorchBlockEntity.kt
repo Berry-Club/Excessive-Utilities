@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.excessive_utilities.MagnumTorchCarrier
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet
 import net.minecraft.core.BlockPos
@@ -58,7 +59,7 @@ class MagnumTorchBlockEntity(
 		fun shouldPreventSpawn(level: ServerLevel, pos: BlockPos): Boolean {
 			if (level !is MagnumTorchCarrier) return false
 
-			val radius = 64
+			val radius = ServerConfig.CONFIG.magnumTorchRadius.get()
 			val positions = level.getMagnumTorchPositions()
 
 			return positions
