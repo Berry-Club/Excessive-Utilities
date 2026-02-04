@@ -2,9 +2,11 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.BlackoutCurtainBlock
 import dev.aaronhowser.mods.excessive_utilities.block.SpikeBlock
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
+import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object ModBlocks : AaronBlockRegistry() {
@@ -19,8 +21,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("compressed_block")
 	val ANGEL_BLOCK =
 		basicBlock("angel_block")
-	val BLACKOUT_CURTAIN =
-		basicBlock("blackout_curtain")
+	val BLACKOUT_CURTAIN: DeferredBlock<BlackoutCurtainBlock> =
+		registerBlock("blackout_curtain", ::BlackoutCurtainBlock)
 	val ADVANCED_OBSERVER =
 		basicBlock("advanced_observer")
 	val CONVEYOR_BELT =
@@ -104,7 +106,7 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Spikes
 
-	val WOODEN_SPIKE =
+	val WOODEN_SPIKE: DeferredBlock<SpikeBlock> =
 		registerBlock("wooden_spike") {
 			SpikeBlock(
 				damagePerHit = 1f,
@@ -112,21 +114,21 @@ object ModBlocks : AaronBlockRegistry() {
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)
 			)
 		}
-	val STONE_SPIKE =
+	val STONE_SPIKE: DeferredBlock<SpikeBlock> =
 		registerBlock("stone_spike") {
 			SpikeBlock(
 				damagePerHit = 2f,
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.COBBLESTONE)
 			)
 		}
-	val IRON_SPIKE =
+	val IRON_SPIKE: DeferredBlock<SpikeBlock> =
 		registerBlock("iron_spike") {
 			SpikeBlock(
 				damagePerHit = 4f,
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
 			)
 		}
-	val GOLDEN_SPIKE =
+	val GOLDEN_SPIKE: DeferredBlock<SpikeBlock> =
 		registerBlock("golden_spike") {
 			SpikeBlock(
 				damagePerHit = 2f,
@@ -134,7 +136,7 @@ object ModBlocks : AaronBlockRegistry() {
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.GOLD_BLOCK)
 			)
 		}
-	val DIAMOND_SPIKE =
+	val DIAMOND_SPIKE: DeferredBlock<SpikeBlock> =
 		registerBlock("diamond_spike") {
 			SpikeBlock(
 				damagePerHit = 8f,
@@ -143,7 +145,7 @@ object ModBlocks : AaronBlockRegistry() {
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_BLOCK)
 			)
 		}
-	val NETHERITE_SPIKE =
+	val NETHERITE_SPIKE: DeferredBlock<SpikeBlock> =
 		registerBlock("netherite_spike") {
 			SpikeBlock(
 				damagePerHit = 10f,
@@ -152,7 +154,7 @@ object ModBlocks : AaronBlockRegistry() {
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.NETHERITE_BLOCK)
 			)
 		}
-	val CREATIVE_SPIKE =
+	val CREATIVE_SPIKE: DeferredBlock<SpikeBlock> =
 		registerBlock("creative_spike") {
 			SpikeBlock(
 				damagePerHit = Float.MAX_VALUE,
