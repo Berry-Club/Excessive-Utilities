@@ -14,6 +14,11 @@ class ServerConfig(
 	lateinit var heatingCoilBurnCost: ModConfigSpec.IntValue
 	lateinit var heatingCoilMaxEnergy: ModConfigSpec.IntValue
 
+	lateinit var stoneDrumCapacity: ModConfigSpec.DoubleValue
+	lateinit var ironDrumCapacity: ModConfigSpec.DoubleValue
+	lateinit var reinforcedLargeDrumCapacity: ModConfigSpec.DoubleValue
+	lateinit var demonicallyGargantuanDrumCapacity: ModConfigSpec.DoubleValue
+
 	init {
 		general()
 		heatingCoil()

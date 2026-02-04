@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.ChandelierBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.DrumBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.MagnumTorchBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.PeacefulTableBlockEntity
 import net.minecraft.core.registries.BuiltInRegistries
@@ -26,5 +27,11 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("chandelier", ::ChandelierBlockEntity, ModBlocks.CHANDELIER)
 	val PEACEFUL_TABLE: DeferredHolder<BlockEntityType<*>, BlockEntityType<PeacefulTableBlockEntity>> =
 		register("peaceful_table", ::PeacefulTableBlockEntity, ModBlocks.PEACEFUL_TABLE)
+	val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<DrumBlockEntity>> =
+		register(
+			"drum",
+			::DrumBlockEntity,
+			ModBlocks.STONE_DRUM, ModBlocks.IRON_DRUM, ModBlocks.REINFORCED_LARGE_DRUM, ModBlocks.DEMONICALLY_GARGANTUAN_DRUM, ModBlocks.CREATIVE_DRUM
+		)
 
 }
