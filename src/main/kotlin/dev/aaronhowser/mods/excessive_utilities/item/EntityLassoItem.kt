@@ -9,6 +9,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.monster.Enemy
 import net.minecraft.world.entity.player.Player
@@ -40,6 +41,8 @@ class EntityLassoItem(
 		val customNbt = CustomData.of(entityNbt)
 
 		stack.set(ModDataComponents.ENTITY, customNbt)
+
+		interactionTarget.remove(Entity.RemovalReason.DISCARDED)
 
 		return InteractionResult.SUCCESS
 	}
