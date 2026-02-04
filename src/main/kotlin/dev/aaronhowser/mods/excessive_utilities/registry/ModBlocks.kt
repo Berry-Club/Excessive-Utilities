@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.BlackoutCurtainBlock
+import dev.aaronhowser.mods.excessive_utilities.block.MagnumTorchBlock
 import dev.aaronhowser.mods.excessive_utilities.block.SpikeBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -46,8 +47,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("ender_thermic_pump")
 	val MAGICAL_WOOD =
 		basicBlock("magical_wood")
-	val MAGNUM_TORCH =
-		basicBlock("magnum_torch")
+	val MAGNUM_TORCH: DeferredBlock<MagnumTorchBlock> =
+		registerBlock("magnum_torch", ::MagnumTorchBlock)
 	val PEACEFUL_TABLE =
 		basicBlock("peaceful_table")
 	val DEEP_DARK_PORTAL =

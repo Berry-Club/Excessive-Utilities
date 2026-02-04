@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.excessive_utilities.block.entity.MagnumTorchBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -9,8 +10,8 @@ import net.minecraft.world.level.block.state.BlockState
 
 class MagnumTorchBlock : Block(Properties.ofFullCopy(Blocks.OAK_LOG)), EntityBlock {
 
-	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
-		TODO("Not yet implemented")
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
+		return MagnumTorchBlockEntity(pos, state)
 	}
 
 }
