@@ -95,7 +95,7 @@ class PeacefulTableBlockEntity(
 		}
 
 		val mob = getMobToSpawn(this) ?: return
-		val drops = getDrops(mob)
+		val drops = getDrops(mob, fakePlayer)
 
 		for (drop in drops) {
 			var copy = drop.copy()
@@ -175,9 +175,9 @@ class PeacefulTableBlockEntity(
 			return mob
 		}
 
-		private fun getDrops(mob: Mob): List<ItemStack> {
+		private fun getDrops(mob: Mob, fakePlayer: FakePlayer): List<ItemStack> {
 			val level = mob.level() as? ServerLevel ?: return emptyList()
-			val damageSource = level.damageSources().genericKill()
+			val damageSource = level.damageSources().playerAttack(fakePlayer)
 
 			mob.captureDrops(mutableListOf())
 
@@ -188,6 +188,7 @@ class PeacefulTableBlockEntity(
 				.withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
 				.withOptionalParameter(LootContextParams.ATTACKING_ENTITY, damageSource.entity)
 				.withOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, damageSource.directEntity)
+				.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer).withLuck(fakePlayer.luck)
 
 			val lootParams = lootParamsBuilder.create(LootContextParamSets.ENTITY)
 			lootTable.getRandomItems(lootParams, mob.lootTableSeed, mob::spawnAtLocation)
