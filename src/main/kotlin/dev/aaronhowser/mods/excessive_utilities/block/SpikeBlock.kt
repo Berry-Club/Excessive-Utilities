@@ -25,25 +25,29 @@ class SpikeBlock(
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		var shape = Shapes.empty()
+		val layers = 5
+		val layerHeight = 16.0 / layers
+		val insetStep = 16.0 / (layers * 2.0)
 
-		for (i in 0 until 4) {
-			val widthPercent = 1 - (i.toDouble() / 5.0)
-			val width = 16.0 * widthPercent
+		for (i in 0 until layers) {
+			val yMin = i * layerHeight
+			val yMax = yMin + layerHeight
+			val inset = i * insetStep
+			val min = inset
+			val max = 16.0 - inset
+
 			shape = Shapes.or(
 				shape,
 				box(
-					16.0 - width / 2.0,
-					0.0 + i * 4.0,
-					16.0 - width / 2.0,
-					0.0 + width / 2.0,
-					4.0 + i * 4.0,
-					0.0 + width / 2.0
+					min, yMin, min,
+					max, yMax, max
 				)
 			)
 		}
 
 		return shape
 	}
+
 
 	override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity) {
 		if (entity !is LivingEntity || level !is ServerLevel || level.gameTime % 10 != 0L) return
