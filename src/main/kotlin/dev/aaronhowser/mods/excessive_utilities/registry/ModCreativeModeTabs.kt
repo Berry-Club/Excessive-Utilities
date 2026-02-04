@@ -19,7 +19,7 @@ object ModCreativeModeTabs {
 	val MOD_TAB: DeferredHolder<CreativeModeTab, CreativeModeTab> = TABS_REGISTRY.register("creative_tab", Supplier {
 		CreativeModeTab.builder()
 			.title(ModItemLang.CREATIVE_TAB.toComponent())
-			.icon { ModItems.HEALING_AXE.toStack() }
+			.icon { ModBlocks.ANGEL_BLOCK.toStack() }
 			.displayItems { displayContext: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
 				val regularItems: List<Item> = ModItems.ITEM_REGISTRY.entries.map { it.get() }
 				val blockItems: Set<BlockItem> = regularItems.filterIsInstance<BlockItem>().toSet()
