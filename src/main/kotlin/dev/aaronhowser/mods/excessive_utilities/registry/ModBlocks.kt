@@ -61,6 +61,49 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("sound_muffler")
 	val TRADING_POST =
 		basicBlock("trading_post")
+	val CREATIVE_HARVEST =
+		basicBlock("creative_harvest")
+	val ENDER_PORCUPINE =
+		basicBlock("ender_porcupine")
+	val INDEXER =
+		basicBlock("indexer")
+	val CRUSHER =
+		basicBlock("crusher")
+	val FURNACE =
+		basicBlock("furnace")
+	val MACHINE_BLOCK =
+		basicBlock("machine_block")
+	val MAGICAL_SNOW_GLOBE =
+		basicBlock("magical_snow_globe")
+	val MECHANICAL_MINER =
+		basicBlock("mechanical_miner")
+	val MECHANICAL_USER =
+		basicBlock("mechanical_user")
+	val POWER_OVERLOAD =
+		basicBlock("power_overload")
+	val QUANTUM_QUARRY =
+		basicBlock("quantum_quarry")
+	val QUANTUM_QUARRY_ACTUATOR =
+		basicBlock("quantum_quarry_actuator")
+	val RED_ORCHID =
+		basicBlock("red_orchid")
+	val REDSTONE_LANTERN =
+		basicBlock("redstone_lantern")
+	val RESONATOR =
+		basicBlock("resonator")
+	val RESTURBED_MOB_SPAWNER =
+		basicBlock("resturbed_mob_spawner")
+	val SCANNER =
+		basicBlock("scanner")
+	val SCREEN =
+		basicBlock("screen")
+	val WIRELESS_RF_BATTERY =
+		basicBlock("wireless_rf_battery")
+	val WIRELESS_RF_TRANSMITTER =
+		basicBlock("wireless_rf_transmitter")
+
+	// Spikes
+
 	val WOODEN_SPIKE =
 		registerBlock("wooden_spike") {
 			SpikeBlock(
@@ -118,46 +161,6 @@ object ModBlocks : AaronBlockRegistry() {
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
 			)
 		}
-	val CREATIVE_HARVEST =
-		basicBlock("creative_harvest")
-	val ENDER_PORCUPINE =
-		basicBlock("ender_porcupine")
-	val INDEXER =
-		basicBlock("indexer")
-	val CRUSHER =
-		basicBlock("crusher")
-	val FURNACE =
-		basicBlock("furnace")
-	val MACHINE_BLOCK =
-		basicBlock("machine_block")
-	val MAGICAL_SNOW_GLOBE =
-		basicBlock("magical_snow_globe")
-	val MECHANICAL_MINER =
-		basicBlock("mechanical_miner")
-	val MECHANICAL_USER =
-		basicBlock("mechanical_user")
-	val POWER_OVERLOAD =
-		basicBlock("power_overload")
-	val QUANTUM_QUARRY =
-		basicBlock("quantum_quarry")
-	val QUANTUM_QUARRY_ACTUATOR =
-		basicBlock("quantum_quarry_actuator")
-	val RED_ORCHID =
-		basicBlock("red_orchid")
-	val REDSTONE_LANTERN =
-		basicBlock("redstone_lantern")
-	val RESONATOR =
-		basicBlock("resonator")
-	val RESTURBED_MOB_SPAWNER =
-		basicBlock("resturbed_mob_spawner")
-	val SCANNER =
-		basicBlock("scanner")
-	val SCREEN =
-		basicBlock("screen")
-	val WIRELESS_RF_BATTERY =
-		basicBlock("wireless_rf_battery")
-	val WIRELESS_RF_TRANSMITTER =
-		basicBlock("wireless_rf_transmitter")
 
 	// Upgrades
 
