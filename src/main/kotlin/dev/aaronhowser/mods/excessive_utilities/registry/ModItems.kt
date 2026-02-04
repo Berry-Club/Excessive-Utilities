@@ -138,8 +138,8 @@ object ModItems : AaronItemRegistry() {
 		basic("biome_marker")
 	val BAG_OF_HOLDING =
 		basic("bag_of_holding")
-	val MAGICAL_APPLE =
-		basic("magical_apple")
+	val MAGICAL_APPLE: DeferredItem<MagicalAppleItem> =
+		register("magical_apple", ::MagicalAppleItem, MagicalAppleItem.PROPERTIES)
 	val PORTABLE_SCANNER =
 		basic("portable_scanner")
 	val SONAR_GOGGLES =
