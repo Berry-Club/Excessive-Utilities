@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "excessive_utilities:item/unstable_tools/pickaxe_base",
+    "layer1": "excessive_utilities:item/unstable_tools/pickaxe_glow",
+    "layer2": "excessive_utilities:item/unstable_tools/pickaxe_outline"
+  }
+}

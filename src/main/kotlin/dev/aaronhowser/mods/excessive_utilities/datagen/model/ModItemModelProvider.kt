@@ -21,8 +21,56 @@ class ModItemModelProvider(
 
 	override fun registerModels() {
 		lassos()
+		unstableTools()
 
 		basicItems()
+	}
+
+	fun unstableTools() {
+		val axe = ModItems.HEALING_AXE.get()
+		val pickaxe = ModItems.DESTRUCTION_PICKAXE.get()
+		val hoe = ModItems.REVERSING_HOE.get()
+		val shovel = ModItems.EROSION_SHOVEL.get()
+		val sword = ModItems.ETHERIC_SWORD.get()
+		val shears = ModItems.PRECISION_SHEARS.get()
+
+		getBuilder(getName(axe).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/unstable_tools/axe_base"))
+			.texture("layer1", modLoc("item/unstable_tools/axe_glow"))
+
+		getBuilder(getName(pickaxe).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/unstable_tools/pickaxe_base"))
+			.texture("layer1", modLoc("item/unstable_tools/pickaxe_glow"))
+			.texture("layer2", modLoc("item/unstable_tools/pickaxe_outline"))
+
+		getBuilder(getName(hoe).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/unstable_tools/hoe_base"))
+			.texture("layer1", modLoc("item/unstable_tools/hoe_glow"))
+
+		getBuilder(getName(shovel).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/unstable_tools/shovel_base"))
+			.texture("layer1", modLoc("item/unstable_tools/shovel_glow"))
+
+		getBuilder(getName(sword).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/unstable_tools/sword_base"))
+			.texture("layer1", modLoc("item/unstable_tools/sword_glow"))
+
+		getBuilder(getName(shears).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/unstable_tools/shears_base"))
+			.texture("layer1", modLoc("item/unstable_tools/shears_glow"))
+
+		handledItems.add(axe)
+		handledItems.add(pickaxe)
+		handledItems.add(hoe)
+		handledItems.add(shovel)
+		handledItems.add(sword)
+		handledItems.add(shears)
 	}
 
 	fun lassos() {
