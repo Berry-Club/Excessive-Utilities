@@ -22,6 +22,12 @@ class ModBlockStateProvider(
 	fun blackoutCurtain() {
 		val block = ModBlocks.BLACKOUT_CURTAIN.get()
 
+		val texture = modLoc("block/blackout_curtain")
+
+		itemModels()
+			.withExistingParent(name(block), "item/generated")
+			.texture("layer0", texture)
+
 		val post = models()
 			.withExistingParent(name(block) + "_post", mcLoc("block/glass_pane_post"))
 
@@ -43,33 +49,72 @@ class ModBlockStateProvider(
 
 		for (direction in Direction.Plane.HORIZONTAL) {
 
-			if (direction == Direction.NORTH) {
-				multipartBuilder = multipartBuilder
-					.part()
-					.modelFile(side)
-					.addModel()
-					.condition(CrossCollisionBlock.NORTH, true)
-					.end()
+			when (direction) {
+				Direction.NORTH -> {
+					multipartBuilder = multipartBuilder
+						.part()
+						.modelFile(side)
+						.addModel()
+						.condition(CrossCollisionBlock.NORTH, true)
+						.end()
 
-					.part()
-					.modelFile(noside)
-					.addModel()
-					.condition(CrossCollisionBlock.NORTH, false)
-					.end()
-			} else if (direction == Direction.EAST) {
-				multipartBuilder = multipartBuilder
-					.part()
-					.modelFile(side)
-					.rotationY(90)
-					.addModel()
-					.condition(CrossCollisionBlock.EAST, true)
-					.end()
+						.part()
+						.modelFile(noside)
+						.addModel()
+						.condition(CrossCollisionBlock.NORTH, false)
+						.end()
+				}
 
-					.part()
-					.modelFile(nosideAlt)
-					.addModel()
-					.condition(CrossCollisionBlock.EAST, false)
-					.end()
+				Direction.EAST -> {
+					multipartBuilder = multipartBuilder
+						.part()
+						.modelFile(side)
+						.rotationY(90)
+						.addModel()
+						.condition(CrossCollisionBlock.EAST, true)
+						.end()
+
+						.part()
+						.modelFile(nosideAlt)
+						.addModel()
+						.condition(CrossCollisionBlock.EAST, false)
+						.end()
+				}
+
+				Direction.SOUTH -> {
+					multipartBuilder = multipartBuilder
+						.part()
+						.modelFile(sideAlt)
+						.addModel()
+						.condition(CrossCollisionBlock.SOUTH, true)
+						.end()
+
+						.part()
+						.modelFile(nosideAlt)
+						.rotationY(90)
+						.addModel()
+						.condition(CrossCollisionBlock.SOUTH, false)
+						.end()
+				}
+
+				Direction.WEST -> {
+					multipartBuilder = multipartBuilder
+						.part()
+						.modelFile(sideAlt)
+						.rotationY(90)
+						.addModel()
+						.condition(CrossCollisionBlock.WEST, true)
+						.end()
+
+						.part()
+						.modelFile(noside)
+						.rotationY(270)
+						.addModel()
+						.condition(CrossCollisionBlock.WEST, false)
+						.end()
+				}
+
+				else -> {}
 			}
 
 		}
