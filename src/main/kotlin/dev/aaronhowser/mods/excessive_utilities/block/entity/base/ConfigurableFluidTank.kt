@@ -13,16 +13,9 @@ open class ConfigurableFluidTank(
 	private var fluid: FluidStack = FluidStack.EMPTY
 
 	override fun getFluid(): FluidStack = fluid
-
-	override fun getFluidAmount(): Int {
-		TODO("Not yet implemented")
-	}
-
+	override fun getFluidAmount(): Int = fluid.amount
 	override fun getCapacity(): Int = capacityGetter.asInt
-
-	override fun isFluidValid(stack: FluidStack): Boolean {
-		TODO("Not yet implemented")
-	}
+	override fun isFluidValid(stack: FluidStack): Boolean = true
 
 	override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int {
 		if (resource.isEmpty || !isFluidValid(resource)) return 0
