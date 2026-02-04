@@ -1,8 +1,11 @@
-// 1.21.1	2026-02-03T22:12:10.2615817	Block States: excessive_utilities
+// 1.21.1	2026-02-03T22:40:04.4210663	Block States: excessive_utilities
+dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 007142c75a7d34b0af29ac7efe89f17e7a31753c assets/excessive_utilities/blockstates/blackout_curtain.json
+6d4f53581d4fae76ae16c77a8ed80fcb39864c39 assets/excessive_utilities/models/block/angel_block.json
 bdf0301306b504dd80b3981f25e3e6b003323d9a assets/excessive_utilities/models/block/blackout_curtain_noside.json
 d2f7f41bc59c6d2d0e5aae43bf26c18057e3c573 assets/excessive_utilities/models/block/blackout_curtain_noside_alt.json
 0bde66f02a7e5312071b732316e4fc67b82dfa8f assets/excessive_utilities/models/block/blackout_curtain_post.json
 6a7d8fe07bfd629da58789fbaff6c2bf97a76fda assets/excessive_utilities/models/block/blackout_curtain_side.json
 d0e3f106f223ab337043a7d11dd26f70e5b4856d assets/excessive_utilities/models/block/blackout_curtain_side_alt.json
+2244aa7594f02ddcf0595ab5928b0d7fe884477c assets/excessive_utilities/models/item/angel_block.json
 3db72782b3b73bea77c0d61d49dd1187c74c011d assets/excessive_utilities/models/item/blackout_curtain.json
