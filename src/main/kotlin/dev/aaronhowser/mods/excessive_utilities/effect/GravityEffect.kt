@@ -12,6 +12,10 @@ class GravityEffect : MobEffect(
 	0xFFFFFF
 ) {
 
+	override fun shouldApplyEffectTickThisTick(duration: Int, amplifier: Int): Boolean {
+		return true
+	}
+
 	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
 		val level = livingEntity.level()
 		val clip = level.clip(

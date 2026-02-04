@@ -10,7 +10,8 @@ object ModRegistries {
 			ModItems.ITEM_REGISTRY,
 			ModBlocks.BLOCK_REGISTRY,
 			ModCreativeModeTabs.TABS_REGISTRY,
-			ModDataComponents.DATA_COMPONENT_REGISTRY
+			ModDataComponents.DATA_COMPONENT_REGISTRY,
+			ModMobEffects.EFFECT_REGISTRY
 		)
 
 		for (registry in registries) {

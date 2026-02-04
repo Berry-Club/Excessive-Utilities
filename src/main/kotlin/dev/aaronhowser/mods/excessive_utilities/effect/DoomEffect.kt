@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
+import dev.aaronhowser.mods.aaron.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
 import net.minecraft.world.effect.MobEffect
@@ -11,16 +12,21 @@ class DoomEffect : MobEffect(
 	0x000000
 ) {
 
+	override fun shouldApplyEffectTickThisTick(duration: Int, amplifier: Int): Boolean {
+		return true
+	}
+
 	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+		if (livingEntity.isClientSide) return true
 		val remainingDuration = livingEntity.getEffect(ModMobEffects.DOOM)?.duration ?: return false
 
 		if (remainingDuration % 20 == 0) {
 			val seconds = remainingDuration / 20
-			if (seconds == 0) {
-				livingEntity.hurt(livingEntity.damageSources().magic(), Float.MAX_VALUE)
-			} else {
-				livingEntity.tell("$seconds")
-			}
+			livingEntity.tell("$seconds")
+		}
+
+		if (remainingDuration <= 1) {
+			livingEntity.hurt(livingEntity.damageSources().magic(), Float.MAX_VALUE)
 		}
 
 		return true
