@@ -1,3 +1,6 @@
 {
-  "parent": "minecraft:block/glass_pane_post"
+  "parent": "minecraft:block/glass_pane_post",
+  "textures": {
+    "pane": "excessive_utilities:block/blackout_curtain"
+  }
 }

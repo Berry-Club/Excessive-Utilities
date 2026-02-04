@@ -1,3 +1,6 @@
 {
-  "parent": "minecraft:block/glass_pane_noside"
+  "parent": "minecraft:block/glass_pane_noside",
+  "textures": {
+    "pane": "excessive_utilities:block/blackout_curtain"
+  }
 }

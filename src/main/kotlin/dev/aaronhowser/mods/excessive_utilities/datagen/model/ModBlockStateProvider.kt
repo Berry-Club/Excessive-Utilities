@@ -30,16 +30,21 @@ class ModBlockStateProvider(
 
 		val post = models()
 			.withExistingParent(name(block) + "_post", mcLoc("block/glass_pane_post"))
+			.texture("pane", texture)
 
 		val side = models()
 			.withExistingParent(name(block) + "_side", mcLoc("block/glass_pane_side"))
+			.texture("pane", texture)
 		val sideAlt = models()
 			.withExistingParent(name(block) + "_side_alt", mcLoc("block/glass_pane_side_alt"))
+			.texture("pane", texture)
 
 		val noside = models()
 			.withExistingParent(name(block) + "_noside", mcLoc("block/glass_pane_noside"))
+			.texture("pane", texture)
 		val nosideAlt = models()
 			.withExistingParent(name(block) + "_noside_alt", mcLoc("block/glass_pane_noside_alt"))
+			.texture("pane", texture)
 
 		var multipartBuilder = getMultipartBuilder(block)
 			.part()
