@@ -28,11 +28,11 @@ object ModDataGen {
 			event.includeClient(),
 			ModItemModelProvider(output, existingFileHelper)
 		)
-//		generator.addProvider(
-//			event.includeClient(),
-//			ModBlockStateProvider(output, existingFileHelper)
-//		)
-//
+		generator.addProvider(
+			event.includeClient(),
+			ModBlockStateProvider(output, existingFileHelper)
+		)
+
 //		generator.addProvider(
 //			event.includeServer(),
 //			ModRecipeProvider(output, lookupProvider)
