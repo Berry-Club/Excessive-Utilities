@@ -1,19 +1,18 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import com.mojang.serialization.MapCodec
+import net.minecraft.core.BlockPos
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.CrossCollisionBlock
+import net.minecraft.world.level.block.IronBarsBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 
-class BlackoutCurtainBlock : CrossCollisionBlock(
-	1f, 1f,
-	16f, 16f, 16f,
-	Properties.ofFullCopy(Blocks.BLACK_WOOL)
-) {
+class BlackoutCurtainBlock : IronBarsBlock(Properties.ofFullCopy(Blocks.BLACK_WOOL)) {
 
-	override fun codec(): MapCodec<out CrossCollisionBlock> = CODEC
-
-	companion object {
-		val CODEC: MapCodec<BlackoutCurtainBlock> = simpleCodec { BlackoutCurtainBlock() }
+	override fun getCollisionShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
+		return Shapes.empty()
 	}
 
 }
