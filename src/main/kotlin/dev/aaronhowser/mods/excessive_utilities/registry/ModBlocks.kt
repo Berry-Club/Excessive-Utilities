@@ -2,6 +2,9 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.SpikeBlock
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object ModBlocks : AaronBlockRegistry() {
@@ -59,7 +62,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val TRADING_POST =
 		basicBlock("trading_post")
 	val WOODEN_SPIKE =
-		basicBlock("wooden_spike")
+		registerBlock("wooden_spike") { SpikeBlock(damagePerHit = 1f, canKill = false, properties = BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)) }
 	val IRON_SPIKE =
 		basicBlock("iron_spike")
 	val GOLDEN_SPIKE =
