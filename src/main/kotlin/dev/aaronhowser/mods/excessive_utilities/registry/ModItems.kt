@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.BedrockiumIngotItem
+import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.SickleItem
 import dev.aaronhowser.mods.excessive_utilities.item.TrowelItem
 import net.minecraft.world.item.Tiers
@@ -86,10 +87,10 @@ object ModItems : AaronItemRegistry() {
 		basic("watering_can")
 	val REINFORCED_WATERING_CAN =
 		basic("reinforced_watering_can")
-	val GOLDEN_LASSO =
-		basic("golden_lasso")
-	val CURSED_LASSO =
-		basic("cursed_lasso")
+	val GOLDEN_LASSO: DeferredItem<EntityLassoItem> =
+		register("golden_lasso", { EntityLassoItem(canHoldHostileMobs = false, it) }, EntityLassoItem.DEFAULT_PROPERTIES)
+	val CURSED_LASSO: DeferredItem<EntityLassoItem> =
+		register("cursed_lasso", { EntityLassoItem(canHoldHostileMobs = true, it) }, EntityLassoItem.DEFAULT_PROPERTIES)
 	val WOODEN_SICKLE: DeferredItem<SickleItem> =
 		register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.WOOD) }
 	val STONE_SICKLE: DeferredItem<SickleItem> =

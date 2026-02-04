@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
@@ -69,10 +70,10 @@ object ModDataGen {
 //			event.includeServer(),
 //			ModFluidTagsProvider(output, lookupProvider, existingFileHelper)
 //		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModEntityTypeTagsProvider(output, lookupProvider, existingFileHelper)
-//		)
+		generator.addProvider(
+			event.includeServer(),
+			ModEntityTypeTagsProvider(output, lookupProvider, existingFileHelper)
+		)
 //		generator.addProvider(
 //			event.includeServer(),
 //			ModEnchantmentTagsProvider(output, dataPackProvider.registryProvider, existingFileHelper)
