@@ -201,16 +201,16 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("filing_cabinet")
 	val ADVANCED_FILING_CABINET =
 		basicBlock("advanced_filing_cabinet")
-	val STONE_DRUM =
-		basicBlock("stone_drum")
-	val IRON_DRUM =
-		basicBlock("iron_drum")
-	val REINFORCED_LARGE_DRUM =
-		basicBlock("reinforced_large_drum")
-	val DEMONICALLY_GARGANTUAN_DRUM =
-		basicBlock("demonically_gargantuan_drum")
-	val CREATIVE_DRUM =
-		basicBlock("creative_drum")
+	val STONE_DRUM: DeferredBlock<DrumBlock> =
+		registerBlock("stone_drum", ::DrumBlock)
+	val IRON_DRUM: DeferredBlock<DrumBlock> =
+		registerBlock("iron_drum", ::DrumBlock)
+	val REINFORCED_LARGE_DRUM: DeferredBlock<DrumBlock> =
+		registerBlock("reinforced_large_drum", ::DrumBlock)
+	val DEMONICALLY_GARGANTUAN_DRUM: DeferredBlock<DrumBlock> =
+		registerBlock("demonically_gargantuan_drum", ::DrumBlock)
+	val CREATIVE_DRUM: DeferredBlock<DrumBlock> =
+		registerBlock("creative_drum", ::DrumBlock)
 	val CREATIVE_CHEST =
 		basicBlock("creative_chest")
 	val TRASH_CAN =
