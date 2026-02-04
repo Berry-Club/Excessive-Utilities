@@ -22,6 +22,7 @@ class ServerConfig(
 	init {
 		general()
 		heatingCoil()
+		drums()
 	}
 
 	private fun general() {
@@ -50,6 +51,28 @@ class ServerConfig(
 		heatingCoilMaxEnergy = builder
 			.comment("The maximum amount of FE a Heating Coil can store.")
 			.defineInRange("heatingCoilMaxEnergy", 1_500_000, 1, Int.MAX_VALUE)
+
+		builder.pop()
+	}
+
+	private fun drums() {
+		builder.push("drums")
+
+		stoneDrumCapacity = builder
+			.comment("The fluid capacity of Stone Drums in millibuckets.")
+			.defineInRange("stoneDrumCapacity", 16_000, 1, Int.MAX_VALUE)
+
+		ironDrumCapacity = builder
+			.comment("The fluid capacity of Iron Drums in millibuckets.")
+			.defineInRange("ironDrumCapacity", 256_000, 1, Int.MAX_VALUE)
+
+		reinforcedLargeDrumCapacity = builder
+			.comment("The fluid capacity of Reinforced Large Drums in millibuckets.")
+			.defineInRange("reinforcedLargeDrumCapacity", 4_096_000, 1, Int.MAX_VALUE)
+
+		demonicallyGargantuanDrumCapacity = builder
+			.comment("The fluid capacity of Demonically Gargantuan Drums in millibuckets.")
+			.defineInRange("demonicallyGargantuanDrumCapacity", 65_536_000, 1, Int.MAX_VALUE)
 
 		builder.pop()
 	}
