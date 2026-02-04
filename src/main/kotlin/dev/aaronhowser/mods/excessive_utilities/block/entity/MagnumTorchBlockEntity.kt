@@ -5,8 +5,10 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.monster.Enemy
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
 
 class MagnumTorchBlockEntity(
 	pos: BlockPos,
@@ -41,10 +43,22 @@ class MagnumTorchBlockEntity(
 	companion object {
 		fun MagnumTorchCarrier.getMagnumTorchPositions(): LongOpenHashSet = this.`eu$getMagnumTorchBlockPositions`()
 
-		fun preventMonsterSpawn(level: ServerLevel, pos: BlockPos): Boolean {
+		fun handleSpawnEvent(event: MobSpawnEvent.SpawnPlacementCheck) {
+			val level = event.level.level
+			val entity = event.entityType.create(level)
+
+			if (entity is Enemy) {
+				val pos = event.pos
+				if (shouldPreventSpawn(level, pos)) {
+					event.result = MobSpawnEvent.SpawnPlacementCheck.Result.FAIL
+				}
+			}
+		}
+
+		fun shouldPreventSpawn(level: ServerLevel, pos: BlockPos): Boolean {
 			if (level !is MagnumTorchCarrier) return false
 
-			val radius = 16
+			val radius = 64
 			val positions = level.getMagnumTorchPositions()
 
 			return positions
