@@ -21,9 +21,9 @@ public abstract class AbstractFurnaceBlockEntityMixin {
 			ItemStack fuel,
 			CallbackInfoReturnable<Integer> cir
 	) {
-		if (fuel.is(ModItems.HEATING_COIL.get())) {
-			cir.setReturnValue(HeatingCoilItem.getFuelBurnTime(fuel));
-		}
+//		if (fuel.is(ModItems.HEATING_COIL.get())) {
+//			cir.setReturnValue(HeatingCoilItem.getFuelBurnTime(fuel));
+//		}
 	}
 
 }
