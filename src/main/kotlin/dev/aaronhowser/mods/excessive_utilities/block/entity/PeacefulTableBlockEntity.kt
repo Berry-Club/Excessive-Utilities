@@ -5,19 +5,21 @@ import com.mojang.datafixers.util.Either
 import dev.aaronhowser.mods.aaron.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.AaronUtil
+import dev.aaronhowser.mods.aaron.BetterFakePlayerFactory
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Difficulty
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.Mob
-import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.entity.*
+import net.minecraft.world.entity.ai.attributes.Attribute
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.SwordItem
 import net.minecraft.world.level.Level
@@ -30,7 +32,6 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.extensions.IOwnedSpawner
 import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.event.EventHooks
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.lang.ref.WeakReference
@@ -56,7 +57,7 @@ class PeacefulTableBlockEntity(
 		}
 
 		val gameProfile = GameProfile(this.uuid, "EU_PeacefulTable")
-		val fakePlayer = FakePlayerFactory.get(level, gameProfile)
+		val fakePlayer = BetterFakePlayerFactory.get(level, gameProfile) { PeacefulTableFakePlayer(level, gameProfile) }
 
 		fakePlayer.isSilent = true
 		fakePlayer.setOnGround(true)
@@ -204,6 +205,50 @@ class PeacefulTableBlockEntity(
 			}
 
 			return AaronUtil.flattenStacks(list)
+		}
+	}
+
+	class PeacefulTableFakePlayer(level: ServerLevel, name: GameProfile) : FakePlayer(level, name) {
+
+		override fun getAttributeValue(attribute: Holder<Attribute>): Double {
+			if (attribute == Attributes.ATTACK_DAMAGE) {
+				val attributeModifiers = weaponItem.attributeModifiers.modifiers
+
+				var baseAmount = 1.0
+				var multiplyBase = 0.0
+				var multiplyTotal = 0.0
+
+				for (entry in attributeModifiers) {
+					if (entry.attribute == Attributes.ATTACK_DAMAGE && entry.slot == EquipmentSlotGroup.MAINHAND) {
+						val modifier = entry.modifier
+						when (modifier.operation) {
+							AttributeModifier.Operation.ADD_VALUE -> baseAmount += modifier.amount
+							AttributeModifier.Operation.ADD_MULTIPLIED_BASE -> multiplyBase += modifier.amount
+							AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL -> multiplyTotal += modifier.amount
+						}
+					}
+				}
+
+				baseAmount *= (1.0 + multiplyBase)
+				baseAmount *= (1.0 + multiplyTotal)
+
+				return baseAmount
+			}
+
+			return super.getAttributeValue(attribute)
+		}
+
+		fun getAttackDamage(target: Entity): Float {
+			var baseDamage = getAttributeValue(Attributes.ATTACK_DAMAGE)
+			val weapon = weaponItem
+			val damageSource = damageSources().playerAttack(this)
+			val enchantBonus = getEnchantedDamage(target, baseDamage.toFloat(), damageSource) - baseDamage
+			val attackStrengthScale = getAttackStrengthScale(0.5f)
+			baseDamage *= 0.2f + attackStrengthScale * attackStrengthScale * 0.8f
+			val scaledEnchantmentBonus = enchantBonus * attackStrengthScale
+			baseDamage += weapon.item.getAttackDamageBonus(target, baseDamage.toFloat(), damageSource)
+
+			return baseDamage.toFloat() + scaledEnchantmentBonus.toFloat()
 		}
 	}
 
