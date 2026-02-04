@@ -39,4 +39,19 @@ open class SemiPermeableGlassBlock(
 		}
 	}
 
+	class Dark(
+		isSolidForMobsOnly: Boolean,
+		properties: Properties = Properties.ofFullCopy(Blocks.GLASS)
+	) : SemiPermeableGlassBlock(isSolidForMobsOnly, properties) {
+
+		override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean {
+			return false
+		}
+
+		override fun getLightBlock(state: BlockState, level: BlockGetter, pos: BlockPos): Int {
+			return level.maxLightLevel
+		}
+
+	}
+
 }
