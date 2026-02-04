@@ -2,10 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.item.BedrockiumIngotItem
-import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
-import dev.aaronhowser.mods.excessive_utilities.item.SickleItem
-import dev.aaronhowser.mods.excessive_utilities.item.TrowelItem
+import dev.aaronhowser.mods.excessive_utilities.item.*
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -126,8 +123,11 @@ object ModItems : AaronItemRegistry() {
 		basic("magical_boomerang")
 
 	// Misc
+	@JvmField
 	val HEATING_COIL =
-		basic("heating_coil")
+		register("heating_coil", ::HeatingCoilItem, HeatingCoilItem.DEFAULT_PROPERTIES)
+
+	@JvmField
 	val WIRELESS_RF_HEATING_COIL =
 		basic("wireless_rf_heating_coil")
 	val POWER_MANAGER =

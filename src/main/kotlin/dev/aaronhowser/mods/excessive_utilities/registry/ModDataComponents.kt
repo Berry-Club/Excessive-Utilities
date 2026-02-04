@@ -21,4 +21,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 	val ENTITY: DeferredHolder<DataComponentType<*>, DataComponentType<CustomData>> =
 		register("entity", CustomData.CODEC, CustomData.STREAM_CODEC)
 
+	val ENERGY: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
+		int("energy")
+
 }
