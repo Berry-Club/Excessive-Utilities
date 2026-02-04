@@ -13,6 +13,31 @@ class MagnumTorchBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(ModBlockEntityTypes.MAGNUM_TORCH.get(), pos, blockState) {
 
+	override fun onLoad() {
+		super.onLoad()
+		val level = this.level
+		if (level is MagnumTorchCarrier) {
+			level.getMagnumTorchPositions().add(this.worldPosition.asLong())
+		}
+	}
+
+	override fun setRemoved() {
+		super.setRemoved()
+		val level = this.level
+		if (level is MagnumTorchCarrier) {
+			level.getMagnumTorchPositions().remove(this.worldPosition.asLong())
+		}
+	}
+
+	override fun clearRemoved() {
+		super.clearRemoved()
+		val level = this.level
+		if (level is MagnumTorchCarrier) {
+			level.getMagnumTorchPositions().add(this.worldPosition.asLong())
+		}
+	}
+
+
 	companion object {
 		fun MagnumTorchCarrier.getMagnumTorchPositions(): LongOpenHashSet = this.`eu$getMagnumTorchBlockPositions`()
 
