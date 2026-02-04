@@ -466,17 +466,17 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("swirling_glass")
 	val THICKENED_GLASS =
 		basicBlock("thickened_glass")
-	val ETHEREAL_GLASS =
-		basicBlock("ethereal_glass")
-	val INVERTED_ETHEREAL_GLASS =
-		basicBlock("inverted_ethereal_glass")
-	val DARK_ETHEREAL_GLASS =
-		basicBlock("dark_ethereal_glass")
-	val INVERTED_DARK_ETHEREAL_GLASS =
-		basicBlock("inverted_dark_ethereal_glass")
-	val INEFFABLE_GLASS =
-		basicBlock("ineffable_glass")
-	val INVERTED_INEFFABLE_GLASS =
-		basicBlock("inverted_ineffable_glass")
+	val ETHEREAL_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
+		registerBlock("ethereal_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = false) }
+	val INVERTED_ETHEREAL_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
+		registerBlock("inverted_ethereal_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = true) }
+	val DARK_ETHEREAL_GLASS: DeferredBlock<DarkSemiPermeableGlassBlock> =
+		registerBlock("dark_ethereal_glass") { DarkSemiPermeableGlassBlock(isSolidForMobsOnly = false) }
+	val INVERTED_DARK_ETHEREAL_GLASS: DeferredBlock<DarkSemiPermeableGlassBlock> =
+		registerBlock("inverted_dark_ethereal_glass") { DarkSemiPermeableGlassBlock(isSolidForMobsOnly = true) }
+	val INEFFABLE_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
+		registerBlock("ineffable_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = false) }
+	val INVERTED_INEFFABLE_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
+		registerBlock("inverted_ineffable_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = true) }
 
 }
