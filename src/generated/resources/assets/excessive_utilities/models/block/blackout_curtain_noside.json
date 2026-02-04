@@ -1,6 +1,7 @@
 {
   "parent": "minecraft:block/glass_pane_noside",
   "textures": {
+    "edge": "excessive_utilities:block/blackout_curtain",
     "pane": "excessive_utilities:block/blackout_curtain"
   }
 }
