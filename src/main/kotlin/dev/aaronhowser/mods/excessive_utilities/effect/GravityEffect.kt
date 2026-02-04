@@ -33,6 +33,7 @@ class GravityEffect : MobEffect(
 
 		if (clip.type == HitResult.Type.BLOCK) {
 			val distance = abs(livingEntity.position().y - clip.location.y)
+			livingEntity.deltaMovement.add(0.0, -0.1 * distance, 0.0)
 		}
 
 		return true
