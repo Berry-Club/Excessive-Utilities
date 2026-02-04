@@ -14,6 +14,10 @@ import net.minecraft.world.entity.MobSpawnType
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.loot.LootParams
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams
+import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.extensions.IOwnedSpawner
 import net.neoforged.neoforge.event.EventHooks
 import kotlin.jvm.optionals.getOrNull
@@ -36,6 +40,8 @@ class PeacefulTableBlockEntity(
 			?: return
 
 		val mob = entityType.create(level) as? Mob ?: return
+		mob.moveTo(blockPos.bottomCenter)
+
 		EventHooks.finalizeMobSpawnSpawner(
 			mob,
 			level,
@@ -50,6 +56,28 @@ class PeacefulTableBlockEntity(
 			this,
 			true
 		)
+
+		val damageSource = level.damageSources().genericKill()
+
+		mob.captureDrops(mutableListOf())
+
+		val lootTable = level.server.reloadableRegistries().getLootTable(mob.lootTable)
+		val lootParamsBuilder = LootParams.Builder(level)
+			.withParameter(LootContextParams.THIS_ENTITY, mob)
+			.withParameter(LootContextParams.ORIGIN, mob.position())
+			.withParameter(LootContextParams.DAMAGE_SOURCE, damageSource)
+			.withOptionalParameter(LootContextParams.ATTACKING_ENTITY, damageSource.entity)
+			.withOptionalParameter(LootContextParams.DIRECT_ATTACKING_ENTITY, damageSource.directEntity)
+
+		val lootParams = lootParamsBuilder.create(LootContextParamSets.ENTITY)
+		lootTable.getRandomItems(lootParams, mob.lootTableSeed, mob::spawnAtLocation)
+
+		val drops = mob.captureDrops(null) ?: return
+		if (!CommonHooks.onLivingDrops(mob, damageSource, drops, true)) {
+			for (drop in drops) {
+				level.addFreshEntity(drop)
+			}
+		}
 
 	}
 
