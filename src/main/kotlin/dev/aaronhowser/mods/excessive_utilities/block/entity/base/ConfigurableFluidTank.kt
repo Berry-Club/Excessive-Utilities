@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.base
 
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.IFluidTank
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
@@ -78,4 +80,18 @@ open class ConfigurableFluidTank(
 	override fun getTankCapacity(tank: Int): Int = capacity
 	override fun getFluidInTank(tank: Int): FluidStack = fluid
 	override fun isFluidValid(tank: Int, stack: FluidStack): Boolean = isFluidValid(stack)
+
+	fun addToTag(lookupProvider: HolderLookup.Provider, nbt: CompoundTag): CompoundTag {
+		if (!fluid.isEmpty) {
+			nbt.put("Fluid", fluid.save(lookupProvider))
+		}
+
+		return nbt
+	}
+
+	fun loadFromTag(lookupProvider: HolderLookup.Provider, nbt: CompoundTag): ConfigurableFluidTank {
+		fluid = FluidStack.parseOptional(lookupProvider, nbt.getCompound("Fluid"))
+		return this
+	}
+
 }
