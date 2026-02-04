@@ -36,16 +36,10 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("ender_collector")
 	val ENDER_CORE =
 		basicBlock("ender_core")
-	val ENDER_QUARRY =
-		basicBlock("ender_quarry")
 	val ENDER_FLUX_CRYSTAL =
 		basicBlock("ender_flux_crystal")
 	val ENDER_INFUSED_OBSIDIAN =
 		basicBlock("ender_infused_obsidian")
-	val ENDER_MARKER =
-		basicBlock("ender_marker")
-	val ENDER_THERMIC_PUMP =
-		basicBlock("ender_thermic_pump")
 	val MAGICAL_WOOD =
 		basicBlock("magical_wood")
 	val MAGNUM_TORCH: DeferredBlock<MagnumTorchBlock> =
@@ -56,8 +50,6 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("deep_dark_portal")
 	val LAST_MILLENNIUM_PORTAL =
 		basicBlock("last_millennium_portal")
-	val QED =
-		basicBlock("qed")
 	val RAIN_MUFFLER =
 		basicBlock("rain_muffler")
 	val REDSTONE_CLOCK =
@@ -72,12 +64,6 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("ender_porcupine")
 	val INDEXER =
 		basicBlock("indexer")
-	val CRUSHER =
-		basicBlock("crusher")
-	val FURNACE =
-		basicBlock("furnace")
-	val MACHINE_BLOCK =
-		basicBlock("machine_block")
 	val MAGICAL_SNOW_GLOBE =
 		basicBlock("magical_snow_globe")
 	val MECHANICAL_MINER =
@@ -86,10 +72,6 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("mechanical_user")
 	val POWER_OVERLOAD =
 		basicBlock("power_overload")
-	val QUANTUM_QUARRY =
-		basicBlock("quantum_quarry")
-	val QUANTUM_QUARRY_ACTUATOR =
-		basicBlock("quantum_quarry_actuator")
 	val RED_ORCHID =
 		basicBlock("red_orchid")
 	val REDSTONE_LANTERN =
@@ -106,6 +88,26 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("wireless_rf_battery")
 	val WIRELESS_RF_TRANSMITTER =
 		basicBlock("wireless_rf_transmitter")
+
+	// Machines
+	val ENDER_QUARRY =
+		basicBlock("ender_quarry")
+	val ENDER_MARKER =
+		basicBlock("ender_marker")
+	val ENDER_THERMIC_PUMP =
+		basicBlock("ender_thermic_pump")
+	val QED =
+		basicBlock("qed")
+	val CRUSHER =
+		basicBlock("crusher")
+	val FURNACE =
+		basicBlock("furnace")
+	val MACHINE_BLOCK =
+		basicBlock("machine_block")
+	val QUANTUM_QUARRY =
+		basicBlock("quantum_quarry")
+	val QUANTUM_QUARRY_ACTUATOR =
+		basicBlock("quantum_quarry_actuator")
 
 	// Spikes
 
