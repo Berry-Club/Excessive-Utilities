@@ -11,6 +11,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Difficulty
@@ -22,6 +23,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.SwordItem
+import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -202,7 +204,17 @@ class PeacefulTableBlockEntity(
 			val effectiveDamage = damage * (1.0 - damageReduction)
 			val hitsToKill = (mob.health / effectiveDamage).toInt()
 
-			swordStack.hurtAndBreak(hitsToKill, fakePlayer, EquipmentSlot.MAINHAND)
+			val unbreaking = mob.level().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(Enchantments.UNBREAKING)
+			val unbreakingLevel = swordStack.getEnchantmentLevel(unbreaking)
+
+			for (i in 0 until hitsToKill) {
+				val chanceToNotDamage = 1.0 / (unbreakingLevel + 1)
+				if (mob.random.nextDouble() < chanceToNotDamage) continue
+
+				swordStack.hurtAndBreak(1, fakePlayer, EquipmentSlot.MAINHAND)
+				if (swordStack.isEmpty) break
+			}
+
 			return !swordStack.isEmpty
 		}
 
