@@ -140,7 +140,13 @@ class ModBlockStateProvider(
 			ModBlocks.BEDROCK_BRICKS.get(),
 			ModBlocks.BEDROCK_COBBLESTONE.get(),
 			ModBlocks.CREATIVE_HARVEST.get(),
-			ModBlocks.DEEP_DARK_PORTAL.get()
+			ModBlocks.CREATIVE_ENERGY_SOURCE.get(),
+			ModBlocks.DEEP_DARK_PORTAL.get(),
+			ModBlocks.BLOCK_OF_DEMON_METAL.get(),
+			ModBlocks.BLOCK_OF_ENCHANTED_METAL.get(),
+			ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.get(),
+			ModBlocks.POWER_OVERLOAD.get(),
+			ModBlocks.SOUND_MUFFLER.get()
 		)
 
 		for (block in blocks) {

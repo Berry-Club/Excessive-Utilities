@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "excessive_utilities:block/block_of_evil_infused_iron"
+  }
+}
