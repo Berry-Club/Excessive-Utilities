@@ -2,6 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.ChandelierBlock
+import dev.aaronhowser.mods.excessive_utilities.block.entity.ChandelierBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.MagnumTorchBlockEntity
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -20,5 +22,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 
 	val MAGNUM_TORCH: DeferredHolder<BlockEntityType<*>, BlockEntityType<MagnumTorchBlockEntity>> =
 		register("magnum_torch", ::MagnumTorchBlockEntity, ModBlocks.MAGNUM_TORCH)
+	val CHANDELIER: DeferredHolder<BlockEntityType<*>, BlockEntityType<ChandelierBlockEntity>> =
+		register("chandelier", ::ChandelierBlockEntity, ModBlocks.CHANDELIER)
 
 }

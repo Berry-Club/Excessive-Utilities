@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.BlackoutCurtainBlock
+import dev.aaronhowser.mods.excessive_utilities.block.ChandelierBlock
 import dev.aaronhowser.mods.excessive_utilities.block.MagnumTorchBlock
 import dev.aaronhowser.mods.excessive_utilities.block.SpikeBlock
 import net.minecraft.world.level.block.Block
@@ -411,8 +412,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("gravel_road")
 	val LAPIS_CAELESTIS =
 		basicBlock("lapis_caelestis")
-	val CHANDELIER =
-		basicBlock("chandelier")
+	val CHANDELIER: DeferredBlock<ChandelierBlock> =
+		registerBlock("chandelier", ::ChandelierBlock)
 	val BEDROCK_BRICKS =
 		basicBlock("bedrock_bricks")
 	val BEDROCK_COBBLESTONE =
