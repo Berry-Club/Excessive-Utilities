@@ -5,10 +5,12 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import java.util.function.IntSupplier
 
 class DrumBlockEntity(
@@ -42,6 +44,12 @@ class DrumBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 		tank.loadFromTag(registries, tag)
+	}
+
+	companion object {
+		fun getFluidCapability(blockEntity: DrumBlockEntity, direction: Direction?): IFluidHandler? {
+			return blockEntity.tank
+		}
 	}
 
 }
