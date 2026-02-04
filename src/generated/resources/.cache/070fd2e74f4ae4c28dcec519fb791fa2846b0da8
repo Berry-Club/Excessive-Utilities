@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-03T16:21:33.4245572	Item Models: excessive_utilities
+// 1.21.1	2026-02-03T20:36:55.7032821	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
 fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/bedrockium_ingot.json
@@ -6,6 +6,8 @@ fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/
 51775dc4da89f0a39a0faf3cf0059f133feb6307 assets/excessive_utilities/models/item/builders_wand.json
 89dd7a013f8b2cd71d05f4658dddeccc7d71d873 assets/excessive_utilities/models/item/chicken_wing_ring.json
 50270e0fd544b58345ed8bff0444e898efc7063f assets/excessive_utilities/models/item/creative_upgrade.json
+0f3638592a59c1971bffbeccd734601cefa6d002 assets/excessive_utilities/models/item/cursed_lasso.json
+ad7c6b9dd8b18f6efe22bb57b620edba375d7973 assets/excessive_utilities/models/item/cursed_lasso_filled.json
 01e2f4e1de7b1c2ab414a4fc2ff1a1ca9db471e2 assets/excessive_utilities/models/item/demon_ingot.json
 331e63b69da8a5bb9a70c0ca6223e8ab2b1eadb6 assets/excessive_utilities/models/item/depth_first_search_upgrade.json
 c520303713ce05e8b299bb6e6682556d440c8b50 assets/excessive_utilities/models/item/destruction_wand.json
@@ -20,6 +22,8 @@ ef69022b9e58fe3a2d5a7381ec746d9c362d9090 assets/excessive_utilities/models/item/
 c5fa7d675f986a8739aa3f9708895ecffe138edb assets/excessive_utilities/models/item/fire_axe.json
 5e563d6e893be430b3eed6a81d786cfa0d1ae264 assets/excessive_utilities/models/item/fluid_filter.json
 60d50d87e3ec13d15249818f0d9398ee6609b428 assets/excessive_utilities/models/item/glass_cutter.json
+6115b9a83246e48508a59fd82dc132d4a7bef5c0 assets/excessive_utilities/models/item/golden_lasso.json
+80f14664e885786bbd7192847f019ebcb029a545 assets/excessive_utilities/models/item/golden_lasso_filled.json
 d95554acff847840270ebf3a87526b05c0455410 assets/excessive_utilities/models/item/golden_sickle.json
 b0572e7fd1269eb34216a41f6af904259993abec assets/excessive_utilities/models/item/heating_coil.json
 1682ce328bb115e4d1ef2446372a9e676dc9f2c0 assets/excessive_utilities/models/item/iron_sickle.json

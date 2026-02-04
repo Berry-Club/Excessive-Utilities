@@ -1,11 +1,15 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
+import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModItemModelProvider(
@@ -31,8 +35,6 @@ class ModItemModelProvider(
 		ModItems.CREATIVE_DESTRUCTION_WAND.get(),
 		ModItems.FLAT_TRANSFER_NODE_ITEMS.get(),
 		ModItems.FLAT_TRANSFER_NODE_FLUIDS.get(),
-		ModItems.CURSED_LASSO.get(),
-		ModItems.GOLDEN_LASSO.get(),
 		ModItems.SUN_CRYSTAL.get(),
 		ModItems.HEALING_AXE.get(),
 		ModItems.REVERSING_HOE.get(),
@@ -47,7 +49,48 @@ class ModItemModelProvider(
 	)
 
 	override fun registerModels() {
+		lassos()
+
 		basicItems()
+	}
+
+	fun lassos() {
+		val goldenLasso = ModItems.GOLDEN_LASSO.get()
+		val goldenName = getName(goldenLasso).toString()
+
+		val goldenBaseModel = getBuilder(goldenName)
+			.parent(ModelFile.UncheckedModelFile("item/generated"))
+			.texture("layer0", modLoc("item/lasso/golden"))
+
+		val goldenFilledModel = getBuilder("${goldenName}_filled")
+			.parent(goldenBaseModel)
+			.texture("layer1", modLoc("item/lasso/golden_internal"))
+
+		goldenBaseModel
+			.override()
+			.predicate(EntityLassoItem.HAS_ENTITY, 1f)
+			.model(goldenFilledModel)
+			.end()
+
+		val cursedLasso = ModItems.CURSED_LASSO.get()
+		val cursedName = getName(cursedLasso).toString()
+
+		val cursedBaseModel = getBuilder(cursedName)
+			.parent(ModelFile.UncheckedModelFile("item/generated"))
+			.texture("layer0", modLoc("item/lasso/cursed"))
+
+		val cursedFilledModel = getBuilder("${cursedName}_filled")
+			.parent(cursedBaseModel)
+			.texture("layer1", modLoc("item/lasso/cursed_internal"))
+
+		cursedBaseModel
+			.override()
+			.predicate(EntityLassoItem.HAS_ENTITY, 1f)
+			.model(cursedFilledModel)
+			.end()
+
+		handledItems.add(goldenLasso)
+		handledItems.add(cursedLasso)
 	}
 
 	private fun basicItems() {
@@ -59,6 +102,10 @@ class ModItemModelProvider(
 				basicItem(item)
 			}
 		}
+	}
+
+	private fun getName(item: Item): ResourceLocation {
+		return BuiltInRegistries.ITEM.getKey(item)
 	}
 
 }
