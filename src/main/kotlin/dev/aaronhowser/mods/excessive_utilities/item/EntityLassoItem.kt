@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.AaronExtensions.getMinimalTag
 import dev.aaronhowser.mods.aaron.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.AaronExtensions.isEntity
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.registries.Registries
@@ -17,6 +18,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.Level
 
 class EntityLassoItem(
 	val canHoldHostileMobs: Boolean,
@@ -85,6 +87,16 @@ class EntityLassoItem(
 
 	companion object {
 		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
+
+		val HAS_ENTITY = ExcessiveUtilities.modResource("has_entity")
+		fun hasEntityPredicate(
+			stack: ItemStack,
+			localLevel: Level?,
+			holdingEntity: LivingEntity?,
+			int: Int
+		): Float {
+			return if (stack.has(ModDataComponents.ENTITY)) 1f else 0f
+		}
 	}
 
 }

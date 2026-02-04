@@ -1,0 +1,33 @@
+package dev.aaronhowser.mods.excessive_utilities.event
+
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.client.renderer.item.ItemProperties
+import net.neoforged.api.distmarker.Dist
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.client.event.ModelEvent
+
+@EventBusSubscriber(
+	modid = ExcessiveUtilities.MOD_ID,
+	value = [Dist.CLIENT]
+)
+object ClientEvents {
+
+	@SubscribeEvent
+	fun onModelRegistry(event: ModelEvent.RegisterAdditional) {
+		ItemProperties.register(
+			ModItems.GOLDEN_LASSO.get(),
+			EntityLassoItem.HAS_ENTITY,
+			EntityLassoItem::hasEntityPredicate
+		)
+
+		ItemProperties.register(
+			ModItems.CURSED_LASSO.get(),
+			EntityLassoItem.HAS_ENTITY,
+			EntityLassoItem::hasEntityPredicate
+		)
+	}
+
+}
