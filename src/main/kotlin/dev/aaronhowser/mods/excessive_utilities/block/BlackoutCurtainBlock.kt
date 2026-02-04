@@ -26,4 +26,8 @@ class BlackoutCurtainBlock : IronBarsBlock(
 		return false
 	}
 
+	override fun getLightBlock(state: BlockState, level: BlockGetter, pos: BlockPos): Int {
+		return level.maxLightLevel / 2
+	}
+
 }
