@@ -2,11 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.BlackoutCurtainBlock
-import dev.aaronhowser.mods.excessive_utilities.block.ChandelierBlock
-import dev.aaronhowser.mods.excessive_utilities.block.MagnumTorchBlock
-import dev.aaronhowser.mods.excessive_utilities.block.PeacefulTableBlock
-import dev.aaronhowser.mods.excessive_utilities.block.SpikeBlock
+import dev.aaronhowser.mods.excessive_utilities.block.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -36,7 +32,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val ENDER_COLLECTOR =
 		basicBlock("ender_collector")
 	val ENDER_CORE =
-		basicBlock("ender_core")
+		registerBlock("ender_core", ::EnderCoreBlock)
 	val ENDER_FLUX_CRYSTAL =
 		basicBlock("ender_flux_crystal")
 	val ENDER_INFUSED_OBSIDIAN =
@@ -228,6 +224,8 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// FE Generators
 
+	val CREATIVE_ENERGY_SOURCE =
+		basicBlock("creative_energy_source")
 	val SURVIVALIST_GENERATOR =
 		basicBlock("survivalist_generator")
 	val FURNACE_GENERATOR =
