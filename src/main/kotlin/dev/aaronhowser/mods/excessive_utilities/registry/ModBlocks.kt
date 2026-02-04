@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.BlackoutCurtainBlock
 import dev.aaronhowser.mods.excessive_utilities.block.ChandelierBlock
 import dev.aaronhowser.mods.excessive_utilities.block.MagnumTorchBlock
+import dev.aaronhowser.mods.excessive_utilities.block.PeacefulTableBlock
 import dev.aaronhowser.mods.excessive_utilities.block.SpikeBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -44,8 +45,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("magical_wood")
 	val MAGNUM_TORCH: DeferredBlock<MagnumTorchBlock> =
 		registerBlock("magnum_torch", ::MagnumTorchBlock)
-	val PEACEFUL_TABLE =
-		basicBlock("peaceful_table")
+	val PEACEFUL_TABLE: DeferredBlock<PeacefulTableBlock> =
+		registerBlock("peaceful_table", ::PeacefulTableBlock)
 	val DEEP_DARK_PORTAL =
 		basicBlock("deep_dark_portal")
 	val LAST_MILLENNIUM_PORTAL =
