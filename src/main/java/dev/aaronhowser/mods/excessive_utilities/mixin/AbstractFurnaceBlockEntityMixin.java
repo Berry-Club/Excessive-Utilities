@@ -6,24 +6,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(AbstractFurnaceBlockEntity.class)
 public abstract class AbstractFurnaceBlockEntityMixin {
 
-	@Inject(
-			method = "getBurnDuration",
-			at = @At("HEAD"),
-			cancellable = true
+	@Redirect(
+			method = "serverTick",
+			at = @At(
+					value = "INVOKE",
+					target = "Lnet/minecraft/world/item/ItemStack;shrink(I)V"
+			)
 	)
-	private static void eu$heating_coil_fuel(
-			ItemStack fuel,
-			CallbackInfoReturnable<Integer> cir
-	) {
-//		if (fuel.is(ModItems.HEATING_COIL.get())) {
-//			cir.setReturnValue(HeatingCoilItem.getFuelBurnTime(fuel));
-//		}
+	private static void eu$dontBurnCoil(ItemStack instance, int decrement) {
+		if (instance.is(ModItems.HEATING_COIL)) {
+			HeatingCoilItem.burnInFuelSlot(instance);
+		} else {
+			instance.shrink(decrement);
+		}
 	}
 
 }
