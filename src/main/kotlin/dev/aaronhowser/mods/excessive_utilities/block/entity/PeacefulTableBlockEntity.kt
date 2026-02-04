@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Difficulty
 import net.minecraft.world.DifficultyInstance
+import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.MobCategory
@@ -44,6 +45,8 @@ class PeacefulTableBlockEntity(
 	private var uuid: UUID? = null
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
+	private var isFirstTick = true
+
 	private fun initFakePlayer() {
 		val level = level as? ServerLevel ?: return
 
@@ -66,6 +69,13 @@ class PeacefulTableBlockEntity(
 		val level = this.level as? ServerLevel ?: return
 		if (level.difficulty != Difficulty.PEACEFUL) return
 
+		if (isFirstTick) {
+			isFirstTick = false
+			initFakePlayer()
+		}
+
+		val fakePlayer = this.fakePlayer?.get() ?: return
+
 		val adjacentInventories = Direction.entries
 			.mapNotNull { direction ->
 				level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos.relative(direction), direction.opposite)
@@ -77,6 +87,8 @@ class PeacefulTableBlockEntity(
 				(0 until inventory.slots).asSequence().map { inventory.getStackInSlot(it) }
 			}
 			.firstOrNull { it.item is SwordItem }
+
+		fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, sword ?: ItemStack.EMPTY)
 
 		if (sword == null) {
 			return
