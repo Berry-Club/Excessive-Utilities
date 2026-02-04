@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.registry.AaronDataComponentRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.Registries
+import net.minecraft.world.item.component.CustomData
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -16,5 +17,8 @@ object ModDataComponents : AaronDataComponentRegistry() {
 
 	val RADIUS: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("radius")
+
+	val ENTITY: DeferredHolder<DataComponentType<*>, DataComponentType<CustomData>> =
+		register("entity", CustomData.CODEC, CustomData.STREAM_CODEC)
 
 }
