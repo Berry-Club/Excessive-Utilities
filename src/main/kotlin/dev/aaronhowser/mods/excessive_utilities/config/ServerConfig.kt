@@ -9,6 +9,7 @@ class ServerConfig(
 
 	lateinit var heatingCoilBurnTime: ModConfigSpec.IntValue
 	lateinit var heatingCoilBurnCost: ModConfigSpec.IntValue
+	lateinit var heatingCoilMaxEnergy: ModConfigSpec.IntValue
 
 	init {
 		general()
@@ -24,11 +25,15 @@ class ServerConfig(
 
 		heatingCoilBurnTime = builder
 			.comment("The number of ticks a Heating Coil will burn in a Furnace.")
-			.defineInRange("burn_time", 200, 1, Int.MAX_VALUE)
+			.defineInRange("burn_time", 20, 1, Int.MAX_VALUE)
 
 		heatingCoilBurnCost = builder
 			.comment("How much FE will be spent when a Heating Coil is used as Furnace fuel.")
-			.defineInRange("burn_cost", 20, 1, Int.MAX_VALUE)
+			.defineInRange("burn_cost", 50, 1, Int.MAX_VALUE)
+
+		heatingCoilMaxEnergy = builder
+			.comment("The maximum amount of FE a Heating Coil can store.")
+			.defineInRange("max_energy", 1_500_000, 1, Int.MAX_VALUE)
 
 		builder.pop()
 	}
