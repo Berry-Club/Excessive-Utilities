@@ -101,11 +101,11 @@ class PeacefulTableBlockEntity(
 
 		val mob = getMobToSpawn(this) ?: return
 
-		if (!damageSword(sword, fakePlayer, mob)) return
-
 		val drops = getDrops(mob, fakePlayer)
+		var dropsInserted = false
 
 		for (drop in drops) {
+			val countBefore = drop.count
 			var copy = drop.copy()
 
 			for (inv in adjacentInventories) {
@@ -113,6 +113,13 @@ class PeacefulTableBlockEntity(
 
 				copy = ItemHandlerHelper.insertItemStacked(inv, copy, false)
 			}
+
+			val countAfter = copy.count
+			if (countAfter < countBefore) dropsInserted = true
+		}
+
+		if (dropsInserted) {
+			damageSword(sword, fakePlayer, mob)
 		}
 
 	}
@@ -180,7 +187,11 @@ class PeacefulTableBlockEntity(
 				true
 			)
 
-			if (mob.isPassenger || mob.isVehicle) return null
+			val vehicle = mob.vehicle
+			if (vehicle != null) {
+				mob.stopRiding()
+				vehicle.discard()
+			}
 
 			return mob
 		}
@@ -209,7 +220,7 @@ class PeacefulTableBlockEntity(
 
 			for (i in 0 until hitsToKill) {
 				val chanceToNotDamage = 1.0 / (unbreakingLevel + 1)
-				if (mob.random.nextDouble() < chanceToNotDamage) continue
+				if (mob.random.nextDouble() > chanceToNotDamage) continue
 
 				swordStack.hurtAndBreak(1, fakePlayer, EquipmentSlot.MAINHAND)
 				if (swordStack.isEmpty) break
@@ -280,18 +291,6 @@ class PeacefulTableBlockEntity(
 			return super.getAttributeValue(attribute)
 		}
 
-		fun getAttackDamage(target: Entity): Float {
-			var baseDamage = getAttributeValue(Attributes.ATTACK_DAMAGE)
-			val weapon = weaponItem
-			val damageSource = damageSources().playerAttack(this)
-			val enchantBonus = getEnchantedDamage(target, baseDamage.toFloat(), damageSource) - baseDamage
-			val attackStrengthScale = getAttackStrengthScale(0.5f)
-			baseDamage *= 0.2f + attackStrengthScale * attackStrengthScale * 0.8f
-			val scaledEnchantmentBonus = enchantBonus * attackStrengthScale
-			baseDamage += weapon.item.getAttackDamageBonus(target, baseDamage.toFloat(), damageSource)
-
-			return baseDamage.toFloat() + scaledEnchantmentBonus.toFloat()
-		}
 	}
 
 }
