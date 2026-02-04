@@ -8,6 +8,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 
+//TODO: Make it a HoeItem
 class ReversingHoeItem(properties: Properties) : Item(properties) {
 
 	override fun useOn(context: UseOnContext): InteractionResult {
