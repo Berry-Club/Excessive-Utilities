@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import java.util.*
@@ -23,7 +24,25 @@ class SpikeBlock(
 ) : Block(properties) {
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-		return box(4.0, 4.0, 4.0, 5.0, 5.0, 5.0)
+		var shape = Shapes.empty()
+
+		for (i in 0 until 4) {
+			val widthPercent = 1 - (i.toDouble() / 5.0)
+			val width = 16.0 * widthPercent
+			shape = Shapes.or(
+				shape,
+				box(
+					16.0 - width / 2.0,
+					0.0 + i * 4.0,
+					16.0 - width / 2.0,
+					0.0 + width / 2.0,
+					4.0 + i * 4.0,
+					0.0 + width / 2.0
+				)
+			)
+		}
+
+		return shape
 	}
 
 	override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity) {
