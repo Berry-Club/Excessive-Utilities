@@ -16,7 +16,7 @@ import java.util.function.IntSupplier
 class DrumBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.CHANDELIER.get(), pos, blockState) {
+) : BlockEntity(ModBlockEntityTypes.DRUM.get(), pos, blockState) {
 
 	private val capacityGetter: IntSupplier =
 		when (blockState.block) {
