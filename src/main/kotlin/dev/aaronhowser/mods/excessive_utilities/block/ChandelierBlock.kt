@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-class ChandelierBlock : Block(Properties.ofFullCopy(Blocks.OAK_LOG)), EntityBlock {
+class ChandelierBlock : Block(Properties.ofFullCopy(Blocks.TORCH)), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return ChandelierBlockEntity(pos, state)
