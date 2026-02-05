@@ -5,6 +5,8 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpSourceBlockE
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
@@ -39,7 +41,20 @@ class ManualMillBlockEntity(
 		for (player in playersCranking) {
 			player.swing(InteractionHand.MAIN_HAND, true)
 		}
+	}
 
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+		tag.putBoolean(IS_BEING_CRANKED_KEY, isBeingCranked)
+	}
+
+	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.loadAdditional(tag, registries)
+		isBeingCranked = tag.getBoolean(IS_BEING_CRANKED_KEY)
+	}
+
+	companion object {
+		const val IS_BEING_CRANKED_KEY = "IsBeingCranked"
 	}
 
 }
