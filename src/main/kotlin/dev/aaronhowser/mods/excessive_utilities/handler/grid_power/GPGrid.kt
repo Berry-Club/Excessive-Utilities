@@ -21,9 +21,25 @@ class GPGrid(
 
 	fun isEmpty() = gpProducers.isEmpty() && gpConsumers.isEmpty()
 
+	private var capacityLastTick = 0
+	private var usageLastTick = 0
+
+	fun hasChangedSinceLastTick(): Boolean {
+		val capacityNow = getCapacity()
+		val usageNow = getUsage()
+		val changed = capacityNow != capacityLastTick || usageNow != usageLastTick
+		capacityLastTick = capacityNow
+		usageLastTick = usageNow
+		return changed
+	}
+
 	fun tick() {
 		gpProducers.removeIf { !it.isStillValid() }
 		gpConsumers.removeIf { !it.isStillValid() }
+
+		if (hasChangedSinceLastTick()) {
+
+		}
 	}
 
 }
