@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
-import dev.aaronhowser.mods.aaron.AaronExtensions.defaultBlockState
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.defaultBlockState
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand

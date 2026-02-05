@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
-import dev.aaronhowser.mods.aaron.AaronExtensions.isHolder
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.world.item.ItemStack
