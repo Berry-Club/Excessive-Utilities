@@ -2,11 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.entity.ChandelierBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.DrumBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.GpPanelBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.MagnumTorchBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.PeacefulTableBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -28,13 +24,15 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("chandelier", ::ChandelierBlockEntity, ModBlocks.CHANDELIER)
 	val PEACEFUL_TABLE: DeferredHolder<BlockEntityType<*>, BlockEntityType<PeacefulTableBlockEntity>> =
 		register("peaceful_table", ::PeacefulTableBlockEntity, ModBlocks.PEACEFUL_TABLE)
+	val GP_PANEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<GpPanelBlockEntity>> =
+		register("gp_panel", ::GpPanelBlockEntity, ModBlocks.SOLAR_PANEL)
+	val DRAGON_EGG_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<DragonEggMillBlockEntity>> =
+		register("dragon_egg_mill", ::DragonEggMillBlockEntity, ModBlocks.DRAGON_EGG_MILL)
 	val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<DrumBlockEntity>> =
 		register(
 			"drum",
 			::DrumBlockEntity,
 			ModBlocks.STONE_DRUM, ModBlocks.IRON_DRUM, ModBlocks.REINFORCED_LARGE_DRUM, ModBlocks.DEMONICALLY_GARGANTUAN_DRUM, ModBlocks.CREATIVE_DRUM
 		)
-	val GP_PANEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<GpPanelBlockEntity>> =
-		register("solar_panel", {pos, state -> GpPanelBlockEntity(pos, state)}, ModBlocks.SOLAR_PANEL)
 
 }
