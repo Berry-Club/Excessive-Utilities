@@ -12,7 +12,9 @@ object ModRegistries {
 			ModBlockEntityTypes.BLOCK_ENTITY_REGISTRY,
 			ModCreativeModeTabs.TABS_REGISTRY,
 			ModDataComponents.DATA_COMPONENT_REGISTRY,
-			ModMobEffects.EFFECT_REGISTRY
+			ModMobEffects.EFFECT_REGISTRY,
+			ModRecipeTypes.RECIPE_TYPES_REGISTRY,
+			ModRecipeSerializers.RECIPE_SERIALIZERS_REGISTRY
 		)
 
 		for (registry in registries) {
