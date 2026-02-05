@@ -28,7 +28,7 @@ class ResonatorRecipe(
 ) {
 
 	override fun matches(input: SingleRecipeInput, level: Level): Boolean {
-		TODO("Not yet implemented")
+		return ingredient.test(input.item())
 	}
 
 	class Serializer : RecipeSerializer<ResonatorRecipe> {
