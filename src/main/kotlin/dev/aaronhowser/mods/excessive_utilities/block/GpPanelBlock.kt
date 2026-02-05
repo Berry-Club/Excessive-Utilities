@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import dev.aaronhowser.mods.excessive_utilities.block.base.GpSourceBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.GpPanelBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpSourceBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
@@ -11,12 +12,12 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.registries.DeferredHolder
 
 class GpPanelBlock(
-	val isDay: Boolean,
-	beType: DeferredHolder<BlockEntityType<*>, BlockEntityType<out GpSourceBlockEntity>>
-) : GpSourceBlock(beType, Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR)) {
+	val isDay: Boolean
+) : GpSourceBlock(Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR)) {
+
+	override fun getBlockEntityType(): BlockEntityType<out GpSourceBlockEntity> = ModBlockEntityTypes.GP_PANEL.get()
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return GpPanelBlockEntity(pos, state)
