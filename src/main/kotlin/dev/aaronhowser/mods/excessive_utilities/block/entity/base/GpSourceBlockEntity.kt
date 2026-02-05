@@ -27,7 +27,7 @@ abstract class GpSourceBlockEntity(
 		ownerUuid = uuid
 	}
 
-	protected fun internalTick() {
+	protected open fun serverTick() {
 		val owner = ownerUuid ?: return
 		val level = level as? ServerLevel ?: return
 
@@ -36,6 +36,8 @@ abstract class GpSourceBlockEntity(
 			grid.addProducer(gpGeneration)
 		}
 	}
+
+	protected open fun clientTick() {}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
@@ -62,7 +64,9 @@ abstract class GpSourceBlockEntity(
 			blockEntity: GpSourceBlockEntity
 		) {
 			if (level.isServerSide) {
-				blockEntity.internalTick()
+				blockEntity.serverTick()
+			} else {
+				blockEntity.clientTick()
 			}
 		}
 	}
