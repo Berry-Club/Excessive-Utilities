@@ -19,24 +19,11 @@ class GPGrid(
 	fun addConsumer(consumer: GridPowerContribution) = gpConsumers.add(consumer)
 	fun removeConsumer(consumer: GridPowerContribution) = gpConsumers.remove(consumer)
 
+	fun isEmpty() = gpProducers.isEmpty() && gpConsumers.isEmpty()
+
 	fun tick() {
 		gpProducers.removeIf { !it.isStillValid() }
 		gpConsumers.removeIf { !it.isStillValid() }
-	}
-
-	companion object {
-
-		private val GRIDS: MutableMap<UUID, GPGrid> = mutableMapOf()
-
-		fun getGrid(gridId: UUID): GPGrid {
-			return GRIDS.getOrPut(gridId) { GPGrid(gridId) }
-		}
-
-		fun tick() {
-			GRIDS.values.forEach(GPGrid::tick)
-
-			GRIDS.entries.removeIf { (_, grid) -> grid.gpProducers.isEmpty() && grid.gpConsumers.isEmpty()}
-		}
 	}
 
 }
