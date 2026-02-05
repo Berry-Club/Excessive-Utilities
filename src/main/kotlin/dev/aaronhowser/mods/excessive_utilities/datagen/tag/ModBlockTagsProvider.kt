@@ -43,6 +43,8 @@ class ModBlockTagsProvider(
 				ModBlocks.LUNAR_PANEL.get(),
 				ModBlocks.DRAGON_EGG_MILL.get(),
 				ModBlocks.CREATIVE_MILL.get(),
+				ModBlocks.RESONATOR.get(),
+				ModBlocks.WIRELESS_RF_TRANSMITTER.get()
 			)
 	}
 

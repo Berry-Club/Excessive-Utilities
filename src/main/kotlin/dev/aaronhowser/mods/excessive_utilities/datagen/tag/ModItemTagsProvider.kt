@@ -35,6 +35,8 @@ class ModItemTagsProvider(
 				ModBlocks.LUNAR_PANEL.asItem(),
 				ModBlocks.DRAGON_EGG_MILL.asItem(),
 				ModBlocks.CREATIVE_MILL.asItem(),
+				ModBlocks.RESONATOR.asItem(),
+				ModBlocks.WIRELESS_RF_TRANSMITTER.asItem()
 			)
 	}
 

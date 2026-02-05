@@ -1,2 +1,3 @@
-// 1.21.1	2026-02-03T17:22:28.4739102	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-02-05T02:49:47.5723266	Tags for minecraft:block mod id excessive_utilities
 2bef9f868fc60a1a3de29857c00073febf29cd62 data/c/tags/block/mineable/sickle.json
+6e6619eeb8d9d02beeea87794a109cf6b345239f data/excessive_utilities/tags/block/render_gp_while_looking_at.json
