@@ -73,8 +73,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("red_orchid")
 	val REDSTONE_LANTERN =
 		basicBlock("redstone_lantern")
-	val RESONATOR =
-		basicBlock("resonator")
+	val RESONATOR: DeferredBlock<ResonatorBlock> =
+		registerBlock("resonator", ::ResonatorBlock)
 	val RESTURBED_MOB_SPAWNER =
 		basicBlock("resturbed_mob_spawner")
 	val SCANNER =

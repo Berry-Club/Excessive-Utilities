@@ -43,8 +43,10 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("water_mill", ::WaterMillBlockEntity, ModBlocks.WATER_MILL)
 	val DRAGON_EGG_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<DragonEggMillBlockEntity>> =
 		register("dragon_egg_mill", ::DragonEggMillBlockEntity, ModBlocks.DRAGON_EGG_MILL)
-
 	val CREATIVE_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<CreativeMillBlockEntity>> =
 		register("creative_mill", ::CreativeMillBlockEntity, ModBlocks.CREATIVE_MILL)
+
+	val RESONATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<ResonatorBlockEntity>> =
+		register("resonator", ::ResonatorBlockEntity, ModBlocks.RESONATOR)
 
 }
