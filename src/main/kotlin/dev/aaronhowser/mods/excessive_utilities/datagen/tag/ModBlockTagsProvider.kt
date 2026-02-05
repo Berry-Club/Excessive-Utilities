@@ -46,6 +46,11 @@ class ModBlockTagsProvider(
 				ModBlocks.RESONATOR.get(),
 				ModBlocks.WIRELESS_RF_TRANSMITTER.get()
 			)
+
+		tag(VALID_FOR_DRAGON_EGG_MILL)
+			.add(
+				Blocks.DRAGON_EGG
+			)
 	}
 
 	companion object {
@@ -54,6 +59,7 @@ class ModBlockTagsProvider(
 
 		val MINEABLE_WITH_SICKLE = common("mineable/sickle")
 		val RENDER_GP_WHILE_LOOKING_AT = create("render_gp_while_looking_at")
+		val VALID_FOR_DRAGON_EGG_MILL = create("valid_for_dragon_egg_mill")
 	}
 
 }
