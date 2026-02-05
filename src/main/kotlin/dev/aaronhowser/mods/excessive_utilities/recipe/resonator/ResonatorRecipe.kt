@@ -9,10 +9,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.SingleItemRecipe
-import net.minecraft.world.item.crafting.SingleRecipeInput
+import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
 class ResonatorRecipe(
@@ -58,6 +55,20 @@ class ResonatorRecipe(
 					ByteBufCodecs.VAR_INT, ResonatorRecipe::gpCost,
 					::ResonatorRecipe
 				)
+		}
+	}
+
+	companion object {
+		fun getRecipe(level: Level, input: ItemStack): ResonatorRecipe? {
+			return getAllRecipes(level.recipeManager)
+				.firstOrNull { recipeHolder ->
+					recipeHolder.value.matches(SingleRecipeInput(input), level)
+				}
+				?.value
+		}
+
+		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<ResonatorRecipe>> {
+			return recipeManager.getAllRecipesFor(ModRecipeTypes.RESONATOR.get())
 		}
 	}
 
