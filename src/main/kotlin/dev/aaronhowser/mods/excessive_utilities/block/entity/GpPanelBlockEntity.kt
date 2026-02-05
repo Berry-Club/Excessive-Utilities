@@ -37,17 +37,4 @@ class GpPanelBlockEntity(
 			override fun isStillValid(): Boolean = !this@GpPanelBlockEntity.isRemoved
 		}
 
-	companion object {
-		fun tick(
-			level: Level,
-			blockPos: BlockPos,
-			blockState: BlockState,
-			blockEntity: GpPanelBlockEntity
-		) {
-			if (level.isServerSide) {
-				blockEntity.tick()
-			}
-		}
-	}
-
 }
