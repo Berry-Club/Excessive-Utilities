@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.language
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 
 object ModBlockLang {

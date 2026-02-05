@@ -47,7 +47,7 @@ class DrumBlockEntity(
 	}
 
 	companion object {
-		fun getFluidCapability(blockEntity: DrumBlockEntity, direction: Direction?): IFluidHandler? {
+		fun getFluidCapability(blockEntity: DrumBlockEntity, direction: Direction?): IFluidHandler {
 			return blockEntity.tank
 		}
 	}

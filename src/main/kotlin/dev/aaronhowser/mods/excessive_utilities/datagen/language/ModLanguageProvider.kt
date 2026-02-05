@@ -9,7 +9,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 
 class ModLanguageProvider(
 	output: PackOutput
-) : LanguageProvider(output, ExcessiveUtilities.Companion.MOD_ID, "en_us") {
+) : LanguageProvider(output, ExcessiveUtilities.MOD_ID, "en_us") {
 
 	override fun addTranslations() {
 		ModItemLang.add(this)
