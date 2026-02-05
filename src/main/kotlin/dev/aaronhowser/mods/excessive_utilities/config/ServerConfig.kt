@@ -19,10 +19,28 @@ class ServerConfig(
 	lateinit var reinforcedLargeDrumCapacity: ModConfigSpec.IntValue
 	lateinit var demonicallyGargantuanDrumCapacity: ModConfigSpec.IntValue
 
+	lateinit var solarPanelGeneration: ModConfigSpec.IntValue
+	lateinit var lunarPanelGeneration: ModConfigSpec.IntValue
+
 	init {
 		general()
 		heatingCoil()
 		drums()
+		gridPower()
+	}
+
+	private fun gridPower() {
+		builder.push("grid_power")
+
+		solarPanelGeneration = builder
+			.comment("The amount of GP the Solar Panel generates when it can see the sun.")
+			.defineInRange("solarPanelGeneration", 1, 1, Int.MAX_VALUE)
+
+		lunarPanelGeneration = builder
+			.comment("The amount of GP the Lunar Panel generates when it can see the moon.")
+			.defineInRange("lunarPanelGeneration", 1, 1, Int.MAX_VALUE)
+
+		builder.pop()
 	}
 
 	private fun general() {
