@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.recipe.resonator.ResonatorRecipe
@@ -37,14 +38,26 @@ class ResonatorBlockEntity(
 
 		progress++
 
-		if (progress >= 20 * 10) {
+		if (progress >= CRAFT_TIME) {
 			craftItem(recipe)
 			progress = 0
 		}
 	}
 
-	private fun craftItem(recipe1: ResonatorRecipe) {
+	private fun craftItem(recipe: ResonatorRecipe) {
+		val level = level ?: return
 
+		val inputStack = container.getItem(INPUT_SLOT)
+
+		val recipeOutput = recipe.getResultItem(level.registryAccess()).copy()
+		val stackInOutput = container.getItem(OUTPUT_SLOT)
+		if (stackInOutput.isNotEmpty()) {
+			stackInOutput.grow(recipeOutput.count)
+		} else {
+			container.setItem(OUTPUT_SLOT, recipeOutput)
+		}
+
+		inputStack.shrink(1)
 	}
 
 	fun getRecipe(): ResonatorRecipe? {
@@ -67,6 +80,8 @@ class ResonatorBlockEntity(
 		const val CONTAINER_SIZE = 2
 		const val INPUT_SLOT = 0
 		const val OUTPUT_SLOT = 1
+
+		const val CRAFT_TIME = 20 * 10
 	}
 
 }
