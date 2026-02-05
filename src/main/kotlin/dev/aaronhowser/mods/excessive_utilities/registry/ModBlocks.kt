@@ -353,10 +353,10 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("fire_mill")
 	val LAVA_MILL =
 		basicBlock("lava_mill")
-	val SOLAR_PANEL =
-		basicBlock("solar_panel")
-	val LUNAR_PANEL =
-		basicBlock("lunar_panel")
+	val SOLAR_PANEL: DeferredBlock<GpPanelBlock> =
+		registerBlock("solar_panel") { GpPanelBlock(isDay = true) }
+	val LUNAR_PANEL: DeferredBlock<GpPanelBlock> =
+		registerBlock("lunar_panel") { GpPanelBlock(isDay = false) }
 	val DRAGON_EGG_MILL =
 		basicBlock("dragon_egg_mill")
 	val CREATIVE_MILL =
