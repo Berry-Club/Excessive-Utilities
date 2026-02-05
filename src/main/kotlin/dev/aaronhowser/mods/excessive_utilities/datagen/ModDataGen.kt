@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -35,11 +36,11 @@ object ModDataGen {
 			ModBlockStateProvider(output, existingFileHelper)
 		)
 
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModRecipeProvider(output, lookupProvider)
-//		)
-//
+		generator.addProvider(
+			event.includeServer(),
+			ModRecipeProvider(output, lookupProvider)
+		)
+
 //		generator.addProvider(
 //			event.includeServer(),
 //			ModLootTableProvider(output, lookupProvider)
