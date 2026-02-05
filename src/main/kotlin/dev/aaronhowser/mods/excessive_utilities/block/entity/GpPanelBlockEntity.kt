@@ -17,15 +17,18 @@ class GpPanelBlockEntity(
 	private val gpGeneration: GridPowerContribution =
 		object : GridPowerContribution {
 			override fun getAmount(): Int {
+				val level = level ?: return 0
+
 				val amount = if (isDay) {
 					ServerConfig.CONFIG.solarPanelGeneration.get()
 				} else {
 					ServerConfig.CONFIG.lunarPanelGeneration.get()
 				}
 
-				val canSeeSky = level?.canSeeSky(worldPosition.above()) ?: false
+				val canSeeSky = level.canSeeSky(worldPosition.above())
+				val isDayTime = level.isDay
 
-				return if (canSeeSky) amount else 0
+				return if (canSeeSky && isDay == isDayTime) amount else 0
 			}
 
 			override fun isStillValid(): Boolean = !this@GpPanelBlockEntity.isRemoved
