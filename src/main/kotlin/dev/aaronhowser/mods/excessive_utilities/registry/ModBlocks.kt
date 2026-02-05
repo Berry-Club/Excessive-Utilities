@@ -343,8 +343,8 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// GP Generators
 
-	val MANUAL_MILL =
-		basicBlock("manual_mill")
+	val MANUAL_MILL: DeferredBlock<ManualMillBlock> =
+		registerBlock("manual_mill", ::ManualMillBlock)
 	val WATER_MILL: DeferredBlock<WaterMillBlock> =
 		registerBlock("water_mill", ::WaterMillBlock)
 	val WIND_MILL =
