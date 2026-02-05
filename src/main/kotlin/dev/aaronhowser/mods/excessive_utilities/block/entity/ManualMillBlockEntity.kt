@@ -7,6 +7,9 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.protocol.Packet
+import net.minecraft.network.protocol.game.ClientGamePacketListener
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
@@ -19,6 +22,11 @@ class ManualMillBlockEntity(
 
 	private val playersCranking: MutableSet<Player> = mutableSetOf()
 	private var isBeingCranked: Boolean = false
+
+	var turnRotation: Float = 0f
+		set(value) {
+			field = turnRotation % 360f
+		}
 
 	override fun getGp(): Int {
 		return ServerConfig.CONFIG.manualMillGenerationPerPlayer.get() * playersCranking.size
@@ -36,7 +44,11 @@ class ManualMillBlockEntity(
 			lookingAt != this.blockPos
 		}
 
+		val wasBeingCranked = isBeingCranked
 		isBeingCranked = playersCranking.isNotEmpty()
+		if (wasBeingCranked != isBeingCranked) {
+			setChanged()
+		}
 
 		for (player in playersCranking) {
 			player.swing(InteractionHand.MAIN_HAND, true)
@@ -52,6 +64,10 @@ class ManualMillBlockEntity(
 		super.loadAdditional(tag, registries)
 		isBeingCranked = tag.getBoolean(IS_BEING_CRANKED_KEY)
 	}
+
+	// Syncs with client
+	override fun getUpdateTag(pRegistries: HolderLookup.Provider): CompoundTag = saveWithoutMetadata(pRegistries)
+	override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 
 	companion object {
 		const val IS_BEING_CRANKED_KEY = "IsBeingCranked"
