@@ -22,7 +22,7 @@ abstract class GpSourceBlock(
 	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
 		val blockEntity = level.getBlockEntity(pos)
 		if (blockEntity is GpSourceBlockEntity && placer != null) {
-			blockEntity.setOwner(placer.uuid)
+			blockEntity.ownerUuid = placer.uuid
 		}
 	}
 
