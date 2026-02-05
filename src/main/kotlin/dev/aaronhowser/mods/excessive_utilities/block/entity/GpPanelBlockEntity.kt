@@ -15,7 +15,7 @@ class GpPanelBlockEntity(
 
 	var requiresDay: Boolean = true
 
-	override fun getGp(): Int {
+	override fun getGpGeneration(): Int {
 		val level = level ?: return 0
 
 		val amount = if (requiresDay) {

@@ -13,27 +13,27 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import java.util.*
 
-abstract class GpSourceBlockEntity(
+abstract class GpDrainBlockEntity(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
 	blockState: BlockState
 ) : BlockEntity(type, pos, blockState) {
 
 	var ownerUuid: UUID? = null
-	protected open val gpGeneration: GridPowerContribution =
+	protected open val gpUsage: GridPowerContribution =
 		object : GridPowerContribution {
-			override fun getAmount(): Int = getGpGeneration()
-			override fun isStillValid(): Boolean = !this@GpSourceBlockEntity.isRemoved
+			override fun getAmount(): Int = getGpUsage()
+			override fun isStillValid(): Boolean = !this@GpDrainBlockEntity.isRemoved
 		}
 
-	abstract fun getGpGeneration(): Int
+	abstract fun getGpUsage(): Int
 
 	protected open fun serverTick(level: ServerLevel) {
 		val owner = ownerUuid ?: return
 
-		if (gpGeneration.isStillValid() && gpGeneration.getAmount() > 0) {
+		if (gpUsage.isStillValid() && gpUsage.getAmount() > 0) {
 			val grid = GridPowerHandler.get(level).getGrid(owner)
-			grid.addProducer(gpGeneration)
+			grid.addConsumer(gpUsage)
 		}
 	}
 
@@ -61,7 +61,7 @@ abstract class GpSourceBlockEntity(
 			level: Level,
 			blockPos: BlockPos,
 			blockState: BlockState,
-			blockEntity: GpSourceBlockEntity
+			blockEntity: GpDrainBlockEntity
 		) {
 			if (level is ServerLevel) {
 				blockEntity.serverTick(level)

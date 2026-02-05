@@ -13,7 +13,7 @@ class FireMillBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.FIRE_MILL.get(), pos, blockState) {
 
-	override fun getGp(): Int {
+	override fun getGpGeneration(): Int {
 		val stateBelow = level?.getBlockState(worldPosition.below()) ?: return 0
 
 		return if (stateBelow.isBlock(BlockTags.FIRE)) {

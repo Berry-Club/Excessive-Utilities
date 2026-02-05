@@ -14,7 +14,7 @@ class LavaMillBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.LAVA_MILL.get(), pos, blockState) {
 
-	override fun getGp(): Int {
+	override fun getGpGeneration(): Int {
 		val level = level ?: return 0
 
 		val touchingLava = Direction.Plane.HORIZONTAL

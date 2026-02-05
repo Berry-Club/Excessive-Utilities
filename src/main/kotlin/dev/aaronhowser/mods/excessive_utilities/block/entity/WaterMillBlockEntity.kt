@@ -14,7 +14,7 @@ class WaterMillBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.WATER_MILL.get(), pos, blockState) {
 
-	override fun getGp(): Int {
+	override fun getGpGeneration(): Int {
 		val level = level ?: return 0
 
 		val amountTouchingWater = Direction.Plane.HORIZONTAL
