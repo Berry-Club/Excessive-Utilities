@@ -19,6 +19,7 @@ class ServerConfig(
 	lateinit var reinforcedLargeDrumCapacity: ModConfigSpec.IntValue
 	lateinit var demonicallyGargantuanDrumCapacity: ModConfigSpec.IntValue
 
+	lateinit var manualMillGenerationPerPlayer: ModConfigSpec.IntValue
 	lateinit var solarPanelGeneration: ModConfigSpec.IntValue
 	lateinit var lunarPanelGeneration: ModConfigSpec.IntValue
 	lateinit var lavaMillGeneration: ModConfigSpec.IntValue
@@ -38,6 +39,10 @@ class ServerConfig(
 		builder.push("grid_power")
 
 		builder.push("gp_generation")
+
+		manualMillGenerationPerPlayer = builder
+			.comment("The amount of GP the Manual Mill generates per player cranking it.")
+			.defineInRange("manualMillGenerationPerPlayer", 15, 1, Int.MAX_VALUE)
 
 		solarPanelGeneration = builder
 			.comment("The amount of GP the Solar Panel generates when it can see the sun.")

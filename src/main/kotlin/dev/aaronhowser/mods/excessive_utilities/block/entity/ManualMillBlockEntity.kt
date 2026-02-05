@@ -1,11 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpSourceBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.tags.BlockTags
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.state.BlockState
 
 class ManualMillBlockEntity(
@@ -13,14 +12,11 @@ class ManualMillBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.MANUAL_MILL.get(), pos, blockState) {
 
-	override fun getGp(): Int {
-		val stateBelow = level?.getBlockState(worldPosition.below()) ?: return 0
+	private val playersCranking: MutableSet<Player> = mutableSetOf()
+	private var isBeingCranked: Boolean = false
 
-		return if (stateBelow.isBlock(BlockTags.FIRE)) {
-			ServerConfig.CONFIG.fireMillGeneration.get()
-		} else {
-			0
-		}
+	override fun getGp(): Int {
+		return ServerConfig.CONFIG.manualMillGenerationPerPlayer.get() * playersCranking.size
 	}
 
 }
