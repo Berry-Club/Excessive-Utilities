@@ -21,6 +21,7 @@ class ServerConfig(
 
 	lateinit var solarPanelGeneration: ModConfigSpec.IntValue
 	lateinit var lunarPanelGeneration: ModConfigSpec.IntValue
+	lateinit var lavaMillGeneration: ModConfigSpec.IntValue
 	lateinit var fireMillGeneration: ModConfigSpec.IntValue
 	lateinit var dragonEggMillGeneration: ModConfigSpec.IntValue
 	lateinit var creativeMillGeneration: ModConfigSpec.IntValue
@@ -44,6 +45,10 @@ class ServerConfig(
 		lunarPanelGeneration = builder
 			.comment("The amount of GP the Lunar Panel generates when it can see the moon.")
 			.defineInRange("lunarPanelGeneration", 1, 1, Int.MAX_VALUE)
+
+		lavaMillGeneration = builder
+			.comment("The amount of GP the Lava Mill generates when Lava is adjacent.")
+			.defineInRange("lavaMillGeneration", 2, 1, Int.MAX_VALUE)
 
 		fireMillGeneration = builder
 			.comment("The amount of GP the Fire Mill generates when Fire is below it.")

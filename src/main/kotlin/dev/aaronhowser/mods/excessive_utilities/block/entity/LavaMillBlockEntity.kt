@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpSourceBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -24,7 +25,7 @@ class LavaMillBlockEntity(
 			}
 
 		return if (touchingLava) {
-			2
+			ServerConfig.CONFIG.lavaMillGeneration.get()
 		} else {
 			0
 		}
