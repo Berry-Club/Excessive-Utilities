@@ -13,6 +13,7 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class ManualMillBlockEntity(
@@ -23,9 +24,10 @@ class ManualMillBlockEntity(
 	private val playersCranking: MutableSet<Player> = mutableSetOf()
 	private var isBeingCranked: Boolean = false
 
-	var turnRotation: Float = 0f
+	var prevTurnDegrees: Float = 0f
+	var turnDegrees: Float = 0f
 		set(value) {
-			field = turnRotation % 360f
+			field = turnDegrees % 360f
 		}
 
 	override fun getGp(): Int {
@@ -52,6 +54,13 @@ class ManualMillBlockEntity(
 
 		for (player in playersCranking) {
 			player.swing(InteractionHand.MAIN_HAND, true)
+		}
+	}
+
+	override fun clientTick(level: Level) {
+		if (isBeingCranked) {
+			prevTurnDegrees = turnDegrees
+			turnDegrees += 15f
 		}
 	}
 
