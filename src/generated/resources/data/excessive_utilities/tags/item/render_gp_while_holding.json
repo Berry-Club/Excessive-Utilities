@@ -1,6 +1,15 @@
 {
   "values": [
     "excessive_utilities:speed_upgrade",
-    "excessive_utilities:power_manager"
+    "excessive_utilities:power_manager",
+    "excessive_utilities:manual_mill",
+    "excessive_utilities:water_mill",
+    "excessive_utilities:wind_mill",
+    "excessive_utilities:fire_mill",
+    "excessive_utilities:lava_mill",
+    "excessive_utilities:solar_panel",
+    "excessive_utilities:lunar_panel",
+    "excessive_utilities:dragon_egg_mill",
+    "excessive_utilities:creative_mill"
   ]
 }

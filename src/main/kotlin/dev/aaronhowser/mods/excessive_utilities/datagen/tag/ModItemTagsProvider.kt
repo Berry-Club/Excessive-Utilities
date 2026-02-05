@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.tag
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -24,7 +25,16 @@ class ModItemTagsProvider(
 		tag(RENDER_GP_WHILE_HOLDING)
 			.add(
 				ModItems.SPEED_UPGRADE.get(),
-				ModItems.POWER_MANAGER.get()
+				ModItems.POWER_MANAGER.get(),
+				ModBlocks.MANUAL_MILL.asItem(),
+				ModBlocks.WATER_MILL.asItem(),
+				ModBlocks.WIND_MILL.asItem(),
+				ModBlocks.FIRE_MILL.asItem(),
+				ModBlocks.LAVA_MILL.asItem(),
+				ModBlocks.SOLAR_PANEL.asItem(),
+				ModBlocks.LUNAR_PANEL.asItem(),
+				ModBlocks.DRAGON_EGG_MILL.asItem(),
+				ModBlocks.CREATIVE_MILL.asItem(),
 			)
 	}
 
