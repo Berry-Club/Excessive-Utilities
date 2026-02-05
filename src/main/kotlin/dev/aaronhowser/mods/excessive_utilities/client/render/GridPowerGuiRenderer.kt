@@ -24,7 +24,7 @@ object GridPowerGuiRenderer {
 		val player = AaronClientUtil.localPlayer ?: return
 
 		if (!player.isHolding { it.isItem(ModItemTagsProvider.RENDER_GP_WHILE_HOLDING) }) {
-			val lookingAt = player.getPovResult(player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE))
+			val lookingAt = player.getPovResult()
 			val shouldRender = player.level()
 				.getBlockState(lookingAt.blockPos)
 				.isBlock(ModBlockTagsProvider.RENDER_GP_WHILE_LOOKING_AT)
