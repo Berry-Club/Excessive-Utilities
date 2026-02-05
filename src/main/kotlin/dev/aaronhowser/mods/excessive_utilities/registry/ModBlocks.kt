@@ -359,8 +359,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("lunar_panel") { GpPanelBlock(requiresDay = false) }
 	val DRAGON_EGG_MILL: DeferredBlock<DragonEggMillBlock> =
 		registerBlock("dragon_egg_mill", ::DragonEggMillBlock)
-	val CREATIVE_MILL =
-		basicBlock("creative_mill")
+	val CREATIVE_MILL: DeferredBlock<CreativeMillBlock> =
+		registerBlock("creative_mill", ::CreativeMillBlock)
 
 	// Terraformer
 

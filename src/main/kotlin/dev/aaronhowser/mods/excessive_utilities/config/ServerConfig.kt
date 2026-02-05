@@ -22,6 +22,7 @@ class ServerConfig(
 	lateinit var solarPanelGeneration: ModConfigSpec.IntValue
 	lateinit var lunarPanelGeneration: ModConfigSpec.IntValue
 	lateinit var dragonEggMillGeneration: ModConfigSpec.IntValue
+	lateinit var creativeMillGeneration: ModConfigSpec.IntValue
 
 	init {
 		general()
@@ -46,6 +47,10 @@ class ServerConfig(
 		dragonEggMillGeneration = builder
 			.comment("The amount of GP the Dragon Egg Mill generates when a Dragon Egg is on top of it.")
 			.defineInRange("dragonEggMillGeneration", 500, 1, Int.MAX_VALUE)
+
+		creativeMillGeneration = builder
+			.comment("The amount of GP the Creative Mill generates.")
+			.defineInRange("creativeMillGeneration", 10_000, 1, Int.MAX_VALUE)
 
 		builder.pop()
 
