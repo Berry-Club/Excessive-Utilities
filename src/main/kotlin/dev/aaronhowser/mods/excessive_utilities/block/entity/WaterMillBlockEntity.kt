@@ -26,7 +26,7 @@ class WaterMillBlockEntity(
 			.count()
 			.toInt()
 
-		return amountTouchingWater * ServerConfig.CONFIG.lavaMillGeneration.get()
+		return amountTouchingWater * ServerConfig.CONFIG.waterMillGenerationPerSide.get()
 	}
 
 }
