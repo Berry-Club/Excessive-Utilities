@@ -1,9 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.handler.grid_power
 
+import dev.aaronhowser.mods.excessive_utilities.packet.server_to_client.UpdateGridPowerPacket
+import net.minecraft.server.level.ServerLevel
 import java.util.*
 
 class GPGrid(
-	val gridId: UUID
+	val ownerUuid: UUID
 ) {
 
 	private val gpProducers: MutableSet<GridPowerContribution> = mutableSetOf()
@@ -24,22 +26,28 @@ class GPGrid(
 	private var capacityLastTick = 0
 	private var usageLastTick = 0
 
-	fun hasChangedSinceLastTick(): Boolean {
+	fun updateClient(level: ServerLevel) {
 		val capacityNow = getCapacity()
 		val usageNow = getUsage()
+
 		val changed = capacityNow != capacityLastTick || usageNow != usageLastTick
+		if (changed) {
+			val player = level.server.playerList.getPlayer(ownerUuid)
+			if (player != null) {
+				val packet = UpdateGridPowerPacket(capacityNow, usageNow)
+				packet.messagePlayer(player)
+			}
+		}
+
 		capacityLastTick = capacityNow
 		usageLastTick = usageNow
-		return changed
 	}
 
-	fun tick() {
+	fun tick(level: ServerLevel) {
 		gpProducers.removeIf { !it.isStillValid() }
 		gpConsumers.removeIf { !it.isStillValid() }
 
-		if (hasChangedSinceLastTick()) {
-
-		}
+		updateClient(level)
 	}
 
 }

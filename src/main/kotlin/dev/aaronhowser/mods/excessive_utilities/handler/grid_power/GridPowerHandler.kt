@@ -22,8 +22,8 @@ class GridPowerHandler : SavedData() {
 		return grids.getOrPut(uuid) { GPGrid(uuid) }
 	}
 
-	fun tick() {
-		grids.values.forEach(GPGrid::tick)
+	fun tick(level: ServerLevel) {
+		grids.values.forEach { grid -> grid.tick(level) }
 		grids.entries.removeIf { (_, grid) -> grid.isEmpty() }
 	}
 
