@@ -1,9 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.aaron.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpSourceBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 
 class DragonEggMillBlockEntity(
@@ -11,16 +12,14 @@ class DragonEggMillBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.DRAGON_EGG_MILL.get(), pos, blockState) {
 
-	override val gpGeneration: GridPowerContribution =
-		object : GridPowerContribution {
-			override fun getAmount(): Int {
-				TODO("Not yet implemented")
-			}
+	override fun getGp(): Int {
+		val stateAbove = level?.getBlockState(worldPosition.above()) ?: return 0
 
-			override fun isStillValid(): Boolean {
-				TODO("Not yet implemented")
-			}
-
+		return if (stateAbove.isBlock(Blocks.DRAGON_EGG)) {
+			1000
+		} else {
+			0
 		}
+	}
 
 }

@@ -19,12 +19,14 @@ abstract class GpSourceBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(type, pos, blockState) {
 
-	protected var ownerUuid: UUID? = null
-	protected abstract val gpGeneration: GridPowerContribution
+	var ownerUuid: UUID? = null
+	protected open val gpGeneration: GridPowerContribution =
+		object : GridPowerContribution {
+			override fun getAmount(): Int = getGp()
+			override fun isStillValid(): Boolean = !this@GpSourceBlockEntity.isRemoved
+		}
 
-	fun setOwner(uuid: UUID) {
-		ownerUuid = uuid
-	}
+	abstract fun getGp(): Int
 
 	protected open fun serverTick(level: ServerLevel) {
 		val owner = ownerUuid ?: return
