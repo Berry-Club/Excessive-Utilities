@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
 class GpPanelBlock(
-	val isDay: Boolean
+	val requiresDay: Boolean
 ) : GpSourceBlock(Properties.ofFullCopy(Blocks.DAYLIGHT_DETECTOR)) {
 
 	override fun getBlockEntityType(): BlockEntityType<out GpSourceBlockEntity> = ModBlockEntityTypes.GP_PANEL.get()
@@ -27,7 +27,7 @@ class GpPanelBlock(
 		super.setPlacedBy(level, pos, state, placer, stack)
 		val blockEntity = level.getBlockEntity(pos)
 		if (blockEntity is GpPanelBlockEntity) {
-			blockEntity.isDay = isDay
+			blockEntity.requiresDay = requiresDay
 		}
 	}
 

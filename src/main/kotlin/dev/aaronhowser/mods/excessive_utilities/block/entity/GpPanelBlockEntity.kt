@@ -14,14 +14,14 @@ class GpPanelBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.GP_PANEL.get(), pos, blockState) {
 
-	var isDay: Boolean = true
+	var requiresDay: Boolean = true
 
 	override val gpGeneration: GridPowerContribution =
 		object : GridPowerContribution {
 			override fun getAmount(): Int {
 				val level = level ?: return 0
 
-				val amount = if (isDay) {
+				val amount = if (requiresDay) {
 					ServerConfig.CONFIG.solarPanelGeneration.get()
 				} else {
 					ServerConfig.CONFIG.lunarPanelGeneration.get()
@@ -30,7 +30,7 @@ class GpPanelBlockEntity(
 				val canSeeSky = level.canSeeSky(worldPosition.above())
 				val isDayTime = level.isDay
 
-				return if (canSeeSky && isDay == isDayTime) amount else 0
+				return if (canSeeSky && requiresDay == isDayTime) amount else 0
 			}
 
 			override fun isStillValid(): Boolean = !this@GpPanelBlockEntity.isRemoved
@@ -38,16 +38,16 @@ class GpPanelBlockEntity(
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
-		tag.putBoolean(IS_DAY_NBT, isDay)
+		tag.putBoolean(REQUIRES_DAY_NBT, requiresDay)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
-		isDay = tag.getBoolean(IS_DAY_NBT)
+		requiresDay = tag.getBoolean(REQUIRES_DAY_NBT)
 	}
 
 	companion object {
-		const val IS_DAY_NBT = "IsDay"
+		const val REQUIRES_DAY_NBT = "RequiresDay"
 	}
 
 }
