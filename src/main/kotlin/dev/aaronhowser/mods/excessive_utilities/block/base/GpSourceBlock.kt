@@ -12,9 +12,10 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.registries.DeferredHolder
 
 abstract class GpSourceBlock(
-	val beType: BlockEntityType<out GpSourceBlockEntity>,
+	val beType: DeferredHolder<BlockEntityType<*>, BlockEntityType<out GpSourceBlockEntity>>,
 	properties: Properties,
 ) : Block(properties), EntityBlock {
 
@@ -28,7 +29,7 @@ abstract class GpSourceBlock(
 	override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
 		return BaseEntityBlock.createTickerHelper(
 			blockEntityType,
-			beType,
+			beType.get(),
 			GpSourceBlockEntity::tick
 		)
 	}

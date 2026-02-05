@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.GpPanelBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.ChandelierBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.DrumBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.GpPanelBlockEntity
@@ -35,9 +34,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 			::DrumBlockEntity,
 			ModBlocks.STONE_DRUM, ModBlocks.IRON_DRUM, ModBlocks.REINFORCED_LARGE_DRUM, ModBlocks.DEMONICALLY_GARGANTUAN_DRUM, ModBlocks.CREATIVE_DRUM
 		)
-	val SOLAR_PANEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<GpPanelBlockEntity>> =
-		register("solar_panel", {pos, state -> GpPanelBlockEntity(pos, state, isDay = true)}, ModBlocks.SOLAR_PANEL)
-	val LUNAR_PANEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<GpPanelBlockEntity>> =
-		register("lunar_panel", {pos, state -> GpPanelBlockEntity(pos, state, isDay = false)}, ModBlocks.LUNAR_PANEL)
+	val GP_PANEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<GpPanelBlockEntity>> =
+		register("solar_panel", {pos, state -> GpPanelBlockEntity(pos, state)}, ModBlocks.SOLAR_PANEL)
 
 }
