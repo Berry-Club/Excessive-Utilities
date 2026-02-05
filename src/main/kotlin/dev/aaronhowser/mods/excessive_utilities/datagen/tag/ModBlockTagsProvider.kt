@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.tag
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
@@ -30,6 +31,19 @@ class ModBlockTagsProvider(
 				Blocks.FERN,
 				Blocks.LARGE_FERN
 			)
+
+		tag(RENDER_GP_WHILE_LOOKING_AT)
+			.add(
+				ModBlocks.MANUAL_MILL.get(),
+				ModBlocks.WATER_MILL.get(),
+				ModBlocks.WIND_MILL.get(),
+				ModBlocks.FIRE_MILL.get(),
+				ModBlocks.LAVA_MILL.get(),
+				ModBlocks.SOLAR_PANEL.get(),
+				ModBlocks.LUNAR_PANEL.get(),
+				ModBlocks.DRAGON_EGG_MILL.get(),
+				ModBlocks.CREATIVE_MILL.get(),
+			)
 	}
 
 	companion object {
@@ -37,6 +51,7 @@ class ModBlockTagsProvider(
 		private fun common(id: String): TagKey<Block> = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", id))
 
 		val MINEABLE_WITH_SICKLE = common("mineable/sickle")
+		val RENDER_GP_WHILE_LOOKING_AT = create("render_gp_while_looking_at")
 	}
 
 }
