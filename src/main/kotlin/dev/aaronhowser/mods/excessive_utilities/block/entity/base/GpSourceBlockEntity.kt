@@ -27,7 +27,7 @@ abstract class GpSourceBlockEntity(
 		ownerUuid = uuid
 	}
 
-	protected fun tick() {
+	protected fun internalTick() {
 		val owner = ownerUuid ?: return
 		val level = level as? ServerLevel ?: return
 
@@ -62,7 +62,7 @@ abstract class GpSourceBlockEntity(
 			blockEntity: GpSourceBlockEntity
 		) {
 			if (level.isServerSide) {
-				blockEntity.tick()
+				blockEntity.internalTick()
 			}
 		}
 	}
