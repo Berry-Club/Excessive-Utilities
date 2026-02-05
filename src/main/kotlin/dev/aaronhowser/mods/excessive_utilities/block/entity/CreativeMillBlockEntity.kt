@@ -11,6 +11,6 @@ class CreativeMillBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.CREATIVE_MILL.get(), pos, blockState) {
 
-	override fun getGpGeneration(): Int = ServerConfig.CONFIG.creativeMillGeneration.get()
+	override fun getGpGeneration(): Double = ServerConfig.CONFIG.creativeMillGeneration.get()
 
 }

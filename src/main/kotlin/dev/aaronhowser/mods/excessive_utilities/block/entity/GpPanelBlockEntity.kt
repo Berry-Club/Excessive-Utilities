@@ -15,8 +15,8 @@ class GpPanelBlockEntity(
 
 	var requiresDay: Boolean = true
 
-	override fun getGpGeneration(): Int {
-		val level = level ?: return 0
+	override fun getGpGeneration(): Double {
+		val level = level ?: return 0.0
 
 		val amount = if (requiresDay) {
 			ServerConfig.CONFIG.solarPanelGeneration.get()
@@ -27,7 +27,7 @@ class GpPanelBlockEntity(
 		val canSeeSky = level.canSeeSky(worldPosition.above())
 		val isDayTime = level.isDay
 
-		return if (canSeeSky && requiresDay == isDayTime) amount else 0
+		return if (canSeeSky && requiresDay == isDayTime) amount else 0.0
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

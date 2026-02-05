@@ -30,7 +30,7 @@ class ManualMillBlockEntity(
 			field = turnDegrees % 360f
 		}
 
-	override fun getGpGeneration(): Int {
+	override fun getGpGeneration(): Double {
 		return ServerConfig.CONFIG.manualMillGenerationPerPlayer.get() * playersCranking.size
 	}
 

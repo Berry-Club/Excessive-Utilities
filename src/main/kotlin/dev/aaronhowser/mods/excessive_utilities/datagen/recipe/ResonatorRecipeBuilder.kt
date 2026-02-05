@@ -16,7 +16,7 @@ import net.minecraft.world.item.crafting.Ingredient
 class ResonatorRecipeBuilder(
 	val ingredient: Ingredient,
 	val result: ItemStack,
-	val gpCost: Int
+	val gpCost: Double
 ) : RecipeBuilder {
 
 	private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()

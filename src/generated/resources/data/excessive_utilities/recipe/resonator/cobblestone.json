@@ -1,6 +1,6 @@
 {
   "type": "excessive_utilities:resonator",
-  "gp_cost": 10,
+  "gp_cost": 10.0,
   "ingredient": {
     "item": "minecraft:stone"
   },

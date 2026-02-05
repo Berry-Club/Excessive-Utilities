@@ -10,8 +10,8 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 import net.neoforged.neoforge.network.handling.IPayloadContext
 
 class UpdateGridPowerPacket(
-	val capacity: Int,
-	val usage: Int
+	val capacity: Double,
+	val usage: Double
 ) : AaronPacket() {
 
 	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload?> {
@@ -29,8 +29,8 @@ class UpdateGridPowerPacket(
 
 		val STREAM_CODEC: StreamCodec<ByteBuf, UpdateGridPowerPacket> =
 			StreamCodec.composite(
-				ByteBufCodecs.VAR_INT, UpdateGridPowerPacket::capacity,
-				ByteBufCodecs.VAR_INT, UpdateGridPowerPacket::usage,
+				ByteBufCodecs.DOUBLE, UpdateGridPowerPacket::capacity,
+				ByteBufCodecs.DOUBLE, UpdateGridPowerPacket::usage,
 				::UpdateGridPowerPacket
 			)
 	}

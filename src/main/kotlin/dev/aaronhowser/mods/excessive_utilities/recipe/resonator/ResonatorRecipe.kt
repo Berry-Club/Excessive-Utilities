@@ -15,7 +15,7 @@ import net.minecraft.world.level.Level
 class ResonatorRecipe(
 	ingredient: Ingredient,
 	result: ItemStack,
-	val gpCost: Int
+	val gpCost: Double
 ) : SingleItemRecipe(
 	ModRecipeTypes.RESONATOR.get(),
 	ModRecipeSerializers.RESONATOR.get(),
@@ -42,7 +42,7 @@ class ResonatorRecipe(
 						ItemStack.CODEC
 							.fieldOf("output")
 							.forGetter(ResonatorRecipe::result),
-						Codec.INT
+						Codec.DOUBLE
 							.fieldOf("gp_cost")
 							.forGetter(ResonatorRecipe::gpCost)
 					).apply(instance, ::ResonatorRecipe)
@@ -52,7 +52,7 @@ class ResonatorRecipe(
 				StreamCodec.composite(
 					Ingredient.CONTENTS_STREAM_CODEC, ResonatorRecipe::ingredient,
 					ItemStack.STREAM_CODEC, ResonatorRecipe::result,
-					ByteBufCodecs.VAR_INT, ResonatorRecipe::gpCost,
+					ByteBufCodecs.DOUBLE, ResonatorRecipe::gpCost,
 					::ResonatorRecipe
 				)
 		}

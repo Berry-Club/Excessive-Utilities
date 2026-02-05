@@ -19,14 +19,14 @@ class ServerConfig(
 	lateinit var reinforcedLargeDrumCapacity: ModConfigSpec.IntValue
 	lateinit var demonicallyGargantuanDrumCapacity: ModConfigSpec.IntValue
 
-	lateinit var manualMillGenerationPerPlayer: ModConfigSpec.IntValue
-	lateinit var solarPanelGeneration: ModConfigSpec.IntValue
-	lateinit var lunarPanelGeneration: ModConfigSpec.IntValue
-	lateinit var lavaMillGeneration: ModConfigSpec.IntValue
-	lateinit var fireMillGeneration: ModConfigSpec.IntValue
-	lateinit var waterMillGenerationPerSide: ModConfigSpec.IntValue
-	lateinit var dragonEggMillGeneration: ModConfigSpec.IntValue
-	lateinit var creativeMillGeneration: ModConfigSpec.IntValue
+	lateinit var manualMillGenerationPerPlayer: ModConfigSpec.DoubleValue
+	lateinit var solarPanelGeneration: ModConfigSpec.DoubleValue
+	lateinit var lunarPanelGeneration: ModConfigSpec.DoubleValue
+	lateinit var lavaMillGeneration: ModConfigSpec.DoubleValue
+	lateinit var fireMillGeneration: ModConfigSpec.DoubleValue
+	lateinit var waterMillGenerationPerSide: ModConfigSpec.DoubleValue
+	lateinit var dragonEggMillGeneration: ModConfigSpec.DoubleValue
+	lateinit var creativeMillGeneration: ModConfigSpec.DoubleValue
 
 	init {
 		general()
@@ -42,35 +42,35 @@ class ServerConfig(
 
 		manualMillGenerationPerPlayer = builder
 			.comment("The amount of GP the Manual Mill generates per player cranking it.")
-			.defineInRange("manualMillGenerationPerPlayer", 15, 1, Int.MAX_VALUE)
+			.defineInRange("manualMillGenerationPerPlayer", 15.0, 1.0, Double.MAX_VALUE)
 
 		solarPanelGeneration = builder
 			.comment("The amount of GP the Solar Panel generates when it can see the sun.")
-			.defineInRange("solarPanelGeneration", 1, 1, Int.MAX_VALUE)
+			.defineInRange("solarPanelGeneration", 1.0, 1.0, Double.MAX_VALUE)
 
 		lunarPanelGeneration = builder
 			.comment("The amount of GP the Lunar Panel generates when it can see the moon.")
-			.defineInRange("lunarPanelGeneration", 1, 1, Int.MAX_VALUE)
+			.defineInRange("lunarPanelGeneration", 1.0, 1.0, Double.MAX_VALUE)
 
 		lavaMillGeneration = builder
 			.comment("The amount of GP the Lava Mill generates when Lava is adjacent.")
-			.defineInRange("lavaMillGeneration", 2, 1, Int.MAX_VALUE)
+			.defineInRange("lavaMillGeneration", 2.0, 1.0, Double.MAX_VALUE)
 
 		fireMillGeneration = builder
 			.comment("The amount of GP the Fire Mill generates when Fire is below it.")
-			.defineInRange("fireMillGeneration", 4, 1, Int.MAX_VALUE)
+			.defineInRange("fireMillGeneration", 4.0, 1.0, Double.MAX_VALUE)
 
 		waterMillGenerationPerSide = builder
 			.comment("The amount of GP the Water Mill generates per side with flowing water adjacent.")
-			.defineInRange("waterMillGenerationPerSide", 4, 1, Int.MAX_VALUE)
+			.defineInRange("waterMillGenerationPerSide", 4.0, 1.0, Double.MAX_VALUE)
 
 		dragonEggMillGeneration = builder
 			.comment("The amount of GP the Dragon Egg Mill generates when a Dragon Egg is on top of it.")
-			.defineInRange("dragonEggMillGeneration", 500, 1, Int.MAX_VALUE)
+			.defineInRange("dragonEggMillGeneration", 500.0, 1.0, Double.MAX_VALUE)
 
 		creativeMillGeneration = builder
 			.comment("The amount of GP the Creative Mill generates.")
-			.defineInRange("creativeMillGeneration", 10_000, 1, Int.MAX_VALUE)
+			.defineInRange("creativeMillGeneration", 10_000.0, 1.0, Double.MAX_VALUE)
 
 		builder.pop()
 

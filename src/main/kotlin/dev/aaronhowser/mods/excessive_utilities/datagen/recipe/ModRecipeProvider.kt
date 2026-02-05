@@ -23,7 +23,7 @@ class ModRecipeProvider(
 			ResonatorRecipeBuilder(
 				ing(Items.STONE).getIngredient(),
 				Items.COBBLESTONE.defaultInstance,
-				10
+				10.0
 			)
 		)
 

@@ -11,8 +11,8 @@ class GPGrid(
 	private val gpProducers: MutableSet<GridPowerContribution> = mutableSetOf()
 	private val gpConsumers: MutableSet<GridPowerContribution> = mutableSetOf()
 
-	fun getCapacity(): Int = gpProducers.sumOf { it.getAmount().toLong() }.toInt()
-	fun getUsage(): Int = gpConsumers.sumOf { it.getAmount().toLong() }.toInt()
+	fun getCapacity(): Double = gpProducers.sumOf { it.getAmount() }
+	fun getUsage(): Double = gpConsumers.sumOf { it.getAmount() }
 	fun isOverloaded(): Boolean = getUsage() > getCapacity()
 
 	fun addProducer(producer: GridPowerContribution) = gpProducers.add(producer)
@@ -23,8 +23,8 @@ class GPGrid(
 
 	fun isEmpty() = gpProducers.isEmpty() && gpConsumers.isEmpty()
 
-	private var capacityLastTick = 0
-	private var usageLastTick = 0
+	private var capacityLastTick = 0.0
+	private var usageLastTick = 0.0
 
 	fun updateClient(level: ServerLevel) {
 		val capacityNow = getCapacity()

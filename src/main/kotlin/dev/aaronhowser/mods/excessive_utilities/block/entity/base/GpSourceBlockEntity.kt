@@ -22,11 +22,11 @@ abstract class GpSourceBlockEntity(
 	var ownerUuid: UUID? = null
 	protected open val gpGeneration: GridPowerContribution =
 		object : GridPowerContribution {
-			override fun getAmount(): Int = getGpGeneration()
+			override fun getAmount(): Double = getGpGeneration()
 			override fun isStillValid(): Boolean = !this@GpSourceBlockEntity.isRemoved
 		}
 
-	abstract fun getGpGeneration(): Int
+	abstract fun getGpGeneration(): Double
 
 	protected open fun serverTick(level: ServerLevel) {
 		val owner = ownerUuid ?: return

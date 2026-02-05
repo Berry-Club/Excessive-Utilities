@@ -13,13 +13,13 @@ class DragonEggMillBlockEntity(
 	blockState: BlockState
 ) : GpSourceBlockEntity(ModBlockEntityTypes.DRAGON_EGG_MILL.get(), pos, blockState) {
 
-	override fun getGpGeneration(): Int {
-		val stateAbove = level?.getBlockState(worldPosition.above()) ?: return 0
+	override fun getGpGeneration(): Double {
+		val stateAbove = level?.getBlockState(worldPosition.above()) ?: return 0.0
 
 		return if (stateAbove.isBlock(ModBlockTagsProvider.VALID_FOR_DRAGON_EGG_MILL)) {
 			ServerConfig.CONFIG.dragonEggMillGeneration.get()
 		} else {
-			0
+			0.0
 		}
 	}
 

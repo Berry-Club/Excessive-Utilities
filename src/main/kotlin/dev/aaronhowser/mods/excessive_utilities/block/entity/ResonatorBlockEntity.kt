@@ -14,7 +14,7 @@ class ResonatorBlockEntity(
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState) {
 
-	override fun getGpUsage(): Int = getRecipe()?.gpCost ?: 0
+	override fun getGpUsage(): Double = getRecipe()?.gpCost ?: 0.0
 
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 
