@@ -34,6 +34,8 @@ class ManualMillBlockEntity(
 			lookingAt != this.blockPos
 		}
 
+		isBeingCranked = playersCranking.isNotEmpty()
+
 		for (player in playersCranking) {
 			player.swing(InteractionHand.MAIN_HAND, true)
 		}
