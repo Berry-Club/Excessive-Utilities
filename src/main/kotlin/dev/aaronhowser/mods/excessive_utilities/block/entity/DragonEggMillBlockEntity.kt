@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpSourceBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.Blocks
@@ -16,7 +17,7 @@ class DragonEggMillBlockEntity(
 		val stateAbove = level?.getBlockState(worldPosition.above()) ?: return 0
 
 		return if (stateAbove.isBlock(Blocks.DRAGON_EGG)) {
-			1000
+			ServerConfig.CONFIG.dragonEggMillGeneration.get()
 		} else {
 			0
 		}
