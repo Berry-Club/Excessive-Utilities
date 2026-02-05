@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
@@ -15,7 +16,7 @@ class GpPanelBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState,
 	val isDay: Boolean
-) : BlockEntity(if (isDay) null else null, pos, blockState) {
+) : BlockEntity(if (isDay) ModBlockEntityTypes.SOLAR_PANEL.get() else ModBlockEntityTypes.LUNAR_PANEL.get(), pos, blockState) {
 
 	private var ownerUuid: UUID? = null
 

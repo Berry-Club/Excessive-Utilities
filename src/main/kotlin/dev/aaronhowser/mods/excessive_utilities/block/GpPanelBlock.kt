@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import dev.aaronhowser.mods.excessive_utilities.block.entity.GpPanelBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
@@ -31,6 +33,13 @@ class GpPanelBlock(
 			},
 			GpPanelBlockEntity::tick
 		)
+	}
+
+	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
+		val blockEntity = level.getBlockEntity(pos)
+		if (blockEntity is GpPanelBlockEntity && placer != null) {
+			blockEntity.setOwner(placer.uuid)
+		}
 	}
 
 }
