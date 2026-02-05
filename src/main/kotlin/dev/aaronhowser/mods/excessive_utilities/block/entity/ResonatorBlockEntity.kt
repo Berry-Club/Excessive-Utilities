@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpDrainBlockEn
 import dev.aaronhowser.mods.excessive_utilities.recipe.resonator.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 
@@ -13,9 +14,38 @@ class ResonatorBlockEntity(
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState) {
 
+	override fun getGpUsage(): Int = getRecipe()?.gpCost ?: 0
+
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 
-	override fun getGpUsage(): Int = getRecipe()?.gpCost ?: 0
+	private var progress: Int = 0
+		set(value) {
+			if (field == value) return
+			field = value
+			setChanged()
+		}
+
+	override fun serverTick(level: ServerLevel) {
+		super.serverTick(level)
+
+		val recipe = getRecipe()
+
+		if (recipe == null) {
+			progress = 0
+			return
+		}
+
+		progress++
+
+		if (progress >= 20 * 10) {
+			craftItem(recipe)
+			progress = 0
+		}
+	}
+
+	private fun craftItem(recipe1: ResonatorRecipe) {
+
+	}
 
 	fun getRecipe(): ResonatorRecipe? {
 		val level = level ?: return null
