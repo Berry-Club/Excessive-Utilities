@@ -1,8 +1,6 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen
+package dev.aaronhowser.mods.excessive_utilities.datagen.language
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModBlockLang
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import net.minecraft.ChatFormatting
 import net.minecraft.data.PackOutput
 import net.minecraft.network.chat.Component
@@ -11,7 +9,7 @@ import net.neoforged.neoforge.common.data.LanguageProvider
 
 class ModLanguageProvider(
 	output: PackOutput
-) : LanguageProvider(output, ExcessiveUtilities.MOD_ID, "en_us") {
+) : LanguageProvider(output, ExcessiveUtilities.Companion.MOD_ID, "en_us") {
 
 	override fun addTranslations() {
 		ModItemLang.add(this)

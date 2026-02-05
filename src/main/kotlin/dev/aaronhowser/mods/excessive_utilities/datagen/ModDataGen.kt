@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
