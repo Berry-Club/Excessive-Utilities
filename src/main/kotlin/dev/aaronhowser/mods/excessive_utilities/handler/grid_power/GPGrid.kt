@@ -24,4 +24,19 @@ class GPGrid(
 		gpConsumers.removeIf { !it.isStillValid() }
 	}
 
+	companion object {
+
+		private val GRIDS: MutableMap<UUID, GPGrid> = mutableMapOf()
+
+		fun getGrid(gridId: UUID): GPGrid {
+			return GRIDS.getOrPut(gridId) { GPGrid(gridId) }
+		}
+
+		fun tick() {
+			GRIDS.values.forEach(GPGrid::tick)
+
+			GRIDS.entries.removeIf { (_, grid) -> grid.gpProducers.isEmpty() && grid.gpConsumers.isEmpty()}
+		}
+	}
+
 }
