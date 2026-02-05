@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.base
 
 import dev.aaronhowser.mods.aaron.AaronExtensions.getUuidOrNull
-import dev.aaronhowser.mods.aaron.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import net.minecraft.core.BlockPos
@@ -27,9 +26,8 @@ abstract class GpSourceBlockEntity(
 		ownerUuid = uuid
 	}
 
-	protected open fun serverTick() {
+	protected open fun serverTick(level: ServerLevel) {
 		val owner = ownerUuid ?: return
-		val level = level as? ServerLevel ?: return
 
 		if (gpGeneration.isStillValid() && gpGeneration.getAmount() > 0) {
 			val grid = GridPowerHandler.get(level).getGrid(owner)
@@ -37,7 +35,7 @@ abstract class GpSourceBlockEntity(
 		}
 	}
 
-	protected open fun clientTick() {}
+	protected open fun clientTick(level: Level) {}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
@@ -63,10 +61,10 @@ abstract class GpSourceBlockEntity(
 			blockState: BlockState,
 			blockEntity: GpSourceBlockEntity
 		) {
-			if (level.isServerSide) {
-				blockEntity.serverTick()
+			if (level is ServerLevel) {
+				blockEntity.serverTick(level)
 			} else {
-				blockEntity.clientTick()
+				blockEntity.clientTick(level)
 			}
 		}
 	}
