@@ -1,35 +1,64 @@
 package dev.aaronhowser.mods.excessive_utilities.recipe.resonator
 
+import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.SingleItemRecipe
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 
 class ResonatorRecipe(
 	ingredient: Ingredient,
-	output: ItemStack,
+	result: ItemStack,
 	val gpCost: Int
 ) : SingleItemRecipe(
 	ModRecipeTypes.RESONATOR.get(),
 	ModRecipeSerializers.RESONATOR.get(),
 	"eu_resonator",
 	ingredient,
-	output
+	result
 ) {
 
 	override fun matches(input: SingleRecipeInput, level: Level): Boolean {
 		TODO("Not yet implemented")
 	}
 
-	interface Factory : SingleItemRecipe.Factory<ResonatorRecipe> {
-		fun create(group: String, ingredient: Ingredient, output: ItemStack, gpCost: Int): ResonatorRecipe
-	}
+	class Serializer : RecipeSerializer<ResonatorRecipe> {
+		override fun codec(): MapCodec<ResonatorRecipe> = CODEC
+		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, ResonatorRecipe> = STREAM_CODEC
 
-	class Serializer(factory: Factory) : SingleItemRecipe.Serializer<ResonatorRecipe>(factory) {
+		companion object {
+			val CODEC: MapCodec<ResonatorRecipe> =
+				RecordCodecBuilder.mapCodec { instance ->
+					instance.group(
+						Ingredient.CODEC
+							.fieldOf("ingredient")
+							.forGetter(ResonatorRecipe::ingredient),
+						ItemStack.CODEC
+							.fieldOf("output")
+							.forGetter(ResonatorRecipe::result),
+						Codec.INT
+							.fieldOf("gp_cost")
+							.forGetter(ResonatorRecipe::gpCost)
+					).apply(instance, ::ResonatorRecipe)
+				}
 
+			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, ResonatorRecipe> =
+				StreamCodec.composite(
+					Ingredient.CONTENTS_STREAM_CODEC, ResonatorRecipe::ingredient,
+					ItemStack.STREAM_CODEC, ResonatorRecipe::result,
+					ByteBufCodecs.VAR_INT, ResonatorRecipe::gpCost,
+					::ResonatorRecipe
+				)
+		}
 	}
 
 }
