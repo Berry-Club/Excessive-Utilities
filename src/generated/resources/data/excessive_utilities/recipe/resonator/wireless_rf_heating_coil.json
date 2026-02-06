@@ -1,0 +1,11 @@
+{
+  "type": "excessive_utilities:resonator",
+  "gp_cost": 16.0,
+  "ingredient": {
+    "item": "minecraft:iron_bars"
+  },
+  "output": {
+    "count": 1,
+    "id": "excessive_utilities:wireless_rf_heating_coil"
+  }
+}

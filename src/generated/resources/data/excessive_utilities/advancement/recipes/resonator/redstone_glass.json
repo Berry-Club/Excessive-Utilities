@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "excessive_utilities:resonator/cobblestone"
+        "recipe": "excessive_utilities:resonator/redstone_glass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "excessive_utilities:resonator/cobblestone"
+      "excessive_utilities:resonator/redstone_glass"
     ]
   }
 }

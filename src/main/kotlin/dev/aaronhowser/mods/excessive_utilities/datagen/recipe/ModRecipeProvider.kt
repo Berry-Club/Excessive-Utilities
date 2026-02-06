@@ -1,10 +1,15 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.world.item.Items
+import net.minecraft.tags.ItemTags
+import net.minecraft.world.level.block.Blocks
+import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
 
 class ModRecipeProvider(
@@ -21,9 +26,44 @@ class ModRecipeProvider(
 	private fun resonatingRecipes(recipeOutput: RecipeOutput) {
 		val recipes = listOf(
 			ResonatorRecipeBuilder(
-				ing(Items.STONE).getIngredient(),
-				Items.COBBLESTONE.defaultInstance,
-				10.0
+				ModBlocks.POLISHED_STONE.asIngredient(),
+				ModBlocks.STONEBURNT.toStack(),
+				8.0
+			),
+			ResonatorRecipeBuilder(
+				Blocks.QUARTZ_BLOCK.asIngredient(),
+				ModBlocks.QUARTZBURNT.toStack(),
+				8.0
+			),
+			ResonatorRecipeBuilder(
+				ModBlocks.STONEBURNT.asIngredient(),
+				ModBlocks.RAINBOW_STONE.toStack(),
+				64.0
+			),
+			ResonatorRecipeBuilder(
+				Tags.Items.GEMS_LAPIS.asIngredient(),
+				ModItems.LUNAR_REACTIVE_DUST.toStack(),
+				16.0
+			),
+			ResonatorRecipeBuilder(
+				ItemTags.COALS.asIngredient(),
+				ModItems.RED_COAL.toStack(),
+				16.0
+			),
+			ResonatorRecipeBuilder(
+				Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE.asIngredient(),
+				ModItems.UPGRADE_BASE.toStack(),
+				8.0
+			),
+			ResonatorRecipeBuilder(
+				Blocks.IRON_BARS.asIngredient(),
+				ModItems.WIRELESS_RF_HEATING_COIL.toStack(),
+				16.0
+			),
+			ResonatorRecipeBuilder(
+				ModBlocks.THICKENED_GLASS.asIngredient(),
+				ModBlocks.REDSTONE_GLASS.toStack(),
+				1.0
 			)
 		)
 

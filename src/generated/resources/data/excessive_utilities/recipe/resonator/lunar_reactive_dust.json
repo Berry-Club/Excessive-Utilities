@@ -1,11 +1,11 @@
 {
   "type": "excessive_utilities:resonator",
-  "gp_cost": 10.0,
+  "gp_cost": 16.0,
   "ingredient": {
-    "item": "minecraft:stone"
+    "tag": "c:gems/lapis"
   },
   "output": {
     "count": 1,
-    "id": "minecraft:cobblestone"
+    "id": "excessive_utilities:lunar_reactive_dust"
   }
 }

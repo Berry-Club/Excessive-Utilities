@@ -389,6 +389,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("block_of_bedrockium")
 	val UNSTABLE_INGOT_BLOCK =
 		basicBlock("unstable_ingot_block")
+	val POLISHED_STONE =
+		basicBlock("polished_stone")
 	val BORDER_STONE =
 		basicBlock("border_stone")
 	val BORDER_STONE_ALT =
@@ -466,6 +468,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("swirling_glass")
 	val THICKENED_GLASS =
 		basicBlock("thickened_glass")
+	val REDSTONE_GLASS =
+		basicBlock("redstone_glass")
 	val ETHEREAL_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
 		registerBlock("ethereal_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = false) }
 	val INVERTED_ETHEREAL_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
