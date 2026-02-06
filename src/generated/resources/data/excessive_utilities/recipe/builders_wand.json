@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "W": {
+      "item": "excessive_utilities:magical_wood"
+    }
+  },
+  "pattern": [
+    "  G",
+    " W ",
+    "W  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:builders_wand"
+  }
+}

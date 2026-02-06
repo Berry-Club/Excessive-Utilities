@@ -19,12 +19,12 @@ class ModRecipeProvider(
 ) : AaronRecipeProvider(output, lookupProvider) {
 
 	override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
-		shapedRecipes(recipeOutput)
-		shapelessRecipes(recipeOutput)
-		resonatingRecipes(recipeOutput)
+		buildShapedRecipes(recipeOutput)
+		buildShapelessRecipes(recipeOutput)
+		buildResonatorRecipes(recipeOutput)
 	}
 
-	private fun shapedRecipes(recipeOutput: RecipeOutput) {
+	private fun buildShapedRecipes(recipeOutput: RecipeOutput) {
 		val recipes = listOf(
 			shapedRecipe(
 				ModBlocks.MAGICAL_SNOW_GLOBE.toStack(),
@@ -39,22 +39,75 @@ class ModRecipeProvider(
 					'E' to ing(Tags.Items.ENDER_PEARLS),
 					'W' to ing(Items.NETHER_STAR)
 				)
-			)
-		)
-
-		for (recipe in recipes) {
-			recipe.save(recipeOutput)
-		}
-	}
-
-	private fun shapelessRecipes(recipeOutput: RecipeOutput) {
-		val recipes = listOf(
-			shapelessRecipe(
-				ModBlocks.COOLER,
-				listOf(
-					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
-					ing(Items.SNOWBALL),
-					ing(Items.SNOWBALL),
+			),
+			shapedRecipe(
+				ModItems.BUILDERS_WAND.toStack(),
+				"  G, W ,W  ",
+				mapOf(
+					'G' to ing(Tags.Items.INGOTS_GOLD),
+					'W' to ing(ModBlocks.MAGICAL_WOOD)
+				)
+			),
+			shapedRecipe(
+				ModItems.DESTRUCTION_WAND.toStack(),
+				" GG, WG,W  ",
+				mapOf(
+					'G' to ing(Tags.Items.INGOTS_GOLD),
+					'W' to ing(ModBlocks.MAGICAL_WOOD)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.TRASH_CAN.toStack(),
+				"SSS,CHC,CCC",
+				mapOf(
+					'S' to ing(Tags.Items.STONES),
+					'H' to ing(Tags.Items.CHESTS_WOODEN),
+					'C' to ing(Tags.Items.COBBLESTONES_NORMAL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.TRASH_CAN_FLUID.toStack(),
+				"SSS,CBC,CCC",
+				mapOf(
+					'S' to ing(Tags.Items.STONES),
+					'B' to ing(Items.BUCKET),
+					'C' to ing(Tags.Items.COBBLESTONES_NORMAL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.TRASH_CAN_ENERGY.toStack(),
+				"SSS,CRC,CCC",
+				mapOf(
+					'S' to ing(Tags.Items.STONES),
+					'R' to ing(Tags.Items.STORAGE_BLOCKS_REDSTONE),
+					'C' to ing(Tags.Items.COBBLESTONES_NORMAL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ANGEL_BLOCK.toStack(),
+				" G ,FOF",
+				mapOf(
+					'G' to ing(Tags.Items.INGOTS_GOLD),
+					'F' to ing(Tags.Items.FEATHERS),
+					'O' to ing(Tags.Items.OBSIDIANS_NORMAL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.SOLAR_PANEL.toStack(3),
+				"LLL,PRP",
+				mapOf(
+					'L' to ing(Tags.Items.GEMS_LAPIS),
+					'P' to ing(ModBlocks.POLISHED_STONE),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.LUNAR_PANEL.toStack(3),
+				"LLL,PRP",
+				mapOf(
+					'L' to ing(ModItems.LUNAR_REACTIVE_DUST),
+					'P' to ing(ModBlocks.POLISHED_STONE),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
 				)
 			)
 		)
@@ -64,7 +117,38 @@ class ModRecipeProvider(
 		}
 	}
 
-	private fun resonatingRecipes(recipeOutput: RecipeOutput) {
+	private fun buildShapelessRecipes(recipeOutput: RecipeOutput) {
+		val recipes = listOf(
+			shapelessRecipe(
+				ModBlocks.COOLER,
+				listOf(
+					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
+					ing(Items.SNOWBALL),
+					ing(Items.SNOWBALL),
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.SOUND_MUFFLER,
+				listOf(
+					ing(ItemTags.WOOL),
+					ing(Blocks.NOTE_BLOCK)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.MAGICAL_PLANKS,
+				4,
+				listOf(
+					ing(ModBlocks.MAGICAL_WOOD)
+				)
+			)
+		)
+
+		for (recipe in recipes) {
+			recipe.save(recipeOutput)
+		}
+	}
+
+	private fun buildResonatorRecipes(recipeOutput: RecipeOutput) {
 		val recipes = listOf(
 			ResonatorRecipeBuilder(
 				ModBlocks.POLISHED_STONE.asIngredient(),

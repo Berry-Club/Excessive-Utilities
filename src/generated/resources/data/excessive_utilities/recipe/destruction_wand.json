@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "W": {
+      "item": "excessive_utilities:magical_wood"
+    }
+  },
+  "pattern": [
+    " GG",
+    " WG",
+    "W  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:destruction_wand"
+  }
+}
