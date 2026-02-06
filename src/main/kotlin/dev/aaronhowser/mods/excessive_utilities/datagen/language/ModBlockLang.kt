@@ -202,8 +202,6 @@ object ModBlockLang {
 			addBlock(ModBlocks.THICKENED_GLASS, "Thickened Glass")
 			addBlock(ModBlocks.ETHEREAL_GLASS, "Ethereal Glass")
 			addBlock(ModBlocks.INVERTED_ETHEREAL_GLASS, "Ethereal Glass (Inverted)")
-			addBlock(ModBlocks.DARK_ETHEREAL_GLASS, "Dark Ethereal Glass")
-			addBlock(ModBlocks.INVERTED_DARK_ETHEREAL_GLASS, "Dark Ethereal Glass (Inverted)")
 			addBlock(ModBlocks.INEFFABLE_GLASS, "Ineffable Glass")
 			addBlock(ModBlocks.INVERTED_INEFFABLE_GLASS, "Ineffable Glass (Inverted)")
 		}

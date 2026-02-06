@@ -322,6 +322,33 @@ class ModRecipeProvider(
 				mapOf(
 					'G' to ing(ModBlocks.THICKENED_GLASS_BORDERED)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.ETHEREAL_GLASS,
+				8,
+				"GGG,GMG,GGG",
+				mapOf(
+					'G' to ing(Tags.Items.GLASS_BLOCKS),
+					'M' to ing(ModItems.MOON_STONE)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.INEFFABLE_GLASS,
+				8,
+				"GGG,GMG,GGG",
+				mapOf(
+					'G' to ing(ModBlocks.THICKENED_GLASS),
+					'M' to ing(ModItems.MOON_STONE)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.DARK_INEFFABLE_GLASS,
+				8,
+				"GGG,GMG,GGG",
+				mapOf(
+					'G' to ing(Blocks.TINTED_GLASS),
+					'M' to ing(ModItems.MOON_STONE)
+				)
 			)
 		)
 
@@ -502,6 +529,20 @@ class ModRecipeProvider(
 					ing(Tags.Items.GLASS_BLOCKS_COLORLESS),
 					ing(Tags.Items.GLASS_BLOCKS_COLORLESS),
 					ing(Tags.Items.DUSTS_GLOWSTONE)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.INVERTED_ETHEREAL_GLASS,
+				listOf(
+					ing(ModBlocks.ETHEREAL_GLASS),
+					ing(Items.REDSTONE_TORCH)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.INVERTED_INEFFABLE_GLASS,
+				listOf(
+					ing(ModBlocks.INEFFABLE_GLASS),
+					ing(Items.REDSTONE_TORCH)
 				)
 			)
 		)
