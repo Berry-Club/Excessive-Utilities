@@ -1,10 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
+import com.google.gson.JsonObject
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -18,6 +20,44 @@ class ModBlockStateProvider(
 	override fun registerStatesAndModels() {
 		singleTextureBlocks()
 		blackoutCurtain()
+	}
+
+	fun fullCubeCtm(
+		block: Block,
+		center: ResourceLocation,
+		empty: ResourceLocation,
+		horizontal: ResourceLocation,
+		vertical: ResourceLocation,
+		particle: ResourceLocation = empty
+	) {
+
+		val json = JsonObject()
+
+		json.add(
+			"variants",
+			JsonObject().apply {
+				add(
+					"",
+					JsonObject().apply {
+						addProperty("model", "minecraft:block/air")
+					}
+				)
+			}
+		)
+
+		json.addProperty("athena:loader", "athena:ctm")
+
+		json.add(
+			"textures",
+			JsonObject().apply {
+				addProperty("center", center.toString())
+				addProperty("empty", empty.toString())
+				addProperty("horizontal", horizontal.toString())
+				addProperty("vertical", vertical.toString())
+				addProperty("particle", particle.toString())
+			}
+		)
+
 	}
 
 	fun blackoutCurtain() {
