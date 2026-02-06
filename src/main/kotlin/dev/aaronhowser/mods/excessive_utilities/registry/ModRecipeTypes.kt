@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.recipe.resonator.ResonatorRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeType

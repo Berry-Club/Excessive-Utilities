@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.recipe.resonator.ResonatorRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion

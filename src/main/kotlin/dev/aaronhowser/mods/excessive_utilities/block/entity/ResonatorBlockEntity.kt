@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpDrainBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.recipe.resonator.ResonatorRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
