@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:golden_lasso"
+    },
+    {
+      "item": "excessive_utilities:drop_of_evil"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:cursed_lasso"
+  }
+}

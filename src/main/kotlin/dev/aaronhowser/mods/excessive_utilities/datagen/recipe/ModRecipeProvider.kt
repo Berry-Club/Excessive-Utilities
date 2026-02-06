@@ -2,8 +2,10 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -12,6 +14,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
@@ -240,7 +243,10 @@ class ModRecipeProvider(
 				mapOf(
 					'F' to ing(Tags.Items.FEATHERS),
 					'I' to ing(Tags.Items.INGOTS_IRON),
-					'L' to ing(ModItems.GOLDEN_LASSO),
+					'L' to ing(
+						ModItems.GOLDEN_LASSO
+							.withComponent(ModDataComponents.ENTITY_TYPE.get(), EntityType.CHICKEN.builtInRegistryHolder())
+					),
 					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
 				)
 			)
