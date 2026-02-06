@@ -1,0 +1,16 @@
+{
+	"variants": {
+	  "": {
+		"model": "excessive_utilities:block/stoneburnt"
+	  }
+	},
+	
+	"athena:loader": "athena:ctm",
+	"ctm_textures": {
+	  "center": "excessive_utilities:block/stoneburnt/center",
+	  "empty": "excessive_utilities:block/stoneburnt/empty",
+	  "horizontal": "excessive_utilities:block/stoneburnt/horizontal",
+	  "particle": "excessive_utilities:block/stoneburnt/particle",
+	  "vertical": "excessive_utilities:block/stoneburnt/vertical"
+	}
+  }

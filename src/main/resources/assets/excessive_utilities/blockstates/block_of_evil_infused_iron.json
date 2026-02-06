@@ -1,16 +1,16 @@
 {
 	"variants": {
 	  "": {
-		"model": "minecraft:block/air"
+		"model": "excessive_utilities:block/block_of_evil_infused_iron"
 	  }
 	},
 	
 	"athena:loader": "athena:ctm",
 	"ctm_textures": {
-	  "center": "excessive_utilities:block/evil_infused_iron/center",
-	  "empty": "excessive_utilities:block/evil_infused_iron/empty",
-	  "horizontal": "excessive_utilities:block/evil_infused_iron/horizontal",
-	  "particle": "excessive_utilities:block/evil_infused_iron/particle",
-	  "vertical": "excessive_utilities:block/evil_infused_iron/vertical"
+	  "center": "excessive_utilities:block/block_of_evil_infused_iron/center",
+	  "empty": "excessive_utilities:block/block_of_evil_infused_iron/empty",
+	  "horizontal": "excessive_utilities:block/block_of_evil_infused_iron/horizontal",
+	  "particle": "excessive_utilities:block/block_of_evil_infused_iron/particle",
+	  "vertical": "excessive_utilities:block/block_of_evil_infused_iron/vertical"
 	}
   }

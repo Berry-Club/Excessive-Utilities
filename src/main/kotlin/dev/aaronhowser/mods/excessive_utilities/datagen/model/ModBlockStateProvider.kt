@@ -18,9 +18,10 @@ class ModBlockStateProvider(
 	override fun registerStatesAndModels() {
 		singleTextureBlocks()
 		blackoutCurtain()
+		athenaBlocks()
 	}
 
-	fun blackoutCurtain() {
+	private fun blackoutCurtain() {
 		val block = ModBlocks.BLACKOUT_CURTAIN.get()
 
 		val texture = modLoc("block/blackout_curtain")
@@ -132,7 +133,7 @@ class ModBlockStateProvider(
 
 	}
 
-	fun singleTextureBlocks() {
+	private fun singleTextureBlocks() {
 		val blocks = listOf(
 			ModBlocks.ANGEL_BLOCK.get(),
 			ModBlocks.ENDER_CORE.get(),
@@ -150,6 +151,25 @@ class ModBlockStateProvider(
 
 		for (block in blocks) {
 			simpleBlockWithItem(block, cubeAll(block))
+		}
+	}
+
+	private fun athenaBlocks() {
+		val blocks = listOf(
+			ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.get(),
+			ModBlocks.MAGICAL_PLANKS.get(),
+			ModBlocks.QUARTZBURNT.get(),
+			ModBlocks.STONEBURNT.get()
+		)
+
+		for (block in blocks) {
+			val path = BuiltInRegistries.BLOCK.getKey(block).path
+			val texture = modLoc("block/$path/particle")
+
+			val model = models()
+				.cubeAll(name(block), texture)
+
+			simpleBlockItem(block, model)
 		}
 	}
 

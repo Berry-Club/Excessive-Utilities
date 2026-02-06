@@ -1,7 +1,7 @@
 {
 	"variants": {
 	  "": {
-		"model": "minecraft:block/air"
+		"model": "excessive_utilities:block/magical_planks"
 	  }
 	},
 	
