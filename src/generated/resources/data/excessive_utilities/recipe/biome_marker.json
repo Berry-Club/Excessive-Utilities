@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "P": {
+      "tag": "c:dyes/purple"
+    },
+    "S": {
+      "tag": "minecraft:saplings"
+    }
+  },
+  "pattern": [
+    "PIP",
+    "ISI",
+    "PIP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:biome_marker"
+  }
+}

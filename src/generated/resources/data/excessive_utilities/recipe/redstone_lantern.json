@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "minecraft:coals"
+    },
+    "P": {
+      "item": "minecraft:repeater"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "item": "excessive_utilities:polished_stone"
+    }
+  },
+  "pattern": [
+    "RSR",
+    "SCS",
+    "RPR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:redstone_lantern"
+  }
+}
