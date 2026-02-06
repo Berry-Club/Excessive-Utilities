@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.tags.ItemTags
@@ -356,6 +357,29 @@ class ModRecipeProvider(
 					ing(Tags.Items.DUSTS_REDSTONE),
 					ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
 				)
+			),
+			shapelessRecipe(
+				ModItems.SPEED_UPGRADE,
+				listOf(
+					ing(ModItems.UPGRADE_BASE),
+					ing(Tags.Items.INGOTS_GOLD),
+					ing(Tags.Items.STORAGE_BLOCKS_REDSTONE)
+				)
+			),
+			shapelessRecipe(
+				ModItems.STACK_UPGRADE,
+				listOf(
+					ing(ModItems.UPGRADE_BASE),
+					ing(Tags.Items.INGOTS_GOLD),
+					ing(Tags.Items.GEMS_DIAMOND)
+				)
+			),
+			shapelessRecipe(
+				ModItems.WORLD_INTERACTION_UPGRADE,
+				listOf(
+					ing(ModItems.UPGRADE_BASE),
+					ing(Items.GOLDEN_PICKAXE)
+				)
 			)
 		)
 
@@ -423,6 +447,14 @@ class ModRecipeProvider(
 				'I' to ing(ModItems.UNSTABLE_INGOT)
 			)
 		).save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
+
+		nineBlockStorageRecipes(
+			recipeOutput,
+			RecipeCategory.MISC,
+			ModItems.DEMON_INGOT,
+			RecipeCategory.MISC,
+			ModBlocks.BLOCK_OF_DEMON_METAL
+		)
 	}
 
 	private fun modLoc(name: String) = ExcessiveUtilities.modResource(name)

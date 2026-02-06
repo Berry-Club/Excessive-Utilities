@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_demon_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:demon_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:block_of_demon_metal"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_demon_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:block_of_demon_metal"
+    ]
+  }
+}

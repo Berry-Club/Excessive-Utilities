@@ -155,6 +155,10 @@ object ModItems : AaronItemRegistry() {
 
 	val SPEED_UPGRADE =
 		basic("speed_upgrade")
+	val SPEED_UPGRADE_MAGICAL =
+		basic("speed_upgrade_magical")
+	val SPEED_UPGRADE_ULTIMATE =
+		basic("speed_upgrade_ultimate")
 	val STACK_UPGRADE =
 		basic("stack_upgrade")
 	val WORLD_INTERACTION_UPGRADE =
