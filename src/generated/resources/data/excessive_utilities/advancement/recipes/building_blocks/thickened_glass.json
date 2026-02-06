@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sandy_glass": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:sandy_glass"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "excessive_utilities:thickened_glass"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_sandy_glass"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "excessive_utilities:thickened_glass"
+    ]
+  }
+}

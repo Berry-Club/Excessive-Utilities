@@ -32,6 +32,7 @@ class ModRecipeProvider(
 		buildShapelessRecipes(recipeOutput)
 		buildResonatorRecipes(recipeOutput)
 		namedRecipes(recipeOutput)
+		buildSmeltingRecipes(recipeOutput)
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput) {
@@ -288,6 +289,23 @@ class ModRecipeProvider(
 						)
 					)
 				)
+			),
+			shapedRecipe(
+				ModItems.POWER_MANAGER,
+				" R,SS,SS",
+				mapOf(
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					'S' to ing(Tags.Items.STONES)
+				)
+			),
+			shapedRecipe(
+				ModItems.BAG_OF_HOLDING,
+				"GGG,CMC,GGG",
+				mapOf(
+					'G' to ing(Tags.Items.INGOTS_GOLD),
+					'C' to ing(Tags.Items.CHESTS_WOODEN),
+					'M' to ing(ModBlocks.MAGICAL_WOOD)
+				)
 			)
 		)
 
@@ -543,6 +561,10 @@ class ModRecipeProvider(
 			RecipeCategory.MISC,
 			ModBlocks.BLOCK_OF_ENCHANTED_METAL
 		)
+	}
+
+	private fun buildSmeltingRecipes(recipeOutput: RecipeOutput) {
+		smeltingResultFromBase(recipeOutput, ModBlocks.THICKENED_GLASS, ModBlocks.SANDY_GLASS)
 	}
 
 	private fun modLoc(name: String) = ExcessiveUtilities.modResource(name)

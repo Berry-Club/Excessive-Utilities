@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:chests/wooden"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "M": {
+      "item": "excessive_utilities:magical_wood"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "CMC",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:bag_of_holding"
+  }
+}
