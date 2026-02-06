@@ -834,6 +834,68 @@ class ModRecipeProvider(
 					'S' to ing(ItemTags.SAPLINGS),
 					'M' to ing(ModBlocks.MACHINE_BLOCK)
 				)
+			),
+			shapedRecipe(
+				ModItems.KIKOKU,
+				"O,O,S",
+				mapOf(
+					'O' to ing(ModItems.OPINIUM_CORE),
+					'S' to ing(Tags.Items.RODS_WOODEN)
+				)
+			),
+			shapedRecipe(
+				ModItems.FLAT_TRANSFER_NODE_ITEMS,
+				8,
+				"A, ,N",
+				mapOf(
+					'A' to ing(ItemTags.ANVIL),
+					'N' to ing(ModBlocks.ITEM_TRANSFER_NODE)
+				)
+			),
+			shapedRecipe(
+				ModItems.FLAT_TRANSFER_NODE_FLUIDS,
+				8,
+				"A, ,N",
+				mapOf(
+					'A' to ing(ItemTags.ANVIL),
+					'N' to ing(ModBlocks.FLUID_TRANSFER_NODE)
+				)
+			),
+			shapedRecipe(
+				ModItems.COMPOUND_BOW,
+				" OS,I S, OS",
+				mapOf(
+					'O' to ing(ModItems.OPINIUM_CORE),
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'S' to ing(Tags.Items.STRINGS)
+				)
+			),
+			shapedRecipe(
+				ModItems.FIRE_AXE,
+				"OO,OS, S",
+				mapOf(
+					'O' to ing(ModItems.OPINIUM_CORE),
+					'S' to ing(Tags.Items.RODS_WOODEN)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_PORCUPINE,
+				"SES,EME,SES",
+				mapOf(
+					'S' to ing(Tags.Items.STRINGS),
+					'E' to ing(Tags.Items.ENDER_PEARLS),
+					'M' to ing(ModItems.POWER_MANAGER)
+				)
+			),
+			shapedRecipe(
+				ModItems.LUX_SABER,
+				"EGE,ECE,ERE",
+				mapOf(
+					'E' to ing(ModItems.EVIL_INFUSED_IRON_INGOT),
+					'G' to ing(Tags.Items.GLASS_BLOCKS),
+					'C' to ing(ModItems.SUN_CRYSTAL),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
 			)
 		)
 

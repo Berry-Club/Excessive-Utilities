@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "O": {
+      "item": "excessive_utilities:opinium_core"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    "OO",
+    "OS",
+    " S"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:fire_axe"
+  }
+}

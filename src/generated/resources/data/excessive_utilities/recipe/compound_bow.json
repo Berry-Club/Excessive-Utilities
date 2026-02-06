@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "O": {
+      "item": "excessive_utilities:opinium_core"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    " OS",
+    "I S",
+    " OS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:compound_bow"
+  }
+}
