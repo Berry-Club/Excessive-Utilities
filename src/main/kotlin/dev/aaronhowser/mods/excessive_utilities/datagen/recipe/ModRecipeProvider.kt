@@ -1187,6 +1187,14 @@ class ModRecipeProvider(
 					ing(Items.ENCHANTING_TABLE),
 					ing(Items.ENCHANTING_TABLE)
 				)
+			),
+			shapelessRecipe(
+				ModBlocks.TRASH_CAN_CHEST,
+				listOf(
+					ing(ModBlocks.TRASH_CAN),
+					ing(Tags.Items.CHESTS_WOODEN),
+					ing(Tags.Items.DUSTS_REDSTONE)
+				)
 			)
 		)
 
@@ -1310,6 +1318,95 @@ class ModRecipeProvider(
 				ing(ModBlocks.MINI_CHEST),
 			)
 		).save(recipeOutput, modLoc("chest_from_mini_chests"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" R ,RIR, R ",
+			mapOf(
+				'R' to ing(ModItems.RED_COAL),
+				'I' to ing(Tags.Items.STORAGE_BLOCKS_IRON)
+			)
+		).save(recipeOutput, modLoc("opinion_core_pathetic"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,IGI, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'I' to ing(Tags.Items.STORAGE_BLOCKS_IRON),
+				'G' to ing(Tags.Items.STORAGE_BLOCKS_GOLD)
+			)
+		).save(recipeOutput, modLoc("opinion_core_mediocre"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,GDG, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'G' to ing(Tags.Items.STORAGE_BLOCKS_GOLD),
+				'D' to ing(Tags.Items.STORAGE_BLOCKS_DIAMOND)
+			)
+		).save(recipeOutput, modLoc("opinion_core_passable"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,DED, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'D' to ing(Tags.Items.STORAGE_BLOCKS_DIAMOND),
+				'E' to ing(Tags.Items.STORAGE_BLOCKS_EMERALD)
+			)
+		).save(recipeOutput, modLoc("opinion_core_decent"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,ECE, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'E' to ing(Tags.Items.STORAGE_BLOCKS_EMERALD),
+				'C' to ing(Blocks.CHORUS_FLOWER)
+			)
+		).save(recipeOutput, modLoc("opinion_core_good"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,CBC, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'C' to ing(Blocks.CHORUS_FLOWER),
+				'B' to ing(Items.EXPERIENCE_BOTTLE)
+			)
+		).save(recipeOutput, modLoc("opinion_core_damn_good"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,BEB, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'B' to ing(Items.EXPERIENCE_BOTTLE),
+				'E' to ing(Items.ELYTRA)
+			)
+		).save(recipeOutput, modLoc("opinion_core_amazing"))
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,ESE, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'E' to ing(Items.ELYTRA),
+				'S' to ing(Items.NETHER_STAR)
+			)
+		)
+
+		shapedRecipe(
+			ModItems.OPINIUM_CORE,
+			" O ,SIS, O ",
+			mapOf(
+				'O' to ing(ModItems.OPINIUM_CORE),
+				'S' to ing(Items.NETHER_STAR),
+				'I' to ing(Items.IRON_INGOT)
+			)
+		).save(recipeOutput, modLoc("opinion_core_perfected"))
 
 	}
 
