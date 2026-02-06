@@ -50,8 +50,8 @@ object ModItems : AaronItemRegistry() {
 		basic("semi_unstable_nugget")
 	val MOBIUS_INGOT =
 		basic("mobius_ingot")
-	val KLEIN_FLASK =
-		basic("klein_flask")
+	val KLEIN_BOTTLE =
+		basic("klein_bottle")
 
 	// Plants
 
@@ -108,6 +108,8 @@ object ModItems : AaronItemRegistry() {
 		basic("destruction_wand")
 	val CREATIVE_DESTRUCTION_WAND =
 		basic("creative_destruction_wand")
+	val INDEXER_REMOTE =
+		basic("indexer_remote")
 
 	// Weapons
 

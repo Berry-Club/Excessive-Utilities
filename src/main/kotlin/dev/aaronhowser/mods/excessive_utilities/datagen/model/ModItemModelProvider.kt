@@ -122,7 +122,7 @@ class ModItemModelProvider(
 			ModItems.UNSTABLE_INGOT.get(),
 			ModItems.SEMI_UNSTABLE_NUGGET.get(),
 			ModItems.MOBIUS_INGOT.get(),
-			ModItems.KLEIN_FLASK.get(),
+			ModItems.KLEIN_BOTTLE.get(),
 			ModItems.BIOME_MARKER.get(),
 			ModItems.COMPOUND_BOW.get(),
 			ModItems.CREATIVE_BUILDERS_WAND.get(),

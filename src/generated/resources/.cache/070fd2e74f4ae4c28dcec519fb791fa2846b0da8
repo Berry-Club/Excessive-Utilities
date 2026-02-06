@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-05T21:41:24.5685578	Item Models: excessive_utilities
+// 1.21.1	2026-02-05T21:54:35.5563765	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
 fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/bedrockium_ingot.json
@@ -30,6 +30,7 @@ c5fa7d675f986a8739aa3f9708895ecffe138edb assets/excessive_utilities/models/item/
 d95554acff847840270ebf3a87526b05c0455410 assets/excessive_utilities/models/item/golden_sickle.json
 ea54a7efe61eb07eb93d89422b6804e7aa21e6db assets/excessive_utilities/models/item/healing_axe.json
 b0572e7fd1269eb34216a41f6af904259993abec assets/excessive_utilities/models/item/heating_coil.json
+b8ce398d5409c61d511dcc6cdbb912fca2dd9641 assets/excessive_utilities/models/item/indexer_remote.json
 1682ce328bb115e4d1ef2446372a9e676dc9f2c0 assets/excessive_utilities/models/item/iron_sickle.json
 1e13a69390961ab8ee787c4bc2b7f1c76ec8f9a9 assets/excessive_utilities/models/item/item_filter.json
 34c063c725f8c913b5c1393175528bc6712d3001 assets/excessive_utilities/models/item/magical_apple.json

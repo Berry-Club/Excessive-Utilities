@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "excessive_utilities:eye_of_redstone"
+    },
+    "F": {
+      "item": "minecraft:item_frame"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "SES",
+    "SFS",
+    "SES"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:indexer_remote"
+  }
+}

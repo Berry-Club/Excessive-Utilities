@@ -467,6 +467,24 @@ class ModRecipeProvider(
 					'E' to ing(Tags.Items.GEMS_DIAMOND)
 				)
 			),
+			shapedRecipe(
+				ModBlocks.INDEXER,
+				"SRS,SFS,SRS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					'F' to ing(Items.ITEM_FRAME)
+				)
+			),
+			shapedRecipe(
+				ModItems.INDEXER_REMOTE,
+				"SES,SFS,SES",
+				mapOf(
+					'S' to ing(Tags.Items.STONES),
+					'E' to ing(ModItems.EYE_OF_REDSTONE),
+					'F' to ing(Items.ITEM_FRAME)
+				)
+			)
 		)
 
 		for (recipe in recipes) {
@@ -669,6 +687,38 @@ class ModRecipeProvider(
 					ing(ModBlocks.TRANSFER_PIPE),
 					ing(ModItems.ITEM_FILTER),
 					ing(Tags.Items.DUSTS_REDSTONE)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.SCANNER,
+				listOf(
+					ing(Blocks.OBSERVER),
+					ing(Tags.Items.DUSTS_REDSTONE),
+					ing(Items.SPIDER_EYE)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.MECHANICAL_MINER,
+				listOf(
+					ing(Blocks.DROPPER),
+					ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					ing(Items.IRON_PICKAXE)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.MECHANICAL_USER,
+				listOf(
+					ing(Blocks.DROPPER),
+					ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					ing(Items.LEVER)
+				)
+			),
+			shapelessRecipe(
+				ModItems.KLEIN_BOTTLE,
+				listOf(
+					ing(Items.GLASS_BOTTLE),
+					ing(Tags.Items.ENDER_PEARLS),
+					ing(Tags.Items.ENDER_PEARLS),
 				)
 			)
 		)

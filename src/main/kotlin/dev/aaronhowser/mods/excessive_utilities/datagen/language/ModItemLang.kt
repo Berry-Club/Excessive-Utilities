@@ -28,7 +28,7 @@ object ModItemLang {
 			addItem(ModItems.UNSTABLE_INGOT, "Unstable Ingot")
 			addItem(ModItems.SEMI_UNSTABLE_NUGGET, "Semi-Unstable Nugget")
 			addItem(ModItems.MOBIUS_INGOT, "Mobius \"Unstable/Stable\" Ingot")
-			addItem(ModItems.KLEIN_FLASK, "Klein Flask")
+			addItem(ModItems.KLEIN_BOTTLE, "Klein Bottle")
 
 			addItem(ModItems.ENDER_LILY, "Ender Lily")
 

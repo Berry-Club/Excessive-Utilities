@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "tag": "c:ender_pearls"
+    },
+    {
+      "tag": "c:ender_pearls"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:klein_bottle"
+  }
+}

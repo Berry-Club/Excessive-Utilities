@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "minecraft:dropper"
+    },
+    {
+      "item": "excessive_utilities:resonating_redstone_crystal"
+    },
+    {
+      "item": "minecraft:lever"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:mechanical_user"
+  }
+}
