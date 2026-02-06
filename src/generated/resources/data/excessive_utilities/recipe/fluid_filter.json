@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "c:gems/lapis"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    },
+    "T": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    "LSL",
+    "STS",
+    "LSL"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:fluid_filter"
+  }
+}

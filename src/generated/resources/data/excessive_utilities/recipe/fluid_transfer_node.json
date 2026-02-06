@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:bucket"
+    },
+    "P": {
+      "item": "excessive_utilities:transfer_pipe"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "RPR",
+    "SCS"
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:fluid_transfer_node"
+  }
+}

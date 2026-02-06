@@ -385,6 +385,88 @@ class ModRecipeProvider(
 					'M' to ing(ModBlocks.MAGICAL_WOOD)
 				)
 			),
+			shapedRecipe(
+				ModItems.ITEM_FILTER,
+				"RSR,STS,RSR",
+				mapOf(
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'S' to ing(Tags.Items.RODS_WOODEN),
+					'T' to ing(Tags.Items.STRINGS)
+				)
+			),
+			shapedRecipe(
+				ModItems.FLUID_FILTER,
+				"LSL,STS,LSL",
+				mapOf(
+					'L' to ing(Tags.Items.GEMS_LAPIS),
+					'S' to ing(Tags.Items.RODS_WOODEN),
+					'T' to ing(Tags.Items.STRINGS)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ITEM_TRANSFER_NODE,
+				4,
+				"RPR,SCS",
+				mapOf(
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'P' to ing(ModBlocks.TRANSFER_PIPE),
+					'S' to ing(Tags.Items.STONES),
+					'C' to ing(Tags.Items.CHESTS_WOODEN)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.TRANSFER_FILTER,
+				4,
+				"RFR,SPS",
+				mapOf(
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'F' to ing(ModItems.ITEM_FILTER),
+					'S' to ing(Tags.Items.STONES),
+					'P' to ing(ModBlocks.TRANSFER_PIPE)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.FLUID_TRANSFER_NODE,
+				4,
+				"RPR,SCS",
+				mapOf(
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'P' to ing(ModBlocks.TRANSFER_PIPE),
+					'S' to ing(Tags.Items.STONES),
+					'C' to ing(Items.BUCKET)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENERGY_TRANSFER_NODE,
+				4,
+				"RPR,GBG",
+				mapOf(
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'P' to ing(ModBlocks.TRANSFER_PIPE),
+					'G' to ing(Tags.Items.INGOTS_GOLD),
+					'B' to ing(Tags.Items.STORAGE_BLOCKS_REDSTONE)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ITEM_RETRIEVAL_NODE,
+				2,
+				" P ,NEN, P ",
+				mapOf(
+					'P' to ing(Tags.Items.ENDER_PEARLS),
+					'N' to ing(ModBlocks.ITEM_TRANSFER_NODE),
+					'E' to ing(Tags.Items.GEMS_EMERALD)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.FLUID_RETRIEVAL_NODE,
+				2,
+				" P ,NEN, P ",
+				mapOf(
+					'P' to ing(Tags.Items.ENDER_PEARLS),
+					'N' to ing(ModBlocks.FLUID_TRANSFER_NODE),
+					'E' to ing(Tags.Items.GEMS_DIAMOND)
+				)
+			),
 		)
 
 		for (recipe in recipes) {
@@ -580,6 +662,15 @@ class ModRecipeProvider(
 					ing(Items.REDSTONE_TORCH)
 				)
 			),
+			shapelessRecipe(
+				ModBlocks.TRANSFER_PIPE_FILTER,
+				4,
+				listOf(
+					ing(ModBlocks.TRANSFER_PIPE),
+					ing(ModItems.ITEM_FILTER),
+					ing(Tags.Items.DUSTS_REDSTONE)
+				)
+			)
 		)
 
 		for (recipe in recipes) {

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "P": {
+      "item": "excessive_utilities:transfer_pipe"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "RPR",
+    "GBG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:energy_transfer_node"
+  }
+}
