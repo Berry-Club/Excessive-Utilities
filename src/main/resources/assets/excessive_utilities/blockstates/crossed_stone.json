@@ -1,0 +1,16 @@
+{
+	"variants": {
+	  "": {
+		"model": "excessive_utilities:block/crossed_stone"
+	  }
+	},
+	
+	"athena:loader": "athena:ctm",
+	"ctm_textures": {
+	  "center": "excessive_utilities:block/crossed_stone/center",
+	  "empty": "excessive_utilities:block/crossed_stone/empty",
+	  "horizontal": "excessive_utilities:block/crossed_stone/horizontal",
+	  "particle": "excessive_utilities:block/crossed_stone/particle",
+	  "vertical": "excessive_utilities:block/crossed_stone/vertical"
+	}
+  }

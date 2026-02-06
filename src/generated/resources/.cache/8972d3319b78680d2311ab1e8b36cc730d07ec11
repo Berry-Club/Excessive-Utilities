@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-06T00:27:59.1309571	Block States: excessive_utilities
+// 1.21.1	2026-02-06T00:31:09.6058971	Block States: excessive_utilities
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 b234a9e9783bbcba2f25a6fb38362e61ecabf128 assets/excessive_utilities/blockstates/bedrock_bricks.json
 a1af58ae4fea69980a2c763586a855cd236e1152 assets/excessive_utilities/blockstates/bedrock_cobblestone.json
@@ -27,6 +27,7 @@ d789b98b7c6a387f582ab9acbe79d0adaf66dd83 assets/excessive_utilities/models/block
 29126fd8b5e793dd5cc712250fcee39843353f65 assets/excessive_utilities/models/block/border_stone.json
 c824a11567f0110bf2bfbdde3185ac052c7b1d88 assets/excessive_utilities/models/block/creative_energy_source.json
 3bb08b1a0cfcf78459df1384e3dc5d2464b5ca7a assets/excessive_utilities/models/block/creative_harvest.json
+f74409e15c5672118b7fec50f30181fa9e66c6f2 assets/excessive_utilities/models/block/crossed_stone.json
 42a0956eac15bc4653a99f783d177298b093dbcf assets/excessive_utilities/models/block/dark_ineffable_glass.json
 a9d700223c2a584299a49ecc090b20de6d91e11b assets/excessive_utilities/models/block/deep_dark_portal.json
 84e97f576e7dd3e631838390c2043fda8dcaac1d assets/excessive_utilities/models/block/ender_core.json
@@ -49,6 +50,7 @@ ec15b7b31d27465c66ae2a975492e2d1ee277aa9 assets/excessive_utilities/models/item/
 6a76542a3155ab00ef5e95948501baf1c108879c assets/excessive_utilities/models/item/border_stone.json
 c7d5f97a5c6ec69740fb0138b8491980588cf26e assets/excessive_utilities/models/item/creative_energy_source.json
 696e3f10642d4e050cdecb36eb0e0760a3222e8b assets/excessive_utilities/models/item/creative_harvest.json
+17a536981f755f5b6e5a55380283097dd7642a42 assets/excessive_utilities/models/item/crossed_stone.json
 6d787e41817ebe9e667f0c7d439266c31aac05f7 assets/excessive_utilities/models/item/dark_ineffable_glass.json
 355af476a0ae50e04a0173eb134a33eb90a0cd38 assets/excessive_utilities/models/item/deep_dark_portal.json
 23b17f7cf99a6d852177f2d7a86cc271c7c3081c assets/excessive_utilities/models/item/ender_core.json

@@ -1,0 +1,16 @@
+{
+	"variants": {
+	  "": {
+		"model": "excessive_utilities:block/ineffable_glass"
+	  }
+	},
+	
+	"athena:loader": "athena:ctm",
+	"ctm_textures": {
+	  "center": "excessive_utilities:block/ineffable_glass/center",
+	  "empty": "excessive_utilities:block/ineffable_glass/empty",
+	  "horizontal": "excessive_utilities:block/ineffable_glass/horizontal",
+	  "particle": "excessive_utilities:block/ineffable_glass/particle",
+	  "vertical": "excessive_utilities:block/ineffable_glass/vertical"
+	}
+  }
