@@ -43,6 +43,7 @@ class EntityLassoItem(
 		val customNbt = CustomData.of(entityNbt)
 
 		stack.set(ModDataComponents.ENTITY, customNbt)
+		stack.set(ModDataComponents.ENTITY_TYPE, interactionTarget.type.builtInRegistryHolder())
 
 		interactionTarget.remove(Entity.RemovalReason.DISCARDED)
 
@@ -82,6 +83,8 @@ class EntityLassoItem(
 		level.addFreshEntity(entity)
 
 		stack.remove(ModDataComponents.ENTITY)
+		stack.remove(ModDataComponents.ENTITY_TYPE)
+
 		return InteractionResult.SUCCESS
 	}
 
@@ -95,7 +98,7 @@ class EntityLassoItem(
 			holdingEntity: LivingEntity?,
 			int: Int
 		): Float {
-			return if (stack.has(ModDataComponents.ENTITY)) 1f else 0f
+			return if (stack.has(ModDataComponents.ENTITY) || stack.has(ModDataComponents.ENTITY_TYPE)) 1f else 0f
 		}
 	}
 
