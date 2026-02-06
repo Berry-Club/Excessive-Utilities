@@ -144,7 +144,6 @@ class ModBlockStateProvider(
 			ModBlocks.DEEP_DARK_PORTAL.get(),
 			ModBlocks.BLOCK_OF_DEMON_METAL.get(),
 			ModBlocks.BLOCK_OF_ENCHANTED_METAL.get(),
-			ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.get(),
 			ModBlocks.POWER_OVERLOAD.get(),
 			ModBlocks.SOUND_MUFFLER.get()
 		)

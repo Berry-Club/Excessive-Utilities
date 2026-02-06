@@ -412,6 +412,12 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("block_of_bedrockium")
 	val BLOCK_OF_UNSTABLE_INGOT =
 		basicBlock("block_of_unstable_ingot")
+	val BLOCK_OF_EVIL_INFUSED_IRON =
+		basicBlock("block_of_evil_infused_iron")
+	val BLOCK_OF_DEMON_METAL =
+		basicBlock("block_of_demon_metal")
+	val BLOCK_OF_ENCHANTED_METAL =
+		basicBlock("block_of_enchanted_metal")
 	val POLISHED_STONE =
 		basicBlock("polished_stone")
 	val BORDER_STONE =
@@ -450,8 +456,6 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("bedrock_slabs")
 	val BLUE_QUARTZ =
 		basicBlock("blue_quartz")
-	val BLOCK_OF_EVIL_INFUSED_IRON =
-		basicBlock("block_of_evil_infused_iron")
 	val STONEBURNT =
 		basicBlock("stoneburnt")
 	val TRUCHET =
@@ -464,10 +468,6 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("magical_planks")
 	val DIAGONAL_WOOD =
 		basicBlock("diagonal_wood")
-	val BLOCK_OF_DEMON_METAL =
-		basicBlock("block_of_demon_metal")
-	val BLOCK_OF_ENCHANTED_METAL =
-		basicBlock("block_of_enchanted_metal")
 
 	// Glass
 

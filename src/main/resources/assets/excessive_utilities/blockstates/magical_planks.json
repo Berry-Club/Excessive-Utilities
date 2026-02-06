@@ -1,0 +1,16 @@
+{
+	"variants": {
+	  "": {
+		"model": "minecraft:block/air"
+	  }
+	},
+	
+	"athena:loader": "athena:ctm",
+	"ctm_textures": {
+	  "center": "excessive_utilities:block/magical_planks/center",
+	  "empty": "excessive_utilities:block/magical_planks/empty",
+	  "horizontal": "excessive_utilities:block/magical_planks/horizontal",
+	  "particle": "excessive_utilities:block/magical_planks/particle",
+	  "vertical": "excessive_utilities:block/magical_planks/vertical"
+	}
+  }
