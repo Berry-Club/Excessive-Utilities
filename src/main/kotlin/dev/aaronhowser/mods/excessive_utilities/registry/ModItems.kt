@@ -52,6 +52,8 @@ object ModItems : AaronItemRegistry() {
 		basic("mobius_ingot")
 	val KLEIN_FLASK =
 		basic("klein_flask")
+	val CONTRACT =
+		basic("contract")
 
 	// Plants
 

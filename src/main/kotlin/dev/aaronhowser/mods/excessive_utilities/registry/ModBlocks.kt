@@ -220,6 +220,27 @@ object ModBlocks : AaronBlockRegistry() {
 	val TRASH_CAN_FLUID =
 		basicBlock("trash_can_fluid")
 
+	// Transfer
+
+	val TRANSFER_PIPE =
+		basicBlock("transfer_pipe")
+	val ITEM_TRANSFER_NODE =
+		basicBlock("item_transfer_node")
+	val FLUID_TRANSFER_NODE =
+		basicBlock("fluid_transfer_node")
+	val ENERGY_TRANSFER_NODE =
+		basicBlock("energy_transfer_node")
+	val ITEM_RETRIEVAL_NODE =
+		basicBlock("item_retrieval_node")
+	val FLUID_RETRIEVAL_NODE =
+		basicBlock("fluid_retrieval_node")
+	val ENERGY_RETRIEVAL_NODE =
+		basicBlock("energy_retrieval_node")
+	val TRANSFER_FILTER =
+		basicBlock("transfer_filter")
+	val TRANSFER_PIPE_FILTER =
+		basicBlock("transfer_pipe_filter")
+
 	// FE Generators
 
 	val CREATIVE_ENERGY_SOURCE =

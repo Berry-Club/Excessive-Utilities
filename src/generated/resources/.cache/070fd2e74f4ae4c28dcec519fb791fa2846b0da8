@@ -1,10 +1,11 @@
-// 1.21.1	2026-02-05T21:03:10.2611132	Item Models: excessive_utilities
+// 1.21.1	2026-02-05T21:39:40.1469303	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
 fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/bedrockium_ingot.json
 2a20ffb5814ad920a9053a2d8493d635a1ff5cd4 assets/excessive_utilities/models/item/breadth_first_search_upgrade.json
 51775dc4da89f0a39a0faf3cf0059f133feb6307 assets/excessive_utilities/models/item/builders_wand.json
 89dd7a013f8b2cd71d05f4658dddeccc7d71d873 assets/excessive_utilities/models/item/chicken_wing_ring.json
+9069a08e1d3463baca7e430bc5202112fc74ad02 assets/excessive_utilities/models/item/contract.json
 50270e0fd544b58345ed8bff0444e898efc7063f assets/excessive_utilities/models/item/creative_upgrade.json
 0f3638592a59c1971bffbeccd734601cefa6d002 assets/excessive_utilities/models/item/cursed_lasso.json
 ad7c6b9dd8b18f6efe22bb57b620edba375d7973 assets/excessive_utilities/models/item/cursed_lasso_filled.json

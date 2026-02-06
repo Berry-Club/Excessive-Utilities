@@ -349,7 +349,42 @@ class ModRecipeProvider(
 					'G' to ing(Blocks.TINTED_GLASS),
 					'M' to ing(ModItems.MOON_STONE)
 				)
-			)
+			),
+			shapedRecipe(
+				ModBlocks.TRANSFER_PIPE,
+				64,
+				"SSS,GRG,SSS",
+				mapOf(
+					'S' to ing(Items.STONE_SLAB),
+					'G' to ing(Tags.Items.GLASS_BLOCKS),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.PLAYER_CHEST,
+				"SSS,SES,SRS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'E' to ing(Tags.Items.CHESTS_ENDER),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
+			),
+			shapedRecipe(
+				ModItems.WRENCH,
+				" DI, IR,I  ",
+				mapOf(
+					'D' to ing(Tags.Items.DYES_RED),
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE)
+				)
+			),
+			shapedRecipe(
+				ModItems.MAGICAL_BOOMERANG,
+				" M ,M M",
+				mapOf(
+					'M' to ing(ModBlocks.MAGICAL_WOOD)
+				)
+			),
 		)
 
 		for (recipe in recipes) {
@@ -543,6 +578,15 @@ class ModRecipeProvider(
 				listOf(
 					ing(ModBlocks.INEFFABLE_GLASS),
 					ing(Items.REDSTONE_TORCH)
+				)
+			),
+			shapelessRecipe(
+				ModItems.CONTRACT,
+				listOf(
+					ing(Tags.Items.FEATHERS),
+					ing(Items.PAPER),
+					ing(Items.GLASS_BOTTLE),
+					ing(Items.INK_SAC)
 				)
 			)
 		)

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:dyes/red"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    " DI",
+    " IR",
+    "I  "
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:wrench"
+  }
+}
