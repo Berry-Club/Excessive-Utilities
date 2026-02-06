@@ -109,6 +109,62 @@ class ModRecipeProvider(
 					'P' to ing(ModBlocks.POLISHED_STONE),
 					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.LAVA_MILL.toStack(),
+				"SSS,SRS,SGS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					'G' to ing(Tags.Items.INGOTS_GOLD)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.WATER_MILL.toStack(),
+				"SSS,GRG,SSS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					'G' to ing(ModItems.REDSTONE_GEAR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.WIND_MILL.toStack(),
+				"SSS, GR,SSS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					'G' to ing(ModItems.REDSTONE_GEAR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.FIRE_MILL.toStack(),
+				"SRS,SGS,SFS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					'G' to ing(ModItems.REDSTONE_GEAR),
+					'F' to ing(Tags.Items.FENCES_NETHER_BRICK)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.MANUAL_MILL.toStack(),
+				" G ,SRS",
+				mapOf(
+					'G' to ing(ModItems.REDSTONE_GEAR),
+					'S' to ing(ModBlocks.POLISHED_STONE),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.DRAGON_EGG_MILL.toStack(),
+				"SGS,NGN,SIS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'G' to ing(ModItems.REDSTONE_GEAR),
+					'N' to ing(Items.NETHER_STAR),
+					'I' to ing(ModItems.EYE_OF_REDSTONE)
+				)
 			)
 		)
 
