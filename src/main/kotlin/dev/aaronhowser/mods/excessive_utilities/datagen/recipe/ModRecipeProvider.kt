@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
@@ -26,6 +27,7 @@ class ModRecipeProvider(
 		buildShapedRecipes(recipeOutput)
 		buildShapelessRecipes(recipeOutput)
 		buildResonatorRecipes(recipeOutput)
+		namedRecipes(recipeOutput)
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput) {
@@ -196,6 +198,22 @@ class ModRecipeProvider(
 					'I' to ing(Tags.Items.INGOTS_IRON),
 					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
 				)
+			),
+			shapedRecipe(
+				ModItems.REDSTONE_GEAR.toStack(),
+				" T ,TPT, T ",
+				mapOf(
+					'T' to ing(Items.REDSTONE_TORCH),
+					'P' to ing(ItemTags.PLANKS)
+				)
+			),
+			shapedRecipe(
+				ModItems.MOON_STONE,
+				"LLL,LDL,LLL",
+				mapOf(
+					'L' to ing(ModItems.LUNAR_REACTIVE_DUST),
+					'D' to ing(Tags.Items.GEMS_DIAMOND)
+				)
 			)
 		)
 
@@ -330,6 +348,14 @@ class ModRecipeProvider(
 					ing(Tags.Items.DUSTS_REDSTONE),
 					ing(Tags.Items.DUSTS_REDSTONE),
 				)
+			),
+			shapelessRecipe(
+				ModItems.EYE_OF_REDSTONE,
+				listOf(
+					ing(Tags.Items.ENDER_PEARLS),
+					ing(Tags.Items.DUSTS_REDSTONE),
+					ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
 			)
 		)
 
@@ -386,5 +412,19 @@ class ModRecipeProvider(
 			recipe.save(recipeOutput)
 		}
 	}
+
+	private fun namedRecipes(recipeOutput: RecipeOutput) {
+		shapedRecipe(
+			ModItems.MOON_STONE,
+			9,
+			"LLL,LIL,LLL",
+			mapOf(
+				'L' to ing(ModItems.LUNAR_REACTIVE_DUST),
+				'I' to ing(ModItems.UNSTABLE_INGOT)
+			)
+		).save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
+	}
+
+	private fun modLoc(name: String) = ExcessiveUtilities.modResource(name)
 
 }

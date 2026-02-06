@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "excessive_utilities:unstable_ingot"
+    },
+    "L": {
+      "item": "excessive_utilities:lunar_reactive_dust"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "LIL",
+    "LLL"
+  ],
+  "result": {
+    "count": 9,
+    "id": "excessive_utilities:moon_stone"
+  }
+}
