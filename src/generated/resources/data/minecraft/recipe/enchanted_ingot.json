@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:block_of_enchanted_metal"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "excessive_utilities:enchanted_ingot"
+  }
+}

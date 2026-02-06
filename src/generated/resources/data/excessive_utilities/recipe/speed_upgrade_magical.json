@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "excessive_utilities:magical_apple"
+    },
+    "I": {
+      "item": "excessive_utilities:enchanted_ingot"
+    },
+    "U": {
+      "item": "excessive_utilities:speed_upgrade"
+    }
+  },
+  "pattern": [
+    "AIA",
+    "IUI",
+    "AIA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:speed_upgrade_magical"
+  }
+}

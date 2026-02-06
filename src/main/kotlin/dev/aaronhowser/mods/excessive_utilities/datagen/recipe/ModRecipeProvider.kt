@@ -215,6 +215,24 @@ class ModRecipeProvider(
 					'L' to ing(ModItems.LUNAR_REACTIVE_DUST),
 					'D' to ing(Tags.Items.GEMS_DIAMOND)
 				)
+			),
+			shapedRecipe(
+				ModItems.SPEED_UPGRADE_MAGICAL,
+				"AIA,IUI,AIA",
+				mapOf(
+					'A' to ing(ModItems.MAGICAL_APPLE),
+					'I' to ing(ModItems.ENCHANTED_INGOT),
+					'U' to ing(ModItems.SPEED_UPGRADE)
+				)
+			),
+			shapedRecipe(
+				ModItems.SPEED_UPGRADE_ULTIMATE,
+				"EIE,IUI,EIE",
+				mapOf(
+					'E' to ing(ModItems.DROP_OF_EVIL),
+					'I' to ing(ModItems.EVIL_INFUSED_IRON_INGOT),
+					'U' to ing(ModItems.SPEED_UPGRADE_MAGICAL)
+				)
 			)
 		)
 
@@ -454,6 +472,14 @@ class ModRecipeProvider(
 			ModItems.DEMON_INGOT,
 			RecipeCategory.MISC,
 			ModBlocks.BLOCK_OF_DEMON_METAL
+		)
+
+		nineBlockStorageRecipes(
+			recipeOutput,
+			RecipeCategory.MISC,
+			ModItems.ENCHANTED_INGOT,
+			RecipeCategory.MISC,
+			ModBlocks.BLOCK_OF_ENCHANTED_METAL
 		)
 	}
 
