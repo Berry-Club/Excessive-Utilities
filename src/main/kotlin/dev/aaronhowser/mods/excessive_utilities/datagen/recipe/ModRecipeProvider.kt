@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -519,6 +520,43 @@ class ModRecipeProvider(
 					'D' to ing(ModItems.DEMON_INGOT),
 					'K' to ing(ModItems.KLEIN_BOTTLE),
 					'R' to ing(ModBlocks.REINFORCED_LARGE_DRUM)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.MACHINE_BLOCK,
+				4,
+				"IRI,RCR,IRI",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'C' to ing(Tags.Items.CHESTS_WOODEN)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.FURNACE,
+				"BBB,BMB,BBB",
+				mapOf(
+					'B' to ing(Tags.Items.BRICKS),
+					'M' to ing(ModBlocks.MACHINE_BLOCK)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.CRUSHER,
+				"IPI,IMI,IPI",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'P' to ing(ModItemTagsProvider.PISTONS),
+					'M' to ing(ModBlocks.MACHINE_BLOCK)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENCHANTER,
+				" E ,DMD,III",
+				mapOf(
+					'E' to ing(Items.ENCHANTED_BOOK),
+					'D' to ing(Tags.Items.GEMS_DIAMOND),
+					'M' to ing(ModBlocks.MACHINE_BLOCK),
+					'I' to ing(Tags.Items.INGOTS_IRON)
 				)
 			)
 		)

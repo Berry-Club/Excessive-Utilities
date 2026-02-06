@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "E": {
+      "item": "minecraft:enchanted_book"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "M": {
+      "item": "excessive_utilities:machine_block"
+    }
+  },
+  "pattern": [
+    " E ",
+    "DMD",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:enchanter"
+  }
+}

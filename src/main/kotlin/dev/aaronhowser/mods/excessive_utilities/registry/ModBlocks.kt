@@ -93,12 +93,14 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("ender_thermic_pump")
 	val QED =
 		basicBlock("qed")
+	val MACHINE_BLOCK =
+		basicBlock("machine_block")
 	val CRUSHER =
 		basicBlock("crusher")
 	val FURNACE =
 		basicBlock("furnace")
-	val MACHINE_BLOCK =
-		basicBlock("machine_block")
+	val ENCHANTER =
+		basicBlock("enchanter")
 	val QUANTUM_QUARRY =
 		basicBlock("quantum_quarry")
 	val QUANTUM_QUARRY_ACTUATOR =

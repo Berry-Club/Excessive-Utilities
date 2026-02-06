@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
@@ -39,6 +40,12 @@ class ModItemTagsProvider(
 				ModBlocks.RESONATOR.asItem(),
 				ModBlocks.WIRELESS_RF_TRANSMITTER.asItem()
 			)
+
+		tag(PISTONS)
+			.add(
+				Items.PISTON,
+				Items.STICKY_PISTON,
+			)
 	}
 
 	companion object {
@@ -46,6 +53,7 @@ class ModItemTagsProvider(
 		private fun common(id: String): TagKey<Item> = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", id))
 
 		val RENDER_GP_WHILE_HOLDING = create("render_gp_while_holding")
+		val PISTONS = common("pistons")
 	}
 
 }
