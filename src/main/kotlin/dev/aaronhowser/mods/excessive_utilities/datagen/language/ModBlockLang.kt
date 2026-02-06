@@ -164,7 +164,6 @@ object ModBlockLang {
 			addBlock(ModBlocks.BLOCK_OF_UNSTABLE_INGOT, "Unstable Ingot Block")
 			addBlock(ModBlocks.BORDER_STONE, "Border Stone")
 			addBlock(ModBlocks.BORDER_STONE_ALT, "Border Stone (Alternative)")
-			addBlock(ModBlocks.BURNT_QUARTZ, "Burnt Quartz")
 			addBlock(ModBlocks.EMINENCE_STONE, "Carved 'Eminence' Stone")
 			addBlock(ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX, "Diamond-Etched Computational Matrix")
 			addBlock(ModBlocks.EDGED_STONE_BRICKS, "Edged Stone Bricks")
