@@ -6,9 +6,12 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpDrainBlockEn
 import dev.aaronhowser.mods.excessive_utilities.recipe.resonator.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.items.wrapper.InvWrapper
 
 class ResonatorBlockEntity(
 	pos: BlockPos,
@@ -18,6 +21,22 @@ class ResonatorBlockEntity(
 	override fun getGpUsage(): Double = getRecipe()?.gpCost ?: 0.0
 
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	private val itemHandler: IItemHandlerModifiable =
+		object : InvWrapper(container) {
+			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = slot == INPUT_SLOT
+
+			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
+				if (slot != INPUT_SLOT) return stack
+				return super.insertItem(slot, stack, simulate)
+			}
+
+			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
+				if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
+				return super.extractItem(slot, amount, simulate)
+			}
+		}
+
+	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
 	private var progress: Int = 0
 		set(value) {
