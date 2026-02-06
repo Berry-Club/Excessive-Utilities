@@ -244,10 +244,49 @@ class ModRecipeProvider(
 					'F' to ing(Tags.Items.FEATHERS),
 					'I' to ing(Tags.Items.INGOTS_IRON),
 					'L' to ing(
-						ModItems.GOLDEN_LASSO
-							.withComponent(ModDataComponents.ENTITY_TYPE.get(), EntityType.CHICKEN.builtInRegistryHolder())
+						ModItems.GOLDEN_LASSO.withComponent(
+							ModDataComponents.ENTITY_TYPE.get(),
+							EntityType.CHICKEN.builtInRegistryHolder()
+						)
 					),
 					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
+			),
+			shapedRecipe(
+				ModItems.RING_OF_THE_FLYING_SQUID,
+				"IDI,LCE,IDI",
+				mapOf(
+					'I' to ing(Items.INK_SAC),
+					'D' to ing(Tags.Items.GEMS_DIAMOND),
+					'L' to ing(
+						ModItems.GOLDEN_LASSO.withComponent(
+							ModDataComponents.ENTITY_TYPE.get(),
+							EntityType.SQUID.builtInRegistryHolder()
+						)
+					),
+					'C' to ing(ModItems.CHICKEN_WING_RING),
+					'E' to ing(Tags.Items.ENDER_PEARLS)
+				)
+			),
+			shapedRecipe(
+				ModItems.ANGEL_RING,
+				"GIG,ISI,BIH",
+				mapOf(
+					'G' to ing(Tags.Items.GLASS_BLOCKS),
+					'I' to ing(Tags.Items.INGOTS_GOLD),
+					'S' to ing(ModItems.RING_OF_THE_FLYING_SQUID),
+					'B' to ing(
+						ModItems.GOLDEN_LASSO.withComponent(
+							ModDataComponents.ENTITY_TYPE.get(),
+							EntityType.BAT.builtInRegistryHolder()
+						)
+					),
+					'H' to ing(
+						ModItems.CURSED_LASSO.withComponent(
+							ModDataComponents.ENTITY_TYPE.get(),
+							EntityType.GHAST.builtInRegistryHolder()
+						)
+					)
 				)
 			)
 		)
