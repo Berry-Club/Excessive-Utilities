@@ -306,6 +306,22 @@ class ModRecipeProvider(
 					'C' to ing(Tags.Items.CHESTS_WOODEN),
 					'M' to ing(ModBlocks.MAGICAL_WOOD)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.THICKENED_GLASS_BORDERED,
+				4,
+				"GG,GG",
+				mapOf(
+					'G' to ing(ModBlocks.THICKENED_GLASS)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.THICKENED_GLASS_PATTERNED,
+				4,
+				"GG,GG",
+				mapOf(
+					'G' to ing(ModBlocks.THICKENED_GLASS_BORDERED)
+				)
 			)
 		)
 
@@ -479,6 +495,15 @@ class ModRecipeProvider(
 					ing(ModItems.DROP_OF_EVIL)
 				)
 			),
+			shapelessRecipe(
+				ModBlocks.GLOWING_GLASS,
+				2,
+				listOf(
+					ing(Tags.Items.GLASS_BLOCKS_COLORLESS),
+					ing(Tags.Items.GLASS_BLOCKS_COLORLESS),
+					ing(Tags.Items.DUSTS_GLOWSTONE)
+				)
+			)
 		)
 
 		for (recipe in recipes) {

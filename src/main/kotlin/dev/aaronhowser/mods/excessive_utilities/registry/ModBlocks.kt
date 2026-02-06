@@ -454,8 +454,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("edged_glass")
 	val GOLDEN_EDGED_GLASS =
 		basicBlock("golden_edged_glass")
-	val GLOWSTONE_GLASS =
-		basicBlock("glowstone_glass")
+	val GLOWING_GLASS =
+		basicBlock("glowing_glass")
 	val HEART_GLASS =
 		basicBlock("heart_glass")
 	val OBSIDIAN_GLASS =
@@ -470,6 +470,10 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("swirling_glass")
 	val THICKENED_GLASS =
 		basicBlock("thickened_glass")
+	val THICKENED_GLASS_BORDERED =
+		basicBlock("thickened_glass_bordered")
+	val THICKENED_GLASS_PATTERNED =
+		basicBlock("thickened_glass_patterned")
 	val REDSTONE_GLASS =
 		basicBlock("redstone_glass")
 	val ETHEREAL_GLASS: DeferredBlock<SemiPermeableGlassBlock> =

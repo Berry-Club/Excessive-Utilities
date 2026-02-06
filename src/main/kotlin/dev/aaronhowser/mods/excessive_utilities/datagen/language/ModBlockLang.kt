@@ -192,7 +192,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.CARVED_GLASS, "Carved Glass")
 			addBlock(ModBlocks.EDGED_GLASS, "Edged Glass")
 			addBlock(ModBlocks.GOLDEN_EDGED_GLASS, "Golden Edged Glass")
-			addBlock(ModBlocks.GLOWSTONE_GLASS, "Glowstone Glass")
+			addBlock(ModBlocks.GLOWING_GLASS, "Glowstone Glass")
 			addBlock(ModBlocks.HEART_GLASS, "Heart Glass")
 			addBlock(ModBlocks.OBSIDIAN_GLASS, "Obsidian Glass")
 			addBlock(ModBlocks.REINFORCED_DARK_GLASS, "Reinforced Dark Glass")
