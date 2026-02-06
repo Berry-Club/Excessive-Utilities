@@ -38,7 +38,7 @@ class ModItemTagsProvider(
 				ModBlocks.DRAGON_EGG_MILL.asItem(),
 				ModBlocks.CREATIVE_MILL.asItem(),
 				ModBlocks.RESONATOR.asItem(),
-				ModBlocks.WIRELESS_RF_TRANSMITTER.asItem()
+				ModBlocks.WIRELESS_FE_TRANSMITTER.asItem()
 			)
 
 		tag(PISTONS)

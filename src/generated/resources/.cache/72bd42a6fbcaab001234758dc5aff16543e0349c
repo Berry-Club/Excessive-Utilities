@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-05T04:34:55.853108	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-02-05T22:42:07.7616756	Tags for minecraft:block mod id excessive_utilities
 2bef9f868fc60a1a3de29857c00073febf29cd62 data/c/tags/block/mineable/sickle.json
-6e6619eeb8d9d02beeea87794a109cf6b345239f data/excessive_utilities/tags/block/render_gp_while_looking_at.json
+77c72ebdc367454db5bd51cf0009a81a1ed4098e data/excessive_utilities/tags/block/render_gp_while_looking_at.json
 fdf0229f5dd8b82a9a07d37302c8eab1ed4ebeab data/excessive_utilities/tags/block/valid_for_dragon_egg_mill.json

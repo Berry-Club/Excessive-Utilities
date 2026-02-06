@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "excessive_utilities:compressed_block"
+    },
+    "I": {
+      "tag": "c:cobblestones/normal"
+    },
+    "S": {
+      "item": "minecraft:stone_sword"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SIS",
+    "IBI"
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:stone_spike"
+  }
+}

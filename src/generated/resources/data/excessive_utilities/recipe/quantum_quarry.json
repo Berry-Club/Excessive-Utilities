@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:end_stones"
+    },
+    "G": {
+      "item": "excessive_utilities:magical_snow_globe"
+    },
+    "S": {
+      "item": "excessive_utilities:stoneburnt"
+    }
+  },
+  "pattern": [
+    "ESE",
+    "SGS",
+    "ESE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:quantum_quarry"
+  }
+}

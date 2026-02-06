@@ -79,10 +79,10 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("resturbed_mob_spawner")
 	val SCANNER =
 		basicBlock("scanner")
-	val WIRELESS_RF_BATTERY =
-		basicBlock("wireless_rf_battery")
-	val WIRELESS_RF_TRANSMITTER =
-		basicBlock("wireless_rf_transmitter")
+	val WIRELESS_FE_BATTERY =
+		basicBlock("wireless_fe_battery")
+	val WIRELESS_FE_TRANSMITTER =
+		basicBlock("wireless_fe_transmitter")
 
 	// Machines
 	val ENDER_QUARRY =

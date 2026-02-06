@@ -53,8 +53,8 @@ object ModBlockLang {
 			addBlock(ModBlocks.RESONATOR, "Resonator")
 			addBlock(ModBlocks.RESTURBED_MOB_SPAWNER, "Resturbed Mob Spawner")
 			addBlock(ModBlocks.SCANNER, "Scanner")
-			addBlock(ModBlocks.WIRELESS_RF_BATTERY, "Wireless RF Battery")
-			addBlock(ModBlocks.WIRELESS_RF_TRANSMITTER, "Wireless RF Transmitter")
+			addBlock(ModBlocks.WIRELESS_FE_BATTERY, "Wireless FE Battery")
+			addBlock(ModBlocks.WIRELESS_FE_TRANSMITTER, "Wireless FE Transmitter")
 
 			addBlock(ModBlocks.ENDER_QUARRY_UPGRADE_BASE, "Ender Quarry Upgrade Base")
 			addBlock(ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE, "Ender Quarry Fortune I Upgrade")

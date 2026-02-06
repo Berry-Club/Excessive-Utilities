@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "excessive_utilities:compressed_block"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "C C",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:deep_dark_portal"
+  }
+}

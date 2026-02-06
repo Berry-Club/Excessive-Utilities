@@ -717,6 +717,50 @@ class ModRecipeProvider(
 					'R' to ing(Tags.Items.DUSTS_REDSTONE),
 					'M' to ing(ModBlocks.FURNACE_GENERATOR)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.DEEP_DARK_PORTAL,
+				"CCC,C C,CCC",
+				mapOf(
+					'C' to ing(ModBlocks.COMPRESSED_BLOCK)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.WIRELESS_FE_TRANSMITTER,
+				4,
+				"R,S",
+				mapOf(
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL),
+					'S' to ing(ModBlocks.STONEBURNT)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.WIRELESS_FE_BATTERY,
+				"SSS,BRB,SSS",
+				mapOf(
+					'S' to ing(ModBlocks.STONEBURNT),
+					'B' to ing(Tags.Items.STORAGE_BLOCKS_REDSTONE),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.QUANTUM_QUARRY_ACTUATOR,
+				"ERE,EDE,SSS",
+				mapOf(
+					'E' to ing(Tags.Items.END_STONES),
+					'R' to ing(Blocks.END_ROD),
+					'D' to ing(Items.DIAMOND_PICKAXE),
+					'S' to ing(ModBlocks.STONEBURNT)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.QUANTUM_QUARRY,
+				"ESE,SGS,ESE",
+				mapOf(
+					'E' to ing(Tags.Items.END_STONES),
+					'S' to ing(ModBlocks.STONEBURNT),
+					'G' to ing(ModBlocks.MAGICAL_SNOW_GLOBE)
+				)
 			)
 		)
 
@@ -791,6 +835,27 @@ class ModRecipeProvider(
 		generatorCompression(ModBlocks.SLIMEY_GENERATOR, ModBlocks.SLIMEY_GENERATOR_X8, ModBlocks.SLIMEY_GENERATOR_X64)
 		generatorCompression(ModBlocks.DEATH_GENERATOR, ModBlocks.DEATH_GENERATOR_X8, ModBlocks.DEATH_GENERATOR_X64)
 		generatorCompression(ModBlocks.RAINBOW_GENERATOR, ModBlocks.RAINBOW_GENERATOR_X8, ModBlocks.RAINBOW_GENERATOR_X64)
+
+		fun spike(spike: ItemLike, sword: IngredientType, middle: IngredientType, base: IngredientType) {
+			shapedRecipe(
+				spike,
+				4,
+				" S ,SIS,IBI",
+				mapOf(
+					'S' to sword,
+					'I' to middle,
+					'B' to base
+				)
+			).save(recipeOutput)
+		}
+
+		spike(ModBlocks.WOODEN_SPIKE, ing(Items.WOODEN_SWORD), ing(ItemTags.PLANKS), ing(ItemTags.LOGS))
+		spike(ModBlocks.STONE_SPIKE, ing(Items.STONE_SWORD), ing(Tags.Items.COBBLESTONES_NORMAL), ing(ModBlocks.COMPRESSED_BLOCK))
+		spike(ModBlocks.IRON_SPIKE, ing(Items.IRON_SWORD), ing(Tags.Items.INGOTS_IRON), ing(Tags.Items.STORAGE_BLOCKS_IRON))
+		spike(ModBlocks.GOLDEN_SPIKE, ing(Items.GOLDEN_SWORD), ing(Tags.Items.INGOTS_GOLD), ing(Tags.Items.STORAGE_BLOCKS_GOLD))
+		spike(ModBlocks.DIAMOND_SPIKE, ing(Items.DIAMOND_SWORD), ing(Tags.Items.GEMS_DIAMOND), ing(Tags.Items.STORAGE_BLOCKS_DIAMOND))
+		spike(ModBlocks.NETHERITE_SPIKE, ing(Items.NETHERITE_SWORD), ing(Tags.Items.INGOTS_NETHERITE), ing(Tags.Items.STORAGE_BLOCKS_NETHERITE))
+
 	}
 
 	private fun buildShapelessRecipes(recipeOutput: RecipeOutput) {
