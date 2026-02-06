@@ -7,8 +7,12 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.tags.ItemTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import java.util.concurrent.CompletableFuture
@@ -165,12 +169,54 @@ class ModRecipeProvider(
 					'N' to ing(Items.NETHER_STAR),
 					'I' to ing(ModItems.EYE_OF_REDSTONE)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.REDSTONE_CLOCK.toStack(),
+				"SRS,RTR,SRS",
+				mapOf(
+					'S' to ing(Tags.Items.STONES),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'T' to ing(Blocks.REDSTONE_TORCH)
+				)
+			),
+			shapedRecipe(
+				ModItems.GLASS_CUTTER.toStack(),
+				"  I, SI,I  ",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'S' to ing(Tags.Items.RODS_WOODEN)
+				)
 			)
 		)
 
 		for (recipe in recipes) {
 			recipe.save(recipeOutput)
 		}
+
+		fun sickle(output: ItemLike, material: TagKey<Item>): ShapedRecipeBuilder {
+			return shapedRecipe(
+				output,
+				" MM,  M,SMM",
+				mapOf(
+					'M' to ing(material),
+					'S' to ing(Tags.Items.RODS_WOODEN)
+				)
+			)
+		}
+
+		val sickles = listOf(
+			sickle(ModItems.WOODEN_SICKLE, ItemTags.PLANKS),
+			sickle(ModItems.STONE_SICKLE, Tags.Items.STONES),
+			sickle(ModItems.IRON_SICKLE, Tags.Items.INGOTS_IRON),
+			sickle(ModItems.GOLDEN_SICKLE, Tags.Items.INGOTS_GOLD),
+			sickle(ModItems.DIAMOND_SICKLE, Tags.Items.GEMS_DIAMOND),
+			sickle(ModItems.NETHERITE_SICKLE, Tags.Items.INGOTS_NETHERITE)
+		)
+
+		for (recipe in sickles) {
+			recipe.save(recipeOutput)
+		}
+
 	}
 
 	private fun buildShapelessRecipes(recipeOutput: RecipeOutput) {
@@ -195,6 +241,14 @@ class ModRecipeProvider(
 				4,
 				listOf(
 					ing(ModBlocks.MAGICAL_WOOD)
+				)
+			),
+			shapelessRecipe(
+				ModItems.ENDER_SHARD,
+				8,
+				listOf(
+					ing(Tags.Items.ENDER_PEARLS),
+					ing(ModItems.GLASS_CUTTER)    // TODO: Damage the glass cutter
 				)
 			)
 		)
