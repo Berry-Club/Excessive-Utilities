@@ -233,6 +233,16 @@ class ModRecipeProvider(
 					'I' to ing(ModItems.EVIL_INFUSED_IRON_INGOT),
 					'U' to ing(ModItems.SPEED_UPGRADE_MAGICAL)
 				)
+			),
+			shapedRecipe(
+				ModItems.CHICKEN_WING_RING,
+				"FIF,ILI,RIR",
+				mapOf(
+					'F' to ing(Tags.Items.FEATHERS),
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'L' to ing(ModItems.GOLDEN_LASSO),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
 			)
 		)
 
@@ -398,7 +408,14 @@ class ModRecipeProvider(
 					ing(ModItems.UPGRADE_BASE),
 					ing(Items.GOLDEN_PICKAXE)
 				)
-			)
+			),
+			shapelessRecipe(
+				ModItems.CURSED_LASSO,
+				listOf(
+					ing(ModItems.GOLDEN_LASSO),
+					ing(ModItems.DROP_OF_EVIL)
+				)
+			),
 		)
 
 		for (recipe in recipes) {
