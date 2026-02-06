@@ -162,10 +162,10 @@ class ModBlockStateProvider(
 			ModBlocks.STONEBURNT.get(),
 			ModBlocks.BORDER_STONE.get(),
 //			ModBlocks.CROSSED_STONE.get(),
-//			ModBlocks.INEFFABLE_GLASS.get(),
+			ModBlocks.INEFFABLE_GLASS.get(),
 			ModBlocks.DARK_INEFFABLE_GLASS.get(),
 			ModBlocks.ETHEREAL_GLASS.get(),
-//			ModBlocks.INVERTED_ETHEREAL_GLASS.get()
+			ModBlocks.INVERTED_ETHEREAL_GLASS.get()
 		)
 
 		for (block in blocks) {
