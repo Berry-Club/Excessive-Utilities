@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_bedrockium_ingot": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:bedrockium_ingot"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "minecraft:block_of_bedrockium"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_bedrockium_ingot"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "minecraft:block_of_bedrockium"
+    ]
+  }
+}

@@ -1341,6 +1341,30 @@ class ModRecipeProvider(
 			ModBlocks.BLOCK_OF_ENCHANTED_METAL
 		)
 
+		nineBlockStorageRecipes(
+			recipeOutput,
+			RecipeCategory.MISC,
+			ModItems.EVIL_INFUSED_IRON_INGOT,
+			RecipeCategory.MISC,
+			ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON
+		)
+
+		nineBlockStorageRecipes(
+			recipeOutput,
+			RecipeCategory.MISC,
+			ModItems.BEDROCKIUM_INGOT,
+			RecipeCategory.MISC,
+			ModBlocks.BLOCK_OF_BEDROCKIUM
+		)
+
+		nineBlockStorageRecipes(
+			recipeOutput,
+			RecipeCategory.MISC,
+			ModItems.UNSTABLE_INGOT,
+			RecipeCategory.MISC,
+			ModBlocks.BLOCK_OF_UNSTABLE_INGOT
+		)
+
 		shapelessRecipe(
 			ModBlocks.STONE_DRUM,
 			listOf(ing(ModBlocks.STONE_DRUM))

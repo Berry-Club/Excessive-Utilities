@@ -410,8 +410,8 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val BLOCK_OF_BEDROCKIUM =
 		basicBlock("block_of_bedrockium")
-	val UNSTABLE_INGOT_BLOCK =
-		basicBlock("unstable_ingot_block")
+	val BLOCK_OF_UNSTABLE_INGOT =
+		basicBlock("block_of_unstable_ingot")
 	val POLISHED_STONE =
 		basicBlock("polished_stone")
 	val BORDER_STONE =

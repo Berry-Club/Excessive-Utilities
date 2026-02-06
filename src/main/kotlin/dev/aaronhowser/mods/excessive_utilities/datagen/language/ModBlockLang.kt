@@ -161,7 +161,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.MAGIC_INFUSER, "Magic Infuser")
 
 			addBlock(ModBlocks.BLOCK_OF_BEDROCKIUM, "Block of Bedrockium")
-			addBlock(ModBlocks.UNSTABLE_INGOT_BLOCK, "Unstable Ingot Block")
+			addBlock(ModBlocks.BLOCK_OF_UNSTABLE_INGOT, "Unstable Ingot Block")
 			addBlock(ModBlocks.BORDER_STONE, "Border Stone")
 			addBlock(ModBlocks.BORDER_STONE_ALT, "Border Stone (Alternative)")
 			addBlock(ModBlocks.BURNT_QUARTZ, "Burnt Quartz")
