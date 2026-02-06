@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:magical_wood"
+    },
+    {
+      "item": "minecraft:enchanting_table"
+    },
+    {
+      "item": "minecraft:enchanting_table"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:magic_infuser"
+  }
+}

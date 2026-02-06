@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "excessive_utilities:climograph_base_unit"
+    },
+    "E": {
+      "tag": "c:ender_pearls"
+    },
+    "P": {
+      "item": "minecraft:repeater"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "ECE",
+    "RPR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:terraformer"
+  }
+}

@@ -805,6 +805,35 @@ class ModRecipeProvider(
 					'I' to ing(Tags.Items.INGOTS_IRON),
 					'S' to ing(ItemTags.SAPLINGS)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.TERRAFORMER,
+				"ECE,RPR",
+				mapOf(
+					'E' to ing(Tags.Items.ENDER_PEARLS),
+					'C' to ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'P' to ing(Items.REPEATER)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ANTENNA,
+				"E E,ISI, I ",
+				mapOf(
+					'E' to ing(Blocks.END_ROD),
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'S' to ing(ItemTags.SAPLINGS)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.CLIMOGRAPH_BASE_UNIT,
+				"IDI,SMS,IDI",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'D' to ing(Tags.Items.GEMS_DIAMOND),
+					'S' to ing(ItemTags.SAPLINGS),
+					'M' to ing(ModBlocks.MACHINE_BLOCK)
+				)
 			)
 		)
 
@@ -904,14 +933,6 @@ class ModRecipeProvider(
 
 	private fun buildShapelessRecipes(recipeOutput: RecipeOutput) {
 		val recipes = listOf(
-			shapelessRecipe(
-				ModBlocks.COOLER,
-				listOf(
-					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
-					ing(Items.SNOWBALL),
-					ing(Items.SNOWBALL),
-				)
-			),
 			shapelessRecipe(
 				ModBlocks.SOUND_MUFFLER,
 				listOf(
@@ -1110,6 +1131,62 @@ class ModRecipeProvider(
 				ModBlocks.MINI_CHEST,
 				9,
 				listOf(ing(Tags.Items.CHESTS_WOODEN))
+			),
+			shapelessRecipe(
+				ModBlocks.COOLER,
+				listOf(
+					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
+					ing(Items.SNOWBALL),
+					ing(Items.SNOWBALL),
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.HUMIDIFIER,
+				listOf(
+					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
+					ing(Items.WATER_BUCKET),
+					ing(Items.WATER_BUCKET)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.DEHUMIDIFIER,
+				listOf(
+					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
+					ing(Tags.Items.SANDS),
+					ing(Tags.Items.SANDS)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.HEATER,
+				listOf(
+					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
+					ing(Items.LAVA_BUCKET),
+					ing(Items.LAVA_BUCKET)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.DEHOSTILIFIER,
+				listOf(
+					ing(ModBlocks.CLIMOGRAPH_BASE_UNIT),
+					ing(Items.MYCELIUM),
+					ing(Items.MYCELIUM)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.MAGIC_ABSORPTION,
+				listOf(
+					ing(ModBlocks.MAGICAL_WOOD),
+					ing(ItemTags.ANVIL),
+					ing(ItemTags.ANVIL)
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.MAGIC_INFUSER,
+				listOf(
+					ing(ModBlocks.MAGICAL_WOOD),
+					ing(Items.ENCHANTING_TABLE),
+					ing(Items.ENCHANTING_TABLE)
+				)
 			)
 		)
 

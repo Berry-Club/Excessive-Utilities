@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "M": {
+      "item": "excessive_utilities:machine_block"
+    },
+    "S": {
+      "tag": "minecraft:saplings"
+    }
+  },
+  "pattern": [
+    "IDI",
+    "SMS",
+    "IDI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:climograph_base_unit"
+  }
+}
