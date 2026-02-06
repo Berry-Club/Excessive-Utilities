@@ -1,0 +1,16 @@
+{
+	"variants": {
+	  "": {
+		"model": "excessive_utilities:block/border_stone"
+	  }
+	},
+	
+	"athena:loader": "athena:ctm",
+	"ctm_textures": {
+	  "center": "excessive_utilities:block/border_stone/center",
+	  "empty": "excessive_utilities:block/border_stone/empty",
+	  "horizontal": "excessive_utilities:block/border_stone/horizontal",
+	  "particle": "excessive_utilities:block/border_stone/particle",
+	  "vertical": "excessive_utilities:block/border_stone/vertical"
+	}
+  }

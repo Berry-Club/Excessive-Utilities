@@ -159,7 +159,13 @@ class ModBlockStateProvider(
 			ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.get(),
 			ModBlocks.MAGICAL_PLANKS.get(),
 			ModBlocks.QUARTZBURNT.get(),
-			ModBlocks.STONEBURNT.get()
+			ModBlocks.STONEBURNT.get(),
+			ModBlocks.BORDER_STONE.get(),
+//			ModBlocks.CROSSED_STONE.get(),
+//			ModBlocks.INEFFABLE_GLASS.get(),
+			ModBlocks.DARK_INEFFABLE_GLASS.get(),
+			ModBlocks.ETHEREAL_GLASS.get(),
+//			ModBlocks.INVERTED_ETHEREAL_GLASS.get()
 		)
 
 		for (block in blocks) {
