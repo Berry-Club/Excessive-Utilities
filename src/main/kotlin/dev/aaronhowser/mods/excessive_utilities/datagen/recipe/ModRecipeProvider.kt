@@ -761,6 +761,50 @@ class ModRecipeProvider(
 					'S' to ing(ModBlocks.STONEBURNT),
 					'G' to ing(ModBlocks.MAGICAL_SNOW_GLOBE)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.REDSTONE_LANTERN,
+				"RSR,SCS,RPR",
+				mapOf(
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'S' to ing(ModBlocks.POLISHED_STONE),
+					'C' to ing(ItemTags.COALS),
+					'P' to ing(Items.REPEATER)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.SLIGHTLY_LARGER_CHEST,
+				"SSS,SCS,SSS",
+				mapOf(
+					'S' to ing(Tags.Items.RODS_WOODEN),
+					'C' to ing(Tags.Items.CHESTS_WOODEN)
+				)
+			),
+			shapedRecipe(
+				ModItems.MAGICAL_APPLE,
+				"AAA,AWA,AAA",
+				mapOf(
+					'A' to ing(Items.APPLE),
+					'W' to ing(ModBlocks.MAGICAL_WOOD)
+				)
+			),
+			shapedRecipe(
+				ModItems.TROWEL,
+				"  I, B ,S  ",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'B' to ing(Items.STONE_BUTTON),
+					'S' to ing(Tags.Items.RODS_WOODEN)
+				)
+			),
+			shapedRecipe(
+				ModItems.BIOME_MARKER,
+				"PIP,ISI,PIP",
+				mapOf(
+					'P' to ing(Tags.Items.DYES_PURPLE),
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'S' to ing(ItemTags.SAPLINGS)
+				)
 			)
 		)
 
@@ -1061,6 +1105,11 @@ class ModRecipeProvider(
 					ing(Tags.Items.ENDER_PEARLS),
 					ing(Tags.Items.ENDER_PEARLS),
 				)
+			),
+			shapelessRecipe(
+				ModBlocks.MINI_CHEST,
+				9,
+				listOf(ing(Tags.Items.CHESTS_WOODEN))
 			)
 		)
 
@@ -1169,6 +1218,21 @@ class ModRecipeProvider(
 			ModBlocks.CREATIVE_DRUM,
 			listOf(ing(ModBlocks.CREATIVE_DRUM))
 		).save(recipeOutput, modLoc("creative_drum_empty"))
+
+		shapelessRecipe(
+			Blocks.CHEST,
+			listOf(
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+				ing(ModBlocks.MINI_CHEST),
+			)
+		).save(recipeOutput, modLoc("chest_from_mini_chests"))
 
 	}
 
