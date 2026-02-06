@@ -1,0 +1,39 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:grass_block"
+    },
+    "D": {
+      "tag": "minecraft:wooden_doors"
+    },
+    "E": {
+      "tag": "c:ender_pearls"
+    },
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "L": {
+      "tag": "minecraft:logs"
+    },
+    "N": {
+      "item": "minecraft:snowball"
+    },
+    "S": {
+      "tag": "minecraft:saplings"
+    },
+    "W": {
+      "item": "minecraft:nether_star"
+    }
+  },
+  "pattern": [
+    "GSN",
+    "DLA",
+    "EW "
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:magical_snow_globe"
+  }
+}

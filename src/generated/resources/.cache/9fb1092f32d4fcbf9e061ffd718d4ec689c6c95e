@@ -1,4 +1,6 @@
-// 1.21.1	2026-02-05T19:57:51.1606452	Recipes
+// 1.21.1	2026-02-05T20:22:19.0034673	Recipes
+9df47acf3dd1ef8263c010b24687205eb7872247 data/excessive_utilities/advancement/recipes/misc/cooler.json
+4cdfc5083cf601a65d407db05bec4e8190cf1ba1 data/excessive_utilities/advancement/recipes/misc/magical_snow_globe.json
 7f4b0f9a5f8cdc10e726b3518032fe322c29d0c8 data/excessive_utilities/advancement/recipes/resonator/lunar_reactive_dust.json
 127cd9d3b73efb4548d6d5a3f50bb2dc4c4b608d data/excessive_utilities/advancement/recipes/resonator/quartzburnt.json
 1e256c5b45fa4e314a4751b0f84676195c72bf13 data/excessive_utilities/advancement/recipes/resonator/rainbow_stone.json
@@ -7,6 +9,8 @@
 d740199b2c610d4c2af23ab84a71e9eb7d4ab80d data/excessive_utilities/advancement/recipes/resonator/stoneburnt.json
 899152b9b909eeffe466935be3303cca055c4e4e data/excessive_utilities/advancement/recipes/resonator/upgrade_base.json
 ddabd2a2ba78231785ba1ff42a04b0affc9049cf data/excessive_utilities/advancement/recipes/resonator/wireless_rf_heating_coil.json
+16ed929dcee1d43fd43788a31118b51958007733 data/excessive_utilities/recipe/cooler.json
+7e85198e703ed87893f989dbd9dd04a90f1df391 data/excessive_utilities/recipe/magical_snow_globe.json
 2ea0a428146215fea5e38765cebcb1eede8a6573 data/excessive_utilities/recipe/resonator/lunar_reactive_dust.json
 95367db3d4744929a7017072f6b4fb13c2ad1e4d data/excessive_utilities/recipe/resonator/quartzburnt.json
 96d484920620f7b580df803d7c10e8b279c53d64 data/excessive_utilities/recipe/resonator/rainbow_stone.json

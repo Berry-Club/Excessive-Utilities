@@ -366,6 +366,8 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val TERRAFORMER =
 		basicBlock("terraformer")
+	val CLIMOGRAPH_BASE_UNIT =
+		basicBlock("climograph_base_unit")
 	val ANTENNA =
 		basicBlock("antenna")
 	val COOLER =
