@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:rods/blaze"
+    },
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "item": "minecraft:brewing_stand"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BSB",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:potions_generator"
+  }
+}

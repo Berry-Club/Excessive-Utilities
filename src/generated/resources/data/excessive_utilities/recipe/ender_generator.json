@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:ender_pearls"
+    },
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "O": {
+      "tag": "c:obsidians/normal"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "EEE",
+    "EOE",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_generator"
+  }
+}

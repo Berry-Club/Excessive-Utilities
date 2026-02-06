@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:cobblestones/normal"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CIC",
+    "RFR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:survivalist_generator"
+  }
+}

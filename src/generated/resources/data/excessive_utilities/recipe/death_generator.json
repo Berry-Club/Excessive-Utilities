@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:corpse_parts"
+    },
+    "E": {
+      "item": "minecraft:spider_eye"
+    },
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "CCC",
+    "CEC",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:death_generator"
+  }
+}

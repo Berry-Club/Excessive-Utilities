@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "item": "minecraft:slime_block"
+    },
+    "s": {
+      "tag": "c:slime_balls"
+    }
+  },
+  "pattern": [
+    "sss",
+    "sSs",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:slimey_generator"
+  }
+}

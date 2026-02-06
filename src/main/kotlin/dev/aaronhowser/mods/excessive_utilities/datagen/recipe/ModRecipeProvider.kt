@@ -558,6 +558,165 @@ class ModRecipeProvider(
 					'M' to ing(ModBlocks.MACHINE_BLOCK),
 					'I' to ing(Tags.Items.INGOTS_IRON)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.SURVIVALIST_GENERATOR,
+				"CCC,CIC,RFR",
+				mapOf(
+					'C' to ing(Tags.Items.COBBLESTONES_NORMAL),
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'F' to ing(Items.FURNACE)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.FURNACE_GENERATOR,
+				"III,IMI,RFR",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'M' to ing(ModBlocks.MACHINE_BLOCK),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'F' to ing(Items.FURNACE)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.CULINARY_GENERATOR,
+				"PPP,PFP,RMR",
+				mapOf(
+					'P' to ing(Tags.Items.CROPS),
+					'F' to ing(Tags.Items.FOODS_COOKED_MEAT),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.MACHINE_BLOCK)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.MAGMATIC_GENERATOR,
+				"GGG,GLG,RMR",
+				mapOf(
+					'G' to ing(Tags.Items.INGOTS_GOLD),
+					'L' to ing(Items.LAVA_BUCKET),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.MACHINE_BLOCK)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.HEATED_REDSTONE_GENERATOR,
+				"RRR,RBR,RMR",
+				mapOf(
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'B' to ing(Tags.Items.STORAGE_BLOCKS_REDSTONE),
+					'M' to ing(ModBlocks.MAGMATIC_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_GENERATOR,
+				"EEE,EOE,RMR",
+				mapOf(
+					'E' to ing(Tags.Items.ENDER_PEARLS),
+					'O' to ing(Tags.Items.OBSIDIANS_NORMAL),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.POTIONS_GENERATOR,
+				"BBB,BSB,RMR",
+				mapOf(
+					'B' to ing(Tags.Items.RODS_BLAZE),
+					'S' to ing(Blocks.BREWING_STAND),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.PINK_GENERATOR,
+				"DDD,DWD,RMR",
+				mapOf(
+					'D' to ing(Tags.Items.DYES_PINK),
+					'W' to ing(Items.PINK_WOOL),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR,
+				"III,ICI,RMR",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'C' to ing(Blocks.COAL_BLOCK),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.EXPLOSIVE_GENERATOR,
+				"GGG,GTG,RMR",
+				mapOf(
+					'G' to ing(Tags.Items.GUNPOWDERS),
+					'T' to ing(Blocks.TNT),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.NETHER_STAR_GENERATOR,
+				"WWW,WSW,RMR",
+				mapOf(
+					'W' to ing(Items.WITHER_SKELETON_SKULL),
+					'S' to ing(Items.NETHER_STAR),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.HALITOSIS_GENERATOR,
+				"PPP,PEP,RMR",
+				mapOf(
+					'P' to ing(Blocks.PURPUR_BLOCK),
+					'E' to ing(Blocks.END_ROD),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.FROSTY_GENERATOR,
+				"SSS,SIS,RMR",
+				mapOf(
+					'S' to ing(Items.SNOWBALL),
+					'I' to ing(Items.ICE),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.DEATH_GENERATOR,
+				"CCC,CEC,RMR",
+				mapOf(
+					'C' to ing(ModItemTagsProvider.CORPSE_PARTS),
+					'E' to ing(Items.SPIDER_EYE),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.DISENCHANTMENT_GENERATOR,
+				"WWW,WEW,RMR",
+				mapOf(
+					'W' to ing(ModBlocks.MAGICAL_WOOD),
+					'E' to ing(Blocks.ENCHANTING_TABLE),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.SLIMEY_GENERATOR,
+				"sss,sSs,RMR",
+				mapOf(
+					's' to ing(Tags.Items.SLIME_BALLS),
+					'S' to ing(Blocks.SLIME_BLOCK),
+					'R' to ing(Tags.Items.DUSTS_REDSTONE),
+					'M' to ing(ModBlocks.FURNACE_GENERATOR)
+				)
 			)
 		)
 

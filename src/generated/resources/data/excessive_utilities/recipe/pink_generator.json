@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:dyes/pink"
+    },
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "W": {
+      "item": "minecraft:pink_wool"
+    }
+  },
+  "pattern": [
+    "DDD",
+    "DWD",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:pink_generator"
+  }
+}

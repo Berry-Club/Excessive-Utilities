@@ -46,6 +46,12 @@ class ModItemTagsProvider(
 				Items.PISTON,
 				Items.STICKY_PISTON,
 			)
+
+		tag(CORPSE_PARTS)
+			.add(
+				Items.BONE,
+				Items.ROTTEN_FLESH
+			)
 	}
 
 	companion object {
@@ -54,6 +60,7 @@ class ModItemTagsProvider(
 
 		val RENDER_GP_WHILE_HOLDING = create("render_gp_while_holding")
 		val PISTONS = common("pistons")
+		val CORPSE_PARTS = common("corpse_parts")
 	}
 
 }

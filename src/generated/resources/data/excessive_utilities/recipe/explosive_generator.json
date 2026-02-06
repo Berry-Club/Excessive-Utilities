@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:gunpowders"
+    },
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "T": {
+      "item": "minecraft:tnt"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GTG",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:explosive_generator"
+  }
+}

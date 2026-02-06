@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:end_rod"
+    },
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "P": {
+      "item": "minecraft:purpur_block"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PEP",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:halitosis_generator"
+  }
+}

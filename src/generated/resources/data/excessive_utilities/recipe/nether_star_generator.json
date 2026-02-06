@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "item": "minecraft:nether_star"
+    },
+    "W": {
+      "item": "minecraft:wither_skeleton_skull"
+    }
+  },
+  "pattern": [
+    "WWW",
+    "WSW",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:nether_star_generator"
+  }
+}
