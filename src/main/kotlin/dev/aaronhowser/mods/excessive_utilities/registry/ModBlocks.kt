@@ -510,5 +510,6 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Blocks not reimplemented:
 	// - Screen
+	// - Chunk Loading Ward
 
 }

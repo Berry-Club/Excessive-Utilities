@@ -52,8 +52,6 @@ object ModItems : AaronItemRegistry() {
 		basic("mobius_ingot")
 	val KLEIN_FLASK =
 		basic("klein_flask")
-	val CONTRACT =
-		basic("contract")
 
 	// Plants
 
@@ -192,5 +190,8 @@ object ModItems : AaronItemRegistry() {
 		basic("ring_of_the_flying_squid")
 	val ANGEL_RING =
 		basic("angel_ring")
+
+	// Items not reimplemented:
+	// - Contract (used only for Chunk Loading Ward)
 
 }

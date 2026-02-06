@@ -580,15 +580,6 @@ class ModRecipeProvider(
 					ing(Items.REDSTONE_TORCH)
 				)
 			),
-			shapelessRecipe(
-				ModItems.CONTRACT,
-				listOf(
-					ing(Tags.Items.FEATHERS),
-					ing(Items.PAPER),
-					ing(Items.GLASS_BOTTLE),
-					ing(Items.INK_SAC)
-				)
-			)
 		)
 
 		for (recipe in recipes) {
