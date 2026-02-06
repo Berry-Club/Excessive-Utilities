@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:stones"
+    },
+    {
+      "tag": "c:stones"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    },
+    {
+      "item": "minecraft:stone_bricks"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:border_stone"
+  }
+}

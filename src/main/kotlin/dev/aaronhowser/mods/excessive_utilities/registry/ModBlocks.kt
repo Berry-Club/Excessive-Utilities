@@ -395,6 +395,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("border_stone")
 	val BORDER_STONE_ALT =
 		basicBlock("border_stone_alt")
+	val CROSSED_STONE =
+		basicBlock("crossed_stone")
 	val BURNT_QUARTZ =
 		basicBlock("burnt_quartz")
 	val EMINENCE_STONE =

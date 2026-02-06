@@ -26,6 +26,7 @@ class ModItemTagsProvider(
 			.add(
 				ModItems.SPEED_UPGRADE.get(),
 				ModItems.POWER_MANAGER.get(),
+				ModItems.RESONATING_REDSTONE_CRYSTAL.get(),
 				ModBlocks.MANUAL_MILL.asItem(),
 				ModBlocks.WATER_MILL.asItem(),
 				ModBlocks.WIND_MILL.asItem(),

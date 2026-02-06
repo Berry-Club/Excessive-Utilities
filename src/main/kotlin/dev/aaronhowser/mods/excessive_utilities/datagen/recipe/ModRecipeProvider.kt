@@ -186,6 +186,16 @@ class ModRecipeProvider(
 					'I' to ing(Tags.Items.INGOTS_IRON),
 					'S' to ing(Tags.Items.RODS_WOODEN)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.RESONATOR.toStack(),
+				"DCD,IRI,III",
+				mapOf(
+					'D' to ing(Tags.Items.DUSTS_REDSTONE),
+					'C' to ing(Tags.Items.STORAGE_BLOCKS_COAL),
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'R' to ing(ModItems.RESONATING_REDSTONE_CRYSTAL)
+				)
 			)
 		)
 
@@ -249,6 +259,76 @@ class ModRecipeProvider(
 				listOf(
 					ing(Tags.Items.ENDER_PEARLS),
 					ing(ModItems.GLASS_CUTTER)    // TODO: Damage the glass cutter
+				)
+			),
+			shapelessRecipe(
+				ModItems.SUN_CRYSTAL,
+				listOf(
+					ing(Tags.Items.GEMS_DIAMOND),
+					ing(Tags.Items.DUSTS_GLOWSTONE),
+					ing(Tags.Items.DUSTS_GLOWSTONE),
+					ing(Tags.Items.DUSTS_GLOWSTONE),
+					ing(Tags.Items.DUSTS_GLOWSTONE),
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.BORDER_STONE,
+				4,
+				listOf(
+					ing(Tags.Items.STONES),
+					ing(Tags.Items.STONES),
+					ing(Items.STONE_BRICKS),
+					ing(Items.STONE_BRICKS),
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.CROSSED_STONE,
+				4,
+				listOf(
+					ing(ModBlocks.BORDER_STONE),
+					ing(ModBlocks.BORDER_STONE),
+					ing(ModBlocks.BORDER_STONE),
+					ing(ModBlocks.BORDER_STONE),
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.POLISHED_STONE,
+				4,
+				listOf(
+					ing(Blocks.CHISELED_STONE_BRICKS),
+					ing(Blocks.CHISELED_STONE_BRICKS),
+					ing(Blocks.CHISELED_STONE_BRICKS),
+					ing(Blocks.CHISELED_STONE_BRICKS),
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.SANDY_GLASS,
+				4,
+				listOf(
+					ing(Tags.Items.GLASS_BLOCKS_COLORLESS),
+					ing(Tags.Items.GLASS_BLOCKS_COLORLESS),
+					ing(Tags.Items.SANDS),
+					ing(Tags.Items.SANDS),
+				)
+			),
+			shapelessRecipe(
+				ModBlocks.TRUCHET,
+				4,
+				listOf(
+					ing(ModBlocks.POLISHED_STONE),
+					ing(ModBlocks.POLISHED_STONE),
+					ing(ModBlocks.BORDER_STONE),
+					ing(ModBlocks.BORDER_STONE),
+				)
+			),
+			shapelessRecipe(
+				ModItems.RESONATING_REDSTONE_CRYSTAL,
+				listOf(
+					ing(ModItems.ENDER_SHARD),
+					ing(Tags.Items.DUSTS_REDSTONE),
+					ing(Tags.Items.DUSTS_REDSTONE),
+					ing(Tags.Items.DUSTS_REDSTONE),
+					ing(Tags.Items.DUSTS_REDSTONE),
 				)
 			)
 		)

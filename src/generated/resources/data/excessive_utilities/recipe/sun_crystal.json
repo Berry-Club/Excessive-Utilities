@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "c:gems/diamond"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    },
+    {
+      "tag": "c:dusts/glowstone"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:sun_crystal"
+  }
+}
