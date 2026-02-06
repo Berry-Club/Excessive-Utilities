@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "excessive_utilities:energy_transfer_node"
+    },
+    "G": {
+      "item": "excessive_utilities:pink_generator"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GEG",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:pink_generator_x8"
+  }
+}
