@@ -79,8 +79,6 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("resturbed_mob_spawner")
 	val SCANNER =
 		basicBlock("scanner")
-	val SCREEN =
-		basicBlock("screen")
 	val WIRELESS_RF_BATTERY =
 		basicBlock("wireless_rf_battery")
 	val WIRELESS_RF_TRANSMITTER =
@@ -484,5 +482,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("ineffable_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = false) }
 	val INVERTED_INEFFABLE_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
 		registerBlock("inverted_ineffable_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = true) }
+
+	// Blocks not reimplemented:
+	// - Screen
 
 }

@@ -53,7 +53,6 @@ object ModBlockLang {
 			addBlock(ModBlocks.RESONATOR, "Resonator")
 			addBlock(ModBlocks.RESTURBED_MOB_SPAWNER, "Resturbed Mob Spawner")
 			addBlock(ModBlocks.SCANNER, "Scanner")
-			addBlock(ModBlocks.SCREEN, "Screen")
 			addBlock(ModBlocks.WIRELESS_RF_BATTERY, "Wireless RF Battery")
 			addBlock(ModBlocks.WIRELESS_RF_TRANSMITTER, "Wireless RF Transmitter")
 
