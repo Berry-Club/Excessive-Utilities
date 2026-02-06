@@ -484,6 +484,42 @@ class ModRecipeProvider(
 					'E' to ing(ModItems.EYE_OF_REDSTONE),
 					'F' to ing(Items.ITEM_FRAME)
 				)
+			),
+			shapedRecipe(
+				ModBlocks.STONE_DRUM,
+				"CSC,CBC,CSC",
+				mapOf(
+					'S' to ing(Tags.Items.COBBLESTONES_NORMAL),
+					'C' to ing(Blocks.COBBLESTONE_SLAB),
+					'B' to ing(Items.BOWL)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.IRON_DRUM,
+				"IPI,ICI,IPI",
+				mapOf(
+					'I' to ing(Tags.Items.INGOTS_IRON),
+					'P' to ing(Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE),
+					'C' to ing(Blocks.CAULDRON)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.REINFORCED_LARGE_DRUM,
+				"DPD,DID,DPD",
+				mapOf(
+					'D' to ing(Tags.Items.GEMS_DIAMOND),
+					'P' to ing(Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE),
+					'I' to ing(ModBlocks.IRON_DRUM)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.DEMONICALLY_GARGANTUAN_DRUM,
+				"DKD,DRD,DKD",
+				mapOf(
+					'D' to ing(ModItems.DEMON_INGOT),
+					'K' to ing(ModItems.KLEIN_BOTTLE),
+					'R' to ing(ModBlocks.REINFORCED_LARGE_DRUM)
+				)
 			)
 		)
 
@@ -803,6 +839,32 @@ class ModRecipeProvider(
 			RecipeCategory.MISC,
 			ModBlocks.BLOCK_OF_ENCHANTED_METAL
 		)
+
+		shapelessRecipe(
+			ModBlocks.STONE_DRUM,
+			listOf(ing(ModBlocks.STONE_DRUM))
+		).save(recipeOutput, modLoc("stone_drum_empty"))
+
+		shapelessRecipe(
+			ModBlocks.IRON_DRUM,
+			listOf(ing(ModBlocks.IRON_DRUM))
+		).save(recipeOutput, modLoc("iron_drum_empty"))
+
+		shapelessRecipe(
+			ModBlocks.REINFORCED_LARGE_DRUM,
+			listOf(ing(ModBlocks.REINFORCED_LARGE_DRUM))
+		).save(recipeOutput, modLoc("reinforced_large_drum_empty"))
+
+		shapelessRecipe(
+			ModBlocks.DEMONICALLY_GARGANTUAN_DRUM,
+			listOf(ing(ModBlocks.DEMONICALLY_GARGANTUAN_DRUM))
+		).save(recipeOutput, modLoc("demonically_gargantuan_drum_empty"))
+
+		shapelessRecipe(
+			ModBlocks.CREATIVE_DRUM,
+			listOf(ing(ModBlocks.CREATIVE_DRUM))
+		).save(recipeOutput, modLoc("creative_drum_empty"))
+
 	}
 
 	private fun buildSmeltingRecipes(recipeOutput: RecipeOutput) {
