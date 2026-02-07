@@ -1,9 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.entity.DrumBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.MagnumTorchBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.ResonatorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -43,6 +41,18 @@ object CommonEvents {
 			Capabilities.ItemHandler.BLOCK,
 			ModBlockEntityTypes.RESONATOR.get(),
 			ResonatorBlockEntity::getItemHandler
+		)
+
+		event.registerBlockEntity(
+			Capabilities.EnergyStorage.BLOCK,
+			ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(),
+			WirelessFeBatteryBlockEntity::getEnergyCapability
+		)
+
+		event.registerBlockEntity(
+			Capabilities.EnergyStorage.BLOCK,
+			ModBlockEntityTypes.WIRELESS_FE_TRANSMITTER.get(),
+			WirelessFeTransmitterBlockEntity::getEnergyCapability
 		)
 
 	}

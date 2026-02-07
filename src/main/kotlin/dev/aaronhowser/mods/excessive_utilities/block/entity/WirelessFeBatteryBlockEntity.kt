@@ -4,12 +4,14 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.excessive_utilities.handler.wireless_fe.WirelessFeNetworkHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
+import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.*
 
 class WirelessFeBatteryBlockEntity(
@@ -18,7 +20,6 @@ class WirelessFeBatteryBlockEntity(
 ) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState) {
 
 	val energyStorage = EnergyStorage(10)
-
 	var ownerUuid: UUID? = null
 
 	override fun onLoad() {
@@ -65,6 +66,10 @@ class WirelessFeBatteryBlockEntity(
 
 	companion object {
 		const val OWNER_UUID_NBT = "OwnerUUID"
+
+		fun getEnergyCapability(battery: WirelessFeBatteryBlockEntity, direction: Direction?): IEnergyStorage {
+			return battery.energyStorage
+		}
 	}
 
 }
