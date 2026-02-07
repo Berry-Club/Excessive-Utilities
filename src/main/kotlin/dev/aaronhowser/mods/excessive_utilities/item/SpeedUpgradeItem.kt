@@ -1,10 +1,26 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import net.minecraft.core.component.DataComponents
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
+import net.minecraft.world.item.TooltipFlag
 
 class SpeedUpgradeItem(properties: Properties) : Item(properties) {
+
+	override fun appendHoverText(
+		stack: ItemStack,
+		context: TooltipContext,
+		tooltipComponents: MutableList<Component>,
+		tooltipFlag: TooltipFlag
+	) {
+		val stackSize = stack.count
+		val gpCost = getGpCost(stackSize)
+
+		val component = Component.literal("GP Cost: ${"%.2f".format(gpCost)}")
+		tooltipComponents.add(component)
+	}
 
 	companion object {
 		val BASIC_PROPERTIES: Properties =
