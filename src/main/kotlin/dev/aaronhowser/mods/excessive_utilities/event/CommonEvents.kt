@@ -59,7 +59,7 @@ object CommonEvents {
 			WirelessFeTransmitterBlockEntity::getEnergyCapability
 		)
 
-		val dataDrivenBeTypes = listOf(
+		val generators = listOf(
 			ModBlockEntityTypes.ENDER_GENERATOR.get(),
 			ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
 			ModBlockEntityTypes.PINK_GENERATOR.get(),
@@ -67,33 +67,22 @@ object CommonEvents {
 			ModBlockEntityTypes.FROSTY_GENERATOR.get(),
 			ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
 			ModBlockEntityTypes.DEATH_GENERATOR.get(),
+			ModBlockEntityTypes.CULINARY_GENERATOR.get()
 		)
 
-		val culinary = ModBlockEntityTypes.CULINARY_GENERATOR.get()
-
-		val compressibleGenBeTypes = dataDrivenBeTypes + culinary
-
-		for (beType in compressibleGenBeTypes) {
+		for (beType in generators) {
 			event.registerBlockEntity(
 				Capabilities.EnergyStorage.BLOCK,
 				beType,
 				GeneratorBlockEntity::getEnergyCapability
 			)
-		}
 
-		for (beType in dataDrivenBeTypes) {
 			event.registerBlockEntity(
 				Capabilities.ItemHandler.BLOCK,
 				beType,
-				DataDrivenGeneratorBlockEntity::getItemHandler
+				GeneratorBlockEntity::getItemHandler
 			)
 		}
-
-		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
-			culinary,
-			CulinaryGeneratorBlockEntity::getItemHandler
-		)
 
 	}
 
