@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "excessive_utilities:slimey_generator"
+        "recipe": "excessive_utilities:slimy_generator_x64"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "excessive_utilities:slimey_generator"
+      "excessive_utilities:slimy_generator_x64"
     ]
   }
 }

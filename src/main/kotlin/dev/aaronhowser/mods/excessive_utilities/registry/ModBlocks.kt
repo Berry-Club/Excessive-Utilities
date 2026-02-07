@@ -277,8 +277,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("frosty_generator")
 	val HALITOSIS_GENERATOR =
 		basicBlock("halitosis_generator")
-	val SLIMEY_GENERATOR =
-		basicBlock("slimey_generator")
+	val SLIMY_GENERATOR =
+		basicBlock("slimy_generator")
 	val DEATH_GENERATOR =
 		basicBlock("death_generator")
 	val RAINBOW_GENERATOR =
@@ -316,8 +316,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("frosty_generator_x8")
 	val HALITOSIS_GENERATOR_X8 =
 		basicBlock("halitosis_generator_x8")
-	val SLIMEY_GENERATOR_X8 =
-		basicBlock("slimey_generator_x8")
+	val SLIMY_GENERATOR_X8 =
+		basicBlock("slimy_generator_x8")
 	val DEATH_GENERATOR_X8 =
 		basicBlock("death_generator_x8")
 	val RAINBOW_GENERATOR_X8 =
@@ -355,8 +355,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("frosty_generator_x64")
 	val HALITOSIS_GENERATOR_X64 =
 		basicBlock("halitosis_generator_x64")
-	val SLIMEY_GENERATOR_X64 =
-		basicBlock("slimey_generator_x64")
+	val SLIMY_GENERATOR_X64 =
+		basicBlock("slimy_generator_x64")
 	val DEATH_GENERATOR_X64 =
 		basicBlock("death_generator_x64")
 	val RAINBOW_GENERATOR_X64 =

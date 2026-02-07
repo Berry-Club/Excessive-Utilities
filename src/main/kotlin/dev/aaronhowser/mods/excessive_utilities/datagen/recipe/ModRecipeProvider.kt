@@ -712,7 +712,7 @@ class ModRecipeProvider(
 				)
 			),
 			shapedRecipe(
-				ModBlocks.SLIMEY_GENERATOR,
+				ModBlocks.SLIMY_GENERATOR,
 				"sss,sSs,RMR",
 				mapOf(
 					's' to ing(Tags.Items.SLIME_BALLS),
@@ -970,7 +970,7 @@ class ModRecipeProvider(
 		generatorCompression(ModBlocks.DISENCHANTMENT_GENERATOR, ModBlocks.DISENCHANTMENT_GENERATOR_X8, ModBlocks.DISENCHANTMENT_GENERATOR_X64)
 		generatorCompression(ModBlocks.FROSTY_GENERATOR, ModBlocks.FROSTY_GENERATOR_X8, ModBlocks.FROSTY_GENERATOR_X64)
 		generatorCompression(ModBlocks.HALITOSIS_GENERATOR, ModBlocks.HALITOSIS_GENERATOR_X8, ModBlocks.HALITOSIS_GENERATOR_X64)
-		generatorCompression(ModBlocks.SLIMEY_GENERATOR, ModBlocks.SLIMEY_GENERATOR_X8, ModBlocks.SLIMEY_GENERATOR_X64)
+		generatorCompression(ModBlocks.SLIMY_GENERATOR, ModBlocks.SLIMY_GENERATOR_X8, ModBlocks.SLIMY_GENERATOR_X64)
 		generatorCompression(ModBlocks.DEATH_GENERATOR, ModBlocks.DEATH_GENERATOR_X8, ModBlocks.DEATH_GENERATOR_X64)
 		generatorCompression(ModBlocks.RAINBOW_GENERATOR, ModBlocks.RAINBOW_GENERATOR_X8, ModBlocks.RAINBOW_GENERATOR_X64)
 

@@ -98,7 +98,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.DISENCHANTMENT_GENERATOR, "Disenchantment Generator")
 			addBlock(ModBlocks.FROSTY_GENERATOR, "Frosty Generator")
 			addBlock(ModBlocks.HALITOSIS_GENERATOR, "Halitosis Generator")
-			addBlock(ModBlocks.SLIMEY_GENERATOR, "Slimey Generator")
+			addBlock(ModBlocks.SLIMY_GENERATOR, "Slimy Generator")
 			addBlock(ModBlocks.DEATH_GENERATOR, "Death Generator")
 			addBlock(ModBlocks.RAINBOW_GENERATOR, "Rainbow Generator!")
 
@@ -117,7 +117,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.DISENCHANTMENT_GENERATOR_X8, "Disenchantment Generator x8")
 			addBlock(ModBlocks.FROSTY_GENERATOR_X8, "Frosty Generator x8")
 			addBlock(ModBlocks.HALITOSIS_GENERATOR_X8, "Halitosis Generator x8")
-			addBlock(ModBlocks.SLIMEY_GENERATOR_X8, "Slimey Generator x8")
+			addBlock(ModBlocks.SLIMY_GENERATOR_X8, "Slimy Generator x8")
 			addBlock(ModBlocks.DEATH_GENERATOR_X8, "Death Generator x8")
 			addBlock(ModBlocks.RAINBOW_GENERATOR_X8, "Rainbow Generator! x8")
 
@@ -136,7 +136,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.DISENCHANTMENT_GENERATOR_X64, "Disenchantment Generator x64")
 			addBlock(ModBlocks.FROSTY_GENERATOR_X64, "Frosty Generator x64")
 			addBlock(ModBlocks.HALITOSIS_GENERATOR_X64, "Halitosis Generator x64")
-			addBlock(ModBlocks.SLIMEY_GENERATOR_X64, "Slimey Generator x64")
+			addBlock(ModBlocks.SLIMY_GENERATOR_X64, "Slimy Generator x64")
 			addBlock(ModBlocks.DEATH_GENERATOR_X64, "Death Generator x64")
 			addBlock(ModBlocks.RAINBOW_GENERATOR_X64, "Rainbow Generator! x64")
 
