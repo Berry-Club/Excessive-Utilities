@@ -53,28 +53,35 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		for (i in 0 until repetitions) generatorTick(level)
 	}
 
-	protected open fun generatorTick(level: ServerLevel) {
+	/**
+	 * @return true if it generated energy
+	 */
+	protected open fun generatorTick(level: ServerLevel): Boolean {
 		if (burnTimeRemaining <= 0) {
 			fePerTick = 0
 			tryStartBurning(level)
 
-			if (burnTimeRemaining <= 0) return
+			if (burnTimeRemaining <= 0) return false
 		}
 
-		generateEnergy(level)
+		return generateEnergy(level)
 	}
 
 	protected abstract fun tryStartBurning(level: ServerLevel)
 
-	protected open fun generateEnergy(level: ServerLevel) {
+	/**
+	 * @return true if it generated energy
+	 */
+	protected open fun generateEnergy(level: ServerLevel): Boolean {
 		val remainingCapacity = energyStorage.maxEnergyStored - energyStorage.energyStored
-		if (remainingCapacity <= 0) return
+		if (remainingCapacity <= 0) return false
 
 		val energyToGenerate = fePerTick.coerceAtMost(remainingCapacity)
 		energyStorage.receiveEnergy(energyToGenerate, false)
 
 		burnTimeRemaining--
 		setChanged()
+		return true
 	}
 
 	protected open fun clientTick(level: Level) {}
