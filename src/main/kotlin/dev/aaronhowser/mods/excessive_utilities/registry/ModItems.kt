@@ -3,6 +3,9 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.*
+import net.minecraft.core.component.DataComponents
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -155,12 +158,12 @@ object ModItems : AaronItemRegistry() {
 
 	// Transfer Node Upgrades
 
-	val SPEED_UPGRADE =
-		basic("speed_upgrade")
-	val SPEED_UPGRADE_MAGICAL =
-		basic("speed_upgrade_magical")
-	val SPEED_UPGRADE_ULTIMATE =
-		basic("speed_upgrade_ultimate")
+	val SPEED_UPGRADE: DeferredItem<SpeedUpgradeItem> =
+		register("speed_upgrade", ::SpeedUpgradeItem, SpeedUpgradeItem.BASIC_PROPERTIES)
+	val SPEED_UPGRADE_MAGICAL: DeferredItem<SpeedUpgradeItem> =
+		register("speed_upgrade_magical", ::SpeedUpgradeItem, SpeedUpgradeItem.MAGICAL_PROPERTIES)
+	val SPEED_UPGRADE_ULTIMATE: DeferredItem<SpeedUpgradeItem> =
+		register("speed_upgrade_ultimate", ::SpeedUpgradeItem, SpeedUpgradeItem.ULTIMATE_PROPERTIES)
 	val STACK_UPGRADE =
 		basic("stack_upgrade")
 	val WORLD_INTERACTION_UPGRADE =
