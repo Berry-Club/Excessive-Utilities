@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.entity.base
+package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

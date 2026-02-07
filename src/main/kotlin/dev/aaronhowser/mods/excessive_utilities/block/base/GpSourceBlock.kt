@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpSourceBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpSourceBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack

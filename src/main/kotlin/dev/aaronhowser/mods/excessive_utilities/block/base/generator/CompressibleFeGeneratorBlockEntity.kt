@@ -1,8 +1,8 @@
-package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
+package dev.aaronhowser.mods.excessive_utilities.block.base.generator
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
-import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

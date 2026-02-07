@@ -1,6 +1,6 @@
-package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
+package dev.aaronhowser.mods.excessive_utilities.block.base.generator
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.entity.BlockEntityType
