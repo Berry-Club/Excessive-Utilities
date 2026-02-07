@@ -54,8 +54,18 @@ abstract class CompressibleFeGeneratorBlockEntity(
 	}
 
 	protected open fun tryStartBurning(level: ServerLevel) {
+		val fuelMap = generatorType.fuelDataMap ?: return
+
 		val inputStack = container.getItem(INPUT_SLOT)
 		if (inputStack.isEmpty) return
+
+		val itemFuel = inputStack.item.builtInRegistryHolder().getData(fuelMap) ?: return
+
+		fePerTick = itemFuel.fePerTick
+		burnTimeRemaining = itemFuel.burnTime
+
+		inputStack.shrink(1)
+		setChanged()
 	}
 
 	protected open fun clientTick(level: Level) {}
