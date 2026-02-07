@@ -6,12 +6,15 @@ import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import java.util.UUID
+import net.neoforged.neoforge.energy.EnergyStorage
+import java.util.*
 
 class WirelessFeBatteryBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
 ) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState) {
+
+	val energyStorage = EnergyStorage(10)
 
 	var ownerUuid: UUID? = null
 
