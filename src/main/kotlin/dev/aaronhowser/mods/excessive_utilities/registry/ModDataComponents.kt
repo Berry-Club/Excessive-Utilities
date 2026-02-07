@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronDataComponentRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
@@ -31,5 +32,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		)
 	val ENERGY: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("energy")
+	val OPINIUM_CORE_CONTENTS: DeferredHolder<DataComponentType<*>, DataComponentType<OpiniumCoreContentsComponent>> =
+		register("opinium_core_contents", OpiniumCoreContentsComponent.CODEC, OpiniumCoreContentsComponent.STREAM_CODEC)
 
 }
