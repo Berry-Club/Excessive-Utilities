@@ -90,7 +90,7 @@ class DataDrivenGeneratorBlockEntity(
 		)
 
 		fun enderEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			type = ModBlockEntityTypes.ENDER_GENERATOR_EIGHT.get(),
 			compressionLevel = 2,
 			generatorType = GeneratorType.ENDER,
 			pos = pos,
@@ -98,12 +98,37 @@ class DataDrivenGeneratorBlockEntity(
 		)
 
 		fun enderSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			type = ModBlockEntityTypes.ENDER_GENERATOR_SIXTY_FOUR.get(),
 			compressionLevel = 3,
 			generatorType = GeneratorType.ENDER,
 			pos = pos,
 			blockState = state
 		)
+
+		fun explosive(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
+			compressionLevel = 1,
+			generatorType = GeneratorType.EXPLOSIVE,
+			pos = pos,
+			blockState = state
+		)
+
+		fun explosiveEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR_EIGHT.get(),
+			compressionLevel = 2,
+			generatorType = GeneratorType.EXPLOSIVE,
+			pos = pos,
+			blockState = state
+		)
+
+		fun explosiveSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR_SIXTY_FOUR.get(),
+			compressionLevel = 3,
+			generatorType = GeneratorType.EXPLOSIVE,
+			pos = pos,
+			blockState = state
+		)
+
 	}
 
 }
