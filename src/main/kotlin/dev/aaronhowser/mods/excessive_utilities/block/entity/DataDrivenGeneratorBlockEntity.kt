@@ -201,6 +201,30 @@ class DataDrivenGeneratorBlockEntity(
 			blockState = state
 		)
 
+		fun halitosis(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
+			compressionLevel = 1,
+			generatorType = GeneratorType.HALITOSIS,
+			pos = pos,
+			blockState = state
+		)
+
+		fun halitosisEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.HALITOSIS_GENERATOR_EIGHT.get(),
+			compressionLevel = 2,
+			generatorType = GeneratorType.HALITOSIS,
+			pos = pos,
+			blockState = state
+		)
+
+		fun halitosisSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.HALITOSIS_GENERATOR_SIXTY_FOUR.get(),
+			compressionLevel = 3,
+			generatorType = GeneratorType.HALITOSIS,
+			pos = pos,
+			blockState = state
+		)
+
 	}
 
 }
