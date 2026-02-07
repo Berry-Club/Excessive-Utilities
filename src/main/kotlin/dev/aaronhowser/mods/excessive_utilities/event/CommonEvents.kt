@@ -68,7 +68,13 @@ object CommonEvents {
 
 	@SubscribeEvent
 	fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-		event.register(GeneratorFuelDataMap.DATA_MAP_TYPE)
+		event.register(GeneratorFuelDataMap.ENDER)
+		event.register(GeneratorFuelDataMap.EXPLOSIVE)
+		event.register(GeneratorFuelDataMap.PINK)
+		event.register(GeneratorFuelDataMap.NETHER_STAR)
+		event.register(GeneratorFuelDataMap.FROSTY)
+		event.register(GeneratorFuelDataMap.HALITOSIS)
+		event.register(GeneratorFuelDataMap.DEATH)
 	}
 
 }

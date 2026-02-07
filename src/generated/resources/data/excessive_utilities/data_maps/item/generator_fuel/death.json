@@ -1,0 +1,28 @@
+{
+  "values": {
+    "#c:bones": {
+      "burn_time": 400,
+      "fe_per_tick": 40
+    },
+    "#c:storage_blocks/bone_meal": {
+      "burn_time": 400,
+      "fe_per_tick": 150
+    },
+    "minecraft:bone_meal": {
+      "burn_time": 200,
+      "fe_per_tick": 40
+    },
+    "minecraft:rotten_flesh": {
+      "burn_time": 400,
+      "fe_per_tick": 20
+    },
+    "minecraft:skeleton_skull": {
+      "burn_time": 400,
+      "fe_per_tick": 100
+    },
+    "minecraft:wither_skeleton_skull": {
+      "burn_time": 400,
+      "fe_per_tick": 150
+    }
+  }
+}

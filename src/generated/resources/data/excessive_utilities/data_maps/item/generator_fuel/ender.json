@@ -1,0 +1,12 @@
+{
+  "values": {
+    "#c:ender_pearls": {
+      "burn_time": 1600,
+      "fe_per_tick": 40
+    },
+    "minecraft:ender_eye": {
+      "burn_time": 3200,
+      "fe_per_tick": 80
+    }
+  }
+}

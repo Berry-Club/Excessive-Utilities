@@ -1,0 +1,12 @@
+{
+  "values": {
+    "#c:dyed/pink": {
+      "burn_time": 10,
+      "fe_per_tick": 40
+    },
+    "#c:dyes/pink": {
+      "burn_time": 10,
+      "fe_per_tick": 40
+    }
+  }
+}

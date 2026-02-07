@@ -10,7 +10,6 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 data class GeneratorFuelDataMap(
-	val generatorType: GeneratorType,
 	val fePerTick: Int,
 	val burnTime: Int
 ) {
@@ -19,9 +18,6 @@ data class GeneratorFuelDataMap(
 		val CODEC: Codec<GeneratorFuelDataMap> =
 			RecordCodecBuilder.create { instance ->
 				instance.group(
-					GeneratorType.CODEC
-						.fieldOf("type")
-						.forGetter(GeneratorFuelDataMap::generatorType),
 					Codec.INT
 						.fieldOf("fe_per_tick")
 						.forGetter(GeneratorFuelDataMap::fePerTick),
@@ -31,18 +27,23 @@ data class GeneratorFuelDataMap(
 				).apply(instance, ::GeneratorFuelDataMap)
 			}
 
-		val DATA_MAP_TYPE: DataMapType<Item, GeneratorFuelDataMap> =
-			DataMapType
+		val ENDER: DataMapType<Item, GeneratorFuelDataMap> = createMap(GeneratorType.ENDER)
+		val EXPLOSIVE: DataMapType<Item, GeneratorFuelDataMap> = createMap(GeneratorType.EXPLOSIVE)
+		val PINK: DataMapType<Item, GeneratorFuelDataMap> = createMap(GeneratorType.PINK)
+		val NETHER_STAR: DataMapType<Item, GeneratorFuelDataMap> = createMap(GeneratorType.NETHER_STAR)
+		val FROSTY: DataMapType<Item, GeneratorFuelDataMap> = createMap(GeneratorType.FROSTY)
+		val HALITOSIS: DataMapType<Item, GeneratorFuelDataMap> = createMap(GeneratorType.HALITOSIS)
+		val DEATH: DataMapType<Item, GeneratorFuelDataMap> = createMap(GeneratorType.DEATH)
+
+		private fun createMap(generatorType: GeneratorType): DataMapType<Item, GeneratorFuelDataMap> {
+			return DataMapType
 				.builder(
-					ExcessiveUtilities.modResource("generator_fuel"),
+					ExcessiveUtilities.modResource("generator_fuel/${generatorType.serializedName}"),
 					Registries.ITEM,
 					CODEC
 				)
 				.synced(CODEC, true)
 				.build()
-
-		fun getFuelData(stack: ItemStack): GeneratorFuelDataMap? {
-			return stack.itemHolder.getData(DATA_MAP_TYPE)
 		}
 	}
 

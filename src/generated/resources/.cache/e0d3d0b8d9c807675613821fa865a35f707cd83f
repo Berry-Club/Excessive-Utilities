@@ -1,2 +1,8 @@
-// 1.21.1	2026-02-07T05:44:47.700705	Data Maps
-beaae0b6d2c5056598ffd5ed9c434ab96faebf92 data/excessive_utilities/data_maps/item/generator_fuel.json
+// 1.21.1	2026-02-07T06:16:26.607255	Data Maps
+ca66f03655c54edd64fc1fae9b43ad7b9a910ddb data/excessive_utilities/data_maps/item/generator_fuel/death.json
+57f97906d258ab8040c4ce759fd3f65a017f74ff data/excessive_utilities/data_maps/item/generator_fuel/ender.json
+288eecab7ec8a5dfafce9e8d930f1c45a5fc4602 data/excessive_utilities/data_maps/item/generator_fuel/explosive.json
+882a0aeb773b0d15c1cf433902e28ade8a5e515c data/excessive_utilities/data_maps/item/generator_fuel/frosty.json
+b277e1b1442c3f9bebc71cef7f38a2a82ee82c25 data/excessive_utilities/data_maps/item/generator_fuel/halitosis.json
+833e0e96ffabe7d0e988e50d3d5c2574cff05cc5 data/excessive_utilities/data_maps/item/generator_fuel/nether_star.json
+27e69cdfc24f04bc0c4b549f0a674a4d77c76a7f data/excessive_utilities/data_maps/item/generator_fuel/pink.json

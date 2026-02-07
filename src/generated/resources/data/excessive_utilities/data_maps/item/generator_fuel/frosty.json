@@ -1,0 +1,28 @@
+{
+  "values": {
+    "minecraft:blue_ice": {
+      "burn_time": 3240,
+      "fe_per_tick": 40
+    },
+    "minecraft:ice": {
+      "burn_time": 40,
+      "fe_per_tick": 40
+    },
+    "minecraft:packed_ice": {
+      "burn_time": 360,
+      "fe_per_tick": 40
+    },
+    "minecraft:snow": {
+      "burn_time": 3,
+      "fe_per_tick": 40
+    },
+    "minecraft:snow_block": {
+      "burn_time": 20,
+      "fe_per_tick": 40
+    },
+    "minecraft:snowball": {
+      "burn_time": 5,
+      "fe_per_tick": 40
+    }
+  }
+}

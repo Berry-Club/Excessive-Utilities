@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorFuelDataMap
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
@@ -10,6 +9,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.ItemLike
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.DataMapProvider
+import net.neoforged.neoforge.registries.datamaps.DataMapType
 import java.util.concurrent.CompletableFuture
 
 class ModDataMapProvider(
@@ -18,53 +18,61 @@ class ModDataMapProvider(
 ) : DataMapProvider(packOutput, lookupProvider) {
 
 	override fun gather(provider: HolderLookup.Provider) {
-		val fuelBuilder = builder(GeneratorFuelDataMap.DATA_MAP_TYPE)
 
-		fun addFuel(item: ItemLike, generatorType: GeneratorType, fePerTick: Int, burnTime: Int) {
-			fuelBuilder.add(
+		fun addFuel(
+			map: DataMapType<Item, GeneratorFuelDataMap>,
+			item: ItemLike,
+			fePerTick: Int,
+			burnTime: Int
+		) {
+			builder(map).add(
 				item.asItem().builtInRegistryHolder(),
-				GeneratorFuelDataMap(generatorType, fePerTick, burnTime),
+				GeneratorFuelDataMap(fePerTick, burnTime),
 				false
 			)
 		}
 
-		fun addFuel(itemTag: TagKey<Item>, generatorType: GeneratorType, fePerTick: Int, burnTime: Int) {
-			fuelBuilder.add(
+		fun addFuel(
+			map: DataMapType<Item, GeneratorFuelDataMap>,
+			itemTag: TagKey<Item>,
+			fePerTick: Int,
+			burnTime: Int
+		) {
+			builder(map).add(
 				itemTag,
-				GeneratorFuelDataMap(generatorType, fePerTick, burnTime),
+				GeneratorFuelDataMap(fePerTick, burnTime),
 				false
 			)
 		}
 
-		addFuel(Tags.Items.ENDER_PEARLS, GeneratorType.ENDER, 40, 20 * (60 + 20)) // 1:20
-		addFuel(Items.ENDER_EYE, GeneratorType.ENDER, 80, (20 * (2 * 60 + 40))) // 2:40
+		addFuel(GeneratorFuelDataMap.ENDER, Tags.Items.ENDER_PEARLS, 40, 20 * (60 + 20)) // 1:20
+		addFuel(GeneratorFuelDataMap.ENDER, Items.ENDER_EYE, 80, (20 * (2 * 60 + 40))) // 2:40
 
-		addFuel(Tags.Items.DYES_PINK, GeneratorType.PINK, 40, 10)
-		addFuel(Tags.Items.DYED_PINK, GeneratorType.PINK, 40, 10)
+		addFuel(GeneratorFuelDataMap.PINK, Tags.Items.DYES_PINK, 40, 10)
+		addFuel(GeneratorFuelDataMap.PINK, Tags.Items.DYED_PINK, 40, 10)
 
-		addFuel(Tags.Items.BONES, GeneratorType.DEATH, 40, 20 * 20)
-		addFuel(Tags.Items.STORAGE_BLOCKS_BONE_MEAL, GeneratorType.DEATH, 150, 20 * 20)
-		addFuel(Items.BONE_MEAL, GeneratorType.DEATH, 40, 20 * 10)
-		addFuel(Items.ROTTEN_FLESH, GeneratorType.DEATH, 20, 20 * 20)
-		addFuel(Items.SKELETON_SKULL, GeneratorType.DEATH, 100, 20 * 20)
-		addFuel(Items.WITHER_SKELETON_SKULL, GeneratorType.DEATH, 150, 20 * 20)
+		addFuel(GeneratorFuelDataMap.DEATH, Tags.Items.BONES, 40, 20 * 20)
+		addFuel(GeneratorFuelDataMap.DEATH, Tags.Items.STORAGE_BLOCKS_BONE_MEAL, 150, 20 * 20)
+		addFuel(GeneratorFuelDataMap.DEATH, Items.BONE_MEAL, 40, 20 * 10)
+		addFuel(GeneratorFuelDataMap.DEATH, Items.ROTTEN_FLESH, 20, 20 * 20)
+		addFuel(GeneratorFuelDataMap.DEATH, Items.SKELETON_SKULL, 100, 20 * 20)
+		addFuel(GeneratorFuelDataMap.DEATH, Items.WITHER_SKELETON_SKULL, 150, 20 * 20)
 
-		addFuel(Items.TNT, GeneratorType.EXPLOSIVE, 160, 20 * (2 * 60 + 40))
-		addFuel(Items.TNT_MINECART, GeneratorType.EXPLOSIVE, 200, 20 * (2 * 60 + 40))
-		addFuel(Tags.Items.GUNPOWDERS, GeneratorType.EXPLOSIVE, 160, 20 * 20)
+		addFuel(GeneratorFuelDataMap.EXPLOSIVE, Items.TNT, 160, 20 * (2 * 60 + 40))
+		addFuel(GeneratorFuelDataMap.EXPLOSIVE, Items.TNT_MINECART, 200, 20 * (2 * 60 + 40))
+		addFuel(GeneratorFuelDataMap.EXPLOSIVE, Tags.Items.GUNPOWDERS, 160, 20 * 20)
 
-		addFuel(Items.NETHER_STAR, GeneratorType.NETHER_STAR, 4_000, 20 * 60 * 2)
-		addFuel(Items.FIREWORK_STAR, GeneratorType.NETHER_STAR, 20, 20)
+		addFuel(GeneratorFuelDataMap.NETHER_STAR, Items.NETHER_STAR, 4_000, 20 * 60 * 2)
+		addFuel(GeneratorFuelDataMap.NETHER_STAR, Items.FIREWORK_STAR, 20, 20)
 
-		addFuel(Items.DRAGON_BREATH, GeneratorType.HALITOSIS, 40, 20 * 60 * 10) // 10 minutes
+		addFuel(GeneratorFuelDataMap.HALITOSIS, Items.DRAGON_BREATH, 40, 20 * 60 * 10) // 10 minutes
 
-		addFuel(Items.ICE, GeneratorType.FROSTY, 40, 20 * 2)
-		addFuel(Items.PACKED_ICE, GeneratorType.FROSTY, 40, 20 * 2 * 9)
-		addFuel(Items.BLUE_ICE, GeneratorType.FROSTY, 40, 20 * 2 * 9 * 9)
-		addFuel(Items.SNOWBALL, GeneratorType.FROSTY, 40, 5)
-		addFuel(Items.SNOW_BLOCK, GeneratorType.FROSTY, 40, 20)
-		addFuel(Items.SNOW, GeneratorType.FROSTY, 40, 3)
-
+		addFuel(GeneratorFuelDataMap.FROSTY, Items.ICE, 40, 20 * 2)
+		addFuel(GeneratorFuelDataMap.FROSTY, Items.PACKED_ICE, 40, 20 * 2 * 9)
+		addFuel(GeneratorFuelDataMap.FROSTY, Items.BLUE_ICE, 40, 20 * 2 * 9 * 9)
+		addFuel(GeneratorFuelDataMap.FROSTY, Items.SNOWBALL, 40, 5)
+		addFuel(GeneratorFuelDataMap.FROSTY, Items.SNOW_BLOCK, 40, 20)
+		addFuel(GeneratorFuelDataMap.FROSTY, Items.SNOW, 40, 3)
 	}
 
 }

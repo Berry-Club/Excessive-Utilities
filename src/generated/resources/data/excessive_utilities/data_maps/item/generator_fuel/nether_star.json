@@ -1,0 +1,12 @@
+{
+  "values": {
+    "minecraft:firework_star": {
+      "burn_time": 20,
+      "fe_per_tick": 20
+    },
+    "minecraft:nether_star": {
+      "burn_time": 2400,
+      "fe_per_tick": 4000
+    }
+  }
+}

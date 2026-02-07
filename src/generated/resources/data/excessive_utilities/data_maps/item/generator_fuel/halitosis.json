@@ -1,0 +1,8 @@
+{
+  "values": {
+    "minecraft:dragon_breath": {
+      "burn_time": 12000,
+      "fe_per_tick": 40
+    }
+  }
+}
