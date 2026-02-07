@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
+import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorFuelDataMap
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -12,6 +13,8 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
+
 
 @EventBusSubscriber(
 	modid = ExcessiveUtilities.MOD_ID
@@ -61,6 +64,11 @@ object CommonEvents {
 	fun afterServerTick(event: ServerTickEvent.Post) {
 		val overworld = event.server.overworld()
 		GridPowerHandler.get(overworld).tick(overworld)
+	}
+
+	@SubscribeEvent
+	fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
+		event.register(GeneratorFuelDataMap.DATA_MAP_TYPE)
 	}
 
 }

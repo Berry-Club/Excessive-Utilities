@@ -41,6 +41,11 @@ object ModDataGen {
 			ModRecipeProvider(output, lookupProvider)
 		)
 
+		generator.addProvider(
+			event.includeServer(),
+			ModDataMapProvider(output, lookupProvider)
+		)
+
 //		generator.addProvider(
 //			event.includeServer(),
 //			ModLootTableProvider(output, lookupProvider)
