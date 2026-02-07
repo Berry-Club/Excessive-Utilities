@@ -1,20 +1,24 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.base
 
+import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Item
+import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 enum class GeneratorType(
-	private val id: String
+	private val id: String,
+	val fuelDataMap: DataMapType<Item, GeneratorItemFuel>?
 ) : StringRepresentable {
-	ENDER("ender"),
-	HEATED_REDSTONE("heated_redstone"),
-	POTIONS("potions"),
-	EXPLOSIVE("explosive"),
-	PINK("pink"),
-	NETHER_STAR("nether_star"),
-	FROSTY("frosty"),
-	HALITOSIS("halitosis"),
-	SLIMY("slimy"),
-	DEATH("death")
+	ENDER("ender", GeneratorItemFuel.ENDER),
+	HEATED_REDSTONE("heated_redstone", null),
+	POTIONS("potions", null),
+	EXPLOSIVE("explosive", GeneratorItemFuel.EXPLOSIVE),
+	PINK("pink", GeneratorItemFuel.PINK),
+	NETHER_STAR("nether_star", GeneratorItemFuel.NETHER_STAR),
+	FROSTY("frosty", GeneratorItemFuel.FROSTY),
+	HALITOSIS("halitosis", GeneratorItemFuel.HALITOSIS),
+	SLIMY("slimy", null),
+	DEATH("death", GeneratorItemFuel.DEATH)
 
 	/**
 	 * Left out intentionally:

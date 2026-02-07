@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
-import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorFuelDataMap
+import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -68,13 +68,13 @@ object CommonEvents {
 
 	@SubscribeEvent
 	fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-		event.register(GeneratorFuelDataMap.ENDER)
-		event.register(GeneratorFuelDataMap.EXPLOSIVE)
-		event.register(GeneratorFuelDataMap.PINK)
-		event.register(GeneratorFuelDataMap.NETHER_STAR)
-		event.register(GeneratorFuelDataMap.FROSTY)
-		event.register(GeneratorFuelDataMap.HALITOSIS)
-		event.register(GeneratorFuelDataMap.DEATH)
+		event.register(GeneratorItemFuel.ENDER)
+		event.register(GeneratorItemFuel.EXPLOSIVE)
+		event.register(GeneratorItemFuel.PINK)
+		event.register(GeneratorItemFuel.NETHER_STAR)
+		event.register(GeneratorItemFuel.FROSTY)
+		event.register(GeneratorItemFuel.HALITOSIS)
+		event.register(GeneratorItemFuel.DEATH)
 	}
 
 }
