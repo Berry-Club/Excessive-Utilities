@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.neoforged.neoforge.items.wrapper.InvWrapper
 
 open class GeneratorContainer(
 	blockEntity: BlockEntity
@@ -24,6 +25,18 @@ open class GeneratorContainer(
 	protected open fun canPlaceSecondaryInput(stack: ItemStack): Boolean = false
 
 	fun getSpeed(): Int = getItem(UPGRADE_SLOT).count
+
+	val itemHandler: InvWrapper =
+		object : InvWrapper(this) {
+			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = canPlaceItem(slot, stack)
+
+			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
+				if (!canPlaceItem(slot, stack)) return stack
+				return super.insertItem(slot, stack, simulate)
+			}
+
+			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = ItemStack.EMPTY
+		}
 
 	companion object {
 		const val CONTAINER_SIZE = 3

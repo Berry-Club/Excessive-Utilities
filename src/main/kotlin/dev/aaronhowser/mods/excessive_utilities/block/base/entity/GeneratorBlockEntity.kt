@@ -15,7 +15,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandlerModifiable
-import net.neoforged.neoforge.items.wrapper.InvWrapper
 import java.util.*
 
 abstract class GeneratorBlockEntity(
@@ -29,8 +28,7 @@ abstract class GeneratorBlockEntity(
 	protected val energyStorage = EnergyStorage(10_000)
 
 	protected open val container = GeneratorContainer(this)
-	protected val itemHandler: IItemHandlerModifiable = InvWrapper(container)
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
+	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = container.itemHandler
 
 	protected var fePerTick: Int = 0
 		set(value) {
