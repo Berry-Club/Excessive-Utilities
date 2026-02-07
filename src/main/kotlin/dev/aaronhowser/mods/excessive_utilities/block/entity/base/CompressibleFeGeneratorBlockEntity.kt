@@ -24,6 +24,11 @@ abstract class CompressibleFeGeneratorBlockEntity(
 
 	var ownerUuid: UUID? = null
 	private var burnTimeRemaining: Int = 0
+		set(value) {
+			if (field == value) return
+			field = value
+			setChanged()
+		}
 
 	private val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 
