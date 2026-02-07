@@ -28,11 +28,29 @@ class ServerConfig(
 	lateinit var dragonEggMillGeneration: ModConfigSpec.DoubleValue
 	lateinit var creativeMillGeneration: ModConfigSpec.DoubleValue
 
+	lateinit var feGenMk2Multiplier: ModConfigSpec.IntValue
+	lateinit var feGenMk3Multiplier: ModConfigSpec.IntValue
+
 	init {
 		general()
 		heatingCoil()
 		drums()
 		gridPower()
+		feGenerators()
+	}
+
+	private fun feGenerators() {
+		builder.push("fe_generators")
+
+		feGenMk2Multiplier = builder
+			.comment("How much faster Mk2 Generators work compared to Mk1.")
+			.defineInRange("feGenMk2Multiplier", 8, 1, Int.MAX_VALUE)
+
+		feGenMk3Multiplier = builder
+			.comment("How much faster Mk3 Generators work compared to Mk1.")
+			.defineInRange("feGenMk3Multiplier", 64, 1, Int.MAX_VALUE)
+
+		builder.pop()
 	}
 
 	private fun gridPower() {
