@@ -930,50 +930,6 @@ class ModRecipeProvider(
 			recipe.save(recipeOutput)
 		}
 
-		fun generatorCompression(
-			tierOne: ItemLike,
-			tierTwo: ItemLike,
-			tierThree: ItemLike
-		) {
-			shapedRecipe(
-				tierTwo,
-				"GGG,GEG,GGG",
-				mapOf(
-					'G' to ing(tierOne),
-					'E' to ing(ModBlocks.ENERGY_TRANSFER_NODE)
-				)
-			).save(recipeOutput)
-
-			shapedRecipe(
-				tierThree,
-				"GGG,GEG,GGG",
-				mapOf(
-					'G' to ing(tierTwo),
-					'E' to ing(ModBlocks.ENERGY_RETRIEVAL_NODE)
-				)
-			).save(recipeOutput)
-		}
-
-
-		generatorCompression(ModBlocks.SURVIVALIST_GENERATOR, ModBlocks.SURVIVALIST_GENERATOR_MK2, ModBlocks.SURVIVALIST_GENERATOR_MK3)
-		generatorCompression(ModBlocks.FURNACE_GENERATOR, ModBlocks.FURNACE_GENERATOR_MK2, ModBlocks.FURNACE_GENERATOR_MK3)
-		generatorCompression(ModBlocks.MAGMATIC_GENERATOR, ModBlocks.MAGMATIC_GENERATOR_MK2, ModBlocks.MAGMATIC_GENERATOR_MK3)
-		generatorCompression(ModBlocks.ENDER_GENERATOR, ModBlocks.ENDER_GENERATOR_MK2, ModBlocks.ENDER_GENERATOR_MK3)
-		generatorCompression(ModBlocks.HEATED_REDSTONE_GENERATOR, ModBlocks.HEATED_REDSTONE_GENERATOR_MK2, ModBlocks.HEATED_REDSTONE_GENERATOR_MK3)
-		generatorCompression(ModBlocks.CULINARY_GENERATOR, ModBlocks.CULINARY_GENERATOR_MK2, ModBlocks.CULINARY_GENERATOR_MK3)
-		generatorCompression(ModBlocks.POTIONS_GENERATOR, ModBlocks.POTIONS_GENERATOR_MK2, ModBlocks.POTIONS_GENERATOR_MK3)
-		generatorCompression(ModBlocks.SOLAR_GENERATOR, ModBlocks.SOLAR_GENERATOR_MK2, ModBlocks.SOLAR_GENERATOR_MK3)
-		generatorCompression(ModBlocks.EXPLOSIVE_GENERATOR, ModBlocks.EXPLOSIVE_GENERATOR_MK2, ModBlocks.EXPLOSIVE_GENERATOR_MK3)
-		generatorCompression(ModBlocks.PINK_GENERATOR, ModBlocks.PINK_GENERATOR_MK2, ModBlocks.PINK_GENERATOR_MK3)
-		generatorCompression(ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR, ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR_MK2, ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR_MK3)
-		generatorCompression(ModBlocks.NETHER_STAR_GENERATOR, ModBlocks.NETHER_STAR_GENERATOR_MK2, ModBlocks.NETHER_STAR_GENERATOR_MK3)
-		generatorCompression(ModBlocks.DISENCHANTMENT_GENERATOR, ModBlocks.DISENCHANTMENT_GENERATOR_MK2, ModBlocks.DISENCHANTMENT_GENERATOR_MK3)
-		generatorCompression(ModBlocks.FROSTY_GENERATOR, ModBlocks.FROSTY_GENERATOR_MK2, ModBlocks.FROSTY_GENERATOR_MK3)
-		generatorCompression(ModBlocks.HALITOSIS_GENERATOR, ModBlocks.HALITOSIS_GENERATOR_MK2, ModBlocks.HALITOSIS_GENERATOR_MK3)
-		generatorCompression(ModBlocks.SLIMY_GENERATOR, ModBlocks.SLIMY_GENERATOR_MK2, ModBlocks.SLIMY_GENERATOR_MK3)
-		generatorCompression(ModBlocks.DEATH_GENERATOR, ModBlocks.DEATH_GENERATOR_MK2, ModBlocks.DEATH_GENERATOR_MK3)
-		generatorCompression(ModBlocks.RAINBOW_GENERATOR, ModBlocks.RAINBOW_GENERATOR_MK2, ModBlocks.RAINBOW_GENERATOR_MK3)
-
 		fun spike(spike: ItemLike, sword: IngredientType, middle: IngredientType, base: IngredientType) {
 			shapedRecipe(
 				spike,
