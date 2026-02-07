@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -1405,94 +1406,46 @@ class ModRecipeProvider(
 			)
 		).save(recipeOutput, modLoc("chest_from_mini_chests"))
 
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" R ,RIR, R ",
-			mapOf(
-				'R' to ing(ModItems.RED_COAL),
-				'I' to ing(Tags.Items.STORAGE_BLOCKS_IRON)
-			)
-		).save(recipeOutput, modLoc("opinion_core_pathetic"))
+		val cores = OpiniumCoreContentsComponent.getDefaultTiers()
+		for ((i, core) in cores.withIndex()) {
+			val tierName = core.name.toString().split(".").last()
+			val recipeName = "opinium_core_$tierName"
 
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,IGI, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'I' to ing(Tags.Items.STORAGE_BLOCKS_IRON),
-				'G' to ing(Tags.Items.STORAGE_BLOCKS_GOLD)
-			)
-		).save(recipeOutput, modLoc("opinion_core_mediocre"))
+			if (i == 0) {
+				shapedRecipe(
+					ModItems.OPINIUM_CORE,
+					" R ,RIR, R ",
+					mapOf(
+						'R' to ing(ModItems.RED_COAL),
+						'I' to ing(Tags.Items.STORAGE_BLOCKS_IRON)
+					)
+				).save(recipeOutput, modLoc(recipeName))
 
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,GDG, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'G' to ing(Tags.Items.STORAGE_BLOCKS_GOLD),
-				'D' to ing(Tags.Items.STORAGE_BLOCKS_DIAMOND)
-			)
-		).save(recipeOutput, modLoc("opinion_core_passable"))
+				continue
+			}
 
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,DED, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'D' to ing(Tags.Items.STORAGE_BLOCKS_DIAMOND),
-				'E' to ing(Tags.Items.STORAGE_BLOCKS_EMERALD)
+			val inputCoreStack = ModItems.OPINIUM_CORE.withComponent(
+				ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
+				cores[i - 1]
 			)
-		).save(recipeOutput, modLoc("opinion_core_decent"))
 
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,ECE, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'E' to ing(Tags.Items.STORAGE_BLOCKS_EMERALD),
-				'C' to ing(Blocks.CHORUS_FLOWER)
+			val outputCoreStack = ModItems.OPINIUM_CORE.withComponent(
+				ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
+				core
 			)
-		).save(recipeOutput, modLoc("opinion_core_good"))
 
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,CBC, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'C' to ing(Blocks.CHORUS_FLOWER),
-				'B' to ing(Items.EXPERIENCE_BOTTLE)
-			)
-		).save(recipeOutput, modLoc("opinion_core_fuckin_sick"))
+			val (inner, outer) = core
 
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,BEB, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'B' to ing(Items.EXPERIENCE_BOTTLE),
-				'E' to ing(Items.ELYTRA)
-			)
-		).save(recipeOutput, modLoc("opinion_core_amazing"))
-
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,ESE, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'E' to ing(Items.ELYTRA),
-				'S' to ing(Items.NETHER_STAR)
-			)
-		)
-
-		shapedRecipe(
-			ModItems.OPINIUM_CORE,
-			" O ,SIS, O ",
-			mapOf(
-				'O' to ing(ModItems.OPINIUM_CORE),
-				'S' to ing(Items.NETHER_STAR),
-				'I' to ing(Items.IRON_INGOT)
-			)
-		).save(recipeOutput, modLoc("opinion_core_perfected"))
+			shapedRecipe(
+				outputCoreStack,
+				" O ,ABA, O",
+				mapOf(
+					'O' to ing(inputCoreStack),
+					'A' to ing(outer),
+					'B' to ing(inner)
+				)
+			).save(recipeOutput, modLoc(recipeName))
+		}
 
 	}
 

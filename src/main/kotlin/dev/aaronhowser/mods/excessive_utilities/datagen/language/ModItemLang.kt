@@ -6,6 +6,16 @@ object ModItemLang {
 
 	const val CREATIVE_TAB = "itemGroup.excessive_utilities"
 
+	const val OPINIUM_CORE_PATHETIC = "item.excessive_utilities.opinium_core.pathetic"
+	const val OPINIUM_CORE_MEDIOCRE = "item.excessive_utilities.opinium_core.mediocre"
+	const val OPINIUM_CORE_PASSABLE = "item.excessive_utilities.opinium_core.passable"
+	const val OPINIUM_CORE_DECENT = "item.excessive_utilities.opinium_core.decent"
+	const val OPINIUM_CORE_GOOD = "item.excessive_utilities.opinium_core.good"
+	const val OPINIUM_CORE_DAMN_GOOD = "item.excessive_utilities.opinium_core.damn_good"
+	const val OPINIUM_CORE_AMAZING = "item.excessive_utilities.opinium_core.amazing"
+	const val OPINIUM_CORE_INSPIRING = "item.excessive_utilities.opinium_core.inspiring"
+	const val OPINIUM_CORE_PERFECTED = "item.excessive_utilities.opinium_core.perfected"
+
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
 			add(CREATIVE_TAB, "Excessive Utilities")
@@ -92,6 +102,15 @@ object ModItemLang {
 			addItem(ModItems.ENDER_TRANSMITTER, "Ender Transmitter")
 			addItem(ModItems.CREATIVE_UPGRADE, "Creative Upgrade")
 
+			add(OPINIUM_CORE_PATHETIC, "Opinium Core (Pathetic)")
+			add(OPINIUM_CORE_MEDIOCRE, "Opinium Core (Mediocre)")
+			add(OPINIUM_CORE_PASSABLE, "Opinium Core (Passable)")
+			add(OPINIUM_CORE_DECENT, "Opinium Core (Decent)")
+			add(OPINIUM_CORE_GOOD, "Opinium Core (Good)")
+			add(OPINIUM_CORE_DAMN_GOOD, "Opinium Core (Damn Good)")
+			add(OPINIUM_CORE_AMAZING, "Opinium Core (Amazing)")
+			add(OPINIUM_CORE_INSPIRING, "Opinium Core (Inspiring)")
+			add(OPINIUM_CORE_PERFECTED, "Opinium Core (Perfected)")
 		}
 	}
 
