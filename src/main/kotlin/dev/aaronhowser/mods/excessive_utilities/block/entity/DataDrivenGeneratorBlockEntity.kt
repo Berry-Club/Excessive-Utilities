@@ -225,6 +225,30 @@ class DataDrivenGeneratorBlockEntity(
 			blockState = state
 		)
 
+		fun death(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.DEATH_GENERATOR.get(),
+			compressionLevel = 1,
+			generatorType = GeneratorType.DEATH,
+			pos = pos,
+			blockState = state
+		)
+
+		fun deathEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.DEATH_GENERATOR_EIGHT.get(),
+			compressionLevel = 2,
+			generatorType = GeneratorType.DEATH,
+			pos = pos,
+			blockState = state
+		)
+
+		fun deathSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.DEATH_GENERATOR_SIXTY_FOUR.get(),
+			compressionLevel = 3,
+			generatorType = GeneratorType.DEATH,
+			pos = pos,
+			blockState = state
+		)
+
 	}
 
 }

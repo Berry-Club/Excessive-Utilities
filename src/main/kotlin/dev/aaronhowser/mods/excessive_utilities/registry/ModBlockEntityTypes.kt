@@ -96,4 +96,11 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 	val HALITOSIS_GENERATOR_SIXTY_FOUR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("halitosis_generator_sixty_four", DataDrivenGeneratorBlockEntity::halitosisSixtyFour, ModBlocks.HALITOSIS_GENERATOR_X64)
 
+	val DEATH_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("death_generator", DataDrivenGeneratorBlockEntity::death, ModBlocks.DEATH_GENERATOR)
+	val DEATH_GENERATOR_EIGHT: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("death_generator_eight", DataDrivenGeneratorBlockEntity::deathEight, ModBlocks.DEATH_GENERATOR_X8)
+	val DEATH_GENERATOR_SIXTY_FOUR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("death_generator_sixty_four", DataDrivenGeneratorBlockEntity::deathSixtyFour, ModBlocks.DEATH_GENERATOR_X64)
+
 }
