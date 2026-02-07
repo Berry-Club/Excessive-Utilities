@@ -15,6 +15,11 @@
       "burn_time": 10,
       "fe_per_tick": 40
     },
+    "#c:gunpowders": {
+      "type": "explosive",
+      "burn_time": 400,
+      "fe_per_tick": 160
+    },
     "#c:storage_blocks/bone_meal": {
       "type": "death",
       "burn_time": 400,
@@ -25,6 +30,16 @@
       "burn_time": 200,
       "fe_per_tick": 40
     },
+    "minecraft:firework_star": {
+      "type": "nether_star",
+      "burn_time": 20,
+      "fe_per_tick": 20
+    },
+    "minecraft:nether_star": {
+      "type": "nether_star",
+      "burn_time": 2400,
+      "fe_per_tick": 4000
+    },
     "minecraft:rotten_flesh": {
       "type": "death",
       "burn_time": 400,
@@ -34,6 +49,16 @@
       "type": "death",
       "burn_time": 400,
       "fe_per_tick": 100
+    },
+    "minecraft:tnt": {
+      "type": "explosive",
+      "burn_time": 3200,
+      "fe_per_tick": 160
+    },
+    "minecraft:tnt_minecart": {
+      "type": "explosive",
+      "burn_time": 3200,
+      "fe_per_tick": 200
     },
     "minecraft:wither_skeleton_skull": {
       "type": "death",

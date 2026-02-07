@@ -20,18 +20,18 @@ class ModDataMapProvider(
 	override fun gather(provider: HolderLookup.Provider) {
 		val fuelBuilder = builder(GeneratorFuelDataMap.DATA_MAP_TYPE)
 
-		fun addFuel(item: ItemLike, genType: GeneratorType, burnTime: Int, energy: Int) {
+		fun addFuel(item: ItemLike, generatorType: GeneratorType, fePerTick: Int, burnTime: Int) {
 			fuelBuilder.add(
 				item.asItem().builtInRegistryHolder(),
-				GeneratorFuelDataMap(genType, burnTime, energy),
+				GeneratorFuelDataMap(generatorType, fePerTick, burnTime),
 				false
 			)
 		}
 
-		fun addFuel(itemTag: TagKey<Item>, genType: GeneratorType, fePerTick: Int, burnTicks: Int) {
+		fun addFuel(itemTag: TagKey<Item>, generatorType: GeneratorType, fePerTick: Int, burnTime: Int) {
 			fuelBuilder.add(
 				itemTag,
-				GeneratorFuelDataMap(genType, fePerTick, burnTicks),
+				GeneratorFuelDataMap(generatorType, fePerTick, burnTime),
 				false
 			)
 		}
@@ -46,7 +46,7 @@ class ModDataMapProvider(
 		addFuel(Items.SKELETON_SKULL, GeneratorType.DEATH, 100, 20 * 20)
 		addFuel(Items.WITHER_SKELETON_SKULL, GeneratorType.DEATH, 150, 20 * 20)
 
-		addFuel(Items.TNT, GeneratorType.EXPLOSIVE, 160, 20 * (2 * 60 + 40)) // 2:40
+		addFuel(Items.TNT, GeneratorType.EXPLOSIVE, 160, 20 * (2 * 60 + 40))
 		addFuel(Items.TNT_MINECART, GeneratorType.EXPLOSIVE, 200, 20 * (2 * 60 + 40))
 		addFuel(Tags.Items.GUNPOWDERS, GeneratorType.EXPLOSIVE, 160, 20 * 20)
 
