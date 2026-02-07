@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
-import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -22,14 +21,6 @@ abstract class GeneratorBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(type, pos, blockState) {
 
-	private val repetitions: Int
-		get() = when (tier) {
-			1 -> 1
-			2 -> ServerConfig.CONFIG.feGenMk2Multiplier.get()
-			3 -> ServerConfig.CONFIG.feGenMk3Multiplier.get()
-			else -> error("Invalid generator tier: $tier")
-		}
-
 	var ownerUuid: UUID? = null
 
 	protected val energyStorage = EnergyStorage(10_000)
@@ -48,8 +39,9 @@ abstract class GeneratorBlockEntity(
 			setChanged()
 		}
 
+	//TODO: Loop this for each speed upgrade
 	protected open fun serverTick(level: ServerLevel) {
-		for (i in 0 until repetitions) generatorTick(level)
+		generatorTick(level)
 	}
 
 	/**

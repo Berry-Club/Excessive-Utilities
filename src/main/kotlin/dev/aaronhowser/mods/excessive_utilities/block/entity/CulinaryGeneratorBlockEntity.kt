@@ -8,17 +8,14 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.wrapper.InvWrapper
 
 class CulinaryGeneratorBlockEntity(
-	type: BlockEntityType<*>,
-	override val tier: Int,
 	pos: BlockPos,
 	blockState: BlockState,
-) : GeneratorBlockEntity(type, pos, blockState) {
+) : GeneratorBlockEntity(ModBlockEntityTypes.CULINARY_GENERATOR.get(), pos, blockState) {
 
 	private val container: ImprovedSimpleContainer =
 		object : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
@@ -57,26 +54,6 @@ class CulinaryGeneratorBlockEntity(
 		const val CONTAINER_SIZE = 1
 		const val INPUT_SLOT = 0
 
-		fun mk1(pos: BlockPos, state: BlockState) = CulinaryGeneratorBlockEntity(
-			type = ModBlockEntityTypes.CULINARY_GENERATOR.get(),
-			tier = 1,
-			pos = pos,
-			blockState = state
-		)
-
-		fun mk2(pos: BlockPos, state: BlockState) = CulinaryGeneratorBlockEntity(
-			type = ModBlockEntityTypes.CULINARY_GENERATOR_MK2.get(),
-			tier = 2,
-			pos = pos,
-			blockState = state
-		)
-
-		fun mk3(pos: BlockPos, state: BlockState) = CulinaryGeneratorBlockEntity(
-			type = ModBlockEntityTypes.CULINARY_GENERATOR_MK3.get(),
-			tier = 3,
-			pos = pos,
-			blockState = state
-		)
 	}
 
 }
