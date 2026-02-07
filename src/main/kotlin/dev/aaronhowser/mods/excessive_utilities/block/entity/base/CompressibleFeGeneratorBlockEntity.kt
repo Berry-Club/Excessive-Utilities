@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.base
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
-import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

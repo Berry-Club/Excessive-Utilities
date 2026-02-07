@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.excessive_utilities.block.entity.WirelessFeTransmitterBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
