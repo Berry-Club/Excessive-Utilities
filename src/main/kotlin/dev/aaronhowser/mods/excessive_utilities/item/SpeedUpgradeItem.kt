@@ -24,11 +24,33 @@ class SpeedUpgradeItem(properties: Properties) : Item(properties) {
 				.rarity(Rarity.EPIC)
 				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
 
-		fun getGpCost(amount: Int): Double {
-			if (amount <= 0) return 0.0
-			if (amount == 1) return 1.0
+		private var gpCostCalculator: (Int) -> Double = { stackSize ->
+			if (stackSize <= 0) {
+				0.0
+			} else {
+				stackSize * (122 + 4 * stackSize) / 126.0
+			}
+		}
 
-			return amount * (122 + 4 * amount) / 126.0
+		fun getGpCost(stackSize: Int): Double = gpCostCalculator(stackSize)
+
+		/**
+		 * Mostly meant to be called from KubeJS.
+		 *
+		 * Here's an example:
+		 *
+		 * ```js
+		 * const $SpeedUpgradeItem = Java.loadClass('dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem')
+		 *
+		 * $SpeedUpgradeItem.setGpCostCalculator(stackSize => stackSize * 10)
+		 * ```
+		 *
+		 * This would set the GP cost to be 10 GP per Speed Upgrade in the stack
+		 *
+		 */
+		@JvmStatic
+		fun setGpCostCalculator(newFunction: (Int) -> Double) {
+			gpCostCalculator = newFunction
 		}
 	}
 
