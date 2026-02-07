@@ -138,22 +138,6 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 		) {
 			poseStack.pushPose()
 
-//			poseStack.translate(0.5, 0.5, 0.5)
-
-//			val time = AaronClientUtil.localLevel?.gameTime ?: 0
-//
-//			val yRotPerTick = 4f
-//			val yRot = Mth.wrapDegrees(time * yRotPerTick)
-//			poseStack.mulPose(Axis.YP.rotationDegrees(yRot))
-//
-//			val xRotPerTick = 2f
-//			val xRot = Mth.wrapDegrees(time * xRotPerTick)
-//			poseStack.mulPose(Axis.XP.rotationDegrees(xRot))
-//
-//			val zRotPerTick = 1f
-//			val zRot = Mth.wrapDegrees(time * zRotPerTick)
-//			poseStack.mulPose(Axis.ZP.rotationDegrees(zRot))
-//
 			poseStack.scale(0.25f, 0.25f, 0.25f)
 
 			ITEM_RENDERER.renderStatic(
