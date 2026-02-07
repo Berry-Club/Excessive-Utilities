@@ -16,8 +16,8 @@ class EnderGeneratorBlock(
 	override fun getBlockEntityType(): BlockEntityType<out DataDrivenGeneratorBlockEntity> {
 		return when (compressionLevel) {
 			1 -> ModBlockEntityTypes.ENDER_GENERATOR.get()
-			2 -> ModBlockEntityTypes.ENDER_GENERATOR_EIGHT.get()
-			3 -> ModBlockEntityTypes.ENDER_GENERATOR_SIXTY_FOUR.get()
+			2 -> ModBlockEntityTypes.ENDER_GENERATOR_MK2.get()
+			3 -> ModBlockEntityTypes.ENDER_GENERATOR_MK3.get()
 			else -> error("Invalid compression level: $compressionLevel")
 		}
 	}

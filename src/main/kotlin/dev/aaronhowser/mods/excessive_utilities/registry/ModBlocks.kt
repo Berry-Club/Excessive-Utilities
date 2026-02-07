@@ -286,81 +286,81 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// x8
 
-	val SURVIVALIST_GENERATOR_X8 =
-		basicBlock("survivalist_generator_x8")
-	val FURNACE_GENERATOR_X8 =
-		basicBlock("furnace_generator_x8")
-	val MAGMATIC_GENERATOR_X8 =
-		basicBlock("magmatic_generator_x8")
-	val ENDER_GENERATOR_X8: DeferredBlock<EnderGeneratorBlock> =
-		registerBlock("ender_generator_x8") { EnderGeneratorBlock(compressionLevel = 2) }
-	val HEATED_REDSTONE_GENERATOR_X8 =
-		basicBlock("heated_redstone_generator_x8")
-	val CULINARY_GENERATOR_X8 =
-		basicBlock("culinary_generator_x8")
-	val POTIONS_GENERATOR_X8 =
-		basicBlock("potions_generator_x8")
-	val SOLAR_GENERATOR_X8 =
-		basicBlock("solar_generator_x8")
-	val EXPLOSIVE_GENERATOR_X8 =
-		basicBlock("explosive_generator_x8")
-	val PINK_GENERATOR_X8 =
-		basicBlock("pink_generator_x8")
-	val HIGH_TEMPERATURE_FURNACE_GENERATOR_X8 =
-		basicBlock("high_temperature_furnace_generator_x8")
-	val NETHER_STAR_GENERATOR_X8 =
-		basicBlock("nether_star_generator_x8")
-	val DISENCHANTMENT_GENERATOR_X8 =
-		basicBlock("disenchantment_generator_x8")
-	val FROSTY_GENERATOR_X8 =
-		basicBlock("frosty_generator_x8")
-	val HALITOSIS_GENERATOR_X8 =
-		basicBlock("halitosis_generator_x8")
-	val SLIMY_GENERATOR_X8 =
-		basicBlock("slimy_generator_x8")
-	val DEATH_GENERATOR_X8 =
-		basicBlock("death_generator_x8")
-	val RAINBOW_GENERATOR_X8 =
-		basicBlock("rainbow_generator_x8")
+	val SURVIVALIST_GENERATOR_MK2 =
+		basicBlock("survivalist_generator_mk2")
+	val FURNACE_GENERATOR_MK2 =
+		basicBlock("furnace_generator_mk2")
+	val MAGMATIC_GENERATOR_MK2 =
+		basicBlock("magmatic_generator_mk2")
+	val ENDER_GENERATOR_MK2: DeferredBlock<EnderGeneratorBlock> =
+		registerBlock("ender_generator_mk2") { EnderGeneratorBlock(compressionLevel = 2) }
+	val HEATED_REDSTONE_GENERATOR_MK2 =
+		basicBlock("heated_redstone_generator_mk2")
+	val CULINARY_GENERATOR_MK2 =
+		basicBlock("culinary_generator_mk2")
+	val POTIONS_GENERATOR_MK2 =
+		basicBlock("potions_generator_mk2")
+	val SOLAR_GENERATOR_MK2 =
+		basicBlock("solar_generator_mk2")
+	val EXPLOSIVE_GENERATOR_MK2 =
+		basicBlock("explosive_generator_mk2")
+	val PINK_GENERATOR_MK2 =
+		basicBlock("pink_generator_mk2")
+	val HIGH_TEMPERATURE_FURNACE_GENERATOR_MK2 =
+		basicBlock("high_temperature_furnace_generator_mk2")
+	val NETHER_STAR_GENERATOR_MK2 =
+		basicBlock("nether_star_generator_mk2")
+	val DISENCHANTMENT_GENERATOR_MK2 =
+		basicBlock("disenchantment_generator_mk2")
+	val FROSTY_GENERATOR_MK2 =
+		basicBlock("frosty_generator_mk2")
+	val HALITOSIS_GENERATOR_MK2 =
+		basicBlock("halitosis_generator_mk2")
+	val SLIMY_GENERATOR_MK2 =
+		basicBlock("slimy_generator_mk2")
+	val DEATH_GENERATOR_MK2 =
+		basicBlock("death_generator_mk2")
+	val RAINBOW_GENERATOR_MK2 =
+		basicBlock("rainbow_generator_mk2")
 
 	// x64
 
-	val SURVIVALIST_GENERATOR_X64 =
-		basicBlock("survivalist_generator_x64")
-	val FURNACE_GENERATOR_X64 =
-		basicBlock("furnace_generator_x64")
-	val MAGMATIC_GENERATOR_X64 =
-		basicBlock("magmatic_generator_x64")
-	val ENDER_GENERATOR_X64: DeferredBlock<EnderGeneratorBlock> =
-		registerBlock("ender_generator_x64") { EnderGeneratorBlock(compressionLevel = 3) }
-	val HEATED_REDSTONE_GENERATOR_X64 =
-		basicBlock("heated_redstone_generator_x64")
-	val CULINARY_GENERATOR_X64 =
-		basicBlock("culinary_generator_x64")
-	val POTIONS_GENERATOR_X64 =
-		basicBlock("potions_generator_x64")
-	val SOLAR_GENERATOR_X64 =
-		basicBlock("solar_generator_x64")
-	val EXPLOSIVE_GENERATOR_X64 =
-		basicBlock("explosive_generator_x64")
-	val PINK_GENERATOR_X64 =
-		basicBlock("pink_generator_x64")
-	val HIGH_TEMPERATURE_FURNACE_GENERATOR_X64 =
-		basicBlock("high_temperature_furnace_generator_x64")
-	val NETHER_STAR_GENERATOR_X64 =
-		basicBlock("nether_star_generator_x64")
-	val DISENCHANTMENT_GENERATOR_X64 =
-		basicBlock("disenchantment_generator_x64")
-	val FROSTY_GENERATOR_X64 =
-		basicBlock("frosty_generator_x64")
-	val HALITOSIS_GENERATOR_X64 =
-		basicBlock("halitosis_generator_x64")
-	val SLIMY_GENERATOR_X64 =
-		basicBlock("slimy_generator_x64")
-	val DEATH_GENERATOR_X64 =
-		basicBlock("death_generator_x64")
-	val RAINBOW_GENERATOR_X64 =
-		basicBlock("rainbow_generator_x64")
+	val SURVIVALIST_GENERATOR_MK3 =
+		basicBlock("survivalist_generator_mk3")
+	val FURNACE_GENERATOR_MK3 =
+		basicBlock("furnace_generator_mk3")
+	val MAGMATIC_GENERATOR_MK3 =
+		basicBlock("magmatic_generator_mk3")
+	val ENDER_GENERATOR_MK3: DeferredBlock<EnderGeneratorBlock> =
+		registerBlock("ender_generator_mk3") { EnderGeneratorBlock(compressionLevel = 3) }
+	val HEATED_REDSTONE_GENERATOR_MK3 =
+		basicBlock("heated_redstone_generator_mk3")
+	val CULINARY_GENERATOR_MK3 =
+		basicBlock("culinary_generator_mk3")
+	val POTIONS_GENERATOR_MK3 =
+		basicBlock("potions_generator_mk3")
+	val SOLAR_GENERATOR_MK3 =
+		basicBlock("solar_generator_mk3")
+	val EXPLOSIVE_GENERATOR_MK3 =
+		basicBlock("explosive_generator_mk3")
+	val PINK_GENERATOR_MK3 =
+		basicBlock("pink_generator_mk3")
+	val HIGH_TEMPERATURE_FURNACE_GENERATOR_MK3 =
+		basicBlock("high_temperature_furnace_generator_mk3")
+	val NETHER_STAR_GENERATOR_MK3 =
+		basicBlock("nether_star_generator_mk3")
+	val DISENCHANTMENT_GENERATOR_MK3 =
+		basicBlock("disenchantment_generator_mk3")
+	val FROSTY_GENERATOR_MK3 =
+		basicBlock("frosty_generator_mk3")
+	val HALITOSIS_GENERATOR_MK3 =
+		basicBlock("halitosis_generator_mk3")
+	val SLIMY_GENERATOR_MK3 =
+		basicBlock("slimy_generator_mk3")
+	val DEATH_GENERATOR_MK3 =
+		basicBlock("death_generator_mk3")
+	val RAINBOW_GENERATOR_MK3 =
+		basicBlock("rainbow_generator_mk3")
 
 	// GP Generators
 

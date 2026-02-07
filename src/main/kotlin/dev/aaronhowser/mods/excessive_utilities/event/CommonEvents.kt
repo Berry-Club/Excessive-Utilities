@@ -61,8 +61,8 @@ object CommonEvents {
 
 		val dataDrivenBeTypes = listOf(
 			ModBlockEntityTypes.ENDER_GENERATOR.get(),
-			ModBlockEntityTypes.ENDER_GENERATOR_EIGHT.get(),
-			ModBlockEntityTypes.ENDER_GENERATOR_SIXTY_FOUR.get()
+			ModBlockEntityTypes.ENDER_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.ENDER_GENERATOR_MK3.get()
 		)
 
 		val compressibleGenBeTypes = dataDrivenBeTypes + listOf()
