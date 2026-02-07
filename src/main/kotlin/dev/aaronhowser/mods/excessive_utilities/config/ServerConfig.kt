@@ -30,6 +30,8 @@ class ServerConfig(
 
 	lateinit var feGenMk2Multiplier: ModConfigSpec.IntValue
 	lateinit var feGenMk3Multiplier: ModConfigSpec.IntValue
+	lateinit var culinaryFePerFoodValue: ModConfigSpec.DoubleValue
+	lateinit var culinaryTicksPerSaturationValue: ModConfigSpec.DoubleValue
 
 	init {
 		general()
@@ -49,6 +51,14 @@ class ServerConfig(
 		feGenMk3Multiplier = builder
 			.comment("How much faster Mk3 Generators work compared to Mk1.")
 			.defineInRange("feGenMk3Multiplier", 64, 1, Int.MAX_VALUE)
+
+		culinaryFePerFoodValue = builder
+			.comment("How much FE the Culinary Generator produces per point of food value in the input item.")
+			.defineInRange("culinaryFePerFoodValue", 1.0, 0.0, Double.MAX_VALUE)
+
+		culinaryTicksPerSaturationValue = builder
+			.comment("How many ticks of burn time the Culinary Generator gets per point of saturation value in the input item.")
+			.defineInRange("culinaryFePerSaturationValue", 1.0, 0.0, Double.MAX_VALUE)
 
 		builder.pop()
 	}

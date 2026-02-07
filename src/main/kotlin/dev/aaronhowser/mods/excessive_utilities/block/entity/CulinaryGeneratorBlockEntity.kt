@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.DataDrivenGeneratorBlockEntity.Companion.CONTAINER_SIZE
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -33,10 +33,30 @@ class CulinaryGeneratorBlockEntity(
 	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
 	override fun tryStartBurning(level: ServerLevel) {
-		TODO("Not yet implemented")
+		if (burnTimeRemaining > 0) return
+
+		val inputStack = container.getItem(INPUT_SLOT)
+		if (inputStack.isEmpty) return
+
+		val foodProperties = inputStack.getFoodProperties(null) ?: return
+
+		val foodValue = foodProperties.nutrition
+		val saturationValue = foodProperties.saturation
+
+		val fePerFoodValue = ServerConfig.CONFIG.culinaryFePerFoodValue.get()
+		val ticksPerSaturationValue = ServerConfig.CONFIG.culinaryTicksPerSaturationValue.get()
+
+		fePerTick = (foodValue * fePerFoodValue).toInt()
+		burnTimeRemaining = (saturationValue * ticksPerSaturationValue).toInt()
+
+		inputStack.shrink(1)
+		setChanged()
 	}
 
 	companion object {
+		const val CONTAINER_SIZE = 1
+		const val INPUT_SLOT = 0
+
 		fun mk1(pos: BlockPos, state: BlockState) = CulinaryGeneratorBlockEntity(
 			type = ModBlockEntityTypes.CULINARY_GENERATOR.get(),
 			tier = 1,
