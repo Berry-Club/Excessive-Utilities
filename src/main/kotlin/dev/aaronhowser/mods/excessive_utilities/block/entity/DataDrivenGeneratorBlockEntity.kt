@@ -177,6 +177,29 @@ class DataDrivenGeneratorBlockEntity(
 			blockState = state
 		)
 
+		fun frosty(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.FROSTY_GENERATOR.get(),
+			compressionLevel = 1,
+			generatorType = GeneratorType.FROSTY,
+			pos = pos,
+			blockState = state
+		)
+
+		fun frostyEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.FROSTY_GENERATOR_EIGHT.get(),
+			compressionLevel = 2,
+			generatorType = GeneratorType.FROSTY,
+			pos = pos,
+			blockState = state
+		)
+
+		fun frostySixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.FROSTY_GENERATOR_SIXTY_FOUR.get(),
+			compressionLevel = 3,
+			generatorType = GeneratorType.FROSTY,
+			pos = pos,
+			blockState = state
+		)
 
 	}
 

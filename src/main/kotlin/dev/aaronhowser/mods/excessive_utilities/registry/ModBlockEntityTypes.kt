@@ -82,4 +82,11 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 	val NETHER_STAR_GENERATOR_SIXTY_FOUR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("nether_star_generator_sixty_four", DataDrivenGeneratorBlockEntity::netherStarSixtyFour, ModBlocks.NETHER_STAR_GENERATOR_X64)
 
+	val FROSTY_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("frosty_generator", DataDrivenGeneratorBlockEntity::frosty, ModBlocks.FROSTY_GENERATOR)
+	val FROSTY_GENERATOR_EIGHT: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("frosty_generator_eight", DataDrivenGeneratorBlockEntity::frostyEight, ModBlocks.FROSTY_GENERATOR_X8)
+	val FROSTY_GENERATOR_SIXTY_FOUR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("frosty_generator_sixty_four", DataDrivenGeneratorBlockEntity::frostySixtyFour, ModBlocks.FROSTY_GENERATOR_X64)
+
 }
