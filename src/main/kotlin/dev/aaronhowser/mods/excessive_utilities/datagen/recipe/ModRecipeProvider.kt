@@ -38,6 +38,8 @@ class ModRecipeProvider(
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput) {
+		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
+
 		val recipes = listOf(
 			shapedRecipe(
 				ModBlocks.MAGICAL_SNOW_GLOBE.toStack(),
@@ -840,7 +842,7 @@ class ModRecipeProvider(
 				ModItems.KIKOKU,
 				"O,O,S",
 				mapOf(
-					'O' to ing(ModItems.OPINIUM_CORE),
+					'O' to ing(perfectOpiniumCore),
 					'S' to ing(Tags.Items.RODS_WOODEN)
 				)
 			),
@@ -866,7 +868,7 @@ class ModRecipeProvider(
 				ModItems.COMPOUND_BOW,
 				" OS,I S, OS",
 				mapOf(
-					'O' to ing(ModItems.OPINIUM_CORE),
+					'O' to ing(perfectOpiniumCore),
 					'I' to ing(Tags.Items.INGOTS_IRON),
 					'S' to ing(Tags.Items.STRINGS)
 				)
@@ -875,7 +877,7 @@ class ModRecipeProvider(
 				ModItems.FIRE_AXE,
 				"OO,OS, S",
 				mapOf(
-					'O' to ing(ModItems.OPINIUM_CORE),
+					'O' to ing(perfectOpiniumCore),
 					'S' to ing(Tags.Items.RODS_WOODEN)
 				)
 			),
@@ -1424,15 +1426,8 @@ class ModRecipeProvider(
 				continue
 			}
 
-			val inputCoreStack = ModItems.OPINIUM_CORE.withComponent(
-				ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-				cores[i - 1]
-			)
-
-			val outputCoreStack = ModItems.OPINIUM_CORE.withComponent(
-				ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-				core
-			)
+			val inputCoreStack = cores[i - 1].getStack()
+			val outputCoreStack = core.getStack()
 
 			val (inner, outer) = core
 

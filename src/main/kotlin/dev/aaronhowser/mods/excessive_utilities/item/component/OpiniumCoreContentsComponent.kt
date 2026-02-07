@@ -3,8 +3,10 @@ package dev.aaronhowser.mods.excessive_utilities.item.component
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
@@ -18,6 +20,8 @@ data class OpiniumCoreContentsComponent(
 	val outer: ItemStack,
 	val name: Component
 ) {
+
+	fun getStack(): ItemStack = ModItems.OPINIUM_CORE.withComponent(ModDataComponents.OPINIUM_CORE_CONTENTS.get(), this)
 
 	companion object {
 		val CODEC: Codec<OpiniumCoreContentsComponent> =
