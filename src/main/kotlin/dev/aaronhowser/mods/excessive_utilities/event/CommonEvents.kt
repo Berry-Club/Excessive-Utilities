@@ -107,6 +107,14 @@ object CommonEvents {
 			)
 		}
 
+		for (beType in culinaryGenBeTypes) {
+			event.registerBlockEntity(
+				Capabilities.ItemHandler.BLOCK,
+				beType,
+				CulinaryGeneratorBlockEntity::getItemHandler
+			)
+		}
+
 	}
 
 	@SubscribeEvent
