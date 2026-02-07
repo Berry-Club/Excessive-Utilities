@@ -2,8 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.generator.DataDrivenGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder

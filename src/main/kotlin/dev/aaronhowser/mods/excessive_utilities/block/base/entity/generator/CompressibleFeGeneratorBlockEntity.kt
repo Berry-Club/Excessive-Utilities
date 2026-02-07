@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
-import java.util.UUID
+import java.util.*
 
 abstract class CompressibleFeGeneratorBlockEntity(
 	type: BlockEntityType<*>,
