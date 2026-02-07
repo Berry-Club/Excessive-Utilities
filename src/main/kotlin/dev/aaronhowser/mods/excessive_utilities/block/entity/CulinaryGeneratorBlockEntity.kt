@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
-import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -17,17 +17,13 @@ class CulinaryGeneratorBlockEntity(
 	blockState: BlockState,
 ) : GeneratorBlockEntity(ModBlockEntityTypes.CULINARY_GENERATOR.get(), pos, blockState) {
 
-	private val container: ImprovedSimpleContainer =
-		object : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
-			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+	override val container: GeneratorContainer =
+		object : GeneratorContainer(this@CulinaryGeneratorBlockEntity) {
+			override fun canPlaceInput(stack: ItemStack): Boolean {
 				val foodValue = stack.getFoodProperties(null)
 				return foodValue != null && (foodValue.nutrition > 0 || foodValue.saturation > 0f)
 			}
 		}
-
-	private val itemHandler: IItemHandlerModifiable = InvWrapper(container)
-
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
 	override fun tryStartBurning(level: ServerLevel) {
 		if (burnTimeRemaining > 0) return

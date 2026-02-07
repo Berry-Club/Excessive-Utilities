@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -13,6 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.items.wrapper.InvWrapper
 import java.util.*
 
 abstract class GeneratorBlockEntity(
@@ -24,6 +27,10 @@ abstract class GeneratorBlockEntity(
 	var ownerUuid: UUID? = null
 
 	protected val energyStorage = EnergyStorage(10_000)
+
+	protected open val container = GeneratorContainer(this)
+	protected val itemHandler: IItemHandlerModifiable = InvWrapper(container)
+	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
 	protected var fePerTick: Int = 0
 		set(value) {

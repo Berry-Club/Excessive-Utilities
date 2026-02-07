@@ -23,6 +23,8 @@ open class GeneratorContainer(
 	protected open fun canPlaceUpgrade(stack: ItemStack): Boolean = stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
 	protected open fun canPlaceSecondaryInput(stack: ItemStack): Boolean = false
 
+	fun getSpeed(): Int = getItem(UPGRADE_SLOT).count
+
 	companion object {
 		const val CONTAINER_SIZE = 3
 		const val INPUT_SLOT = 0
