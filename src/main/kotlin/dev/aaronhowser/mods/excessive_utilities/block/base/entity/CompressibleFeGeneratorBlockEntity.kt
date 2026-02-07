@@ -21,7 +21,7 @@ abstract class CompressibleFeGeneratorBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(type, pos, blockState) {
 
-	abstract val compressionLevel: Int
+	abstract val tier: Int
 
 	var ownerUuid: UUID? = null
 
@@ -42,7 +42,7 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		}
 
 	protected open fun serverTick(level: ServerLevel) {
-		for (i in 0 until compressionLevel) generatorTick(level)
+		for (i in 0 until tier) generatorTick(level)
 	}
 
 	protected open fun generatorTick(level: ServerLevel) {

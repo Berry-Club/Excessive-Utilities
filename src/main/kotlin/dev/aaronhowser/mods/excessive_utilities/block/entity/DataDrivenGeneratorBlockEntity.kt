@@ -17,9 +17,9 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.wrapper.InvWrapper
 
-class DataDrivenGeneratorBlockEntity(
+open class DataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
-	override val compressionLevel: Int,
+	override val tier: Int,
 	val generatorType: GeneratorType,
 	pos: BlockPos,
 	blockState: BlockState,
@@ -81,49 +81,49 @@ class DataDrivenGeneratorBlockEntity(
 		const val CONTAINER_SIZE = 1
 		const val INPUT_SLOT = 0
 
-		fun ender(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun enderMk1(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
-			compressionLevel = 1,
+			tier = 1,
 			generatorType = GeneratorType.ENDER,
 			pos = pos,
 			blockState = state
 		)
 
-		fun enderEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun enderMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.ENDER_GENERATOR_EIGHT.get(),
-			compressionLevel = 2,
+			tier = 2,
 			generatorType = GeneratorType.ENDER,
 			pos = pos,
 			blockState = state
 		)
 
-		fun enderSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun enderMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.ENDER_GENERATOR_SIXTY_FOUR.get(),
-			compressionLevel = 3,
+			tier = 3,
 			generatorType = GeneratorType.ENDER,
 			pos = pos,
 			blockState = state
 		)
 
-		fun explosive(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun explosiveMk1(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
-			compressionLevel = 1,
+			tier = 1,
 			generatorType = GeneratorType.EXPLOSIVE,
 			pos = pos,
 			blockState = state
 		)
 
-		fun explosiveEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun explosiveMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR_EIGHT.get(),
-			compressionLevel = 2,
+			tier = 2,
 			generatorType = GeneratorType.EXPLOSIVE,
 			pos = pos,
 			blockState = state
 		)
 
-		fun explosiveSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun explosiveMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR_SIXTY_FOUR.get(),
-			compressionLevel = 3,
+			tier = 3,
 			generatorType = GeneratorType.EXPLOSIVE,
 			pos = pos,
 			blockState = state
@@ -131,23 +131,23 @@ class DataDrivenGeneratorBlockEntity(
 
 		fun pink(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.PINK_GENERATOR.get(),
-			compressionLevel = 1,
+			tier = 1,
 			generatorType = GeneratorType.PINK,
 			pos = pos,
 			blockState = state
 		)
 
-		fun pinkEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun pinkMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.PINK_GENERATOR_EIGHT.get(),
-			compressionLevel = 2,
+			tier = 2,
 			generatorType = GeneratorType.PINK,
 			pos = pos,
 			blockState = state
 		)
 
-		fun pinkSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun pinkMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.PINK_GENERATOR_SIXTY_FOUR.get(),
-			compressionLevel = 3,
+			tier = 3,
 			generatorType = GeneratorType.PINK,
 			pos = pos,
 			blockState = state
@@ -155,23 +155,23 @@ class DataDrivenGeneratorBlockEntity(
 
 		fun netherStar(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR.get(),
-			compressionLevel = 1,
+			tier = 1,
 			generatorType = GeneratorType.NETHER_STAR,
 			pos = pos,
 			blockState = state
 		)
 
-		fun netherStarEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun netherStarMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR_EIGHT.get(),
-			compressionLevel = 2,
+			tier = 2,
 			generatorType = GeneratorType.NETHER_STAR,
 			pos = pos,
 			blockState = state
 		)
 
-		fun netherStarSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun netherStarMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR_SIXTY_FOUR.get(),
-			compressionLevel = 3,
+			tier = 3,
 			generatorType = GeneratorType.NETHER_STAR,
 			pos = pos,
 			blockState = state
@@ -179,23 +179,23 @@ class DataDrivenGeneratorBlockEntity(
 
 		fun frosty(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.FROSTY_GENERATOR.get(),
-			compressionLevel = 1,
+			tier = 1,
 			generatorType = GeneratorType.FROSTY,
 			pos = pos,
 			blockState = state
 		)
 
-		fun frostyEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun frostyMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.FROSTY_GENERATOR_EIGHT.get(),
-			compressionLevel = 2,
+			tier = 2,
 			generatorType = GeneratorType.FROSTY,
 			pos = pos,
 			blockState = state
 		)
 
-		fun frostySixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun frostyMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.FROSTY_GENERATOR_SIXTY_FOUR.get(),
-			compressionLevel = 3,
+			tier = 3,
 			generatorType = GeneratorType.FROSTY,
 			pos = pos,
 			blockState = state
@@ -203,23 +203,23 @@ class DataDrivenGeneratorBlockEntity(
 
 		fun halitosis(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
-			compressionLevel = 1,
+			tier = 1,
 			generatorType = GeneratorType.HALITOSIS,
 			pos = pos,
 			blockState = state
 		)
 
-		fun halitosisEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun halitosisMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.HALITOSIS_GENERATOR_EIGHT.get(),
-			compressionLevel = 2,
+			tier = 2,
 			generatorType = GeneratorType.HALITOSIS,
 			pos = pos,
 			blockState = state
 		)
 
-		fun halitosisSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun halitosisMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.HALITOSIS_GENERATOR_SIXTY_FOUR.get(),
-			compressionLevel = 3,
+			tier = 3,
 			generatorType = GeneratorType.HALITOSIS,
 			pos = pos,
 			blockState = state
@@ -227,23 +227,23 @@ class DataDrivenGeneratorBlockEntity(
 
 		fun death(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.DEATH_GENERATOR.get(),
-			compressionLevel = 1,
+			tier = 1,
 			generatorType = GeneratorType.DEATH,
 			pos = pos,
 			blockState = state
 		)
 
-		fun deathEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun deathMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.DEATH_GENERATOR_EIGHT.get(),
-			compressionLevel = 2,
+			tier = 2,
 			generatorType = GeneratorType.DEATH,
 			pos = pos,
 			blockState = state
 		)
 
-		fun deathSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun deathMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.DEATH_GENERATOR_SIXTY_FOUR.get(),
-			compressionLevel = 3,
+			tier = 3,
 			generatorType = GeneratorType.DEATH,
 			pos = pos,
 			blockState = state
