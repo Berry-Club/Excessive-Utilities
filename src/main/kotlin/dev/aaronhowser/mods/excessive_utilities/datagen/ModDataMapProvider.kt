@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorFuelDataMap
+import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorType
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
@@ -19,7 +20,7 @@ class ModDataMapProvider(
 	override fun gather(provider: HolderLookup.Provider) {
 		val fuelBuilder = builder(GeneratorFuelDataMap.DATA_MAP_TYPE)
 
-		fun addFuel(item: ItemLike, genType: String, burnTime: Int, energy: Int) {
+		fun addFuel(item: ItemLike, genType: GeneratorType, burnTime: Int, energy: Int) {
 			fuelBuilder.add(
 				item.asItem().builtInRegistryHolder(),
 				GeneratorFuelDataMap(genType, burnTime, energy),
@@ -27,7 +28,7 @@ class ModDataMapProvider(
 			)
 		}
 
-		fun addFuel(itemTag: TagKey<Item>, genType: String, fePerTick: Int, burnTicks: Int) {
+		fun addFuel(itemTag: TagKey<Item>, genType: GeneratorType, fePerTick: Int, burnTicks: Int) {
 			fuelBuilder.add(
 				itemTag,
 				GeneratorFuelDataMap(genType, fePerTick, burnTicks),
@@ -35,12 +36,13 @@ class ModDataMapProvider(
 			)
 		}
 
-		addFuel(Tags.Items.DYES_PINK, "pink", 200, 200)
-		addFuel(Tags.Items.DYED_PINK, "pink", 150, 200)
-		addFuel(Tags.Items.BONES, "death", 100, 200)
-		addFuel(Items.BONE_MEAL, "death", 100, 200)
-		addFuel(Items.BONE_BLOCK, "death", 100, 200)
-		addFuel(Items.ROTTEN_FLESH, "death", 50, 200)
+		addFuel(Tags.Items.DYES_PINK, GeneratorType.PINK, 200, 200)
+		addFuel(Tags.Items.DYED_PINK, GeneratorType.PINK, 150, 200)
+
+		addFuel(Tags.Items.BONES, GeneratorType.DEATH, 100, 200)
+		addFuel(Items.BONE_MEAL, GeneratorType.DEATH, 100, 200)
+		addFuel(Items.BONE_BLOCK, GeneratorType.DEATH, 100, 200)
+		addFuel(Items.ROTTEN_FLESH, GeneratorType.DEATH, 50, 200)
 
 	}
 

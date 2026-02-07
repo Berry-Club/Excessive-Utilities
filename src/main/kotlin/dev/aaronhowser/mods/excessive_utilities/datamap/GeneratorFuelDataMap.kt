@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 data class GeneratorFuelDataMap(
-	val generatorType: String,
+	val generatorType: GeneratorType,
 	val fePerTick: Int,
 	val burnTime: Int
 ) {
@@ -18,7 +18,7 @@ data class GeneratorFuelDataMap(
 		val CODEC: Codec<GeneratorFuelDataMap> =
 			RecordCodecBuilder.create { instance ->
 				instance.group(
-					Codec.STRING
+					GeneratorType.CODEC
 						.fieldOf("type")
 						.forGetter(GeneratorFuelDataMap::generatorType),
 					Codec.INT
