@@ -39,6 +39,15 @@ class CompressibleFeGeneratorBlock(
 	}
 
 	companion object {
+		fun culinary(tier: Int) = CompressibleFeGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.CULINARY_GENERATOR.get()
+				2 -> ModBlockEntityTypes.CULINARY_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.CULINARY_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
+
 		fun ender(tier: Int) = CompressibleFeGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.ENDER_GENERATOR.get()

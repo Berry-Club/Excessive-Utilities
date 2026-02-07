@@ -3,7 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
-import dev.aaronhowser.mods.excessive_utilities.block.CompressibleFeGeneratorBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -258,8 +257,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("ender_generator") { CompressibleFeGeneratorBlock.ender(tier = 1) }
 	val HEATED_REDSTONE_GENERATOR =
 		basicBlock("heated_redstone_generator")
-	val CULINARY_GENERATOR =
-		basicBlock("culinary_generator")
+	val CULINARY_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("culinary_generator") { CompressibleFeGeneratorBlock.ender(tier = 1) }
 	val POTIONS_GENERATOR =
 		basicBlock("potions_generator")
 	val SOLAR_GENERATOR =
@@ -295,8 +294,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("ender_generator_mk2") { CompressibleFeGeneratorBlock.ender(tier = 2) }
 	val HEATED_REDSTONE_GENERATOR_MK2 =
 		basicBlock("heated_redstone_generator_mk2")
-	val CULINARY_GENERATOR_MK2 =
-		basicBlock("culinary_generator_mk2")
+	val CULINARY_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("culinary_generator_mk2") { CompressibleFeGeneratorBlock.ender(tier = 2) }
 	val POTIONS_GENERATOR_MK2 =
 		basicBlock("potions_generator_mk2")
 	val SOLAR_GENERATOR_MK2 =
@@ -332,8 +331,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("ender_generator_mk3") { CompressibleFeGeneratorBlock.ender(tier = 3) }
 	val HEATED_REDSTONE_GENERATOR_MK3 =
 		basicBlock("heated_redstone_generator_mk3")
-	val CULINARY_GENERATOR_MK3 =
-		basicBlock("culinary_generator_mk3")
+	val CULINARY_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("culinary_generator_mk3") { CompressibleFeGeneratorBlock.culinary(tier = 3) }
 	val POTIONS_GENERATOR_MK3 =
 		basicBlock("potions_generator_mk3")
 	val SOLAR_GENERATOR_MK3 =
