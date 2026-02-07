@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 class GeneratorBlock(
 	val beTypeGetter: () -> BlockEntityType<out GeneratorBlockEntity>
-) : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
+) : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
 
 	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
 		val blockEntity = level.getBlockEntity(pos)
