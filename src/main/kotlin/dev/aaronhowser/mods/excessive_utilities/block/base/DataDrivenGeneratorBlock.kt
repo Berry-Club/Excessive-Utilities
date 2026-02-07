@@ -48,6 +48,60 @@ class DataDrivenGeneratorBlock(
 				else -> error("Invalid tier: $tier")
 			}
 		}
+
+		fun explosive(tier: Int) = DataDrivenGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get()
+				2 -> ModBlockEntityTypes.EXPLOSIVE_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.EXPLOSIVE_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
+
+		fun pink(tier: Int) = DataDrivenGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.PINK_GENERATOR.get()
+				2 -> ModBlockEntityTypes.PINK_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.PINK_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
+
+		fun netherStar(tier: Int) = DataDrivenGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.NETHER_STAR_GENERATOR.get()
+				2 -> ModBlockEntityTypes.NETHER_STAR_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.NETHER_STAR_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
+
+		fun frosty(tier: Int) = DataDrivenGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.FROSTY_GENERATOR.get()
+				2 -> ModBlockEntityTypes.FROSTY_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.FROSTY_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
+
+		fun halitosis(tier: Int) = DataDrivenGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.HALITOSIS_GENERATOR.get()
+				2 -> ModBlockEntityTypes.HALITOSIS_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.HALITOSIS_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
+
+		fun death(tier: Int) = DataDrivenGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.DEATH_GENERATOR.get()
+				2 -> ModBlockEntityTypes.DEATH_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.DEATH_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
 	}
 
 }
