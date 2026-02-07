@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.block.base.entity.generator
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -23,7 +22,6 @@ abstract class CompressibleFeGeneratorBlockEntity(
 ) : BlockEntity(type, pos, blockState) {
 
 	abstract val compressionLevel: Int
-	abstract val generatorType: GeneratorType
 
 	var ownerUuid: UUID? = null
 
@@ -60,22 +58,7 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		generateEnergy(level)
 	}
 
-	protected open fun tryStartBurning(level: ServerLevel) {
-		if (burnTimeRemaining > 0) return
-
-		val fuelMap = generatorType.fuelDataMap ?: return
-
-		val inputStack = container.getItem(INPUT_SLOT)
-		if (inputStack.isEmpty) return
-
-		val itemFuel = inputStack.item.builtInRegistryHolder().getData(fuelMap) ?: return
-
-		fePerTick = itemFuel.fePerTick
-		burnTimeRemaining = itemFuel.burnTime
-
-		inputStack.shrink(1)
-		setChanged()
-	}
+	protected abstract fun tryStartBurning(level: ServerLevel)
 
 	protected open fun generateEnergy(level: ServerLevel) {
 		val remainingCapacity = energyStorage.maxEnergyStored - energyStorage.energyStored
