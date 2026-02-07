@@ -41,16 +41,21 @@ abstract class CompressibleFeGeneratorBlockEntity(
 	protected open val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 
 	protected open fun serverTick(level: ServerLevel) {
-		for (i in 0 until compressionLevel) {
-			if (burnTimeRemaining <= 0) {
-				fePerTick = 0
-				tryStartBurning(level)
-			}
+		for (i in 0 until compressionLevel) generatorTick(level)
+	}
+
+	protected open fun generatorTick(level: ServerLevel) {
+		if (burnTimeRemaining <= 0) {
+			fePerTick = 0
+			tryStartBurning(level)
+
+			if (burnTimeRemaining <= 0) return
 		}
 	}
 
 	protected open fun tryStartBurning(level: ServerLevel) {
-
+		val inputStack = container.getItem(INPUT_SLOT)
+		if (inputStack.isEmpty) return
 	}
 
 	protected open fun clientTick(level: Level) {}
