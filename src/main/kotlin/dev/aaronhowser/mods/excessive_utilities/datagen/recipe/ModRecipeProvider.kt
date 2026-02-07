@@ -1462,7 +1462,7 @@ class ModRecipeProvider(
 				'C' to ing(Blocks.CHORUS_FLOWER),
 				'B' to ing(Items.EXPERIENCE_BOTTLE)
 			)
-		).save(recipeOutput, modLoc("opinion_core_damn_good"))
+		).save(recipeOutput, modLoc("opinion_core_fuckin_sick"))
 
 		shapedRecipe(
 			ModItems.OPINIUM_CORE,

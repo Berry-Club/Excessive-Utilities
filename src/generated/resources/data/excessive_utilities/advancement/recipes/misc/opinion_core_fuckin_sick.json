@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "excessive_utilities:opinion_core_damn_good"
+        "recipe": "excessive_utilities:opinion_core_fuckin_sick"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "excessive_utilities:opinion_core_damn_good"
+      "excessive_utilities:opinion_core_fuckin_sick"
     ]
   }
 }
