@@ -153,6 +153,30 @@ class DataDrivenGeneratorBlockEntity(
 			blockState = state
 		)
 
+		fun netherStar(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR.get(),
+			compressionLevel = 1,
+			generatorType = GeneratorType.NETHER_STAR,
+			pos = pos,
+			blockState = state
+		)
+
+		fun netherStarEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR_EIGHT.get(),
+			compressionLevel = 2,
+			generatorType = GeneratorType.NETHER_STAR,
+			pos = pos,
+			blockState = state
+		)
+
+		fun netherStarSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR_SIXTY_FOUR.get(),
+			compressionLevel = 3,
+			generatorType = GeneratorType.NETHER_STAR,
+			pos = pos,
+			blockState = state
+		)
+
 
 	}
 
