@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GpDrainBlockEntity
@@ -7,7 +8,10 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandlerModifiable
@@ -95,7 +99,29 @@ class ResonatorBlockEntity(
 		return if (outputCanFit) recipe else null
 	}
 
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+
+		ContainerHelper.saveAllItems(tag, container.items, registries)
+		tag.putInt(PROGRESS_NBT, progress)
+		val uuid = ownerUuid
+		if (uuid != null) {
+			tag.putUUID(OWNER_UUID_NBT, uuid)
+		}
+	}
+
+	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.loadAdditional(tag, registries)
+
+		ContainerHelper.loadAllItems(tag, container.items, registries)
+		progress = tag.getInt(PROGRESS_NBT)
+		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
+	}
+
 	companion object {
+		const val PROGRESS_NBT = "Progress"
+		const val OWNER_UUID_NBT = "OwnerUUID"
+
 		const val CONTAINER_SIZE = 2
 		const val INPUT_SLOT = 0
 		const val OUTPUT_SLOT = 1
