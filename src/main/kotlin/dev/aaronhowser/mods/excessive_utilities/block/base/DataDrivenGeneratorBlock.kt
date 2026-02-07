@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.entity.DataDrivenGeneratorBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
@@ -15,9 +16,22 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class DataDrivenGeneratorBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
+abstract class DataDrivenGeneratorBlock(
+	val tier: Int,
+	val generatorType: GeneratorType,
+) : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
 
 	abstract fun getBlockEntityType(): BlockEntityType<out DataDrivenGeneratorBlockEntity>
+
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
+		return DataDrivenGeneratorBlockEntity(
+			getBlockEntityType(),
+			tier,
+			generatorType,
+			pos,
+			state
+		)
+	}
 
 	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
 		val blockEntity = level.getBlockEntity(pos)
