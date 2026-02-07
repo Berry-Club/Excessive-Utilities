@@ -3,7 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
-import dev.aaronhowser.mods.excessive_utilities.block.entity.ResonatorBlockEntity.Companion.OUTPUT_SLOT
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -25,28 +24,17 @@ open class DataDrivenGeneratorBlockEntity(
 	blockState: BlockState,
 ) : CompressibleFeGeneratorBlockEntity(type, pos, blockState) {
 
-	private val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, CONTAINER_SIZE)
-
-	private val itemHandler: IItemHandlerModifiable =
-		object : InvWrapper(container) {
-
-			override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
+	private val container: ImprovedSimpleContainer =
+		object : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
+			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
 				val fuelMap = generatorType.fuelDataMap
 				val itemFuel = stack.item.builtInRegistryHolder().getData(fuelMap)
 
 				return slot == INPUT_SLOT && itemFuel != null
 			}
-
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				if (slot != INPUT_SLOT) return stack
-				return super.insertItem(slot, stack, simulate)
-			}
-
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-				if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
-				return super.extractItem(slot, amount, simulate)
-			}
 		}
+
+	private val itemHandler: IItemHandlerModifiable = InvWrapper(container)
 
 	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
