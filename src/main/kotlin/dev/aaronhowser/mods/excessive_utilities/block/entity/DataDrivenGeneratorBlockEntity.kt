@@ -29,10 +29,16 @@ class DataDrivenGeneratorBlockEntity(
 
 	private val itemHandler: IItemHandlerModifiable =
 		object : InvWrapper(container) {
-			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = slot == ResonatorBlockEntity.Companion.INPUT_SLOT
+
+			override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
+				val fuelMap = generatorType.fuelDataMap
+				val itemFuel = stack.item.builtInRegistryHolder().getData(fuelMap)
+
+				return slot == INPUT_SLOT && itemFuel != null
+			}
 
 			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				if (slot != ResonatorBlockEntity.Companion.INPUT_SLOT) return stack
+				if (slot != INPUT_SLOT) return stack
 				return super.insertItem(slot, stack, simulate)
 			}
 
