@@ -46,6 +46,13 @@ class ModDataMapProvider(
 		addFuel(Items.SKELETON_SKULL, GeneratorType.DEATH, 100, 20 * 20)
 		addFuel(Items.WITHER_SKELETON_SKULL, GeneratorType.DEATH, 150, 20 * 20)
 
+		addFuel(Items.TNT, GeneratorType.EXPLOSIVE, 160, 20 * (2 * 60 + 40)) // 2:40
+		addFuel(Items.TNT_MINECART, GeneratorType.EXPLOSIVE, 200, 20 * (2 * 60 + 40))
+		addFuel(Tags.Items.GUNPOWDERS, GeneratorType.EXPLOSIVE, 160, 20 * 20)
+
+		addFuel(Items.NETHER_STAR, GeneratorType.NETHER_STAR, 4_000, 20 * 60 * 2)
+		addFuel(Items.FIREWORK_STAR, GeneratorType.NETHER_STAR, 20, 20)
+
 	}
 
 }
