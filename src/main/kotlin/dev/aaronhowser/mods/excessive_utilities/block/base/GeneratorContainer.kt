@@ -26,15 +26,9 @@ open class GeneratorContainer(
 
 	fun getSpeed(): Int = getItem(UPGRADE_SLOT).count
 
-	val itemHandler: InvWrapper =
+	open val itemHandler: InvWrapper =
 		object : InvWrapper(this) {
 			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = canPlaceItem(slot, stack)
-
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				if (!canPlaceItem(slot, stack)) return stack
-				return super.insertItem(slot, stack, simulate)
-			}
-
 			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = ItemStack.EMPTY
 		}
 
