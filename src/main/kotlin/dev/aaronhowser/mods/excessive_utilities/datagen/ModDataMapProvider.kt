@@ -36,13 +36,15 @@ class ModDataMapProvider(
 			)
 		}
 
-		addFuel(Tags.Items.DYES_PINK, GeneratorType.PINK, 200, 200)
-		addFuel(Tags.Items.DYED_PINK, GeneratorType.PINK, 150, 200)
+		addFuel(Tags.Items.DYES_PINK, GeneratorType.PINK, 40, 10)
+		addFuel(Tags.Items.DYED_PINK, GeneratorType.PINK, 40, 10)
 
-		addFuel(Tags.Items.BONES, GeneratorType.DEATH, 100, 200)
-		addFuel(Items.BONE_MEAL, GeneratorType.DEATH, 100, 200)
-		addFuel(Items.BONE_BLOCK, GeneratorType.DEATH, 100, 200)
-		addFuel(Items.ROTTEN_FLESH, GeneratorType.DEATH, 50, 200)
+		addFuel(Tags.Items.BONES, GeneratorType.DEATH, 40, 20 * 20)
+		addFuel(Tags.Items.STORAGE_BLOCKS_BONE_MEAL, GeneratorType.DEATH, 120, 20 * 20)
+		addFuel(Items.BONE_MEAL, GeneratorType.DEATH, 40, 20 * 10)
+		addFuel(Items.ROTTEN_FLESH, GeneratorType.DEATH, 20, 20 * 20)
+		addFuel(Items.SKELETON_SKULL, GeneratorType.DEATH, 100, 20 * 20)
+		addFuel(Items.WITHER_SKELETON_SKULL, GeneratorType.DEATH, 150, 20 * 20)
 
 	}
 

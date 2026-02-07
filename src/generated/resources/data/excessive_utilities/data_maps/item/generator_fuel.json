@@ -2,33 +2,43 @@
   "values": {
     "#c:bones": {
       "type": "death",
-      "burn_time": 200,
-      "fe_per_tick": 100
+      "burn_time": 400,
+      "fe_per_tick": 40
     },
     "#c:dyed/pink": {
       "type": "pink",
-      "burn_time": 200,
-      "fe_per_tick": 150
+      "burn_time": 10,
+      "fe_per_tick": 40
     },
     "#c:dyes/pink": {
       "type": "pink",
-      "burn_time": 200,
-      "fe_per_tick": 200
+      "burn_time": 10,
+      "fe_per_tick": 40
     },
-    "minecraft:bone_block": {
+    "#c:storage_blocks/bone_meal": {
       "type": "death",
-      "burn_time": 200,
-      "fe_per_tick": 100
+      "burn_time": 400,
+      "fe_per_tick": 120
     },
     "minecraft:bone_meal": {
       "type": "death",
       "burn_time": 200,
-      "fe_per_tick": 100
+      "fe_per_tick": 40
     },
     "minecraft:rotten_flesh": {
       "type": "death",
-      "burn_time": 200,
-      "fe_per_tick": 50
+      "burn_time": 400,
+      "fe_per_tick": 20
+    },
+    "minecraft:skeleton_skull": {
+      "type": "death",
+      "burn_time": 400,
+      "fe_per_tick": 100
+    },
+    "minecraft:wither_skeleton_skull": {
+      "type": "death",
+      "burn_time": 400,
+      "fe_per_tick": 150
     }
   }
 }
