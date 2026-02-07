@@ -19,7 +19,7 @@ class WirelessFeBatteryBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState) {
 
-	val energyStorage = EnergyStorage(10)
+	val energyStorage = EnergyStorage(15_000)
 	var ownerUuid: UUID? = null
 
 	override fun onLoad() {

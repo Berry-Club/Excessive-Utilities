@@ -11,6 +11,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.EnergyStorage
 import java.util.*
 
 abstract class CompressibleFeGeneratorBlockEntity(
@@ -24,14 +25,16 @@ abstract class CompressibleFeGeneratorBlockEntity(
 
 	var ownerUuid: UUID? = null
 
-	private var fePerTick: Int = 0
+	protected val energyStorage = EnergyStorage(10_000)
+
+	protected var fePerTick: Int = 0
 		set(value) {
 			if (field == value) return
 			field = value
 			setChanged()
 		}
 
-	private var burnTimeRemaining: Int = 0
+	protected var burnTimeRemaining: Int = 0
 		set(value) {
 			if (field == value) return
 			field = value
@@ -51,6 +54,14 @@ abstract class CompressibleFeGeneratorBlockEntity(
 
 			if (burnTimeRemaining <= 0) return
 		}
+
+		generateFe(level)
+	}
+
+	protected open fun generateFe(level: ServerLevel) {
+
+
+		burnTimeRemaining--
 	}
 
 	protected open fun tryStartBurning(level: ServerLevel) {
