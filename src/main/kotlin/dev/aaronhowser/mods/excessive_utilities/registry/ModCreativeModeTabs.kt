@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
@@ -28,10 +29,12 @@ object ModCreativeModeTabs {
 				for (item in regularItems) {
 					if (item is BlockItem) continue
 
-					if (item == ModItems.OPINIUM_CORE) {
+					if (item.defaultInstance.isItem(ModItems.OPINIUM_CORE)) {
 						for (tier in OpiniumCoreContentsComponent.getDefaultTiers()) {
 							output.accept(tier.getStack())
 						}
+
+						continue
 					}
 
 					output.accept(item)
