@@ -5,7 +5,6 @@ import net.minecraft.util.StringRepresentable
 enum class GeneratorType(
 	private val id: String
 ) : StringRepresentable {
-	MAGMATIC("magmatic"),
 	ENDER("ender"),
 	HEATED_REDSTONE("heated_redstone"),
 	POTIONS("potions"),
@@ -21,6 +20,7 @@ enum class GeneratorType(
 	 * Left out intentionally:
 	 * - Survival, Furnace, High-Temperature Furnace: Factor of burn time
 	 * - Culinary: Factor of food value
+	 * - Magmatic: Uses a fluid
 	 */
 
 	;
