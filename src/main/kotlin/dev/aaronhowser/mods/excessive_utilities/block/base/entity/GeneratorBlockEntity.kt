@@ -39,9 +39,13 @@ abstract class GeneratorBlockEntity(
 			setChanged()
 		}
 
-	//TODO: Loop this for each speed upgrade
+	protected open fun getSpeed(): Int = 1
+
 	protected open fun serverTick(level: ServerLevel) {
-		generatorTick(level)
+		val speed = getSpeed()
+		for (i in 0 until speed) {
+			generatorTick(level)
+		}
 	}
 
 	/**
