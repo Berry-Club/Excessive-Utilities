@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.base.generator
+package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
-import java.util.*
+import java.util.UUID
 
 abstract class CompressibleFeGeneratorBlockEntity(
 	type: BlockEntityType<*>,

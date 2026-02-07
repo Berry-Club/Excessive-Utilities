@@ -21,3 +21,4 @@ class DragonEggMillBlock : GpSourceBlock(Properties.ofFullCopy(Blocks.STONE)) {
 	}
 
 }
+
