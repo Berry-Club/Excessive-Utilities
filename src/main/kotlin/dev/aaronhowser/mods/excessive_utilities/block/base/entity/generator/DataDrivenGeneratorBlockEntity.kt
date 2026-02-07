@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.base.generator
+package dev.aaronhowser.mods.excessive_utilities.block.base.entity.generator
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
