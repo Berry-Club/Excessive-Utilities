@@ -27,8 +27,8 @@ enum class DataDrivenGeneratorType(
 
 	;
 
-	val fuelDataMap: DataMapType<Item, GeneratorItemFuel>
-		get() = when (this) {
+	val fuelDataMap: DataMapType<Item, GeneratorItemFuel> by lazy {
+		when (this) {
 			ENDER -> GeneratorItemFuel.ENDER
 			EXPLOSIVE -> GeneratorItemFuel.EXPLOSIVE
 			PINK -> GeneratorItemFuel.PINK
@@ -37,6 +37,7 @@ enum class DataDrivenGeneratorType(
 			HALITOSIS -> GeneratorItemFuel.HALITOSIS
 			DEATH -> GeneratorItemFuel.DEATH
 		}
+	}
 
 	override fun getSerializedName(): String = id
 
