@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorFuelDataMap
-import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block.entity.base.GeneratorType
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey

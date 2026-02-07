@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.datamap
+package dev.aaronhowser.mods.excessive_utilities.block.entity.base
 
 import net.minecraft.util.StringRepresentable
 
