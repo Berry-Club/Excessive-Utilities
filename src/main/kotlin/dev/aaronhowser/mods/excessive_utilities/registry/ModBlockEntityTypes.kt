@@ -24,12 +24,8 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("chandelier", ::ChandelierBlockEntity, ModBlocks.CHANDELIER)
 	val PEACEFUL_TABLE: DeferredHolder<BlockEntityType<*>, BlockEntityType<PeacefulTableBlockEntity>> =
 		register("peaceful_table", ::PeacefulTableBlockEntity, ModBlocks.PEACEFUL_TABLE)
-	val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<DrumBlockEntity>> =
-		register(
-			"drum",
-			::DrumBlockEntity,
-			ModBlocks.STONE_DRUM, ModBlocks.IRON_DRUM, ModBlocks.REINFORCED_LARGE_DRUM, ModBlocks.DEMONICALLY_GARGANTUAN_DRUM, ModBlocks.CREATIVE_DRUM
-		)
+	val WIRELESS_FE_BATTERY: DeferredHolder<BlockEntityType<*>, BlockEntityType<WirelessFeBatteryBlockEntity>> =
+		register("wireless_fe_battery", ::WirelessFeBatteryBlockEntity, ModBlocks.WIRELESS_FE_BATTERY)
 
 	val MANUAL_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<ManualMillBlockEntity>> =
 		register("manual_mill", ::ManualMillBlockEntity, ModBlocks.MANUAL_MILL)
@@ -48,5 +44,12 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 
 	val RESONATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<ResonatorBlockEntity>> =
 		register("resonator", ::ResonatorBlockEntity, ModBlocks.RESONATOR)
+
+	val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<DrumBlockEntity>> =
+		register(
+			"drum",
+			::DrumBlockEntity,
+			ModBlocks.STONE_DRUM, ModBlocks.IRON_DRUM, ModBlocks.REINFORCED_LARGE_DRUM, ModBlocks.DEMONICALLY_GARGANTUAN_DRUM, ModBlocks.CREATIVE_DRUM
+		)
 
 }
