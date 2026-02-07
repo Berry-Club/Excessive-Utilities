@@ -28,8 +28,6 @@ class ServerConfig(
 	lateinit var dragonEggMillGeneration: ModConfigSpec.DoubleValue
 	lateinit var creativeMillGeneration: ModConfigSpec.DoubleValue
 
-	lateinit var feGenMk2Multiplier: ModConfigSpec.IntValue
-	lateinit var feGenMk3Multiplier: ModConfigSpec.IntValue
 	lateinit var culinaryFePerFoodValue: ModConfigSpec.DoubleValue
 	lateinit var culinaryTicksPerSaturationValue: ModConfigSpec.DoubleValue
 
@@ -43,14 +41,6 @@ class ServerConfig(
 
 	private fun feGenerators() {
 		builder.push("fe_generators")
-
-		feGenMk2Multiplier = builder
-			.comment("How much faster Mk2 Generators work compared to Mk1.")
-			.defineInRange("feGenMk2Multiplier", 8, 1, Int.MAX_VALUE)
-
-		feGenMk3Multiplier = builder
-			.comment("How much faster Mk3 Generators work compared to Mk1.")
-			.defineInRange("feGenMk3Multiplier", 64, 1, Int.MAX_VALUE)
 
 		culinaryFePerFoodValue = builder
 			.comment("How much FE the Culinary Generator produces per point of food value in the input item.")
