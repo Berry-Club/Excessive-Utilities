@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
@@ -24,11 +25,21 @@ object ModCreativeModeTabs {
 				val regularItems: List<Item> = ModItems.ITEM_REGISTRY.entries.map { it.get() }
 				val blockItems: Set<BlockItem> = regularItems.filterIsInstance<BlockItem>().toSet()
 
-				output.acceptAll(
-					(regularItems - blockItems).map(Item::getDefaultInstance)
-				)
+				for (item in regularItems) {
+					if (item is BlockItem) continue
 
-				output.acceptAll(blockItems.map { it.defaultInstance })
+					if (item == ModItems.OPINIUM_CORE) {
+						for (tier in OpiniumCoreContentsComponent.getDefaultTiers()) {
+							output.accept(tier.getStack())
+						}
+					}
+
+					output.accept(item)
+				}
+
+				for (blockItem in blockItems) {
+					output.accept(blockItem)
+				}
 			}
 			.build()
 	})
