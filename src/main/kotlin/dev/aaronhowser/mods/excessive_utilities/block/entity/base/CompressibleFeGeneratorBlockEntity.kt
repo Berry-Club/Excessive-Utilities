@@ -59,17 +59,6 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		generateEnergy(level)
 	}
 
-	protected open fun generateEnergy(level: ServerLevel) {
-		val remainingCapacity = energyStorage.maxEnergyStored - energyStorage.energyStored
-		if (remainingCapacity <= 0) return
-
-		val energyToGenerate = fePerTick.coerceAtMost(remainingCapacity)
-		energyStorage.receiveEnergy(energyToGenerate, false)
-
-		burnTimeRemaining--
-		setChanged()
-	}
-
 	protected open fun tryStartBurning(level: ServerLevel) {
 		if (burnTimeRemaining > 0) return
 
@@ -84,6 +73,17 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		burnTimeRemaining = itemFuel.burnTime
 
 		inputStack.shrink(1)
+		setChanged()
+	}
+
+	protected open fun generateEnergy(level: ServerLevel) {
+		val remainingCapacity = energyStorage.maxEnergyStored - energyStorage.energyStored
+		if (remainingCapacity <= 0) return
+
+		val energyToGenerate = fePerTick.coerceAtMost(remainingCapacity)
+		energyStorage.receiveEnergy(energyToGenerate, false)
+
+		burnTimeRemaining--
 		setChanged()
 	}
 
