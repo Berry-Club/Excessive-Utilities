@@ -10,7 +10,7 @@ open class GeneratorContainer(
 	blockEntity: BlockEntity
 ) : ImprovedSimpleContainer(blockEntity, CONTAINER_SIZE) {
 
-	override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+	final override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
 		return when (slot) {
 			INPUT_SLOT -> canPlaceInput(stack)
 			UPGRADE_SLOT -> canPlaceUpgrade(stack)

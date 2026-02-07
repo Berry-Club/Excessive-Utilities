@@ -1,11 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
-import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -13,8 +12,6 @@ import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandlerModifiable
-import net.neoforged.neoforge.items.wrapper.InvWrapper
 
 open class DataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
@@ -23,19 +20,15 @@ open class DataDrivenGeneratorBlockEntity(
 	blockState: BlockState,
 ) : GeneratorBlockEntity(type, pos, blockState) {
 
-	private val container: ImprovedSimpleContainer =
-		object : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
-			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+	override val container: GeneratorContainer =
+		object : GeneratorContainer(this@DataDrivenGeneratorBlockEntity) {
+			override fun canPlaceInput(stack: ItemStack): Boolean {
 				val fuelMap = generatorType.fuelDataMap
 				val itemFuel = stack.item.builtInRegistryHolder().getData(fuelMap)
 
-				return slot == INPUT_SLOT && itemFuel != null
+				return itemFuel != null
 			}
 		}
-
-	private val itemHandler: IItemHandlerModifiable = InvWrapper(container)
-
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
 	override fun tryStartBurning(level: ServerLevel) {
 		if (burnTimeRemaining > 0) return
