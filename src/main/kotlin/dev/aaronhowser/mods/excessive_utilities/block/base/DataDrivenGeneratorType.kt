@@ -5,7 +5,7 @@ import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
-enum class GeneratorType(
+enum class DataDrivenGeneratorType(
 	private val id: String
 ) : StringRepresentable {
 	ENDER("ender"),
@@ -41,7 +41,7 @@ enum class GeneratorType(
 	override fun getSerializedName(): String = id
 
 	companion object {
-		val CODEC: StringRepresentable.EnumCodec<GeneratorType> =
+		val CODEC: StringRepresentable.EnumCodec<DataDrivenGeneratorType> =
 			StringRepresentable.fromEnum { entries.toTypedArray() }
 	}
 
