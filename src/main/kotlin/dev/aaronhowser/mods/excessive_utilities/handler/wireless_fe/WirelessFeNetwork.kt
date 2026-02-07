@@ -11,4 +11,10 @@ class WirelessFeNetwork(
 	private val batteries: MutableSet<WirelessFeBatteryBlockEntity> = mutableSetOf()
 	private val transmitters: MutableSet<WirelessFeTransmitterBlockEntity> = mutableSetOf()
 
+	fun addBattery(battery: WirelessFeBatteryBlockEntity) = batteries.add(battery)
+	fun removeBattery(battery: WirelessFeBatteryBlockEntity) = batteries.remove(battery)
+
+	fun addTransmitter(transmitter: WirelessFeTransmitterBlockEntity) = transmitters.add(transmitter)
+	fun removeTransmitter(transmitter: WirelessFeTransmitterBlockEntity) = transmitters.remove(transmitter)
+
 }

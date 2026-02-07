@@ -1,7 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.excessive_utilities.handler.wireless_fe.WirelessFeNetworkHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import java.util.UUID
@@ -17,8 +19,8 @@ class WirelessFeBatteryBlockEntity(
 		super.onLoad()
 		val level = this.level
 		val owner = ownerUuid
-		if (level != null && owner != null) {
-			WirelessFeBatteryHandler.addBattery(level, owner, this)
+		if (level is ServerLevel && owner != null) {
+			WirelessFeNetworkHandler.get(level).getNetwork(owner).addBattery(this)
 		}
 	}
 
@@ -26,8 +28,8 @@ class WirelessFeBatteryBlockEntity(
 		super.setRemoved()
 		val level = this.level
 		val owner = ownerUuid
-		if (level != null && owner != null) {
-			WirelessFeBatteryHandler.removeBattery(level, owner, this)
+		if (level is ServerLevel && owner != null) {
+			WirelessFeNetworkHandler.get(level).getNetwork(owner).removeBattery(this)
 		}
 	}
 
@@ -35,8 +37,8 @@ class WirelessFeBatteryBlockEntity(
 		super.clearRemoved()
 		val level = this.level
 		val owner = ownerUuid
-		if (level != null && owner != null) {
-			WirelessFeBatteryHandler.addBattery(level, owner, this)
+		if (level is ServerLevel && owner != null) {
+			WirelessFeNetworkHandler.get(level).getNetwork(owner).addBattery(this)
 		}
 	}
 
