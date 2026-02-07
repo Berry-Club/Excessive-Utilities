@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.ConfigurableFluidTank
+import dev.aaronhowser.mods.excessive_utilities.block.base.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks

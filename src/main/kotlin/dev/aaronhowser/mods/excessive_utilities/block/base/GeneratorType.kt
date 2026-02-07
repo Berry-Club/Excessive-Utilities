@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.base.entity
+package dev.aaronhowser.mods.excessive_utilities.block.base
 
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import net.minecraft.util.StringRepresentable

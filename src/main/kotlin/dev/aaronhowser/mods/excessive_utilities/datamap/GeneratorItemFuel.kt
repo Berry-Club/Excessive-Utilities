@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.datamap
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.datamaps.DataMapType
