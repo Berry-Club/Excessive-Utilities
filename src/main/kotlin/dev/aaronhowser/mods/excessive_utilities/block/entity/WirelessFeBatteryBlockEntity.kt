@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -56,16 +57,23 @@ class WirelessFeBatteryBlockEntity(
 		if (uuid != null) {
 			tag.putUUID(OWNER_UUID_NBT, uuid)
 		}
+
+		tag.put(STORED_ENERGY_NBT, energyStorage.serializeNBT(registries))
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
 		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
+		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
+		if (storedEnergyTag is IntTag) {
+			energyStorage.deserializeNBT(registries, storedEnergyTag)
+		}
 	}
 
 	companion object {
 		const val OWNER_UUID_NBT = "OwnerUUID"
+		const val STORED_ENERGY_NBT = "StoredEnergy"
 
 		fun getEnergyCapability(battery: WirelessFeBatteryBlockEntity, direction: Direction?): IEnergyStorage {
 			return battery.energyStorage
