@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "excessive_utilities:opinion_core_amazing"
+        "recipe": "excessive_utilities:opinium_core_mediocre"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "excessive_utilities:opinion_core_amazing"
+      "excessive_utilities:opinium_core_mediocre"
     ]
   }
 }

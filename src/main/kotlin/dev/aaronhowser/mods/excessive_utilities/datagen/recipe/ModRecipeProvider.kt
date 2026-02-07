@@ -1408,7 +1408,7 @@ class ModRecipeProvider(
 
 		val cores = OpiniumCoreContentsComponent.getDefaultTiers()
 		for ((i, core) in cores.withIndex()) {
-			val tierName = core.name.toString().split(".").last()
+			val tierName = core.name.string.split(".").last()
 			val recipeName = "opinium_core_$tierName"
 
 			if (i == 0) {
@@ -1438,7 +1438,7 @@ class ModRecipeProvider(
 
 			shapedRecipe(
 				outputCoreStack,
-				" O ,ABA, O",
+				" O ,ABA, O ",
 				mapOf(
 					'O' to ing(inputCoreStack),
 					'A' to ing(outer),
