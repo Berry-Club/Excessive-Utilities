@@ -16,7 +16,7 @@ import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.*
 
-abstract class CompressibleFeGeneratorBlockEntity(
+abstract class TieredGeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
 	blockState: BlockState
@@ -122,7 +122,7 @@ abstract class CompressibleFeGeneratorBlockEntity(
 			level: Level,
 			blockPos: BlockPos,
 			blockState: BlockState,
-			blockEntity: CompressibleFeGeneratorBlockEntity
+			blockEntity: TieredGeneratorBlockEntity
 		) {
 			if (level is ServerLevel) {
 				blockEntity.serverTick(level)
@@ -131,7 +131,7 @@ abstract class CompressibleFeGeneratorBlockEntity(
 			}
 		}
 
-		fun getEnergyCapability(transmitter: CompressibleFeGeneratorBlockEntity, direction: Direction?): IEnergyStorage? {
+		fun getEnergyCapability(transmitter: TieredGeneratorBlockEntity, direction: Direction?): IEnergyStorage? {
 			return transmitter.energyStorage
 		}
 	}

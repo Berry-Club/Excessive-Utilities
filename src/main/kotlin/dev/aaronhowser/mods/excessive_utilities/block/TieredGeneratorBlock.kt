@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TieredGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
@@ -15,13 +15,13 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-class CompressibleFeGeneratorBlock(
-	val beTypeGetter: () -> BlockEntityType<out CompressibleFeGeneratorBlockEntity>
+class TieredGeneratorBlock(
+	val beTypeGetter: () -> BlockEntityType<out TieredGeneratorBlockEntity>
 ) : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
 
 	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
 		val blockEntity = level.getBlockEntity(pos)
-		if (blockEntity is CompressibleFeGeneratorBlockEntity && placer != null) {
+		if (blockEntity is TieredGeneratorBlockEntity && placer != null) {
 			blockEntity.ownerUuid = placer.uuid
 		}
 	}
@@ -34,12 +34,12 @@ class CompressibleFeGeneratorBlock(
 		return BaseEntityBlock.createTickerHelper(
 			blockEntityType,
 			beTypeGetter(),
-			CompressibleFeGeneratorBlockEntity.Companion::tick
+			TieredGeneratorBlockEntity.Companion::tick
 		)
 	}
 
 	companion object {
-		fun culinary(tier: Int) = CompressibleFeGeneratorBlock {
+		fun culinary(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.CULINARY_GENERATOR.get()
 				2 -> ModBlockEntityTypes.CULINARY_GENERATOR_MK2.get()
@@ -48,7 +48,7 @@ class CompressibleFeGeneratorBlock(
 			}
 		}
 
-		fun ender(tier: Int) = CompressibleFeGeneratorBlock {
+		fun ender(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.ENDER_GENERATOR.get()
 				2 -> ModBlockEntityTypes.ENDER_GENERATOR_MK2.get()
@@ -57,7 +57,7 @@ class CompressibleFeGeneratorBlock(
 			}
 		}
 
-		fun explosive(tier: Int) = CompressibleFeGeneratorBlock {
+		fun explosive(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get()
 				2 -> ModBlockEntityTypes.EXPLOSIVE_GENERATOR_MK2.get()
@@ -66,7 +66,7 @@ class CompressibleFeGeneratorBlock(
 			}
 		}
 
-		fun pink(tier: Int) = CompressibleFeGeneratorBlock {
+		fun pink(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.PINK_GENERATOR.get()
 				2 -> ModBlockEntityTypes.PINK_GENERATOR_MK2.get()
@@ -75,7 +75,7 @@ class CompressibleFeGeneratorBlock(
 			}
 		}
 
-		fun netherStar(tier: Int) = CompressibleFeGeneratorBlock {
+		fun netherStar(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.NETHER_STAR_GENERATOR.get()
 				2 -> ModBlockEntityTypes.NETHER_STAR_GENERATOR_MK2.get()
@@ -84,7 +84,7 @@ class CompressibleFeGeneratorBlock(
 			}
 		}
 
-		fun frosty(tier: Int) = CompressibleFeGeneratorBlock {
+		fun frosty(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.FROSTY_GENERATOR.get()
 				2 -> ModBlockEntityTypes.FROSTY_GENERATOR_MK2.get()
@@ -93,7 +93,7 @@ class CompressibleFeGeneratorBlock(
 			}
 		}
 
-		fun halitosis(tier: Int) = CompressibleFeGeneratorBlock {
+		fun halitosis(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.HALITOSIS_GENERATOR.get()
 				2 -> ModBlockEntityTypes.HALITOSIS_GENERATOR_MK2.get()
@@ -102,7 +102,7 @@ class CompressibleFeGeneratorBlock(
 			}
 		}
 
-		fun death(tier: Int) = CompressibleFeGeneratorBlock {
+		fun death(tier: Int) = TieredGeneratorBlock {
 			when (tier) {
 				1 -> ModBlockEntityTypes.DEATH_GENERATOR.get()
 				2 -> ModBlockEntityTypes.DEATH_GENERATOR_MK2.get()

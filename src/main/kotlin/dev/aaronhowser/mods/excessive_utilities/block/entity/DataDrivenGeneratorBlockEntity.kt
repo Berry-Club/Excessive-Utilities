@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TieredGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -22,7 +22,7 @@ open class DataDrivenGeneratorBlockEntity(
 	val generatorType: GeneratorType,
 	pos: BlockPos,
 	blockState: BlockState,
-) : CompressibleFeGeneratorBlockEntity(type, pos, blockState) {
+) : TieredGeneratorBlockEntity(type, pos, blockState) {
 
 	private val container: ImprovedSimpleContainer =
 		object : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
