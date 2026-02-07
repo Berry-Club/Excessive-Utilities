@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-05T21:54:35.5563765	Item Models: excessive_utilities
+// 1.21.1	2026-02-07T00:14:00.0665927	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
 fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/bedrockium_ingot.json
@@ -36,6 +36,7 @@ b8ce398d5409c61d511dcc6cdbb912fca2dd9641 assets/excessive_utilities/models/item/
 34c063c725f8c913b5c1393175528bc6712d3001 assets/excessive_utilities/models/item/magical_apple.json
 0feecdbf86f2248c82f6d70b39932e916409d39b assets/excessive_utilities/models/item/moon_stone.json
 dd9f77f45e5bdfc10ac63e52baaa7341b45d0c02 assets/excessive_utilities/models/item/netherite_sickle.json
+e0f7b66a84e6588f01abbbce75b1803ffe5d46e2 assets/excessive_utilities/models/item/opinium_core.json
 74b878eb3503c58e1f1846fb57af9e10fefb9218 assets/excessive_utilities/models/item/portable_scanner.json
 9cd6ef4a35233707cda45579d56dd022715c1d5a assets/excessive_utilities/models/item/power_manager.json
 bd85f874689d71077f8ac512baf4e2e171041088 assets/excessive_utilities/models/item/precision_shears.json

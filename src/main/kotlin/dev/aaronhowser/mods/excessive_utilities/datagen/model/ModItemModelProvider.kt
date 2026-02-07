@@ -22,8 +22,24 @@ class ModItemModelProvider(
 	override fun registerModels() {
 		lassos()
 		unstableTools()
+		bewlrs()
 
 		basicItems()
+	}
+
+	fun bewlrs() {
+		val bewlrItems = listOf(
+			ModItems.OPINIUM_CORE.get()
+		)
+
+		for (item in bewlrItems) {
+			val name = getName(item)
+
+			getBuilder(name.toString())
+				.parent(ModelFile.UncheckedModelFile("builtin/entity"))
+
+			handledItems.add(item)
+		}
 	}
 
 	fun unstableTools() {
