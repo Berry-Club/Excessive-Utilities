@@ -18,7 +18,7 @@ class WirelessFeNetwork(
 	fun addTransmitter(transmitter: WirelessFeTransmitterBlockEntity) = transmitters.add(transmitter)
 	fun removeTransmitter(transmitter: WirelessFeTransmitterBlockEntity) = transmitters.remove(transmitter)
 
-	private val energyStorage: IEnergyStorage =
+	val energyStorage: IEnergyStorage =
 		object : IEnergyStorage {
 
 			override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = 0
