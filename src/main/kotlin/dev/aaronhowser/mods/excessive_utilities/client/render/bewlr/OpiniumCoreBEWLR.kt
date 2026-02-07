@@ -31,6 +31,7 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 		val (inner, outer) = component
 
 		renderInner(inner, poseStack, buffer, displayContext, packedLight, packedOverlay)
+		renderOuters(outer, poseStack, buffer, displayContext, packedLight, packedOverlay)
 	}
 
 	companion object {
@@ -61,10 +62,102 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 			val zRot = Mth.wrapDegrees(time * zRotPerTick)
 			poseStack.mulPose(Axis.ZP.rotationDegrees(zRot))
 
-			poseStack.scale(0.75f, 0.75f, 0.75f)
+			poseStack.scale(0.5f, 0.5f, 0.5f)
 
 			ITEM_RENDERER.renderStatic(
 				innerStack,
+				displayContext,
+				packedLight,
+				packedOverlay,
+				poseStack,
+				buffer,
+				null,
+				0
+			)
+
+			poseStack.popPose()
+		}
+
+		private fun renderOuters(
+			outerStack: ItemStack,
+			poseStack: PoseStack,
+			buffer: MultiBufferSource,
+			displayContext: ItemDisplayContext,
+			packedLight: Int,
+			packedOverlay: Int
+		) {
+
+			poseStack.pushPose()
+
+			poseStack.translate(0.5, 0.5, 0.5)
+
+			val time = AaronClientUtil.localLevel?.gameTime ?: 0
+
+			val yRotPerTick = 4f
+			val yRot = Mth.wrapDegrees(time * yRotPerTick)
+			poseStack.mulPose(Axis.YP.rotationDegrees(yRot))
+
+			val xRotPerTick = 2f
+			val xRot = Mth.wrapDegrees(time * xRotPerTick)
+			poseStack.mulPose(Axis.XP.rotationDegrees(xRot))
+
+			val zRotPerTick = 1f
+			val zRot = Mth.wrapDegrees(time * zRotPerTick)
+			poseStack.mulPose(Axis.ZP.rotationDegrees(zRot))
+
+			poseStack.pushPose()
+			renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
+			poseStack.popPose()
+
+//			poseStack.pushPose()
+//			poseStack.translate(0.5, 0.5, 0.5)
+//			renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
+//			poseStack.popPose()
+//
+//			poseStack.pushPose()
+//			poseStack.translate(0.5, 0.5, 0.5)
+//			renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
+//			poseStack.popPose()
+//
+//			poseStack.pushPose()
+//			poseStack.translate(0.5, 0.5, 0.5)
+//			renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
+//			poseStack.popPose()
+
+			poseStack.popPose()
+
+		}
+
+		private fun renderOuterShifted(
+			outerStack: ItemStack,
+			poseStack: PoseStack,
+			buffer: MultiBufferSource,
+			displayContext: ItemDisplayContext,
+			packedLight: Int,
+			packedOverlay: Int
+		) {
+			poseStack.pushPose()
+
+//			poseStack.translate(0.5, 0.5, 0.5)
+//
+//			val time = AaronClientUtil.localLevel?.gameTime ?: 0
+//
+//			val yRotPerTick = 4f
+//			val yRot = Mth.wrapDegrees(time * yRotPerTick)
+//			poseStack.mulPose(Axis.YP.rotationDegrees(yRot))
+//
+//			val xRotPerTick = 2f
+//			val xRot = Mth.wrapDegrees(time * xRotPerTick)
+//			poseStack.mulPose(Axis.XP.rotationDegrees(xRot))
+//
+//			val zRotPerTick = 1f
+//			val zRot = Mth.wrapDegrees(time * zRotPerTick)
+//			poseStack.mulPose(Axis.ZP.rotationDegrees(zRot))
+//
+//			poseStack.scale(0.25f, 0.25f, 0.25f)
+
+			ITEM_RENDERER.renderStatic(
+				outerStack,
 				displayContext,
 				packedLight,
 				packedOverlay,
