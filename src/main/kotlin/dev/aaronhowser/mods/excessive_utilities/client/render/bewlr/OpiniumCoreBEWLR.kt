@@ -30,8 +30,10 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 
 		val (inner, outer) = component
 
-		renderInner(inner, poseStack, buffer, displayContext, packedLight, packedOverlay)
-		renderOuters(outer, poseStack, buffer, displayContext, packedLight, packedOverlay)
+		val time = AaronClientUtil.localLevel?.gameTime ?: 0
+
+		renderInner(inner, poseStack, buffer, displayContext, packedLight, packedOverlay, time)
+		renderOuters(outer, poseStack, buffer, displayContext, packedLight, packedOverlay, time)
 	}
 
 	companion object {
@@ -43,13 +45,12 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 			buffer: MultiBufferSource,
 			displayContext: ItemDisplayContext,
 			packedLight: Int,
-			packedOverlay: Int
+			packedOverlay: Int,
+			time: Long
 		) {
 			poseStack.pushPose()
 
 			poseStack.translate(0.5, 0.5, 0.5)
-
-			val time = AaronClientUtil.localLevel?.gameTime ?: 0
 
 			val yRotPerTick = 4f
 			val yRot = Mth.wrapDegrees(time * yRotPerTick)
@@ -85,14 +86,12 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 			buffer: MultiBufferSource,
 			displayContext: ItemDisplayContext,
 			packedLight: Int,
-			packedOverlay: Int
+			packedOverlay: Int,
+			time: Long
 		) {
-
 			poseStack.pushPose()
 
 			poseStack.translate(0.5, 0.5, 0.5)
-
-			val time = AaronClientUtil.localLevel?.gameTime ?: 0
 
 			val yRotPerTick = 2f
 			val yRot = Mth.wrapDegrees(time * yRotPerTick)
@@ -127,7 +126,6 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 			poseStack.popPose()
 
 			poseStack.popPose()
-
 		}
 
 		private fun renderOuterShifted(
