@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.level.Level
@@ -94,6 +95,7 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		ContainerHelper.saveAllItems(tag, container.items, registries)
 		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
 		tag.putInt(FE_PER_TICK_NBT, fePerTick)
+		tag.put(STORED_ENERGY_NBT, energyStorage.serializeNBT(registries))
 
 		val uuid = ownerUuid
 		if (uuid != null) {
@@ -108,12 +110,18 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		burnTimeRemaining = tag.getInt(BURN_TIME_REMAINING_NBT)
 		fePerTick = tag.getInt(FE_PER_TICK_NBT)
 		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
+
+		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
+		if (storedEnergyTag is IntTag) {
+			energyStorage.deserializeNBT(registries, storedEnergyTag)
+		}
 	}
 
 	companion object {
 		const val OWNER_UUID_NBT = "OwnerUUID"
 		const val BURN_TIME_REMAINING_NBT = "BurnTimeRemaining"
 		const val FE_PER_TICK_NBT = "FePerTick"
+		const val STORED_ENERGY_NBT = "StoredEnergy"
 
 		const val CONTAINER_SIZE = 1
 		const val INPUT_SLOT = 0
