@@ -30,7 +30,8 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 
 		val (inner, outer) = component
 
-		val time = AaronClientUtil.localLevel?.gameTime ?: 0
+		val gameTime = AaronClientUtil.localLevel?.gameTime ?: 0
+		val time = gameTime + Minecraft.getInstance().timer.gameTimeDeltaTicks
 
 		renderInner(inner, poseStack, buffer, displayContext, packedLight, packedOverlay, time)
 		renderOuters(outer, poseStack, buffer, displayContext, packedLight, packedOverlay, time)
@@ -46,7 +47,7 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 			displayContext: ItemDisplayContext,
 			packedLight: Int,
 			packedOverlay: Int,
-			time: Long
+			time: Float
 		) {
 			poseStack.pushPose()
 
@@ -87,7 +88,7 @@ class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
 			displayContext: ItemDisplayContext,
 			packedLight: Int,
 			packedOverlay: Int,
-			time: Long
+			time: Float
 		) {
 			poseStack.pushPose()
 
