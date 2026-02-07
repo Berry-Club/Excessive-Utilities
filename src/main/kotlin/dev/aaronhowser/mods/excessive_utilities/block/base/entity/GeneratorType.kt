@@ -7,24 +7,23 @@ import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 enum class GeneratorType(
 	private val id: String,
-	val fuelDataMap: DataMapType<Item, GeneratorItemFuel>?
+	val fuelDataMap: DataMapType<Item, GeneratorItemFuel>
 ) : StringRepresentable {
 	ENDER("ender", GeneratorItemFuel.ENDER),
-	HEATED_REDSTONE("heated_redstone", null),
-	POTIONS("potions", null),
 	EXPLOSIVE("explosive", GeneratorItemFuel.EXPLOSIVE),
 	PINK("pink", GeneratorItemFuel.PINK),
 	NETHER_STAR("nether_star", GeneratorItemFuel.NETHER_STAR),
 	FROSTY("frosty", GeneratorItemFuel.FROSTY),
 	HALITOSIS("halitosis", GeneratorItemFuel.HALITOSIS),
-	SLIMY("slimy", null),
 	DEATH("death", GeneratorItemFuel.DEATH)
 
 	/**
 	 * Left out intentionally:
 	 * - Survival, Furnace, High-Temperature Furnace: Factor of burn time
 	 * - Culinary: Factor of food value
-	 * - Magmatic: Uses a fluid
+	 * - Magmatic, Heated Redstone: Uses a fluid
+	 * - Potions: Uses a potion
+	 * - Slimy: Uses multiple items together
 	 */
 
 	;
