@@ -24,12 +24,11 @@ object ModCreativeModeTabs {
 			.title(ModItemLang.CREATIVE_TAB.toComponent())
 			.icon { ModBlocks.ANGEL_BLOCK.toStack() }
 			.displayItems { displayContext: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-				val regularItems: List<Item> = ModItems.ITEM_REGISTRY.entries.map { it.get() }
-				val blockItems: Set<BlockItem> = regularItems.filterIsInstance<BlockItem>().toSet()
+				val regularItems = ModItems.ITEM_REGISTRY.entries.map { it.get() }.toMutableList()
+				val blockItems = regularItems.filterIsInstance<BlockItem>().toSet()
+				regularItems -= blockItems
 
 				for (item in regularItems) {
-					if (item is BlockItem) continue
-
 					if (item == ModItems.OPINIUM_CORE.get()) {
 						for (tier in OpiniumCoreContentsComponent.getDefaultTiers()) {
 							output.accept(tier.getStack())
