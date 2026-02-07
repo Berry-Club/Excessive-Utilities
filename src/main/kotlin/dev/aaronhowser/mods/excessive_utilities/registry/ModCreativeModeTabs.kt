@@ -5,9 +5,11 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.network.chat.Component
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
@@ -32,6 +34,22 @@ object ModCreativeModeTabs {
 						for (tier in OpiniumCoreContentsComponent.getDefaultTiers()) {
 							output.accept(tier.getStack())
 						}
+
+						var funnyTier = OpiniumCoreContentsComponent(
+							Items.NETHERITE_BLOCK.defaultInstance,
+							Items.DIAMOND_BLOCK.defaultInstance,
+							Component.literal("Haha")
+						)
+
+						for (i in 0 until 2) {
+							funnyTier = OpiniumCoreContentsComponent(
+								funnyTier.getStack(),
+								funnyTier.getStack(),
+								Component.literal("Test Opinium Core Please Ignore")
+							)
+						}
+
+						output.accept(funnyTier.getStack())
 
 						continue
 					}
