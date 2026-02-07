@@ -129,6 +129,31 @@ class DataDrivenGeneratorBlockEntity(
 			blockState = state
 		)
 
+		fun pink(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.PINK_GENERATOR.get(),
+			compressionLevel = 1,
+			generatorType = GeneratorType.PINK,
+			pos = pos,
+			blockState = state
+		)
+
+		fun pinkEight(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.PINK_GENERATOR_EIGHT.get(),
+			compressionLevel = 2,
+			generatorType = GeneratorType.PINK,
+			pos = pos,
+			blockState = state
+		)
+
+		fun pinkSixtyFour(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.PINK_GENERATOR_SIXTY_FOUR.get(),
+			compressionLevel = 3,
+			generatorType = GeneratorType.PINK,
+			pos = pos,
+			blockState = state
+		)
+
+
 	}
 
 }

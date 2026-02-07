@@ -68,4 +68,11 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 	val EXPLOSIVE_GENERATOR_SIXTY_FOUR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("explosive_generator_sixty_four", DataDrivenGeneratorBlockEntity::explosiveSixtyFour, ModBlocks.EXPLOSIVE_GENERATOR_X64)
 
+	val PINK_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("pink_generator", DataDrivenGeneratorBlockEntity::pink, ModBlocks.PINK_GENERATOR)
+	val PINK_GENERATOR_EIGHT: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("pink_generator_eight", DataDrivenGeneratorBlockEntity::pinkEight, ModBlocks.PINK_GENERATOR_X8)
+	val PINK_GENERATOR_SIXTY_FOUR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("pink_generator_sixty_four", DataDrivenGeneratorBlockEntity::pinkSixtyFour, ModBlocks.PINK_GENERATOR_X64)
+
 }
