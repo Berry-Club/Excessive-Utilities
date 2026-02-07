@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
@@ -57,6 +58,30 @@ object CommonEvents {
 			ModBlockEntityTypes.WIRELESS_FE_TRANSMITTER.get(),
 			WirelessFeTransmitterBlockEntity::getEnergyCapability
 		)
+
+		val dataDrivenBeTypes = listOf(
+			ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			ModBlockEntityTypes.ENDER_GENERATOR_EIGHT.get(),
+			ModBlockEntityTypes.ENDER_GENERATOR_SIXTY_FOUR.get()
+		)
+
+		val compressibleGenBeTypes = dataDrivenBeTypes + listOf()
+
+		for (beType in dataDrivenBeTypes) {
+			event.registerBlockEntity(
+				Capabilities.ItemHandler.BLOCK,
+				beType,
+				DataDrivenGeneratorBlockEntity::getItemHandler
+			)
+		}
+
+		for (beType in compressibleGenBeTypes) {
+			event.registerBlockEntity(
+				Capabilities.EnergyStorage.BLOCK,
+				beType,
+				CompressibleFeGeneratorBlockEntity::getEnergyCapability
+			)
+		}
 
 	}
 
