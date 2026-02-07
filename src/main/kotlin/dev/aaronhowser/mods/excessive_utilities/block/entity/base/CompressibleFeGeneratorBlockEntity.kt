@@ -23,6 +23,14 @@ abstract class CompressibleFeGeneratorBlockEntity(
 	abstract val generatorType: GeneratorType
 
 	var ownerUuid: UUID? = null
+
+	private var fePerTick: Int = 0
+		set(value) {
+			if (field == value) return
+			field = value
+			setChanged()
+		}
+
 	private var burnTimeRemaining: Int = 0
 		set(value) {
 			if (field == value) return
@@ -30,9 +38,18 @@ abstract class CompressibleFeGeneratorBlockEntity(
 			setChanged()
 		}
 
-	private val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	protected open val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 
 	protected open fun serverTick(level: ServerLevel) {
+		for (i in 0 until compressionLevel) {
+			if (burnTimeRemaining <= 0) {
+				fePerTick = 0
+				tryStartBurning(level)
+			}
+		}
+	}
+
+	protected open fun tryStartBurning(level: ServerLevel) {
 
 	}
 
@@ -43,6 +60,7 @@ abstract class CompressibleFeGeneratorBlockEntity(
 
 		ContainerHelper.saveAllItems(tag, container.items, registries)
 		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
+		tag.putInt(FE_PER_TICK_NBT, fePerTick)
 
 		val uuid = ownerUuid
 		if (uuid != null) {
@@ -55,12 +73,14 @@ abstract class CompressibleFeGeneratorBlockEntity(
 
 		ContainerHelper.loadAllItems(tag, container.items, registries)
 		burnTimeRemaining = tag.getInt(BURN_TIME_REMAINING_NBT)
+		fePerTick = tag.getInt(FE_PER_TICK_NBT)
 		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
 	}
 
 	companion object {
 		const val OWNER_UUID_NBT = "OwnerUUID"
 		const val BURN_TIME_REMAINING_NBT = "BurnTimeRemaining"
+		const val FE_PER_TICK_NBT = "FePerTick"
 
 		const val CONTAINER_SIZE = 1
 		const val INPUT_SLOT = 0
