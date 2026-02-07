@@ -1,4 +1,5 @@
-// 1.21.1	2026-02-05T22:42:07.7549866	Tags for minecraft:item mod id excessive_utilities
+// 1.21.1	2026-02-07T09:06:52.0500009	Tags for minecraft:item mod id excessive_utilities
 50a922b6b7c90503a7e47bffb505e8a6444b87e5 data/c/tags/item/corpse_parts.json
 4f9bdf86ef56df2d6abcc811dda7e2bed52b0289 data/c/tags/item/pistons.json
+a4fcf166f6bbc92de938e9ff282c5b11b045b4c6 data/c/tags/item/speed_upgrades.json
 bf4b302c5ce62b6fa38fbc2e093158ed4c26e5d4 data/excessive_utilities/tags/item/render_gp_while_holding.json

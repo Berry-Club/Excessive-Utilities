@@ -52,6 +52,13 @@ class ModItemTagsProvider(
 				Items.BONE,
 				Items.ROTTEN_FLESH
 			)
+
+		tag(SPEED_UPGRADES)
+			.add(
+				ModItems.SPEED_UPGRADE.get(),
+				ModItems.SPEED_UPGRADE_MAGICAL.get(),
+				ModItems.SPEED_UPGRADE_ULTIMATE.get()
+			)
 	}
 
 	companion object {
@@ -61,6 +68,7 @@ class ModItemTagsProvider(
 		val RENDER_GP_WHILE_HOLDING = create("render_gp_while_holding")
 		val PISTONS = common("pistons")
 		val CORPSE_PARTS = common("corpse_parts")
+		val SPEED_UPGRADES = common("speed_upgrades")
 	}
 
 }
