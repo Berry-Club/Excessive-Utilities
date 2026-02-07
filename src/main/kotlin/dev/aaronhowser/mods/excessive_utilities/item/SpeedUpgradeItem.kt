@@ -23,6 +23,13 @@ class SpeedUpgradeItem(properties: Properties) : Item(properties) {
 				.stacksTo(64)
 				.rarity(Rarity.EPIC)
 				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+
+		fun getGpCost(amount: Int): Double {
+			if (amount <= 0) return 0.0
+			if (amount == 1) return 1.0
+
+			return amount * (122 + 4 * amount) / 126.0
+		}
 	}
 
 }
