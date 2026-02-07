@@ -84,12 +84,15 @@ object ModItemLang {
 			addItem(ModItems.FLAT_TRANSFER_NODE_ITEMS, "Flat Transfer Node (Items)")
 			addItem(ModItems.PORTABLE_SCANNER, "Portable Scanner")
 			addItem(ModItems.SONAR_GOGGLES, "Sonar Goggles")
+			addItem(ModItems.INDEXER_REMOTE, "Indexer Remote")
 
 			addItem(ModItems.CHICKEN_WING_RING, "Chicken Wing Ring")
 			addItem(ModItems.RING_OF_THE_FLYING_SQUID, "Ring of the Flying Squid")
 			addItem(ModItems.ANGEL_RING, "Angel Ring")
 
 			addItem(ModItems.SPEED_UPGRADE, "Speed Upgrade")
+			addItem(ModItems.SPEED_UPGRADE_MAGICAL, "Speed Upgrade (Magical)")
+			addItem(ModItems.SPEED_UPGRADE_ULTIMATE, "Speed Upgrade (Ultimate)")
 			addItem(ModItems.STACK_UPGRADE, "Stack Upgrade")
 			addItem(ModItems.WORLD_INTERACTION_UPGRADE, "World Interaction Upgrade")
 			addItem(ModItems.ITEM_FILTER, "Item Filter")

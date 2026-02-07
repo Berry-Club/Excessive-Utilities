@@ -41,6 +41,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.INDEXER, "Inder")
 			addBlock(ModBlocks.CRUSHER, "Crusher")
 			addBlock(ModBlocks.FURNACE, "Furnace")
+			addBlock(ModBlocks.ENCHANTER, "Enchanter")
 			addBlock(ModBlocks.MACHINE_BLOCK, "Machine Block")
 			addBlock(ModBlocks.MAGICAL_SNOW_GLOBE, "Magical Snow Globe")
 			addBlock(ModBlocks.MECHANICAL_MINER, "Mechanical Miner")
@@ -83,6 +84,17 @@ object ModBlockLang {
 			addBlock(ModBlocks.TRASH_CAN_ENERGY, "Trash Can (Energy)")
 			addBlock(ModBlocks.TRASH_CAN_FLUID, "Trash Can (Fluid)")
 
+			addBlock(ModBlocks.TRANSFER_PIPE, "Transfer Pipe")
+			addBlock(ModBlocks.ITEM_TRANSFER_NODE, "Item Transfer Node")
+			addBlock(ModBlocks.FLUID_TRANSFER_NODE, "Fluid Transfer Node")
+			addBlock(ModBlocks.ENERGY_TRANSFER_NODE, "Energy Transfer Node")
+			addBlock(ModBlocks.ITEM_RETRIEVAL_NODE, "Item Retrieval Node")
+			addBlock(ModBlocks.FLUID_RETRIEVAL_NODE, "Fluid Retrieval Node")
+			addBlock(ModBlocks.ENERGY_RETRIEVAL_NODE, "Energy Retrieval Node")
+			addBlock(ModBlocks.TRANSFER_FILTER, "Transfer Filter")
+			addBlock(ModBlocks.TRANSFER_PIPE_FILTER, "Transfer Pipe Filter")
+
+			addBlock(ModBlocks.CREATIVE_ENERGY_SOURCE, "Creative Energy Source")
 			addBlock(ModBlocks.SURVIVALIST_GENERATOR, "Survivalist Generator")
 			addBlock(ModBlocks.FURNACE_GENERATOR, "Furnace Generator")
 			addBlock(ModBlocks.MAGMATIC_GENERATOR, "Magmatic Generator")
@@ -148,6 +160,8 @@ object ModBlockLang {
 			addBlock(ModBlocks.DIAGONAL_WOOD, "Diagonal Wood")
 			addBlock(ModBlocks.BLOCK_OF_DEMON_METAL, "Block of Demon Metal")
 			addBlock(ModBlocks.BLOCK_OF_ENCHANTED_METAL, "Block of Enchanted Metal")
+			addBlock(ModBlocks.POLISHED_STONE, "Polished Stone")
+			addBlock(ModBlocks.CROSSED_STONE, "Crossed Stone")
 
 			addBlock(ModBlocks.CARVED_GLASS, "Carved Glass")
 			addBlock(ModBlocks.EDGED_GLASS, "Edged Glass")
@@ -163,7 +177,11 @@ object ModBlockLang {
 			addBlock(ModBlocks.ETHEREAL_GLASS, "Ethereal Glass")
 			addBlock(ModBlocks.INVERTED_ETHEREAL_GLASS, "Ethereal Glass (Inverted)")
 			addBlock(ModBlocks.INEFFABLE_GLASS, "Ineffable Glass")
+			addBlock(ModBlocks.DARK_INEFFABLE_GLASS, "Ineffable Glass (Dark)")
 			addBlock(ModBlocks.INVERTED_INEFFABLE_GLASS, "Ineffable Glass (Inverted)")
+			addBlock(ModBlocks.THICKENED_GLASS_BORDERED, "Thickened Glass (Bordered)")
+			addBlock(ModBlocks.THICKENED_GLASS_PATTERNED, "Thickened Glass (Patterned)")
+			addBlock(ModBlocks.REDSTONE_GLASS, "Redstone Glass")
 		}
 	}
 
