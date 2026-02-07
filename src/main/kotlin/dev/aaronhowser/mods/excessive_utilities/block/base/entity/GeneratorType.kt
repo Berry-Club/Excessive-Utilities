@@ -6,16 +6,15 @@ import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 enum class GeneratorType(
-	private val id: String,
-	val fuelDataMap: DataMapType<Item, GeneratorItemFuel>
+	private val id: String
 ) : StringRepresentable {
-	ENDER("ender", GeneratorItemFuel.ENDER),
-	EXPLOSIVE("explosive", GeneratorItemFuel.EXPLOSIVE),
-	PINK("pink", GeneratorItemFuel.PINK),
-	NETHER_STAR("nether_star", GeneratorItemFuel.NETHER_STAR),
-	FROSTY("frosty", GeneratorItemFuel.FROSTY),
-	HALITOSIS("halitosis", GeneratorItemFuel.HALITOSIS),
-	DEATH("death", GeneratorItemFuel.DEATH)
+	ENDER("ender"),
+	EXPLOSIVE("explosive"),
+	PINK("pink"),
+	NETHER_STAR("nether_star"),
+	FROSTY("frosty"),
+	HALITOSIS("halitosis"),
+	DEATH("death")
 
 	/**
 	 * Left out intentionally:
@@ -27,6 +26,17 @@ enum class GeneratorType(
 	 */
 
 	;
+
+	val fuelDataMap: DataMapType<Item, GeneratorItemFuel>
+		get() = when (this) {
+			ENDER -> GeneratorItemFuel.ENDER
+			EXPLOSIVE -> GeneratorItemFuel.EXPLOSIVE
+			PINK -> GeneratorItemFuel.PINK
+			NETHER_STAR -> GeneratorItemFuel.NETHER_STAR
+			FROSTY -> GeneratorItemFuel.FROSTY
+			HALITOSIS -> GeneratorItemFuel.HALITOSIS
+			DEATH -> GeneratorItemFuel.DEATH
+		}
 
 	override fun getSerializedName(): String = id
 
