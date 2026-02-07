@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
-import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.CompressibleFeGeneratorBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -254,8 +254,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator")
 	val MAGMATIC_GENERATOR =
 		basicBlock("magmatic_generator")
-	val ENDER_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("ender_generator") { DataDrivenGeneratorBlock.ender(tier = 1) }
+	val ENDER_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("ender_generator") { CompressibleFeGeneratorBlock.ender(tier = 1) }
 	val HEATED_REDSTONE_GENERATOR =
 		basicBlock("heated_redstone_generator")
 	val CULINARY_GENERATOR =
@@ -264,24 +264,24 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("potions_generator")
 	val SOLAR_GENERATOR =
 		basicBlock("solar_generator")
-	val EXPLOSIVE_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("explosive_generator") { DataDrivenGeneratorBlock.explosive(tier = 1) }
-	val PINK_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("pink_generator") { DataDrivenGeneratorBlock.pink(tier = 1) }
+	val EXPLOSIVE_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("explosive_generator") { CompressibleFeGeneratorBlock.explosive(tier = 1) }
+	val PINK_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("pink_generator") { CompressibleFeGeneratorBlock.pink(tier = 1) }
 	val HIGH_TEMPERATURE_FURNACE_GENERATOR =
 		basicBlock("high_temperature_furnace_generator")
-	val NETHER_STAR_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("nether_star_generator") { DataDrivenGeneratorBlock.netherStar(tier = 1) }
+	val NETHER_STAR_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("nether_star_generator") { CompressibleFeGeneratorBlock.netherStar(tier = 1) }
 	val DISENCHANTMENT_GENERATOR =
 		basicBlock("disenchantment_generator")
-	val FROSTY_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("frosty_generator") { DataDrivenGeneratorBlock.frosty(tier = 1) }
-	val HALITOSIS_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("halitosis_generator") { DataDrivenGeneratorBlock.halitosis(tier = 1) }
+	val FROSTY_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("frosty_generator") { CompressibleFeGeneratorBlock.frosty(tier = 1) }
+	val HALITOSIS_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("halitosis_generator") { CompressibleFeGeneratorBlock.halitosis(tier = 1) }
 	val SLIMY_GENERATOR =
 		basicBlock("slimy_generator")
-	val DEATH_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("death_generator") { DataDrivenGeneratorBlock.death(tier = 1) }
+	val DEATH_GENERATOR: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("death_generator") { CompressibleFeGeneratorBlock.death(tier = 1) }
 	val RAINBOW_GENERATOR =
 		basicBlock("rainbow_generator")
 
@@ -291,8 +291,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator_mk2")
 	val MAGMATIC_GENERATOR_MK2 =
 		basicBlock("magmatic_generator_mk2")
-	val ENDER_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("ender_generator_mk2") { DataDrivenGeneratorBlock.ender(tier = 2) }
+	val ENDER_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("ender_generator_mk2") { CompressibleFeGeneratorBlock.ender(tier = 2) }
 	val HEATED_REDSTONE_GENERATOR_MK2 =
 		basicBlock("heated_redstone_generator_mk2")
 	val CULINARY_GENERATOR_MK2 =
@@ -301,24 +301,24 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("potions_generator_mk2")
 	val SOLAR_GENERATOR_MK2 =
 		basicBlock("solar_generator_mk2")
-	val EXPLOSIVE_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("explosive_generator_mk2") { DataDrivenGeneratorBlock.explosive(tier = 2) }
-	val PINK_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("pink_generator_mk2") { DataDrivenGeneratorBlock.pink(tier = 2) }
+	val EXPLOSIVE_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("explosive_generator_mk2") { CompressibleFeGeneratorBlock.explosive(tier = 2) }
+	val PINK_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("pink_generator_mk2") { CompressibleFeGeneratorBlock.pink(tier = 2) }
 	val HIGH_TEMPERATURE_FURNACE_GENERATOR_MK2 =
 		basicBlock("high_temperature_furnace_generator_mk2")
-	val NETHER_STAR_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("nether_star_generator_mk2") { DataDrivenGeneratorBlock.netherStar(tier = 2) }
+	val NETHER_STAR_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("nether_star_generator_mk2") { CompressibleFeGeneratorBlock.netherStar(tier = 2) }
 	val DISENCHANTMENT_GENERATOR_MK2 =
 		basicBlock("disenchantment_generator_mk2")
-	val FROSTY_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("frosty_generator_mk2") { DataDrivenGeneratorBlock.frosty(tier = 2) }
-	val HALITOSIS_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("halitosis_generator_mk2") { DataDrivenGeneratorBlock.halitosis(tier = 2) }
+	val FROSTY_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("frosty_generator_mk2") { CompressibleFeGeneratorBlock.frosty(tier = 2) }
+	val HALITOSIS_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("halitosis_generator_mk2") { CompressibleFeGeneratorBlock.halitosis(tier = 2) }
 	val SLIMY_GENERATOR_MK2 =
 		basicBlock("slimy_generator_mk2")
-	val DEATH_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("death_generator_mk2") { DataDrivenGeneratorBlock.death(tier = 2) }
+	val DEATH_GENERATOR_MK2: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("death_generator_mk2") { CompressibleFeGeneratorBlock.death(tier = 2) }
 	val RAINBOW_GENERATOR_MK2 =
 		basicBlock("rainbow_generator_mk2")
 
@@ -328,8 +328,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator_mk3")
 	val MAGMATIC_GENERATOR_MK3 =
 		basicBlock("magmatic_generator_mk3")
-	val ENDER_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("ender_generator_mk3") { DataDrivenGeneratorBlock.ender(tier = 3) }
+	val ENDER_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("ender_generator_mk3") { CompressibleFeGeneratorBlock.ender(tier = 3) }
 	val HEATED_REDSTONE_GENERATOR_MK3 =
 		basicBlock("heated_redstone_generator_mk3")
 	val CULINARY_GENERATOR_MK3 =
@@ -338,24 +338,24 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("potions_generator_mk3")
 	val SOLAR_GENERATOR_MK3 =
 		basicBlock("solar_generator_mk3")
-	val EXPLOSIVE_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("explosive_generator_mk3") { DataDrivenGeneratorBlock.explosive(tier = 3) }
-	val PINK_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("pink_generator_mk3") { DataDrivenGeneratorBlock.pink(tier = 3) }
+	val EXPLOSIVE_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("explosive_generator_mk3") { CompressibleFeGeneratorBlock.explosive(tier = 3) }
+	val PINK_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("pink_generator_mk3") { CompressibleFeGeneratorBlock.pink(tier = 3) }
 	val HIGH_TEMPERATURE_FURNACE_GENERATOR_MK3 =
 		basicBlock("high_temperature_furnace_generator_mk3")
-	val NETHER_STAR_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("nether_star_generator_mk3") { DataDrivenGeneratorBlock.netherStar(tier = 3) }
+	val NETHER_STAR_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("nether_star_generator_mk3") { CompressibleFeGeneratorBlock.netherStar(tier = 3) }
 	val DISENCHANTMENT_GENERATOR_MK3 =
 		basicBlock("disenchantment_generator_mk3")
-	val FROSTY_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("frosty_generator_mk3") { DataDrivenGeneratorBlock.frosty(tier = 3) }
-	val HALITOSIS_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("halitosis_generator_mk3") { DataDrivenGeneratorBlock.halitosis(tier = 3) }
+	val FROSTY_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("frosty_generator_mk3") { CompressibleFeGeneratorBlock.frosty(tier = 3) }
+	val HALITOSIS_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("halitosis_generator_mk3") { CompressibleFeGeneratorBlock.halitosis(tier = 3) }
 	val SLIMY_GENERATOR_MK3 =
 		basicBlock("slimy_generator_mk3")
-	val DEATH_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
-		registerBlock("death_generator_mk3") { DataDrivenGeneratorBlock.death(tier = 3) }
+	val DEATH_GENERATOR_MK3: DeferredBlock<CompressibleFeGeneratorBlock> =
+		registerBlock("death_generator_mk3") { CompressibleFeGeneratorBlock.death(tier = 3) }
 	val RAINBOW_GENERATOR_MK3 =
 		basicBlock("rainbow_generator_mk3")
 
