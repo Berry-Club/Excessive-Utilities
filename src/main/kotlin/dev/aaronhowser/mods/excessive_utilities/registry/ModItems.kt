@@ -42,8 +42,8 @@ object ModItems : AaronItemRegistry() {
 		basic("resonating_redstone_crystal")
 	val UPGRADE_BASE =
 		basic("upgrade_base")
-	val OPINIUM_CORE =
-		basic("opinium_core")
+	val OPINIUM_CORE: DeferredItem<OpiniumCoreItem> =
+		register("opinium_core", ::OpiniumCoreItem, OpiniumCoreItem.DEFAULT_PROPERTIES)
 	val UNSTABLE_INGOT =
 		basic("unstable_ingot")
 	val SEMI_UNSTABLE_NUGGET =
