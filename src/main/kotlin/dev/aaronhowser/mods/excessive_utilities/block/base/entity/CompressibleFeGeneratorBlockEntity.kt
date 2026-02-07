@@ -1,19 +1,17 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
-import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.ContainerHelper
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
-import java.util.UUID
+import java.util.*
 
 abstract class CompressibleFeGeneratorBlockEntity(
 	type: BlockEntityType<*>,
@@ -40,8 +38,6 @@ abstract class CompressibleFeGeneratorBlockEntity(
 			field = value
 			setChanged()
 		}
-
-	protected open val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 
 	protected open fun serverTick(level: ServerLevel) {
 		for (i in 0 until compressionLevel) generatorTick(level)
@@ -76,7 +72,6 @@ abstract class CompressibleFeGeneratorBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		ContainerHelper.saveAllItems(tag, container.items, registries)
 		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
 		tag.putInt(FE_PER_TICK_NBT, fePerTick)
 		tag.put(STORED_ENERGY_NBT, energyStorage.serializeNBT(registries))
@@ -90,7 +85,6 @@ abstract class CompressibleFeGeneratorBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		ContainerHelper.loadAllItems(tag, container.items, registries)
 		burnTimeRemaining = tag.getInt(BURN_TIME_REMAINING_NBT)
 		fePerTick = tag.getInt(FE_PER_TICK_NBT)
 		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
@@ -106,9 +100,6 @@ abstract class CompressibleFeGeneratorBlockEntity(
 		const val BURN_TIME_REMAINING_NBT = "BurnTimeRemaining"
 		const val FE_PER_TICK_NBT = "FePerTick"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
-
-		const val CONTAINER_SIZE = 1
-		const val INPUT_SLOT = 0
 
 		fun tick(
 			level: Level,
