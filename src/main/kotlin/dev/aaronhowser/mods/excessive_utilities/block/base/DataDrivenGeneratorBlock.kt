@@ -1,8 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.entity.DataDrivenGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
@@ -16,22 +16,9 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-abstract class DataDrivenGeneratorBlock(
-	val tier: Int,
-	val generatorType: GeneratorType,
+class DataDrivenGeneratorBlock(
+	val beTypeGetter: () -> BlockEntityType<out DataDrivenGeneratorBlockEntity>
 ) : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
-
-	abstract fun getBlockEntityType(): BlockEntityType<out DataDrivenGeneratorBlockEntity>
-
-	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
-		return DataDrivenGeneratorBlockEntity(
-			getBlockEntityType(),
-			tier,
-			generatorType,
-			pos,
-			state
-		)
-	}
 
 	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
 		val blockEntity = level.getBlockEntity(pos)
@@ -40,12 +27,27 @@ abstract class DataDrivenGeneratorBlock(
 		}
 	}
 
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
+		return beTypeGetter().create(pos, state)
+	}
+
 	override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
 		return BaseEntityBlock.createTickerHelper(
 			blockEntityType,
-			getBlockEntityType(),
+			beTypeGetter(),
 			CompressibleFeGeneratorBlockEntity::tick
 		)
+	}
+
+	companion object {
+		fun ender(tier: Int) = DataDrivenGeneratorBlock {
+			when (tier) {
+				1 -> ModBlockEntityTypes.ENDER_GENERATOR.get()
+				2 -> ModBlockEntityTypes.ENDER_GENERATOR_MK2.get()
+				3 -> ModBlockEntityTypes.ENDER_GENERATOR_MK3.get()
+				else -> error("Invalid tier: $tier")
+			}
+		}
 	}
 
 }

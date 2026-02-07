@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
+import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -253,8 +254,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator")
 	val MAGMATIC_GENERATOR =
 		basicBlock("magmatic_generator")
-	val ENDER_GENERATOR =
-		registerBlock("ender_generator") { EnderGeneratorBlock(compressionLevel = 1) }
+	val ENDER_GENERATOR: DeferredBlock<DataDrivenGeneratorBlock> =
+		registerBlock("ender_generator") { DataDrivenGeneratorBlock.ender(tier = 1) }
 	val HEATED_REDSTONE_GENERATOR =
 		basicBlock("heated_redstone_generator")
 	val CULINARY_GENERATOR =
@@ -292,8 +293,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator_mk2")
 	val MAGMATIC_GENERATOR_MK2 =
 		basicBlock("magmatic_generator_mk2")
-	val ENDER_GENERATOR_MK2: DeferredBlock<EnderGeneratorBlock> =
-		registerBlock("ender_generator_mk2") { EnderGeneratorBlock(compressionLevel = 2) }
+	val ENDER_GENERATOR_MK2: DeferredBlock<DataDrivenGeneratorBlock> =
+		registerBlock("ender_generator_2") { DataDrivenGeneratorBlock.ender(tier = 2) }
 	val HEATED_REDSTONE_GENERATOR_MK2 =
 		basicBlock("heated_redstone_generator_mk2")
 	val CULINARY_GENERATOR_MK2 =
@@ -331,8 +332,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator_mk3")
 	val MAGMATIC_GENERATOR_MK3 =
 		basicBlock("magmatic_generator_mk3")
-	val ENDER_GENERATOR_MK3: DeferredBlock<EnderGeneratorBlock> =
-		registerBlock("ender_generator_mk3") { EnderGeneratorBlock(compressionLevel = 3) }
+	val ENDER_GENERATOR_MK3: DeferredBlock<DataDrivenGeneratorBlock> =
+		registerBlock("ender_generator_mk3") { DataDrivenGeneratorBlock.ender(tier = 3) }
 	val HEATED_REDSTONE_GENERATOR_MK3 =
 		basicBlock("heated_redstone_generator_mk3")
 	val CULINARY_GENERATOR_MK3 =
