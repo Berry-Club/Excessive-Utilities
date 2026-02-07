@@ -24,9 +24,17 @@ object ModCreativeModeTabs {
 			.title(ModItemLang.CREATIVE_TAB.toComponent())
 			.icon { ModBlocks.ANGEL_BLOCK.toStack() }
 			.displayItems { displayContext: CreativeModeTab.ItemDisplayParameters, output: CreativeModeTab.Output ->
-				val regularItems = ModItems.ITEM_REGISTRY.entries.map { it.get() }.toMutableList()
-				val blockItems = regularItems.filterIsInstance<BlockItem>().toSet()
-				regularItems -= blockItems
+				val regularItems = mutableListOf<Item>()
+				val blockItems = mutableListOf<BlockItem>()
+
+				for (deferred in ModItems.ITEM_REGISTRY.entries) {
+					val item = deferred.get()
+					if (item is BlockItem) {
+						blockItems.add(item)
+					} else {
+						regularItems.add(item)
+					}
+				}
 
 				for (item in regularItems) {
 					if (item == ModItems.OPINIUM_CORE.get()) {
