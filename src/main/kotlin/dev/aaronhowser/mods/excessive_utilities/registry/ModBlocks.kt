@@ -254,7 +254,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val MAGMATIC_GENERATOR =
 		basicBlock("magmatic_generator")
 	val ENDER_GENERATOR =
-		basicBlock("ender_generator")
+		registerBlock("ender_generator") { EnderGeneratorBlock(compressionLevel = 1) }
 	val HEATED_REDSTONE_GENERATOR =
 		basicBlock("heated_redstone_generator")
 	val CULINARY_GENERATOR =
@@ -292,8 +292,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator_x8")
 	val MAGMATIC_GENERATOR_X8 =
 		basicBlock("magmatic_generator_x8")
-	val ENDER_GENERATOR_X8 =
-		basicBlock("ender_generator_x8")
+	val ENDER_GENERATOR_X8: DeferredBlock<EnderGeneratorBlock> =
+		registerBlock("ender_generator_x8") { EnderGeneratorBlock(compressionLevel = 2) }
 	val HEATED_REDSTONE_GENERATOR_X8 =
 		basicBlock("heated_redstone_generator_x8")
 	val CULINARY_GENERATOR_X8 =
@@ -331,8 +331,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace_generator_x64")
 	val MAGMATIC_GENERATOR_X64 =
 		basicBlock("magmatic_generator_x64")
-	val ENDER_GENERATOR_X64 =
-		basicBlock("ender_generator_x64")
+	val ENDER_GENERATOR_X64: DeferredBlock<EnderGeneratorBlock> =
+		registerBlock("ender_generator_x64") { EnderGeneratorBlock(compressionLevel = 3) }
 	val HEATED_REDSTONE_GENERATOR_X64 =
 		basicBlock("heated_redstone_generator_x64")
 	val CULINARY_GENERATOR_X64 =

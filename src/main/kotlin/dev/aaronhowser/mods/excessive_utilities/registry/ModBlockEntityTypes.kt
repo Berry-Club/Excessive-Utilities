@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.entity.DataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -55,7 +54,11 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 			ModBlocks.STONE_DRUM, ModBlocks.IRON_DRUM, ModBlocks.REINFORCED_LARGE_DRUM, ModBlocks.DEMONICALLY_GARGANTUAN_DRUM, ModBlocks.CREATIVE_DRUM
 		)
 
-	val ENDER_GENERATOR =
-		register("ender_generator", DataDrivenGeneratorBlockEntity::Ender, ModBlocks.ENDER_GENERATOR)
+	val ENDER_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("ender_generator", DataDrivenGeneratorBlockEntity::ender, ModBlocks.ENDER_GENERATOR)
+	val ENDER_GENERATOR_EIGHT: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("ender_generator_eight", DataDrivenGeneratorBlockEntity::enderEight, ModBlocks.ENDER_GENERATOR_X8)
+	val ENDER_GENERATOR_SIXTY_FOUR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+		register("ender_generator_sixty_four", DataDrivenGeneratorBlockEntity::enderSixtyFour, ModBlocks.ENDER_GENERATOR_X64)
 
 }
