@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TieredGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -18,7 +18,7 @@ class CulinaryGeneratorBlockEntity(
 	override val tier: Int,
 	pos: BlockPos,
 	blockState: BlockState,
-) : TieredGeneratorBlockEntity(type, pos, blockState) {
+) : GeneratorBlockEntity(type, pos, blockState) {
 
 	private val container: ImprovedSimpleContainer =
 		object : ImprovedSimpleContainer(this, CONTAINER_SIZE) {

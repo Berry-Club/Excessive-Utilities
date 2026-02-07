@@ -16,13 +16,12 @@ import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.*
 
-abstract class TieredGeneratorBlockEntity(
+abstract class GeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
 	blockState: BlockState
 ) : BlockEntity(type, pos, blockState) {
 
-	abstract val tier: Int
 	private val repetitions: Int
 		get() = when (tier) {
 			1 -> 1
@@ -122,7 +121,7 @@ abstract class TieredGeneratorBlockEntity(
 			level: Level,
 			blockPos: BlockPos,
 			blockState: BlockState,
-			blockEntity: TieredGeneratorBlockEntity
+			blockEntity: GeneratorBlockEntity
 		) {
 			if (level is ServerLevel) {
 				blockEntity.serverTick(level)
@@ -131,7 +130,7 @@ abstract class TieredGeneratorBlockEntity(
 			}
 		}
 
-		fun getEnergyCapability(transmitter: TieredGeneratorBlockEntity, direction: Direction?): IEnergyStorage? {
+		fun getEnergyCapability(transmitter: GeneratorBlockEntity, direction: Direction?): IEnergyStorage? {
 			return transmitter.energyStorage
 		}
 	}

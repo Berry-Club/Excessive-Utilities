@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TieredGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -18,11 +18,10 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper
 
 open class DataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
-	override val tier: Int,
 	val generatorType: GeneratorType,
 	pos: BlockPos,
 	blockState: BlockState,
-) : TieredGeneratorBlockEntity(type, pos, blockState) {
+) : GeneratorBlockEntity(type, pos, blockState) {
 
 	private val container: ImprovedSimpleContainer =
 		object : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
@@ -71,23 +70,6 @@ open class DataDrivenGeneratorBlockEntity(
 
 		fun enderMk1(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
-			tier = 1,
-			generatorType = GeneratorType.ENDER,
-			pos = pos,
-			blockState = state
-		)
-
-		fun enderMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.ENDER_GENERATOR_MK2.get(),
-			tier = 2,
-			generatorType = GeneratorType.ENDER,
-			pos = pos,
-			blockState = state
-		)
-
-		fun enderMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.ENDER_GENERATOR_MK3.get(),
-			tier = 3,
 			generatorType = GeneratorType.ENDER,
 			pos = pos,
 			blockState = state
@@ -95,23 +77,6 @@ open class DataDrivenGeneratorBlockEntity(
 
 		fun explosiveMk1(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
-			tier = 1,
-			generatorType = GeneratorType.EXPLOSIVE,
-			pos = pos,
-			blockState = state
-		)
-
-		fun explosiveMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR_MK2.get(),
-			tier = 2,
-			generatorType = GeneratorType.EXPLOSIVE,
-			pos = pos,
-			blockState = state
-		)
-
-		fun explosiveMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR_MK3.get(),
-			tier = 3,
 			generatorType = GeneratorType.EXPLOSIVE,
 			pos = pos,
 			blockState = state
@@ -119,23 +84,6 @@ open class DataDrivenGeneratorBlockEntity(
 
 		fun pink(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.PINK_GENERATOR.get(),
-			tier = 1,
-			generatorType = GeneratorType.PINK,
-			pos = pos,
-			blockState = state
-		)
-
-		fun pinkMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.PINK_GENERATOR_MK2.get(),
-			tier = 2,
-			generatorType = GeneratorType.PINK,
-			pos = pos,
-			blockState = state
-		)
-
-		fun pinkMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.PINK_GENERATOR_MK3.get(),
-			tier = 3,
 			generatorType = GeneratorType.PINK,
 			pos = pos,
 			blockState = state
@@ -143,23 +91,6 @@ open class DataDrivenGeneratorBlockEntity(
 
 		fun netherStar(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR.get(),
-			tier = 1,
-			generatorType = GeneratorType.NETHER_STAR,
-			pos = pos,
-			blockState = state
-		)
-
-		fun netherStarMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR_MK2.get(),
-			tier = 2,
-			generatorType = GeneratorType.NETHER_STAR,
-			pos = pos,
-			blockState = state
-		)
-
-		fun netherStarMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR_MK3.get(),
-			tier = 3,
 			generatorType = GeneratorType.NETHER_STAR,
 			pos = pos,
 			blockState = state
@@ -167,23 +98,6 @@ open class DataDrivenGeneratorBlockEntity(
 
 		fun frosty(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.FROSTY_GENERATOR.get(),
-			tier = 1,
-			generatorType = GeneratorType.FROSTY,
-			pos = pos,
-			blockState = state
-		)
-
-		fun frostyMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.FROSTY_GENERATOR_MK2.get(),
-			tier = 2,
-			generatorType = GeneratorType.FROSTY,
-			pos = pos,
-			blockState = state
-		)
-
-		fun frostyMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.FROSTY_GENERATOR_MK3.get(),
-			tier = 3,
 			generatorType = GeneratorType.FROSTY,
 			pos = pos,
 			blockState = state
@@ -191,47 +105,14 @@ open class DataDrivenGeneratorBlockEntity(
 
 		fun halitosis(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
-			tier = 1,
 			generatorType = GeneratorType.HALITOSIS,
 			pos = pos,
 			blockState = state
 		)
 
-		fun halitosisMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.HALITOSIS_GENERATOR_MK2.get(),
-			tier = 2,
-			generatorType = GeneratorType.HALITOSIS,
-			pos = pos,
-			blockState = state
-		)
-
-		fun halitosisMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.HALITOSIS_GENERATOR_MK3.get(),
-			tier = 3,
-			generatorType = GeneratorType.HALITOSIS,
-			pos = pos,
-			blockState = state
-		)
 
 		fun death(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.DEATH_GENERATOR.get(),
-			tier = 1,
-			generatorType = GeneratorType.DEATH,
-			pos = pos,
-			blockState = state
-		)
-
-		fun deathMk2(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.DEATH_GENERATOR_MK2.get(),
-			tier = 2,
-			generatorType = GeneratorType.DEATH,
-			pos = pos,
-			blockState = state
-		)
-
-		fun deathMk3(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.DEATH_GENERATOR_MK3.get(),
-			tier = 3,
 			generatorType = GeneratorType.DEATH,
 			pos = pos,
 			blockState = state
