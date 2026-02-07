@@ -1,13 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity.generator
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorType
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-sealed class DataDrivenGeneratorBlockEntity(
+class DataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	override val compressionLevel: Int,
 	val generatorType: GeneratorType,
@@ -31,14 +30,5 @@ sealed class DataDrivenGeneratorBlockEntity(
 		inputStack.shrink(1)
 		setChanged()
 	}
-
-	class Ender(pos: BlockPos, blockState: BlockState) : DataDrivenGeneratorBlockEntity(
-		type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
-		generatorType = GeneratorType.ENDER,
-		compressionLevel = 1,
-		pos = pos,
-		blockState = blockState
-	)
-
 
 }
