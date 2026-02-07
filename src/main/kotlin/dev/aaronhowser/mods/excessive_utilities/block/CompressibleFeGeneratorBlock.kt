@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.base
+package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.CompressibleFeGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -34,7 +34,7 @@ class CompressibleFeGeneratorBlock(
 		return BaseEntityBlock.createTickerHelper(
 			blockEntityType,
 			beTypeGetter(),
-			CompressibleFeGeneratorBlockEntity::tick
+			CompressibleFeGeneratorBlockEntity.Companion::tick
 		)
 	}
 
