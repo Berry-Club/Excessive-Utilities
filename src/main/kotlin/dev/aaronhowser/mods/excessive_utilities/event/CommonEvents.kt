@@ -62,24 +62,48 @@ object CommonEvents {
 		val dataDrivenBeTypes = listOf(
 			ModBlockEntityTypes.ENDER_GENERATOR.get(),
 			ModBlockEntityTypes.ENDER_GENERATOR_MK2.get(),
-			ModBlockEntityTypes.ENDER_GENERATOR_MK3.get()
+			ModBlockEntityTypes.ENDER_GENERATOR_MK3.get(),
+			ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
+			ModBlockEntityTypes.EXPLOSIVE_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.EXPLOSIVE_GENERATOR_MK3.get(),
+			ModBlockEntityTypes.PINK_GENERATOR.get(),
+			ModBlockEntityTypes.PINK_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.PINK_GENERATOR_MK3.get(),
+			ModBlockEntityTypes.NETHER_STAR_GENERATOR.get(),
+			ModBlockEntityTypes.NETHER_STAR_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.NETHER_STAR_GENERATOR_MK3.get(),
+			ModBlockEntityTypes.FROSTY_GENERATOR.get(),
+			ModBlockEntityTypes.FROSTY_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.FROSTY_GENERATOR_MK3.get(),
+			ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
+			ModBlockEntityTypes.HALITOSIS_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.HALITOSIS_GENERATOR_MK3.get(),
+			ModBlockEntityTypes.DEATH_GENERATOR.get(),
+			ModBlockEntityTypes.DEATH_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.DEATH_GENERATOR_MK3.get(),
 		)
 
-		val compressibleGenBeTypes = dataDrivenBeTypes + listOf()
+		val culinaryGenBeTypes = listOf(
+			ModBlockEntityTypes.CULINARY_GENERATOR.get(),
+			ModBlockEntityTypes.CULINARY_GENERATOR_MK2.get(),
+			ModBlockEntityTypes.CULINARY_GENERATOR_MK3.get()
+		)
 
-		for (beType in dataDrivenBeTypes) {
-			event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
-				beType,
-				DataDrivenGeneratorBlockEntity::getItemHandler
-			)
-		}
+		val compressibleGenBeTypes = dataDrivenBeTypes + culinaryGenBeTypes
 
 		for (beType in compressibleGenBeTypes) {
 			event.registerBlockEntity(
 				Capabilities.EnergyStorage.BLOCK,
 				beType,
 				CompressibleFeGeneratorBlockEntity::getEnergyCapability
+			)
+		}
+
+		for (beType in dataDrivenBeTypes) {
+			event.registerBlockEntity(
+				Capabilities.ItemHandler.BLOCK,
+				beType,
+				DataDrivenGeneratorBlockEntity::getItemHandler
 			)
 		}
 
