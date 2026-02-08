@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.handler.flat_transfer_node
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -46,7 +47,10 @@ class FlatTransferNode(
 		val itemHandlerOn = level.getCapability(Capabilities.ItemHandler.BLOCK, onPos, facing)
 		val shouldBreak = itemHandlerOn == null
 
-
+		if (shouldBreak) {
+			val player = level.players().first()
+			player.tell("Breaking a node at $onPos")
+		}
 
 		return shouldBreak
 	}
