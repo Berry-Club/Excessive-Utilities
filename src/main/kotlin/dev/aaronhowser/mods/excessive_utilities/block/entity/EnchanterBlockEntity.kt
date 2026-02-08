@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
@@ -40,7 +41,11 @@ class EnchanterBlockEntity(
 		}
 
 	override fun getGpUsage(): Double {
-		TODO("Not yet implemented")
+		val isCrafting = true
+		if (!isCrafting) return 0.0
+
+		val amountUpgrades = container.getItem(UPGRADE_SLOT).count
+		return SpeedUpgradeItem.getGpCost(amountUpgrades)
 	}
 
 	companion object {
