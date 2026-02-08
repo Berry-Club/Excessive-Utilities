@@ -21,7 +21,9 @@ object ModEntityTypes {
 			MobCategory.MISC,
 			1f, 1f,
 			::FlatTransferNodeEntity
-		)
+		) {
+			eyeHeight(0.5f)
+		}
 
 	fun <T : Entity> registerEntityType(
 		name: String,
