@@ -33,6 +33,7 @@ class ModRecipeProvider(
 		buildShapedRecipes(recipeOutput)
 		buildShapelessRecipes(recipeOutput)
 		buildResonatorRecipes(recipeOutput)
+		buildEnchanterRecipes(recipeOutput)
 		namedRecipes(recipeOutput)
 		buildSmeltingRecipes(recipeOutput)
 	}
@@ -1216,6 +1217,22 @@ class ModRecipeProvider(
 					ing(Tags.Items.CHESTS_WOODEN),
 					ing(Tags.Items.DUSTS_REDSTONE)
 				)
+			)
+		)
+
+		for (recipe in recipes) {
+			recipe.save(recipeOutput)
+		}
+	}
+
+	private fun buildEnchanterRecipes(recipeOutput: RecipeOutput) {
+		val recipes = listOf(
+			EnchanterRecipeBuilder(
+				Tags.Items.BOOKSHELVES.asIngredient(),
+				Tags.Items.GEMS_LAPIS.asIngredient(),
+				64_00 / (80 * 20),
+				80 * 20,
+				ModBlocks.MAGICAL_WOOD.toStack()
 			)
 		)
 

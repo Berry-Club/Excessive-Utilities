@@ -1,0 +1,15 @@
+{
+  "type": "excessive_utilities:enchanter",
+  "fe_cost": 4,
+  "left": {
+    "tag": "c:bookshelves"
+  },
+  "output": {
+    "count": 1,
+    "id": "excessive_utilities:magical_wood"
+  },
+  "right": {
+    "tag": "c:gems/lapis"
+  },
+  "ticks": 1600
+}

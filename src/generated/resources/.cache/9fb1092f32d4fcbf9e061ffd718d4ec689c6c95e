@@ -1,5 +1,6 @@
-// 1.21.1	2026-02-07T08:45:02.5005267	Recipes
+// 1.21.1	2026-02-07T19:28:54.2491331	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
+bf6ed5adfa89bae5fa09c362e57975e3c6b96f09 data/excessive_utilities/advancement/recipes/enchanter/magical_wood.json
 5b975df8b1bd44b37ab1ee685ac609cb0f3bc798 data/excessive_utilities/advancement/recipes/misc/angel_block.json
 d0ab2ccfe41c04b087169ae6eca200cec312427b data/excessive_utilities/advancement/recipes/misc/angel_ring.json
 ea8146dff68f952d46ff3338f4b50434fb0d75a9 data/excessive_utilities/advancement/recipes/misc/antenna.json
@@ -188,6 +189,7 @@ a21d8fb6ab87b1801057e605eb13d0159be86644 data/excessive_utilities/recipe/diamond
 be24de5fc014907f65275fa690e976bc04fc99cc data/excessive_utilities/recipe/disenchantment_generator.json
 02eef74ad0fdc6be5a85ed5354fe63de94cc3358 data/excessive_utilities/recipe/dragon_egg_mill.json
 6634ce39a9c362d57366eac126119cf6a87bc738 data/excessive_utilities/recipe/enchanter.json
+d4187afd86f021b9966782e9dcb0682b21eec619 data/excessive_utilities/recipe/enchanter/magical_wood.json
 5519226edeb8385e84896627a8182f4e1adc7912 data/excessive_utilities/recipe/ender_generator.json
 ca96a5334b32b25b633eb55460c6d73775a9c99e data/excessive_utilities/recipe/ender_porcupine.json
 db77a077ed0a41485b9637b917d38664a2fc1bfc data/excessive_utilities/recipe/ender_shard.json
