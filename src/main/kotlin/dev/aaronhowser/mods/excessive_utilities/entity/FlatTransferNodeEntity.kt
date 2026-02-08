@@ -13,25 +13,29 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 
-class FlatTransferNodeEntity : Entity {
+class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level) {
 
-	constructor(entityType: EntityType<*>, level: Level) : super(entityType, level)
+	var isItemNode: Boolean
+		get() = entityData.get(IS_ITEM_NODE_DATA)
+		private set(value) = entityData.set(IS_ITEM_NODE_DATA, value)
 
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
 		builder.define(IS_ITEM_NODE_DATA, true)
 	}
 
 	override fun readAdditionalSaveData(compound: CompoundTag) {
-		TODO("Not yet implemented")
+		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
 	}
 
 	override fun addAdditionalSaveData(compound: CompoundTag) {
-		TODO("Not yet implemented")
+		compound.putBoolean(IS_ITEM_NODE_TAG, isItemNode)
 	}
 
 	companion object {
 		val IS_ITEM_NODE_DATA: EntityDataAccessor<Boolean> =
 			SynchedEntityData.defineId(FlatTransferNodeEntity::class.java, EntityDataSerializers.BOOLEAN)
+
+		const val IS_ITEM_NODE_TAG = "IsItemNode"
 
 		fun place(
 			level: Level,
@@ -49,7 +53,10 @@ class FlatTransferNodeEntity : Entity {
 			}
 
 			val node = FlatTransferNodeEntity(ModEntityTypes.FLAT_TRANSFER_NODE.get(), level)
+
 			node.setPos(Vec3.atLowerCornerOf(blockPos))
+			node.isItemNode = isItemNode
+
 			level.addFreshEntity(node)
 			return node
 		}
