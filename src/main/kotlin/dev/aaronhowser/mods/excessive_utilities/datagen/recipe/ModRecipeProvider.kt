@@ -1229,7 +1229,9 @@ class ModRecipeProvider(
 		val recipes = listOf(
 			EnchanterRecipeBuilder(
 				Tags.Items.BOOKSHELVES.asIngredient(),
+				1,
 				Tags.Items.GEMS_LAPIS.asIngredient(),
+				1,
 				64_00 / (80 * 20),
 				80 * 20,
 				ModBlocks.MAGICAL_WOOD.toStack()

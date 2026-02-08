@@ -4,6 +4,7 @@
   "left": {
     "tag": "c:bookshelves"
   },
+  "left_count": 1,
   "output": {
     "count": 1,
     "id": "excessive_utilities:magical_wood"
@@ -11,5 +12,6 @@
   "right": {
     "tag": "c:gems/lapis"
   },
+  "right_count": 1,
   "ticks": 1600
 }

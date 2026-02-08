@@ -12,17 +12,26 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
 
 class EnchanterRecipe(
 	val leftIngredient: Ingredient,
+	val leftCount: Int,
 	val rightIngredient: Ingredient,
+	val rightCount: Int,
 	val feCost: Int,
 	val ticks: Int,
 	private val result: ItemStack
 ) : Recipe<EnchanterRecipe.Input> {
 
 	override fun matches(input: Input, level: Level): Boolean {
-		return leftIngredient.test(input.left) && rightIngredient.test(input.right)
+		val left = input.left
+		val right = input.right
+
+		return leftIngredient.test(left)
+				&& left.count >= leftCount
+				&& rightIngredient.test(right)
+				&& right.count >= rightCount
 	}
 
 	override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack = result.copy()
@@ -60,9 +69,15 @@ class EnchanterRecipe(
 						Ingredient.CODEC_NONEMPTY
 							.fieldOf("left")
 							.forGetter(EnchanterRecipe::leftIngredient),
+						Codec.INT
+							.fieldOf("left_count")
+							.forGetter(EnchanterRecipe::leftCount),
 						Ingredient.CODEC_NONEMPTY
 							.fieldOf("right")
 							.forGetter(EnchanterRecipe::rightIngredient),
+						Codec.INT
+							.fieldOf("right_count")
+							.forGetter(EnchanterRecipe::rightCount),
 						Codec.INT
 							.fieldOf("fe_cost")
 							.forGetter(EnchanterRecipe::feCost),
@@ -76,9 +91,11 @@ class EnchanterRecipe(
 				}
 
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchanterRecipe> =
-				StreamCodec.composite(
+				NeoForgeStreamCodecs.composite(
 					Ingredient.CONTENTS_STREAM_CODEC, EnchanterRecipe::leftIngredient,
+					ByteBufCodecs.VAR_INT, EnchanterRecipe::leftCount,
 					Ingredient.CONTENTS_STREAM_CODEC, EnchanterRecipe::rightIngredient,
+					ByteBufCodecs.VAR_INT, EnchanterRecipe::rightCount,
 					ByteBufCodecs.VAR_INT, EnchanterRecipe::feCost,
 					ByteBufCodecs.VAR_INT, EnchanterRecipe::ticks,
 					ItemStack.STREAM_CODEC, EnchanterRecipe::result,

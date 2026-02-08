@@ -15,7 +15,9 @@ import net.minecraft.world.item.crafting.Ingredient
 
 class EnchanterRecipeBuilder(
 	val leftIngredient: Ingredient,
+	val leftCount: Int,
 	val rightIngredient: Ingredient,
+	val rightCount: Int,
 	val feCost: Int,
 	val ticks: Int,
 	val result: ItemStack,
@@ -52,7 +54,7 @@ class EnchanterRecipeBuilder(
 			advancement.addCriterion(criterion.key, criterion.value)
 		}
 
-		val recipe = EnchanterRecipe(leftIngredient, rightIngredient, feCost, ticks, result)
+		val recipe = EnchanterRecipe(leftIngredient, leftCount, rightIngredient, rightCount, feCost, ticks, result)
 
 		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
 	}
