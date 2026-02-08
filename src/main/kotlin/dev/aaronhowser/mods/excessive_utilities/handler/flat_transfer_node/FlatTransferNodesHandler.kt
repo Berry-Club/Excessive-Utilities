@@ -26,6 +26,8 @@ class FlatTransferNodesHandler(
 		val chunkPos = node.chunkPos
 		val chunkNodes = nodesPerChunk.getOrPut(chunkPos) { mutableSetOf() }
 		chunkNodes.add(node)
+
+		updatePlayersWatchingChunk(node.chunkPos)
 	}
 
 	fun removeNode(node: FlatTransferNode) {
