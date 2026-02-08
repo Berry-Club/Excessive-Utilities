@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.recipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
+import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
 import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
@@ -27,13 +29,8 @@ class EnchanterRecipe(
 	override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
 	override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
 
-	override fun getSerializer(): RecipeSerializer<*> {
-		TODO("Not yet implemented")
-	}
-
-	override fun getType(): RecipeType<*> {
-		TODO("Not yet implemented")
-	}
+	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.ENCHANTER.get()
+	override fun getType(): RecipeType<*> = ModRecipeTypes.ENCHANTER.get()
 
 	class Serializer : RecipeSerializer<EnchanterRecipe> {
 		override fun codec(): MapCodec<EnchanterRecipe> = CODEC
