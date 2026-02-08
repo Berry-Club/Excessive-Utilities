@@ -70,13 +70,12 @@ class EnchanterBlockEntity(
 		progress++
 
 		if (progress >= recipe.value.ticks) {
-			craftRecipe(recipe.value)
+			craftRecipe(level, recipe.value)
 			progress = 0
 		}
 	}
 
-	private fun craftRecipe(value: EnchanterRecipe) {
-
+	private fun craftRecipe(level: ServerLevel, value: EnchanterRecipe) {
 	}
 
 	private var recipeCache: RecipeHolder<EnchanterRecipe>? = null

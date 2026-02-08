@@ -62,14 +62,12 @@ class ResonatorBlockEntity(
 		progress++
 
 		if (progress >= CRAFT_TIME) {
-			craftItem(recipe)
+			craftItem(level, recipe)
 			progress = 0
 		}
 	}
 
-	private fun craftItem(recipe: ResonatorRecipe) {
-		val level = level ?: return
-
+	private fun craftItem(level: ServerLevel, recipe: ResonatorRecipe) {
 		val inputStack = container.getItem(INPUT_SLOT)
 
 		val recipeOutput = recipe.getResultItem(level.registryAccess()).copy()
