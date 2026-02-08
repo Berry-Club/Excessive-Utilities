@@ -9,7 +9,7 @@ import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.saveddata.SavedData
 import net.neoforged.neoforge.event.level.ChunkWatchEvent
 
-class FlatTransferNodesHandler(
+class FlatTransferNodeHandler(
 	private val level: ServerLevel
 ) : SavedData() {
 
@@ -75,8 +75,8 @@ class FlatTransferNodesHandler(
 		const val SAVED_DATA_NAME = "eu_flat_transfer_nodes_handler"
 		const val NODES_NBT = "nodes"
 
-		private fun load(level: ServerLevel, tag: CompoundTag, provider: HolderLookup.Provider): FlatTransferNodesHandler {
-			val handler = FlatTransferNodesHandler(level)
+		private fun load(level: ServerLevel, tag: CompoundTag, provider: HolderLookup.Provider): FlatTransferNodeHandler {
+			val handler = FlatTransferNodeHandler(level)
 
 			val nodesList = tag.getList(NODES_NBT, Tag.TAG_COMPOUND.toInt())
 
@@ -89,10 +89,10 @@ class FlatTransferNodesHandler(
 			return handler
 		}
 
-		fun get(level: ServerLevel): FlatTransferNodesHandler {
+		fun get(level: ServerLevel): FlatTransferNodeHandler {
 			val storage = level.dataStorage
 			val factory = Factory(
-				{ FlatTransferNodesHandler(level) },
+				{ FlatTransferNodeHandler(level) },
 				{ tag, provider -> load(level, tag, provider) }
 			)
 

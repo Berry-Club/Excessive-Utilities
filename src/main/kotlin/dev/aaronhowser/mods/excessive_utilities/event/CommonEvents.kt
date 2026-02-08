@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
-import dev.aaronhowser.mods.excessive_utilities.handler.flat_transfer_node.FlatTransferNodesHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.flat_transfer_node.FlatTransferNodeHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -105,7 +105,7 @@ object CommonEvents {
 	fun afterLevelTick(event: LevelTickEvent.Post) {
 		val level = event.level
 		if (level is ServerLevel) {
-			FlatTransferNodesHandler.get(level).tick()
+			FlatTransferNodeHandler.get(level).tick()
 		}
 	}
 
