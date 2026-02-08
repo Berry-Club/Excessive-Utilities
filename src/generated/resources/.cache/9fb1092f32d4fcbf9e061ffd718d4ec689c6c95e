@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-07T19:47:10.8349381	Recipes
+// 1.21.1	2026-02-07T22:01:38.0929195	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 dae80cf8a41d63d2b6b6e8c8f2980d67accd0b86 data/excessive_utilities/advancement/recipes/enchanter/block_of_enchanted_metal.json
 b46a12420ffdc8e03d9817941889851b7a2c85dc data/excessive_utilities/advancement/recipes/enchanter/block_of_evil_infused_iron.json
@@ -182,7 +182,7 @@ ac3853dd5598de9d07a3dc1848b99e1ed1b3e10b data/excessive_utilities/recipe/chicken
 eb6889d43e508f8a636a85009d0427448b425588 data/excessive_utilities/recipe/culinary_generator.json
 a2b4a1548720c605f94014dd26a89cdd2521af20 data/excessive_utilities/recipe/cursed_lasso.json
 214edd647e6d769ce7f0296b2b3a009506ed61e4 data/excessive_utilities/recipe/dark_ineffable_glass.json
-10a442b395fccf5a7990062178197cb9b5cf9115 data/excessive_utilities/recipe/death_generator.json
+157d45c07aecf4d8fce1285bc25ba9e368901263 data/excessive_utilities/recipe/death_generator.json
 17dfd32f08bca5737542f812c1e180fd2137ba32 data/excessive_utilities/recipe/deep_dark_portal.json
 0ee9def113315304d076e14b0150e52e5f085fb1 data/excessive_utilities/recipe/dehostilifier.json
 5099a3295d86ea2d76d8d4f012756b15ceb55ea5 data/excessive_utilities/recipe/dehumidifier.json

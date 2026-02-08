@@ -67,8 +67,8 @@ class ModItemTagsProvider(
 
 		val RENDER_GP_WHILE_HOLDING = create("render_gp_while_holding")
 		val PISTONS = common("pistons")
-		val CORPSE_PARTS = common("corpse_parts")
-		val SPEED_UPGRADES = common("speed_upgrades")
+		val CORPSE_PARTS = create("corpse_parts")
+		val SPEED_UPGRADES = create("speed_upgrades")
 	}
 
 }

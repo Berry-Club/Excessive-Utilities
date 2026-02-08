@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "C": {
-      "tag": "c:corpse_parts"
+      "tag": "excessive_utilities:corpse_parts"
     },
     "E": {
       "item": "minecraft:spider_eye"
