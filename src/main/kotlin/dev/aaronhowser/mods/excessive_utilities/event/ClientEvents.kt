@@ -5,11 +5,14 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRender
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
+import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.client.renderer.entity.NoopRenderer
 import net.minecraft.client.renderer.item.ItemProperties
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.client.event.EntityRenderersEvent
 import net.neoforged.neoforge.client.event.ModelEvent
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent
@@ -57,6 +60,13 @@ object ClientEvents {
 			OpiniumCoreBEWLR.ClientItemExtensions,
 			ModItems.OPINIUM_CORE.get()
 		)
+	}
+
+	@SubscribeEvent
+	fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
+
+		event.registerEntityRenderer(ModEntityTypes.FLAT_TRANSFER_NODE.get(), ::NoopRenderer)
+
 	}
 
 }
