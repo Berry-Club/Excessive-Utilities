@@ -5,6 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.neoforged.neoforge.capabilities.Capabilities
 
 class FlatTransferNode(
 	val onPos: BlockPos,
@@ -12,10 +13,27 @@ class FlatTransferNode(
 	val isItemNode: Boolean
 ) {
 
+	val targetPos: BlockPos = onPos.relative(facing)
+
 	fun tick(level: ServerLevel) {
-		// Get item handler it's on
-		// Get item handler it's facing
-		// If both are present, transfer items from one to the other
+		if (!level.isLoaded(onPos) || !level.isLoaded(targetPos)) return
+
+		if (isItemNode) {
+			transferItem(level)
+		} else {
+			transferFluid(level)
+		}
+
+	}
+
+	private fun transferItem(level: ServerLevel) {
+		val itemHandlerOn = level.getCapability(Capabilities.ItemHandler.BLOCK, onPos, facing) ?: return
+		val itemHandlerTarget = level.getCapability(Capabilities.ItemHandler.BLOCK, targetPos, facing.opposite) ?: return
+	}
+
+	private fun transferFluid(level: ServerLevel) {
+		val fluidHandlerOn = level.getCapability(Capabilities.FluidHandler.BLOCK, onPos, facing) ?: return
+		val fluidHandlerTarget = level.getCapability(Capabilities.FluidHandler.BLOCK, targetPos, facing.opposite) ?: return
 	}
 
 	companion object {
