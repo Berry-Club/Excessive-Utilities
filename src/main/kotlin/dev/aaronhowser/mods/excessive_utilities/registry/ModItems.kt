@@ -3,9 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.*
-import net.minecraft.core.component.DataComponents
-import net.minecraft.world.item.Item
-import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -150,9 +147,17 @@ object ModItems : AaronItemRegistry() {
 	val SONAR_GOGGLES =
 		basic("sonar_goggles")
 	val FLAT_TRANSFER_NODE_ITEMS: DeferredItem<FlatTransferNodeItem> =
-		register("flat_transfer_node_items", ::FlatTransferNodeItem, FlatTransferNodeItem.DEFAULT_PROPERTIES)
-	val FLAT_TRANSFER_NODE_FLUIDS =
-		basic("flat_transfer_node_fluids")
+		register(
+			"flat_transfer_node_items",
+			{ FlatTransferNodeItem(it, isItemNode = true) },
+			FlatTransferNodeItem.DEFAULT_PROPERTIES
+		)
+	val FLAT_TRANSFER_NODE_FLUIDS: DeferredItem<FlatTransferNodeItem> =
+		register(
+			"flat_transfer_node_fluids",
+			{ FlatTransferNodeItem(it, isItemNode = false) },
+			FlatTransferNodeItem.DEFAULT_PROPERTIES
+		)
 	val ANGEL_BLOCK_ITEM: DeferredItem<AngelBlockItem> =
 		register("angel_block", ::AngelBlockItem)
 

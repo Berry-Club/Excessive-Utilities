@@ -6,7 +6,10 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.context.UseOnContext
 
-class FlatTransferNodeItem(properties: Properties) : Item(properties) {
+class FlatTransferNodeItem(
+	properties: Properties,
+	val isItemNode: Boolean
+) : Item(properties) {
 
 	override fun useOn(context: UseOnContext): InteractionResult {
 		val level = context.level
@@ -15,7 +18,7 @@ class FlatTransferNodeItem(properties: Properties) : Item(properties) {
 			val direction = context.clickedFace
 			val pos = context.clickedPos
 
-			FlatTransferNodeEntity.place(level, pos, direction, true)
+			FlatTransferNodeEntity.place(level, pos, direction, isItemNode)
 		}
 
 		return InteractionResult.SUCCESS
