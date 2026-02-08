@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getPovResult
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
@@ -24,11 +25,17 @@ object GridPowerGuiRenderer {
 
 		if (!player.isHolding { it.isItem(ModItemTagsProvider.RENDER_GP_WHILE_HOLDING) }) {
 			val lookingAt = player.getPovResult()
-			val shouldRender = player.level()
+			val isTag = player.level()
 				.getBlockState(lookingAt.blockPos)
 				.isBlock(ModBlockTagsProvider.RENDER_GP_WHILE_LOOKING_AT)
 
-			if (!shouldRender) return
+			if (!isTag) return
+
+			val blockEntity = player.level().getBlockEntity(lookingAt.blockPos)
+			if (blockEntity is GpDrainBlockEntity) {
+				val currentDrain = blockEntity.getGpUsage()
+				if (currentDrain <= 0) return
+			}
 		}
 
 		val component = Component.literal("${ClientGridPower.usage} / ${ClientGridPower.capacity} GP")

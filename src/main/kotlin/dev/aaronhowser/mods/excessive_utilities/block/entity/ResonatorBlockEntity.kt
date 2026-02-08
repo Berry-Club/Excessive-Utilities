@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
@@ -14,6 +13,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.wrapper.InvWrapper
@@ -24,7 +24,7 @@ class ResonatorBlockEntity(
 ) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState) {
 
 	override fun getGpUsage(): Double {
-		val level = level as? ServerLevel ?: return 0.0
+		val level = level ?: return 0.0
 		return getRecipe(level)?.gpCost ?: 0.0
 	}
 
@@ -85,7 +85,7 @@ class ResonatorBlockEntity(
 		inputStack.shrink(1)
 	}
 
-	fun getRecipe(level: ServerLevel): ResonatorRecipe? {
+	fun getRecipe(level: Level): ResonatorRecipe? {
 		val inputStack = container.getItem(INPUT_SLOT)
 		val recipe = ResonatorRecipe.getRecipe(level, inputStack) ?: return null
 
