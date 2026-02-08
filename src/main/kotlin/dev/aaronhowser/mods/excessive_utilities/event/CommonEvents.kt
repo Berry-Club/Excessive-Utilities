@@ -48,6 +48,12 @@ object CommonEvents {
 		)
 
 		event.registerBlockEntity(
+			Capabilities.ItemHandler.BLOCK,
+			ModBlockEntityTypes.ENCHANTER.get(),
+			EnchanterBlockEntity::getItemHandler
+		)
+
+		event.registerBlockEntity(
 			Capabilities.EnergyStorage.BLOCK,
 			ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(),
 			WirelessFeBatteryBlockEntity::getEnergyCapability

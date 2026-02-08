@@ -67,13 +67,11 @@ class WirelessFeBatteryBlockEntity(
 		}
 	}
 
+	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
+
 	companion object {
 		const val OWNER_UUID_NBT = "OwnerUUID"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
-
-		fun getEnergyCapability(battery: WirelessFeBatteryBlockEntity, direction: Direction?): IEnergyStorage {
-			return battery.energyStorage
-		}
 	}
 
 }

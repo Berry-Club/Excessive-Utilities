@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -46,6 +47,8 @@ class EnchanterBlockEntity(
 				return super.extractItem(slot, amount, simulate)
 			}
 		}
+
+	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
 	override fun getGpUsage(): Double {
 		val isCrafting = recipeCache != null
