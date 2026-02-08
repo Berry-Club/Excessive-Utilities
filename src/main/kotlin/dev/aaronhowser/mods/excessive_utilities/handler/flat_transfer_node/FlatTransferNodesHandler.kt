@@ -53,8 +53,10 @@ class FlatTransferNodesHandler(
 	}
 
 	fun tick(level: ServerLevel) {
-		for (node in nodes) {
-			node.tick(level)
+		val nodesToRemove = nodes.filter { it.tick(level) }
+
+		for (node in nodesToRemove) {
+			removeNode(node)
 		}
 	}
 

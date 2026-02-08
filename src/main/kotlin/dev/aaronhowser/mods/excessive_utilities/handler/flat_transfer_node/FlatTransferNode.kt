@@ -25,8 +25,13 @@ class FlatTransferNode(
 	val chunkPos: ChunkPos = ChunkPos(onPos)
 	val targetPos: BlockPos = onPos.relative(facing)
 
-	fun tick(level: ServerLevel) {
-		if (!level.isLoaded(onPos) || !level.isLoaded(targetPos)) return
+	/**
+	 * @return true if the node should be removed (e.g. because the block it's attached to is gone)
+	 */
+	fun tick(level: ServerLevel): Boolean {
+		if (!level.isLoaded(onPos) || !level.isLoaded(targetPos)) return false
+
+		if (tryBreak(level)) return true
 
 		if (isItemNode) {
 			transferItem(level)
@@ -34,6 +39,16 @@ class FlatTransferNode(
 			transferFluid(level)
 		}
 
+		return false
+	}
+
+	private fun tryBreak(level: ServerLevel): Boolean {
+		val itemHandlerOn = level.getCapability(Capabilities.ItemHandler.BLOCK, onPos, facing)
+		val shouldBreak = itemHandlerOn == null
+
+
+
+		return shouldBreak
 	}
 
 	private fun transferItem(level: ServerLevel) {
