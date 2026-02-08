@@ -19,13 +19,6 @@ class ChunkFlatTransferNodes(
 		val CODEC: Codec<ChunkFlatTransferNodes> =
 			FlatTransferNode.CODEC.listOf()
 				.xmap(::ChunkFlatTransferNodes, ChunkFlatTransferNodes::nodes)
-
-		fun tickLevel(level: ServerLevel) {
-			val chunks = level.chunkSource.
-				.chunkMap
-
-
-		}
 	}
 
 }
