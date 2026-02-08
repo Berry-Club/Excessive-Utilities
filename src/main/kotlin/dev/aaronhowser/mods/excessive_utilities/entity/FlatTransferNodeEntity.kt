@@ -15,6 +15,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level) {
@@ -44,6 +45,8 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 			if (isItemNode) {
 				transferItem(level)
+			} else {
+				transferFluid(level)
 			}
 		}
 	}
@@ -61,6 +64,29 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		}
 
 		return shouldBreak
+	}
+
+	private fun transferFluid(level: ServerLevel) {
+		val pos = blockPosition()
+		val targetPos = pos.relative(aiming)
+
+		val source = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, aiming) ?: return
+		val target = level.getCapability(Capabilities.FluidHandler.BLOCK, targetPos, aiming.opposite) ?: return
+
+		for (i in 0 until source.tanks) {
+			val fluidToMove = source.getFluidInTank(i)
+			if (fluidToMove.isEmpty) continue
+
+			val copy = fluidToMove.copyWithAmount(1000)
+
+			val simulatedResult = target.fill(copy, IFluidHandler.FluidAction.SIMULATE)
+
+			if (simulatedResult != 0) {
+				val actualResult = target.fill(copy, IFluidHandler.FluidAction.EXECUTE)
+				source.drain(actualResult, IFluidHandler.FluidAction.EXECUTE)
+				return
+			}
+		}
 	}
 
 	private fun transferItem(level: ServerLevel) {
