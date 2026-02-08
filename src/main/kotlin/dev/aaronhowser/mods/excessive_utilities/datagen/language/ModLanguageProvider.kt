@@ -14,6 +14,7 @@ class ModLanguageProvider(
 	override fun addTranslations() {
 		ModItemLang.add(this)
 		ModBlockLang.add(this)
+		ModEntityLang.add(this)
 	}
 
 	companion object {
