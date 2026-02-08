@@ -4,12 +4,19 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.server.level.ServerLevel
 
 class FlatTransferNode(
 	val onPos: BlockPos,
 	val facing: Direction,
 	val isItemNode: Boolean
 ) {
+
+	fun tick(level: ServerLevel) {
+		// Get item handler it's on
+		// Get item handler it's facing
+		// If both are present, transfer items from one to the other
+	}
 
 	companion object {
 		val CODEC: Codec<FlatTransferNode> =
