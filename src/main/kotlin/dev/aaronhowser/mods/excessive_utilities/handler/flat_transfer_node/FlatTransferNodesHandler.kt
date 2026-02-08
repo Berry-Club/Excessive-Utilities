@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.handler.flat_transfer_node
 
+import dev.aaronhowser.mods.excessive_utilities.packet.server_to_client.UpdateChunkFlatTransferNodesPacket
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
@@ -43,7 +44,10 @@ class FlatTransferNodesHandler(
 	}
 
 	fun updatePlayersWatchingChunk(chunkPos: ChunkPos) {
+		val chunkNodes = nodesPerChunk[chunkPos] ?: emptySet()
+		val packet = UpdateChunkFlatTransferNodesPacket(chunkPos, chunkNodes.toList())
 
+		packet.messageAllPlayersTrackingChunk(level, chunkPos)
 	}
 
 	fun tick(level: ServerLevel) {
