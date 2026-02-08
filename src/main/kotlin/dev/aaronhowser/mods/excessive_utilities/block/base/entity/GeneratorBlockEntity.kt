@@ -8,6 +8,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -27,8 +28,18 @@ abstract class GeneratorBlockEntity(
 
 	protected val energyStorage = EnergyStorage(10_000)
 
-	protected open val container = GeneratorContainer(this)
+	protected open val container =
+		object : GeneratorContainer(this@GeneratorBlockEntity, amountInputs = 1) {
+			override fun canPlaceInput(stack: ItemStack): Boolean = isValidInput(stack)
+			override fun canPlaceSecondaryInput(stack: ItemStack): Boolean = isValidSecondaryInput(stack)
+			override fun canPlaceUpgrade(stack: ItemStack): Boolean = isValidUpgrade(stack)
+		}
+
 	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = container.itemHandler
+
+	protected open fun isValidInput(itemStack: ItemStack) = true
+	protected open fun isValidSecondaryInput(itemStack: ItemStack) = true
+	protected open fun isValidUpgrade(itemStack: ItemStack) = true
 
 	protected var fePerTick: Int = 0
 		set(value) {

@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
-import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -20,15 +19,12 @@ open class DataDrivenGeneratorBlockEntity(
 	blockState: BlockState,
 ) : GeneratorBlockEntity(type, pos, blockState) {
 
-	override val container: GeneratorContainer =
-		object : GeneratorContainer(this@DataDrivenGeneratorBlockEntity) {
-			override fun canPlaceInput(stack: ItemStack): Boolean {
-				val fuelMap = generatorType.fuelDataMap
-				val itemFuel = stack.item.builtInRegistryHolder().getData(fuelMap)
+	override fun isValidInput(itemStack: ItemStack): Boolean {
+		val fuelMap = generatorType.fuelDataMap
+		val itemFuel = itemStack.item.builtInRegistryHolder().getData(fuelMap)
 
-				return itemFuel != null
-			}
-		}
+		return itemFuel != null
+	}
 
 	override fun tryStartBurning(level: ServerLevel) {
 		if (burnTimeRemaining > 0) return

@@ -1,29 +1,22 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
-import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandlerModifiable
-import net.neoforged.neoforge.items.wrapper.InvWrapper
 
 class CulinaryGeneratorBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState,
 ) : GeneratorBlockEntity(ModBlockEntityTypes.CULINARY_GENERATOR.get(), pos, blockState) {
 
-	override val container: GeneratorContainer =
-		object : GeneratorContainer(this@CulinaryGeneratorBlockEntity) {
-			override fun canPlaceInput(stack: ItemStack): Boolean {
-				val foodValue = stack.getFoodProperties(null)
-				return foodValue != null && (foodValue.nutrition > 0 || foodValue.saturation > 0f)
-			}
-		}
+	override fun isValidInput(itemStack: ItemStack): Boolean {
+		val foodValue = itemStack.getFoodProperties(null)
+		return foodValue != null && (foodValue.nutrition > 0 || foodValue.saturation > 0f)
+	}
 
 	override fun tryStartBurning(level: ServerLevel) {
 		if (burnTimeRemaining > 0) return

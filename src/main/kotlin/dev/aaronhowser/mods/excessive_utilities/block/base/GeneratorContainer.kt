@@ -8,8 +8,9 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.neoforged.neoforge.items.wrapper.InvWrapper
 
 open class GeneratorContainer(
-	blockEntity: BlockEntity
-) : ImprovedSimpleContainer(blockEntity, CONTAINER_SIZE) {
+	blockEntity: BlockEntity,
+	val amountInputs: Int
+) : ImprovedSimpleContainer(blockEntity, amountInputs + 1) {
 
 	final override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
 		return when (slot) {
@@ -33,7 +34,6 @@ open class GeneratorContainer(
 		}
 
 	companion object {
-		const val CONTAINER_SIZE = 3
 		const val INPUT_SLOT = 0
 		const val UPGRADE_SLOT = 1
 		const val SECONDARY_INPUT_SLOT = 2
