@@ -14,6 +14,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.util.*
 
 class FlatTransferNode(
@@ -56,13 +57,29 @@ class FlatTransferNode(
 	}
 
 	private fun transferItem(level: ServerLevel) {
-		val itemHandlerOn = level.getCapability(Capabilities.ItemHandler.BLOCK, onPos, facing) ?: return
-		val itemHandlerTarget = level.getCapability(Capabilities.ItemHandler.BLOCK, targetPos, facing.opposite) ?: return
+		val source = level.getCapability(Capabilities.ItemHandler.BLOCK, onPos, facing) ?: return
+		val target = level.getCapability(Capabilities.ItemHandler.BLOCK, targetPos, facing.opposite) ?: return
+
+		for (i in 0 until source.slots) {
+			val stackToMove = source.getStackInSlot(i)
+			if (stackToMove.isEmpty) continue
+
+			val copy = stackToMove.copyWithCount(1)
+
+			val simulatedResult = ItemHandlerHelper.insertItemStacked(target, copy, true)
+
+			if (simulatedResult.count != copy.count) {
+				val actualResult = ItemHandlerHelper.insertItemStacked(target, copy, false)
+				val amountInserted = copy.count - actualResult.count
+				stackToMove.shrink(amountInserted)
+				return
+			}
+		}
 	}
 
 	private fun transferFluid(level: ServerLevel) {
-		val fluidHandlerOn = level.getCapability(Capabilities.FluidHandler.BLOCK, onPos, facing) ?: return
-		val fluidHandlerTarget = level.getCapability(Capabilities.FluidHandler.BLOCK, targetPos, facing.opposite) ?: return
+		val source = level.getCapability(Capabilities.FluidHandler.BLOCK, onPos, facing) ?: return
+		val target = level.getCapability(Capabilities.FluidHandler.BLOCK, targetPos, facing.opposite) ?: return
 	}
 
 	fun toTag(): Tag {
