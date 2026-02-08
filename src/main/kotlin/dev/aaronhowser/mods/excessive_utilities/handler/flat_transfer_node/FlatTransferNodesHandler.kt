@@ -71,6 +71,14 @@ class FlatTransferNodesHandler : SavedData() {
 
 			return handler
 		}
+
+		fun get(level: ServerLevel): FlatTransferNodesHandler {
+			val storage = level.dataStorage
+			val factory = Factory(::FlatTransferNodesHandler, ::load)
+
+			return storage.computeIfAbsent(factory, SAVED_DATA_NAME)
+		}
+
 	}
 
 
