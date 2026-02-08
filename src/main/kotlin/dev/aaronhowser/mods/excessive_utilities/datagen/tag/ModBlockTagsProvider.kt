@@ -44,7 +44,8 @@ class ModBlockTagsProvider(
 				ModBlocks.DRAGON_EGG_MILL.get(),
 				ModBlocks.CREATIVE_MILL.get(),
 				ModBlocks.RESONATOR.get(),
-				ModBlocks.WIRELESS_FE_TRANSMITTER.get()
+				ModBlocks.WIRELESS_FE_TRANSMITTER.get(),
+				ModBlocks.ENCHANTER.get()
 			)
 
 		tag(VALID_FOR_DRAGON_EGG_MILL)
