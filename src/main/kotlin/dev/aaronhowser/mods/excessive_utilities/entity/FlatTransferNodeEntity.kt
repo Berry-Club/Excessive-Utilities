@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
+import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.nbt.CompoundTag
@@ -13,7 +14,6 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
-import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -25,7 +25,12 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 	var aiming: Direction
 		get() = entityData.get(AIMING_DATA)
-		private set(value) = entityData.set(AIMING_DATA, value)
+		private set(value) {
+			entityData.set(AIMING_DATA, value)
+
+			val lookTowards = eyePosition.add(value.stepX.toDouble(), value.stepY.toDouble(), value.stepZ.toDouble())
+			lookAt(EntityAnchorArgument.Anchor.EYES, lookTowards)
+		}
 
 	override fun tick() {
 		super.tick()
@@ -121,7 +126,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 			val node = FlatTransferNodeEntity(ModEntityTypes.FLAT_TRANSFER_NODE.get(), level)
 
-			node.setPos(Vec3.atLowerCornerOf(blockPos))
+			node.setPos(blockPos.bottomCenter)
 			node.isItemNode = isItemNode
 			node.aiming = direction
 
