@@ -6,6 +6,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.UUIDUtil
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.ChunkPos
 import net.neoforged.neoforge.capabilities.Capabilities
 import java.util.*
 
@@ -16,6 +17,7 @@ class FlatTransferNode(
 	val isItemNode: Boolean
 ) {
 
+	val chunkPos: ChunkPos = ChunkPos(onPos)
 	val targetPos: BlockPos = onPos.relative(facing)
 
 	fun tick(level: ServerLevel) {
