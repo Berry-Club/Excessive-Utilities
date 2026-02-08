@@ -114,6 +114,7 @@ class EnchanterBlockEntity(
 		}
 
 		recipeCache = recipe
+		progress = 0
 		return recipe
 	}
 
