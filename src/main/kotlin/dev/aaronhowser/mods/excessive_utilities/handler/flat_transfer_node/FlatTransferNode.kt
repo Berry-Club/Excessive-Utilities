@@ -4,10 +4,13 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.UUIDUtil
 import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.capabilities.Capabilities
+import java.util.*
 
 class FlatTransferNode(
+	val id: UUID,
 	val onPos: BlockPos,
 	val facing: Direction,
 	val isItemNode: Boolean
@@ -40,6 +43,9 @@ class FlatTransferNode(
 		val CODEC: Codec<FlatTransferNode> =
 			RecordCodecBuilder.create { instance ->
 				instance.group(
+					UUIDUtil.CODEC
+						.fieldOf("id")
+						.forGetter(FlatTransferNode::id),
 					BlockPos.CODEC
 						.fieldOf("pos")
 						.forGetter(FlatTransferNode::onPos),
