@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
@@ -103,10 +104,7 @@ class ResonatorBlockEntity(
 
 		ContainerHelper.saveAllItems(tag, container.items, registries)
 		tag.putInt(PROGRESS_NBT, progress)
-		val uuid = ownerUuid
-		if (uuid != null) {
-			tag.putUUID(OWNER_UUID_NBT, uuid)
-		}
+		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

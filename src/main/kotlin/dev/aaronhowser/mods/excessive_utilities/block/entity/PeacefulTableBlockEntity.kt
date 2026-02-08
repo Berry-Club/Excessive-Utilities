@@ -5,6 +5,7 @@ import com.mojang.datafixers.util.Either
 import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -130,11 +131,7 @@ class PeacefulTableBlockEntity(
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
-
-		val uuid = this.uuid
-		if (uuid != null) {
-			tag.putUUID(UUID_NBT, uuid)
-		}
+		tag.putUuidIfNotNull(UUID_NBT, this.uuid)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

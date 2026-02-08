@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import net.minecraft.core.BlockPos
@@ -41,11 +42,7 @@ abstract class GpDrainBlockEntity(
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
-
-		val uuid = ownerUuid
-		if (uuid != null) {
-			tag.putUUID(OWNER_UUID_NBT, uuid)
-		}
+		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

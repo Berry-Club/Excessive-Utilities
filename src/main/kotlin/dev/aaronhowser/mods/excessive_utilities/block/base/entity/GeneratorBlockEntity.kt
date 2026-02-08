@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -101,11 +102,7 @@ abstract class GeneratorBlockEntity(
 		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
 		tag.putInt(FE_PER_TICK_NBT, fePerTick)
 		tag.put(STORED_ENERGY_NBT, energyStorage.serializeNBT(registries))
-
-		val uuid = ownerUuid
-		if (uuid != null) {
-			tag.putUUID(OWNER_UUID_NBT, uuid)
-		}
+		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
