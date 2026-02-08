@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
+import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -1235,6 +1236,24 @@ class ModRecipeProvider(
 				64_00 / (80 * 20),
 				80 * 20,
 				ModBlocks.MAGICAL_WOOD.toStack()
+			),
+			EnchanterRecipeBuilder(
+				Tags.Items.STORAGE_BLOCKS_GOLD.asIngredient(),
+				1,
+				Tags.Items.GEMS_LAPIS.asIngredient(),
+				9,
+				24_000 / (20 * 30),
+				20 * 30,
+				ModBlocks.BLOCK_OF_ENCHANTED_METAL.toStack()
+			),
+			EnchanterRecipeBuilder(
+				Tags.Items.INGOTS_GOLD.asIngredient(),
+				1,
+				Tags.Items.GEMS_LAPIS.asIngredient(),
+				1,
+				8_000 / (20 * 10),
+				20 * 10,
+				ModItems.ENCHANTED_INGOT.toStack()
 			)
 		)
 

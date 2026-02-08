@@ -1,0 +1,17 @@
+{
+  "type": "excessive_utilities:enchanter",
+  "fe_cost": 40,
+  "left": {
+    "tag": "c:ingots/gold"
+  },
+  "left_count": 1,
+  "output": {
+    "count": 1,
+    "id": "excessive_utilities:enchanted_ingot"
+  },
+  "right": {
+    "tag": "c:gems/lapis"
+  },
+  "right_count": 1,
+  "ticks": 200
+}
