@@ -114,12 +114,10 @@ class ResonatorBlockEntity(
 
 		ContainerHelper.loadAllItems(tag, container.items, registries)
 		progress = tag.getInt(PROGRESS_NBT)
-		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
 	}
 
 	companion object {
 		const val PROGRESS_NBT = "Progress"
-		const val OWNER_UUID_NBT = "OwnerUUID"
 
 		const val CONTAINER_SIZE = 2
 		const val INPUT_SLOT = 0

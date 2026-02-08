@@ -9,7 +9,10 @@ import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.state.BlockState
@@ -127,7 +130,23 @@ class EnchanterBlockEntity(
 		return recipe
 	}
 
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+
+		ContainerHelper.saveAllItems(tag, container.items, registries)
+		tag.putInt(PROGRESS_NBT, progress)
+	}
+
+	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.loadAdditional(tag, registries)
+
+		ContainerHelper.loadAllItems(tag, container.items, registries)
+		progress = tag.getInt(PROGRESS_NBT)
+	}
+
 	companion object {
+		const val PROGRESS_NBT = "Progress"
+
 		const val CONTAINER_SIZE = 4
 		const val LEFT_INPUT_SLOT = 0
 		const val RIGHT_INPUT_SLOT = 1
