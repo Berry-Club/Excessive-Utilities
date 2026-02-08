@@ -19,34 +19,34 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		get() = entityData.get(IS_ITEM_NODE_DATA)
 		private set(value) = entityData.set(IS_ITEM_NODE_DATA, value)
 
-	var direction: Direction
-		get() = entityData.get(DIRECTION)
-		private set(value) = entityData.set(DIRECTION, value)
+	var placedOnFace: Direction
+		get() = entityData.get(PLACED_ON_FACE_DATA)
+		private set(value) = entityData.set(PLACED_ON_FACE_DATA, value)
 
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
 		builder.define(IS_ITEM_NODE_DATA, true)
-		builder.define(DIRECTION, Direction.NORTH)
+		builder.define(PLACED_ON_FACE_DATA, Direction.NORTH)
 	}
 
 	override fun addAdditionalSaveData(compound: CompoundTag) {
 		compound.putBoolean(IS_ITEM_NODE_TAG, isItemNode)
-		compound.putInt(DIRECTION_TAG, direction.ordinal)
+		compound.putInt(PLACED_ON_FACE_TAG, placedOnFace.ordinal)
 	}
 
 	override fun readAdditionalSaveData(compound: CompoundTag) {
 		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
-		val directionOrdinal = compound.getInt(DIRECTION_TAG)
-		direction = Direction.entries[directionOrdinal]
+		val directionOrdinal = compound.getInt(PLACED_ON_FACE_TAG)
+		placedOnFace = Direction.entries[directionOrdinal]
 	}
 
 	companion object {
 		val IS_ITEM_NODE_DATA: EntityDataAccessor<Boolean> =
 			SynchedEntityData.defineId(FlatTransferNodeEntity::class.java, EntityDataSerializers.BOOLEAN)
-		val DIRECTION: EntityDataAccessor<Direction> =
+		val PLACED_ON_FACE_DATA: EntityDataAccessor<Direction> =
 			SynchedEntityData.defineId(FlatTransferNodeEntity::class.java, EntityDataSerializers.DIRECTION)
 
 		const val IS_ITEM_NODE_TAG = "IsItemNode"
-		const val DIRECTION_TAG = "Direction"
+		const val PLACED_ON_FACE_TAG = "PlacedOnFace"
 
 		fun place(
 			level: Level,
@@ -59,7 +59,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 				AABB(blockPos)
 			)
 
-			if (nodesAlreadyThere.any { it.direction == direction }) {
+			if (nodesAlreadyThere.any { it.placedOnFace == direction }) {
 				return null
 			}
 
