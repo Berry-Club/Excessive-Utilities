@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -91,17 +92,22 @@ class EnchanterBlockEntity(
 		val leftStack = container.getItem(LEFT_INPUT_SLOT)
 		val rightStack = container.getItem(RIGHT_INPUT_SLOT)
 
-		val recipe = EnchanterRecipe.getRecipe(level, leftStack, rightStack)
+		var recipe = EnchanterRecipe.getRecipe(level, leftStack, rightStack)
+
+		if (recipe != null) {
+			val stackInOutput = container.getItem(ResonatorBlockEntity.OUTPUT_SLOT)
+			val recipeOutput = recipe.value.getResultItem(level.registryAccess()).copy()
+
+			if (stackInOutput.isNotEmpty() && ItemStack.isSameItemSameComponents(stackInOutput, recipeOutput)) {
+				val canFit = stackInOutput.count + recipeOutput.count <= stackInOutput.maxStackSize
+				if (!canFit) recipe = null
+			}
+		}
 
 		if (recipe == null) {
 			recipeCache = null
 			return null
 		}
-
-		val stackInOutput = container.getItem(ResonatorBlockEntity.OUTPUT_SLOT)
-		val recipeOutput = recipe.value.getResultItem(level.registryAccess()).copy()
-
-
 
 		if (recipe.id == recipeCache?.id) {
 			return recipe
