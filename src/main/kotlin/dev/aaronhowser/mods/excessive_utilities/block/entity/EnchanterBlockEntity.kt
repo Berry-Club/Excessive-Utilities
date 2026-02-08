@@ -83,6 +83,16 @@ class EnchanterBlockEntity(
 		leftStack.shrink(recipe.leftCount)
 		rightStack.shrink(recipe.rightCount)
 
+		val outputStack = container.getItem(OUTPUT_SLOT)
+		val resultStack = recipe.getResultItem(level.registryAccess()).copy()
+
+		if (outputStack.isNotEmpty()) {
+			outputStack.grow(resultStack.count)
+		} else {
+			container.setItem(OUTPUT_SLOT, resultStack)
+		}
+
+		setChanged()
 	}
 
 	private var recipeCache: RecipeHolder<EnchanterRecipe>? = null
