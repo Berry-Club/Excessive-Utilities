@@ -6,7 +6,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
-import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -1263,6 +1262,24 @@ class ModRecipeProvider(
 				192_000 / (20 * 240),
 				20 * 240,
 				ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.toStack(8)
+			),
+			EnchanterRecipeBuilder(
+				Tags.Items.INGOTS_IRON.asIngredient(),
+				8,
+				Items.NETHER_STAR.asIngredient(),
+				1,
+				64_000 / (20 * 20),
+				20 * 20,
+				ModItems.EVIL_INFUSED_IRON_INGOT.toStack(8)
+			),
+			EnchanterRecipeBuilder(
+				Items.APPLE.asIngredient(),
+				16,
+				Tags.Items.GEMS_LAPIS.asIngredient(),
+				1,
+				16_000 / (20 * 80),
+				20 * 80,
+				ModItems.MAGICAL_APPLE.toStack(16)
 			)
 		)
 
