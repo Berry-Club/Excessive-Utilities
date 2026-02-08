@@ -22,7 +22,10 @@ class ResonatorBlockEntity(
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState) {
 
-	override fun getGpUsage(): Double = getRecipe()?.gpCost ?: 0.0
+	override fun getGpUsage(): Double {
+		val level = level as? ServerLevel ?: return 0.0
+		return getRecipe(level)?.gpCost ?: 0.0
+	}
 
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 	private val itemHandler: IItemHandlerModifiable =
@@ -52,7 +55,7 @@ class ResonatorBlockEntity(
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
 
-		val recipe = getRecipe()
+		val recipe = getRecipe(level)
 
 		if (recipe == null) {
 			progress = 0
@@ -81,9 +84,7 @@ class ResonatorBlockEntity(
 		inputStack.shrink(1)
 	}
 
-	fun getRecipe(): ResonatorRecipe? {
-		val level = level ?: return null
-
+	fun getRecipe(level: ServerLevel): ResonatorRecipe? {
 		val inputStack = container.getItem(INPUT_SLOT)
 		val recipe = ResonatorRecipe.getRecipe(level, inputStack) ?: return null
 

@@ -75,7 +75,13 @@ class EnchanterBlockEntity(
 		}
 	}
 
-	private fun craftRecipe(level: ServerLevel, value: EnchanterRecipe) {
+	private fun craftRecipe(level: ServerLevel, recipe: EnchanterRecipe) {
+		val leftStack = container.getItem(LEFT_INPUT_SLOT)
+		val rightStack = container.getItem(RIGHT_INPUT_SLOT)
+
+		leftStack.shrink(recipe.leftCount)
+		rightStack.shrink(recipe.rightCount)
+
 	}
 
 	private var recipeCache: RecipeHolder<EnchanterRecipe>? = null
@@ -91,6 +97,11 @@ class EnchanterBlockEntity(
 			recipeCache = null
 			return null
 		}
+
+		val stackInOutput = container.getItem(ResonatorBlockEntity.OUTPUT_SLOT)
+		val recipeOutput = recipe.value.getResultItem(level.registryAccess()).copy()
+
+
 
 		if (recipe.id == recipeCache?.id) {
 			return recipe
