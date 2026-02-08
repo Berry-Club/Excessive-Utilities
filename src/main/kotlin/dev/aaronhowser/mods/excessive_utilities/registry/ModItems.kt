@@ -149,10 +149,10 @@ object ModItems : AaronItemRegistry() {
 		basic("portable_scanner")
 	val SONAR_GOGGLES =
 		basic("sonar_goggles")
+	val FLAT_TRANSFER_NODE_ITEMS: DeferredItem<FlatTransferNodeItem> =
+		register("flat_transfer_node_items", ::FlatTransferNodeItem, FlatTransferNodeItem.DEFAULT_PROPERTIES)
 	val FLAT_TRANSFER_NODE_FLUIDS =
 		basic("flat_transfer_node_fluids")
-	val FLAT_TRANSFER_NODE_ITEMS =
-		basic("flat_transfer_node_items")
 	val ANGEL_BLOCK_ITEM: DeferredItem<AngelBlockItem> =
 		register("angel_block", ::AngelBlockItem)
 
