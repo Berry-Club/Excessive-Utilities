@@ -5,9 +5,12 @@ import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
+import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.wrapper.InvWrapper
@@ -46,6 +49,32 @@ class EnchanterBlockEntity(
 
 		val amountUpgrades = container.getItem(UPGRADE_SLOT).count
 		return SpeedUpgradeItem.getGpCost(amountUpgrades)
+	}
+
+	override fun serverTick(level: ServerLevel) {
+		super.serverTick(level)
+	}
+
+	private var recipeCache: RecipeHolder<EnchanterRecipe>? = null
+	private fun getRecipe(): RecipeHolder<EnchanterRecipe>? {
+		val level = level ?: return null
+
+		val leftStack = container.getItem(LEFT_INPUT_SLOT)
+		val rightStack = container.getItem(RIGHT_INPUT_SLOT)
+
+		val recipe = EnchanterRecipe.getRecipe(level, leftStack, rightStack)
+
+		if (recipe?.id == recipeCache?.id) {
+			return recipe
+		}
+
+		if (recipe == null) {
+			recipeCache = null
+			return null
+		}
+
+		recipeCache = recipe
+		return recipe
 	}
 
 	companion object {
