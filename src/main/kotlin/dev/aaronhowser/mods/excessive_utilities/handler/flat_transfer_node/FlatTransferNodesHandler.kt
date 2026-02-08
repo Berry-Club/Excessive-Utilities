@@ -6,8 +6,11 @@ import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.saveddata.SavedData
+import net.neoforged.neoforge.event.level.ChunkWatchEvent
 
-class FlatTransferNodesHandler : SavedData() {
+class FlatTransferNodesHandler(
+	private val level: ServerLevel
+) : SavedData() {
 
 	private val nodes: MutableSet<FlatTransferNode> = mutableSetOf()
 	private val nodesPerChunk: MutableMap<ChunkPos, MutableSet<FlatTransferNode>> = mutableMapOf()
@@ -35,6 +38,12 @@ class FlatTransferNodesHandler : SavedData() {
 				nodesPerChunk.remove(chunkPos)
 			}
 		}
+
+		updatePlayersWatchingChunk(node.chunkPos)
+	}
+
+	fun updatePlayersWatchingChunk(chunkPos: ChunkPos) {
+
 	}
 
 	fun tick(level: ServerLevel) {
@@ -58,8 +67,8 @@ class FlatTransferNodesHandler : SavedData() {
 		const val SAVED_DATA_NAME = "eu_flat_transfer_nodes_handler"
 		const val NODES_NBT = "nodes"
 
-		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): FlatTransferNodesHandler {
-			val handler = FlatTransferNodesHandler()
+		private fun load(level: ServerLevel, tag: CompoundTag, provider: HolderLookup.Provider): FlatTransferNodesHandler {
+			val handler = FlatTransferNodesHandler(level)
 
 			val nodesList = tag.getList(NODES_NBT, Tag.TAG_COMPOUND.toInt())
 
@@ -74,9 +83,16 @@ class FlatTransferNodesHandler : SavedData() {
 
 		fun get(level: ServerLevel): FlatTransferNodesHandler {
 			val storage = level.dataStorage
-			val factory = Factory(::FlatTransferNodesHandler, ::load)
+			val factory = Factory(
+				{ FlatTransferNodesHandler(level) },
+				{ tag, provider -> load(level, tag, provider) }
+			)
 
 			return storage.computeIfAbsent(factory, SAVED_DATA_NAME)
+		}
+
+		fun handleChunkWatch(event: ChunkWatchEvent.Watch) {
+
 		}
 
 	}
