@@ -52,7 +52,7 @@ class FlatTransferNodesHandler(
 		packet.messageAllPlayersTrackingChunk(level, chunkPos)
 	}
 
-	fun tick(level: ServerLevel) {
+	fun tick() {
 		val nodesToRemove = nodes.filter { it.tick(level) }
 
 		for (node in nodesToRemove) {
