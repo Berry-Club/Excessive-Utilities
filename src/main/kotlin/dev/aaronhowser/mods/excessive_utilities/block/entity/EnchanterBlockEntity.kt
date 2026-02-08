@@ -51,8 +51,32 @@ class EnchanterBlockEntity(
 		return SpeedUpgradeItem.getGpCost(amountUpgrades)
 	}
 
+	private var progress: Int = 0
+		set(value) {
+			if (field == value) return
+			field = value
+			setChanged()
+		}
+
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
+
+		val recipe = getRecipe()
+		if (recipe == null) {
+			progress = 0
+			return
+		}
+
+		progress++
+
+		if (progress >= recipe.value.ticks) {
+			craftRecipe(recipe.value)
+			progress = 0
+		}
+	}
+
+	private fun craftRecipe(value: EnchanterRecipe) {
+
 	}
 
 	private var recipeCache: RecipeHolder<EnchanterRecipe>? = null
@@ -64,13 +88,13 @@ class EnchanterBlockEntity(
 
 		val recipe = EnchanterRecipe.getRecipe(level, leftStack, rightStack)
 
-		if (recipe?.id == recipeCache?.id) {
-			return recipe
-		}
-
 		if (recipe == null) {
 			recipeCache = null
 			return null
+		}
+
+		if (recipe.id == recipeCache?.id) {
+			return recipe
 		}
 
 		recipeCache = recipe
