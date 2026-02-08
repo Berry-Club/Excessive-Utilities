@@ -357,7 +357,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val FROSTED_STONE =
 		basicBlock("frosted_stone")
 	val GLASS_BRICKS =
-		basicBlock("glass_bricks")
+		basicGlassBlock("glass_bricks")
 	val GRAVEL_BRICKS =
 		basicBlock("gravel_bricks")
 	val GRAVEL_ROAD =
@@ -390,33 +390,33 @@ object ModBlocks : AaronBlockRegistry() {
 	// Glass
 
 	val CARVED_GLASS =
-		basicBlock("carved_glass")
+		basicGlassBlock("carved_glass")
 	val EDGED_GLASS =
-		basicBlock("edged_glass")
+		basicGlassBlock("edged_glass")
 	val GOLDEN_EDGED_GLASS =
-		basicBlock("golden_edged_glass")
+		basicGlassBlock("golden_edged_glass")
 	val GLOWING_GLASS =
-		basicBlock("glowing_glass")
+		basicGlassBlock("glowing_glass")
 	val HEART_GLASS =
-		basicBlock("heart_glass")
+		basicGlassBlock("heart_glass")
 	val OBSIDIAN_GLASS =
-		basicBlock("obsidian_glass")
+		basicGlassBlock("obsidian_glass")
 	val REINFORCED_DARK_GLASS =
-		basicBlock("reinforced_dark_glass")
+		basicGlassBlock("reinforced_dark_glass")
 	val SANDY_GLASS =
 		basicBlock("sandy_glass")
 	val SQUARE_GLASS =
-		basicBlock("square_glass")
+		basicGlassBlock("square_glass")
 	val SWIRLING_GLASS =
-		basicBlock("swirling_glass")
+		basicGlassBlock("swirling_glass")
 	val THICKENED_GLASS =
-		basicBlock("thickened_glass")
+		basicGlassBlock("thickened_glass")
 	val THICKENED_GLASS_BORDERED =
-		basicBlock("thickened_glass_bordered")
+		basicGlassBlock("thickened_glass_bordered")
 	val THICKENED_GLASS_PATTERNED =
-		basicBlock("thickened_glass_patterned")
+		basicGlassBlock("thickened_glass_patterned")
 	val REDSTONE_GLASS =
-		basicBlock("redstone_glass")
+		basicGlassBlock("redstone_glass")
 	val ETHEREAL_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
 		registerBlock("ethereal_glass") { SemiPermeableGlassBlock(isSolidForMobsOnly = false) }
 	val INVERTED_ETHEREAL_GLASS: DeferredBlock<SemiPermeableGlassBlock> =
