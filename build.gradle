@@ -156,13 +156,13 @@ dependencies {
 	compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
 	runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
 
-	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:${modonomicon_version}") { transitive = false }
+//	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:${modonomicon_version}") { transitive = false }
 
-	implementation "dev.aaronhowser.mods:patchoulidatagen-${pdg_version}"
+//	implementation "dev.aaronhowser.mods:patchoulidatagen-${pdg_version}"
 	implementation "dev.aaronhowser.mods:aaron-1.21.1:${aaron_lib_version}"
 
-	compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}:api"
-	runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
+//	compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}:api"
+//	runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 
 	runtimeOnly "org.sinytra:wiki-exporter-neoforge:2.2.1+1.21.1"
 }
