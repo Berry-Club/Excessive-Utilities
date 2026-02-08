@@ -5,6 +5,8 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.UUIDUtil
+import net.minecraft.nbt.NbtOps
+import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -41,6 +43,11 @@ class FlatTransferNode(
 		val fluidHandlerTarget = level.getCapability(Capabilities.FluidHandler.BLOCK, targetPos, facing.opposite) ?: return
 	}
 
+	fun toTag(): Tag {
+		val tag = CODEC.encodeStart(NbtOps.INSTANCE, this)
+		return tag.result().orElseThrow()
+	}
+
 	companion object {
 		val CODEC: Codec<FlatTransferNode> =
 			RecordCodecBuilder.create { instance ->
@@ -59,6 +66,11 @@ class FlatTransferNode(
 						.forGetter(FlatTransferNode::isItemNode)
 				).apply(instance, ::FlatTransferNode)
 			}
+
+		fun fromTag(tag: Tag): FlatTransferNode {
+			val result = CODEC.parse(NbtOps.INSTANCE, tag)
+			return result.result().orElseThrow()
+		}
 	}
 
 }

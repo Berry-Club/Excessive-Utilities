@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.handler.flat_transfer_node
 
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.saveddata.SavedData
@@ -12,7 +13,7 @@ class FlatTransferNodesHandler : SavedData() {
 	private val nodesPerChunk: MutableMap<ChunkPos, MutableSet<FlatTransferNode>> = mutableMapOf()
 
 	fun getNodesInChunk(chunkPos: ChunkPos): Set<FlatTransferNode> {
-		return nodesPerChunk.get(chunkPos)?.toSet() ?: emptySet()
+		return nodesPerChunk[chunkPos] ?: emptySet()
 	}
 
 	fun addNode(node: FlatTransferNode) {
@@ -43,7 +44,33 @@ class FlatTransferNodesHandler : SavedData() {
 	}
 
 	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
-		TODO("Not yet implemented")
+		val nodesList = tag.getList(NODES_NBT, Tag.TAG_COMPOUND.toInt())
+
+		for (node in nodes) {
+			nodesList.add(node.toTag())
+		}
+
+		tag.put(NODES_NBT, nodesList)
+		return tag
+	}
+
+	companion object {
+		const val SAVED_DATA_NAME = "eu_flat_transfer_nodes_handler"
+		const val NODES_NBT = "nodes"
+
+		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): FlatTransferNodesHandler {
+			val handler = FlatTransferNodesHandler()
+
+			val nodesList = tag.getList(NODES_NBT, Tag.TAG_COMPOUND.toInt())
+
+			for (i in nodesList.indices) {
+				val tag = nodesList.getCompound(i)
+				val node = FlatTransferNode.fromTag(tag)
+				handler.addNode(node)
+			}
+
+			return handler
+		}
 	}
 
 
