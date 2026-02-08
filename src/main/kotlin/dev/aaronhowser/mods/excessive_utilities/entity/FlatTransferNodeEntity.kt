@@ -49,8 +49,11 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 	}
 
 	private fun tryBreak(level: ServerLevel): Boolean {
-		val itemHandlerOn = level.getCapability(Capabilities.ItemHandler.BLOCK, blockPosition(), aiming)
-		val shouldBreak = itemHandlerOn == null
+		val shouldBreak = if (isItemNode) {
+			level.getCapability(Capabilities.ItemHandler.BLOCK, blockPosition(), aiming) == null
+		} else {
+			level.getCapability(Capabilities.FluidHandler.BLOCK, blockPosition(), aiming) == null
+		}
 
 		if (shouldBreak) {
 			val player = level.players().first()
