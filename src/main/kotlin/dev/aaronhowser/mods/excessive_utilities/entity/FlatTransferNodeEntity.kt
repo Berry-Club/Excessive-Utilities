@@ -19,23 +19,34 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		get() = entityData.get(IS_ITEM_NODE_DATA)
 		private set(value) = entityData.set(IS_ITEM_NODE_DATA, value)
 
+	var direction: Direction
+		get() = entityData.get(DIRECTION)
+		private set(value) = entityData.set(DIRECTION, value)
+
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
 		builder.define(IS_ITEM_NODE_DATA, true)
-	}
-
-	override fun readAdditionalSaveData(compound: CompoundTag) {
-		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
+		builder.define(DIRECTION, Direction.NORTH)
 	}
 
 	override fun addAdditionalSaveData(compound: CompoundTag) {
 		compound.putBoolean(IS_ITEM_NODE_TAG, isItemNode)
+		compound.putInt(DIRECTION_TAG, direction.ordinal)
+	}
+
+	override fun readAdditionalSaveData(compound: CompoundTag) {
+		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
+		val directionOrdinal = compound.getInt(DIRECTION_TAG)
+		direction = Direction.entries[directionOrdinal]
 	}
 
 	companion object {
 		val IS_ITEM_NODE_DATA: EntityDataAccessor<Boolean> =
 			SynchedEntityData.defineId(FlatTransferNodeEntity::class.java, EntityDataSerializers.BOOLEAN)
+		val DIRECTION: EntityDataAccessor<Direction> =
+			SynchedEntityData.defineId(FlatTransferNodeEntity::class.java, EntityDataSerializers.DIRECTION)
 
 		const val IS_ITEM_NODE_TAG = "IsItemNode"
+		const val DIRECTION_TAG = "Direction"
 
 		fun place(
 			level: Level,
