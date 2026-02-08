@@ -32,6 +32,24 @@ class EnchanterRecipe(
 	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.ENCHANTER.get()
 	override fun getType(): RecipeType<*> = ModRecipeTypes.ENCHANTER.get()
 
+	companion object {
+		fun getRecipe(
+			level: Level,
+			leftInput: ItemStack,
+			rightInput: ItemStack
+		): EnchanterRecipe? {
+			return getAllRecipes(level.recipeManager)
+				.firstOrNull { recipeHolder ->
+					recipeHolder.value.matches(Input(leftInput, rightInput), level)
+				}
+				?.value
+		}
+
+		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<EnchanterRecipe>> {
+			return recipeManager.getAllRecipesFor(ModRecipeTypes.ENCHANTER.get())
+		}
+	}
+
 	class Serializer : RecipeSerializer<EnchanterRecipe> {
 		override fun codec(): MapCodec<EnchanterRecipe> = CODEC
 		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, EnchanterRecipe> = STREAM_CODEC
