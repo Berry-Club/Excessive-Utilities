@@ -37,12 +37,11 @@ class EnchanterRecipe(
 			level: Level,
 			leftInput: ItemStack,
 			rightInput: ItemStack
-		): EnchanterRecipe? {
+		): RecipeHolder<EnchanterRecipe>? {
 			return getAllRecipes(level.recipeManager)
 				.firstOrNull { recipeHolder ->
 					recipeHolder.value.matches(Input(leftInput, rightInput), level)
 				}
-				?.value
 		}
 
 		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<EnchanterRecipe>> {
