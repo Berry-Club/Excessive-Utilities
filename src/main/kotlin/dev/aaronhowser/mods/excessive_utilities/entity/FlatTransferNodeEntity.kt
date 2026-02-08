@@ -7,6 +7,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.level.Level
@@ -19,37 +20,37 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		get() = entityData.get(IS_ITEM_NODE_DATA)
 		private set(value) = entityData.set(IS_ITEM_NODE_DATA, value)
 
-	var placedOnFace: Direction
-		get() = entityData.get(PLACED_ON_FACE_DATA)
-		private set(value) = entityData.set(PLACED_ON_FACE_DATA, value)
+	var aiming: Direction
+		get() = entityData.get(AIMING_DATA)
+		private set(value) = entityData.set(AIMING_DATA, value)
 
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
 		builder.define(IS_ITEM_NODE_DATA, true)
-		builder.define(PLACED_ON_FACE_DATA, Direction.NORTH)
+		builder.define(AIMING_DATA, Direction.NORTH)
 	}
 
 	override fun addAdditionalSaveData(compound: CompoundTag) {
 		compound.putBoolean(IS_ITEM_NODE_TAG, isItemNode)
-		compound.putInt(PLACED_ON_FACE_TAG, placedOnFace.ordinal)
+		compound.putInt(AIMING_TAG, aiming.ordinal)
 	}
 
 	override fun readAdditionalSaveData(compound: CompoundTag) {
 		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
-		val directionOrdinal = compound.getInt(PLACED_ON_FACE_TAG)
-		placedOnFace = Direction.entries[directionOrdinal]
+		val directionOrdinal = compound.getInt(AIMING_TAG)
+		aiming = Direction.entries[directionOrdinal]
 	}
 
 	companion object {
 		val IS_ITEM_NODE_DATA: EntityDataAccessor<Boolean> =
 			SynchedEntityData.defineId(FlatTransferNodeEntity::class.java, EntityDataSerializers.BOOLEAN)
-		val PLACED_ON_FACE_DATA: EntityDataAccessor<Direction> =
+		val AIMING_DATA: EntityDataAccessor<Direction> =
 			SynchedEntityData.defineId(FlatTransferNodeEntity::class.java, EntityDataSerializers.DIRECTION)
 
 		const val IS_ITEM_NODE_TAG = "IsItemNode"
-		const val PLACED_ON_FACE_TAG = "PlacedOnFace"
+		const val AIMING_TAG = "Aiming"
 
 		fun place(
-			level: Level,
+			level: ServerLevel,
 			blockPos: BlockPos,
 			direction: Direction,
 			isItemNode: Boolean = true
@@ -59,7 +60,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 				AABB(blockPos)
 			)
 
-			if (nodesAlreadyThere.any { it.placedOnFace == direction }) {
+			if (nodesAlreadyThere.any { it.aiming == direction }) {
 				return null
 			}
 
@@ -67,6 +68,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 			node.setPos(Vec3.atLowerCornerOf(blockPos))
 			node.isItemNode = isItemNode
+			node.aiming = direction
 
 			level.addFreshEntity(node)
 			return node
