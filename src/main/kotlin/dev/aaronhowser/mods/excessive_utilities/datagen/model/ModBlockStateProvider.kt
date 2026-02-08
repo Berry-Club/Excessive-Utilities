@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -162,6 +163,9 @@ class ModBlockStateProvider(
 			ModBlocks.STONEBURNT.get(),
 			ModBlocks.BORDER_STONE.get(),
 			ModBlocks.CROSSED_STONE.get(),
+		)
+
+		val translucent = listOf(
 			ModBlocks.INEFFABLE_GLASS.get(),
 			ModBlocks.DARK_INEFFABLE_GLASS.get(),
 			ModBlocks.ETHEREAL_GLASS.get(),
@@ -174,6 +178,17 @@ class ModBlockStateProvider(
 
 			val model = models()
 				.cubeAll(name(block), texture)
+
+			simpleBlockItem(block, model)
+		}
+
+		for (block in translucent) {
+			val path = BuiltInRegistries.BLOCK.getKey(block).path
+			val texture = modLoc("block/$path/particle")
+
+			val model = models()
+				.cubeAll(name(block), texture)
+				.renderType(RenderType.translucent().name)
 
 			simpleBlockItem(block, model)
 		}
