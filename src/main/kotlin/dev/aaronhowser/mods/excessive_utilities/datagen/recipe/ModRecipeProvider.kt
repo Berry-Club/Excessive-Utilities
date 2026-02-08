@@ -1254,6 +1254,15 @@ class ModRecipeProvider(
 				8_000 / (20 * 10),
 				20 * 10,
 				ModItems.ENCHANTED_INGOT.toStack()
+			),
+			EnchanterRecipeBuilder(
+				Tags.Items.STORAGE_BLOCKS_IRON.asIngredient(),
+				8,
+				Items.NETHER_STAR.asIngredient(),
+				1,
+				192_000 / (20 * 240),
+				20 * 240,
+				ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.toStack(8)
 			)
 		)
 

@@ -1,0 +1,17 @@
+{
+  "type": "excessive_utilities:enchanter",
+  "fe_cost": 40,
+  "left": {
+    "tag": "c:storage_blocks/iron"
+  },
+  "left_count": 8,
+  "output": {
+    "count": 8,
+    "id": "excessive_utilities:block_of_evil_infused_iron"
+  },
+  "right": {
+    "item": "minecraft:nether_star"
+  },
+  "right_count": 1,
+  "ticks": 4800
+}
