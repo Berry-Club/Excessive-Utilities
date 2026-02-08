@@ -1,6 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.recipe
 
+import com.mojang.serialization.Codec
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import net.minecraft.core.HolderLookup
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
@@ -27,6 +33,44 @@ class EnchanterRecipe(
 
 	override fun getType(): RecipeType<*> {
 		TODO("Not yet implemented")
+	}
+
+	class Serializer : RecipeSerializer<EnchanterRecipe> {
+		override fun codec(): MapCodec<EnchanterRecipe> = CODEC
+		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, EnchanterRecipe> = STREAM_CODEC
+
+		companion object {
+			val CODEC: MapCodec<EnchanterRecipe> =
+				RecordCodecBuilder.mapCodec { instance ->
+					instance.group(
+						Ingredient.CODEC_NONEMPTY
+							.fieldOf("left")
+							.forGetter(EnchanterRecipe::leftIngredient),
+						Ingredient.CODEC_NONEMPTY
+							.fieldOf("right")
+							.forGetter(EnchanterRecipe::rightIngredient),
+						Codec.INT
+							.fieldOf("fe_cost")
+							.forGetter(EnchanterRecipe::feCost),
+						Codec.INT
+							.fieldOf("ticks")
+							.forGetter(EnchanterRecipe::ticks),
+						ItemStack.CODEC
+							.fieldOf("output")
+							.forGetter(EnchanterRecipe::result)
+					).apply(instance, ::EnchanterRecipe)
+				}
+
+			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchanterRecipe> =
+				StreamCodec.composite(
+					Ingredient.CONTENTS_STREAM_CODEC, EnchanterRecipe::leftIngredient,
+					Ingredient.CONTENTS_STREAM_CODEC, EnchanterRecipe::rightIngredient,
+					ByteBufCodecs.VAR_INT, EnchanterRecipe::feCost,
+					ByteBufCodecs.VAR_INT, EnchanterRecipe::ticks,
+					ItemStack.STREAM_CODEC, EnchanterRecipe::result,
+					::EnchanterRecipe
+				)
+		}
 	}
 
 	class Input(
