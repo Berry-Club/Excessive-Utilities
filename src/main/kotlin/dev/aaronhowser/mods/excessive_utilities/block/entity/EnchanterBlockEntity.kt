@@ -109,12 +109,11 @@ class EnchanterBlockEntity(
 			return null
 		}
 
-		if (recipe.id == recipeCache?.id) {
-			return recipe
+		if (recipe.id != recipeCache?.id) {
+			recipeCache = recipe
+			progress = 0
 		}
 
-		recipeCache = recipe
-		progress = 0
 		return recipe
 	}
 
