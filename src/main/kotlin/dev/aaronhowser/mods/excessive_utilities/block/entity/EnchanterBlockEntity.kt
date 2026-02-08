@@ -45,7 +45,7 @@ class EnchanterBlockEntity(
 		}
 
 	override fun getGpUsage(): Double {
-		val isCrafting = true
+		val isCrafting = recipeCache != null
 		if (!isCrafting) return 0.0
 
 		val amountUpgrades = container.getItem(UPGRADE_SLOT).count
