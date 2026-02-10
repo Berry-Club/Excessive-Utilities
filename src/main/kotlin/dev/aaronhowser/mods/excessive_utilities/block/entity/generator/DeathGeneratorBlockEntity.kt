@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
@@ -44,7 +45,8 @@ class DeathGeneratorBlockEntity(
 		if (!isActive) return
 
 		val radius = ServerConfig.CONFIG.deathGeneratorEffectRadius.get()
-		val particleCount = Mth.ceil(Math.PI * radius * radius) / 4
+		var particleCount = Mth.ceil(Math.PI * radius * radius) / 4
+		particleCount = Mth.ceil(particleCount * ClientConfig.CONFIG.generatorParticleDensity.get())
 
 		val particle = ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, 0xFF660000.toInt())
 

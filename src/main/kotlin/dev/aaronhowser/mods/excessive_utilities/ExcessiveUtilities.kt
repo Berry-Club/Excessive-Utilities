@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities
 
+import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRegistries
 import net.minecraft.resources.ResourceLocation
@@ -37,7 +38,7 @@ class ExcessiveUtilities(
 		}
 
 		modContainer.registerConfig(ModConfig.Type.SERVER, ServerConfig.CONFIG_SPEC)
-//		modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.CONFIG_SPEC)
+		modContainer.registerConfig(ModConfig.Type.CLIENT, ClientConfig.CONFIG_SPEC)
 	}
 
 }
