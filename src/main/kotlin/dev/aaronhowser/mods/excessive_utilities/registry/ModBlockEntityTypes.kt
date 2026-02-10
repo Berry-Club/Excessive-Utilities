@@ -5,13 +5,8 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DataDrivenGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.CreativeMillBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.DragonEggMillBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.FireMillBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.GpPanelBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.LavaMillBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.ManualMillBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.WaterMillBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.FurnaceFuelGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.*
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -71,10 +66,14 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 			ModBlocks.STONE_DRUM, ModBlocks.IRON_DRUM, ModBlocks.REINFORCED_LARGE_DRUM, ModBlocks.DEMONICALLY_GARGANTUAN_DRUM, ModBlocks.CREATIVE_DRUM
 		)
 
+	val SURVIVAL_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<FurnaceFuelGeneratorBlockEntity>> =
+		register("survival_generator", FurnaceFuelGeneratorBlockEntity::survival, ModBlocks.SURVIVALIST_GENERATOR)
+	val FURNACE_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<FurnaceFuelGeneratorBlockEntity>> =
+		register("furnace_generator", FurnaceFuelGeneratorBlockEntity::furnace, ModBlocks.FURNACE_GENERATOR)
 	val ENDER_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
-		register("ender_generator", DataDrivenGeneratorBlockEntity::enderMk1, ModBlocks.ENDER_GENERATOR)
+		register("ender_generator", DataDrivenGeneratorBlockEntity::ender, ModBlocks.ENDER_GENERATOR)
 	val EXPLOSIVE_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
-		register("explosive_generator", DataDrivenGeneratorBlockEntity::explosiveMk1, ModBlocks.EXPLOSIVE_GENERATOR)
+		register("explosive_generator", DataDrivenGeneratorBlockEntity::explosive, ModBlocks.EXPLOSIVE_GENERATOR)
 	val PINK_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("pink_generator", DataDrivenGeneratorBlockEntity::pink, ModBlocks.PINK_GENERATOR)
 	val NETHER_STAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =

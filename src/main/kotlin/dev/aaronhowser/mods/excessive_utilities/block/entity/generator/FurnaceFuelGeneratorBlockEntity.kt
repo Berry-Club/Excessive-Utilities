@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.FurnaceFuelGeneratorT
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity.Companion.INPUT_SLOT
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -46,6 +47,22 @@ class FurnaceFuelGeneratorBlockEntity(
 		setChanged()
 
 		return true
+	}
+
+	companion object {
+		fun furnace(pos: BlockPos, state: BlockState) = FurnaceFuelGeneratorBlockEntity(
+			ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			FurnaceFuelGeneratorType.FURNACE,
+			pos,
+			state
+		)
+
+		fun survival(pos: BlockPos, state: BlockState) = FurnaceFuelGeneratorBlockEntity(
+			ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			FurnaceFuelGeneratorType.SURVIVAL,
+			pos,
+			state
+		)
 	}
 
 }

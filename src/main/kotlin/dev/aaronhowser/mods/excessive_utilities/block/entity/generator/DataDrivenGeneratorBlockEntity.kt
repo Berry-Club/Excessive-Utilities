@@ -59,14 +59,14 @@ class DataDrivenGeneratorBlockEntity(
 		const val CONTAINER_SIZE = 1
 		const val INPUT_SLOT = 0
 
-		fun enderMk1(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun ender(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
 			generatorType = DataDrivenGeneratorType.ENDER,
 			pos = pos,
 			blockState = state
 		)
 
-		fun explosiveMk1(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+		fun explosive(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
 			generatorType = DataDrivenGeneratorType.EXPLOSIVE,
 			pos = pos,
