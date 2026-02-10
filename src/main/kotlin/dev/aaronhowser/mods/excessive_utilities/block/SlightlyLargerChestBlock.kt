@@ -8,6 +8,7 @@ import net.minecraft.world.Containers
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -60,6 +61,16 @@ class SlightlyLargerChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), Ent
 			}
 		}
 		super.onRemove(state, level, pos, newState, movedByPiston)
+	}
+
+	override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
+	override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos): Int {
+		val be = level.getBlockEntity(pos)
+		if (be is SlightlyLargerChestBlockEntity) {
+			return AbstractContainerMenu.getRedstoneSignalFromContainer(be.container)
+		}
+
+		return super.getAnalogOutputSignal(state, level, pos)
 	}
 
 	companion object {
