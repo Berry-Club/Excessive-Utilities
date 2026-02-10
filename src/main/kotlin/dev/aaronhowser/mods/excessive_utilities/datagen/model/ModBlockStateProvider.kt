@@ -32,13 +32,12 @@ class ModBlockStateProvider(
 	}
 
 	private fun generators() {
-
-		val generatorFace = models()
+		models()
 			.withExistingParent("generator_face", mcLoc("block/block"))
 			.renderType(RenderType.translucent().name)
 			.element()
-			.from(0f, 0f, 0f)
-			.to(16f, 16f, 0.01f)
+			.from(0f, 0f, -0.01f)
+			.to(16f, 16f, 0f)
 			.face(Direction.NORTH)
 			.texture("#overlay")
 			.end()
