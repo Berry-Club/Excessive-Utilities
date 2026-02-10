@@ -8,6 +8,7 @@ import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -47,6 +48,24 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		}
 
 		return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+	}
+
+	override fun canHarvestBlock(state: BlockState, level: BlockGetter, pos: BlockPos, player: Player): Boolean {
+		val be = level.getBlockEntity(pos)
+		if (be is CreativeHarvestBlockEntity) {
+			return be.mimicBlockState.canHarvestBlock(level, pos, player)
+		}
+
+		return super.canHarvestBlock(state, level, pos, player)
+	}
+
+	override fun getDestroyProgress(state: BlockState, player: Player, level: BlockGetter, pos: BlockPos): Float {
+		val be = level.getBlockEntity(pos)
+		if (be is CreativeHarvestBlockEntity) {
+			return be.mimicBlockState.getDestroyProgress(player, level, pos)
+		}
+
+		return super.getDestroyProgress(state, player, level, pos)
 	}
 
 	override fun playerDestroy(
