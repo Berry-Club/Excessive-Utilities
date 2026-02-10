@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.MiniChestBlock
 import dev.aaronhowser.mods.excessive_utilities.block.SlightlyLargerChestBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.client.renderer.RenderType
@@ -56,7 +57,26 @@ class ModBlockStateProvider(
 			}
 			.end()
 
-		simpleBlockWithItem(block, model)
+		getVariantBuilder(block)
+			.forAllStates {
+				val facing = it.getValue(MiniChestBlock.FACING)
+
+				val yRotation = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		simpleBlockItem(block, model)
 	}
 
 	private fun slightlyLargerChest() {
