@@ -77,12 +77,14 @@ object ClientEvents {
 	fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
 		event.register(HeatingCoilItem::getItemColor, ModItems.HEATING_COIL.get())
 
+		val generatorColors = GeneratorBlock.getColors()
+
 		event.register(
 			{ stack, tintIndex ->
 				val item = stack.item
 				if (item is BlockItem && tintIndex == 0) {
 					val block = item.block
-					GeneratorBlock.COLORS.getOrDefault(block, 0xFFFFFF)
+					generatorColors.getOrDefault(block, 0xFFFFFF)
 				} else {
 					0xFFFFFF
 				}
@@ -109,10 +111,12 @@ object ClientEvents {
 	@SubscribeEvent
 	fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
 
+		val generatorColors = GeneratorBlock.getColors()
+
 		event.register(
 			{ state, level, pos, tintIndex ->
 				if (tintIndex == 0) {
-					GeneratorBlock.COLORS.getOrDefault(state.block, 0xFFFFFF)
+					generatorColors.getOrDefault(state.block, 0xFFFFFF)
 				} else {
 					0xFFFFFF
 				}
