@@ -51,14 +51,14 @@ class FurnaceFuelGeneratorBlockEntity(
 
 	companion object {
 		fun furnace(pos: BlockPos, state: BlockState) = FurnaceFuelGeneratorBlockEntity(
-			ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			ModBlockEntityTypes.FURNACE_GENERATOR.get(),
 			FurnaceFuelGeneratorType.FURNACE,
 			pos,
 			state
 		)
 
 		fun survival(pos: BlockPos, state: BlockState) = FurnaceFuelGeneratorBlockEntity(
-			ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			ModBlockEntityTypes.SURVIVAL_GENERATOR.get(),
 			FurnaceFuelGeneratorType.SURVIVAL,
 			pos,
 			state
