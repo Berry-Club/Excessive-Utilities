@@ -58,6 +58,7 @@ class ModBlockStateProvider(
 			.allFaces { dir, fb ->
 				fb.uvs(0f, 0f, 16f, 16f)
 				fb.cullface(dir)
+				fb.tintindex(0)
 
 				when (dir) {
 					Direction.DOWN -> fb.texture("#bottom")
@@ -65,6 +66,20 @@ class ModBlockStateProvider(
 					else -> fb.texture("#side")
 				}
 			}
+			.end()
+
+			.element()
+			.from(0f, 0f, 0f)
+			.to(16f, 16f, 16f)
+			.face(Direction.UP)
+			.uvs(0f, 0f, 16f, 16f)
+			.cullface(Direction.UP)
+			.texture("#top_overlay")
+			.end()
+			.face(Direction.NORTH)
+			.uvs(0f, 0f, 16f, 16f)
+			.cullface(Direction.NORTH)
+			.texture("#front_overlay")
 			.end()
 
 		makeGenerator(ModBlocks.PINK_GENERATOR.get())
@@ -75,6 +90,10 @@ class ModBlockStateProvider(
 
 		val model = models()
 			.withExistingParent(name, modLoc("generator_base"))
+			.texture("top_overlay", modLoc("block/generator/top/pink"))
+			.texture("front_overlay", modLoc("block/generator/off"))
+
+		simpleBlockWithItem(generatorBlock, model)
 	}
 
 	private fun miniChest() {
