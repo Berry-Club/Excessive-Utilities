@@ -185,6 +185,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 			).firstOrNull { it.aiming == direction }
 		}
 
+		@Suppress("FoldInitializerAndIfToElvis")
 		fun place(
 			level: ServerLevel,
 			blockPos: BlockPos,
@@ -192,6 +193,14 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 			isItemNode: Boolean = true
 		): FlatTransferNodeEntity? {
 			if (getNodeAt(level, blockPos, direction) != null) return null
+
+			if (isItemNode) {
+				val itemHandlerThere = level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos, direction)
+				if (itemHandlerThere == null) return null
+			} else {
+				val fluidHandlerThere = level.getCapability(Capabilities.FluidHandler.BLOCK, blockPos, direction)
+				if (fluidHandlerThere == null) return null
+			}
 
 			val node = FlatTransferNodeEntity(ModEntityTypes.FLAT_TRANSFER_NODE.get(), level)
 
