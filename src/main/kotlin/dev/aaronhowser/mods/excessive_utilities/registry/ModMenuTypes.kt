@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.FlatTransferNodeMenu
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.inventory.MenuType
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
+import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
 object ModMenuTypes : AaronMenuTypesRegistry() {
@@ -15,7 +16,7 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 
 	override fun getMenuTypeRegistry(): DeferredRegister<MenuType<*>> = MENU_TYPE_REGISTRY
 
-	val FLAT_TRANSFER_NODE =
+	val FLAT_TRANSFER_NODE: DeferredHolder<MenuType<*>, MenuType<FlatTransferNodeMenu>> =
 		register("flat_transfer_node", ::FlatTransferNodeMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {

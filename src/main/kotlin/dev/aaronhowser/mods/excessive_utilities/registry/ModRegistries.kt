@@ -15,7 +15,8 @@ object ModRegistries {
 			ModMobEffects.EFFECT_REGISTRY,
 			ModRecipeTypes.RECIPE_TYPES_REGISTRY,
 			ModRecipeSerializers.RECIPE_SERIALIZERS_REGISTRY,
-			ModEntityTypes.ENTITY_TYPE_REGISTRY
+			ModEntityTypes.ENTITY_TYPE_REGISTRY,
+			ModMenuTypes.MENU_TYPE_REGISTRY
 		)
 
 		for (registry in registries) {
