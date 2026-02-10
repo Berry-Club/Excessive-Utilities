@@ -255,5 +255,7 @@
   "item.excessive_utilities.wooden_sickle": "Wooden Sickle",
   "item.excessive_utilities.world_interaction_upgrade": "World Interaction Upgrade",
   "item.excessive_utilities.wrench": "Wrench",
-  "itemGroup.excessive_utilities": "Excessive Utilities"
+  "itemGroup.excessive_utilities": "Excessive Utilities",
+  "message.excessive_utilities.doom_death": "%s met their doom.",
+  "message.excessive_utilities.doom_effect_time": "The Spectre of Death will arrive in %d seconds."
 }
