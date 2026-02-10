@@ -25,6 +25,7 @@
         },
         "up": {
           "cullface": "up",
+          "rotation": 180,
           "texture": "#top",
           "tintindex": 0
         },

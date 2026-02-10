@@ -13,6 +13,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
+import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModBlockStateProvider(
@@ -62,7 +63,7 @@ class ModBlockStateProvider(
 
 				when (dir) {
 					Direction.DOWN -> fb.texture("#bottom")
-					Direction.UP -> fb.texture("#top")
+					Direction.UP -> fb.texture("#top").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN)
 					else -> fb.texture("#side")
 				}
 			}
@@ -88,12 +89,39 @@ class ModBlockStateProvider(
 	private fun makeGenerator(generatorBlock: GeneratorBlock) {
 		val name = name(generatorBlock)
 
-		val model = models()
-			.withExistingParent(name, modLoc("generator_base"))
+		val modelOff = models()
+			.withExistingParent(name + "_off", modLoc("generator_base"))
 			.texture("top_overlay", modLoc("block/generator/top/pink"))
 			.texture("front_overlay", modLoc("block/generator/off"))
 
-		simpleBlockWithItem(generatorBlock, model)
+		val modelOn = models()
+			.withExistingParent(name + "_on", modLoc("generator_base"))
+			.texture("top_overlay", modLoc("block/generator/top/pink"))
+			.texture("front_overlay", modLoc("block/generator/on"))
+
+		getVariantBuilder(generatorBlock)
+			.forAllStates {
+				val direction = it.getValue(GeneratorBlock.FACING)
+				val isLit = it.getValue(GeneratorBlock.LIT)
+
+				val yRotation = when (direction) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val modelFile = if (isLit) modelOn else modelOff
+
+				ConfiguredModel
+					.builder()
+					.modelFile(modelFile)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		simpleBlockItem(generatorBlock, modelOff)
 	}
 
 	private fun miniChest() {
