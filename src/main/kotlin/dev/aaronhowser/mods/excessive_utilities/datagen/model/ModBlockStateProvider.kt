@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.SlightlyLargerChestBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.Direction
@@ -9,6 +10,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModBlockStateProvider(
@@ -31,10 +33,35 @@ class ModBlockStateProvider(
 		val side = modLoc("block/slightly_larger_chest/side")
 		val top = modLoc("block/slightly_larger_chest/top")
 
-		val model = models()
-			.orientableWithBottom(name, side, front, top, top )
+		val model = models().orientableWithBottom(name, side, front, top, top)
 
-		simpleBlockWithItem(block, model)
+		getVariantBuilder(block)
+			.forAllStates {
+				val facing = it.getValue(SlightlyLargerChestBlock.FACING)
+
+				val yRotation = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val xRotation = when (facing) {
+					Direction.UP -> 270
+					Direction.DOWN -> 90
+					else -> 0
+				}
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.rotationY(yRotation)
+					.rotationX(xRotation)
+					.build()
+			}
+
+		simpleBlockItem(block, model)
 	}
 
 	private fun blackoutCurtain() {

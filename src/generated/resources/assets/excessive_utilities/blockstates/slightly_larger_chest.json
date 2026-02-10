@@ -1,7 +1,27 @@
 {
   "variants": {
-    "": {
+    "facing=down": {
+      "model": "excessive_utilities:block/slightly_larger_chest",
+      "x": 90
+    },
+    "facing=east": {
+      "model": "excessive_utilities:block/slightly_larger_chest",
+      "y": 90
+    },
+    "facing=north": {
       "model": "excessive_utilities:block/slightly_larger_chest"
+    },
+    "facing=south": {
+      "model": "excessive_utilities:block/slightly_larger_chest",
+      "y": 180
+    },
+    "facing=up": {
+      "model": "excessive_utilities:block/slightly_larger_chest",
+      "x": 270
+    },
+    "facing=west": {
+      "model": "excessive_utilities:block/slightly_larger_chest",
+      "y": 270
     }
   }
 }
