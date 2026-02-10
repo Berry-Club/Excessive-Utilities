@@ -217,6 +217,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 		fun handleRightClickBlock(event: PlayerInteractEvent.RightClickBlock) {
 			val player = event.entity
+			if (player.isSecondaryUseActive) return
 			if (!player.isHolding { it.isItem(ModItemTagsProvider.INTERACT_WITH_FLAT_TRANSFER_NODES) }) return
 
 			val level = event.level
@@ -225,15 +226,25 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 			val node = getNodeAt(level, blockPos, direction) ?: return
 
-			if (player.isSecondaryUseActive) {
-				node.kill()
-			} else {
-				player.openMenu(node)
-			}
+			player.openMenu(node)
 
 			player.swing(player.usedItemHand, true)
 
 			event.cancellationResult = InteractionResult.CONSUME
+			event.isCanceled = true
+		}
+
+		fun handleLeftClickBlock(event: PlayerInteractEvent.LeftClickBlock) {
+			val player = event.entity
+			if (!player.isHolding { it.isItem(ModItemTagsProvider.INTERACT_WITH_FLAT_TRANSFER_NODES) }) return
+
+			val level = event.level
+			val blockPos = event.pos
+			val direction = event.face ?: return
+
+			val node = getNodeAt(level, blockPos, direction) ?: return
+
+			node.kill()
 			event.isCanceled = true
 		}
 	}

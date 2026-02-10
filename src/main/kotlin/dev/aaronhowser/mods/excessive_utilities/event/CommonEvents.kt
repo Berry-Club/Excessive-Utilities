@@ -124,4 +124,9 @@ object CommonEvents {
 		FlatTransferNodeEntity.handleRightClickBlock(event)
 	}
 
+	@SubscribeEvent
+	fun onLeftClickBlock(event: PlayerInteractEvent.LeftClickBlock) {
+		FlatTransferNodeEntity.handleLeftClickBlock(event)
+	}
+
 }
