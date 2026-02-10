@@ -30,6 +30,8 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("wireless_fe_transmitter", ::WirelessFeTransmitterBlockEntity, ModBlocks.WIRELESS_FE_TRANSMITTER)
 	val ENCHANTER: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnchanterBlockEntity>> =
 		register("enchanter", ::EnchanterBlockEntity, ModBlocks.ENCHANTER)
+	val CREATIVE_HARVEST: DeferredHolder<BlockEntityType<*>, BlockEntityType<CreativeHarvestBlockEntity>> =
+		register("creative_harvest", ::CreativeHarvestBlockEntity, ModBlocks.CREATIVE_HARVEST)
 
 	val MANUAL_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<ManualMillBlockEntity>> =
 		register("manual_mill", ::ManualMillBlockEntity, ModBlocks.MANUAL_MILL)

@@ -55,8 +55,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("sound_muffler")
 	val TRADING_POST =
 		basicBlock("trading_post")
-	val CREATIVE_HARVEST =
-		basicBlock("creative_harvest")
+	val CREATIVE_HARVEST: DeferredBlock<CreativeHarvestBlock> =
+		registerBlock("creative_harvest", ::CreativeHarvestBlock)
 	val ENDER_PORCUPINE =
 		basicBlock("ender_porcupine")
 	val INDEXER =
