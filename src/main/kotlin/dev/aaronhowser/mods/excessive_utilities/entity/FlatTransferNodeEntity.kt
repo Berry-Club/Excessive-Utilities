@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import dev.aaronhowser.mods.excessive_utilities.menu.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
@@ -10,15 +11,20 @@ import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
-class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level) {
+class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level), MenuProvider {
 
 	var isItemNode: Boolean
 		get() = entityData.get(IS_ITEM_NODE_DATA)
@@ -127,6 +133,10 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
 		val directionOrdinal = compound.getInt(AIMING_TAG)
 		aiming = Direction.entries[directionOrdinal]
+	}
+
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
+		return FlatTransferNodeMenu(containerId, playerInventory, SimpleContainer(1), this)
 	}
 
 	companion object {
