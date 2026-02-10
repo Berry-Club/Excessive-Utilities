@@ -26,21 +26,23 @@ open class DataDrivenGeneratorBlockEntity(
 		return itemFuel != null
 	}
 
-	override fun tryStartBurning(level: ServerLevel) {
-		if (burnTimeRemaining > 0) return
+	override fun tryStartBurning(level: ServerLevel): Boolean {
+		if (burnTimeRemaining > 0) return false
 
 		val fuelMap = generatorType.fuelDataMap
 
 		val inputStack = container.getItem(INPUT_SLOT)
-		if (inputStack.isEmpty) return
+		if (inputStack.isEmpty) return false
 
-		val itemFuel = inputStack.item.builtInRegistryHolder().getData(fuelMap) ?: return
+		val itemFuel = inputStack.item.builtInRegistryHolder().getData(fuelMap) ?: return false
 
 		fePerTick = itemFuel.fePerTick
 		burnTimeRemaining = itemFuel.burnTime
 
 		inputStack.shrink(1)
 		setChanged()
+
+		return true
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

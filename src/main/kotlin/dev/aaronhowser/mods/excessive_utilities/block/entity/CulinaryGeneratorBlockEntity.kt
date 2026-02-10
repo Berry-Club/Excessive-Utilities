@@ -18,13 +18,13 @@ class CulinaryGeneratorBlockEntity(
 		return foodValue != null && (foodValue.nutrition > 0 || foodValue.saturation > 0f)
 	}
 
-	override fun tryStartBurning(level: ServerLevel) {
-		if (burnTimeRemaining > 0) return
+	override fun tryStartBurning(level: ServerLevel): Boolean {
+		if (burnTimeRemaining > 0) return false
 
 		val inputStack = container.getItem(INPUT_SLOT)
-		if (inputStack.isEmpty) return
+		if (inputStack.isEmpty) return false
 
-		val foodProperties = inputStack.getFoodProperties(null) ?: return
+		val foodProperties = inputStack.getFoodProperties(null) ?: return false
 
 		val foodValue = foodProperties.nutrition
 		val saturationValue = foodProperties.saturation
@@ -37,6 +37,8 @@ class CulinaryGeneratorBlockEntity(
 
 		inputStack.shrink(1)
 		setChanged()
+
+		return true
 	}
 
 	companion object {
