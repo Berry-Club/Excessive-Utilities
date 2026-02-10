@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.effect
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDamageTypeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
@@ -35,15 +36,10 @@ class DoomEffect : MobEffect(
 		}
 
 		if (remainingDuration <= 1) {
-			livingEntity.hurt(livingEntity.damageSources().source(DAMAGE_TYPE), Float.MAX_VALUE)
+			livingEntity.hurt(livingEntity.damageSources().source(ModDamageTypeProvider.DOOM), Float.MAX_VALUE)
 		}
 
 		return true
-	}
-
-	companion object {
-		val DAMAGE_TYPE: ResourceKey<DamageType> =
-			ResourceKey.create(Registries.DAMAGE_TYPE, ExcessiveUtilities.modResource("doom"))
 	}
 
 }

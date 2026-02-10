@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDatapackBuiltinEntriesProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.loot.ModLootTableProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvider
@@ -28,6 +29,11 @@ object ModDataGen {
 		val output: PackOutput = generator.packOutput
 		val existingFileHelper: ExistingFileHelper = event.existingFileHelper
 		val lookupProvider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
+
+		generator.addProvider(
+			event.includeServer(),
+			ModDatapackBuiltinEntriesProvider(output, lookupProvider)
+		)
 
 		generator.addProvider(
 			event.includeClient(),
@@ -61,11 +67,6 @@ object ModDataGen {
 //		generator.addProvider(
 //			event.includeClient(),
 //			ModSoundDefinitionsProvider(output, existingFileHelper)
-//		)
-//
-//		val dataPackProvider = generator.addProvider(
-//			event.includeServer(),
-//			ModDataPackProvider(output, lookupProvider)
 //		)
 
 		val blockTagProvider = generator.addProvider(
