@@ -23,8 +23,25 @@ class ModItemModelProvider(
 		lassos()
 		unstableTools()
 		bewlrs()
+		flatTransferNodes()
 
 		basicItems()
+	}
+
+	fun flatTransferNodes() {
+		val itemNode = ModItems.FLAT_TRANSFER_NODE_ITEMS.get()
+		val fluidNode = ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
+
+		getBuilder(getName(itemNode).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/flat_transfer_node/items"))
+
+		getBuilder(getName(fluidNode).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/flat_transfer_node/fluids"))
+
+		handledItems.add(itemNode)
+		handledItems.add(fluidNode)
 	}
 
 	fun bewlrs() {

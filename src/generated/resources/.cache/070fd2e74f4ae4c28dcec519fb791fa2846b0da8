@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-07T00:14:00.0665927	Item Models: excessive_utilities
+// 1.21.1	2026-02-10T03:45:51.4917979	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
 fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/bedrockium_ingot.json
@@ -23,6 +23,8 @@ a432bafac9099006088a89d242c96f2a7ba87b69 assets/excessive_utilities/models/item/
 86a41e2035943f32dfdd37d2b1214fdb9acceb1d assets/excessive_utilities/models/item/evil_infused_iron_ingot.json
 ef69022b9e58fe3a2d5a7381ec746d9c362d9090 assets/excessive_utilities/models/item/eye_of_redstone.json
 c5fa7d675f986a8739aa3f9708895ecffe138edb assets/excessive_utilities/models/item/fire_axe.json
+7e1cdb00721a068cb51c51aac1911b7319958deb assets/excessive_utilities/models/item/flat_transfer_node_fluids.json
+2ffe071db38b225b2564c0ac6dbe7411d71fb715 assets/excessive_utilities/models/item/flat_transfer_node_items.json
 5e563d6e893be430b3eed6a81d786cfa0d1ae264 assets/excessive_utilities/models/item/fluid_filter.json
 60d50d87e3ec13d15249818f0d9398ee6609b428 assets/excessive_utilities/models/item/glass_cutter.json
 6115b9a83246e48508a59fd82dc132d4a7bef5c0 assets/excessive_utilities/models/item/golden_lasso.json
