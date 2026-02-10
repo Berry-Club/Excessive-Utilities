@@ -1,34 +1,25 @@
 {
-  "variants": {
-    "facing=east,lit=false": {
-      "model": "excessive_utilities:block/culinary_generator",
-      "y": 90
+  "multipart": [
+    {
+      "apply": {
+        "model": "excessive_utilities:block/culinary_generator_base"
+      }
     },
-    "facing=east,lit=true": {
-      "model": "excessive_utilities:block/culinary_generator",
-      "y": 90
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_on"
+      },
+      "when": {
+        "lit": "true"
+      }
     },
-    "facing=north,lit=false": {
-      "model": "excessive_utilities:block/culinary_generator"
-    },
-    "facing=north,lit=true": {
-      "model": "excessive_utilities:block/culinary_generator"
-    },
-    "facing=south,lit=false": {
-      "model": "excessive_utilities:block/culinary_generator",
-      "y": 180
-    },
-    "facing=south,lit=true": {
-      "model": "excessive_utilities:block/culinary_generator",
-      "y": 180
-    },
-    "facing=west,lit=false": {
-      "model": "excessive_utilities:block/culinary_generator",
-      "y": 270
-    },
-    "facing=west,lit=true": {
-      "model": "excessive_utilities:block/culinary_generator",
-      "y": 270
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_off"
+      },
+      "when": {
+        "lit": "false"
+      }
     }
-  }
+  ]
 }

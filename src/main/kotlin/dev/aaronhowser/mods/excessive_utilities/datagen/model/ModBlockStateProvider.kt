@@ -12,6 +12,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -31,7 +32,31 @@ class ModBlockStateProvider(
 	}
 
 	private fun generators() {
-		makeGenerator(ModBlocks.CULINARY_GENERATOR.get())
+		val offFace = models()
+			.withExistingParent("generator_face_off", mcLoc("block/block"))
+			.texture("overlay", modLoc("block/generator/off"))
+			.renderType(RenderType.translucent().name)
+			.element()
+			.from(0f, 0f, 0f)
+			.to(16f, 16f, 0.01f)
+			.face(Direction.NORTH)
+			.texture("#overlay")
+			.end()
+			.end()
+
+		val onFace = models()
+			.withExistingParent("generator_face_on", mcLoc("block/block"))
+			.texture("overlay", modLoc("block/generator/on"))
+			.renderType(RenderType.translucent().name)
+			.element()
+			.from(0f, 0f, 0f)
+			.to(16f, 16f, 0.01f)
+			.face(Direction.NORTH)
+			.texture("#overlay")
+			.end()
+			.end()
+
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), onFace = onFace, offFace = offFace)
 	}
 
 	private fun makeGenerator(
@@ -39,57 +64,35 @@ class ModBlockStateProvider(
 		top: ResourceLocation = modLoc("block/generator/top"),
 		side: ResourceLocation = modLoc("block/generator/side"),
 		bottom: ResourceLocation = modLoc("block/generator/bottom"),
-		front: ResourceLocation = modLoc("block/generator/side")
+		front: ResourceLocation = modLoc("block/generator/side"),
+		onFace: BlockModelBuilder,
+		offFace: BlockModelBuilder
 	) {
 		val name = name(block)
 
-		getVariantBuilder(block)
-			.forAllStates {
-				val facing = it.getValue(GeneratorBlock.FACING)
-				val isLit = it.getValue(GeneratorBlock.LIT)
+		val baseModel = models()
+			.orientableWithBottom(name + "_base", side, front, bottom, top)
 
-				val baseModel = models()
-					.orientableWithBottom(name + "_base", side, front, bottom, top)
+		getMultipartBuilder(block)
 
-				val faceModel = models()
-					.withExistingParent(
-						name + "_face_ " + if (isLit) "on" else "off",
-						"block/block"
-					)
-					.texture("overlay", if (isLit) modLoc("block/generator/face_on") else modLoc("block/generator/face_off"))
-					.renderType(RenderType.translucent().name)
-					.element()
-					.from(0f, 0f, 0f)
-					.to(16f, 16f, 0.01f)
-					.textureAll("#overlay")
-					.end()
+			.part()
+			.modelFile(baseModel)
+			.addModel()
+			.end()
 
-				val model = getMultipartBuilder(block)
-					.part()
-					.modelFile(baseModel)
-					.addModel()
-					.end()
-					.part()
-					.modelFile(faceModel)
-					.addModel()
-					.end()
+			.part()
+			.modelFile(onFace)
+			.addModel()
+			.condition(GeneratorBlock.LIT, true)
+			.end()
 
-				val yRotation = when (facing) {
-					Direction.NORTH -> 0
-					Direction.EAST -> 90
-					Direction.SOUTH -> 180
-					Direction.WEST -> 270
-					else -> 0
-				}
+			.part()
+			.modelFile(offFace)
+			.addModel()
+			.condition(GeneratorBlock.LIT, false)
+			.end()
 
-				ConfiguredModel
-					.builder()
-					.modelFile(model)
-					.rotationY(yRotation)
-					.build()
-			}
-
-		simpleBlockItem(block, model)
+		simpleBlockItem(block, baseModel)
 	}
 
 	private fun miniChest() {
