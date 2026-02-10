@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerHolder
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
@@ -13,6 +14,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -23,9 +25,10 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper
 class EnchanterBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : GpDrainBlockEntity(ModBlockEntityTypes.ENCHANTER.get(), pos, blockState) {
+) : GpDrainBlockEntity(ModBlockEntityTypes.ENCHANTER.get(), pos, blockState), ContainerHolder {
 
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	override fun getContainer(): Container = container
 
 	private val itemHandler: IItemHandlerModifiable =
 		object : InvWrapper(container) {

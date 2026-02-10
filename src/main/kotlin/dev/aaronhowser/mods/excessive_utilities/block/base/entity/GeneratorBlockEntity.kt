@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerHolder
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -10,6 +11,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Container
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -24,7 +26,7 @@ abstract class GeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(type, pos, blockState) {
+) : BlockEntity(type, pos, blockState), ContainerHolder {
 
 	var ownerUuid: UUID? = null
 
@@ -36,6 +38,8 @@ abstract class GeneratorBlockEntity(
 			override fun canPlaceSecondaryInput(stack: ItemStack): Boolean = isValidSecondaryInput(stack)
 			override fun canPlaceUpgrade(stack: ItemStack): Boolean = isValidUpgrade(stack)
 		}
+
+	override fun getContainer(): Container = container
 
 	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = container.itemHandler
 

@@ -1,10 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerHolder
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
+import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -17,9 +19,10 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper
 class SlightlyLargerChestBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.SLIGHTLY_LARGER_CHEST.get(), pos, blockState), MenuProvider {
+) : BlockEntity(ModBlockEntityTypes.SLIGHTLY_LARGER_CHEST.get(), pos, blockState), MenuProvider, ContainerHolder {
 
 	val container = ImprovedSimpleContainer(this, 9 * 3)
+	override fun getContainer(): Container = container
 	private val invWrapper = InvWrapper(container)
 
 	fun getItemHandler(direction: Direction?): InvWrapper = invWrapper

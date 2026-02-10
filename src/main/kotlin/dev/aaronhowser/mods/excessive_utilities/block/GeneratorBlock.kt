@@ -1,9 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerHolder
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.Containers
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.LivingEntity
@@ -77,6 +80,16 @@ class GeneratorBlock(
 	): ItemInteractionResult {
 		val fluidTransferred = FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction)
 		return if (fluidTransferred) ItemInteractionResult.sidedSuccess(level.isClientSide) else ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+	}
+
+	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
+		if (!state.isBlock(newState.block)) {
+			val be = level.getBlockEntity(pos)
+			if (be is ContainerHolder) {
+				Containers.dropContents(level, pos, be.getContainer())
+			}
+		}
+		super.onRemove(state, level, pos, newState, movedByPiston)
 	}
 
 	companion object {

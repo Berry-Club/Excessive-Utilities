@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerHolder
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -11,6 +12,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -21,7 +23,7 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper
 class ResonatorBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState) {
+) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState), ContainerHolder {
 
 	override fun getGpUsage(): Double {
 		val level = level ?: return 0.0
@@ -29,6 +31,8 @@ class ResonatorBlockEntity(
 	}
 
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	override fun getContainer(): Container = container
+
 	private val itemHandler: IItemHandlerModifiable =
 		object : InvWrapper(container) {
 			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = slot == INPUT_SLOT
