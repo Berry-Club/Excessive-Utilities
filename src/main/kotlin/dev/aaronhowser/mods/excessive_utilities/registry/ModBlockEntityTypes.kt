@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DataDrivenGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DeathGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.FurnaceFuelGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.NetherStarGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.*
@@ -77,14 +78,14 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("explosive_generator", DataDrivenGeneratorBlockEntity::explosive, ModBlocks.EXPLOSIVE_GENERATOR)
 	val PINK_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("pink_generator", DataDrivenGeneratorBlockEntity::pink, ModBlocks.PINK_GENERATOR)
-	val NETHER_STAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
+	val NETHER_STAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<NetherStarGeneratorBlockEntity>> =
 		register("nether_star_generator", ::NetherStarGeneratorBlockEntity, ModBlocks.NETHER_STAR_GENERATOR)
 	val FROSTY_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("frosty_generator", DataDrivenGeneratorBlockEntity::frosty, ModBlocks.FROSTY_GENERATOR)
 	val HALITOSIS_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("halitosis_generator", DataDrivenGeneratorBlockEntity::halitosis, ModBlocks.HALITOSIS_GENERATOR)
-	val DEATH_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
-		register("death_generator", DataDrivenGeneratorBlockEntity::death, ModBlocks.DEATH_GENERATOR)
+	val DEATH_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DeathGeneratorBlockEntity>> =
+		register("death_generator", ::DeathGeneratorBlockEntity, ModBlocks.DEATH_GENERATOR)
 	val CULINARY_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<CulinaryGeneratorBlockEntity>> =
 		register("culinary_generator", ::CulinaryGeneratorBlockEntity, ModBlocks.CULINARY_GENERATOR)
 

@@ -94,14 +94,6 @@ open class DataDrivenGeneratorBlockEntity(
 			blockState = state
 		)
 
-
-		fun death(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.DEATH_GENERATOR.get(),
-			generatorType = DataDrivenGeneratorType.DEATH,
-			pos = pos,
-			blockState = state
-		)
-
 	}
 
 }
