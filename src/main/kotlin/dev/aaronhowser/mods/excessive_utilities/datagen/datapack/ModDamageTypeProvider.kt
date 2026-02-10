@@ -17,7 +17,7 @@ object ModDamageTypeProvider {
 		context.register(
 			DOOM,
 			DamageType(
-				"doom",
+				"eu_doom",
 				0.0f
 			)
 		)
