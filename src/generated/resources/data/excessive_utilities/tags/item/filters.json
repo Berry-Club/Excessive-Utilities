@@ -2,7 +2,6 @@
   "values": [
     "excessive_utilities:item_filter",
     "excessive_utilities:advanced_item_filter",
-    "excessive_utilities:fluid_filter",
-    "#c:tools/wrench"
+    "excessive_utilities:fluid_filter"
   ]
 }

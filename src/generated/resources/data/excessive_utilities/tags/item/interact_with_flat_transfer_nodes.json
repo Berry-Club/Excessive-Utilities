@@ -2,6 +2,7 @@
   "values": [
     "excessive_utilities:wrench",
     "excessive_utilities:flat_transfer_node_items",
-    "excessive_utilities:flat_transfer_node_fluids"
+    "excessive_utilities:flat_transfer_node_fluids",
+    "#c:tools/wrench"
   ]
 }
