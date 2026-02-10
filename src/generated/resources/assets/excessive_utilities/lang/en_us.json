@@ -167,6 +167,7 @@
   "block.excessive_utilities.wireless_fe_battery": "Wireless FE Battery",
   "block.excessive_utilities.wireless_fe_transmitter": "Wireless FE Transmitter",
   "block.excessive_utilities.wooden_spike": "Wooden Spike",
+  "death.attack.eu_doom": "%s met their doom.",
   "effect.excessive_utilities.doom": "Doom",
   "effect.excessive_utilities.gravity": "Gravity",
   "entity.excessive_utilities.flat_transfer_node": "Flat Transfer Node",
@@ -258,6 +259,5 @@
   "item.excessive_utilities.world_interaction_upgrade": "World Interaction Upgrade",
   "item.excessive_utilities.wrench": "Wrench",
   "itemGroup.excessive_utilities": "Excessive Utilities",
-  "message.excessive_utilities.doom_death": "%s met their doom.",
   "message.excessive_utilities.doom_effect_time": "The Spectre of Death will arrive in %d seconds."
 }
