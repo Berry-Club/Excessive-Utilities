@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block
+package dev.aaronhowser.mods.excessive_utilities.block.mill
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.GpSourceBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpSourceBlockEntity
