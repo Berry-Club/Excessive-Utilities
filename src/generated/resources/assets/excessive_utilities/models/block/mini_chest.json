@@ -1,0 +1,44 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#bottom"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "north": {
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "west": {
+          "texture": "#side"
+        }
+      },
+      "from": [
+        5,
+        0,
+        5
+      ],
+      "to": [
+        11,
+        6,
+        11
+      ]
+    }
+  ],
+  "textures": {
+    "bottom": "excessive_utilities:block/mini_chest/bottom",
+    "front": "excessive_utilities:block/mini_chest/front",
+    "particle": "excessive_utilities:block/mini_chest/side",
+    "side": "excessive_utilities:block/mini_chest/side",
+    "top": "excessive_utilities:block/mini_chest/top"
+  }
+}

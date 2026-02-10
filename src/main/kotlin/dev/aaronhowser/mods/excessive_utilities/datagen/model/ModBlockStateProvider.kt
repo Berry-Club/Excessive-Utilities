@@ -23,6 +23,40 @@ class ModBlockStateProvider(
 		blackoutCurtain()
 		athenaBlocks()
 		slightlyLargerChest()
+		miniChest()
+	}
+
+	private fun miniChest() {
+		val block = ModBlocks.MINI_CHEST.get()
+		val name = name(block)
+
+		val front = modLoc("block/mini_chest/front")
+		val side = modLoc("block/mini_chest/side")
+		val top = modLoc("block/mini_chest/top")
+		val bottom = modLoc("block/mini_chest/bottom")
+
+		val model = models()
+			.withExistingParent(name, mcLoc("block/block"))
+			.texture("front", front)
+			.texture("side", side)
+			.texture("top", top)
+			.texture("bottom", bottom)
+			.texture("particle", side)
+
+			.element()
+			.from(5f, 0f, 5f)
+			.to(11f, 6f, 11f)
+			.allFaces { dir, fb ->
+				when (dir) {
+					Direction.NORTH -> fb.texture("#front")
+					Direction.UP -> fb.texture("#top")
+					Direction.DOWN -> fb.texture("#bottom")
+					else -> fb.texture("#side")
+				}
+			}
+			.end()
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun slightlyLargerChest() {
