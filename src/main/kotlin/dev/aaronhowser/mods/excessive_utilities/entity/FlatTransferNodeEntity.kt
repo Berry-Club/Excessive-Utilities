@@ -13,6 +13,7 @@ import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.Entity
@@ -192,6 +193,9 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 				player.openMenu(node)
 			}
 
+			player.swing(player.usedItemHand, true)
+
+			event.cancellationResult = InteractionResult.CONSUME
 			event.isCanceled = true
 		}
 	}
