@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "excessive_utilities:block/machine_block/bottom",
+    "front": "excessive_utilities:block/machine_block/side",
+    "side": "excessive_utilities:block/machine_block/side",
+    "top": "excessive_utilities:block/machine_block/top"
+  }
+}

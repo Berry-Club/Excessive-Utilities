@@ -29,6 +29,20 @@ class ModBlockStateProvider(
 		slightlyLargerChest()
 		miniChest()
 		generators()
+		machineBlock()
+	}
+
+	private fun machineBlock() {
+		val block = ModBlocks.MACHINE_BLOCK.get()
+
+		val side = modLoc("block/machine_block/side")
+		val top = modLoc("block/machine_block/top")
+		val bottom = modLoc("block/machine_block/bottom")
+
+		val model = models()
+			.orientableWithBottom(name(block), side, side, bottom, top)
+
+		simpleBlockWithItem(block, model)
 	}
 
 	//TODO: Make this more like furnaces. One texture for each generator's sides and face on/off
