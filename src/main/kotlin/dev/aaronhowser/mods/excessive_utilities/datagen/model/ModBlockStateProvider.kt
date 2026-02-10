@@ -56,7 +56,14 @@ class ModBlockStateProvider(
 			.end()
 			.end()
 
-		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), onFace = onFace, offFace = offFace)
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/culinary"))
+		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/ender"))
+		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/tnt"))
+		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get(), onFace = onFace, offFace = offFace)
+		makeGenerator(ModBlocks.FROSTY_GENERATOR.get(), onFace = onFace, offFace = offFace)
+		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get(), onFace = onFace, offFace = offFace)
+		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/death"))
+		makeGenerator(ModBlocks.PINK_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/pink"))
 	}
 
 	private fun makeGenerator(
