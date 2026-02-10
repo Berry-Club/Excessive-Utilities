@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.GpSourceBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpSourceBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.CreativeMillBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.CreativeMillBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.Blocks

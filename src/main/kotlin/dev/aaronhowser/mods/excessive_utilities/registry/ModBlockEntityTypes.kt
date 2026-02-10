@@ -3,6 +3,13 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.CreativeMillBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.DragonEggMillBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.FireMillBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.GpPanelBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.LavaMillBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.ManualMillBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.WaterMillBlockEntity
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder
