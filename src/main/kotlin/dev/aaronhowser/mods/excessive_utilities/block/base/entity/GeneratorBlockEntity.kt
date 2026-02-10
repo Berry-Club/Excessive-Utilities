@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
+import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -69,7 +70,14 @@ abstract class GeneratorBlockEntity(
 	protected open fun generatorTick(level: ServerLevel): Boolean {
 		if (burnTimeRemaining <= 0) {
 			fePerTick = 0
-			tryStartBurning(level)
+			val startedBurning = tryStartBurning(level)
+			val wasLit = blockState.getValue(GeneratorBlock.LIT)
+
+			if (startedBurning && !wasLit) {
+				level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, true))
+			} else if (!startedBurning && wasLit) {
+				level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, false))
+			}
 
 			if (burnTimeRemaining <= 0) return false
 		}
@@ -77,7 +85,7 @@ abstract class GeneratorBlockEntity(
 		return generateEnergy(level)
 	}
 
-	protected abstract fun tryStartBurning(level: ServerLevel)
+	protected abstract fun tryStartBurning(level: ServerLevel): Boolean
 
 	/**
 	 * @return true if it generated energy
