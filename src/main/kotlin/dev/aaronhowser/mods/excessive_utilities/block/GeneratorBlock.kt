@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.LivingEntity
@@ -63,6 +64,25 @@ class GeneratorBlock(
 	companion object {
 		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
 		val LIT: BooleanProperty = BlockStateProperties.LIT
+
+		val COLORS: Map<Block, Int> = mapOf(
+			ModBlocks.FURNACE_GENERATOR.get() to 0xFFFFFF,
+			ModBlocks.SURVIVAL_GENERATOR.get() to 0xFFFFFF,
+			ModBlocks.CULINARY_GENERATOR.get() to 0xFFFFFF,
+			ModBlocks.POTIONS_GENERATOR.get() to 5509553,
+			ModBlocks.EXPLOSIVE_GENERATOR.get() to 14369818,
+			ModBlocks.MAGMATIC_GENERATOR.get() to 10032418,
+			ModBlocks.PINK_GENERATOR.get() to 16729424,
+			ModBlocks.NETHER_STAR_GENERATOR.get() to 0xFFFFFF,
+			ModBlocks.ENDER_GENERATOR.get() to 2458740,
+			ModBlocks.HEATED_REDSTONE_GENERATOR.get() to 11161091,
+			ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR.get() to 1773488,
+			ModBlocks.HALITOSIS_GENERATOR.get() to 0xA77AA7,
+			ModBlocks.FROSTY_GENERATOR.get() to 5139615,
+			ModBlocks.DEATH_GENERATOR.get() to 14208412,
+			ModBlocks.DISENCHANTMENT_GENERATOR.get() to 3944534,
+			ModBlocks.SLIMY_GENERATOR.get() to 0xFFFFFF
+		)
 	}
 
 }

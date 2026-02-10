@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
@@ -14,6 +15,7 @@ import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.NoopRenderer
 import net.minecraft.client.renderer.item.ItemProperties
+import net.minecraft.world.item.BlockItem
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -74,6 +76,65 @@ object ClientEvents {
 	@SubscribeEvent
 	fun registerItemColors(event: RegisterColorHandlersEvent.Item) {
 		event.register(HeatingCoilItem::getItemColor, ModItems.HEATING_COIL.get())
+
+		event.register(
+			{ stack, tintIndex ->
+				val item = stack.item
+				if (item is BlockItem && tintIndex == 0) {
+					val block = item.block
+					GeneratorBlock.COLORS.getOrDefault(block, 0xFFFFFF)
+				} else {
+					0xFFFFFF
+				}
+			},
+			ModBlocks.FURNACE_GENERATOR.get(),
+			ModBlocks.SURVIVAL_GENERATOR.get(),
+			ModBlocks.CULINARY_GENERATOR.get(),
+			ModBlocks.POTIONS_GENERATOR.get(),
+			ModBlocks.EXPLOSIVE_GENERATOR.get(),
+			ModBlocks.MAGMATIC_GENERATOR.get(),
+			ModBlocks.PINK_GENERATOR.get(),
+			ModBlocks.NETHER_STAR_GENERATOR.get(),
+			ModBlocks.ENDER_GENERATOR.get(),
+			ModBlocks.HEATED_REDSTONE_GENERATOR.get(),
+			ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR.get(),
+			ModBlocks.HALITOSIS_GENERATOR.get(),
+			ModBlocks.FROSTY_GENERATOR.get(),
+			ModBlocks.DEATH_GENERATOR.get(),
+			ModBlocks.DISENCHANTMENT_GENERATOR.get(),
+			ModBlocks.SLIMY_GENERATOR.get(),
+		)
+	}
+
+	@SubscribeEvent
+	fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
+
+		event.register(
+			{ state, level, pos, tintIndex ->
+				if (tintIndex == 0) {
+					GeneratorBlock.COLORS.getOrDefault(state.block, 0xFFFFFF)
+				} else {
+					0xFFFFFF
+				}
+			},
+			ModBlocks.FURNACE_GENERATOR.get(),
+			ModBlocks.SURVIVAL_GENERATOR.get(),
+			ModBlocks.CULINARY_GENERATOR.get(),
+			ModBlocks.POTIONS_GENERATOR.get(),
+			ModBlocks.EXPLOSIVE_GENERATOR.get(),
+			ModBlocks.MAGMATIC_GENERATOR.get(),
+			ModBlocks.PINK_GENERATOR.get(),
+			ModBlocks.NETHER_STAR_GENERATOR.get(),
+			ModBlocks.ENDER_GENERATOR.get(),
+			ModBlocks.HEATED_REDSTONE_GENERATOR.get(),
+			ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR.get(),
+			ModBlocks.HALITOSIS_GENERATOR.get(),
+			ModBlocks.FROSTY_GENERATOR.get(),
+			ModBlocks.DEATH_GENERATOR.get(),
+			ModBlocks.DISENCHANTMENT_GENERATOR.get(),
+			ModBlocks.SLIMY_GENERATOR.get(),
+		)
+
 	}
 
 	@SubscribeEvent
