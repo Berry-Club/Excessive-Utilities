@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
@@ -27,6 +28,9 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.component1
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.component2
+import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.component3
 
 class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level), MenuProvider {
 
@@ -90,9 +94,13 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 	override fun remove(reason: RemovalReason) {
 		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
-			Containers.dropContents(level(), this, container)
+			val (posX, posY, posZ) =
+				position().add(direction.step().toVec3().scale(0.5))
+
+			Containers.dropContents(level(), posX, posY, posZ, container)
+
 			val item = if (isItemNode) ModItems.FLAT_TRANSFER_NODE_ITEMS.get() else ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
-			Containers.dropItemStack(level(), x, y, z, item.defaultInstance)
+			Containers.dropItemStack(level(), posX, posY, posZ, item.defaultInstance)
 		}
 
 		super.remove(reason)
