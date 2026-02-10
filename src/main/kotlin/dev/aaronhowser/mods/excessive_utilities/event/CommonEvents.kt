@@ -13,7 +13,7 @@ import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import net.minecraft.world.item.Items
+import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -149,7 +149,7 @@ object CommonEvents {
 	fun onRightClickBlock(event: PlayerInteractEvent.RightClickBlock) {
 		FlatTransferNodeEntity.handleRightClickBlock(event)
 
-		PotionGeneratorBlockEntity.calculateBrewingSteps(event.level, Items.STONE.asItem().defaultInstance)
+		PotionGeneratorBlockEntity.calculateBrewingSteps(event.level, Potions.LONG_POISON)
 	}
 
 	@SubscribeEvent

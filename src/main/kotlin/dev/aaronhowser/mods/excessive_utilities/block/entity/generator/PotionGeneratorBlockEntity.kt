@@ -1,10 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
@@ -18,14 +20,19 @@ class PotionGeneratorBlockEntity(
 	}
 
 	companion object {
-		fun calculateBrewingSteps(level: Level, itemStack: ItemStack): Int {
+		tailrec fun calculateBrewingSteps(
+			level: Level,
+			potion: Holder<Potion>,
+			runningTotal: Int = 0
+		): Int {
 			val brewing = level.potionBrewing()
-			val actualRecipes = brewing.recipes
 			val potMixes = brewing.potionMixes
-			val containerMixes = brewing.containerMixes
 
-			val firstMix = potMixes.first()
-			val output = firstMix.to()
+			for (potMix in potMixes) {
+				if (potMix.to.isHolder(potion)) {
+					return calculateBrewingSteps(level, potMix.from, runningTotal + 1)
+				}
+			}
 
 			return 1
 		}
