@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
-import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerHolder
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -19,7 +19,7 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper
 class SlightlyLargerChestBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.SLIGHTLY_LARGER_CHEST.get(), pos, blockState), MenuProvider, ContainerHolder {
+) : BlockEntity(ModBlockEntityTypes.SLIGHTLY_LARGER_CHEST.get(), pos, blockState), MenuProvider, ContainerContainer {
 
 	val container = ImprovedSimpleContainer(this, 9 * 3)
 	override fun getContainer(): Container = container

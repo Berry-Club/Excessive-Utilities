@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerHolder
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GpDrainBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.ResonatorBlockEntity
@@ -27,7 +27,7 @@ class ResonatorBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.COAL_BLOCK)) {
 	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
 		if (!state.isBlock(newState.block)) {
 			val be = level.getBlockEntity(pos)
-			if (be is ContainerHolder) {
+			if (be is ContainerContainer) {
 				Containers.dropContents(level, pos, be.getContainer())
 			}
 		}
