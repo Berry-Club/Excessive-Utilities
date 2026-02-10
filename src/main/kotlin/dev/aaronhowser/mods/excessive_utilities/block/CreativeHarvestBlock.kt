@@ -41,9 +41,9 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		val item = stackInHand.item
 
 		if (item is BlockItem && !item.block.defaultBlockState().isBlock(ModBlockTagsProvider.CREATIVE_HARVEST_BLACKLIST)) {
-			val be = level.getBlockEntity(pos) as? CreativeHarvestBlockEntity
+			val be = level.getBlockEntity(pos)
 
-			if (be != null) {
+			if (be is CreativeHarvestBlockEntity) {
 				be.mimicBlockState = item.block.defaultBlockState()
 				return ItemInteractionResult.SUCCESS
 			}
