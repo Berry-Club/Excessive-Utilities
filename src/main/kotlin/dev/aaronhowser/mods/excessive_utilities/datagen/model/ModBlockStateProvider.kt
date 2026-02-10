@@ -54,6 +54,17 @@ class ModBlockStateProvider(
 			.texture("overlay", modLoc("block/generator/on"))
 			.renderType(RenderType.translucent().name)
 
+		models()
+			.withExistingParent("generator_top_overlay", mcLoc("block/block"))
+			.renderType(RenderType.cutout().name)
+			.element()
+			.from(0f, 16f, 0f)
+			.to(16f, 16.01f, 16f)
+			.face(Direction.UP)
+			.texture("#overlay")
+			.end()
+			.end()
+
 		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), topOverlay = modLoc("block/generator/top/culinary"))
 		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), topOverlay = modLoc("block/generator/top/ender"))
 		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), topOverlay = modLoc("block/generator/top/tnt"))
@@ -84,16 +95,8 @@ class ModBlockStateProvider(
 
 		if (topOverlay != null) {
 			val topModel = models()
-				.withExistingParent(name + "_top_overlay", mcLoc("block/block"))
+				.withExistingParent(name + "_top_overlay", modLoc("block/generator_top_overlay"))
 				.texture("overlay", topOverlay)
-				.renderType(RenderType.cutout().name)
-				.element()
-				.from(0f, 16f, 0f)
-				.to(16f, 16.01f, 16f)
-				.face(Direction.UP)
-				.texture("#overlay")
-				.end()
-				.end()
 
 			multipartBuilder
 				.part()

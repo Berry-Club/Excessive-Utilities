@@ -1,0 +1,23 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "up": {
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        16,
+        0
+      ],
+      "to": [
+        16,
+        16.01,
+        16
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout"
+}

@@ -1,25 +1,5 @@
 {
-  "parent": "minecraft:block/block",
-  "elements": [
-    {
-      "faces": {
-        "up": {
-          "texture": "#overlay"
-        }
-      },
-      "from": [
-        0,
-        16,
-        0
-      ],
-      "to": [
-        16,
-        16.01,
-        16
-      ]
-    }
-  ],
-  "render_type": "minecraft:cutout",
+  "parent": "excessive_utilities:block/generator_top_overlay",
   "textures": {
     "overlay": "excessive_utilities:block/generator/top/tnt"
   }
