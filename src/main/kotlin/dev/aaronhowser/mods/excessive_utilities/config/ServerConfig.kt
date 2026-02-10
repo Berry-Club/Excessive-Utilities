@@ -38,6 +38,7 @@ class ServerConfig(
 	lateinit var survivalistGeneratorBurnTimeMultiplier: ModConfigSpec.DoubleValue
 	lateinit var survivalistGeneratorFePerTick: ModConfigSpec.IntValue
 	lateinit var netherStarGeneratorEffectRadius: ModConfigSpec.DoubleValue
+	lateinit var deathGeneratorEffectRadius: ModConfigSpec.DoubleValue
 
 	init {
 		general()
@@ -75,8 +76,12 @@ class ServerConfig(
 			.defineInRange("survivalistGeneratorFePerTick", 5, 1, Int.MAX_VALUE)
 
 		netherStarGeneratorEffectRadius = builder
-			.comment("The radius in blocks that the Nether Star Generator applies its withering effect while active.")
+			.comment("The radius in blocks that the Nether Star Generator applies the Withering II effect while active.")
 			.defineInRange("netherStarGeneratorEffectRadius", 10.0, 0.0, Double.MAX_VALUE)
+
+		deathGeneratorEffectRadius = builder
+			.comment("The radius in blocks that the Death Generator applies the Doom effect while active.")
+			.defineInRange("deathGeneratorEffectRadius", 3.0, 0.0, Double.MAX_VALUE)
 
 		builder.pop()
 	}
