@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
@@ -106,46 +107,50 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 	}
 
 	private fun transferFluid(level: ServerLevel) {
-
 		val source = originFluidHandler ?: return
 		val target = targetFluidHandler ?: return
+
+		var amountToMove = ServerConfig.CONFIG.flatFluidTransferNodeSpeed.get()
 
 		for (i in 0 until source.tanks) {
 			val fluidToMove = source.getFluidInTank(i)
 			if (fluidToMove.isEmpty) continue
 
 			val copy = fluidToMove.copyWithAmount(1000)
+			val splitCopy = copy.split(amountToMove)
 
-			val simulatedResult = target.fill(copy, IFluidHandler.FluidAction.SIMULATE)
+			val simulatedResult = target.fill(splitCopy, IFluidHandler.FluidAction.SIMULATE)
 
 			if (simulatedResult != 0) {
-				val actualResult = target.fill(copy, IFluidHandler.FluidAction.EXECUTE)
+				val actualResult = target.fill(splitCopy, IFluidHandler.FluidAction.EXECUTE)
 				source.drain(actualResult, IFluidHandler.FluidAction.EXECUTE)
-				return
+				amountToMove -= actualResult
+				if (amountToMove <= 0) return
 			}
 		}
 	}
 
 	private fun transferItem(level: ServerLevel) {
-		val pos = blockPosition()
-		pos.relative(aiming)
-
 		val source = originItemHandler ?: return
 		val target = targetItemHandler ?: return
+
+		var amountToMove = ServerConfig.CONFIG.flatItemTransferNodeSpeed.get()
 
 		for (i in 0 until source.slots) {
 			val stackToMove = source.getStackInSlot(i)
 			if (stackToMove.isEmpty) continue
 
 			val copy = stackToMove.copyWithCount(1)
+			val splitCopy = copy.split(amountToMove)
 
-			val simulatedResult = ItemHandlerHelper.insertItemStacked(target, copy, true)
+			val simulatedResult = ItemHandlerHelper.insertItemStacked(target, splitCopy, true)
 
-			if (simulatedResult.count != copy.count) {
-				val actualResult = ItemHandlerHelper.insertItemStacked(target, copy, false)
-				val amountInserted = copy.count - actualResult.count
+			if (simulatedResult.count != splitCopy.count) {
+				val actualResult = ItemHandlerHelper.insertItemStacked(target, splitCopy, false)
+				val amountInserted = splitCopy.count - actualResult.count
 				stackToMove.shrink(amountInserted)
-				return
+				amountToMove -= amountInserted
+				if (amountToMove <= 0) return
 			}
 		}
 	}

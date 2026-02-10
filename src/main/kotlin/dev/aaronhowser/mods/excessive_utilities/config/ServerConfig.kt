@@ -9,6 +9,8 @@ class ServerConfig(
 
 	lateinit var chandelierRadius: ModConfigSpec.IntValue
 	lateinit var magnumTorchRadius: ModConfigSpec.IntValue
+	lateinit var flatItemTransferNodeSpeed: ModConfigSpec.IntValue
+	lateinit var flatFluidTransferNodeSpeed: ModConfigSpec.IntValue
 
 	lateinit var heatingCoilBurnTime: ModConfigSpec.IntValue
 	lateinit var heatingCoilBurnCost: ModConfigSpec.IntValue
@@ -108,6 +110,14 @@ class ServerConfig(
 		magnumTorchRadius = builder
 			.comment("The radius in blocks that a Magnum Torch prevents monster spawns.")
 			.defineInRange("magnumTorchRadius", 64, 1, Int.MAX_VALUE)
+
+		flatItemTransferNodeSpeed = builder
+			.comment("The number of items per tick that Flat Item Transfer Nodes will transfer.")
+			.defineInRange("flatItemTransferNodeSpeed", 64 / (20 * 2), 1, Int.MAX_VALUE)
+
+		flatFluidTransferNodeSpeed = builder
+			.comment("The amount of fluid in millibuckets per tick that Flat Fluid Transfer Nodes will transfer.")
+			.defineInRange("flatFluidTransferNodeSpeed", 1000 / 20, 1, Int.MAX_VALUE)
 
 	}
 
