@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
+import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
@@ -131,6 +132,7 @@ object CommonEvents {
 		event.register(GeneratorItemFuel.FROSTY)
 		event.register(GeneratorItemFuel.HALITOSIS)
 		event.register(GeneratorItemFuel.DEATH)
+		event.register(MagmaticGeneratorFuel.MAP)
 	}
 
 	@SubscribeEvent

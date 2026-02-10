@@ -1,0 +1,8 @@
+{
+  "values": {
+    "#c:lava": {
+      "fe_per_tick": 5000,
+      "ticks_per_mb": 2500
+    }
+  }
+}

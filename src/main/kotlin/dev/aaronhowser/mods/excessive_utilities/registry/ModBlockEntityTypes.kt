@@ -89,7 +89,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("death_generator", ::DeathGeneratorBlockEntity, ModBlocks.DEATH_GENERATOR)
 	val CULINARY_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<CulinaryGeneratorBlockEntity>> =
 		register("culinary_generator", ::CulinaryGeneratorBlockEntity, ModBlocks.CULINARY_GENERATOR)
-	val MAGMATIC_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<MagmaticGeneratorBlockEntity?>> =
+	val MAGMATIC_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<MagmaticGeneratorBlockEntity>> =
 		register("magmatic_generator", ::MagmaticGeneratorBlockEntity, ModBlocks.MAGMATIC_GENERATOR)
 
 }

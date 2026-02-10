@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
+import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.TagKey
@@ -73,6 +74,13 @@ class ModDataMapProvider(
 		addFuel(GeneratorItemFuel.FROSTY, Items.SNOWBALL, 40, 5)
 		addFuel(GeneratorItemFuel.FROSTY, Items.SNOW_BLOCK, 40, 20)
 		addFuel(GeneratorItemFuel.FROSTY, Items.SNOW, 40, 3)
+
+		builder(MagmaticGeneratorFuel.MAP)
+			.add(
+				Tags.Fluids.LAVA,
+				MagmaticGeneratorFuel(100_000 / 20, 125 * 20),
+				false
+			)
 	}
 
 }
