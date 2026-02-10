@@ -80,7 +80,7 @@ object ModItemLang {
 			addItem(ModItems.BIOME_MARKER, "Biome Marker")
 			addItem(ModItems.BAG_OF_HOLDING, "Bag of Holding")
 			addItem(ModItems.MAGICAL_APPLE, "Magical Apple")
-			addItem(ModItems.FLAT_TRANSFER_NODE_FLUIDS, "Flat Transfer Node (Fluids")
+			addItem(ModItems.FLAT_TRANSFER_NODE_FLUIDS, "Flat Transfer Node (Fluids)")
 			addItem(ModItems.FLAT_TRANSFER_NODE_ITEMS, "Flat Transfer Node (Items)")
 			addItem(ModItems.PORTABLE_SCANNER, "Portable Scanner")
 			addItem(ModItems.SONAR_GOGGLES, "Sonar Goggles")
