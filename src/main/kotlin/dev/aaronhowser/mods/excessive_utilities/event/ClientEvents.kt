@@ -5,14 +5,18 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRender
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
+import net.minecraft.client.renderer.ItemBlockRenderTypes
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.NoopRenderer
 import net.minecraft.client.renderer.item.ItemProperties
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.*
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers
@@ -22,6 +26,29 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers
 	value = [Dist.CLIENT]
 )
 object ClientEvents {
+
+	@SubscribeEvent
+	fun onClientSetup(event: FMLClientSetupEvent) {
+
+		// Doing it here instead of in the model because Athena doesn't even LOAD the model
+		val cutout = listOf(
+			ModBlocks.INEFFABLE_GLASS.get(),
+			ModBlocks.INVERTED_ETHEREAL_GLASS.get()
+		)
+
+		for (block in cutout) {
+			ItemBlockRenderTypes.setRenderLayer(block, RenderType.cutout())
+		}
+
+		val translucent = listOf(
+			ModBlocks.DARK_INEFFABLE_GLASS.get()
+		)
+
+		for (block in translucent) {
+			ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent())
+		}
+
+	}
 
 	@SubscribeEvent
 	fun onModelRegistry(event: ModelEvent.RegisterAdditional) {
