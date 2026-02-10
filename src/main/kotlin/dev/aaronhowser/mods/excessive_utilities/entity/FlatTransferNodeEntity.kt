@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
 import net.minecraft.commands.arguments.EntityAnchorArgument
@@ -175,12 +177,14 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		}
 
 		fun handleRightClickBlock(event: PlayerInteractEvent.RightClickBlock) {
+			val player = event.entity
+			if (!player.isHolding { it.isItem(ModItemTagsProvider.INTERACT_WITH_FLAT_TRANSFER_NODES) }) return
+
 			val level = event.level
 			val blockPos = event.pos
 			val direction = event.face ?: return
 
 			val node = getNodeAt(level, blockPos, direction) ?: return
-			val player = event.entity
 
 			if (player.isSecondaryUseActive) {
 				node.kill()
