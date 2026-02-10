@@ -12,9 +12,9 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
+import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModBlockStateProvider(
@@ -44,24 +44,24 @@ class ModBlockStateProvider(
 			.end()
 			.end()
 
-		val offFace = models()
+		models()
 			.withExistingParent("generator_face_off", modLoc("block/generator_face"))
 			.texture("overlay", modLoc("block/generator/off"))
 			.renderType(RenderType.translucent().name)
 
-		val onFace = models()
+		models()
 			.withExistingParent("generator_face_on", modLoc("block/generator_face"))
 			.texture("overlay", modLoc("block/generator/on"))
 			.renderType(RenderType.translucent().name)
 
-		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/culinary"))
-		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/ender"))
-		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/tnt"))
-		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get(), onFace = onFace, offFace = offFace)
-		makeGenerator(ModBlocks.FROSTY_GENERATOR.get(), onFace = onFace, offFace = offFace)
-		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get(), onFace = onFace, offFace = offFace)
-		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/death"))
-		makeGenerator(ModBlocks.PINK_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/pink"))
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), topOverlay = modLoc("block/generator/top/culinary"))
+		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), topOverlay = modLoc("block/generator/top/ender"))
+		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), topOverlay = modLoc("block/generator/top/tnt"))
+		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get())
+		makeGenerator(ModBlocks.FROSTY_GENERATOR.get())
+		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get())
+		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), topOverlay = modLoc("block/generator/top/death"))
+		makeGenerator(ModBlocks.PINK_GENERATOR.get(), topOverlay = modLoc("block/generator/top/pink"))
 	}
 
 	private fun makeGenerator(
@@ -71,8 +71,6 @@ class ModBlockStateProvider(
 		bottom: ResourceLocation = modLoc("block/generator/bottom"),
 		front: ResourceLocation = modLoc("block/generator/side"),
 		topOverlay: ResourceLocation? = null,
-		onFace: BlockModelBuilder,
-		offFace: BlockModelBuilder
 	) {
 		val name = name(block)
 
@@ -80,6 +78,9 @@ class ModBlockStateProvider(
 			.orientableWithBottom(name + "_base", side, front, bottom, top)
 
 		val multipartBuilder = getMultipartBuilder(block)
+
+		val onFace = ModelFile.ExistingModelFile(modLoc("block/generator_face_on"), existingFileHelper)
+		val offFace = ModelFile.ExistingModelFile(modLoc("block/generator_face_off"), existingFileHelper)
 
 		if (topOverlay != null) {
 			val topModel = models()
