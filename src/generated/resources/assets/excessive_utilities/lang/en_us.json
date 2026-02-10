@@ -167,6 +167,8 @@
   "block.excessive_utilities.wireless_fe_battery": "Wireless FE Battery",
   "block.excessive_utilities.wireless_fe_transmitter": "Wireless FE Transmitter",
   "block.excessive_utilities.wooden_spike": "Wooden Spike",
+  "effect.excessive_utilities.doom": "Doom",
+  "effect.excessive_utilities.gravity": "Gravity",
   "entity.excessive_utilities.flat_transfer_node": "Flat Transfer Node",
   "item.excessive_utilities.advanced_item_filter": "Advanced Item Filter",
   "item.excessive_utilities.angel_ring": "Angel Ring",
