@@ -8,9 +8,13 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.ContainerHelper
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.AABB
 
 class DataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
@@ -43,6 +47,10 @@ class DataDrivenGeneratorBlockEntity(
 		setChanged()
 
 		return true
+	}
+
+	override fun effectOnSuccess(level: ServerLevel) {
+		generatorType.effectOnTick.accept(this)
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
