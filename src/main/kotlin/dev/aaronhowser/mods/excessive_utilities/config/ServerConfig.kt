@@ -37,6 +37,7 @@ class ServerConfig(
 	lateinit var furnaceGeneratorFePerTick: ModConfigSpec.IntValue
 	lateinit var survivalistGeneratorBurnTimeMultiplier: ModConfigSpec.DoubleValue
 	lateinit var survivalistGeneratorFePerTick: ModConfigSpec.IntValue
+	lateinit var netherStarGeneratorEffectRadius: ModConfigSpec.DoubleValue
 
 	init {
 		general()
@@ -72,6 +73,10 @@ class ServerConfig(
 		survivalistGeneratorFePerTick = builder
 			.comment("How much FE per tick the Survivalist Generator produces when active.")
 			.defineInRange("survivalistGeneratorFePerTick", 5, 1, Int.MAX_VALUE)
+
+		netherStarGeneratorEffectRadius = builder
+			.comment("The radius in blocks that the Nether Star Generator applies its withering effect while active.")
+			.defineInRange("netherStarGeneratorEffectRadius", 10.0, 0.0, Double.MAX_VALUE)
 
 		builder.pop()
 	}

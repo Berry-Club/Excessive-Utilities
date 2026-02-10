@@ -1,12 +1,15 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.ColorParticleOption
 import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
@@ -23,7 +26,7 @@ class NetherStarGeneratorBlockEntity(
 		if (level.gameTime % 20 != 0L) return
 
 		val pos = blockPos
-		val radius = 10
+		val radius = ServerConfig.CONFIG.netherStarGeneratorEffectRadius.get()
 		val aabb = AABB(pos).inflate(radius.toDouble())
 
 		val entities = level.getEntitiesOfClass(LivingEntity::class.java, aabb)
@@ -40,16 +43,26 @@ class NetherStarGeneratorBlockEntity(
 		val isActive = blockState.getValue(GeneratorBlock.LIT)
 		if (!isActive) return
 
+		val radius = ServerConfig.CONFIG.netherStarGeneratorEffectRadius.get()
+		val particleCount = Mth.ceil(Math.PI * radius * radius) / 4
+
 		val particle = ColorParticleOption.create(ParticleTypes.ENTITY_EFFECT, -1)
-		level.addAlwaysVisibleParticle(
-			particle,
-			blockPos.x.toDouble(),
-			blockPos.y + 1.0,
-			blockPos.z.toDouble(),
-			0.0,
-			0.0,
-			0.0
-		)
+
+		for (i in 0 until particleCount) {
+			val dx = level.random.nextRange(-radius, radius)
+			val dy = level.random.nextRange(-radius, radius)
+			val dz = level.random.nextRange(-radius, radius)
+
+			val x = blockPos.x + 0.5 + dx
+			val y = blockPos.y + 1.0 + dy
+			val z = blockPos.z + 0.5 + dz
+
+			level.addAlwaysVisibleParticle(
+				particle,
+				x, y, z,
+				0.0, 0.0, 0.0
+			)
+		}
 	}
 
 }
