@@ -59,6 +59,13 @@ class ModItemTagsProvider(
 				ModItems.SPEED_UPGRADE_MAGICAL.get(),
 				ModItems.SPEED_UPGRADE_ULTIMATE.get()
 			)
+
+		tag(INTERACT_WITH_FLAT_TRANSFER_NODES)
+			.add(
+				ModItems.WRENCH.get(),
+				ModItems.FLAT_TRANSFER_NODE_ITEMS.get(),
+				ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
+			)
 	}
 
 	companion object {
@@ -69,6 +76,7 @@ class ModItemTagsProvider(
 		val PISTONS = common("pistons")
 		val CORPSE_PARTS = create("corpse_parts")
 		val SPEED_UPGRADES = create("speed_upgrades")
+		val INTERACT_WITH_FLAT_TRANSFER_NODES = create("interact_with_flat_transfer_nodes")
 	}
 
 }
