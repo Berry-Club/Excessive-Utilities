@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-class CreativeMillBlock : GpSourceBlock(Properties.ofFullCopy(Blocks.BEDROCK)) {
+class CreativeMillBlock : GpSourceBlock(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
 
 	override fun getBlockEntityType(): BlockEntityType<out GpSourceBlockEntity> {
 		return ModBlockEntityTypes.CREATIVE_MILL.get()

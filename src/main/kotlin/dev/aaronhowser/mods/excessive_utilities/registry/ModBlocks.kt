@@ -162,7 +162,7 @@ object ModBlocks : AaronBlockRegistry() {
 				damagePerHit = Float.MAX_VALUE,
 				dropsExperience = true,
 				killsAsPlayer = true,
-				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.BEDROCK)
+				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
 			)
 		}
 
