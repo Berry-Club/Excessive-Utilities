@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -90,7 +91,11 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 	override fun remove(reason: RemovalReason) {
 		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
 			Containers.dropContents(level(), this, container)
+			val item = if (isItemNode) ModItems.FLAT_TRANSFER_NODE_ITEMS.get() else ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
+			Containers.dropItemStack(level(), x, y, z, item.defaultInstance)
 		}
+
+		super.remove(reason)
 	}
 
 	private fun transferFluid(level: ServerLevel) {
