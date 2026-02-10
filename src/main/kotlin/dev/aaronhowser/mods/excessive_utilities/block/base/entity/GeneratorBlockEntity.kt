@@ -28,7 +28,7 @@ abstract class GeneratorBlockEntity(
 
 	var ownerUuid: UUID? = null
 
-	protected val energyStorage = EnergyStorage(10_000)
+	protected val energyStorage = EnergyStorage(1_000_000)
 
 	protected open val container =
 		object : GeneratorContainer(this@GeneratorBlockEntity, amountInputs = 1) {
