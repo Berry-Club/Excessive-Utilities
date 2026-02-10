@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.CreativeMillBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.DragonEggMillBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.FireMillBlockEntity
