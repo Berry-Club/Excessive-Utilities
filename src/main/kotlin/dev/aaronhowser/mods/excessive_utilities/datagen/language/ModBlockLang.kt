@@ -102,7 +102,6 @@ object ModBlockLang {
 			addBlock(ModBlocks.HEATED_REDSTONE_GENERATOR, "Heated Redstone Generator")
 			addBlock(ModBlocks.CULINARY_GENERATOR, "Culinary Generator")
 			addBlock(ModBlocks.POTIONS_GENERATOR, "Potions Generator")
-			addBlock(ModBlocks.SOLAR_GENERATOR, "Solar Generator")
 			addBlock(ModBlocks.EXPLOSIVE_GENERATOR, "Explosive Generator")
 			addBlock(ModBlocks.PINK_GENERATOR, "Pink Generator")
 			addBlock(ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR, "High-Temperature Furnace Generator")

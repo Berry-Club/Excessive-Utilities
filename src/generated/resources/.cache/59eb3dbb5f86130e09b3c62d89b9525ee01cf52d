@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-10T10:08:27.9073117	Loot Tables
+// 1.21.1	2026-02-10T12:59:20.1614691	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 dfd3eb1c14ba5a4b83fdae1b1844caadf489ebdb data/excessive_utilities/loot_table/blocks/advanced_observer.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
@@ -142,7 +142,6 @@ c7a30a6e72d0b1e74f6502eca8c413aa8fa207e1 data/excessive_utilities/loot_table/blo
 f6e3bd37fbea3d81f7f3824b07f1bf71ef6750c7 data/excessive_utilities/loot_table/blocks/scanner.json
 41ae40b79196d2815db4d8228d710c9ed4f5a03a data/excessive_utilities/loot_table/blocks/slightly_larger_chest.json
 b8d8210dd4465ad724820e136193570b04c9c533 data/excessive_utilities/loot_table/blocks/slimy_generator.json
-63c7d59cd59dba258fcb63f343633cba9faa4914 data/excessive_utilities/loot_table/blocks/solar_generator.json
 4406787420eab7abf7d225f69b1bc0abe08248d8 data/excessive_utilities/loot_table/blocks/solar_panel.json
 a74608b65b7e4e3ccb84a0ddd6fed776205040aa data/excessive_utilities/loot_table/blocks/sound_muffler.json
 816ac9957739f290a59e3f43dcf6e2d61624c713 data/excessive_utilities/loot_table/blocks/square_glass.json
