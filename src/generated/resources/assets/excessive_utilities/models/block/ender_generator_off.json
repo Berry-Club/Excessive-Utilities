@@ -1,0 +1,7 @@
+{
+  "parent": "excessive_utilities:block/generator_base",
+  "textures": {
+    "front_overlay": "excessive_utilities:block/generator/off",
+    "top_overlay": "excessive_utilities:block/generator/top/ender"
+  }
+}

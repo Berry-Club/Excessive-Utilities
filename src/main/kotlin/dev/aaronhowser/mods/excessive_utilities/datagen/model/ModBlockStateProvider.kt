@@ -87,20 +87,27 @@ class ModBlockStateProvider(
 			.texture("#front_overlay")
 			.end()
 
-		makeGenerator(ModBlocks.PINK_GENERATOR.get())
+		makeGenerator(ModBlocks.PINK_GENERATOR.get(), "pink")
+		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), "death")
+		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), "ender")
+		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), "explosive")
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), "culinary")
 	}
 
-	private fun makeGenerator(generatorBlock: GeneratorBlock) {
+	private fun makeGenerator(
+		generatorBlock: GeneratorBlock,
+		topOverlayName: String
+	) {
 		val name = name(generatorBlock)
 
 		val modelOff = models()
 			.withExistingParent(name + "_off", modLoc("generator_base"))
-			.texture("top_overlay", modLoc("block/generator/top/pink"))
+			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
 			.texture("front_overlay", modLoc("block/generator/off"))
 
 		val modelOn = models()
 			.withExistingParent(name + "_on", modLoc("generator_base"))
-			.texture("top_overlay", modLoc("block/generator/top/pink"))
+			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
 			.texture("front_overlay", modLoc("block/generator/on"))
 
 		getVariantBuilder(generatorBlock)
