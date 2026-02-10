@@ -32,9 +32,9 @@ class ModBlockStateProvider(
 	}
 
 	private fun generators() {
-		val offFace = models()
-			.withExistingParent("generator_face_off", mcLoc("block/block"))
-			.texture("overlay", modLoc("block/generator/off"))
+
+		val generatorFace = models()
+			.withExistingParent("generator_face", mcLoc("block/block"))
 			.renderType(RenderType.translucent().name)
 			.element()
 			.from(0f, 0f, 0f)
@@ -44,17 +44,15 @@ class ModBlockStateProvider(
 			.end()
 			.end()
 
+		val offFace = models()
+			.withExistingParent("generator_face_off", modLoc("block/generator_face"))
+			.texture("overlay", modLoc("block/generator/off"))
+			.renderType(RenderType.translucent().name)
+
 		val onFace = models()
-			.withExistingParent("generator_face_on", mcLoc("block/block"))
+			.withExistingParent("generator_face_on", modLoc("block/generator_face"))
 			.texture("overlay", modLoc("block/generator/on"))
 			.renderType(RenderType.translucent().name)
-			.element()
-			.from(0f, 0f, 0f)
-			.to(16f, 16f, 0.01f)
-			.face(Direction.NORTH)
-			.texture("#overlay")
-			.end()
-			.end()
 
 		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/culinary"))
 		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/ender"))

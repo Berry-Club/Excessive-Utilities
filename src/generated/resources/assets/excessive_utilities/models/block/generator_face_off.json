@@ -1,24 +1,5 @@
 {
-  "parent": "minecraft:block/block",
-  "elements": [
-    {
-      "faces": {
-        "north": {
-          "texture": "#overlay"
-        }
-      },
-      "from": [
-        0,
-        0,
-        0
-      ],
-      "to": [
-        16,
-        16,
-        0.01
-      ]
-    }
-  ],
+  "parent": "excessive_utilities:block/generator_face",
   "render_type": "minecraft:translucent",
   "textures": {
     "overlay": "excessive_utilities:block/generator/off"
