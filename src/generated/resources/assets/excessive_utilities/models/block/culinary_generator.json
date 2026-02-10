@@ -1,0 +1,29 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#face"
+        }
+      },
+      "from": [
+        -0.01,
+        0,
+        -0.01
+      ],
+      "to": [
+        -0.01,
+        16,
+        -0.01
+      ]
+    }
+  ],
+  "textures": {
+    "bottom": "excessive_utilities:block/generator/bottom",
+    "face": "excessive_utilities:block/generator/on",
+    "front": "excessive_utilities:block/generator/side",
+    "side": "excessive_utilities:block/generator/side",
+    "top": "excessive_utilities:block/generator/top"
+  }
+}

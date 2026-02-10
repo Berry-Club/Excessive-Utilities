@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.MiniChestBlock
 import dev.aaronhowser.mods.excessive_utilities.block.SlightlyLargerChestBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -8,6 +9,7 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -25,6 +27,61 @@ class ModBlockStateProvider(
 		athenaBlocks()
 		slightlyLargerChest()
 		miniChest()
+		generators()
+	}
+
+	private fun generators() {
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get())
+	}
+
+	private fun makeGenerator(
+		generatorBlock: GeneratorBlock,
+		top: ResourceLocation = modLoc("block/generator/top"),
+		side: ResourceLocation = modLoc("block/generator/side"),
+		bottom: ResourceLocation = modLoc("block/generator/bottom"),
+		front: ResourceLocation = modLoc("block/generator/side")
+	) {
+		val name = name(generatorBlock)
+
+		val model = models()
+			.orientableWithBottom(name, side, front, bottom, top)
+			.texture("face", modLoc("block/generator/off"))
+
+			.element()
+			.from(-0.01f, 0f, -0.01f)
+			.to(-0.01f, 16f, -0.01f)
+			.face(Direction.NORTH)
+			.texture("#face")
+			.end()
+			.end()
+
+		getVariantBuilder(generatorBlock)
+			.forAllStates {
+				val facing = it.getValue(GeneratorBlock.FACING)
+				val isLit = it.getValue(GeneratorBlock.LIT)
+
+				val yRotation = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val modelFile = if (isLit) {
+					model.texture("face", modLoc("block/generator/on"))
+				} else {
+					model
+				}
+
+				ConfiguredModel
+					.builder()
+					.modelFile(modelFile)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		simpleBlockItem(generatorBlock, model)
 	}
 
 	private fun miniChest() {
