@@ -70,7 +70,12 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 
 	override fun onDestroyedByPlayer(state: BlockState, level: Level, pos: BlockPos, player: Player, willHarvest: Boolean, fluid: FluidState): Boolean {
 		val blockEntity = level.getBlockEntity(pos)
-		if (!willHarvest || level !is ServerLevel || blockEntity !is CreativeHarvestBlockEntity) {
+
+		if (!willHarvest
+			|| player.isSecondaryUseActive
+			|| level !is ServerLevel
+			|| blockEntity !is CreativeHarvestBlockEntity
+		) {
 			return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid)
 		}
 
