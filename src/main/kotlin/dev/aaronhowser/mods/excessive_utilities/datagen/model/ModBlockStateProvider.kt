@@ -56,14 +56,14 @@ class ModBlockStateProvider(
 			.end()
 			.end()
 
-		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/culinary"))
-		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/ender"))
-		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/tnt"))
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/culinary"))
+		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/ender"))
+		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/tnt"))
 		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get(), onFace = onFace, offFace = offFace)
 		makeGenerator(ModBlocks.FROSTY_GENERATOR.get(), onFace = onFace, offFace = offFace)
 		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get(), onFace = onFace, offFace = offFace)
-		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/death"))
-		makeGenerator(ModBlocks.PINK_GENERATOR.get(), onFace = onFace, offFace = offFace, top = modLoc("block/generator/top/pink"))
+		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/death"))
+		makeGenerator(ModBlocks.PINK_GENERATOR.get(), onFace = onFace, offFace = offFace, topOverlay = modLoc("block/generator/top/pink"))
 	}
 
 	private fun makeGenerator(
@@ -72,6 +72,7 @@ class ModBlockStateProvider(
 		side: ResourceLocation = modLoc("block/generator/side"),
 		bottom: ResourceLocation = modLoc("block/generator/bottom"),
 		front: ResourceLocation = modLoc("block/generator/side"),
+		topOverlay: ResourceLocation? = null,
 		onFace: BlockModelBuilder,
 		offFace: BlockModelBuilder
 	) {
@@ -81,6 +82,26 @@ class ModBlockStateProvider(
 			.orientableWithBottom(name + "_base", side, front, bottom, top)
 
 		val multipartBuilder = getMultipartBuilder(block)
+
+		if (topOverlay != null) {
+			val topModel = models()
+				.withExistingParent(name + "_top_overlay", mcLoc("block/block"))
+				.texture("overlay", topOverlay)
+				.renderType(RenderType.cutout().name)
+				.element()
+				.from(0f, 16f, 0f)
+				.to(16f, 16.01f, 16f)
+				.face(Direction.UP)
+				.texture("#overlay")
+				.end()
+				.end()
+
+			multipartBuilder
+				.part()
+				.modelFile(topModel)
+				.addModel()
+				.end()
+		}
 
 		for (direction in Direction.Plane.HORIZONTAL) {
 			val yRotation = when (direction) {

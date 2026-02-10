@@ -2,6 +2,11 @@
   "multipart": [
     {
       "apply": {
+        "model": "excessive_utilities:block/death_generator_top_overlay"
+      }
+    },
+    {
+      "apply": {
         "model": "excessive_utilities:block/death_generator_base"
       },
       "when": {
