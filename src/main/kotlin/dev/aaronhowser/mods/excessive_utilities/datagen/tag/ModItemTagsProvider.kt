@@ -12,6 +12,7 @@ import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
@@ -71,7 +72,15 @@ class ModItemTagsProvider(
 			.add(
 				ModItems.ITEM_FILTER.get(),
 				ModItems.ADVANCED_ITEM_FILTER.get(),
-				ModItems.FLUID_FILTER.get()
+				ModItems.FLUID_FILTER.get(),
+			)
+			.addTags(
+				Tags.Items.TOOLS_WRENCH
+			)
+
+		tag(Tags.Items.TOOLS_WRENCH)
+			.add(
+				ModItems.WRENCH.get()
 			)
 	}
 
