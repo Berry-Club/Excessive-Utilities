@@ -33,6 +33,10 @@ class ServerConfig(
 
 	lateinit var culinaryFePerFoodValue: ModConfigSpec.DoubleValue
 	lateinit var culinaryTicksPerSaturationValue: ModConfigSpec.DoubleValue
+	lateinit var furnaceGeneratorBurnTimeMultiplier: ModConfigSpec.DoubleValue
+	lateinit var furnaceGeneratorFePerTick: ModConfigSpec.IntValue
+	lateinit var survivalistGeneratorBurnTimeMultiplier: ModConfigSpec.DoubleValue
+	lateinit var survivalistGeneratorFePerTick: ModConfigSpec.IntValue
 
 	init {
 		general()
@@ -52,6 +56,22 @@ class ServerConfig(
 		culinaryTicksPerSaturationValue = builder
 			.comment("How many ticks of burn time the Culinary Generator gets per point of saturation value in the input item.")
 			.defineInRange("culinaryFePerSaturationValue", 1.0, 0.0, Double.MAX_VALUE)
+
+		furnaceGeneratorBurnTimeMultiplier = builder
+			.comment("How many times longer should a furnace fuel burn in the Furnace Generator compared to a regular furnace.")
+			.defineInRange("furnaceGeneratorBurnTimeMultiplier", 2.5, 0.0, Double.MAX_VALUE)
+
+		furnaceGeneratorFePerTick = builder
+			.comment("How much FE per tick the Furnace Generator produces when active.")
+			.defineInRange("furnaceGeneratorFePerTick", 40, 1, Int.MAX_VALUE)
+
+		survivalistGeneratorBurnTimeMultiplier = builder
+			.comment("How many times longer should a furnace fuel burn in the Survivalist Generator compared to a regular furnace.")
+			.defineInRange("survivalistGeneratorBurnTimeMultiplier", 100.0, 0.0, Double.MAX_VALUE)
+
+		survivalistGeneratorFePerTick = builder
+			.comment("How much FE per tick the Survivalist Generator produces when active.")
+			.defineInRange("survivalistGeneratorFePerTick", 5, 1, Int.MAX_VALUE)
 
 		builder.pop()
 	}

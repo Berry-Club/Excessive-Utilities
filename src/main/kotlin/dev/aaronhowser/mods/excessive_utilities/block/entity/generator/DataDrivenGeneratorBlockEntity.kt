@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-open class DataDrivenGeneratorBlockEntity(
+class DataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	val generatorType: DataDrivenGeneratorType,
 	pos: BlockPos,
