@@ -13,6 +13,7 @@ import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.ContainerHelper
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.SimpleContainer
@@ -21,6 +22,7 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -41,6 +43,13 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 			val lookTowards = eyePosition.add(value.stepX.toDouble(), value.stepY.toDouble(), value.stepZ.toDouble())
 			lookAt(EntityAnchorArgument.Anchor.EYES, lookTowards)
+		}
+
+	private val container: SimpleContainer =
+		object : SimpleContainer(1) {
+			override fun canAddItem(stack: ItemStack): Boolean {
+				return stack.isItem(ModItemTagsProvider.FILTERS) && super.canAddItem(stack)
+			}
 		}
 
 	override fun tick() {
@@ -131,16 +140,18 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 	override fun addAdditionalSaveData(compound: CompoundTag) {
 		compound.putBoolean(IS_ITEM_NODE_TAG, isItemNode)
 		compound.putInt(AIMING_TAG, aiming.ordinal)
+		ContainerHelper.saveAllItems(compound, container.items, registryAccess())
 	}
 
 	override fun readAdditionalSaveData(compound: CompoundTag) {
 		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
 		val directionOrdinal = compound.getInt(AIMING_TAG)
 		aiming = Direction.entries[directionOrdinal]
+		ContainerHelper.loadAllItems(compound, container.items, registryAccess())
 	}
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
-		return FlatTransferNodeMenu(containerId, playerInventory, SimpleContainer(1), this)
+		return FlatTransferNodeMenu(containerId, playerInventory, container, this)
 	}
 
 	companion object {
