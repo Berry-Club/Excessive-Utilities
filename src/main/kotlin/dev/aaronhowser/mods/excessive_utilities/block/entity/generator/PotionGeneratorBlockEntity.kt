@@ -24,7 +24,8 @@ class PotionGeneratorBlockEntity(
 			val potMixes = brewing.potionMixes
 			val containerMixes = brewing.containerMixes
 
-			println(potMixes.size + containerMixes.size + actualRecipes.size)
+			val firstMix = potMixes.first()
+			val output = firstMix.to()
 
 			return 1
 		}
