@@ -156,7 +156,9 @@ class ModItemModelProvider(
 				.texture("layer0", modLoc("item/ender_shard/$count"))
 		}
 
-		val model = getModelForCount(1)
+		val model = getBuilder(getName(item).toString())
+			.parent(ModelFile.UncheckedModelFile("item/generated"))
+			.texture("layer0", modLoc("item/ender_shard/1"))
 
 		for (i in 2..8) {
 			model
