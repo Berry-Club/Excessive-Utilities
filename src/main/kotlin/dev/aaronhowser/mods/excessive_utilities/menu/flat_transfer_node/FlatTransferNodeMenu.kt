@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.menu
+package dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity

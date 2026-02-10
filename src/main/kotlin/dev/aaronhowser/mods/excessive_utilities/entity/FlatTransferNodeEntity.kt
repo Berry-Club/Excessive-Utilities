@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.menu.FlatTransferNodeMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
