@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "excessive_utilities:block/slightly_larger_chest/top",
+    "front": "excessive_utilities:block/slightly_larger_chest/front",
+    "side": "excessive_utilities:block/slightly_larger_chest/side",
+    "top": "excessive_utilities:block/slightly_larger_chest/top"
+  }
+}

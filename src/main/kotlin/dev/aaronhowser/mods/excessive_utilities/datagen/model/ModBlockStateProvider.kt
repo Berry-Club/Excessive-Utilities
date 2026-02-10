@@ -20,6 +20,21 @@ class ModBlockStateProvider(
 		singleTextureBlocks()
 		blackoutCurtain()
 		athenaBlocks()
+		slightlyLargerChest()
+	}
+
+	private fun slightlyLargerChest() {
+		val block = ModBlocks.SLIGHTLY_LARGER_CHEST.get()
+		val name = name(block)
+
+		val front = modLoc("block/slightly_larger_chest/front")
+		val side = modLoc("block/slightly_larger_chest/side")
+		val top = modLoc("block/slightly_larger_chest/top")
+
+		val model = models()
+			.orientableWithBottom(name, side, front, top, top )
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun blackoutCurtain() {
