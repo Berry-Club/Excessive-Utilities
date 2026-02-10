@@ -38,7 +38,7 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		val stackInHand = player.getItemInHand(hand)
 		val item = stackInHand.item
 
-		if (item is BlockItem && level is ServerLevel) {
+		if (item is BlockItem) {
 			val be = level.getBlockEntity(pos) as? CreativeHarvestBlockEntity
 
 			if (be != null) {
