@@ -5,6 +5,9 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.energy.ComponentEnergyStorage
+import net.neoforged.neoforge.energy.IEnergyStorage
 
 class HeatingCoilItem(properties: Properties) : Item(properties) {
 
@@ -16,11 +19,7 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 		val requiredEnergy =
 			ServerConfig.CONFIG.heatingCoilBurnCost.get()
 
-		val availableEnergy =
-			itemStack.getOrDefault(
-				ModDataComponents.ENERGY,
-				0
-			)
+		val availableEnergy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM, null)?.energyStored ?: 0
 
 		return if (availableEnergy >= requiredEnergy) {
 			ServerConfig.CONFIG.heatingCoilBurnTime.get()
@@ -34,13 +33,25 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 	override fun getDamage(stack: ItemStack): Int = getMaxDamage(stack) - stack.getOrDefault(ModDataComponents.ENERGY, 0)
 
 	companion object {
-		val DEFAULT_PROPERTIES: () -> Properties = { Properties().component(ModDataComponents.ENERGY, 1000) }
+		val DEFAULT_PROPERTIES: () -> Properties = { Properties().component(ModDataComponents.ENERGY, 0) }
+
+		fun getEnergyCapability(stack: ItemStack, unusedContext: Any?): IEnergyStorage {
+			return ComponentEnergyStorage(
+				stack,
+				ModDataComponents.ENERGY.get(),
+				ServerConfig.CONFIG.heatingCoilMaxEnergy.get(),
+				10_000,
+				10_000
+			)
+		}
 
 		@JvmStatic
 		fun burnInFuelSlot(stack: ItemStack) {
-			val energy = stack.getOrDefault(ModDataComponents.ENERGY, 0)
-			val newEnergy = maxOf(0, energy - ServerConfig.CONFIG.heatingCoilBurnCost.get())
-			stack.set(ModDataComponents.ENERGY, newEnergy)
+			val capability = stack.getCapability(Capabilities.EnergyStorage.ITEM, null) ?: return
+			val requiredEnergy = ServerConfig.CONFIG.heatingCoilBurnCost.get()
+			if (capability.energyStored >= requiredEnergy) {
+				capability.extractEnergy(requiredEnergy, false)
+			}
 		}
 
 		fun getItemColor(stack: ItemStack, tintIndex: Int): Int {

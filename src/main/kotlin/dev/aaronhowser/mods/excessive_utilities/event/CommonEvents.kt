@@ -5,8 +5,10 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
+import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -89,6 +91,12 @@ object CommonEvents {
 				GeneratorBlockEntity::getItemHandler
 			)
 		}
+
+		event.registerItem(
+			Capabilities.EnergyStorage.ITEM,
+			HeatingCoilItem::getEnergyCapability,
+			ModItems.HEATING_COIL.get()
+		)
 
 	}
 
