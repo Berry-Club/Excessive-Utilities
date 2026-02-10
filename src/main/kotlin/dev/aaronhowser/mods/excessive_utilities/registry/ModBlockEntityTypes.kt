@@ -34,6 +34,8 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("creative_harvest", ::CreativeHarvestBlockEntity, ModBlocks.CREATIVE_HARVEST)
 	val SLIGHTLY_LARGER_CHEST: DeferredHolder<BlockEntityType<*>, BlockEntityType<SlightlyLargerChestBlockEntity>> =
 		register("slightly_larger_chest", ::SlightlyLargerChestBlockEntity, ModBlocks.SLIGHTLY_LARGER_CHEST)
+	val MINI_CHEST: DeferredHolder<BlockEntityType<*>, BlockEntityType<MiniChestBlockEntity>> =
+		register("mini_chest", ::MiniChestBlockEntity, ModBlocks.MINI_CHEST)
 
 	val MANUAL_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<ManualMillBlockEntity>> =
 		register("manual_mill", ::ManualMillBlockEntity, ModBlocks.MANUAL_MILL)
