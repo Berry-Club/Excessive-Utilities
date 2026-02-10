@@ -34,7 +34,7 @@ class PotionGeneratorBlockEntity(
 				}
 			}
 
-			return 1
+			return runningTotal
 		}
 
 	}

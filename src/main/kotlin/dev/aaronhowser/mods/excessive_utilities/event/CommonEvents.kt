@@ -4,7 +4,6 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.MagmaticGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.PotionGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
@@ -13,7 +12,6 @@ import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import net.minecraft.world.item.alchemy.Potions
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -148,8 +146,6 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onRightClickBlock(event: PlayerInteractEvent.RightClickBlock) {
 		FlatTransferNodeEntity.handleRightClickBlock(event)
-
-		PotionGeneratorBlockEntity.calculateBrewingSteps(event.level, Potions.LONG_POISON)
 	}
 
 	@SubscribeEvent
