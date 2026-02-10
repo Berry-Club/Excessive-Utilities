@@ -137,7 +137,7 @@ abstract class GeneratorBlockEntity(
 			}
 		}
 
-		fun getEnergyCapability(transmitter: GeneratorBlockEntity, direction: Direction?): IEnergyStorage? {
+		fun getEnergyCapability(transmitter: GeneratorBlockEntity, direction: Direction?): IEnergyStorage {
 			return transmitter.energyStorage
 		}
 	}

@@ -28,9 +28,6 @@ import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.component1
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.component2
-import thedarkcolour.kotlinforforge.neoforge.forge.vectorutil.v3d.component3
 
 class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level), MenuProvider {
 
@@ -94,13 +91,12 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 	override fun remove(reason: RemovalReason) {
 		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
-			val (posX, posY, posZ) =
-				position().add(direction.step().toVec3().scale(0.5))
+			val pos = position().add(direction.step().toVec3().scale(0.5))
 
-			Containers.dropContents(level(), posX, posY, posZ, container)
+			Containers.dropContents(level(), pos.x, pos.y, pos.z, container)
 
 			val item = if (isItemNode) ModItems.FLAT_TRANSFER_NODE_ITEMS.get() else ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
-			Containers.dropItemStack(level(), posX, posY, posZ, item.defaultInstance)
+			Containers.dropItemStack(level(), pos.x, pos.y, pos.z, item.defaultInstance)
 		}
 
 		super.remove(reason)
@@ -129,7 +125,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 	private fun transferItem(level: ServerLevel) {
 		val pos = blockPosition()
-		val targetPos = pos.relative(aiming)
+		pos.relative(aiming)
 
 		val source = originItemHandler ?: return
 		val target = targetItemHandler ?: return
