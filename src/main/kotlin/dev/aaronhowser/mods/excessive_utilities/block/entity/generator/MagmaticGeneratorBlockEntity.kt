@@ -16,7 +16,7 @@ import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 class MagmaticGeneratorBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState,
-) : GeneratorBlockEntity(ModBlockEntityTypes.CULINARY_GENERATOR.get(), pos, blockState) {
+) : GeneratorBlockEntity(ModBlockEntityTypes.MAGMATIC_GENERATOR.get(), pos, blockState) {
 
 	val tank: FluidTank =
 		object : FluidTank(1_000_000) {
