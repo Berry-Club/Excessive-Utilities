@@ -268,8 +268,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("heated_redstone_generator")
 	val CULINARY_GENERATOR: DeferredBlock<GeneratorBlock> =
 		registerBlock("culinary_generator") { GeneratorBlock { ModBlockEntityTypes.CULINARY_GENERATOR.get() } }
-	val POTIONS_GENERATOR =
-		basicBlock("potions_generator")
+	val POTION_GENERATOR: DeferredBlock<GeneratorBlock> =
+		registerBlock("potion_generator") { GeneratorBlock { ModBlockEntityTypes.POTION_GENERATOR.get() } }
 	val EXPLOSIVE_GENERATOR: DeferredBlock<GeneratorBlock> =
 		registerBlock("explosive_generator") { GeneratorBlock { ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get() } }
 	val PINK_GENERATOR: DeferredBlock<GeneratorBlock> =

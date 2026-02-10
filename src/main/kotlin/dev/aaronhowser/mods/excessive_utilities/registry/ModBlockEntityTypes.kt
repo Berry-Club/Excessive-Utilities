@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DeathGene
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.FurnaceFuelGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.NetherStarGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.PotionGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.*
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -91,5 +92,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("culinary_generator", ::CulinaryGeneratorBlockEntity, ModBlocks.CULINARY_GENERATOR)
 	val MAGMATIC_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<MagmaticGeneratorBlockEntity>> =
 		register("magmatic_generator", ::MagmaticGeneratorBlockEntity, ModBlocks.MAGMATIC_GENERATOR)
+	val POTION_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<PotionGeneratorBlockEntity>> =
+		register("potion_generator", ::PotionGeneratorBlockEntity, ModBlocks.POTION_GENERATOR)
 
 }

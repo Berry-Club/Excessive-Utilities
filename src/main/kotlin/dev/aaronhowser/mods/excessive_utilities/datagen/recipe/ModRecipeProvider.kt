@@ -632,7 +632,7 @@ class ModRecipeProvider(
 				)
 			),
 			shapedRecipe(
-				ModBlocks.POTIONS_GENERATOR,
+				ModBlocks.POTION_GENERATOR,
 				"BBB,BSB,RMR",
 				mapOf(
 					'B' to ing(Tags.Items.RODS_BLAZE),
