@@ -191,8 +191,8 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Storage
 
-	val SLIGHTLY_LARGER_CHEST =
-		basicBlock("slightly_larger_chest")
+	val SLIGHTLY_LARGER_CHEST: DeferredBlock<SlightlyLargerChestBlock> =
+		registerBlock("slightly_larger_chest", ::SlightlyLargerChestBlock)
 	val MINI_CHEST =
 		basicBlock("mini_chest")
 	val PLAYER_CHEST =
