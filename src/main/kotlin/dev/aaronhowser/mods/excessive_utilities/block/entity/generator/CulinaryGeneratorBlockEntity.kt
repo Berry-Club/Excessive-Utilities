@@ -6,7 +6,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
 class CulinaryGeneratorBlockEntity(
@@ -19,7 +18,7 @@ class CulinaryGeneratorBlockEntity(
 		return foodValue != null && (foodValue.nutrition > 0 || foodValue.saturation > 0f)
 	}
 
-	override fun tryStartBurning(level: Level): Boolean {
+	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false
 
 		val inputStack = container.getItem(INPUT_SLOT)

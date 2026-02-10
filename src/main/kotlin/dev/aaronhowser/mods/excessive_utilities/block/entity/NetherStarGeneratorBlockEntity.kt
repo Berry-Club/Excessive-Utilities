@@ -4,10 +4,10 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorTy
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 
@@ -16,7 +16,7 @@ class NetherStarGeneratorBlockEntity(
 	blockState: BlockState
 ) : DataDrivenGeneratorBlockEntity(ModBlockEntityTypes.NETHER_STAR_GENERATOR.get(), DataDrivenGeneratorType.NETHER_STAR, pos, blockState) {
 
-	override fun effectOnSuccess(level: Level) {
+	override fun effectOnSuccess(level: ServerLevel) {
 		if (level.gameTime % 20 != 0L) return
 
 		val pos = blockPos
