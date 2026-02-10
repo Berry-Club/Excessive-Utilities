@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
@@ -90,8 +91,10 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 	}
 
 	override fun remove(reason: RemovalReason) {
-		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
-			val pos = position().add(direction.step().toVec3().scale(0.5))
+		if (level().isServerSide && (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED)) {
+			val pos = position()
+				.add(0.0, 0.5, 0.0)
+				.add(direction.step().toVec3().scale(0.5))
 
 			Containers.dropContents(level(), pos.x, pos.y, pos.z, container)
 
