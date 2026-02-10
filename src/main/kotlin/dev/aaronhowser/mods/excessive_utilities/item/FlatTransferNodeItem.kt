@@ -18,10 +18,15 @@ class FlatTransferNodeItem(
 			val direction = context.clickedFace
 			val pos = context.clickedPos
 
-			FlatTransferNodeEntity.place(level, pos, direction, isItemNode)
+			val node = FlatTransferNodeEntity.place(level, pos, direction, isItemNode)
+			val success = node != null
+
+			if (success) {
+				return InteractionResult.SUCCESS
+			}
 		}
 
-		return InteractionResult.SUCCESS
+		return InteractionResult.PASS
 	}
 
 	companion object {
