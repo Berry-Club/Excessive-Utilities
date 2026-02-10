@@ -75,6 +75,12 @@ object CommonEvents {
 			SlightlyLargerChestBlockEntity::getItemHandler
 		)
 
+		event.registerBlockEntity(
+			Capabilities.ItemHandler.BLOCK,
+			ModBlockEntityTypes.MINI_CHEST.get(),
+			MiniChestBlockEntity::getItemHandler
+		)
+
 		val generators = listOf(
 			ModBlockEntityTypes.ENDER_GENERATOR.get(),
 			ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
