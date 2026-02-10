@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.FurnaceFuelGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.NetherStarGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.*
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType

@@ -1,13 +1,14 @@
-package dev.aaronhowser.mods.excessive_utilities.block.entity
+package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
+import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorType
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 
@@ -30,6 +31,14 @@ class NetherStarGeneratorBlockEntity(
 
 			val effect = MobEffectInstance(MobEffects.WITHER, 20 * 5, 1)
 			entity.addEffect(effect)
+		}
+	}
+
+	override fun clientTick(level: Level) {
+		val isActive = blockState.getValue(GeneratorBlock.Companion.LIT)
+
+		if (isActive) {
+
 		}
 	}
 
