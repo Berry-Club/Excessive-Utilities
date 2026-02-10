@@ -5,10 +5,15 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
+import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import kotlin.jvm.optionals.getOrNull
+import kotlin.math.pow
 
 class PotionGeneratorBlockEntity(
 	pos: BlockPos,
@@ -20,6 +25,16 @@ class PotionGeneratorBlockEntity(
 	}
 
 	companion object {
+		fun getPowerFromPotion(level: Level, itemStack: ItemStack): Int {
+			val potion = itemStack.get(DataComponents.POTION_CONTENTS)
+				?.potion
+				?.getOrNull()
+				?: return -1
+
+			val steps = calculateBrewingSteps(level, potion)
+			return 100 * Mth.ceil(4.0.pow(steps))
+		}
+
 		tailrec fun calculateBrewingSteps(
 			level: Level,
 			potion: Holder<Potion>,
