@@ -130,6 +130,7 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		}
 	}
 
+	//FIXME: Dupe bug if placed between two halves of the same Double Chest
 	private fun transferItem(level: ServerLevel) {
 		val source = originItemHandler ?: return
 		val target = targetItemHandler ?: return
