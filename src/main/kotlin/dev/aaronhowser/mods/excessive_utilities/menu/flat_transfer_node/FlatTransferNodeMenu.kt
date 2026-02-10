@@ -1,6 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -24,6 +27,18 @@ class FlatTransferNodeMenu(
 				SimpleContainer(1),
 				null
 			)
+
+	init {
+		checkContainerSize(filterContainer, 1)
+
+		addSlots()
+		addPlayerInventorySlots(84)
+	}
+
+	override fun addSlots() {
+		val filterSlot = FilteredSlot(filterContainer, 0, 40, 40) { it.isItem(ModItemTagsProvider.FILTERS) }
+		this.addSlot(filterSlot)
+	}
 
 	override fun quickMoveStack(player: Player, index: Int): ItemStack {
 		return ItemStack.EMPTY

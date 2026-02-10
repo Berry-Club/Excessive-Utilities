@@ -66,6 +66,13 @@ class ModItemTagsProvider(
 				ModItems.FLAT_TRANSFER_NODE_ITEMS.get(),
 				ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
 			)
+
+		tag(FILTERS)
+			.add(
+				ModItems.ITEM_FILTER.get(),
+				ModItems.ADVANCED_ITEM_FILTER.get(),
+				ModItems.FLUID_FILTER.get()
+			)
 	}
 
 	companion object {
@@ -77,6 +84,7 @@ class ModItemTagsProvider(
 		val CORPSE_PARTS = create("corpse_parts")
 		val SPEED_UPGRADES = create("speed_upgrades")
 		val INTERACT_WITH_FLAT_TRANSFER_NODES = create("interact_with_flat_transfer_nodes")
+		val FILTERS = create("filters")
 	}
 
 }
