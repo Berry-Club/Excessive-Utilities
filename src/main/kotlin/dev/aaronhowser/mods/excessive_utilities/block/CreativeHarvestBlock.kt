@@ -68,15 +68,13 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		return super.getDestroyProgress(state, player, level, pos)
 	}
 
-	override fun playerDestroy(
-		level: Level,
-		player: Player,
-		pos: BlockPos,
-		state: BlockState,
-		blockEntity: BlockEntity?,
-		tool: ItemStack
-	) {
-		if (level !is ServerLevel || blockEntity !is CreativeHarvestBlockEntity) return
+	override fun onDestroyedByPlayer(state: BlockState, level: Level, pos: BlockPos, player: Player, willHarvest: Boolean, fluid: FluidState): Boolean {
+		val blockEntity = level.getBlockEntity(pos)
+		if (!willHarvest || level !is ServerLevel || blockEntity !is CreativeHarvestBlockEntity) {
+			return super.onDestroyedByPlayer(state, level, pos, player, willHarvest, fluid)
+		}
+
+		val tool = player.mainHandItem
 
 		val mimicBlockState = blockEntity.mimicBlockState
 
@@ -90,10 +88,8 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		for (drop in drops) {
 			popResource(level, pos, drop)
 		}
-	}
 
-	override fun onDestroyedByPlayer(state: BlockState, level: Level, pos: BlockPos, player: Player, willHarvest: Boolean, fluid: FluidState): Boolean {
-		return player.isSecondaryUseActive
+		return false
 	}
 
 }
