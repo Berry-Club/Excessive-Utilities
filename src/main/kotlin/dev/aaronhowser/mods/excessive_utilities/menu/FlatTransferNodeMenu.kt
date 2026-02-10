@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
+import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -25,11 +26,15 @@ class FlatTransferNodeMenu(
 			)
 
 	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		TODO("Not yet implemented")
+		return ItemStack.EMPTY
 	}
 
 	override fun stillValid(player: Player): Boolean {
-		TODO("Not yet implemented")
+		if (filterEntity == null) return true // Client side
+
+		return filterEntity.isAlive
+				&& filterContainer.stillValid(player)
+				&& player.canInteractWithEntity(filterEntity, player.getAttributeValue(Attributes.ENTITY_INTERACTION_RANGE))
 	}
 
 }
