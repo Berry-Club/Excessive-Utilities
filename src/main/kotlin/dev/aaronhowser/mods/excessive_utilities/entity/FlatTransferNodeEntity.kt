@@ -24,6 +24,7 @@ import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level), MenuProvider {
@@ -48,6 +49,16 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 			}
 		}
 
+	val originItemHandler: IItemHandler?
+		get() = level().getCapability(Capabilities.ItemHandler.BLOCK, blockPosition(), aiming)
+	val targetItemHandler: IItemHandler?
+		get() = level().getCapability(Capabilities.ItemHandler.BLOCK, blockPosition().relative(aiming), aiming.opposite)
+
+	val originFluidHandler: IFluidHandler?
+		get() = level().getCapability(Capabilities.FluidHandler.BLOCK, blockPosition(), aiming)
+	val targetFluidHandler: IFluidHandler?
+		get() = level().getCapability(Capabilities.FluidHandler.BLOCK, blockPosition().relative(aiming), aiming.opposite)
+
 	override fun tick() {
 		super.tick()
 
@@ -68,9 +79,9 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 	private fun tryBreak(level: ServerLevel): Boolean {
 		val shouldBreak = if (isItemNode) {
-			level.getCapability(Capabilities.ItemHandler.BLOCK, blockPosition(), aiming) == null
+			originItemHandler == null
 		} else {
-			level.getCapability(Capabilities.FluidHandler.BLOCK, blockPosition(), aiming) == null
+			originFluidHandler == null
 		}
 
 		return shouldBreak
@@ -83,11 +94,9 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 	}
 
 	private fun transferFluid(level: ServerLevel) {
-		val pos = blockPosition()
-		val targetPos = pos.relative(aiming)
 
-		val source = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, aiming) ?: return
-		val target = level.getCapability(Capabilities.FluidHandler.BLOCK, targetPos, aiming.opposite) ?: return
+		val source = originFluidHandler ?: return
+		val target = targetFluidHandler ?: return
 
 		for (i in 0 until source.tanks) {
 			val fluidToMove = source.getFluidInTank(i)
@@ -109,8 +118,8 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		val pos = blockPosition()
 		val targetPos = pos.relative(aiming)
 
-		val source = level.getCapability(Capabilities.ItemHandler.BLOCK, pos, aiming) ?: return
-		val target = level.getCapability(Capabilities.ItemHandler.BLOCK, targetPos, aiming.opposite) ?: return
+		val source = originItemHandler ?: return
+		val target = targetItemHandler ?: return
 
 		for (i in 0 until source.slots) {
 			val stackToMove = source.getStackInSlot(i)
