@@ -36,7 +36,7 @@ class FlatTransferNodeMenu(
 	}
 
 	override fun addSlots() {
-		val filterSlot = FilteredSlot(filterContainer, 0, 40, 40) { it.isItem(ModItemTagsProvider.FILTERS) }
+		val filterSlot = FilteredSlot(filterContainer, 0, 80, 34) { it.isItem(ModItemTagsProvider.FILTERS) }
 		this.addSlot(filterSlot)
 	}
 
