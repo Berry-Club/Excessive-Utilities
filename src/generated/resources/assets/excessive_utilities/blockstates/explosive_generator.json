@@ -2,7 +2,11 @@
   "multipart": [
     {
       "apply": {
-        "model": "excessive_utilities:block/explosive_generator_top_overlay"
+        "model": "excessive_utilities:block/explosive_generator_top_overlay",
+        "y": 180
+      },
+      "when": {
+        "facing": "north"
       }
     },
     {
@@ -29,6 +33,15 @@
       "when": {
         "facing": "north",
         "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/explosive_generator_top_overlay",
+        "y": 270
+      },
+      "when": {
+        "facing": "east"
       }
     },
     {
@@ -62,6 +75,15 @@
     },
     {
       "apply": {
+        "model": "excessive_utilities:block/explosive_generator_top_overlay",
+        "y": 360
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
         "model": "excessive_utilities:block/explosive_generator_base",
         "y": 180
       },
@@ -87,6 +109,15 @@
       "when": {
         "facing": "south",
         "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/explosive_generator_top_overlay",
+        "y": 450
+      },
+      "when": {
+        "facing": "west"
       }
     },
     {

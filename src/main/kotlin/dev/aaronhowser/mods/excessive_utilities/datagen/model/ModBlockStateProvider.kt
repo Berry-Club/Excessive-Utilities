@@ -87,22 +87,19 @@ class ModBlockStateProvider(
 
 		val baseModel = models()
 			.orientableWithBottom(name + "_base", side, front, bottom, top)
+			.texture("particle", side)
 
 		val multipartBuilder = getMultipartBuilder(block)
 
 		val onFace = ModelFile.ExistingModelFile(modLoc("block/generator_face_on"), existingFileHelper)
 		val offFace = ModelFile.ExistingModelFile(modLoc("block/generator_face_off"), existingFileHelper)
 
+		var topModel: ModelFile? = null
+
 		if (topOverlay != null) {
-			val topModel = models()
+			topModel = models()
 				.withExistingParent(name + "_top_overlay", modLoc("block/generator_top_overlay"))
 				.texture("overlay", topOverlay)
-
-			multipartBuilder
-				.part()
-				.modelFile(topModel)
-				.addModel()
-				.end()
 		}
 
 		for (direction in Direction.Plane.HORIZONTAL) {
@@ -112,6 +109,16 @@ class ModBlockStateProvider(
 				Direction.SOUTH -> 180
 				Direction.WEST -> 270
 				else -> 0
+			}
+
+			if (topModel != null) {
+				multipartBuilder
+					.part()
+					.modelFile(topModel)
+					.rotationY(yRotation + 180)
+					.addModel()
+					.condition(GeneratorBlock.FACING, direction)
+					.end()
 			}
 
 			multipartBuilder
