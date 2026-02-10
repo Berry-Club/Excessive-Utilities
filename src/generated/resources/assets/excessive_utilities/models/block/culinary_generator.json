@@ -1,28 +1,61 @@
 {
-  "parent": "minecraft:block/orientable_with_bottom",
+  "parent": "minecraft:block/block",
   "elements": [
     {
       "faces": {
+        "down": {
+          "texture": "#bottom"
+        },
+        "east": {
+          "texture": "#side"
+        },
         "north": {
-          "texture": "#face"
+          "texture": "#front"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "west": {
+          "texture": "#side"
         }
       },
       "from": [
-        -0.01,
         0,
-        -0.01
+        0,
+        0
       ],
       "to": [
-        -0.01,
         16,
-        -0.01
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "south": {
+          "texture": "#overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        0.01
       ]
     }
   ],
+  "render_type": "minecraft:translucent",
   "textures": {
     "bottom": "excessive_utilities:block/generator/bottom",
-    "face": "excessive_utilities:block/generator/on",
     "front": "excessive_utilities:block/generator/side",
+    "overlay": "excessive_utilities:block/generator/off",
     "side": "excessive_utilities:block/generator/side",
     "top": "excessive_utilities:block/generator/top"
   }

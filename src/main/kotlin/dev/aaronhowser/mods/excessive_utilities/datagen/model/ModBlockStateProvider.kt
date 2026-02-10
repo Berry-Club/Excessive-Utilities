@@ -43,17 +43,34 @@ class ModBlockStateProvider(
 	) {
 		val name = name(generatorBlock)
 
-		val model = models()
-			.orientableWithBottom(name, side, front, bottom, top)
-			.texture("face", modLoc("block/generator/off"))
+		val model =
+			models()
+				.withExistingParent(name, mcLoc("block/block"))
+				.texture("top", top)
+				.texture("side", side)
+				.texture("bottom", bottom)
+				.texture("front", front)
+				.texture("overlay", modLoc("block/generator/off"))
+				.renderType(RenderType.translucent().name)
 
-			.element()
-			.from(-0.01f, 0f, -0.01f)
-			.to(-0.01f, 16f, -0.01f)
-			.face(Direction.NORTH)
-			.texture("#face")
-			.end()
-			.end()
+				.element()
+				.from(0f, 0f, 0f)
+				.to(16f, 16f, 16f)
+				.face(Direction.NORTH).texture("#front").end()
+				.face(Direction.SOUTH).texture("#side").end()
+				.face(Direction.WEST).texture("#side").end()
+				.face(Direction.EAST).texture("#side").end()
+				.face(Direction.UP).texture("#top").end()
+				.face(Direction.DOWN).texture("#bottom").end()
+				.end()
+
+				.element()
+				.from(0f, 0f, 0f)
+				.to(16f, 16f, 0.01f)
+				.face(Direction.SOUTH)
+				.texture("#overlay")
+				.end()
+				.end()
 
 		getVariantBuilder(generatorBlock)
 			.forAllStates {
@@ -68,11 +85,10 @@ class ModBlockStateProvider(
 					else -> 0
 				}
 
-				val modelFile = if (isLit) {
-					model.texture("face", modLoc("block/generator/on"))
-				} else {
-					model
-				}
+				val modelFile = model.texture(
+					"overlay",
+					if (isLit) modLoc("block/generator/on") else modLoc("block/generator/off")
+				)
 
 				ConfiguredModel
 					.builder()
