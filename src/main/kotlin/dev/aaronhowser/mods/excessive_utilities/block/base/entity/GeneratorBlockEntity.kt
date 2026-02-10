@@ -9,7 +9,6 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -57,7 +56,7 @@ abstract class GeneratorBlockEntity(
 			setChanged()
 		}
 
-	protected open fun serverTick(level: ServerLevel) {
+	protected open fun tick(level: Level) {
 		val speed = container.getSpeed()
 
 		var success = false
@@ -70,12 +69,12 @@ abstract class GeneratorBlockEntity(
 		}
 	}
 
-	protected open fun effectOnSuccess(level: ServerLevel) {}
+	protected open fun effectOnSuccess(level: Level) {}
 
 	/**
 	 * @return true if it generated energy
 	 */
-	protected open fun generatorTick(level: ServerLevel): Boolean {
+	protected open fun generatorTick(level: Level): Boolean {
 		if (burnTimeRemaining <= 0) {
 			fePerTick = 0
 			val startedBurning = tryStartBurning(level)
@@ -102,12 +101,12 @@ abstract class GeneratorBlockEntity(
 		return generatedPower
 	}
 
-	protected abstract fun tryStartBurning(level: ServerLevel): Boolean
+	protected abstract fun tryStartBurning(level: Level): Boolean
 
 	/**
 	 * @return true if it generated energy
 	 */
-	protected open fun generateEnergy(level: ServerLevel): Boolean {
+	protected open fun generateEnergy(level: Level): Boolean {
 		val remainingCapacity = energyStorage.maxEnergyStored - energyStorage.energyStored
 		if (remainingCapacity <= 0) return false
 
@@ -118,8 +117,6 @@ abstract class GeneratorBlockEntity(
 		setChanged()
 		return true
 	}
-
-	protected open fun clientTick(level: Level) {}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
@@ -155,11 +152,7 @@ abstract class GeneratorBlockEntity(
 			blockState: BlockState,
 			blockEntity: GeneratorBlockEntity
 		) {
-			if (level is ServerLevel) {
-				blockEntity.serverTick(level)
-			} else {
-				blockEntity.clientTick(level)
-			}
+			blockEntity.tick(level)
 		}
 
 		fun getEnergyCapability(transmitter: GeneratorBlockEntity, direction: Direction?): IEnergyStorage {

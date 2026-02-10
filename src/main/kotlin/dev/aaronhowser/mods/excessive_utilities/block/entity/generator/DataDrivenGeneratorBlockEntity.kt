@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
@@ -26,7 +27,7 @@ open class DataDrivenGeneratorBlockEntity(
 		return itemFuel != null
 	}
 
-	override fun tryStartBurning(level: ServerLevel): Boolean {
+	override fun tryStartBurning(level: Level): Boolean {
 		if (burnTimeRemaining > 0) return false
 
 		val fuelMap = generatorType.fuelDataMap
