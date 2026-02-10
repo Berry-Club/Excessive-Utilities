@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-10T03:45:51.4917979	Item Models: excessive_utilities
+// 1.21.1	2026-02-10T05:14:39.8164409	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
 fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/bedrockium_ingot.json
@@ -17,6 +17,14 @@ c520303713ce05e8b299bb6e6682556d440c8b50 assets/excessive_utilities/models/item/
 1c0bdc2e6923cd0faa6617c3d80eeaf510efe4a7 assets/excessive_utilities/models/item/enchanted_ingot.json
 7207a6558de79105a54ef7751ddced56c1a10134 assets/excessive_utilities/models/item/ender_lily.json
 a432bafac9099006088a89d242c96f2a7ba87b69 assets/excessive_utilities/models/item/ender_receiver.json
+e2dd63a0060f9f9e40e6ba268439896945542b53 assets/excessive_utilities/models/item/ender_shard_1.json
+2b2ab33d47a2f43c67ebc48bd4ae3d6a41b6132d assets/excessive_utilities/models/item/ender_shard_2.json
+103b0ec789b6c4628624319b9b1c629e8281c7e4 assets/excessive_utilities/models/item/ender_shard_3.json
+6339a2fbd40de2ea67e82bf38e69e5165af7498e assets/excessive_utilities/models/item/ender_shard_4.json
+6206834c34319f39918f8f5cc13463627272762a assets/excessive_utilities/models/item/ender_shard_5.json
+b8af41e9669378d590ab4650f5d04b874482bc7d assets/excessive_utilities/models/item/ender_shard_6.json
+8e773a4f0297b4ae321ed1b4c735c1d234878746 assets/excessive_utilities/models/item/ender_shard_7.json
+cf39ecc246fda2e2d5c245e6827aa6278fb42775 assets/excessive_utilities/models/item/ender_shard_8.json
 012763f8611298975a315edfa08dcd701fb09cc2 assets/excessive_utilities/models/item/ender_transmitter.json
 12ece51bc02860a2d3137606b1872011e271f831 assets/excessive_utilities/models/item/erosion_shovel.json
 897481f389fe84f11878af016887672c456d6c2a assets/excessive_utilities/models/item/etheric_sword.json

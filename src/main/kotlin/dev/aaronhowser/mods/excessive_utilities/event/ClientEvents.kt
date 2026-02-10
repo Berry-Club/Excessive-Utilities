@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.event
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
+import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -63,6 +64,11 @@ object ClientEvents {
 			EntityLassoItem.HAS_ENTITY,
 			EntityLassoItem::hasEntityPredicate
 		)
+
+		ItemProperties.register(
+			ModItems.ENDER_SHARD.get(),
+			ModItemModelProvider.ENDER_SHARD_COUNT
+		) { stack, level, entity, seed -> stack.count.toFloat() }
 	}
 
 	@SubscribeEvent

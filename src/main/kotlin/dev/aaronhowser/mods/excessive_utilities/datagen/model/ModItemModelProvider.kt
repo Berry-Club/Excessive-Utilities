@@ -8,6 +8,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -24,6 +25,7 @@ class ModItemModelProvider(
 		unstableTools()
 		bewlrs()
 		flatTransferNodes()
+		enderShard()
 
 		basicItems()
 	}
@@ -145,6 +147,28 @@ class ModItemModelProvider(
 		handledItems.add(cursedLasso)
 	}
 
+	fun enderShard() {
+		val item = ModItems.ENDER_SHARD.get()
+
+		fun getModelForCount(count: Int): ItemModelBuilder {
+			return getBuilder(getName(item).toString() + "_" + count)
+				.parent(ModelFile.UncheckedModelFile("item/generated"))
+				.texture("layer0", modLoc("item/ender_shard/$count"))
+		}
+
+		val model = getModelForCount(1)
+
+		for (i in 2..8) {
+			model
+				.override()
+				.predicate(ENDER_SHARD_COUNT, (i).toFloat())
+				.model(getModelForCount(i))
+				.end()
+		}
+
+		handledItems.add(item)
+	}
+
 	private fun basicItems() {
 		val skipThese = setOf(
 			ModItems.ANGEL_RING.get(),
@@ -187,6 +211,10 @@ class ModItemModelProvider(
 
 	private fun getName(item: Item): ResourceLocation {
 		return BuiltInRegistries.ITEM.getKey(item)
+	}
+
+	companion object {
+		val ENDER_SHARD_COUNT = ExcessiveUtilities.modResource("ender_shard_count")
 	}
 
 }
