@@ -573,7 +573,7 @@ class ModRecipeProvider(
 				)
 			),
 			shapedRecipe(
-				ModBlocks.SURVIVALIST_GENERATOR,
+				ModBlocks.SURVIVAL_GENERATOR,
 				"CCC,CIC,RFR",
 				mapOf(
 					'C' to ing(Tags.Items.COBBLESTONES_NORMAL),

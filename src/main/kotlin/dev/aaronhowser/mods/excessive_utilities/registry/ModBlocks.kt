@@ -249,10 +249,10 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val CREATIVE_ENERGY_SOURCE =
 		basicBlock("creative_energy_source")
-	val SURVIVALIST_GENERATOR =
-		basicBlock("survivalist_generator")
-	val FURNACE_GENERATOR =
-		basicBlock("furnace_generator")
+	val SURVIVAL_GENERATOR: DeferredBlock<GeneratorBlock> =
+		registerBlock("survival_generator") { GeneratorBlock { ModBlockEntityTypes.SURVIVAL_GENERATOR.get() } }
+	val FURNACE_GENERATOR: DeferredBlock<GeneratorBlock> =
+		registerBlock("furnace_generator") { GeneratorBlock { ModBlockEntityTypes.FURNACE_GENERATOR.get() } }
 	val MAGMATIC_GENERATOR =
 		basicBlock("magmatic_generator")
 	val ENDER_GENERATOR: DeferredBlock<GeneratorBlock> =

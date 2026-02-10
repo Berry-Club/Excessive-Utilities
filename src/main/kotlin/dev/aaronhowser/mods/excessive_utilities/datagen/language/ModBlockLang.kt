@@ -95,7 +95,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.TRANSFER_PIPE_FILTER, "Transfer Pipe Filter")
 
 			addBlock(ModBlocks.CREATIVE_ENERGY_SOURCE, "Creative Energy Source")
-			addBlock(ModBlocks.SURVIVALIST_GENERATOR, "Survivalist Generator")
+			addBlock(ModBlocks.SURVIVAL_GENERATOR, "Survivalist Generator")
 			addBlock(ModBlocks.FURNACE_GENERATOR, "Furnace Generator")
 			addBlock(ModBlocks.MAGMATIC_GENERATOR, "Magmatic Generator")
 			addBlock(ModBlocks.ENDER_GENERATOR, "Ender Generator")
