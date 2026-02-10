@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-class DataDrivenGeneratorBlockEntity(
+open class DataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	val generatorType: DataDrivenGeneratorType,
 	pos: BlockPos,
@@ -43,12 +43,6 @@ class DataDrivenGeneratorBlockEntity(
 		setChanged()
 
 		return true
-	}
-
-	override fun effectOnSuccess(level: ServerLevel) {
-		if (this.level != null) {
-			generatorType.effectOnTick.accept(this)
-		}
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -82,13 +76,6 @@ class DataDrivenGeneratorBlockEntity(
 		fun pink(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.PINK_GENERATOR.get(),
 			generatorType = DataDrivenGeneratorType.PINK,
-			pos = pos,
-			blockState = state
-		)
-
-		fun netherStar(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
-			type = ModBlockEntityTypes.NETHER_STAR_GENERATOR.get(),
-			generatorType = DataDrivenGeneratorType.NETHER_STAR,
 			pos = pos,
 			blockState = state
 		)

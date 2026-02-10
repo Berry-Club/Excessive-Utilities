@@ -77,7 +77,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 	val PINK_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("pink_generator", DataDrivenGeneratorBlockEntity::pink, ModBlocks.PINK_GENERATOR)
 	val NETHER_STAR_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
-		register("nether_star_generator", DataDrivenGeneratorBlockEntity::netherStar, ModBlocks.NETHER_STAR_GENERATOR)
+		register("nether_star_generator", ::NetherStarGeneratorBlockEntity, ModBlocks.NETHER_STAR_GENERATOR)
 	val FROSTY_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
 		register("frosty_generator", DataDrivenGeneratorBlockEntity::frosty, ModBlocks.FROSTY_GENERATOR)
 	val HALITOSIS_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DataDrivenGeneratorBlockEntity>> =
