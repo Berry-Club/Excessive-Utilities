@@ -82,7 +82,16 @@ abstract class GeneratorBlockEntity(
 			if (burnTimeRemaining <= 0) return false
 		}
 
-		return generateEnergy(level)
+		val wasLit = blockState.getValue(GeneratorBlock.LIT)
+		val generatedPower = generateEnergy(level)
+
+		if (generatedPower && !wasLit) {
+			level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, true))
+		} else if (!generatedPower && wasLit) {
+			level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, false))
+		}
+
+		return generatedPower
 	}
 
 	protected abstract fun tryStartBurning(level: ServerLevel): Boolean
