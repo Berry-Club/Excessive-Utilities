@@ -1,0 +1,11 @@
+{
+  "parent": "excessive_utilities:block/generator_base",
+  "textures": {
+    "bottom": "minecraft:block/furnace_top",
+    "front_overlay": "excessive_utilities:block/generator/off",
+    "particle": "minecraft:block/furnace_top",
+    "side": "minecraft:block/furnace_side",
+    "top": "minecraft:block/furnace_top",
+    "top_overlay": "excessive_utilities:block/generator/top/nothing"
+  }
+}

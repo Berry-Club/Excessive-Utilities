@@ -45,7 +45,6 @@ class ModBlockStateProvider(
 	}
 
 	private fun generators() {
-
 		models()
 			.withExistingParent("generator_base", mcLoc("block/block"))
 			.texture("bottom", modLoc("block/generator/bottom"))
@@ -87,11 +86,55 @@ class ModBlockStateProvider(
 			.texture("#front_overlay")
 			.end()
 
+		makeGenerator(ModBlocks.FURNACE_GENERATOR.get(), "nothing")
 		makeGenerator(ModBlocks.PINK_GENERATOR.get(), "pink")
 		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), "death")
 		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), "ender")
 		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), "explosive")
 		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), "culinary")
+		survivalGenerator()
+	}
+
+	private fun survivalGenerator() {
+		val block = ModBlocks.SURVIVAL_GENERATOR.get()
+		val name = name(block)
+		val modelOff = models()
+			.withExistingParent(name + "_off", modLoc("generator_base"))
+			.texture("top_overlay", modLoc("block/generator/top/nothing"))
+			.texture("front_overlay", modLoc("block/generator/off"))
+			.texture("bottom", mcLoc("block/furnace_top"))
+			.texture("top", mcLoc("block/furnace_top"))
+			.texture("particle", mcLoc("block/furnace_top"))
+			.texture("side", mcLoc("block/furnace_side"))
+
+		val modelOn = models()
+			.withExistingParent(name + "_on", modLoc("generator_base"))
+			.texture("top_overlay", modLoc("block/generator/top/nothing"))
+			.texture("front_overlay", modLoc("block/generator/on"))
+
+		getVariantBuilder(block)
+			.forAllStates {
+				val direction = it.getValue(GeneratorBlock.FACING)
+				val isLit = it.getValue(GeneratorBlock.LIT)
+
+				val yRotation = when (direction) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val modelFile = if (isLit) modelOn else modelOff
+
+				ConfiguredModel
+					.builder()
+					.modelFile(modelFile)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		simpleBlockItem(block, modelOff)
 	}
 
 	private fun makeGenerator(

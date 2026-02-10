@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "excessive_utilities:survivalist_generator"
+          "name": "excessive_utilities:survival_generator"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "excessive_utilities:blocks/survivalist_generator"
+  "random_sequence": "excessive_utilities:blocks/survival_generator"
 }
