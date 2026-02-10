@@ -73,24 +73,43 @@ class ModBlockStateProvider(
 		val baseModel = models()
 			.orientableWithBottom(name + "_base", side, front, bottom, top)
 
-		getMultipartBuilder(block)
+		val multipartBuilder = getMultipartBuilder(block)
 
-			.part()
-			.modelFile(baseModel)
-			.addModel()
-			.end()
+		for (direction in Direction.Plane.HORIZONTAL) {
+			val yRotation = when (direction) {
+				Direction.NORTH -> 0
+				Direction.EAST -> 90
+				Direction.SOUTH -> 180
+				Direction.WEST -> 270
+				else -> 0
+			}
 
-			.part()
-			.modelFile(onFace)
-			.addModel()
-			.condition(GeneratorBlock.LIT, true)
-			.end()
+			multipartBuilder
+				.part()
+				.modelFile(baseModel)
+				.rotationY(yRotation)
+				.addModel()
+				.condition(GeneratorBlock.FACING, direction)
+				.end()
 
-			.part()
-			.modelFile(offFace)
-			.addModel()
-			.condition(GeneratorBlock.LIT, false)
-			.end()
+			multipartBuilder
+				.part()
+				.modelFile(onFace)
+				.rotationY(yRotation)
+				.addModel()
+				.condition(GeneratorBlock.FACING, direction)
+				.condition(GeneratorBlock.LIT, true)
+				.end()
+
+			multipartBuilder
+				.part()
+				.modelFile(offFace)
+				.rotationY(yRotation)
+				.addModel()
+				.condition(GeneratorBlock.FACING, direction)
+				.condition(GeneratorBlock.LIT, false)
+				.end()
+		}
 
 		simpleBlockItem(block, baseModel)
 	}

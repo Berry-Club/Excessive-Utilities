@@ -3,6 +3,9 @@
     {
       "apply": {
         "model": "excessive_utilities:block/culinary_generator_base"
+      },
+      "when": {
+        "facing": "north"
       }
     },
     {
@@ -10,6 +13,7 @@
         "model": "excessive_utilities:block/generator_face_on"
       },
       "when": {
+        "facing": "north",
         "lit": "true"
       }
     },
@@ -18,6 +22,94 @@
         "model": "excessive_utilities:block/generator_face_off"
       },
       "when": {
+        "facing": "north",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/culinary_generator_base",
+        "y": 90
+      },
+      "when": {
+        "facing": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_on",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_off",
+        "y": 90
+      },
+      "when": {
+        "facing": "east",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/culinary_generator_base",
+        "y": 180
+      },
+      "when": {
+        "facing": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_on",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_off",
+        "y": 180
+      },
+      "when": {
+        "facing": "south",
+        "lit": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/culinary_generator_base",
+        "y": 270
+      },
+      "when": {
+        "facing": "west"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_on",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
+        "lit": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/generator_face_off",
+        "y": 270
+      },
+      "when": {
+        "facing": "west",
         "lit": "false"
       }
     }
