@@ -69,6 +69,12 @@ object CommonEvents {
 			WirelessFeTransmitterBlockEntity::getEnergyCapability
 		)
 
+		event.registerBlockEntity(
+			Capabilities.ItemHandler.BLOCK,
+			ModBlockEntityTypes.SLIGHTLY_LARGER_CHEST.get(),
+			SlightlyLargerChestBlockEntity::getItemHandler
+		)
+
 		val generators = listOf(
 			ModBlockEntityTypes.ENDER_GENERATOR.get(),
 			ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
