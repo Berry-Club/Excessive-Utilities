@@ -15,9 +15,9 @@ import net.minecraft.world.level.block.state.BlockState
 class SlightlyLargerChestBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.CHANDELIER.get(), pos, blockState), MenuProvider {
+) : BlockEntity(ModBlockEntityTypes.SLIGHTLY_LARGER_CHEST.get(), pos, blockState), MenuProvider {
 
-	private val container = ImprovedSimpleContainer(this, 9 * 3)
+	val container = ImprovedSimpleContainer(this, 9 * 3)
 
 	override fun getDisplayName(): Component = blockState.block.name
 

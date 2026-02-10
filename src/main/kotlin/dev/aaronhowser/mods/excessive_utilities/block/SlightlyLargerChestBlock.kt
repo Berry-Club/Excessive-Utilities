@@ -1,7 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.SlightlyLargerChestBlockEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.world.Container
+import net.minecraft.world.Containers
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Player
@@ -27,6 +30,16 @@ class SlightlyLargerChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), Ent
 		} else {
 			return InteractionResult.PASS
 		}
+	}
+
+	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
+		if (!state.isBlock(newState.block)) {
+			val be = level.getBlockEntity(pos)
+			if (be is SlightlyLargerChestBlockEntity) {
+				Containers.dropContents(level, pos, be.container)
+			}
+		}
+		super.onRemove(state, level, pos, newState, movedByPiston)
 	}
 
 }
