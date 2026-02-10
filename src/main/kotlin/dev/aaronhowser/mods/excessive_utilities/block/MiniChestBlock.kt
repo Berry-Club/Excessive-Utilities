@@ -10,6 +10,7 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -20,6 +21,8 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.VoxelShape
 
 class MiniChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), EntityBlock {
 
@@ -37,6 +40,10 @@ class MiniChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), EntityBlock {
 	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
+	}
+
+	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
+		return SHAPE
 	}
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
@@ -75,6 +82,7 @@ class MiniChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), EntityBlock {
 
 	companion object {
 		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val SHAPE: VoxelShape = box(5.0, 0.0, 5.0, 11.0, 5.0, 10.0)
 	}
 
 }
