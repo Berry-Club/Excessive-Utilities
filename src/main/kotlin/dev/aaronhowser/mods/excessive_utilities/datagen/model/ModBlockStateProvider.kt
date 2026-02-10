@@ -47,17 +47,10 @@ class ModBlockStateProvider(
 					else -> 0
 				}
 
-				val xRotation = when (facing) {
-					Direction.UP -> 270
-					Direction.DOWN -> 90
-					else -> 0
-				}
-
 				ConfiguredModel
 					.builder()
 					.modelFile(model)
 					.rotationY(yRotation)
-					.rotationX(xRotation)
 					.build()
 			}
 

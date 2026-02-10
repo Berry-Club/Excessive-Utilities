@@ -35,7 +35,7 @@ class SlightlyLargerChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), Ent
 
 	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
 		return defaultBlockState()
-			.setValue(FACING, context.nearestLookingDirection.opposite)
+			.setValue(FACING, context.horizontalDirection.opposite)
 	}
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
@@ -63,7 +63,7 @@ class SlightlyLargerChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), Ent
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.FACING
+		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
 	}
 
 }
