@@ -20,6 +20,7 @@ class ServerConfig(
 	lateinit var ironDrumCapacity: ModConfigSpec.IntValue
 	lateinit var reinforcedLargeDrumCapacity: ModConfigSpec.IntValue
 	lateinit var demonicallyGargantuanDrumCapacity: ModConfigSpec.IntValue
+	lateinit var bedrockDrumCapacity: ModConfigSpec.IntValue
 
 	lateinit var manualMillGenerationPerPlayer: ModConfigSpec.DoubleValue
 	lateinit var solarPanelGeneration: ModConfigSpec.DoubleValue
@@ -157,6 +158,10 @@ class ServerConfig(
 		demonicallyGargantuanDrumCapacity = builder
 			.comment("The fluid capacity of Demonically Gargantuan Drums in millibuckets.")
 			.defineInRange("demonicallyGargantuanDrumCapacity", 65_536_000, 1, Int.MAX_VALUE)
+
+		bedrockDrumCapacity = builder
+			.comment("The fluid capacity of Bedrock Drums in millibuckets.")
+			.defineInRange("bedrockDrumCapacity", 1_048_576_000, 1, Int.MAX_VALUE)
 
 		builder.pop()
 	}

@@ -1,8 +1,9 @@
-// 1.21.1	2026-02-10T04:39:00.5379175	Loot Tables
+// 1.21.1	2026-02-10T05:42:33.1615577	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 dfd3eb1c14ba5a4b83fdae1b1844caadf489ebdb data/excessive_utilities/loot_table/blocks/advanced_observer.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
 ac31ab7f157f056f8d68ab88ed82665e96def45d data/excessive_utilities/loot_table/blocks/antenna.json
+1eecbac8a2f132211740430b4ff7d225acfe03bd data/excessive_utilities/loot_table/blocks/bedrockium_drum.json
 b44a4e0b21f4cbca3941775d30c5c18319f82f24 data/excessive_utilities/loot_table/blocks/bedrock_bricks.json
 e693e9251789ade417f7db72a56f344bb6f4b2d2 data/excessive_utilities/loot_table/blocks/bedrock_cobblestone.json
 ca8c59bf09338dc71ed6154f4bb2286df366058e data/excessive_utilities/loot_table/blocks/bedrock_slabs.json

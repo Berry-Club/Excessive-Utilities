@@ -527,6 +527,15 @@ class ModRecipeProvider(
 				)
 			),
 			shapedRecipe(
+				ModBlocks.BEDROCKIUM_DRUM,
+				"DBD,DRD,DBD",
+				mapOf(
+					'D' to ing(ModItems.BEDROCKIUM_INGOT),
+					'B' to ing(ModBlocks.BEDROCKIUM_DRUM),
+					'R' to ing(ModBlocks.DEMONICALLY_GARGANTUAN_DRUM)
+				)
+			),
+			shapedRecipe(
 				ModBlocks.MACHINE_BLOCK,
 				4,
 				"IRI,RCR,IRI",
@@ -1407,6 +1416,11 @@ class ModRecipeProvider(
 			ModBlocks.DEMONICALLY_GARGANTUAN_DRUM,
 			listOf(ing(ModBlocks.DEMONICALLY_GARGANTUAN_DRUM))
 		).save(recipeOutput, modLoc("demonically_gargantuan_drum_empty"))
+
+		shapelessRecipe(
+			ModBlocks.BEDROCKIUM_DRUM,
+			listOf(ing(ModBlocks.BEDROCKIUM_DRUM))
+		).save(recipeOutput, modLoc("bedrockium_drum_empty"))
 
 		shapelessRecipe(
 			ModBlocks.CREATIVE_DRUM,

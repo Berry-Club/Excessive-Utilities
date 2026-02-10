@@ -209,6 +209,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("reinforced_large_drum", ::DrumBlock)
 	val DEMONICALLY_GARGANTUAN_DRUM: DeferredBlock<DrumBlock> =
 		registerBlock("demonically_gargantuan_drum", ::DrumBlock)
+	val BEDROCKIUM_DRUM: DeferredBlock<DrumBlock> =
+		registerBlock("bedrockium_drum", ::DrumBlock)
 	val CREATIVE_DRUM: DeferredBlock<DrumBlock> =
 		registerBlock("creative_drum", ::DrumBlock)
 	val CREATIVE_CHEST =

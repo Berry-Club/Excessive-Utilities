@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "excessive_utilities:bedrockium_drum"
+    },
+    "D": {
+      "item": "excessive_utilities:bedrockium_ingot"
+    },
+    "R": {
+      "item": "excessive_utilities:demonically_gargantuan_drum"
+    }
+  },
+  "pattern": [
+    "DBD",
+    "DRD",
+    "DBD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:bedrockium_drum"
+  }
+}
