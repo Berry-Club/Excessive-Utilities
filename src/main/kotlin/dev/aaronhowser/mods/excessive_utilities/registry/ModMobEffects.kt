@@ -17,8 +17,8 @@ object ModMobEffects : AaronMobEffectsRegistry() {
 	override fun getMobEffectRegistry(): DeferredRegister<MobEffect> = EFFECT_REGISTRY
 
 	val GRAVITY: DeferredHolder<MobEffect, GravityEffect> =
-		register("gravity") { GravityEffect() }
+		register("gravity", ::GravityEffect)
 	val DOOM =
-		register("doom") { DoomEffect() }
+		register("doom", ::DoomEffect)
 
 }
