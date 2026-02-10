@@ -25,7 +25,6 @@
         },
         "up": {
           "cullface": "up",
-          "rotation": 180,
           "texture": "#top",
           "tintindex": 0
         },
@@ -54,6 +53,7 @@
         },
         "up": {
           "cullface": "up",
+          "rotation": 180,
           "texture": "#top_overlay"
         }
       },
@@ -69,6 +69,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "bottom": "excessive_utilities:block/generator/bottom",
     "particle": "excessive_utilities:block/generator/side",

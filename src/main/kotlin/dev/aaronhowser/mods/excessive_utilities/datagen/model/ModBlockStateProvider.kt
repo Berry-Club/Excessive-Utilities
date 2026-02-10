@@ -52,6 +52,7 @@ class ModBlockStateProvider(
 			.texture("top", modLoc("block/generator/top"))
 			.texture("side", modLoc("block/generator/side"))
 			.texture("particle", modLoc("block/generator/side"))
+			.renderType(RenderType.cutout().name)
 
 			.element()
 			.from(0f, 0f, 0f)
@@ -63,7 +64,7 @@ class ModBlockStateProvider(
 
 				when (dir) {
 					Direction.DOWN -> fb.texture("#bottom")
-					Direction.UP -> fb.texture("#top").rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN)
+					Direction.UP -> fb.texture("#top")
 					else -> fb.texture("#side")
 				}
 			}
@@ -72,11 +73,14 @@ class ModBlockStateProvider(
 			.element()
 			.from(0f, 0f, 0f)
 			.to(16f, 16f, 16f)
+
 			.face(Direction.UP)
 			.uvs(0f, 0f, 16f, 16f)
 			.cullface(Direction.UP)
 			.texture("#top_overlay")
+			.rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN)
 			.end()
+
 			.face(Direction.NORTH)
 			.uvs(0f, 0f, 16f, 16f)
 			.cullface(Direction.NORTH)
