@@ -40,6 +40,8 @@ class PotionGeneratorBlockEntity(
 			potion: Holder<Potion>,
 			runningTotal: Int = 0
 		): Int {
+			if (runningTotal >= 100) return runningTotal
+
 			val brewing = level.potionBrewing()
 			val potMixes = brewing.potionMixes
 
