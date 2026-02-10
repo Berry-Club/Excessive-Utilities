@@ -30,10 +30,12 @@ object ModDataGen {
 		val existingFileHelper: ExistingFileHelper = event.existingFileHelper
 		val lookupProvider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
 
-		generator.addProvider(
+		val datapackRegistrySets = generator.addProvider(
 			event.includeServer(),
 			ModDatapackBuiltinEntriesProvider(output, lookupProvider)
 		)
+
+		val lookupWithDatapack = datapackRegistrySets.registryProvider
 
 		generator.addProvider(
 			event.includeClient(),
@@ -87,7 +89,7 @@ object ModDataGen {
 		)
 		generator.addProvider(
 			event.includeServer(),
-			ModDamageTypeTagsProvider(output, lookupProvider, existingFileHelper)
+			ModDamageTypeTagsProvider(output, lookupWithDatapack, existingFileHelper)
 		)
 //		generator.addProvider(
 //			event.includeServer(),
