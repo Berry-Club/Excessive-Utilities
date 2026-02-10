@@ -89,7 +89,9 @@ object CommonEvents {
 			ModBlockEntityTypes.FROSTY_GENERATOR.get(),
 			ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
 			ModBlockEntityTypes.DEATH_GENERATOR.get(),
-			ModBlockEntityTypes.CULINARY_GENERATOR.get()
+			ModBlockEntityTypes.CULINARY_GENERATOR.get(),
+			ModBlockEntityTypes.FURNACE_GENERATOR.get(),
+			ModBlockEntityTypes.SURVIVAL_GENERATOR.get()
 		)
 
 		for (beType in generators) {
