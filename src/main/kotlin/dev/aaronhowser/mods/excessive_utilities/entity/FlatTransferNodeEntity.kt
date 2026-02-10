@@ -21,6 +21,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
@@ -148,20 +149,20 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 		const val IS_ITEM_NODE_TAG = "IsItemNode"
 		const val AIMING_TAG = "Aiming"
 
+		fun getNodeAt(level: Level, blockPos: BlockPos, direction: Direction): FlatTransferNodeEntity? {
+			return level.getEntitiesOfClass(
+				FlatTransferNodeEntity::class.java,
+				AABB(blockPos)
+			).firstOrNull { it.aiming == direction }
+		}
+
 		fun place(
 			level: ServerLevel,
 			blockPos: BlockPos,
 			direction: Direction,
 			isItemNode: Boolean = true
 		): FlatTransferNodeEntity? {
-			val nodesAlreadyThere = level.getEntitiesOfClass(
-				FlatTransferNodeEntity::class.java,
-				AABB(blockPos)
-			)
-
-			if (nodesAlreadyThere.any { it.aiming == direction }) {
-				return null
-			}
+			if (getNodeAt(level, blockPos, direction) != null) return null
 
 			val node = FlatTransferNodeEntity(ModEntityTypes.FLAT_TRANSFER_NODE.get(), level)
 
@@ -171,6 +172,23 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 
 			level.addFreshEntity(node)
 			return node
+		}
+
+		fun handleRightClickBlock(event: PlayerInteractEvent.RightClickBlock) {
+			val level = event.level
+			val blockPos = event.pos
+			val direction = event.face ?: return
+
+			val node = getNodeAt(level, blockPos, direction) ?: return
+			val player = event.entity
+
+			if (player.isSecondaryUseActive) {
+				node.kill()
+			} else {
+				player.openMenu(node)
+			}
+
+			event.isCanceled = true
 		}
 	}
 
