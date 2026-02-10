@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvi
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModDamageTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.core.HolderLookup
@@ -82,6 +83,10 @@ object ModDataGen {
 		generator.addProvider(
 			event.includeServer(),
 			ModEntityTypeTagsProvider(output, lookupProvider, existingFileHelper)
+		)
+		generator.addProvider(
+			event.includeServer(),
+			ModDamageTypeTagsProvider(output, lookupProvider, existingFileHelper)
 		)
 //		generator.addProvider(
 //			event.includeServer(),
