@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.entity.CreativeHarvestBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
@@ -38,7 +40,7 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		val stackInHand = player.getItemInHand(hand)
 		val item = stackInHand.item
 
-		if (item is BlockItem) {
+		if (item is BlockItem && !item.block.defaultBlockState().isBlock(ModBlockTagsProvider.CREATIVE_HARVEST_BLACKLIST)) {
 			val be = level.getBlockEntity(pos) as? CreativeHarvestBlockEntity
 
 			if (be != null) {
