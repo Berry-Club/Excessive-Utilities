@@ -1,2 +1,11 @@
-// 1.21.1	2026-02-10T11:44:38.475116	Tags for minecraft:damage_type mod id excessive_utilities
+// 1.21.1	2026-02-10T11:47:47.0576246	Tags for minecraft:damage_type mod id excessive_utilities
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/bypasses_armor.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/bypasses_cooldown.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/bypasses_effects.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/bypasses_enchantments.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/bypasses_invulnerability.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/bypasses_shield.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/bypasses_wolf_armor.json
 86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/no_anger.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/no_impact.json
+86cb3bcbce86e2e283b25732bc1e6ce66c029182 data/minecraft/tags/damage_type/no_knockback.json
