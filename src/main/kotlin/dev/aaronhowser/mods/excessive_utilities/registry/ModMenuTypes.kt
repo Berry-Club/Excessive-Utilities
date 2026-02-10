@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronMenuTypesRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeScreen
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.inventory.MenuType
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
@@ -20,7 +21,7 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("flat_transfer_node", ::FlatTransferNodeMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
-
+		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
 	}
 
 }
