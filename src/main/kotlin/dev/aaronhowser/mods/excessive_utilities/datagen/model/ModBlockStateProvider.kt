@@ -35,47 +35,44 @@ class ModBlockStateProvider(
 	}
 
 	private fun makeGenerator(
-		generatorBlock: GeneratorBlock,
+		block: GeneratorBlock,
 		top: ResourceLocation = modLoc("block/generator/top"),
 		side: ResourceLocation = modLoc("block/generator/side"),
 		bottom: ResourceLocation = modLoc("block/generator/bottom"),
 		front: ResourceLocation = modLoc("block/generator/side")
 	) {
-		val name = name(generatorBlock)
+		val name = name(block)
 
-		val model =
-			models()
-				.withExistingParent(name, mcLoc("block/block"))
-				.texture("top", top)
-				.texture("side", side)
-				.texture("bottom", bottom)
-				.texture("front", front)
-				.texture("overlay", modLoc("block/generator/off"))
-				.renderType(RenderType.translucent().name)
-
-				.element()
-				.from(0f, 0f, 0f)
-				.to(16f, 16f, 16f)
-				.face(Direction.NORTH).texture("#front").end()
-				.face(Direction.SOUTH).texture("#side").end()
-				.face(Direction.WEST).texture("#side").end()
-				.face(Direction.EAST).texture("#side").end()
-				.face(Direction.UP).texture("#top").end()
-				.face(Direction.DOWN).texture("#bottom").end()
-				.end()
-
-				.element()
-				.from(0f, 0f, 0f)
-				.to(16f, 16f, 0.01f)
-				.face(Direction.SOUTH)
-				.texture("#overlay")
-				.end()
-				.end()
-
-		getVariantBuilder(generatorBlock)
+		getVariantBuilder(block)
 			.forAllStates {
 				val facing = it.getValue(GeneratorBlock.FACING)
 				val isLit = it.getValue(GeneratorBlock.LIT)
+
+				val baseModel = models()
+					.orientableWithBottom(name + "_base", side, front, bottom, top)
+
+				val faceModel = models()
+					.withExistingParent(
+						name + "_face_ " + if (isLit) "on" else "off",
+						"block/block"
+					)
+					.texture("overlay", if (isLit) modLoc("block/generator/face_on") else modLoc("block/generator/face_off"))
+					.renderType(RenderType.translucent().name)
+					.element()
+					.from(0f, 0f, 0f)
+					.to(16f, 16f, 0.01f)
+					.textureAll("#overlay")
+					.end()
+
+				val model = getMultipartBuilder(block)
+					.part()
+					.modelFile(baseModel)
+					.addModel()
+					.end()
+					.part()
+					.modelFile(faceModel)
+					.addModel()
+					.end()
 
 				val yRotation = when (facing) {
 					Direction.NORTH -> 0
@@ -85,19 +82,14 @@ class ModBlockStateProvider(
 					else -> 0
 				}
 
-				val modelFile = model.texture(
-					"overlay",
-					if (isLit) modLoc("block/generator/on") else modLoc("block/generator/off")
-				)
-
 				ConfiguredModel
 					.builder()
-					.modelFile(modelFile)
+					.modelFile(model)
 					.rotationY(yRotation)
 					.build()
 			}
 
-		simpleBlockItem(generatorBlock, model)
+		simpleBlockItem(block, model)
 	}
 
 	private fun miniChest() {
