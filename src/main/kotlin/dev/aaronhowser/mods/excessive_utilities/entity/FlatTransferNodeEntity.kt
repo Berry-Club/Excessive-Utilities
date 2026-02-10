@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
@@ -13,10 +12,7 @@ import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.ContainerHelper
-import net.minecraft.world.InteractionResult
-import net.minecraft.world.MenuProvider
-import net.minecraft.world.SimpleContainer
+import net.minecraft.world.*
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Inventory
@@ -77,12 +73,13 @@ class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(e
 			level.getCapability(Capabilities.FluidHandler.BLOCK, blockPosition(), aiming) == null
 		}
 
-		if (shouldBreak) {
-			val player = level.players().first()
-			player.tell("Breaking a node at $onPos")
-		}
-
 		return shouldBreak
+	}
+
+	override fun remove(reason: RemovalReason) {
+		if (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED) {
+			Containers.dropContents(level(), this, container)
+		}
 	}
 
 	private fun transferFluid(level: ServerLevel) {
