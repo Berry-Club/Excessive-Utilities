@@ -31,13 +31,14 @@ class ModBlockStateProvider(
 		generators()
 	}
 
+	//TODO: Make this more like furnaces. One texture for each generator's sides and face on/off
 	private fun generators() {
 		models()
 			.withExistingParent("generator_face", mcLoc("block/block"))
 			.renderType(RenderType.translucent().name)
 			.element()
-			.from(0f, 0f, -0.01f)
-			.to(16f, 16f, 0f)
+			.from(0f, 0f, 0f)
+			.to(16f, 16f, 0.01f)
 			.face(Direction.NORTH)
 			.texture("#overlay")
 			.end()
@@ -57,8 +58,8 @@ class ModBlockStateProvider(
 			.withExistingParent("generator_top_overlay", mcLoc("block/block"))
 			.renderType(RenderType.cutout().name)
 			.element()
-			.from(0f, 16f, 0f)
-			.to(16f, 16.01f, 16f)
+			.from(0f, 15.99f, 0f)
+			.to(16f, 16f, 16f)
 			.face(Direction.UP)
 			.texture("#overlay")
 			.end()
