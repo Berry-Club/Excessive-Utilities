@@ -1,6 +1,0 @@
-{
-  "parent": "excessive_utilities:block/generator_top_overlay",
-  "textures": {
-    "overlay": "excessive_utilities:block/generator/top/death"
-  }
-}

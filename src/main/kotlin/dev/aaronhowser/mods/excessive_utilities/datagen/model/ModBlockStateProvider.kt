@@ -9,12 +9,10 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
-import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModBlockStateProvider(
@@ -45,124 +43,38 @@ class ModBlockStateProvider(
 		simpleBlockWithItem(block, model)
 	}
 
-	//TODO: Make this more like furnaces. One texture for each generator's sides and face on/off
 	private fun generators() {
+
 		models()
-			.withExistingParent("generator_face", mcLoc("block/block"))
-			.renderType(RenderType.translucent().name)
+			.withExistingParent("generator_base", mcLoc("block/block"))
+			.texture("bottom", modLoc("block/generator/bottom"))
+			.texture("top", modLoc("block/generator/top"))
+			.texture("side", modLoc("block/generator/side"))
+			.texture("particle", modLoc("block/generator/side"))
+
 			.element()
 			.from(0f, 0f, 0f)
-			.to(16f, 16f, 0.01f)
-			.face(Direction.NORTH)
-			.texture("#overlay")
-			.end()
-			.end()
-
-		models()
-			.withExistingParent("generator_face_off", modLoc("block/generator_face"))
-			.texture("overlay", modLoc("block/generator/off"))
-			.renderType(RenderType.translucent().name)
-
-		models()
-			.withExistingParent("generator_face_on", modLoc("block/generator_face"))
-			.texture("overlay", modLoc("block/generator/on"))
-			.renderType(RenderType.translucent().name)
-
-		models()
-			.withExistingParent("generator_top_overlay", mcLoc("block/block"))
-			.renderType(RenderType.cutout().name)
-			.element()
-			.from(0f, 15.99f, 0f)
 			.to(16f, 16f, 16f)
-			.face(Direction.UP)
-			.texture("#overlay")
-			.end()
+			.allFaces { dir, fb ->
+				fb.uvs(0f, 0f, 16f, 16f)
+				fb.cullface(dir)
+
+				when (dir) {
+					Direction.DOWN -> fb.texture("#bottom")
+					Direction.UP -> fb.texture("#top")
+					else -> fb.texture("#side")
+				}
+			}
 			.end()
 
-		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), topOverlay = modLoc("block/generator/top/culinary"))
-		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), topOverlay = modLoc("block/generator/top/ender"))
-		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), topOverlay = modLoc("block/generator/top/tnt"))
-		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get())
-		makeGenerator(ModBlocks.FROSTY_GENERATOR.get())
-		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get())
-		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), topOverlay = modLoc("block/generator/top/death"))
-		makeGenerator(ModBlocks.PINK_GENERATOR.get(), topOverlay = modLoc("block/generator/top/pink"))
+		makeGenerator(ModBlocks.PINK_GENERATOR.get())
 	}
 
-	private fun makeGenerator(
-		block: GeneratorBlock,
-		top: ResourceLocation = modLoc("block/generator/top"),
-		side: ResourceLocation = modLoc("block/generator/side"),
-		bottom: ResourceLocation = modLoc("block/generator/bottom"),
-		front: ResourceLocation = modLoc("block/generator/side"),
-		topOverlay: ResourceLocation? = null,
-	) {
-		val name = name(block)
+	private fun makeGenerator(generatorBlock: GeneratorBlock) {
+		val name = name(generatorBlock)
 
-		val baseModel = models()
-			.orientableWithBottom(name + "_base", side, front, bottom, top)
-			.texture("particle", side)
-
-		val multipartBuilder = getMultipartBuilder(block)
-
-		val onFace = ModelFile.ExistingModelFile(modLoc("block/generator_face_on"), existingFileHelper)
-		val offFace = ModelFile.ExistingModelFile(modLoc("block/generator_face_off"), existingFileHelper)
-
-		var topModel: ModelFile? = null
-
-		if (topOverlay != null) {
-			topModel = models()
-				.withExistingParent(name + "_top_overlay", modLoc("block/generator_top_overlay"))
-				.texture("overlay", topOverlay)
-		}
-
-		for (direction in Direction.Plane.HORIZONTAL) {
-			val yRotation = when (direction) {
-				Direction.NORTH -> 0
-				Direction.EAST -> 90
-				Direction.SOUTH -> 180
-				Direction.WEST -> 270
-				else -> 0
-			}
-
-			if (topModel != null) {
-				multipartBuilder
-					.part()
-					.modelFile(topModel)
-					.rotationY(yRotation + 180)
-					.addModel()
-					.condition(GeneratorBlock.FACING, direction)
-					.end()
-			}
-
-			multipartBuilder
-				.part()
-				.modelFile(baseModel)
-				.rotationY(yRotation)
-				.addModel()
-				.condition(GeneratorBlock.FACING, direction)
-				.end()
-
-			multipartBuilder
-				.part()
-				.modelFile(onFace)
-				.rotationY(yRotation)
-				.addModel()
-				.condition(GeneratorBlock.FACING, direction)
-				.condition(GeneratorBlock.LIT, true)
-				.end()
-
-			multipartBuilder
-				.part()
-				.modelFile(offFace)
-				.rotationY(yRotation)
-				.addModel()
-				.condition(GeneratorBlock.FACING, direction)
-				.condition(GeneratorBlock.LIT, false)
-				.end()
-		}
-
-		simpleBlockItem(block, baseModel)
+		val model = models()
+			.withExistingParent(name, modLoc("generator_base"))
 	}
 
 	private fun miniChest() {
