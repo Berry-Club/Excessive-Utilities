@@ -10,11 +10,16 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.effect.MobEffects
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandlerModifiable
@@ -156,6 +161,24 @@ abstract class GeneratorBlockEntity(
 
 		fun getEnergyCapability(transmitter: GeneratorBlockEntity, direction: Direction?): IEnergyStorage {
 			return transmitter.energyStorage
+		}
+
+		fun netherStarTick(generator: GeneratorBlockEntity) {
+			val level = generator.level as? ServerLevel ?: return
+			if (level.gameTime % 20 != 0L) return
+
+			val pos = generator.worldPosition
+			val radius = 10
+			val aabb = AABB(pos).inflate(radius.toDouble())
+
+			val entities = level.getEntitiesOfClass(LivingEntity::class.java, aabb)
+
+			for (entity in entities) {
+				if (entity.hasInfiniteMaterials()) continue
+
+				val effect = MobEffectInstance(MobEffects.WITHER, 20 * 5, 1)
+				entity.addEffect(effect)
+			}
 		}
 	}
 
