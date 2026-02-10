@@ -2,6 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.effect
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
@@ -22,7 +24,10 @@ class DoomEffect : MobEffect(
 
 		if (remainingDuration % 20 == 0) {
 			val seconds = remainingDuration / 20
-			livingEntity.tell("$seconds")
+			if (seconds % 10 == 0 || seconds <= 10) {
+				val component = ModMessageLang.DOOM_EFFECT_TIME.toComponent(seconds)
+				livingEntity.tell(component)
+			}
 		}
 
 		if (remainingDuration <= 1) {
