@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -53,6 +54,12 @@ class MagmaticGeneratorBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 		tank.readFromNBT(registries, tag)
+	}
+
+	companion object {
+		fun getFluidCapability(blockEntity: MagmaticGeneratorBlockEntity, direction: Direction?): IFluidHandler {
+			return blockEntity.tank
+		}
 	}
 
 }

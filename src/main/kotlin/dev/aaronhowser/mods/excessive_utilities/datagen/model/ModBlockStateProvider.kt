@@ -87,6 +87,7 @@ class ModBlockStateProvider(
 			.end()
 
 		makeGenerator(ModBlocks.FURNACE_GENERATOR.get(), "nothing")
+		makeGenerator(ModBlocks.MAGMATIC_GENERATOR.get(), "nothing")
 		makeGenerator(ModBlocks.PINK_GENERATOR.get(), "pink")
 		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), "death")
 		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), "ender")

@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.event
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
@@ -92,7 +93,8 @@ object CommonEvents {
 			ModBlockEntityTypes.DEATH_GENERATOR.get(),
 			ModBlockEntityTypes.CULINARY_GENERATOR.get(),
 			ModBlockEntityTypes.FURNACE_GENERATOR.get(),
-			ModBlockEntityTypes.SURVIVAL_GENERATOR.get()
+			ModBlockEntityTypes.SURVIVAL_GENERATOR.get(),
+			ModBlockEntityTypes.MAGMATIC_GENERATOR.get()
 		)
 
 		for (beType in generators) {
@@ -113,6 +115,12 @@ object CommonEvents {
 			Capabilities.EnergyStorage.ITEM,
 			HeatingCoilItem::getEnergyCapability,
 			ModItems.HEATING_COIL.get()
+		)
+
+		event.registerBlockEntity(
+			Capabilities.FluidHandler.BLOCK,
+			ModBlockEntityTypes.MAGMATIC_GENERATOR.get(),
+			MagmaticGeneratorBlockEntity::getFluidCapability
 		)
 
 	}
