@@ -19,20 +19,20 @@ class EnderQuarryBlockEntity(
 	state: BlockState
 ) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state) {
 
-	private var minPos: BlockPos? = null
-		set(value) {
+	var minPos: BlockPos? = null
+		private set(value) {
 			field = value
 			setChanged()
 		}
 
-	private var maxPos: BlockPos? = null
-		set(value) {
+	var maxPos: BlockPos? = null
+		private set(value) {
 			field = value
 			setChanged()
 		}
 
-	private var targetPos: BlockPos? = null
-		set(value) {
+	var targetPos: BlockPos? = null
+		private set(value) {
 			field = value
 			setChanged()
 		}
