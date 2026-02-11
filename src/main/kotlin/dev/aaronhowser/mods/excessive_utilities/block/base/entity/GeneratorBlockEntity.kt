@@ -49,6 +49,8 @@ abstract class GeneratorBlockEntity(
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = true
 	protected open fun isValidUpgrade(itemStack: ItemStack) = true
 
+	open fun isGenerating(): Boolean = blockState.getValue(GeneratorBlock.LIT)
+
 	protected var fePerTick: Int = 0
 		set(value) {
 			if (field == value) return
