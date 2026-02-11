@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:qed",
+  "pattern": {
+    "key": {
+      "E": {
+        "tag": "c:ender_pearls"
+      },
+      "M": {
+        "tag": "c:gems/emerald"
+      },
+      "N": {
+        "item": "excessive_utilities:item_transfer_node"
+      }
+    },
+    "pattern": [
+      " E ",
+      "NMN",
+      " E "
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:item_retrieval_node"
+  }
+}

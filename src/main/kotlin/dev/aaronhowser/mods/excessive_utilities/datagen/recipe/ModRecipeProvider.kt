@@ -35,8 +35,27 @@ class ModRecipeProvider(
 		buildShapelessRecipes(recipeOutput)
 		buildResonatorRecipes(recipeOutput)
 		buildEnchanterRecipes(recipeOutput)
-		namedRecipes(recipeOutput)
+		buildNamedRecipes(recipeOutput)
 		buildSmeltingRecipes(recipeOutput)
+		buildQedRecipes(recipeOutput)
+	}
+
+	private fun buildQedRecipes(recipeOutput: RecipeOutput) {
+		val recipes = listOf(
+			QEDRecipeBuilder(ModBlocks.ITEM_RETRIEVAL_NODE.toStack())
+				.pattern(
+					" E ",
+					"NMN",
+					" E "
+				)
+				.define('E', Tags.Items.ENDER_PEARLS.asIngredient())
+				.define('N', ModBlocks.ITEM_TRANSFER_NODE.asIngredient())
+				.define('M', Tags.Items.GEMS_EMERALD.asIngredient())
+		)
+
+		for (recipe in recipes) {
+			recipe.save(recipeOutput)
+		}
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput) {
@@ -451,26 +470,6 @@ class ModRecipeProvider(
 					'P' to ing(ModBlocks.TRANSFER_PIPE),
 					'G' to ing(Tags.Items.INGOTS_GOLD),
 					'B' to ing(Tags.Items.STORAGE_BLOCKS_REDSTONE)
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ITEM_RETRIEVAL_NODE,
-				2,
-				" P ,NEN, P ",
-				mapOf(
-					'P' to ing(Tags.Items.ENDER_PEARLS),
-					'N' to ing(ModBlocks.ITEM_TRANSFER_NODE),
-					'E' to ing(Tags.Items.GEMS_EMERALD)
-				)
-			),
-			shapedRecipe(
-				ModBlocks.FLUID_RETRIEVAL_NODE,
-				2,
-				" P ,NEN, P ",
-				mapOf(
-					'P' to ing(Tags.Items.ENDER_PEARLS),
-					'N' to ing(ModBlocks.FLUID_TRANSFER_NODE),
-					'E' to ing(Tags.Items.GEMS_DIAMOND)
 				)
 			),
 			shapedRecipe(
@@ -1347,7 +1346,7 @@ class ModRecipeProvider(
 		}
 	}
 
-	private fun namedRecipes(recipeOutput: RecipeOutput) {
+	private fun buildNamedRecipes(recipeOutput: RecipeOutput) {
 		shapelessRecipe(
 			ModItems.WATERING_CAN,
 			listOf(

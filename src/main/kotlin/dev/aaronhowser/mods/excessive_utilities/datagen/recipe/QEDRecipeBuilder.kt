@@ -48,7 +48,7 @@ class QEDRecipeBuilder(
 		val idString = StringBuilder()
 
 		idString
-			.append("enchanter/")
+			.append("qed/")
 			.append(id.path)
 
 		val id = ExcessiveUtilities.modResource(idString.toString())
