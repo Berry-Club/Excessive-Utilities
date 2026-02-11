@@ -24,6 +24,12 @@ class EnderQuarryBlockEntity(
 			setChanged()
 		}
 
+	private var targetPos: BlockPos? = null
+		set(value) {
+			field = value
+			setChanged()
+		}
+
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
@@ -34,6 +40,12 @@ class EnderQuarryBlockEntity(
 			tag.putLong(MIN_POS_NBT, min.asLong())
 			tag.putLong(MAX_POS_NBT, max.asLong())
 		}
+
+		val target = targetPos
+		if (target != null) {
+			tag.putLong(TARGET_POS_NBT, target.asLong())
+		}
+
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -43,11 +55,16 @@ class EnderQuarryBlockEntity(
 			minPos = BlockPos.of(tag.getLong(MIN_POS_NBT))
 			maxPos = BlockPos.of(tag.getLong(MAX_POS_NBT))
 		}
+
+		if (tag.contains(TARGET_POS_NBT)) {
+			targetPos = BlockPos.of(tag.getLong(TARGET_POS_NBT))
+		}
 	}
 
 	companion object {
 		const val MIN_POS_NBT = "MinPos"
 		const val MAX_POS_NBT = "MaxPos"
+		const val TARGET_POS_NBT = "TargetPos"
 	}
 
 }
