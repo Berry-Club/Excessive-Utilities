@@ -30,7 +30,8 @@ class DisenchantmentGenerator(
 		val totalPower = getPowerFromEnchantment(level, inputStack)
 		if (totalPower <= 0) return false
 
-
+		fePerTick = 40
+		burnTimeRemaining = Mth.ceil(totalPower / fePerTick.toDouble())
 
 		inputStack.shrink(1)
 		setChanged()
