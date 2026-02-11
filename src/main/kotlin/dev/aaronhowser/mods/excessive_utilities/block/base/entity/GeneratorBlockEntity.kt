@@ -14,6 +14,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
+import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -35,16 +36,15 @@ abstract class GeneratorBlockEntity(
 
 	protected val energyStorage = EnergyStorage(1_000_000)
 
-	protected open val container =
+	protected open val container: GeneratorContainer? =
 		object : GeneratorContainer(this@GeneratorBlockEntity, amountInputs = 1) {
 			override fun canPlaceInput(stack: ItemStack): Boolean = isValidInput(stack)
 			override fun canPlaceSecondaryInput(stack: ItemStack): Boolean = isValidSecondaryInput(stack)
 			override fun canPlaceUpgrade(stack: ItemStack): Boolean = isValidUpgrade(stack)
 		}
 
-	override fun getContainer(): Container = container
-
-	open fun getItemHandler(direction: Direction?): IItemHandlerModifiable? = container.itemHandler
+	override fun getContainer(): Container? = container
+	open fun getItemHandler(direction: Direction?): IItemHandlerModifiable? = container?.itemHandler
 
 	protected open fun isValidInput(itemStack: ItemStack) = true
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = true
@@ -69,7 +69,7 @@ abstract class GeneratorBlockEntity(
 	protected open fun serverTick(level: ServerLevel) {
 		addToNetwork(level)
 
-		val speed = container.getSpeed()
+		val speed = container?.getSpeed() ?: 1
 		var success = false
 		for (i in 0 until speed) {
 			if (generatorTick(level)) success = true
@@ -144,6 +144,11 @@ abstract class GeneratorBlockEntity(
 		tag.putInt(FE_PER_TICK_NBT, fePerTick)
 		tag.put(STORED_ENERGY_NBT, energyStorage.serializeNBT(registries))
 		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
+
+		val container = container
+		if (container != null) {
+			ContainerHelper.saveAllItems(tag, container.items, registries)
+		}
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -156,6 +161,11 @@ abstract class GeneratorBlockEntity(
 		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
 		if (storedEnergyTag is IntTag) {
 			energyStorage.deserializeNBT(registries, storedEnergyTag)
+		}
+
+		val container = container
+		if (container != null) {
+			ContainerHelper.loadAllItems(tag, container.items, registries)
 		}
 	}
 

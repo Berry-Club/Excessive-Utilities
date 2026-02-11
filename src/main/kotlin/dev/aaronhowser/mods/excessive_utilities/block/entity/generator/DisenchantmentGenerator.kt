@@ -25,7 +25,7 @@ class DisenchantmentGenerator(
 	override val generatorType: GeneratorType = GeneratorType.DISENCHANTMENT
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
-		if (burnTimeRemaining > 0) return false
+		if (burnTimeRemaining > 0 || container == null) return false
 
 		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (!inputStack.isItem(Items.ENCHANTED_BOOK)) return false
