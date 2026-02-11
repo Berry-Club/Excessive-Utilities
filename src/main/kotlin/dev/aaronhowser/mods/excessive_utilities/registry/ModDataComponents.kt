@@ -11,6 +11,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.component.CustomData
+import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -37,5 +38,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		register("opinium_core_contents", OpiniumCoreContentsComponent.CODEC, OpiniumCoreContentsComponent.STREAM_CODEC)
 	val MAGICAL_SNOW_GLOBE_PROGRESS: DeferredHolder<DataComponentType<*>, DataComponentType<MagicalSnowGlobeProgressComponent>> =
 		register("magical_snow_globe_progress", MagicalSnowGlobeProgressComponent.CODEC, MagicalSnowGlobeProgressComponent.STREAM_CODEC)
+	val WATER: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =
+		register("water", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
 
 }
