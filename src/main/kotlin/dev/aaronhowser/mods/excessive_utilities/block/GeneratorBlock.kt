@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
@@ -108,10 +109,10 @@ class GeneratorBlock(
 						noComponent.append("${type.name}, ")
 					}
 				}
-				
-				val message: MutableComponent = Component.literal("Rainbow Generator Status: ")
-				if (anyActive) message.append(yesComponent)
-				if (anyInactive) message.append(noComponent)
+
+				player.tell(Component.literal("Rainbow Generator Status: "))
+				if (anyActive) player.tell(yesComponent)
+				if (anyInactive) player.tell(noComponent)
 			}
 
 			return InteractionResult.sidedSuccess(level.isClientSide)
