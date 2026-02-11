@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
+import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.Slot
@@ -15,6 +16,13 @@ class BagOfHoldingMenu(
 	playerInventory: Inventory,
 	val bagContainer: Container
 ) : MenuWithInventory(ModMenuTypes.BAG_OF_HOLDING.get(), containerId, playerInventory) {
+
+	constructor(containerId: Int, playerInventory: Inventory) :
+			this(
+				containerId,
+				playerInventory,
+				SimpleContainer(9 * 6)
+			)
 
 	init {
 		addSlots()
