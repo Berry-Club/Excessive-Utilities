@@ -50,7 +50,9 @@ abstract class HeldItemContainerMenu(
 				val container = getItemContainer()
 
 				if (container != null) {
-					for (i in 0 until container.slots) {
+					val maxSlot = minOf(container.slots, containerSlots)
+
+					for (i in 0 until maxSlot) {
 						items[i] = container.getStackInSlot(i)
 					}
 				}
@@ -61,20 +63,28 @@ abstract class HeldItemContainerMenu(
 			override fun getItem(index: Int): ItemStack = getItems()[index]
 
 			override fun removeItem(index: Int, count: Int): ItemStack {
+				if (count <= 0) return ItemStack.EMPTY
+
 				val container = getItemContainer() ?: return ItemStack.EMPTY
 				if (index !in 0 until container.slots) return ItemStack.EMPTY
 
 				val items = getItems()
-				val stack = items[index].copy()
 
-				items[index] = ItemStack.EMPTY
+				val existingStack = items[index]
+				if (existingStack.isEmpty) return ItemStack.EMPTY
+
+				val removedStack = existingStack.split(count)
+
+				if (existingStack.isEmpty) {
+					items[index] = ItemStack.EMPTY
+				}
 
 				getHeldItemStack().set(
 					DataComponents.CONTAINER,
 					ItemContainerContents.fromItems(items)
 				)
 
-				return stack
+				return removedStack
 			}
 
 			override fun addItem(stack: ItemStack): ItemStack {
@@ -82,12 +92,11 @@ abstract class HeldItemContainerMenu(
 
 				getHeldItemStack().set(
 					DataComponents.CONTAINER,
-					ItemContainerContents.fromItems( getItems())
+					ItemContainerContents.fromItems(getItems())
 				)
 
 				return result
 			}
-
 		}
 
 	protected val hand: InteractionHand =
