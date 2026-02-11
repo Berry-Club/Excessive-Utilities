@@ -91,8 +91,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("resonator", ::ResonatorBlock)
 	val ENDER_QUARRY: DeferredBlock<EnderQuarryBlock> =
 		registerBlock("ender_quarry", ::EnderQuarryBlock)
-	val ENDER_MARKER =
-		basicBlock("ender_marker")
+	val ENDER_MARKER: DeferredBlock<EnderMarkerBlock> =
+		registerBlockWithoutItem("ender_marker", ::EnderMarkerBlock)
 	val ENDER_THERMIC_PUMP =
 		basicBlock("ender_thermic_pump")
 	val QED =
