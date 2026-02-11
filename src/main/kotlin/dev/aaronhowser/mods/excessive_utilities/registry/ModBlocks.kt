@@ -3,13 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
-import dev.aaronhowser.mods.excessive_utilities.block.mill.CreativeMillBlock
-import dev.aaronhowser.mods.excessive_utilities.block.mill.DragonEggMillBlock
-import dev.aaronhowser.mods.excessive_utilities.block.mill.FireMillBlock
-import dev.aaronhowser.mods.excessive_utilities.block.mill.GpPanelBlock
-import dev.aaronhowser.mods.excessive_utilities.block.mill.LavaMillBlock
-import dev.aaronhowser.mods.excessive_utilities.block.mill.ManualMillBlock
-import dev.aaronhowser.mods.excessive_utilities.block.mill.WaterMillBlock
+import dev.aaronhowser.mods.excessive_utilities.block.mill.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockBehaviour
@@ -288,8 +282,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("slimy_generator")
 	val DEATH_GENERATOR: DeferredBlock<GeneratorBlock> =
 		registerBlock("death_generator") { GeneratorBlock { ModBlockEntityTypes.DEATH_GENERATOR.get() } }
-	val RAINBOW_GENERATOR =
-		basicBlock("rainbow_generator")
+	val RAINBOW_GENERATOR: DeferredBlock<GeneratorBlock> =
+		registerBlock("rainbow_generator") { GeneratorBlock { ModBlockEntityTypes.RAINBOW_GENERATOR.get() } }
 
 	// GP Generators
 
