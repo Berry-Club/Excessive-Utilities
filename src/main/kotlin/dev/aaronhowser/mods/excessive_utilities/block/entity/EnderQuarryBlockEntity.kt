@@ -74,7 +74,36 @@ class EnderQuarryBlockEntity(
 			return connections == 2
 		}
 
-		return false
+		val dirToProperty = mapOf(
+			Direction.NORTH to FenceBlock.NORTH,
+			Direction.EAST to FenceBlock.EAST,
+			Direction.SOUTH to FenceBlock.SOUTH,
+			Direction.WEST to FenceBlock.WEST
+		)
+
+		val firstDirection = dirToProperty
+			.entries
+			.firstOrNull { (dir, property) -> firstFenceState.getValue(property) }
+			?.key
+			?: return false
+
+		var currentDirection = firstDirection
+		val corners = mutableListOf(fencePos)
+
+		val currentPos = fencePos.mutable()
+		var iterations = 0
+
+		while (iterations < 100_000) {
+			iterations++
+
+			currentPos.move(currentDirection)
+			val currentState = level.getBlockState(currentPos)
+
+			if (!isValidFence(currentState)) return false
+
+		}
+
+		return true
 	}
 
 	private fun trySetBoundariesFromMarkers(level: ServerLevel, markerPos: BlockPos): Boolean {
