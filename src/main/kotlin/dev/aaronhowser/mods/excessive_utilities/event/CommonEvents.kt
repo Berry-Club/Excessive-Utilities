@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -129,6 +130,7 @@ object CommonEvents {
 	fun afterServerTick(event: ServerTickEvent.Post) {
 		val overworld = event.server.overworld()
 		GridPowerHandler.get(overworld).tick(overworld)
+		RainbowGeneratorHandler.get(overworld).tick(overworld)
 	}
 
 	@SubscribeEvent

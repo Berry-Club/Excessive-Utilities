@@ -19,6 +19,11 @@ class PlayerGeneratorNetwork(
 			.toSet()
 	}
 
+	fun allTypesActive(): Boolean {
+		val activeTypes = getActiveGeneratorTypes()
+		return GeneratorType.entries.all { it in activeTypes }
+	}
+
 	fun addGenerator(generator: GeneratorBlockEntity) = generatorBlockEntities.add(generator)
 	fun removeGenerator(generator: GeneratorBlockEntity) = generatorBlockEntities.remove(generator)
 	fun isEmpty(): Boolean = generatorBlockEntities.isEmpty()
