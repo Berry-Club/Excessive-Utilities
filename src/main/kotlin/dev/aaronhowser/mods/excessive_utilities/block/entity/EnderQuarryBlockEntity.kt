@@ -101,8 +101,39 @@ class EnderQuarryBlockEntity(
 
 			if (!isValidFence(currentState)) return false
 
+			val canKeepGoing = currentState.getValue(dirToProperty[currentDirection]!!)
+
+			if (!canKeepGoing) {
+				val nextDirection = dirToProperty
+					.entries
+					.firstOrNull { (dir, property) ->
+						dir != currentDirection.opposite && currentState.getValue(property)
+					}
+					?.key
+					?: return false
+
+				currentDirection = nextDirection
+				corners.add(currentPos.immutable())
+			}
+
+			if (currentPos == fencePos) break
 		}
 
+		if (corners.size < 3) return false
+
+		val minX = corners.minOf(BlockPos::getX)
+		val minZ = corners.minOf(BlockPos::getZ)
+		val maxX = corners.maxOf(BlockPos::getX)
+		val maxZ = corners.maxOf(BlockPos::getZ)
+
+		if (minX == maxX || minZ == maxZ) return false
+
+		val y = blockPos.y
+
+		minPos = BlockPos(minX, y, minZ)
+		maxPos = BlockPos(maxX, y, maxZ)
+
+		targetPos = minPos
 		return true
 	}
 
