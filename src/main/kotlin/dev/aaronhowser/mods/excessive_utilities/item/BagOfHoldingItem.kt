@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding_handler.BagOfHoldingHandler
-import dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding.BagOfHoldingMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -11,6 +10,7 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -28,6 +28,8 @@ class BagOfHoldingItem(properties: Properties) : Item(properties), MenuProvider 
 				bagId = UUID.randomUUID()
 				usedStack.set(ModDataComponents.BAG_OF_HOLDING_ID, bagId)
 			}
+
+			player.openMenu(this)
 		}
 
 		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
@@ -44,7 +46,7 @@ class BagOfHoldingItem(properties: Properties) : Item(properties), MenuProvider 
 
 		val bag = BagOfHoldingHandler.get(level).getBag(bagId)
 
-		return BagOfHoldingMenu(containerId, playerInventory, bag.container)
+		return ChestMenu.sixRows(containerId, playerInventory, bag.container)
 	}
 
 	companion object {
