@@ -173,6 +173,7 @@ class EnderQuarryBlockEntity(
 
 			while (locationsChecked < searchDistance) {
 				locationsChecked++
+				checkPos.move(dir)
 
 				val checkState = level.getBlockState(checkPos)
 				if (checkState.isBlock(ModBlocks.ENDER_MARKER)) {
@@ -180,6 +181,8 @@ class EnderQuarryBlockEntity(
 					break
 				}
 			}
+
+			if (markers.size == 3) break
 		}
 
 		if (markers.size < 3) return false
