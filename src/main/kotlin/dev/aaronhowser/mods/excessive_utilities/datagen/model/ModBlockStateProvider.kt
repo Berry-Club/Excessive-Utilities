@@ -30,6 +30,18 @@ class ModBlockStateProvider(
 		generators()
 		machineBlock()
 		enderQuarry()
+		enderMarker()
+	}
+
+	private fun enderMarker() {
+		val block = ModBlocks.ENDER_MARKER.get()
+
+		val texture = modLoc("block/ender_marker")
+
+		val model = models()
+			.torch(name(block), texture)
+
+		simpleBlockWithItem(block, model)
 	}
 
 	//TODO: Block state for active and finished

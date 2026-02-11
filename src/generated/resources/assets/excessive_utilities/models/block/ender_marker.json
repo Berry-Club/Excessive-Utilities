@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_torch",
+  "textures": {
+    "torch": "excessive_utilities:block/ender_marker"
+  }
+}
