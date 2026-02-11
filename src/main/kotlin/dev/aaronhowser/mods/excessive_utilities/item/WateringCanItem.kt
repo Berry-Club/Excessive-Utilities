@@ -59,9 +59,15 @@ class WateringCanItem(
 		return heldWater.amount <= getWaterPerTick()
 	}
 
-	private fun tryCollectWater(player: Player, stack: ItemStack): Boolean {
-		if (!needsToBeFilled(stack)) return false
+	private fun isFull(stack: ItemStack): Boolean {
+		if (!usesWater()) return true
 
+		val heldWater = stack.get(ModDataComponents.TANK) ?: return false
+		return heldWater.amount >= 10_000
+	}
+
+	private fun tryCollectWater(player: Player, stack: ItemStack): Boolean {
+		if (isFull(stack)) return false
 		val level = player.level()
 
 		val blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.WATER)
@@ -73,7 +79,8 @@ class WateringCanItem(
 		if (!level.getFluidState(pos).isFluid(FluidTags.WATER)) return false
 
 		val heldWater = stack.get(ModDataComponents.TANK) ?: return false
-		val newFluidStack = FluidStack(Fluids.WATER, heldWater.amount + 1000)
+		val newAmount = minOf(heldWater.amount + 1000, 10_000)
+		val newFluidStack = FluidStack(Fluids.WATER, newAmount)
 		stack.set(ModDataComponents.TANK, SimpleFluidContent.copyOf(newFluidStack))
 
 		return true
