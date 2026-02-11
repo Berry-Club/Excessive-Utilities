@@ -32,14 +32,10 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("cursed_earth")
 	val ENDER_COLLECTOR =
 		basicBlock("ender_collector")
-	val ENDER_CORE =
+	val MAGICAL_WOOD: DeferredBlock<MagicalWoodBlock> =
+		registerBlock("magical_wood", ::MagicalWoodBlock)
+	val ENDER_CORE: DeferredBlock<EnderCoreBlock> =
 		registerBlock("ender_core", ::EnderCoreBlock)
-	val ENDER_FLUX_CRYSTAL =
-		basicBlock("ender_flux_crystal")
-	val ENDER_INFUSED_OBSIDIAN =
-		basicBlock("ender_infused_obsidian")
-	val MAGICAL_WOOD =
-		basicBlock("magical_wood")
 	val MAGNUM_TORCH: DeferredBlock<MagnumTorchBlock> =
 		registerBlock("magnum_torch", ::MagnumTorchBlock)
 	val PEACEFUL_TABLE: DeferredBlock<PeacefulTableBlock> =
@@ -50,8 +46,6 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("last_millennium_portal")
 	val RAIN_MUFFLER =
 		basicBlock("rain_muffler")
-	val REDSTONE_CLOCK =
-		basicBlock("redstone_clock")
 	val SOUND_MUFFLER =
 		basicBlock("sound_muffler")
 	val TRADING_POST =
@@ -64,28 +58,36 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("indexer")
 	val MAGICAL_SNOW_GLOBE =
 		registerBlockWithoutItem("magical_snow_globe") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)) }
-	val MECHANICAL_MINER =
-		basicBlock("mechanical_miner")
-	val MECHANICAL_USER =
-		basicBlock("mechanical_user")
 	val POWER_OVERLOAD =
 		basicBlock("power_overload")
-	val RED_ORCHID =
-		basicBlock("red_orchid")
-	val REDSTONE_LANTERN =
-		basicBlock("redstone_lantern")
-	val RESONATOR: DeferredBlock<ResonatorBlock> =
-		registerBlock("resonator", ::ResonatorBlock)
 	val RESTURBED_MOB_SPAWNER =
 		basicBlock("resturbed_mob_spawner")
 	val SCANNER =
 		basicBlock("scanner")
+
+	// Redstone stuff
+
+	val REDSTONE_LANTERN =
+		basicBlock("redstone_lantern")
+	val RED_ORCHID =
+		basicBlock("red_orchid")
+	val MECHANICAL_MINER =
+		basicBlock("mechanical_miner")
+	val MECHANICAL_USER =
+		basicBlock("mechanical_user")
+	val REDSTONE_CLOCK =
+		basicBlock("redstone_clock")
+
+	// Other FE Stuff
+
 	val WIRELESS_FE_BATTERY: DeferredBlock<WirelessFeBatteryBlock> =
 		registerBlock("wireless_fe_battery", ::WirelessFeBatteryBlock)
 	val WIRELESS_FE_TRANSMITTER: DeferredBlock<WirelessFeTransmitterBlock> =
 		registerBlock("wireless_fe_transmitter", ::WirelessFeTransmitterBlock)
 
 	// Machines
+	val RESONATOR: DeferredBlock<ResonatorBlock> =
+		registerBlock("resonator", ::ResonatorBlock)
 	val ENDER_QUARRY =
 		basicBlock("ender_quarry")
 	val ENDER_MARKER =
@@ -94,6 +96,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("ender_thermic_pump")
 	val QED =
 		basicBlock("qed")
+	val ENDER_FLUX_CRYSTAL =
+		basicBlock("ender_flux_crystal")
 	val MACHINE_BLOCK =
 		basicBlock("machine_block")
 	val CRUSHER =
@@ -341,6 +345,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("block_of_demon_metal")
 	val BLOCK_OF_ENCHANTED_METAL =
 		basicBlock("block_of_enchanted_metal")
+	val ENDER_INFUSED_OBSIDIAN =
+		basicBlock("ender_infused_obsidian")
 	val POLISHED_STONE =
 		basicBlock("polished_stone")
 	val BORDER_STONE =
