@@ -20,8 +20,8 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val COMPRESSED_BLOCK =
 		basicBlock("compressed_block")
-	val ANGEL_BLOCK =
-		registerBlockWithoutItem("angel_block") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)) }
+	val ANGEL_BLOCK: DeferredBlock<AngelBlock> =
+		registerBlockWithoutItem("angel_block", ::AngelBlock)
 	val BLACKOUT_CURTAIN: DeferredBlock<BlackoutCurtainBlock> =
 		registerBlock("blackout_curtain", ::BlackoutCurtainBlock)
 	val ADVANCED_OBSERVER =
