@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -21,9 +22,37 @@ class WateringCanItem(
 
 	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(usedHand)
+
+		if (tryCollectWater(player, stack)) {
+			return InteractionResultHolder.consume(stack)
+		}
+
 		player.startUsingItem(usedHand)
 
 		return InteractionResultHolder.consume(stack)
+	}
+
+	private fun getWaterPerTick(): Int {
+		return if (isReinforced) {
+			ServerConfig.CONFIG.reinforcedWateringCanWaterUsagePerTick.get()
+		} else {
+			ServerConfig.CONFIG.wateringCanWaterUsagePerTick.get()
+		}
+	}
+
+	private fun usesWater(): Boolean = getWaterPerTick() > 0
+
+	private fun needsToBeFilled(stack: ItemStack): Boolean {
+		if (!usesWater()) return false
+
+		val heldWater = stack.get(ModDataComponents.WATER) ?: return true
+		return heldWater.amount <= getWaterPerTick()
+	}
+
+	private fun tryCollectWater(player: Player, stack: ItemStack): Boolean {
+		if (!needsToBeFilled(stack)) return false
+
+		return true
 	}
 
 	companion object {
