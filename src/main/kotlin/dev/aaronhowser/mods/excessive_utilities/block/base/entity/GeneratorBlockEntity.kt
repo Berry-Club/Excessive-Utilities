@@ -100,24 +100,24 @@ abstract class GeneratorBlockEntity(
 		if (burnTimeRemaining <= 0) {
 			fePerTick = 0
 			val wasLit = blockState.getValue(GeneratorBlock.LIT)
-			val startedBurning = tryStartBurning(level)
-			changeBurnState(level, wasLit, startedBurning)
+			val shouldBeLit = tryStartBurning(level)
+			changeLitState(level, wasLit, shouldBeLit)
 			if (burnTimeRemaining <= 0) return false
 		}
 
 		val wasLit = blockState.getValue(GeneratorBlock.LIT)
-		val generatedPower = generateEnergy(level)
-		changeBurnState(level, wasLit, generatedPower)
+		val shouldBeLit = generateEnergy(level)
+		changeLitState(level, wasLit, shouldBeLit)
 
-		return generatedPower
+		return shouldBeLit
 	}
 
-	protected open fun changeBurnState(level: ServerLevel, wasBurning: Boolean, isBurning: Boolean) {
-		if (wasBurning != isBurning) {
+	protected open fun changeLitState(level: ServerLevel, wasLit: Boolean, shouldBeLit: Boolean) {
+		if (wasLit != shouldBeLit) {
 			val blockState = level.getBlockState(worldPosition)
 			level.setBlockAndUpdate(
 				worldPosition,
-				blockState.setValue(GeneratorBlock.LIT, isBurning)
+				blockState.setValue(GeneratorBlock.LIT, shouldBeLit)
 			)
 		}
 	}
