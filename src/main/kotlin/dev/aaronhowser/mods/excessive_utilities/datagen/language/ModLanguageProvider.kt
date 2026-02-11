@@ -17,6 +17,7 @@ class ModLanguageProvider(
 		ModEntityLang.add(this)
 		ModMessageLang.add(this)
 		ModEffectLang.add(this)
+		ModConfigLang.add(this)
 	}
 
 	companion object {
