@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.QEDRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.crafting.Recipe
@@ -20,6 +21,9 @@ object ModRecipeTypes {
 
 	val ENCHANTER: DeferredHolder<RecipeType<*>, RecipeType<EnchanterRecipe>> =
 		registerRecipeType("enchanter")
+
+	val QED : DeferredHolder<RecipeType<*>, RecipeType<QEDRecipe>> =
+		registerRecipeType("qed")
 
 	private fun <T : Recipe<*>> registerRecipeType(
 		name: String
