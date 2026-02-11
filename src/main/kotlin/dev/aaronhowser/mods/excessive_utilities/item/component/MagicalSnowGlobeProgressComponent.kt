@@ -1,8 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.item.component
 
 import com.mojang.serialization.Codec
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraCodecs
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
@@ -14,6 +16,22 @@ class MagicalSnowGlobeProgressComponent(
 ) {
 
 	constructor(map: Map<TagKey<Biome>, Boolean>) : this(HashMap(map))
+
+	fun getWithComplete(biome: Holder<Biome>): MagicalSnowGlobeProgressComponent? {
+		val newMap = HashMap(requirements)
+		var found = false
+
+		for ((biomeTag, alreadyFound) in requirements) {
+			if (alreadyFound) continue
+
+			if (biome.isHolder(biomeTag)) {
+				newMap[biomeTag] = true
+				found = true
+			}
+		}
+
+		return if (found) MagicalSnowGlobeProgressComponent(newMap) else null
+	}
 
 	companion object {
 		val CODEC: Codec<MagicalSnowGlobeProgressComponent> =

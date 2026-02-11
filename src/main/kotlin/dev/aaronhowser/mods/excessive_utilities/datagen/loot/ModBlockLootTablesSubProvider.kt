@@ -28,7 +28,7 @@ class ModBlockLootTablesSubProvider(
 			dropSelf(block)
 		}
 
-		dropOther(ModBlocks.ANGEL_BLOCK.get(), ModItems.ANGEL_BLOCK_ITEM)
+		dropOther(ModBlocks.ANGEL_BLOCK.get(), ModItems.ANGEL_BLOCK)
 
 	}
 

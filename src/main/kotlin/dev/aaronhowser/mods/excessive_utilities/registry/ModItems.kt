@@ -158,8 +158,10 @@ object ModItems : AaronItemRegistry() {
 			{ FlatTransferNodeItem(it, isItemNode = false) },
 			FlatTransferNodeItem.DEFAULT_PROPERTIES
 		)
-	val ANGEL_BLOCK_ITEM: DeferredItem<AngelBlockItem> =
+	val ANGEL_BLOCK: DeferredItem<AngelBlockItem> =
 		register("angel_block", ::AngelBlockItem)
+	val MAGICAL_SNOW_GLOBE: DeferredItem<MagicalSnowGlobeBlockItem> =
+		register("magical_snow_globe", ::MagicalSnowGlobeBlockItem, MagicalSnowGlobeBlockItem.DEFAULT_PROPERTIES)
 
 	// Transfer Node Upgrades
 

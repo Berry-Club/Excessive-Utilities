@@ -69,7 +69,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val INDEXER =
 		basicBlock("indexer")
 	val MAGICAL_SNOW_GLOBE =
-		basicBlock("magical_snow_globe")
+		registerBlockWithoutItem("magical_snow_globe") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)) }
 	val MECHANICAL_MINER =
 		basicBlock("mechanical_miner")
 	val MECHANICAL_USER =
