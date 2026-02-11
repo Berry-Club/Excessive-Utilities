@@ -2,13 +2,16 @@ package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.RainbowGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.world.Containers
-import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
+import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.*
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -61,12 +64,52 @@ class GeneratorBlock(
 		return beTypeGetter().create(pos, state)
 	}
 
-	override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
+	override fun <T : BlockEntity> getTicker(
+		level: Level,
+		state: BlockState,
+		blockEntityType: BlockEntityType<T>
+	): BlockEntityTicker<T>? {
 		return BaseEntityBlock.createTickerHelper(
 			blockEntityType,
 			beTypeGetter(),
 			GeneratorBlockEntity.Companion::tick
 		)
+	}
+
+	override fun useWithoutItem(
+		state: BlockState,
+		level: Level,
+		pos: BlockPos,
+		player: Player,
+		hitResult: BlockHitResult
+	): InteractionResult {
+		val blockEntity = level.getBlockEntity(pos)
+
+		if (blockEntity is RainbowGeneratorBlockEntity) {
+			if (level is ServerLevel) {
+				val handler = RainbowGeneratorHandler.get(level).getGeneratorNetwork(player)
+
+				val allTypes = GeneratorType.NON_RAINBOW
+				val activeTypes = handler.getActiveGeneratorTypes()
+
+				for (type in allTypes) {
+					val component = if (type in activeTypes) {
+						Component.literal("[✓] ${type.name}")
+					} else {
+						Component.literal("[ ] ${type.name}")
+					}
+					
+					player.sendSystemMessage(component)
+				}
+			}
+
+			return InteractionResult.sidedSuccess(level.isClientSide)
+		} else if (blockEntity is MenuProvider) {
+			player.openMenu(blockEntity)
+			return InteractionResult.sidedSuccess(level.isClientSide)
+		}
+
+		return InteractionResult.PASS
 	}
 
 	override fun useItemOn(
