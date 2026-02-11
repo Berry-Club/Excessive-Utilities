@@ -1,7 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.tags.FluidTags
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
@@ -11,6 +13,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.material.Fluids
+import net.minecraft.world.phys.HitResult
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
 class WateringCanItem(
@@ -26,6 +31,10 @@ class WateringCanItem(
 
 		if (tryCollectWater(player, stack)) {
 			return InteractionResultHolder.consume(stack)
+		}
+
+		if (needsToBeFilled(stack)) {
+			return InteractionResultHolder.fail(stack)
 		}
 
 		player.startUsingItem(usedHand)
@@ -53,7 +62,19 @@ class WateringCanItem(
 	private fun tryCollectWater(player: Player, stack: ItemStack): Boolean {
 		if (!needsToBeFilled(stack)) return false
 
-		val blockHitResult = getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.WATER)
+		val level = player.level()
+
+		val blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.WATER)
+		if (blockHitResult.type != HitResult.Type.BLOCK) return false
+
+		val pos = blockHitResult.blockPos
+		if (!level.mayInteract(player, pos)) return false
+
+		if (!level.getFluidState(pos).isFluid(FluidTags.WATER)) return false
+
+		val heldWater = stack.get(ModDataComponents.TANK) ?: return false
+		val newFluidStack = FluidStack(Fluids.WATER, heldWater.amount + 1000)
+		stack.set(ModDataComponents.TANK, SimpleFluidContent.copyOf(newFluidStack))
 
 		return true
 	}
