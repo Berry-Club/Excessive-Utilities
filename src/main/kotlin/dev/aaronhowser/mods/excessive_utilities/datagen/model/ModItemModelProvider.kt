@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
+import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -26,6 +27,7 @@ class ModItemModelProvider(
 		bewlrs()
 		flatTransferNodes()
 		enderShard()
+		wateringCan()
 
 		basicItems()
 	}
@@ -106,6 +108,26 @@ class ModItemModelProvider(
 		handledItems.add(shovel)
 		handledItems.add(sword)
 		handledItems.add(shears)
+	}
+
+	fun wateringCan() {
+		val item = ModItems.WATERING_CAN.get()
+
+		val base = getBuilder(getName(item).toString())
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/watering_can"))
+
+		val broken = getBuilder(getName(item).toString() + "_broken")
+			.parent(ModelFile.UncheckedModelFile("item/handheld"))
+			.texture("layer0", modLoc("item/watering_can_broken"))
+
+		base
+			.override()
+			.predicate(WateringCanItem.IS_BROKEN_PREDICATE, 1f)
+			.model(broken)
+			.end()
+
+		handledItems.add(item)
 	}
 
 	fun lassos() {

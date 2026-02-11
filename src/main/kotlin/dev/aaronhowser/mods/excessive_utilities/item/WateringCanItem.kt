@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
@@ -205,6 +206,16 @@ class WateringCanItem(
 
 	companion object {
 		const val MAX_WATER = 10_000
+
+		val IS_BROKEN_PREDICATE = ExcessiveUtilities.modResource("is_broken")
+		fun isBroken(
+			stack: ItemStack,
+			localLevel: Level?,
+			holdingEntity: LivingEntity?,
+			int: Int
+		): Float {
+			return if (stack.has(ModDataComponents.IS_BROKEN)) 1f else 0f
+		}
 
 		val DEFAULT_PROPERTIES: () -> Properties = {
 			Properties()

@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-10T05:16:18.5048623	Item Models: excessive_utilities
+// 1.21.1	2026-02-11T13:11:06.8287337	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
 fb9c0163d8035ba5161fccc2589c9d7d08e983c8 assets/excessive_utilities/models/item/bedrockium_ingot.json
@@ -65,7 +65,8 @@ c3eb7bb4f0f129e3235897c58c981351c1e2906c assets/excessive_utilities/models/item/
 a2054e2d130c5803ef9a33a4f3c388ad81b36c3e assets/excessive_utilities/models/item/stone_sickle.json
 6ed40dbfd1a1d91e3a8757b05cad1a1aa00b95f5 assets/excessive_utilities/models/item/trowel.json
 affe31894bd8dd951fc9adfa947b33f9b55eec7e assets/excessive_utilities/models/item/upgrade_base.json
-3968ac82f9d480f9521d706def16b8acae511ee3 assets/excessive_utilities/models/item/watering_can.json
+829fd123e8b9cfd401d1765a22bbc0c59bebd068 assets/excessive_utilities/models/item/watering_can.json
+b44ada3f081b1066c987ee49b97e734ea7c70133 assets/excessive_utilities/models/item/watering_can_broken.json
 decfa4e2773933f5a6d142b7563c5882fa8f2353 assets/excessive_utilities/models/item/wireless_rf_heating_coil.json
 939625b6b70c53df41e9ad75328e1c373874f93f assets/excessive_utilities/models/item/wooden_sickle.json
 3ed537948f48cabc001e1a17db058b6b1320626d assets/excessive_utilities/models/item/world_interaction_upgrade.json

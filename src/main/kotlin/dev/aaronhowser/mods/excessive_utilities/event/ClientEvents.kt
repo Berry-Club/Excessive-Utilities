@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreB
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
+import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -23,6 +24,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.*
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 
 @EventBusSubscriber(
 	modid = ExcessiveUtilities.MOD_ID,
@@ -71,6 +73,12 @@ object ClientEvents {
 			ModItems.ENDER_SHARD.get(),
 			ModItemModelProvider.ENDER_SHARD_COUNT
 		) { stack, level, entity, seed -> stack.count.toFloat() }
+
+		ItemProperties.register(
+			ModItems.WATERING_CAN.get(),
+			WateringCanItem.IS_BROKEN_PREDICATE,
+			WateringCanItem::isBroken
+		)
 	}
 
 	@SubscribeEvent
