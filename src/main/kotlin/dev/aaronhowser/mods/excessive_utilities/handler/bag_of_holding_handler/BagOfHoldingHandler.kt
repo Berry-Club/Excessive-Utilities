@@ -19,6 +19,8 @@ class BagOfHoldingHandler : SavedData() {
 		val bagList = tag.getList(BAG_LIST_TAG, Tag.TAG_COMPOUND.toInt())
 
 		for (bag in bags.values) {
+			if (bag.isEmpty()) continue
+
 			val bagTag = bag.toTag(registries)
 			bagList.add(bagTag)
 		}

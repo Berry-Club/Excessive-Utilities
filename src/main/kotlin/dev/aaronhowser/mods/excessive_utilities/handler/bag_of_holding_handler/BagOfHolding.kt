@@ -14,6 +14,7 @@ class BagOfHolding(
 	val container = SimpleContainer(9 * 6)
 
 	fun copiedItems(): List<ItemStack> = container.items.map(ItemStack::copy)
+	fun isEmpty(): Boolean = container.items.all(ItemStack::isEmpty)
 
 	fun toTag(registries: HolderLookup.Provider): CompoundTag {
 		val tag = CompoundTag()
