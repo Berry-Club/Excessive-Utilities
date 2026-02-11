@@ -39,6 +39,7 @@ class ServerConfig(
 	lateinit var survivalistGeneratorFePerTick: ModConfigSpec.IntValue
 	lateinit var netherStarGeneratorEffectRadius: ModConfigSpec.DoubleValue
 	lateinit var deathGeneratorEffectRadius: ModConfigSpec.DoubleValue
+	lateinit var rainbowGeneratorFePerTick: ModConfigSpec.IntValue
 
 	init {
 		general()
@@ -82,6 +83,10 @@ class ServerConfig(
 		deathGeneratorEffectRadius = builder
 			.comment("The radius in blocks that the Death Generator applies the Doom effect while active.")
 			.defineInRange("deathGeneratorEffectRadius", 3.0, 0.0, Double.MAX_VALUE)
+
+		rainbowGeneratorFePerTick = builder
+			.comment("How much FE per tick the Rainbow Generator produces when active.")
+			.defineInRange("rainbowGeneratorFePerTick", 25_000_000, 1, Int.MAX_VALUE)
 
 		builder.pop()
 	}

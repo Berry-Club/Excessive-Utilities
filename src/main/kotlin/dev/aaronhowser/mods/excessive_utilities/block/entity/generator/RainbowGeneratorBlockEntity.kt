@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -25,6 +27,16 @@ class RainbowGeneratorBlockEntity(
 	override fun isValidSecondaryInput(itemStack: ItemStack): Boolean = false
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
-		return true
+		val owner = ownerUuid ?: return false
+		val network = RainbowGeneratorHandler.get(level).getGeneratorNetwork(owner)
+
+		val shouldGenerate = network.allTypesActive()
+
+		if (shouldGenerate) {
+			fePerTick = ServerConfig.CONFIG.rainbowGeneratorFePerTick.get()
+			burnTimeRemaining = 1
+		}
+
+		return shouldGenerate
 	}
 }
