@@ -62,6 +62,7 @@ class ServerConfig(
 		wateringCan()
 		gridPower()
 		feGenerators()
+		enderQuarry()
 	}
 
 	private fun enderQuarry() {
