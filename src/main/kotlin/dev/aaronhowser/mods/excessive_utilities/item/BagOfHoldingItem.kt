@@ -7,12 +7,15 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.MenuProvider
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.level.Level
 import java.util.*
 
@@ -33,6 +36,16 @@ class BagOfHoldingItem(properties: Properties) : Item(properties), MenuProvider 
 		}
 
 		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
+	}
+
+	override fun onDestroyed(itemEntity: ItemEntity, damageSource: DamageSource) {
+		val level = itemEntity.level()
+		if (level is ServerLevel) {
+			val bagId = itemEntity.item.get(ModDataComponents.BAG_OF_HOLDING_ID) ?: return
+			val bag = BagOfHoldingHandler.get(level).getBag(bagId)
+
+			ItemUtils.onContainerDestroyed(itemEntity, bag.copiedItems())
+		}
 	}
 
 	override fun getDisplayName(): Component = defaultInstance.hoverName

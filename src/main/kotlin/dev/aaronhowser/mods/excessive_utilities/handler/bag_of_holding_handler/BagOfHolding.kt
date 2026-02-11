@@ -4,6 +4,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.SimpleContainer
+import net.minecraft.world.item.ItemStack
 import java.util.*
 
 class BagOfHolding(
@@ -11,6 +12,8 @@ class BagOfHolding(
 ) {
 
 	val container = SimpleContainer(9 * 6)
+
+	fun copiedItems(): List<ItemStack> = container.items.map(ItemStack::copy)
 
 	fun toTag(registries: HolderLookup.Provider): CompoundTag {
 		val tag = CompoundTag()
