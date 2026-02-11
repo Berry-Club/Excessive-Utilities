@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.*
 import dev.aaronhowser.mods.excessive_utilities.block.mill.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -336,39 +337,39 @@ object ModBlocks : AaronBlockRegistry() {
 	// Decor
 
 	val BLOCK_OF_BEDROCKIUM =
-		basicBlock("block_of_bedrockium")
+		basicCopiedBlock("block_of_bedrockium", Blocks.OBSIDIAN)
 	val BLOCK_OF_UNSTABLE_INGOT =
-		basicBlock("block_of_unstable_ingot")
-	val BLOCK_OF_EVIL_INFUSED_IRON =
-		basicBlock("block_of_evil_infused_iron")
-	val BLOCK_OF_DEMON_METAL =
-		basicBlock("block_of_demon_metal")
-	val BLOCK_OF_ENCHANTED_METAL =
-		basicBlock("block_of_enchanted_metal")
-	val ENDER_INFUSED_OBSIDIAN =
-		basicBlock("ender_infused_obsidian")
-	val POLISHED_STONE =
-		basicBlock("polished_stone")
-	val BORDER_STONE =
-		basicBlock("border_stone")
-	val CROSSED_STONE =
-		basicBlock("crossed_stone")
-	val EMINENCE_STONE =
-		basicBlock("eminence_stone")
-	val DIAMOND_ETCHED_COMPUTATIONAL_MATRIX =
-		basicBlock("diamond_etched_computational_matrix")
-	val EDGED_STONE_BRICKS =
-		basicBlock("edged_stone_bricks")
-	val ENDER_SAND_ALLOY =
-		basicBlock("ender_sand_alloy")
-	val FROSTED_STONE =
-		basicBlock("frosted_stone")
-	val GLASS_BRICKS =
+		basicCopiedBlock("block_of_unstable_ingot", Blocks.IRON_BLOCK)
+	val BLOCK_OF_EVIL_INFUSED_IRON: DeferredBlock<Block> =
+		basicCopiedBlock("block_of_evil_infused_iron", Blocks.IRON_BLOCK)
+	val BLOCK_OF_DEMON_METAL: DeferredBlock<Block> =
+		basicCopiedBlock("block_of_demon_metal", Blocks.IRON_BLOCK)
+	val BLOCK_OF_ENCHANTED_METAL: DeferredBlock<Block> =
+		basicCopiedBlock("block_of_enchanted_metal", Blocks.IRON_BLOCK)
+	val ENDER_INFUSED_OBSIDIAN: DeferredBlock<Block> =
+		basicCopiedBlock("ender_infused_obsidian", Blocks.OBSIDIAN)
+	val POLISHED_STONE: DeferredBlock<Block> =
+		basicStoneBlock("polished_stone")
+	val BORDER_STONE: DeferredBlock<Block> =
+		basicStoneBlock("border_stone")
+	val CROSSED_STONE: DeferredBlock<Block> =
+		basicStoneBlock("crossed_stone")
+	val EMINENCE_STONE: DeferredBlock<Block> =
+		basicStoneBlock("eminence_stone")
+	val DIAMOND_ETCHED_COMPUTATIONAL_MATRIX: DeferredBlock<Block> =
+		basicCopiedBlock("diamond_etched_computational_matrix", Blocks.DIAMOND_BLOCK)
+	val EDGED_STONE_BRICKS: DeferredBlock<Block> =
+		basicStoneBlock("edged_stone_bricks")
+	val ENDER_SAND_ALLOY: DeferredBlock<Block> =
+		basicCopiedBlock("ender_sand_alloy", Blocks.SANDSTONE)
+	val FROSTED_STONE: DeferredBlock<Block> =
+		basicStoneBlock("frosted_stone")
+	val GLASS_BRICKS: DeferredBlock<TransparentBlock> =
 		basicGlassBlock("glass_bricks")
-	val GRAVEL_BRICKS =
-		basicBlock("gravel_bricks")
-	val GRAVEL_ROAD =
-		basicBlock("gravel_road")
+	val GRAVEL_BRICKS: DeferredBlock<Block> =
+		basicCopiedBlock("gravel_bricks", Blocks.GRAVEL)
+	val GRAVEL_ROAD: DeferredBlock<Block> =
+		basicCopiedBlock("gravel_road", Blocks.GRAVEL)
 	val LAPIS_CAELESTIS =
 		basicBlock("lapis_caelestis")
 	val CHANDELIER: DeferredBlock<ChandelierBlock> =
@@ -381,18 +382,18 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("bedrock_slabs")
 	val BLUE_QUARTZ =
 		basicBlock("blue_quartz")
-	val STONEBURNT =
-		basicBlock("stoneburnt")
-	val TRUCHET =
-		basicBlock("truchet")
-	val QUARTZBURNT =
-		basicBlock("quartzburnt")
-	val RAINBOW_STONE =
-		basicBlock("rainbow_stone")
-	val MAGICAL_PLANKS =
-		basicBlock("magical_planks")
-	val DIAGONAL_WOOD =
-		basicBlock("diagonal_wood")
+	val STONEBURNT: DeferredBlock<Block> =
+		basicStoneBlock("stoneburnt")
+	val TRUCHET: DeferredBlock<Block> =
+		basicStoneBlock("truchet")
+	val QUARTZBURNT: DeferredBlock<Block> =
+		basicCopiedBlock("quartzburnt", Blocks.QUARTZ_BLOCK)
+	val RAINBOW_STONE: DeferredBlock<Block> =
+		basicStoneBlock("rainbow_stone")
+	val MAGICAL_PLANKS: DeferredBlock<Block> =
+		basicCopiedBlock("magical_planks", Blocks.OAK_PLANKS)
+	val DIAGONAL_WOOD: DeferredBlock<Block> =
+		basicCopiedBlock("diagonal_wood", Blocks.OAK_PLANKS)
 
 	// Glass
 
