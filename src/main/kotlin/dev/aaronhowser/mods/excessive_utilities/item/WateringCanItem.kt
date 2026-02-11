@@ -1,10 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.Unit
 import net.minecraft.world.InteractionHand
@@ -16,6 +18,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.HitResult
 import net.neoforged.neoforge.fluids.FluidStack
@@ -62,7 +65,7 @@ class WateringCanItem(
 		stack: ItemStack,
 		remainingUseDuration: Int
 	) {
-		if (livingEntity !is Player) return
+		if (level !is ServerLevel || livingEntity !is Player) return
 		if (livingEntity.isFakePlayer) {
 			stack.set(ModDataComponents.IS_BROKEN, Unit.INSTANCE)
 			return
@@ -97,6 +100,14 @@ class WateringCanItem(
 
 		for (pos in blocks) {
 			if (!level.random.chance(chancePerBlock)) continue
+			if (!level.mayInteract(livingEntity, pos)) continue
+
+			val stateThere = level.getBlockState(pos)
+			stateThere.randomTick(level, pos, level.random)
+
+			if (stateThere.isBlock(Blocks.FIRE)) {
+				level.removeBlock(pos, false)
+			}
 		}
 
 	}
