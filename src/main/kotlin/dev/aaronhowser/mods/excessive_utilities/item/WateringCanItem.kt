@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.Unit
@@ -59,7 +60,7 @@ class WateringCanItem(
 			return InteractionResultHolder.consume(stack)
 		}
 
-		if (needsToBeFilled(stack)) {
+		if (!player.hasInfiniteMaterials() && needsToBeFilled(stack)) {
 			return InteractionResultHolder.fail(stack)
 		}
 
@@ -81,7 +82,7 @@ class WateringCanItem(
 
 		if (stack.has(ModDataComponents.IS_BROKEN)) return
 
-		if (needsToBeFilled(stack)) {
+		if (!livingEntity.hasInfiniteMaterials() && needsToBeFilled(stack)) {
 			livingEntity.stopUsingItem()
 			return
 		}
@@ -116,9 +117,33 @@ class WateringCanItem(
 			if (stateThere.isBlock(Blocks.FIRE)) {
 				level.removeBlock(pos, false)
 			}
+
+			spawnParticles(level, pos)
 		}
 
 		drainWater(livingEntity, stack)
+	}
+
+	private fun spawnParticles(level: ServerLevel, pos: BlockPos) {
+		if (level.isEmptyBlock(pos)) return
+		val stateThere = level.getBlockState(pos)
+		if (stateThere.isCollisionShapeFullBlock(level, pos)) return
+
+		val y = pos.y + 0.1
+		val particleCount = 10
+
+		for (i in 0 until particleCount) {
+			val x = pos.x + level.random.nextDouble()
+			val z = pos.z + level.random.nextDouble()
+
+			level.sendParticles(
+				ParticleTypes.SPLASH,
+				x, y, z,
+				1,
+				0.0, 0.0, 0.0,
+				0.0
+			)
+		}
 	}
 
 	private fun drainWater(player: Player, stack: ItemStack) {
