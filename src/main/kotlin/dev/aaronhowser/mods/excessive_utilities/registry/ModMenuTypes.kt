@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronMenuTypesRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding.BagOfHoldingMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.mini_chest.MiniChestMenu
@@ -23,6 +24,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("flat_transfer_node", ::FlatTransferNodeMenu)
 	val MINI_CHEST: DeferredHolder<MenuType<*>, MenuType<MiniChestMenu>> =
 		register("mini_chest", ::MiniChestMenu)
+	val BAG_OF_HOLDING: DeferredHolder<MenuType<*>, MenuType<BagOfHoldingMenu>> =
+		register("bag_of_holding", ::BagOfHoldingMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
