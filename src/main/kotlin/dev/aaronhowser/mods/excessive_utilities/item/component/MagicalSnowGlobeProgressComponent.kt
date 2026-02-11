@@ -11,7 +11,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.biome.Biome
 
-class MagicalSnowGlobeProgressComponent(
+data class MagicalSnowGlobeProgressComponent(
 	val requirements: HashMap<TagKey<Biome>, Boolean>
 ) {
 
