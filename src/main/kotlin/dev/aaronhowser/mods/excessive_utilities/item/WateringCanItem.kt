@@ -32,6 +32,14 @@ class WateringCanItem(
 	override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int = Int.MAX_VALUE
 	override fun getUseAnimation(stack: ItemStack): UseAnim = UseAnim.BOW
 
+	override fun shouldCauseReequipAnimation(
+		oldStack: ItemStack,
+		newStack: ItemStack,
+		slotChanged: Boolean
+	): Boolean {
+		return slotChanged
+	}
+
 	override fun use(
 		level: Level,
 		player: Player,
