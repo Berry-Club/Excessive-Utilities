@@ -32,12 +32,15 @@ class RainbowGeneratorBlockEntity(
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		val owner = ownerUuid ?: return false
 		val network = RainbowGeneratorHandler.get(level).getGeneratorNetwork(owner)
+		if (network.rainbowGeneratedThisTick) return false
 
 		val shouldGenerate = network.allTypesActive()
 
 		if (shouldGenerate) {
 			fePerTick = ServerConfig.CONFIG.rainbowGeneratorFePerTick.get()
 			burnTimeRemaining = 1
+			network.rainbowGeneratedThisTick = true
+			setChanged()
 		}
 
 		return shouldGenerate

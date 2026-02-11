@@ -10,6 +10,7 @@ class PlayerGeneratorNetwork(
 ) {
 
 	private val generatorBlockEntities: MutableSet<GeneratorBlockEntity> = mutableSetOf()
+	var rainbowGeneratedThisTick = false
 
 	fun getActiveGeneratorTypes(): Set<GeneratorType> {
 		return generatorBlockEntities
@@ -30,6 +31,7 @@ class PlayerGeneratorNetwork(
 
 	fun tick(level: ServerLevel) {
 		generatorBlockEntities.removeIf { it.isRemoved }
+		rainbowGeneratedThisTick = false
 	}
 
 }
