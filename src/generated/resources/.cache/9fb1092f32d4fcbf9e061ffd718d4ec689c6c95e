@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-11T09:37:37.5553695	Recipes
+// 1.21.1	2026-02-11T13:12:26.6107777	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 dae80cf8a41d63d2b6b6e8c8f2980d67accd0b86 data/excessive_utilities/advancement/recipes/enchanter/block_of_enchanted_metal.json
 b46a12420ffdc8e03d9817941889851b7a2c85dc data/excessive_utilities/advancement/recipes/enchanter/block_of_evil_infused_iron.json
@@ -150,6 +150,7 @@ fef6cd0614b7c3aa94c9212c04d49ff697570c83 data/excessive_utilities/advancement/re
 156e0d480d3090d91775035fc8de7598a2ee16aa data/excessive_utilities/advancement/recipes/misc/trash_can_fluid.json
 9ee273bcefe8bf6f4360609df71d0462d7feb2ed data/excessive_utilities/advancement/recipes/misc/trowel.json
 043f7e67e5783a2f9b3dc789d4cedc4999c411e5 data/excessive_utilities/advancement/recipes/misc/truchet.json
+7f0a20ddecb9a91765ba2f848ee698004509b045 data/excessive_utilities/advancement/recipes/misc/watering_can_repair.json
 5d8f02d206d2553fe281d6c0e6aa22d286d1b9db data/excessive_utilities/advancement/recipes/misc/water_mill.json
 550b9ba6039a847c47dcd74837c8b6fbf46db527 data/excessive_utilities/advancement/recipes/misc/wind_mill.json
 d9600b3cf72c57b8c9f050c59b60e5a62898c7bc data/excessive_utilities/advancement/recipes/misc/wireless_fe_battery.json
@@ -325,6 +326,7 @@ bf62505062d7b01147a9e028e28cbb4f9fa494a0 data/excessive_utilities/recipe/trash_c
 cfb1e856c5ce2a6bebc9683e52f71e5d470bb7e7 data/excessive_utilities/recipe/trash_can_fluid.json
 bcbf062f5aa4a1eae0e825e66b19ef89246ad093 data/excessive_utilities/recipe/trowel.json
 5e010a12f6bae2b48fc7dc726d2d1bb7729c88d6 data/excessive_utilities/recipe/truchet.json
+23f51f9fe3214abaa7c02731fd60cac08141f807 data/excessive_utilities/recipe/watering_can_repair.json
 78fcdfe6b257f3de7e7f5c2df59ebaec92c17a62 data/excessive_utilities/recipe/water_mill.json
 2eebb2530202141d56e50c38e7dd545b72bbd215 data/excessive_utilities/recipe/wind_mill.json
 0e7870575075a92597582ba4a112634b3a4e49b0 data/excessive_utilities/recipe/wireless_fe_battery.json

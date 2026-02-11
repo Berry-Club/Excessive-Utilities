@@ -16,6 +16,7 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.ShapedRecipeBuilder
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
+import net.minecraft.util.Unit
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
@@ -1347,6 +1348,13 @@ class ModRecipeProvider(
 	}
 
 	private fun namedRecipes(recipeOutput: RecipeOutput) {
+		shapelessRecipe(
+			ModItems.WATERING_CAN,
+			listOf(
+				ing(ModItems.WATERING_CAN.withComponent(ModDataComponents.IS_BROKEN.get(), Unit.INSTANCE))
+			)
+		).save(recipeOutput, modLoc("watering_can_repair"))
+
 		shapedRecipe(
 			ModItems.MOON_STONE,
 			9,
