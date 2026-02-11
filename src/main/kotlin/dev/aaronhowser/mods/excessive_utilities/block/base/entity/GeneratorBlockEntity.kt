@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -66,8 +67,9 @@ abstract class GeneratorBlockEntity(
 		}
 
 	protected open fun serverTick(level: ServerLevel) {
-		val speed = container.getSpeed()
+		addToNetwork(level)
 
+		val speed = container.getSpeed()
 		var success = false
 		for (i in 0 until speed) {
 			if (generatorTick(level)) success = true
@@ -76,6 +78,12 @@ abstract class GeneratorBlockEntity(
 		if (success) {
 			effectOnSuccess(level)
 		}
+	}
+
+	protected open fun addToNetwork(level: ServerLevel) {
+		val owner = ownerUuid ?: return
+		val network = RainbowGeneratorHandler.get(level).getGeneratorNetwork(owner)
+		network.addGenerator(this)
 	}
 
 	protected open fun effectOnSuccess(level: ServerLevel) {}
