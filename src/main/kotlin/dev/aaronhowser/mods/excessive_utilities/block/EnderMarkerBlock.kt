@@ -48,29 +48,63 @@ class EnderMarkerBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
 					otherPositions.add(posThere.immutable())
 					break
 				}
+
+				posThere.move(dir)
 			}
 		}
 
 		if (otherPositions.isEmpty()) return InteractionResult.PASS
 
-		val particle = DustParticleOptions(Vector3f(), 1f)
+		val particle = DustParticleOptions(Vector3f(1f, 0f, 0f), 1f)
 
 		val y = pos.y + 0.8
 
-		for (otherPos in otherPositions) {
-			var x = pos.x + 0.5
-			var z = pos.z + 0.5
+		for (otherPosition in otherPositions) {
 
-			if (otherPos.x == pos.x) {
-				while (z < otherPos.z + 0.5) {
-					level.addParticle(particle, x, y, z, 0.0, 0.0, 0.0)
-					z += 0.1
-				}
-			} else {
-				while (x < otherPos.x + 0.5) {
-					level.addParticle(particle, x, y, z, 0.0, 0.0, 0.0)
-					x += 0.1
-				}
+			val startX = pos.x + 0.5
+			val startZ = pos.z + 0.5
+
+			val deltaX = otherPosition.x - pos.x
+			val deltaZ = otherPosition.z - pos.z
+
+			val stepSize = 0.1
+
+			if (deltaX == 0 && deltaZ == 0) continue
+
+			val stepX = when {
+				deltaX > 0 -> stepSize
+				deltaX < 0 -> -stepSize
+				else -> 0.0
+			}
+
+			val stepZ = when {
+				deltaZ > 0 -> stepSize
+				deltaZ < 0 -> -stepSize
+				else -> 0.0
+			}
+
+			val targetX = otherPosition.x + 0.5
+			val targetZ = otherPosition.z + 0.5
+
+			var currentX = startX
+			var currentZ = startZ
+
+			while (
+				(stepX != 0.0 && (currentX - targetX) * stepX <= 0.0) ||
+				(stepZ != 0.0 && (currentZ - targetZ) * stepZ <= 0.0)
+			) {
+				level.addParticle(
+					particle,
+					currentX,
+					y,
+					currentZ,
+					0.0,
+					0.0,
+					0.0
+				)
+
+				currentX += stepX
+				currentZ += stepZ
 			}
 		}
 
