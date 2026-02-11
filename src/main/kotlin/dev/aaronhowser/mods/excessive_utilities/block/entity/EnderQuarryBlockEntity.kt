@@ -37,7 +37,7 @@ class EnderQuarryBlockEntity(
 			setChanged()
 		}
 
-	private fun trySetBoundaries(level: ServerLevel) {
+	fun trySetBoundaries(level: ServerLevel) {
 		val horizontals = Direction.Plane.HORIZONTAL
 
 		for (dir in horizontals) {
@@ -131,6 +131,7 @@ class EnderQuarryBlockEntity(
 		val maxZ = corners.maxOf(BlockPos::getZ)
 
 		if (minX == maxX || minZ == maxZ) return false
+		if (minX + 1 == maxX || minZ + 1 == maxZ) return false
 
 		val y = blockPos.y
 
@@ -173,6 +174,7 @@ class EnderQuarryBlockEntity(
 		val maxZ = markers.maxOf(BlockPos::getZ)
 
 		if (minX == maxX || minZ == maxZ) return false
+		if (minX + 1 == maxX || minZ + 1 == maxZ) return false
 
 		val y = blockPos.y
 
