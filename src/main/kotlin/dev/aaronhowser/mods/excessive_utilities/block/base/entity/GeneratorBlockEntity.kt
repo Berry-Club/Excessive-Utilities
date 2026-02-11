@@ -50,7 +50,11 @@ abstract class GeneratorBlockEntity(
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = true
 	protected open fun isValidUpgrade(itemStack: ItemStack) = true
 
-	open fun isContributingToRainbowGen(): Boolean = blockState.getValue(GeneratorBlock.LIT)
+	protected var lastGeneratedEnergyOnTick: Long = -1L
+	open fun isContributingToRainbowGen(): Boolean {
+		val currentTick = level?.gameTime ?: return false
+		return lastGeneratedEnergyOnTick >= currentTick - 10L
+	}
 
 	protected var fePerTick: Int = 0
 		set(value) {
