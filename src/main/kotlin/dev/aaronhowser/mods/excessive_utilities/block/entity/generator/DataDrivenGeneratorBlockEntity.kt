@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.DataDrivenGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -31,7 +32,7 @@ open class DataDrivenGeneratorBlockEntity(
 
 		val fuelMap = generatorType.fuelDataMap
 
-		val inputStack = container.getItem(INPUT_SLOT)
+		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (inputStack.isEmpty) return false
 
 		val itemFuel = inputStack.item.builtInRegistryHolder().getData(fuelMap) ?: return false

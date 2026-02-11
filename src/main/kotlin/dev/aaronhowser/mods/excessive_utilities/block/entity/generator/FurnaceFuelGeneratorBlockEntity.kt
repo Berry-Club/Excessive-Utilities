@@ -2,8 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block.base.FurnaceFuelGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity.Companion.INPUT_SLOT
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -29,7 +29,7 @@ class FurnaceFuelGeneratorBlockEntity(
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false
 
-		val inputStack = container.getItem(INPUT_SLOT)
+		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (inputStack.isEmpty) return false
 
 		val burnTime = inputStack.getBurnTime(RecipeType.SMELTING)

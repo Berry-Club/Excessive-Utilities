@@ -7,20 +7,20 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.jvm.optionals.getOrNull
-import kotlin.math.pow
 
-class PotionGeneratorBlockEntity(
+class DisenchantmentGenerator(
 	pos: BlockPos,
 	blockState: BlockState,
-) : GeneratorBlockEntity(ModBlockEntityTypes.POTION_GENERATOR.get(), pos, blockState) {
+) : GeneratorBlockEntity(ModBlockEntityTypes.DISENCHANTMENT_GENERATOR.get(), pos, blockState) {
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false
@@ -34,7 +34,7 @@ class PotionGeneratorBlockEntity(
 			burnTimeRemaining = 10
 			fePerTick = 1
 		} else {
-			val totalPower = getPowerFromPotion(level, inputStack)
+			val totalPower = getPowerFromEnchantment(level, inputStack)
 			if (totalPower <= 0) return false
 
 			val duration = 200
@@ -50,35 +50,22 @@ class PotionGeneratorBlockEntity(
 	}
 
 	companion object {
-		fun getPowerFromPotion(level: Level, itemStack: ItemStack): Int {
-			val potion = itemStack.get(DataComponents.POTION_CONTENTS)
-				?.potion
-				?.getOrNull()
-				?: return -1
+		fun getPowerFromEnchantment(level: Level, itemStack: ItemStack): Int {
+			val enchantments = itemStack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT))
 
-			val steps = calculateBrewingSteps(level, potion)
-			return 100 * Mth.ceil(4.0.pow(steps))
-		}
+			var totalPower = 0
 
-		tailrec fun calculateBrewingSteps(
-			level: Level,
-			potion: Holder<Potion>,
-			runningTotal: Int = 0
-		): Int {
-			if (runningTotal >= 100) return runningTotal
-
-			val brewing = level.potionBrewing()
-			val potMixes = brewing.potionMixes
-
-			for (potMix in potMixes) {
-				if (potMix.to.isHolder(potion)) {
-					return calculateBrewingSteps(level, potMix.from, runningTotal + 1)
-				}
+			for ((enchantment, enchantLevel) in enchantments.entrySet()) {
+				totalPower += getPowerFromEnchantment(level, enchantment, enchantLevel)
 			}
 
-			return runningTotal
+			return totalPower
 		}
 
+		fun getPowerFromEnchantment(level: Level, enchantment: Holder<Enchantment>, enchantLevel: Int): Int {
+
+
+		}
 	}
 
 }

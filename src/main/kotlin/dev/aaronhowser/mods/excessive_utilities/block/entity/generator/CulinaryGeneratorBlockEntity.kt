@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -21,7 +22,7 @@ class CulinaryGeneratorBlockEntity(
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false
 
-		val inputStack = container.getItem(INPUT_SLOT)
+		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (inputStack.isEmpty) return false
 
 		val foodProperties = inputStack.getFoodProperties(null) ?: return false
@@ -39,12 +40,6 @@ class CulinaryGeneratorBlockEntity(
 		setChanged()
 
 		return true
-	}
-
-	companion object {
-		const val CONTAINER_SIZE = 1
-		const val INPUT_SLOT = 0
-
 	}
 
 }

@@ -3,13 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DataDrivenGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.DeathGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.FurnaceFuelGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.MagmaticGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.NetherStarGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.PotionGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.*
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -94,5 +88,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("magmatic_generator", ::MagmaticGeneratorBlockEntity, ModBlocks.MAGMATIC_GENERATOR)
 	val POTION_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<PotionGeneratorBlockEntity>> =
 		register("potion_generator", ::PotionGeneratorBlockEntity, ModBlocks.POTION_GENERATOR)
+	val DISENCHANTMENT_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DisenchantmentGenerator>> =
+		register("disenchantment_generator", ::DisenchantmentGenerator, ModBlocks.DISENCHANTMENT_GENERATOR)
 
 }
