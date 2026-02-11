@@ -62,10 +62,30 @@ abstract class HeldItemContainerMenu(
 
 			override fun removeItem(index: Int, count: Int): ItemStack {
 				val container = getItemContainer() ?: return ItemStack.EMPTY
-
 				if (index !in 0 until container.slots) return ItemStack.EMPTY
-				val stack = container.getStackInSlot(index).copy()
 
+				val items = getItems()
+				val stack = items[index].copy()
+
+				items[index] = ItemStack.EMPTY
+
+				getHeldItemStack().set(
+					DataComponents.CONTAINER,
+					ItemContainerContents.fromItems(items)
+				)
+
+				return stack
+			}
+
+			override fun addItem(stack: ItemStack): ItemStack {
+				val result = super.addItem(stack)
+
+				getHeldItemStack().set(
+					DataComponents.CONTAINER,
+					ItemContainerContents.fromItems( getItems())
+				)
+
+				return result
 			}
 
 		}
