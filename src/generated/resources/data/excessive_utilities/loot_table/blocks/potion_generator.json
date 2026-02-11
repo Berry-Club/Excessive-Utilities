@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "excessive_utilities:potions_generator"
+          "name": "excessive_utilities:potion_generator"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "excessive_utilities:blocks/potions_generator"
+  "random_sequence": "excessive_utilities:blocks/potion_generator"
 }

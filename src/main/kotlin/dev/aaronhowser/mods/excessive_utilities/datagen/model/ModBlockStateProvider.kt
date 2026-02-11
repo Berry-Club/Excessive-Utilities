@@ -388,7 +388,8 @@ class ModBlockStateProvider(
 			ModBlocks.BLOCK_OF_DEMON_METAL.get(),
 			ModBlocks.BLOCK_OF_ENCHANTED_METAL.get(),
 			ModBlocks.POWER_OVERLOAD.get(),
-			ModBlocks.SOUND_MUFFLER.get()
+			ModBlocks.SOUND_MUFFLER.get(),
+			ModBlocks.RAINBOW_GENERATOR.get()
 		)
 
 		for (block in blocks) {

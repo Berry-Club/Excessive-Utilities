@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-10T12:59:20.1614691	Loot Tables
+// 1.21.1	2026-02-11T09:37:37.5503472	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 dfd3eb1c14ba5a4b83fdae1b1844caadf489ebdb data/excessive_utilities/loot_table/blocks/advanced_observer.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
@@ -121,7 +121,7 @@ a90d0e68f6ec54a638cee6531b724c0a00329b1e data/excessive_utilities/loot_table/blo
 61a41a85fc68f8ce83dc865716e0c79ec88ac3a5 data/excessive_utilities/loot_table/blocks/pink_generator.json
 2ef0c4867cf54facecf24c1883112bb8c72dac9d data/excessive_utilities/loot_table/blocks/player_chest.json
 a3434ab65449b26103717f1b6880ca94ebf44a94 data/excessive_utilities/loot_table/blocks/polished_stone.json
-bdbb69e20c77bbc033eb8cf51a575c7c309ffa71 data/excessive_utilities/loot_table/blocks/potions_generator.json
+f6e7e032adebf7bf1fd8560b924c0d182d28a479 data/excessive_utilities/loot_table/blocks/potion_generator.json
 33dc863498f947aa83a436eb113e0130a0487912 data/excessive_utilities/loot_table/blocks/power_overload.json
 2c9f1aba4b9d92dddc30f704f110f08b3f59cf96 data/excessive_utilities/loot_table/blocks/qed.json
 3730574250a1499a0080ec43ba4b4a6e14222d4e data/excessive_utilities/loot_table/blocks/quantum_quarry.json
