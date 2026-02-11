@@ -110,6 +110,15 @@ class WateringCanItem(
 			}
 		}
 
+		drainWater(livingEntity, stack)
+	}
+
+	private fun drainWater(player: Player, stack: ItemStack) {
+		if (player.hasInfiniteMaterials()) return
+		val heldWater = stack.get(ModDataComponents.TANK) ?: return
+		val newAmount = maxOf(heldWater.amount - getWaterPerTick(), 0)
+		val newFluidStack = FluidStack(Fluids.WATER, newAmount)
+		stack.set(ModDataComponents.TANK, SimpleFluidContent.copyOf(newFluidStack))
 	}
 
 	private fun getWaterPerTick(): Int {
