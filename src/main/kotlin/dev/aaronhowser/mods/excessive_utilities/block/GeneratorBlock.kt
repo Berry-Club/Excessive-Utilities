@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
+import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.*
 import net.minecraft.world.entity.LivingEntity
@@ -92,15 +93,25 @@ class GeneratorBlock(
 				val allTypes = GeneratorType.NON_RAINBOW
 				val activeTypes = handler.getActiveGeneratorTypes()
 
+				val yesComponent = Component.literal("Active: ")
+				val noComponent = Component.literal("Inactive: ")
+
+				var anyActive = false
+				var anyInactive = false
+
 				for (type in allTypes) {
-					val component = if (type in activeTypes) {
-						Component.literal("[✓] ${type.name}")
+					if (type in activeTypes) {
+						anyActive = true
+						yesComponent.append("${type.name}, ")
 					} else {
-						Component.literal("[ ] ${type.name}")
+						anyInactive = true
+						noComponent.append("${type.name}, ")
 					}
-					
-					player.sendSystemMessage(component)
 				}
+				
+				val message: MutableComponent = Component.literal("Rainbow Generator Status: ")
+				if (anyActive) message.append(yesComponent)
+				if (anyInactive) message.append(noComponent)
 			}
 
 			return InteractionResult.sidedSuccess(level.isClientSide)
