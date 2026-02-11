@@ -80,6 +80,7 @@ abstract class GeneratorBlockEntity(
 		}
 
 		if (success) {
+			lastGeneratedEnergyOnTick = level.gameTime
 			effectOnSuccess(level)
 		}
 	}
@@ -98,28 +99,27 @@ abstract class GeneratorBlockEntity(
 	protected open fun generatorTick(level: ServerLevel): Boolean {
 		if (burnTimeRemaining <= 0) {
 			fePerTick = 0
-			val startedBurning = tryStartBurning(level)
 			val wasLit = blockState.getValue(GeneratorBlock.LIT)
-
-			if (startedBurning && !wasLit) {
-				level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, true))
-			} else if (!startedBurning && wasLit) {
-				level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, false))
-			}
-
+			val startedBurning = tryStartBurning(level)
+			changeBurnState(level, wasLit, startedBurning)
 			if (burnTimeRemaining <= 0) return false
 		}
 
 		val wasLit = blockState.getValue(GeneratorBlock.LIT)
 		val generatedPower = generateEnergy(level)
-
-		if (generatedPower && !wasLit) {
-			level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, true))
-		} else if (!generatedPower && wasLit) {
-			level.setBlockAndUpdate(worldPosition, blockState.setValue(GeneratorBlock.LIT, false))
-		}
+		changeBurnState(level, wasLit, generatedPower)
 
 		return generatedPower
+	}
+
+	protected open fun changeBurnState(level: ServerLevel, wasBurning: Boolean, isBurning: Boolean) {
+		if (wasBurning != isBurning) {
+			val blockState = level.getBlockState(worldPosition)
+			level.setBlockAndUpdate(
+				worldPosition,
+				blockState.setValue(GeneratorBlock.LIT, isBurning)
+			)
+		}
 	}
 
 	protected abstract fun tryStartBurning(level: ServerLevel): Boolean
