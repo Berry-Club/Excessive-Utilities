@@ -33,6 +33,7 @@ class ModBlockStateProvider(
 		enderMarker()
 	}
 
+	//TODO: Rectangular model
 	private fun enderMarker() {
 		val block = ModBlocks.ENDER_MARKER.get()
 
@@ -40,6 +41,7 @@ class ModBlockStateProvider(
 
 		val model = models()
 			.torch(name(block), texture)
+			.renderType(RenderType.cutout().name)
 
 		simpleBlockWithItem(block, model)
 	}

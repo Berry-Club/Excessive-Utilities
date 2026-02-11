@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-11T16:17:02.4484179	Block States: excessive_utilities
+// 1.21.1	2026-02-11T16:18:34.9168583	Block States: excessive_utilities
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 b234a9e9783bbcba2f25a6fb38362e61ecabf128 assets/excessive_utilities/blockstates/bedrock_bricks.json
 a1af58ae4fea69980a2c763586a855cd236e1152 assets/excessive_utilities/blockstates/bedrock_cobblestone.json
@@ -58,7 +58,7 @@ a9d700223c2a584299a49ecc090b20de6d91e11b assets/excessive_utilities/models/block
 84e97f576e7dd3e631838390c2043fda8dcaac1d assets/excessive_utilities/models/block/ender_core.json
 bd687114923db6772723940bd6f6803c8f3c0d48 assets/excessive_utilities/models/block/ender_generator_off.json
 b07bc24b79772a49cec6bea30daf81e1042c713b assets/excessive_utilities/models/block/ender_generator_on.json
-5a2d4655ee682b114ca0518abe73b6a68be48880 assets/excessive_utilities/models/block/ender_marker.json
+89fb20be0db40995f39c2e3a5397a8fda2f858f4 assets/excessive_utilities/models/block/ender_marker.json
 d19bedd91e20ce2434abbea97218fdb8e28d4f75 assets/excessive_utilities/models/block/ender_quarry.json
 80579b717004df3de02bb82b0bb549b27af4aea1 assets/excessive_utilities/models/block/ethereal_glass.json
 e83bac6ebf0a110f99a2f60bb51bc26825aefecc assets/excessive_utilities/models/block/explosive_generator_off.json
