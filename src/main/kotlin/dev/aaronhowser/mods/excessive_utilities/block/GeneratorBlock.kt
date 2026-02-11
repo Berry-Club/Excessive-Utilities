@@ -79,16 +79,23 @@ class GeneratorBlock(
 		hitResult: BlockHitResult
 	): ItemInteractionResult {
 		val fluidTransferred = FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction)
-		return if (fluidTransferred) ItemInteractionResult.sidedSuccess(level.isClientSide) else ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+
+		return if (fluidTransferred) {
+			ItemInteractionResult.sidedSuccess(level.isClientSide)
+		} else {
+			ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+		}
 	}
 
 	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
 		if (!state.isBlock(newState.block)) {
 			val be = level.getBlockEntity(pos)
 			if (be is ContainerContainer) {
-				Containers.dropContents(level, pos, be.getContainer())
+				val container = be.getContainer()
+				if (container != null) Containers.dropContents(level, pos, container)
 			}
 		}
+
 		super.onRemove(state, level, pos, newState, movedByPiston)
 	}
 
