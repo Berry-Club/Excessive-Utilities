@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
@@ -93,7 +94,9 @@ class EnderQuarryBlockEntity(
 		val currentPos = fencePos.mutable()
 		var iterations = 0
 
-		while (iterations < 100_000) {
+		val maxFences = ServerConfig.CONFIG.enderQuarryFencePerimeterLimit.get()
+
+		while (iterations < maxFences) {
 			iterations++
 
 			currentPos.move(currentDirection)
@@ -101,7 +104,8 @@ class EnderQuarryBlockEntity(
 
 			if (!isValidFence(currentState)) return false
 
-			val canKeepGoing = currentState.getValue(dirToProperty[currentDirection]!!)
+			val property = dirToProperty[currentDirection] ?: return false
+			val canKeepGoing = currentState.getValue(property)
 
 			if (!canKeepGoing) {
 				val nextDirection = dirToProperty
@@ -143,12 +147,14 @@ class EnderQuarryBlockEntity(
 
 		val markers = mutableSetOf(markerPos)
 
+		val searchDistance = ServerConfig.CONFIG.enderQuarryMarkerSearchDistance.get()
+
 		val horizontals = Direction.Plane.HORIZONTAL
 		for (dir in horizontals) {
 			val checkPos = markerPos.relative(dir).mutable()
 			var locationsChecked = 0
 
-			while (locationsChecked < 100) {
+			while (locationsChecked < searchDistance) {
 				locationsChecked++
 
 				val checkState = level.getBlockState(checkPos)

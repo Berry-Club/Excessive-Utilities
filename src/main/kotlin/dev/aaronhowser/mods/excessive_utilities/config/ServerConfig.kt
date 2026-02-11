@@ -52,6 +52,9 @@ class ServerConfig(
 	lateinit var reinforcedWateringCanTickChance: ModConfigSpec.DoubleValue
 	lateinit var reinforcedWateringCanWaterUsagePerTick: ModConfigSpec.IntValue
 
+	lateinit var enderQuarryFencePerimeterLimit: ModConfigSpec.IntValue
+	lateinit var enderQuarryMarkerSearchDistance: ModConfigSpec.IntValue
+
 	init {
 		general()
 		heatingCoil()
@@ -59,6 +62,20 @@ class ServerConfig(
 		wateringCan()
 		gridPower()
 		feGenerators()
+	}
+
+	private fun enderQuarry() {
+		builder.push("ender_quarry")
+
+		enderQuarryFencePerimeterLimit = builder
+			.comment("The maximum number of fence blocks that can be used to create the perimeter for an Ender Quarry.")
+			.defineInRange("enderQuarryFencePerimeterLimit", 100_000, 4, Int.MAX_VALUE)
+
+		enderQuarryMarkerSearchDistance = builder
+			.comment("The maximum distance in blocks that the Ender Quarry will search for its markers.")
+			.defineInRange("enderQuarryMarkerSearchDistance", 1_000, 1, Int.MAX_VALUE)
+
+		builder.pop()
 	}
 
 	private fun wateringCan() {
