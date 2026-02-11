@@ -1,13 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.network.chat.Component
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.tags.BiomeTags
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
@@ -31,9 +31,12 @@ class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MA
 
 		stack.set(ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS.get(), newProgress)
 
-		if (entity is LivingEntity) {
-			entity.tell("Is client: ${level.isClientSide}")
-		}
+		level.playSound(
+			null,
+			entity.blockPosition(),
+			SoundEvents.ARROW_HIT_PLAYER,
+			SoundSource.AMBIENT
+		)
 	}
 
 	override fun appendHoverText(
@@ -48,7 +51,6 @@ class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MA
 			val component = Component.literal(" - ${biomeTag.location}: ${if (found) "Found" else "Not Found"}")
 			tooltipComponents.add(component)
 		}
-
 	}
 
 	companion object {
