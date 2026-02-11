@@ -57,7 +57,48 @@ class EnderQuarryBlockEntity(
 	}
 
 	private fun trySetBoundariesFromMarkers(level: ServerLevel, markerPos: BlockPos): Boolean {
-		return false
+		val firstMarkerState = level.getBlockState(markerPos)
+		if (!firstMarkerState.isBlock(ModBlocks.ENDER_MARKER)) return false
+
+		val markers = mutableSetOf(markerPos)
+
+		val horizontals = Direction.Plane.HORIZONTAL
+		for (dir in horizontals) {
+			val checkPos = markerPos.relative(dir).mutable()
+			var locationsChecked = 0
+
+			while (locationsChecked < 100) {
+				locationsChecked++
+
+				val checkState = level.getBlockState(checkPos)
+				if (checkState.isBlock(ModBlocks.ENDER_MARKER)) {
+					markers.add(checkPos.immutable())
+					break
+				}
+			}
+		}
+
+		if (markers.size < 3) return false
+
+		var minX = markers.minOf(BlockPos::getX)
+		var minZ = markers.minOf(BlockPos::getZ)
+		var maxX = markers.maxOf(BlockPos::getX)
+		var maxZ = markers.maxOf(BlockPos::getZ)
+
+		if (minX == maxX || minZ == maxZ) return false
+
+		minX += 1
+		minZ += 1
+		maxX -= 1
+		maxZ -= 1
+
+		val y = blockPos.y
+
+		minPos = BlockPos(minX, y, minZ)
+		maxPos = BlockPos(maxX, y, maxZ)
+
+		targetPos = minPos
+		return true
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
