@@ -45,12 +45,56 @@ class ServerConfig(
 	lateinit var deathGeneratorEffectRadius: ModConfigSpec.DoubleValue
 	lateinit var rainbowGeneratorFePerTick: ModConfigSpec.IntValue
 
+	lateinit var wateringCanRadius: ModConfigSpec.IntValue
+	lateinit var wateringCanTickChance: ModConfigSpec.DoubleValue
+	lateinit var wateringCanWaterUsagePerTick: ModConfigSpec.IntValue
+	lateinit var reinforcedWateringCanRadius: ModConfigSpec.IntValue
+	lateinit var reinforcedWateringCanTickChance: ModConfigSpec.DoubleValue
+	lateinit var reinforcedWateringCanWaterUsagePerTick: ModConfigSpec.IntValue
+
 	init {
 		general()
 		heatingCoil()
 		drums()
+		wateringCan()
 		gridPower()
 		feGenerators()
+	}
+
+	private fun wateringCan() {
+		builder.push("watering_can")
+
+		wateringCanRadius = builder
+			.comment("The radius in blocks around the player that the Watering Can will effect.")
+			.defineInRange("wateringCanRadius", 3, 1, Int.MAX_VALUE)
+
+		wateringCanTickChance = builder
+			.comment("The chance that each block in the radius will get ticked when the Watering Can is used.")
+			.defineInRange("wateringCanTickChance", 0.3, 0.0, 1.0)
+
+		wateringCanWaterUsagePerTick = builder
+			.comment(
+				"The amount of water in millibuckets that the Watering Can will use per tick.",
+				"Setting this to 0 will make it not require water at all."
+			)
+			.defineInRange("wateringCanWaterUsagePerTick", 10, 0, Int.MAX_VALUE)
+
+		reinforcedWateringCanRadius = builder
+			.comment("The radius in blocks around the player that the Reinforced Watering Can will effect.")
+			.defineInRange("reinforcedWateringCanRadius", 5, 1, Int.MAX_VALUE)
+
+		reinforcedWateringCanTickChance = builder
+			.comment("The chance that each block in the radius will get ticked when the Reinforced Watering Can is used.")
+			.defineInRange("reinforcedWateringCanTickChance", 0.5, 0.0, 1.0)
+
+		reinforcedWateringCanWaterUsagePerTick = builder
+			.comment(
+				"The amount of water in millibuckets that the Reinforced Watering Can will use per tick.",
+				"Setting this to 0 will make it not require water at all."
+			)
+			.defineInRange("reinforcedWateringCanWaterUsagePerTick", 10, 0, Int.MAX_VALUE)
+
+		builder.pop()
 	}
 
 	private fun feGenerators() {
