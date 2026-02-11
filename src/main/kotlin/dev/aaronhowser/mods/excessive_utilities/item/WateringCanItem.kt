@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.UseAnim
+import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 
@@ -45,12 +46,14 @@ class WateringCanItem(
 	private fun needsToBeFilled(stack: ItemStack): Boolean {
 		if (!usesWater()) return false
 
-		val heldWater = stack.get(ModDataComponents.WATER) ?: return true
+		val heldWater = stack.get(ModDataComponents.TANK) ?: return true
 		return heldWater.amount <= getWaterPerTick()
 	}
 
 	private fun tryCollectWater(player: Player, stack: ItemStack): Boolean {
 		if (!needsToBeFilled(stack)) return false
+
+		val blockHitResult = getPlayerPOVHitResult(player.level(), player, ClipContext.Fluid.WATER)
 
 		return true
 	}
@@ -59,13 +62,13 @@ class WateringCanItem(
 		val DEFAULT_PROPERTIES: () -> Properties = {
 			Properties()
 				.stacksTo(1)
-				.component(ModDataComponents.WATER, SimpleFluidContent.EMPTY)
+				.component(ModDataComponents.TANK, SimpleFluidContent.EMPTY)
 		}
 
 		val DEFAULT_REINFORCED_PROPERTIES: () -> Properties = {
 			Properties()
 				.stacksTo(1)
-				.component(ModDataComponents.WATER, SimpleFluidContent.EMPTY)
+				.component(ModDataComponents.TANK, SimpleFluidContent.EMPTY)
 		}
 	}
 

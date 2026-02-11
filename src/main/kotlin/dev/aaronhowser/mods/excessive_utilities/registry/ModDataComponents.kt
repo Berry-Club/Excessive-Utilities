@@ -38,7 +38,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		register("opinium_core_contents", OpiniumCoreContentsComponent.CODEC, OpiniumCoreContentsComponent.STREAM_CODEC)
 	val MAGICAL_SNOW_GLOBE_PROGRESS: DeferredHolder<DataComponentType<*>, DataComponentType<MagicalSnowGlobeProgressComponent>> =
 		register("magical_snow_globe_progress", MagicalSnowGlobeProgressComponent.CODEC, MagicalSnowGlobeProgressComponent.STREAM_CODEC)
-	val WATER: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =
-		register("water", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
+	val TANK: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =
+		register("tank", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
 
 }
