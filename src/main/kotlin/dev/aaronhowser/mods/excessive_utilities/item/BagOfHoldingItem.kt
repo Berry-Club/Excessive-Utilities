@@ -1,6 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding_handler.BagOfHoldingHandler
+import dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding.BagOfHoldingMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -11,7 +14,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import java.util.UUID
+import java.util.*
 
 class BagOfHoldingItem(properties: Properties) : Item(properties), MenuProvider {
 
@@ -32,8 +35,16 @@ class BagOfHoldingItem(properties: Properties) : Item(properties), MenuProvider 
 
 	override fun getDisplayName(): Component = defaultInstance.hoverName
 
-	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
-		return BagOfHoldingMenu(containerId, playerInventory)
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
+		val level = player.level()
+		if (level !is ServerLevel) return null
+
+		val usedStack = player.getItemInHand(player.usedItemHand)
+		val bagId = usedStack.get(ModDataComponents.BAG_OF_HOLDING_ID) ?: return null
+
+		val bag = BagOfHoldingHandler.get(level).getBag(bagId)
+
+		return BagOfHoldingMenu(containerId, playerInventory, bag.container)
 	}
 
 	companion object {
