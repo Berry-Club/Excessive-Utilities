@@ -27,7 +27,11 @@ class WateringCanItem(
 	override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int = Int.MAX_VALUE
 	override fun getUseAnimation(stack: ItemStack): UseAnim = UseAnim.BOW
 
-	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+	override fun use(
+		level: Level,
+		player: Player,
+		usedHand: InteractionHand
+	): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(usedHand)
 
 		if (player.isFakePlayer) {
@@ -47,8 +51,37 @@ class WateringCanItem(
 		}
 
 		player.startUsingItem(usedHand)
-
 		return InteractionResultHolder.consume(stack)
+	}
+
+	override fun onUseTick(
+		level: Level,
+		livingEntity: LivingEntity,
+		stack: ItemStack,
+		remainingUseDuration: Int
+	) {
+		if (livingEntity !is Player) return
+		if (livingEntity.isFakePlayer) {
+			stack.set(ModDataComponents.IS_BROKEN, Unit.INSTANCE)
+			return
+		}
+
+		if (stack.has(ModDataComponents.IS_BROKEN)) return
+
+		if (needsToBeFilled(stack)) {
+			livingEntity.stopUsingItem()
+			return
+		}
+
+		val lookingAt = getPlayerPOVHitResult(level, livingEntity, ClipContext.Fluid.NONE)
+		if (lookingAt.type != HitResult.Type.BLOCK) return
+
+		val radius = if (isReinforced) {
+			ServerConfig.CONFIG.reinforcedWateringCanRadius.get()
+		} else {
+			ServerConfig.CONFIG.wateringCanRadius.get()
+		}
+
 	}
 
 	private fun getWaterPerTick(): Int {
