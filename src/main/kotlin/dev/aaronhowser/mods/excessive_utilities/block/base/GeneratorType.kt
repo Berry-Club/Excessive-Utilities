@@ -16,5 +16,6 @@ enum class GeneratorType {
 	POTION,
 	SLIMY,
 	SURVIVAL,
-	DEATH
+	DEATH,
+	RAINBOW
 }

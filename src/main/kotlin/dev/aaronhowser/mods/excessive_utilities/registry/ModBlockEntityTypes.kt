@@ -90,5 +90,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("potion_generator", ::PotionGeneratorBlockEntity, ModBlocks.POTION_GENERATOR)
 	val DISENCHANTMENT_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<DisenchantmentGenerator>> =
 		register("disenchantment_generator", ::DisenchantmentGenerator, ModBlocks.DISENCHANTMENT_GENERATOR)
+	val RAINBOW_GENERATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<RainbowGeneratorBlockEntity>> =
+		register("rainbow_generator", ::RainbowGeneratorBlockEntity, ModBlocks.RAINBOW_GENERATOR)
 
 }
