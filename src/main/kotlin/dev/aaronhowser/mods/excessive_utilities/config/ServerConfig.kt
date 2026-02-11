@@ -11,6 +11,8 @@ class ServerConfig(
 	lateinit var magnumTorchRadius: ModConfigSpec.IntValue
 	lateinit var flatItemTransferNodeSpeed: ModConfigSpec.IntValue
 	lateinit var flatFluidTransferNodeSpeed: ModConfigSpec.IntValue
+	lateinit var peacefulTableOnlyInPeaceful: ModConfigSpec.BooleanValue
+	lateinit var peacefulTableChancePerTick: ModConfigSpec.DoubleValue
 
 	lateinit var heatingCoilBurnTime: ModConfigSpec.IntValue
 	lateinit var heatingCoilBurnCost: ModConfigSpec.IntValue
@@ -154,6 +156,14 @@ class ServerConfig(
 		flatFluidTransferNodeSpeed = builder
 			.comment("The amount of fluid in millibuckets per tick that Flat Fluid Transfer Nodes will transfer.")
 			.defineInRange("flatFluidTransferNodeSpeed", 1000 / 20, 1, Int.MAX_VALUE)
+
+		peacefulTableOnlyInPeaceful = builder
+			.comment("Whether the Peaceful Table should only work when the difficulty is set to Peaceful.")
+			.define("peacefulTableOnlyInPeaceful", true)
+
+		peacefulTableChancePerTick = builder
+			.comment("The chance per tick that the Peaceful Table will try to generate a drop.")
+			.defineInRange("peacefulTableChancePerTick", 1.0 / 20 / 30, 0.0, 1.0)
 
 	}
 

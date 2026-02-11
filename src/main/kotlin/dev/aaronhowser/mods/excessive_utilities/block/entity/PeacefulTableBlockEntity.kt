@@ -3,10 +3,12 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import com.mojang.authlib.GameProfile
 import com.mojang.datafixers.util.Either
 import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -73,12 +75,18 @@ class PeacefulTableBlockEntity(
 
 	private fun tick() {
 		val level = this.level as? ServerLevel ?: return
-		if (level.difficulty != Difficulty.PEACEFUL) return
+
+		if (ServerConfig.CONFIG.peacefulTableOnlyInPeaceful.get()
+			&& level.difficulty != Difficulty.PEACEFUL
+		) return
 
 		if (isFirstTick) {
 			isFirstTick = false
 			initFakePlayer()
 		}
+
+		val chancePerTick = ServerConfig.CONFIG.peacefulTableChancePerTick.get()
+		if (!level.random.chance(chancePerTick)) return
 
 		val fakePlayer = this.fakePlayer?.get() ?: return
 
