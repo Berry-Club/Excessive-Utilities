@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.menu
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import net.minecraft.core.NonNullList
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.SimpleContainer
@@ -44,7 +45,20 @@ abstract class HeldItemContainerMenu(
 	val fakeContainer: SimpleContainer =
 		object : SimpleContainer(containerSlots) {
 
-			override fun getItem(index: Int): ItemStack = getItemContainer()?.getStackInSlot(index) ?: ItemStack.EMPTY
+			override fun getItems(): NonNullList<ItemStack> {
+				val items = NonNullList.withSize(containerSlots, ItemStack.EMPTY)
+				val container = getItemContainer()
+
+				if (container != null) {
+					for (i in 0 until container.slots) {
+						items[i] = container.getStackInSlot(i)
+					}
+				}
+
+				return items
+			}
+
+			override fun getItem(index: Int): ItemStack = getItems()[index]
 
 			override fun removeItem(index: Int, count: Int): ItemStack {
 				val container = getItemContainer() ?: return ItemStack.EMPTY
