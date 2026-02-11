@@ -11,6 +11,7 @@ import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 
 class RainbowGeneratorBlockEntity(
@@ -19,6 +20,8 @@ class RainbowGeneratorBlockEntity(
 ) : GeneratorBlockEntity(ModBlockEntityTypes.RAINBOW_GENERATOR.get(), pos, blockState) {
 
 	override val generatorType: GeneratorType = GeneratorType.RAINBOW
+
+	override val energyStorage: EnergyStorage = EnergyStorage(1_000_000_000)
 
 	override val container: GeneratorContainer? = null
 	override fun getItemHandler(direction: Direction?): IItemHandlerModifiable? = null
