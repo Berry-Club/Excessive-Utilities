@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
@@ -53,6 +54,26 @@ class EnderQuarryBlockEntity(
 	}
 
 	private fun trySetBoundariesFromFences(level: ServerLevel, fencePos: BlockPos): Boolean {
+		val firstFenceState = level.getBlockState(fencePos)
+		if (!firstFenceState.isBlock(BlockTags.FENCES)) return false
+
+		fun isValidFence(state: BlockState): Boolean {
+			val hasProperties = state.hasProperty(FenceBlock.NORTH)
+					&& state.hasProperty(FenceBlock.EAST)
+					&& state.hasProperty(FenceBlock.SOUTH)
+					&& state.hasProperty(FenceBlock.WEST)
+
+			if (!hasProperties) return false
+
+			var connections = 0
+			if (state.getValue(FenceBlock.NORTH)) connections++
+			if (state.getValue(FenceBlock.EAST)) connections++
+			if (state.getValue(FenceBlock.SOUTH)) connections++
+			if (state.getValue(FenceBlock.WEST)) connections++
+
+			return connections == 2
+		}
+
 		return false
 	}
 
