@@ -278,8 +278,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("high_temperature_furnace_generator")
 	val NETHER_STAR_GENERATOR: DeferredBlock<GeneratorBlock> =
 		registerBlock("nether_star_generator") { GeneratorBlock { ModBlockEntityTypes.NETHER_STAR_GENERATOR.get() } }
-	val DISENCHANTMENT_GENERATOR =
-		basicBlock("disenchantment_generator")
+	val DISENCHANTMENT_GENERATOR: DeferredBlock<GeneratorBlock> =
+		registerBlock("disenchantment_generator") { GeneratorBlock { ModBlockEntityTypes.DISENCHANTMENT_GENERATOR.get() } }
 	val FROSTY_GENERATOR: DeferredBlock<GeneratorBlock> =
 		registerBlock("frosty_generator") { GeneratorBlock { ModBlockEntityTypes.FROSTY_GENERATOR.get() } }
 	val HALITOSIS_GENERATOR: DeferredBlock<GeneratorBlock> =
