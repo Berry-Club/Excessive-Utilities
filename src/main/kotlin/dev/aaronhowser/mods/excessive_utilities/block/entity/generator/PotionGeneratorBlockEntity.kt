@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.CulinaryGeneratorBlockEntity.Companion.INPUT_SLOT
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
@@ -10,6 +11,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.jvm.optionals.getOrNull
@@ -21,7 +23,30 @@ class PotionGeneratorBlockEntity(
 ) : GeneratorBlockEntity(ModBlockEntityTypes.CULINARY_GENERATOR.get(), pos, blockState) {
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
-		return false
+		if (burnTimeRemaining > 0) return false
+
+		val inputStack = container.getItem(INPUT_SLOT)
+		if (inputStack.isEmpty) return false
+
+		val potion = inputStack.get(DataComponents.POTION_CONTENTS)?.potion?.getOrNull() ?: return false
+
+		if (potion.isHolder(Potions.WATER)) {
+			burnTimeRemaining = 10
+			fePerTick = 1
+		} else {
+			val totalPower = getPowerFromPotion(level, inputStack)
+			if (totalPower <= 0) return false
+
+			val duration = 200
+
+			fePerTick = Mth.ceil(totalPower / duration.toDouble())
+			burnTimeRemaining = duration
+		}
+
+		inputStack.shrink(1)
+		setChanged()
+
+		return true
 	}
 
 	companion object {
