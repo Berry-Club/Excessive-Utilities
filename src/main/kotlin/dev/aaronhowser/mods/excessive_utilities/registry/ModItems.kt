@@ -142,8 +142,8 @@ object ModItems : AaronItemRegistry() {
 		register("bag_of_holding", ::BagOfHoldingItem, BagOfHoldingItem.DEFAULT_PROPERTIES)
 	val MAGICAL_APPLE: DeferredItem<MagicalAppleItem> =
 		register("magical_apple", ::MagicalAppleItem, MagicalAppleItem.PROPERTIES)
-	val PORTABLE_SCANNER =
-		basic("portable_scanner")
+	val PORTABLE_SCANNER: DeferredItem<PortableScanner> =
+		register("portable_scanner", ::PortableScanner, PortableScanner.DEFAULT_PROPERTIES)
 	val SONAR_GOGGLES =
 		basic("sonar_goggles")
 	val FLAT_TRANSFER_NODE_ITEMS: DeferredItem<FlatTransferNodeItem> =
