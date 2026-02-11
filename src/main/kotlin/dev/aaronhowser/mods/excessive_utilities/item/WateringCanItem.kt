@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.tags.FluidTags
+import net.minecraft.util.Unit
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.LivingEntity
@@ -28,6 +29,14 @@ class WateringCanItem(
 
 	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(usedHand)
+
+		if (player.isFakePlayer) {
+			stack.set(ModDataComponents.IS_BROKEN, Unit.INSTANCE)
+		}
+
+		if (stack.has(ModDataComponents.IS_BROKEN)) {
+			return InteractionResultHolder.fail(stack)
+		}
 
 		if (tryCollectWater(player, stack)) {
 			return InteractionResultHolder.consume(stack)

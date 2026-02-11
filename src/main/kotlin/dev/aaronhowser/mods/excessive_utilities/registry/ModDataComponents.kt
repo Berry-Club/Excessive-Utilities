@@ -9,6 +9,7 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.util.Unit
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.component.CustomData
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -40,5 +41,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		register("magical_snow_globe_progress", MagicalSnowGlobeProgressComponent.CODEC, MagicalSnowGlobeProgressComponent.STREAM_CODEC)
 	val TANK: DeferredHolder<DataComponentType<*>, DataComponentType<SimpleFluidContent>> =
 		register("tank", SimpleFluidContent.CODEC, SimpleFluidContent.STREAM_CODEC)
+	val IS_BROKEN: DeferredHolder<DataComponentType<*>, DataComponentType<Unit>> =
+		unit("is_broken")
 
 }
