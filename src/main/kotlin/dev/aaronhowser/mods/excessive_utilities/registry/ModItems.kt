@@ -80,10 +80,10 @@ object ModItems : AaronItemRegistry() {
 		register("trowel", ::TrowelItem, TrowelItem.DEFAULT_PROPERTIES)
 	val WRENCH =
 		basic("wrench")
-	val WATERING_CAN =
-		basic("watering_can")
-	val REINFORCED_WATERING_CAN =
-		basic("reinforced_watering_can")
+	val WATERING_CAN: DeferredItem<WateringCanItem> =
+		register("watering_can", { WateringCanItem(isReinforced = false, it) }, WateringCanItem.DEFAULT_PROPERTIES)
+	val REINFORCED_WATERING_CAN: DeferredItem<WateringCanItem> =
+		register("reinforced_watering_can", { WateringCanItem(isReinforced = true, it) }, WateringCanItem.DEFAULT_REINFORCED_PROPERTIES)
 	val GOLDEN_LASSO: DeferredItem<EntityLassoItem> =
 		register("golden_lasso", { EntityLassoItem(canHoldHostileMobs = false, it) }, EntityLassoItem.DEFAULT_PROPERTIES)
 	val CURSED_LASSO: DeferredItem<EntityLassoItem> =
