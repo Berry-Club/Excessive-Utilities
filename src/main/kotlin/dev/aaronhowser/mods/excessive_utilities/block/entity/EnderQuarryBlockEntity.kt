@@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -58,7 +59,14 @@ class EnderQuarryBlockEntity(
 		val firstFenceState = level.getBlockState(fencePos)
 		if (!firstFenceState.isBlock(BlockTags.FENCES)) return false
 
-		fun isValidFence(state: BlockState): Boolean {
+		val dirToProperty = mapOf(
+			Direction.NORTH to FenceBlock.NORTH,
+			Direction.EAST to FenceBlock.EAST,
+			Direction.SOUTH to FenceBlock.SOUTH,
+			Direction.WEST to FenceBlock.WEST
+		)
+
+		fun isValidFence(level: Level, state: BlockState): Boolean {
 			val hasProperties = state.hasProperty(FenceBlock.NORTH)
 					&& state.hasProperty(FenceBlock.EAST)
 					&& state.hasProperty(FenceBlock.SOUTH)
@@ -66,21 +74,14 @@ class EnderQuarryBlockEntity(
 
 			if (!hasProperties) return false
 
-			var connections = 0
-			if (state.getValue(FenceBlock.NORTH)) connections++
-			if (state.getValue(FenceBlock.EAST)) connections++
-			if (state.getValue(FenceBlock.SOUTH)) connections++
-			if (state.getValue(FenceBlock.WEST)) connections++
+			val adjacentFences = Direction.Plane.HORIZONTAL
+				.count { dir ->
+					val stateThere = level.getBlockState(fencePos.relative(dir))
+					stateThere.isBlock(BlockTags.FENCES)
+				}
 
-			return connections == 2
+			return adjacentFences == 2
 		}
-
-		val dirToProperty = mapOf(
-			Direction.NORTH to FenceBlock.NORTH,
-			Direction.EAST to FenceBlock.EAST,
-			Direction.SOUTH to FenceBlock.SOUTH,
-			Direction.WEST to FenceBlock.WEST
-		)
 
 		val firstDirection = dirToProperty
 			.entries
@@ -102,7 +103,7 @@ class EnderQuarryBlockEntity(
 			currentPos.move(currentDirection)
 			val currentState = level.getBlockState(currentPos)
 
-			if (!isValidFence(currentState)) return false
+			if (!isValidFence(level, currentState)) return false
 
 			val property = dirToProperty[currentDirection] ?: return false
 			val canKeepGoing = currentState.getValue(property)
