@@ -38,6 +38,10 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("slightly_larger_chest", ::SlightlyLargerChestBlockEntity, ModBlocks.SLIGHTLY_LARGER_CHEST)
 	val MINI_CHEST: DeferredHolder<BlockEntityType<*>, BlockEntityType<MiniChestBlockEntity>> =
 		register("mini_chest", ::MiniChestBlockEntity, ModBlocks.MINI_CHEST)
+	val RESONATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<ResonatorBlockEntity>> =
+		register("resonator", ::ResonatorBlockEntity, ModBlocks.RESONATOR)
+	val ENDER_QUARRY: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryBlockEntity>> =
+		register("ender_quarry", ::EnderQuarryBlockEntity, ModBlocks.ENDER_QUARRY)
 
 	val MANUAL_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<ManualMillBlockEntity>> =
 		register("manual_mill", ::ManualMillBlockEntity, ModBlocks.MANUAL_MILL)
@@ -53,9 +57,6 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("dragon_egg_mill", ::DragonEggMillBlockEntity, ModBlocks.DRAGON_EGG_MILL)
 	val CREATIVE_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<CreativeMillBlockEntity>> =
 		register("creative_mill", ::CreativeMillBlockEntity, ModBlocks.CREATIVE_MILL)
-
-	val RESONATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<ResonatorBlockEntity>> =
-		register("resonator", ::ResonatorBlockEntity, ModBlocks.RESONATOR)
 
 	val DRUM: DeferredHolder<BlockEntityType<*>, BlockEntityType<DrumBlockEntity>> =
 		register(
