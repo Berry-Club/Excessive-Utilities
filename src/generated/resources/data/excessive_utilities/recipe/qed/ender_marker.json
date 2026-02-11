@@ -1,0 +1,22 @@
+{
+  "type": "excessive_utilities:qed",
+  "pattern": {
+    "key": {
+      "E": {
+        "tag": "c:ender_pearls"
+      },
+      "O": {
+        "item": "excessive_utilities:ender_infused_obsidian"
+      }
+    },
+    "pattern": [
+      "E",
+      "O",
+      "O"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_marker"
+  }
+}

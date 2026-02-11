@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:qed",
+  "pattern": {
+    "key": {
+      "E": {
+        "tag": "c:ender_pearls"
+      },
+      "N": {
+        "item": "excessive_utilities:energy_transfer_node"
+      },
+      "R": {
+        "tag": "c:dusts/redstone"
+      }
+    },
+    "pattern": [
+      " E ",
+      "NRN",
+      " E "
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:energy_retrieval_node"
+  }
+}

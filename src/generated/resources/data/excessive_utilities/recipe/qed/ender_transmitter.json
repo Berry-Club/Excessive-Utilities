@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:qed",
+  "pattern": {
+    "key": {
+      "E": {
+        "tag": "c:ender_pearls"
+      },
+      "Q": {
+        "tag": "c:gems/quartz"
+      },
+      "T": {
+        "item": "minecraft:redstone_torch"
+      }
+    },
+    "pattern": [
+      "ETE",
+      "QEQ",
+      "ETE"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_transmitter"
+  }
+}

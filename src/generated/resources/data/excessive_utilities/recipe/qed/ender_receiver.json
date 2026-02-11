@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:qed",
+  "pattern": {
+    "key": {
+      "E": {
+        "tag": "c:ender_pearls"
+      },
+      "Q": {
+        "tag": "c:gems/quartz"
+      },
+      "R": {
+        "tag": "c:dusts/redstone"
+      }
+    },
+    "pattern": [
+      "ERE",
+      "QEQ",
+      "EQE"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_receiver"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:qed",
+  "pattern": {
+    "key": {
+      "D": {
+        "tag": "c:gems/diamond"
+      },
+      "E": {
+        "tag": "c:ender_pearls"
+      },
+      "N": {
+        "item": "excessive_utilities:fluid_transfer_node"
+      }
+    },
+    "pattern": [
+      " E ",
+      "NDN",
+      " E "
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:fluid_retrieval_node"
+  }
+}

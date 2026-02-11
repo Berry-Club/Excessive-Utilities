@@ -1,0 +1,22 @@
+{
+  "type": "excessive_utilities:qed",
+  "pattern": {
+    "key": {
+      "O": {
+        "item": "excessive_utilities:ender_infused_obsidian"
+      },
+      "Q": {
+        "item": "excessive_utilities:quartzburnt"
+      }
+    },
+    "pattern": [
+      " O ",
+      "OQO",
+      " O "
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_quarry_upgrade_base"
+  }
+}
