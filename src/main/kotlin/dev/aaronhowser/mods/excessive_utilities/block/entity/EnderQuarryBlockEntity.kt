@@ -119,7 +119,7 @@ class EnderQuarryBlockEntity(
 			if (currentPos == fencePos) break
 		}
 
-		if (corners.size < 3) return false
+		if (corners.size < 4) return false
 
 		val minX = corners.minOf(BlockPos::getX)
 		val minZ = corners.minOf(BlockPos::getZ)
