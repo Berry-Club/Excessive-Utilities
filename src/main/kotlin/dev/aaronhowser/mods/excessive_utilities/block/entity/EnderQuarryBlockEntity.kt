@@ -1,9 +1,14 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
@@ -29,6 +34,31 @@ class EnderQuarryBlockEntity(
 			field = value
 			setChanged()
 		}
+
+	private fun trySetBoundaries(level: ServerLevel) {
+		val horizontals = Direction.Plane.HORIZONTAL
+
+		for (dir in horizontals) {
+			val posThere = worldPosition.relative(dir)
+			val stateThere = level.getBlockState(posThere)
+
+			if (stateThere.isBlock(BlockTags.FENCES) && trySetBoundariesFromFences(level, posThere)) {
+				return
+			}
+
+			if (stateThere.isBlock(ModBlocks.ENDER_MARKER) && trySetBoundariesFromMarkers(level, posThere)) {
+				return
+			}
+		}
+	}
+
+	private fun trySetBoundariesFromFences(level: ServerLevel, fencePos: BlockPos): Boolean {
+		return false
+	}
+
+	private fun trySetBoundariesFromMarkers(level: ServerLevel, markerPos: BlockPos): Boolean {
+		return false
+	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
