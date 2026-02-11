@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemUtils
+import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import java.util.*
 
@@ -45,6 +46,21 @@ class BagOfHoldingItem(properties: Properties) : Item(properties), MenuProvider 
 			val bag = BagOfHoldingHandler.get(level).getBag(bagId)
 
 			ItemUtils.onContainerDestroyed(itemEntity, bag.copiedItems())
+		}
+	}
+
+	override fun appendHoverText(
+		stack: ItemStack,
+		context: TooltipContext,
+		tooltipComponents: MutableList<Component>,
+		tooltipFlag: TooltipFlag
+	) {
+
+		if (tooltipFlag.hasShiftDown()) {
+			val bagId = stack.get(ModDataComponents.BAG_OF_HOLDING_ID)
+			if (bagId != null) {
+				tooltipComponents.add(Component.literal(bagId.toString()))
+			}
 		}
 	}
 
