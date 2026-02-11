@@ -53,20 +53,21 @@ class EnderQuarryBlockEntity(
 				return
 			}
 		}
+
+		minPos = null
+		maxPos = null
+		targetPos = null
+
 	}
 
 	private fun trySetBoundariesFromFences(level: ServerLevel, fencePos: BlockPos): Boolean {
 		val firstFenceState = level.getBlockState(fencePos)
 		if (!firstFenceState.isBlock(BlockTags.FENCES)) return false
 
-		val dirToProperty = mapOf(
-			Direction.NORTH to FenceBlock.NORTH,
-			Direction.EAST to FenceBlock.EAST,
-			Direction.SOUTH to FenceBlock.SOUTH,
-			Direction.WEST to FenceBlock.WEST
-		)
+		fun isValidFence(level: Level, checkedPos: BlockPos): Boolean {
+			val state = level.getBlockState(checkedPos)
+			if (!state.isBlock(BlockTags.FENCES)) return false
 
-		fun isValidFence(level: Level, state: BlockState): Boolean {
 			val hasProperties = state.hasProperty(FenceBlock.NORTH)
 					&& state.hasProperty(FenceBlock.EAST)
 					&& state.hasProperty(FenceBlock.SOUTH)
@@ -76,12 +77,20 @@ class EnderQuarryBlockEntity(
 
 			val adjacentFences = Direction.Plane.HORIZONTAL
 				.count { dir ->
-					val stateThere = level.getBlockState(fencePos.relative(dir))
+					val stateThere = level.getBlockState(checkedPos.relative(dir))
 					stateThere.isBlock(BlockTags.FENCES)
 				}
 
 			return adjacentFences == 2
+
 		}
+
+		val dirToProperty = mapOf(
+			Direction.NORTH to FenceBlock.NORTH,
+			Direction.EAST to FenceBlock.EAST,
+			Direction.SOUTH to FenceBlock.SOUTH,
+			Direction.WEST to FenceBlock.WEST
+		)
 
 		val firstDirection = dirToProperty
 			.entries
@@ -103,7 +112,7 @@ class EnderQuarryBlockEntity(
 			currentPos.move(currentDirection)
 			val currentState = level.getBlockState(currentPos)
 
-			if (!isValidFence(level, currentState)) return false
+			if (!isValidFence(level, currentPos)) return false
 
 			val property = dirToProperty[currentDirection] ?: return false
 			val canKeepGoing = currentState.getValue(property)
