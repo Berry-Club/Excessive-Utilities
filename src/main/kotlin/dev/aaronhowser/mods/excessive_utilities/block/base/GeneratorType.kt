@@ -18,4 +18,11 @@ enum class GeneratorType {
 	SURVIVAL,
 	DEATH,
 	RAINBOW
+
+	;
+
+	companion object {
+		val NON_RAINBOW: List<GeneratorType> = entries - RAINBOW
+	}
+
 }

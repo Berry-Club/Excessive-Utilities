@@ -21,7 +21,7 @@ class PlayerGeneratorNetwork(
 
 	fun allTypesActive(): Boolean {
 		val activeTypes = getActiveGeneratorTypes()
-		return GeneratorType.entries.all { it in activeTypes }
+		return GeneratorType.NON_RAINBOW.all { it in activeTypes }
 	}
 
 	fun addGenerator(generator: GeneratorBlockEntity) = generatorBlockEntities.add(generator)
