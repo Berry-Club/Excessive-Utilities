@@ -126,10 +126,15 @@ class WateringCanItem(
 
 	private fun spawnParticles(level: ServerLevel, pos: BlockPos) {
 		if (level.isEmptyBlock(pos)) return
-		val stateThere = level.getBlockState(pos)
-		if (stateThere.isCollisionShapeFullBlock(level, pos)) return
 
-		val y = pos.y + 0.1
+		val isSolidAbove = level.getBlockState(pos.above()).isCollisionShapeFullBlock(level, pos.above())
+		if (isSolidAbove) return
+
+		val isSolid = level.getBlockState(pos).isCollisionShapeFullBlock(level, pos)
+
+		var y = pos.y + 0.1
+		if (isSolid) y += 1
+
 		val particleCount = 10
 
 		for (i in 0 until particleCount) {
