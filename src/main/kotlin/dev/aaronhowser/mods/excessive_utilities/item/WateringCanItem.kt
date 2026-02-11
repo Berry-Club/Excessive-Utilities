@@ -135,7 +135,7 @@ class WateringCanItem(
 		var y = pos.y + 0.1
 		if (isSolid) y += 1
 
-		val particleCount = 10
+		val particleCount = 3
 
 		for (i in 0 until particleCount) {
 			val x = pos.x + level.random.nextDouble()
