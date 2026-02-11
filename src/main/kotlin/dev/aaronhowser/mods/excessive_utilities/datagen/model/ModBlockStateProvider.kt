@@ -86,6 +86,7 @@ class ModBlockStateProvider(
 			.texture("#front_overlay")
 			.end()
 
+		survivalGenerator()
 		makeGenerator(ModBlocks.FURNACE_GENERATOR.get(), "nothing")
 		makeGenerator(ModBlocks.MAGMATIC_GENERATOR.get(), "nothing")
 		makeGenerator(ModBlocks.PINK_GENERATOR.get(), "pink")
@@ -93,7 +94,8 @@ class ModBlockStateProvider(
 		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), "ender")
 		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), "explosive")
 		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), "culinary")
-		survivalGenerator()
+		makeGenerator(ModBlocks.DISENCHANTMENT_GENERATOR.get(), "disenchantment")
+		makeGenerator(ModBlocks.POTION_GENERATOR.get(), "potion")
 	}
 
 	private fun survivalGenerator() {
