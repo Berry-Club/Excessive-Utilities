@@ -14,7 +14,7 @@ class PlayerGeneratorNetwork(
 	fun getActiveGeneratorTypes(): Set<GeneratorType> {
 		return generatorBlockEntities
 			.asSequence()
-			.filter(GeneratorBlockEntity::isGenerating)
+			.filter(GeneratorBlockEntity::isContributingToRainbowGen)
 			.map(GeneratorBlockEntity::generatorType)
 			.toSet()
 	}

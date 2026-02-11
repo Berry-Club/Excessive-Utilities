@@ -44,13 +44,13 @@ abstract class GeneratorBlockEntity(
 
 	override fun getContainer(): Container = container
 
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = container.itemHandler
+	open fun getItemHandler(direction: Direction?): IItemHandlerModifiable? = container.itemHandler
 
 	protected open fun isValidInput(itemStack: ItemStack) = true
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = true
 	protected open fun isValidUpgrade(itemStack: ItemStack) = true
 
-	open fun isGenerating(): Boolean = blockState.getValue(GeneratorBlock.LIT)
+	open fun isContributingToRainbowGen(): Boolean = blockState.getValue(GeneratorBlock.LIT)
 
 	protected var fePerTick: Int = 0
 		set(value) {
