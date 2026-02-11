@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronDataComponentRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
@@ -34,5 +35,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		int("energy")
 	val OPINIUM_CORE_CONTENTS: DeferredHolder<DataComponentType<*>, DataComponentType<OpiniumCoreContentsComponent>> =
 		register("opinium_core_contents", OpiniumCoreContentsComponent.CODEC, OpiniumCoreContentsComponent.STREAM_CODEC)
+	val MAGICAL_SNOW_GLOBE_PROGRESS: DeferredHolder<DataComponentType<*>, DataComponentType<MagicalSnowGlobeProgressComponent>> =
+		register("magical_snow_globe_progress", MagicalSnowGlobeProgressComponent.CODEC, MagicalSnowGlobeProgressComponent.STREAM_CODEC)
 
 }
