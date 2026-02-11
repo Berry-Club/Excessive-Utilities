@@ -150,7 +150,7 @@ class WateringCanItem(
 		if (!usesWater()) return true
 
 		val heldWater = stack.get(ModDataComponents.TANK) ?: return false
-		return heldWater.amount >= 10_000
+		return heldWater.amount >= MAX_WATER
 	}
 
 	private fun tryCollectWater(player: Player, stack: ItemStack): Boolean {
@@ -166,7 +166,7 @@ class WateringCanItem(
 		if (!level.getFluidState(pos).isFluid(FluidTags.WATER)) return false
 
 		val heldWater = stack.get(ModDataComponents.TANK) ?: return false
-		val newAmount = minOf(heldWater.amount + 1000, 10_000)
+		val newAmount = minOf(heldWater.amount + 1000, MAX_WATER)
 		val newFluidStack = FluidStack(Fluids.WATER, newAmount)
 		stack.set(ModDataComponents.TANK, SimpleFluidContent.copyOf(newFluidStack))
 
@@ -174,6 +174,8 @@ class WateringCanItem(
 	}
 
 	companion object {
+		const val MAX_WATER = 10_000
+
 		val DEFAULT_PROPERTIES: () -> Properties = {
 			Properties()
 				.stacksTo(1)
