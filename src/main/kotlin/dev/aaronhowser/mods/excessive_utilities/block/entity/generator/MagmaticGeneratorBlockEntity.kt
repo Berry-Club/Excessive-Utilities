@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -17,6 +18,8 @@ class MagmaticGeneratorBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState,
 ) : GeneratorBlockEntity(ModBlockEntityTypes.MAGMATIC_GENERATOR.get(), pos, blockState) {
+
+	override val generatorType: GeneratorType = GeneratorType.MAGMATIC
 
 	val tank: FluidTank =
 		object : FluidTank(1_000_000) {

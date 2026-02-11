@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -28,6 +29,7 @@ abstract class GeneratorBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(type, pos, blockState), ContainerContainer {
 
+	abstract val generatorType: GeneratorType
 	var ownerUuid: UUID? = null
 
 	protected val energyStorage = EnergyStorage(1_000_000)

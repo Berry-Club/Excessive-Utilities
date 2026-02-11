@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -20,6 +21,8 @@ class DisenchantmentGenerator(
 	pos: BlockPos,
 	blockState: BlockState,
 ) : GeneratorBlockEntity(ModBlockEntityTypes.DISENCHANTMENT_GENERATOR.get(), pos, blockState) {
+
+	override val generatorType: GeneratorType = GeneratorType.DISENCHANTMENT
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false

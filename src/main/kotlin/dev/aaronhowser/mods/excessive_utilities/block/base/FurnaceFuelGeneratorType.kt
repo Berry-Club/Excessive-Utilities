@@ -7,16 +7,19 @@ import java.util.function.IntSupplier
 
 enum class FurnaceFuelGeneratorType(
 	val id: String,
+	val baseGeneratorType: GeneratorType,
 	private val burnTimeMultiplierGetter: DoubleSupplier,
 	private val fePerTickGetter: IntSupplier
 ) : StringRepresentable {
 	FURNACE(
 		"furnace",
+		GeneratorType.FURNACE,
 		ServerConfig.CONFIG.furnaceGeneratorBurnTimeMultiplier,
 		ServerConfig.CONFIG.furnaceGeneratorFePerTick
 	),
 	SURVIVAL(
 		"survival",
+		GeneratorType.SURVIVAL,
 		ServerConfig.CONFIG.survivalistGeneratorBurnTimeMultiplier,
 		ServerConfig.CONFIG.survivalistGeneratorFePerTick
 	)

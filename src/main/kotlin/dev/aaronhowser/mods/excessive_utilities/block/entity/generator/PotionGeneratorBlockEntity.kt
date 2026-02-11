@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -21,6 +22,8 @@ class PotionGeneratorBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState,
 ) : GeneratorBlockEntity(ModBlockEntityTypes.POTION_GENERATOR.get(), pos, blockState) {
+
+	override val generatorType: GeneratorType = GeneratorType.POTION
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false

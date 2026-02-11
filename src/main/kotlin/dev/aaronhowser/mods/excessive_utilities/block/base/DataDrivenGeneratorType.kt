@@ -6,15 +6,16 @@ import net.minecraft.world.item.Item
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 enum class DataDrivenGeneratorType(
-	private val id: String
+	private val id: String,
+	val baseGeneratorType: GeneratorType
 ) : StringRepresentable {
-	ENDER("ender"),
-	EXPLOSIVE("explosive"),
-	PINK("pink"),
-	NETHER_STAR("nether_star"),
-	FROSTY("frosty"),
-	HALITOSIS("halitosis"),
-	DEATH("death")
+	ENDER("ender", GeneratorType.ENDER),
+	EXPLOSIVE("explosive", GeneratorType.EXPLOSIVE),
+	PINK("pink", GeneratorType.PINK),
+	NETHER_STAR("nether_star", GeneratorType.NETHER_STAR),
+	FROSTY("frosty", GeneratorType.FROSTY),
+	HALITOSIS("halitosis", GeneratorType.HALITOSIS),
+	DEATH("death", GeneratorType.DEATH)
 
 	/**
 	 * Left out intentionally:

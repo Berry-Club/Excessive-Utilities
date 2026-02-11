@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -13,6 +14,8 @@ class CulinaryGeneratorBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState,
 ) : GeneratorBlockEntity(ModBlockEntityTypes.CULINARY_GENERATOR.get(), pos, blockState) {
+
+	override val generatorType: GeneratorType = GeneratorType.CULINARY
 
 	override fun isValidInput(itemStack: ItemStack): Boolean {
 		val foodValue = itemStack.getFoodProperties(null)

@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block.base.FurnaceFuelGeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -17,10 +18,12 @@ import net.minecraft.world.level.block.state.BlockState
 
 class FurnaceFuelGeneratorBlockEntity(
 	type: BlockEntityType<*>,
-	val generatorType: FurnaceFuelGeneratorType,
+	val furnaceFuelGeneratorType: FurnaceFuelGeneratorType,
 	pos: BlockPos,
 	blockState: BlockState,
 ) : GeneratorBlockEntity(type, pos, blockState) {
+
+	override val generatorType: GeneratorType = furnaceFuelGeneratorType.baseGeneratorType
 
 	override fun isValidInput(itemStack: ItemStack): Boolean {
 		return itemStack.getBurnTime(RecipeType.SMELTING) > 0
@@ -35,8 +38,8 @@ class FurnaceFuelGeneratorBlockEntity(
 		val burnTime = inputStack.getBurnTime(RecipeType.SMELTING)
 		if (burnTime <= 0) return false
 
-		fePerTick = generatorType.fePerTick
-		burnTimeRemaining = Mth.ceil(burnTime * generatorType.burnTimeMultiplier)
+		fePerTick = furnaceFuelGeneratorType.fePerTick
+		burnTimeRemaining = Mth.ceil(burnTime * furnaceFuelGeneratorType.burnTimeMultiplier)
 
 		if (inputStack.isItem(ModItems.HEATING_COIL)) {
 			HeatingCoilItem.burnInFuelSlot(inputStack)
