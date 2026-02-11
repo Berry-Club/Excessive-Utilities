@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import net.minecraft.core.Holder
-import net.minecraft.core.UUIDUtil
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -16,7 +15,7 @@ import net.minecraft.world.item.component.CustomData
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
-import java.util.UUID
+import java.util.*
 
 object ModDataComponents : AaronDataComponentRegistry() {
 
@@ -46,6 +45,6 @@ object ModDataComponents : AaronDataComponentRegistry() {
 	val IS_BROKEN: DeferredHolder<DataComponentType<*>, DataComponentType<Unit>> =
 		unit("is_broken")
 	val BAG_OF_HOLDING_ID: DeferredHolder<DataComponentType<*>, DataComponentType<UUID>> =
-		register("bag", UUIDUtil.CODEC, UUIDUtil.STREAM_CODEC)
+		uuid("bag")
 
 }
