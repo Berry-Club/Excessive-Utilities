@@ -80,17 +80,12 @@ class EnderQuarryBlockEntity(
 
 		if (markers.size < 3) return false
 
-		var minX = markers.minOf(BlockPos::getX)
-		var minZ = markers.minOf(BlockPos::getZ)
-		var maxX = markers.maxOf(BlockPos::getX)
-		var maxZ = markers.maxOf(BlockPos::getZ)
+		val minX = markers.minOf(BlockPos::getX)
+		val minZ = markers.minOf(BlockPos::getZ)
+		val maxX = markers.maxOf(BlockPos::getX)
+		val maxZ = markers.maxOf(BlockPos::getZ)
 
 		if (minX == maxX || minZ == maxZ) return false
-
-		minX += 1
-		minZ += 1
-		maxX -= 1
-		maxZ -= 1
 
 		val y = blockPos.y
 
