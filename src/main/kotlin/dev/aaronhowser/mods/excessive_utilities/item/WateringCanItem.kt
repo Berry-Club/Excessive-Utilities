@@ -1,8 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.core.BlockPos
 import net.minecraft.tags.FluidTags
 import net.minecraft.util.Unit
 import net.minecraft.world.InteractionHand
@@ -80,6 +82,21 @@ class WateringCanItem(
 			ServerConfig.CONFIG.reinforcedWateringCanRadius.get()
 		} else {
 			ServerConfig.CONFIG.wateringCanRadius.get()
+		}
+
+		val blocks = BlockPos.betweenClosed(
+			lookingAt.blockPos.offset(-radius, -radius, -radius),
+			lookingAt.blockPos.offset(radius, radius, radius)
+		)
+
+		val chancePerBlock = if (isReinforced) {
+			ServerConfig.CONFIG.reinforcedWateringCanTickChance.get()
+		} else {
+			ServerConfig.CONFIG.wateringCanTickChance.get()
+		}
+
+		for (pos in blocks) {
+			if (!level.random.chance(chancePerBlock)) continue
 		}
 
 	}
