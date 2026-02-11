@@ -33,6 +33,8 @@ class ServerConfig(
 	lateinit var dragonEggMillGeneration: ModConfigSpec.DoubleValue
 	lateinit var creativeMillGeneration: ModConfigSpec.DoubleValue
 
+	lateinit var speedUpgradeGpCostMultiplier: ModConfigSpec.DoubleValue
+
 	lateinit var culinaryFePerFoodValue: ModConfigSpec.DoubleValue
 	lateinit var culinaryTicksPerSaturationValue: ModConfigSpec.DoubleValue
 	lateinit var furnaceGeneratorBurnTimeMultiplier: ModConfigSpec.DoubleValue
@@ -133,6 +135,13 @@ class ServerConfig(
 		builder.pop()
 
 		builder.push("gp_usage")
+
+		speedUpgradeGpCostMultiplier = builder
+			.comment(
+				"The multiplier applied to the GP cost of Speed Upgrades.",
+				"Note that you can also change the GP cost formula directly using KubeJS.",
+			)
+			.defineInRange("speedUpgradeGpCostMultiplier", 1.0, 0.0, Double.MAX_VALUE)
 
 		builder.pop()
 

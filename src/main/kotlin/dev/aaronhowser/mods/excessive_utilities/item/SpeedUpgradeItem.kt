@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
@@ -48,7 +49,7 @@ class SpeedUpgradeItem(properties: Properties) : Item(properties) {
 			}
 		}
 
-		fun getGpCost(stackSize: Int): Double = gpCostCalculator(stackSize)
+		fun getGpCost(stackSize: Int): Double = gpCostCalculator(stackSize) * ServerConfig.CONFIG.speedUpgradeGpCostMultiplier.get()
 
 		/**
 		 * Mostly meant to be called from KubeJS.
