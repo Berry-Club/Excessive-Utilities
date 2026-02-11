@@ -24,6 +24,8 @@ class AngelBlock : Block(
 
 			for (drop in drops) {
 				drop.setPos(breaker.position())
+				drop.setNoPickUpDelay()
+
 				if (breaker is Player) {
 					drop.playerTouch(breaker)
 				}
