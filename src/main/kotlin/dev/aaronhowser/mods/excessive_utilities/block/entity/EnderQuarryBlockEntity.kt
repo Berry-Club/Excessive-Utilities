@@ -99,6 +99,8 @@ class EnderQuarryBlockEntity(
 			?: return false
 
 		var currentDirection = firstDirection
+		var amountTurns = 0
+
 		val corners = mutableListOf(fencePos)
 
 		val currentPos = fencePos.mutable()
@@ -127,6 +129,10 @@ class EnderQuarryBlockEntity(
 					?: return false
 
 				currentDirection = nextDirection
+				amountTurns++
+
+				if (amountTurns > 4) return false
+
 				corners.add(currentPos.immutable())
 			}
 
