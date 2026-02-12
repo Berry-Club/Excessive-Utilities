@@ -175,10 +175,13 @@ class EnderQuarryBlockEntity(
 
 		val y = blockPos.y
 
-		minPos = BlockPos(minX, y, minZ)
-		maxPos = BlockPos(maxX, y, maxZ)
+		val min = BlockPos(minX, y, minZ)
+		val max = BlockPos(maxX, y, maxZ)
 
-		targetPos = minPos
+		minPos = min
+		maxPos = max
+
+		targetPos = min.offset(1, 0, 1)
 		return true
 	}
 
@@ -221,10 +224,13 @@ class EnderQuarryBlockEntity(
 
 		val y = blockPos.y
 
-		minPos = BlockPos(minX, y, minZ)
-		maxPos = BlockPos(maxX, y, maxZ)
+		val min = BlockPos(minX, y, minZ)
+		val max = BlockPos(maxX, y, maxZ)
 
-		targetPos = minPos
+		minPos = min
+		maxPos = max
+
+		targetPos = min.offset(1, 0, 1)
 		return true
 	}
 
