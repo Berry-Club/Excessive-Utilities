@@ -1,12 +1,18 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import com.mojang.authlib.GameProfile
+import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.network.protocol.Packet
@@ -15,13 +21,26 @@ import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.ai.attributes.Attribute
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.energy.EnergyStorage
+import net.neoforged.neoforge.event.EventHooks
+import java.lang.ref.WeakReference
 import java.util.*
+import kotlin.collections.component1
+import kotlin.collections.component2
+import kotlin.collections.filter
 
 //TODO:
 // Block States for inactive, active, and finished
@@ -33,6 +52,7 @@ class EnderQuarryBlockEntity(
 	private val energyStorage = EnergyStorage(1_000_000)
 
 	private var uuid: UUID? = null
+	private var fakePlayer: WeakReference<FakePlayer>? = null
 
 	var minPos: BlockPos? = null
 		private set
@@ -45,6 +65,24 @@ class EnderQuarryBlockEntity(
 
 	var boundaryType: BoundaryType? = null
 		private set
+
+	private fun initFakePlayer() {
+		val level = level as? ServerLevel ?: return
+
+		if (this.uuid == null) {
+			this.uuid = UUID.randomUUID()
+			setChanged()
+		}
+
+		val gameProfile = GameProfile(this.uuid, "EU_EnderQuarry")
+		val fakePlayer = BetterFakePlayerFactory.get(level, gameProfile) { EnderQuarryFakePlayer(level, gameProfile) }
+
+		fakePlayer.isSilent = true
+		fakePlayer.setOnGround(true)
+
+		this.fakePlayer = WeakReference(fakePlayer)
+		setChanged()
+	}
 
 	fun trySetBoundaries(level: ServerLevel) {
 		val horizontals = Direction.Plane.HORIZONTAL
@@ -294,6 +332,87 @@ class EnderQuarryBlockEntity(
 		;
 
 		override fun getSerializedName(): String = id
+	}
+
+	class EnderQuarryFakePlayer(level: ServerLevel, gameProfile: GameProfile) : FakePlayer(level, gameProfile) {
+
+		override fun take(entity: Entity, quantity: Int) {
+			// Super would try to send a packet to everyone nearby, which is bad
+		}
+
+		// FakePlayer doesn't normally have access to Mining Efficiency and Block Break Speed attributes
+		// so we have to manually apply them here
+		// Block Breakers don't get potion effects, so we don't need to worry about that
+		// Same for being under water or in the air, etc
+		override fun getDigSpeed(state: BlockState, pos: BlockPos?): Float {
+			var f = this.inventory.getDestroySpeed(state)
+
+			if (f > 1f) {
+				f += getStackAttributeValue(this.mainHandItem, Attributes.MINING_EFFICIENCY, registryAccess(), 0f).toFloat()
+			}
+
+			f *= getStackAttributeValue(this.mainHandItem, Attributes.BLOCK_BREAK_SPEED, registryAccess(), 1f).toFloat()
+
+			@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+			f = EventHooks.getBreakSpeed(this, state, f, pos)
+
+			return f
+		}
+
+		companion object {
+			const val NAME = "IrregularImplementsBlockBreaker"
+
+			private fun getStackAttributeValue(
+				itemStack: ItemStack,
+				attribute: Holder<Attribute>,
+				registryAccess: RegistryAccess,
+				baseValue: Float
+			): Double {
+				val modifiers = getModifiersForAttribute(attribute, itemStack, registryAccess)
+
+				val baseIncrease = modifiers
+					.filter { it.operation == AttributeModifier.Operation.ADD_VALUE }
+					.sumOf { it.amount }
+
+				val increasedBase = baseValue + baseIncrease
+
+				val multipliedBase = modifiers
+					.filter { it.operation == AttributeModifier.Operation.ADD_MULTIPLIED_BASE }
+					.fold(increasedBase) { acc, modifier -> acc * modifier.amount }
+
+				val multipliedTotal = modifiers
+					.filter { it.operation == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL }
+					.fold(multipliedBase) { acc, modifier -> acc * (1.0 + modifier.amount) }
+
+				return multipliedTotal
+			}
+
+			private fun getModifiersForAttribute(
+				attribute: Holder<Attribute>,
+				itemStack: ItemStack,
+				registryAccess: RegistryAccess,
+			): List<AttributeModifier> {
+				if (itemStack.isEmpty) return emptyList()
+
+				val enchantmentModifiers = itemStack.getAllEnchantments(
+					registryAccess.lookupOrThrow(Registries.ENCHANTMENT)
+				)
+					.entrySet()
+					.flatMap { (enchantHolder, level) ->
+						enchantHolder.value().effects()
+							.get(EnchantmentEffectComponents.ATTRIBUTES)
+							?.filter { it.attribute.isHolder(attribute) }
+							?.map { it.getModifier(level, EquipmentSlot.MAINHAND) }
+							?: emptyList()
+					}
+
+				val stackModifiers = itemStack.attributeModifiers.modifiers
+					.filter { it.slot.test(EquipmentSlot.MAINHAND) && it.attribute.isHolder(attribute) }
+					.map { it.modifier }
+
+				return enchantmentModifiers + stackModifiers
+			}
+		}
 	}
 
 }
