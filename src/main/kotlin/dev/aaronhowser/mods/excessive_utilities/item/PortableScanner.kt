@@ -33,9 +33,10 @@ class PortableScanner(properties: Properties) : Item(properties) {
 
 	override fun useOn(context: UseOnContext): InteractionResult {
 		val player = context.player ?: return InteractionResult.PASS
+		val level = context.level
+		if (level.isClientSide) return InteractionResult.SUCCESS
 
 		val blockPos = context.clickedPos
-		val level = context.level
 		val blockState = level.getBlockState(blockPos)
 
 		player.tell(blockState.toString())
