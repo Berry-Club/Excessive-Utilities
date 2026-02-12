@@ -24,19 +24,21 @@ class EnderQuarryBER(
 
 		val start = target.atY(blockEntity.blockPos.y)
 
-		BeaconRenderer.renderBeaconBeam(
-			poseStack,
-			bufferSource,
-			BeaconRenderer.BEAM_LOCATION,
-			partialTick,
-			1f,
-			gameTime,
-			0,
-			0,
-			0,
-			0.2f,
-			0.25f
-		)
+		for (i in 0 until 100) {
+			BeaconRenderer.renderBeaconBeam(
+				poseStack,
+				bufferSource,
+				BeaconRenderer.BEAM_LOCATION,
+				partialTick,
+				1f,
+				gameTime,
+				i,
+				1024,
+				0xFFFFFFFF.toInt(),
+				0.2f,
+				0.25f
+			)
+		}
 
 	}
 }
