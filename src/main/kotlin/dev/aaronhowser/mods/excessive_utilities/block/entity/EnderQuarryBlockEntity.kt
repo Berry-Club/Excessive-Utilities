@@ -8,17 +8,21 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.EnergyStorage
 
 class EnderQuarryBlockEntity(
 	pos: BlockPos,
 	state: BlockState
 ) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state) {
+
+	private val energyStorage = EnergyStorage(1_000_000)
 
 	var minPos: BlockPos? = null
 		private set(value) {
@@ -207,6 +211,8 @@ class EnderQuarryBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
+		tag.putInt(STORED_ENERGY_NBT, energyStorage.energyStored)
+
 		val min = minPos
 		val max = maxPos
 
@@ -219,11 +225,15 @@ class EnderQuarryBlockEntity(
 		if (target != null) {
 			tag.putLong(TARGET_POS_NBT, target.asLong())
 		}
-
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
+
+		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
+		if (storedEnergyTag is IntTag) {
+			energyStorage.deserializeNBT(registries, storedEnergyTag)
+		}
 
 		if (tag.contains(MIN_POS_NBT) && tag.contains(MAX_POS_NBT)) {
 			minPos = BlockPos.of(tag.getLong(MIN_POS_NBT))
@@ -239,6 +249,7 @@ class EnderQuarryBlockEntity(
 		const val MIN_POS_NBT = "MinPos"
 		const val MAX_POS_NBT = "MaxPos"
 		const val TARGET_POS_NBT = "TargetPos"
+		const val STORED_ENERGY_NBT = "StoredEnergy"
 	}
 
 }
