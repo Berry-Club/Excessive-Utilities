@@ -4,14 +4,12 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
+import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.EnderQuarryBER
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
+import dev.aaronhowser.mods.excessive_utilities.registry.*
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.NoopRenderer
@@ -24,7 +22,6 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.*
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 
 @EventBusSubscriber(
 	modid = ExcessiveUtilities.MOD_ID,
@@ -169,6 +166,8 @@ object ClientEvents {
 	@SubscribeEvent
 	fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
 		event.registerEntityRenderer(ModEntityTypes.FLAT_TRANSFER_NODE.get(), ::NoopRenderer)
+
+		event.registerBlockEntityRenderer(ModBlockEntityTypes.ENDER_QUARRY.get(), ::EnderQuarryBER)
 	}
 
 	@SubscribeEvent
