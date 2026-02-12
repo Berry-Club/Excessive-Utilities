@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
+import java.util.*
 
 //TODO:
 // Block States for inactive, active, and finished
@@ -31,37 +32,19 @@ class EnderQuarryBlockEntity(
 
 	private val energyStorage = EnergyStorage(1_000_000)
 
+	private var uuid: UUID? = null
+
 	var minPos: BlockPos? = null
-		private set(value) {
-			field = value
-			setChanged()
-		}
+		private set
 
 	var maxPos: BlockPos? = null
-		private set(value) {
-			field = value
-			setChanged()
-		}
+		private set
 
 	var targetPos: BlockPos? = null
-		private set(value) {
-			field = value
-			setChanged()
-		}
-
-	enum class BoundaryType(val id: String) : StringRepresentable {
-		FENCE("fence"),
-		MARKER("marker")
-		;
-
-		override fun getSerializedName(): String = id
-	}
+		private set
 
 	var boundaryType: BoundaryType? = null
-		private set(value) {
-			field = value
-			setChanged()
-		}
+		private set
 
 	fun trySetBoundaries(level: ServerLevel) {
 		val horizontals = Direction.Plane.HORIZONTAL
@@ -72,11 +55,13 @@ class EnderQuarryBlockEntity(
 
 			if (stateThere.isBlock(BlockTags.FENCES) && trySetBoundariesFromFences(level, posThere)) {
 				boundaryType = BoundaryType.FENCE
+				setChanged()
 				return
 			}
 
 			if (stateThere.isBlock(ModBlocks.ENDER_MARKER) && trySetBoundariesFromMarkers(level, posThere)) {
 				boundaryType = BoundaryType.MARKER
+				setChanged()
 				return
 			}
 		}
@@ -85,6 +70,8 @@ class EnderQuarryBlockEntity(
 		maxPos = null
 		targetPos = null
 		boundaryType = null
+
+		setChanged()
 	}
 
 	private fun trySetBoundariesFromFences(level: ServerLevel, fencePos: BlockPos): Boolean {
@@ -299,6 +286,14 @@ class EnderQuarryBlockEntity(
 		const val TARGET_POS_NBT = "TargetPos"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
 		const val BOUNDARY_TYPE_NBT = "BoundaryType"
+	}
+
+	enum class BoundaryType(val id: String) : StringRepresentable {
+		FENCE("fence"),
+		MARKER("marker")
+		;
+
+		override fun getSerializedName(): String = id
 	}
 
 }
