@@ -11,12 +11,16 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
+import net.minecraft.util.StringRepresentable
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
 
+//TODO:
+// Render a Beacon beam down from the Y level to the target block, to show where it's mining
+// Block States for inactive, active, and finished
 class EnderQuarryBlockEntity(
 	pos: BlockPos,
 	state: BlockState
@@ -42,6 +46,20 @@ class EnderQuarryBlockEntity(
 			setChanged()
 		}
 
+	enum class BoundaryType(val id: String) : StringRepresentable {
+		FENCE("fence"),
+		MARKER("marker")
+		;
+
+		override fun getSerializedName(): String = id
+	}
+
+	var boundaryType: BoundaryType? = null
+		private set(value) {
+			field = value
+			setChanged()
+		}
+
 	fun trySetBoundaries(level: ServerLevel) {
 		val horizontals = Direction.Plane.HORIZONTAL
 
@@ -50,10 +68,12 @@ class EnderQuarryBlockEntity(
 			val stateThere = level.getBlockState(posThere)
 
 			if (stateThere.isBlock(BlockTags.FENCES) && trySetBoundariesFromFences(level, posThere)) {
+				boundaryType = BoundaryType.FENCE
 				return
 			}
 
 			if (stateThere.isBlock(ModBlocks.ENDER_MARKER) && trySetBoundariesFromMarkers(level, posThere)) {
+				boundaryType = BoundaryType.MARKER
 				return
 			}
 		}
@@ -61,7 +81,7 @@ class EnderQuarryBlockEntity(
 		minPos = null
 		maxPos = null
 		targetPos = null
-
+		boundaryType = null
 	}
 
 	private fun trySetBoundariesFromFences(level: ServerLevel, fencePos: BlockPos): Boolean {
@@ -225,6 +245,11 @@ class EnderQuarryBlockEntity(
 		if (target != null) {
 			tag.putLong(TARGET_POS_NBT, target.asLong())
 		}
+
+		val bType = boundaryType
+		if (bType != null) {
+			tag.putString(BOUNDARY_TYPE_NBT, bType.id)
+		}
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -243,6 +268,11 @@ class EnderQuarryBlockEntity(
 		if (tag.contains(TARGET_POS_NBT)) {
 			targetPos = BlockPos.of(tag.getLong(TARGET_POS_NBT))
 		}
+
+		if (tag.contains(BOUNDARY_TYPE_NBT)) {
+			val bTypeString = tag.getString(BOUNDARY_TYPE_NBT)
+			boundaryType = BoundaryType.entries.firstOrNull { it.id == bTypeString }
+		}
 	}
 
 	companion object {
@@ -250,6 +280,7 @@ class EnderQuarryBlockEntity(
 		const val MAX_POS_NBT = "MaxPos"
 		const val TARGET_POS_NBT = "TargetPos"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
+		const val BOUNDARY_TYPE_NBT = "BoundaryType"
 	}
 
 }
