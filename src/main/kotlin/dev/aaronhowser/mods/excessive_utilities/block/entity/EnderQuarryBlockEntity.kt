@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
 
 //TODO:
-// Render a Beacon beam down from the Y level to the target block, to show where it's mining
 // Block States for inactive, active, and finished
 class EnderQuarryBlockEntity(
 	pos: BlockPos,

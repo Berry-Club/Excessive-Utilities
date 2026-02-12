@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.client.render.block_entity
 
 import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.math.Axis
 import dev.aaronhowser.mods.excessive_utilities.block.entity.EnderQuarryBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
@@ -22,9 +23,17 @@ class EnderQuarryBER(
 		val target = blockEntity.targetPos ?: return
 		val gameTime = blockEntity.level?.gameTime ?: 0
 
-		val start = target.atY(blockEntity.blockPos.y)
+		val pos = blockEntity.blockPos
+		val start = target.atY(pos.y)
 
-		for (i in 0 until 100) {
+		val dx = pos.x - start.x
+		val dz = pos.z - start.z
+		val dy = pos.y - start.y
+
+		poseStack.pushPose()
+		poseStack.translate(-dx.toDouble(), -dy.toDouble(), -dz.toDouble())
+
+		for (i in 0 until dy + 1) {
 			BeaconRenderer.renderBeaconBeam(
 				poseStack,
 				bufferSource,
@@ -33,12 +42,13 @@ class EnderQuarryBER(
 				1f,
 				gameTime,
 				i,
-				1024,
+				1,
 				0xFFFFFFFF.toInt(),
 				0.2f,
 				0.25f
 			)
 		}
 
+		poseStack.popPose()
 	}
 }
