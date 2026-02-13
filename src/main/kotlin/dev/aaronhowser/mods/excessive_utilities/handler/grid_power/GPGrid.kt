@@ -11,6 +11,9 @@ class GPGrid(
 	private val gpProducers: MutableSet<GridPowerContribution> = mutableSetOf()
 	private val gpConsumers: MutableSet<GridPowerContribution> = mutableSetOf()
 
+	fun getProducers(): Set<GridPowerContribution> = gpProducers.toSet()
+	fun getConsumers(): Set<GridPowerContribution> = gpConsumers.toSet()
+
 	fun getCapacity(): Double = gpProducers.sumOf { it.getAmount() }
 	fun getUsage(): Double = gpConsumers.sumOf { it.getAmount() }
 	fun isOverloaded(): Boolean = getUsage() > getCapacity()
