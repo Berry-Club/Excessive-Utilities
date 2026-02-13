@@ -87,7 +87,7 @@ class ServerConfig(
 
 		chickenWingRingFallSpeed = builder
 			.comment("The max fall speed when using a Chicken Wing Ring.")
-			.defineInRange("chickenWingRingFallSpeed", 0.5, 0.0, Double.MAX_VALUE)
+			.defineInRange("chickenWingRingFallSpeed", 0.1, 0.0, Double.MAX_VALUE)
 
 		chickenWingRingDurationTicks = builder
 			.comment("The number of ticks that the Chicken Wing Ring will last.")
@@ -96,7 +96,7 @@ class ServerConfig(
 		chickenWingRingRechargeTicks = builder
 			.comment("The number of ticks that the Chicken Wing Ring will take to fully recharge.")
 			.defineInRange("chickenWingRingRechargeTicks", 20 * 5, 1, Int.MAX_VALUE)
-		
+
 		builder.pop()
 
 		builder.push("flying_squid_ring")

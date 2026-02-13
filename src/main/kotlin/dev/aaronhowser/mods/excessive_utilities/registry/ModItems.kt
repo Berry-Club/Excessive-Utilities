@@ -196,8 +196,8 @@ object ModItems : AaronItemRegistry() {
 
 	// Rings
 
-	val CHICKEN_WING_RING =
-		basic("chicken_wing_ring")
+	val CHICKEN_WING_RING: DeferredItem<ChickenWingRingItem> =
+		register("chicken_wing_ring", ::ChickenWingRingItem, ChickenWingRingItem.DEFAULT_PROPERTIES)
 	val RING_OF_THE_FLYING_SQUID: DeferredItem<FlyingSquidRingItem> =
 		register("ring_of_the_flying_squid", ::FlyingSquidRingItem, FlyingSquidRingItem.DEFAULT_PROPERTIES)
 	val ANGEL_RING: DeferredItem<AngelRingItem> =

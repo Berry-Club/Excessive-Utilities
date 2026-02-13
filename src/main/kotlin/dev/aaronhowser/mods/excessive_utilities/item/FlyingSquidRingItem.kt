@@ -27,6 +27,8 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 		}
 
 		if (entity is Player && KeyHandler.isHoldingSpace(entity)) {
+			if (entity.onGround() || entity.isPassenger || entity.abilities.flying) return
+
 			val movement = entity.deltaMovement
 			val dy = movement.y
 			val gravity = entity.gravity
