@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
@@ -19,6 +20,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.level.BlockDropsEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
@@ -160,6 +162,16 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onBlockDrops(event: BlockDropsEvent) {
 		AngelBlock.handleDropEvent(event)
+	}
+
+	@SubscribeEvent
+	fun onPlayerLogout(event: PlayerEvent.PlayerLoggedOutEvent) {
+		KeyHandler.remove(event.entity)
+	}
+
+	@SubscribeEvent
+	fun onPlayerChangeDimension(event: PlayerEvent.PlayerChangedDimensionEvent) {
+		KeyHandler.remove(event.entity)
 	}
 
 }

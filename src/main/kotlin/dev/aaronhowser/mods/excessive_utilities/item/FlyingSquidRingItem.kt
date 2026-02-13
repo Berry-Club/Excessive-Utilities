@@ -3,11 +3,14 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.Vec3
 
 // Weak jetpack
 // Lasts 15 seconds, recharges in 10 seconds
@@ -23,6 +26,14 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 
 		if (entity is ServerPlayer) {
 			addGpConsumer(entity, stack)
+		}
+
+		if (entity is Player && KeyHandler.isHoldingSpace(entity)) {
+			val movement = entity.deltaMovement
+			val dy = movement.y
+			val newDy = minOf(dy + 0.015, 0.2)
+
+			entity.deltaMovement = Vec3(movement.x, newDy, movement.z)
 		}
 
 	}
@@ -52,7 +63,7 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 				}
 
 				override fun getAmount(): Double {
-					if (player.hasInfiniteMaterials() || !player.abilities.flying) return 0.0
+					if (player.hasInfiniteMaterials() || !KeyHandler.isHoldingSpace(player)) return 0.0
 
 					return ServerConfig.CONFIG.flyingSquidRingGpCost.get()
 				}
