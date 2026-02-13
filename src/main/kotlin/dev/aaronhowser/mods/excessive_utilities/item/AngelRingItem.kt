@@ -32,7 +32,6 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 	companion object {
 		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
 		val ATTRIBUTE_MODIFIER_NAME = ExcessiveUtilities.modResource("angel_ring_flight")
-		val ATTRIBUTE_MODIFIER = AttributeModifier(ATTRIBUTE_MODIFIER_NAME, 1.0, AttributeModifier.Operation.ADD_VALUE)
 
 		fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
 			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)
@@ -82,7 +81,13 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)
 			if (!handler.isOverloaded()) {
 				if (!flightAttribute.hasModifier(ATTRIBUTE_MODIFIER_NAME)) {
-					flightAttribute.addTransientModifier(ATTRIBUTE_MODIFIER)
+					flightAttribute.addTransientModifier(
+						AttributeModifier(
+							ATTRIBUTE_MODIFIER_NAME,
+							1.0,
+							AttributeModifier.Operation.ADD_VALUE
+						)
+					)
 				}
 			} else {
 				if (flightAttribute.hasModifier(ATTRIBUTE_MODIFIER_NAME)) {
