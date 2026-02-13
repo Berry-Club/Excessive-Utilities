@@ -1,6 +1,7 @@
 {
   "entries": [
-    "excessive_utilities:resonating_crystal_from_redstone_ore"
+    "excessive_utilities:resonating_crystal_from_redstone_ore",
+    "excessive_utilities:drop_of_evil_from_wither_skeleton"
   ],
   "replace": false
 }

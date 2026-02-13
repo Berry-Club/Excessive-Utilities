@@ -6,16 +6,16 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 90
+          "weight": 70
         },
         {
           "type": "minecraft:item",
-          "name": "excessive_utilities:drop_of_evil",
-          "weight": 10
+          "name": "excessive_utilities:resonating_redstone_crystal",
+          "weight": 30
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "excessive_utilities:drop_of_evil"
+  "random_sequence": "excessive_utilities:block/resonating_redstone_crystal"
 }

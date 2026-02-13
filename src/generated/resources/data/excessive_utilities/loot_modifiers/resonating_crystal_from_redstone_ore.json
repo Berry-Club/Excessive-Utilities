@@ -6,5 +6,5 @@
       "condition": "minecraft:block_state_property"
     }
   ],
-  "table": "excessive_utilities:resonating_redstone_crystal"
+  "table": "excessive_utilities:block/resonating_redstone_crystal"
 }

@@ -51,8 +51,8 @@ class OtherLootTableSubProvider(
 			.add(EmptyLootItem.emptyItem().setWeight(100 - chance))
 			.add(LootItem.lootTableItem(item).setWeight(chance))
 
-		val DROP_OF_EVIL = createPoolRk("drop_of_evil")
-		val RESONATING_REDSTONE_CRYSTAL = createPoolRk("resonating_redstone_crystal")
+		val DROP_OF_EVIL = createPoolRk("entity/drop_of_evil")
+		val RESONATING_REDSTONE_CRYSTAL = createPoolRk("block/resonating_redstone_crystal")
 	}
 
 }

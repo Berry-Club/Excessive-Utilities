@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-13T10:34:15.1845726	Loot Tables
+// 1.21.1	2026-02-13T10:37:43.4652645	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 dfd3eb1c14ba5a4b83fdae1b1844caadf489ebdb data/excessive_utilities/loot_table/blocks/advanced_observer.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
@@ -168,5 +168,5 @@ ee6b9602d70356f1e6eb019ba0095c2373614d5a data/excessive_utilities/loot_table/blo
 90a896d4b5e07c98d0793cc455d6b6438f4dd625 data/excessive_utilities/loot_table/blocks/wireless_fe_battery.json
 ed5b2765b540c4534a58b76893008ebeb62a88c6 data/excessive_utilities/loot_table/blocks/wireless_fe_transmitter.json
 29418384028c2a53ca6f99b502480dff64bba480 data/excessive_utilities/loot_table/blocks/wooden_spike.json
-6b484956454a4174f3e8e05942940300117f0534 data/excessive_utilities/loot_table/drop_of_evil.json
-7dff7a5c8462e3db64f23b546114022e3c2d7172 data/excessive_utilities/loot_table/resonating_redstone_crystal.json
+49fbce5f2fe0bca5067de285be22cf2a20832a17 data/excessive_utilities/loot_table/block/resonating_redstone_crystal.json
+e9c8ef39db473316a06b9cb142f00884106eca95 data/excessive_utilities/loot_table/entity/drop_of_evil.json
