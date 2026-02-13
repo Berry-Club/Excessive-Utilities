@@ -85,6 +85,11 @@ class ModItemTagsProvider(
 			.add(
 				ModItems.WRENCH.get()
 			)
+
+		tag(Tags.Items.DYES_MAGENTA)
+			.add(
+				ModItems.LUNAR_REACTIVE_DUST.get()
+			)
 	}
 
 	companion object {

@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.*
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -18,29 +19,29 @@ object ModItems : AaronItemRegistry() {
 		register("bedrockium_ingot", ::BedrockiumIngotItem)
 	val SOUL_FRAGMENT =
 		basic("soul_fragment")
-	val ENDER_SHARD =
+	val ENDER_SHARD: DeferredItem<Item> =
 		basic("ender_shard")
-	val DEMON_INGOT =
+	val DEMON_INGOT: DeferredItem<Item> = // TODO: Throw Gold in Lava in the Nether
 		basic("demon_ingot")
 	val DROP_OF_EVIL =
 		basic("drop_of_evil")
-	val ENCHANTED_INGOT =
+	val ENCHANTED_INGOT: DeferredItem<Item> =
 		basic("enchanted_ingot")
-	val EVIL_INFUSED_IRON_INGOT =
+	val EVIL_INFUSED_IRON_INGOT: DeferredItem<Item> =
 		basic("evil_infused_iron_ingot")
-	val EYE_OF_REDSTONE =
+	val EYE_OF_REDSTONE: DeferredItem<Item> =
 		basic("eye_of_redstone")
-	val LUNAR_REACTIVE_DUST =
+	val LUNAR_REACTIVE_DUST: DeferredItem<Item> =
 		basic("lunar_reactive_dust")
-	val MOON_STONE =
+	val MOON_STONE = // TODO: Drop from hidden ores that look like stone during the day
 		basic("moon_stone")
 	val RED_COAL =
 		basic("red_coal")
-	val REDSTONE_GEAR =
+	val REDSTONE_GEAR: DeferredItem<Item> =
 		basic("redstone_gear")
-	val RESONATING_REDSTONE_CRYSTAL =
+	val RESONATING_REDSTONE_CRYSTAL: DeferredItem<Item> = // TODO: Drop from redstone ore
 		basic("resonating_redstone_crystal")
-	val UPGRADE_BASE =
+	val UPGRADE_BASE: DeferredItem<Item> =
 		basic("upgrade_base")
 	val OPINIUM_CORE: DeferredItem<OpiniumCoreItem> =
 		register("opinium_core", ::OpiniumCoreItem, OpiniumCoreItem.DEFAULT_PROPERTIES)
@@ -50,7 +51,7 @@ object ModItems : AaronItemRegistry() {
 		basic("semi_unstable_nugget")
 	val MOBIUS_INGOT =
 		basic("mobius_ingot")
-	val KLEIN_BOTTLE =
+	val KLEIN_BOTTLE: DeferredItem<Item> =
 		basic("klein_bottle")
 
 	// Plants
