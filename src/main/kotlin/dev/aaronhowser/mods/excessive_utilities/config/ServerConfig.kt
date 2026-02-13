@@ -58,6 +58,10 @@ class ServerConfig(
 	lateinit var enderQuarryFencePerimeterLimit: ModConfigSpec.IntValue
 	lateinit var enderQuarryMarkerSearchDistance: ModConfigSpec.IntValue
 
+	lateinit var chickenWingRingFallSpeed: ModConfigSpec.DoubleValue
+	lateinit var chickenWingRingDurationTicks: ModConfigSpec.IntValue
+	lateinit var chickenWingRingRechargeTicks: ModConfigSpec.IntValue
+
 	lateinit var flyingSquidRingThrustMultiplier: ModConfigSpec.DoubleValue
 	lateinit var flyingSquidRingMaxUpwardSpeed: ModConfigSpec.DoubleValue
 	lateinit var flyingSquidRingDurationTicks: ModConfigSpec.IntValue
@@ -79,6 +83,24 @@ class ServerConfig(
 
 		builder.comment("GP costs are defined elsewhere!")
 
+		builder.push("chicken_wing_ring")
+
+		chickenWingRingFallSpeed = builder
+			.comment("The max fall speed when using a Chicken Wing Ring.")
+			.defineInRange("chickenWingRingFallSpeed", 0.5, 0.0, Double.MAX_VALUE)
+
+		chickenWingRingDurationTicks = builder
+			.comment("The number of ticks that the Chicken Wing Ring will last.")
+			.defineInRange("chickenWingRingDurationTicks", 20 * 10, 1, Int.MAX_VALUE)
+
+		chickenWingRingRechargeTicks = builder
+			.comment("The number of ticks that the Chicken Wing Ring will take to fully recharge.")
+			.defineInRange("chickenWingRingRechargeTicks", 20 * 5, 1, Int.MAX_VALUE)
+		
+		builder.pop()
+
+		builder.push("flying_squid_ring")
+
 		flyingSquidRingThrustMultiplier = builder
 			.comment("How much strength should the Ring of the Flying Squid push you upwards, compared to your gravity?")
 			.defineInRange("flyingSquidRingThrustMultiplier", 1.1, 0.0, Double.MAX_VALUE)
@@ -94,6 +116,8 @@ class ServerConfig(
 		flyingSquidRingRechargeTicks = builder
 			.comment("The number of ticks that the Ring of the Flying Squid will take to fully recharge.")
 			.defineInRange("flyingSquidRingRechargeTicks", 20 * 10, 1, Int.MAX_VALUE)
+
+		builder.pop()
 
 		builder.pop()
 	}
