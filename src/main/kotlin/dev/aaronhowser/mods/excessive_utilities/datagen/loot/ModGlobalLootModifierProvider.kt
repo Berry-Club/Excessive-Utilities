@@ -27,6 +27,9 @@ class ModGlobalLootModifierProvider(
 				arrayOf(
 					LootItemBlockStatePropertyCondition
 						.hasBlockStateProperties(Blocks.REDSTONE_ORE)
+						.build(),
+					LootItemBlockStatePropertyCondition
+						.hasBlockStateProperties(Blocks.DEEPSLATE_REDSTONE_ORE)
 						.build()
 				),
 				OtherLootTableSubProvider.RESONATING_REDSTONE_CRYSTAL

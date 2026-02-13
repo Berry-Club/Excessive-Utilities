@@ -4,6 +4,10 @@
     {
       "block": "minecraft:redstone_ore",
       "condition": "minecraft:block_state_property"
+    },
+    {
+      "block": "minecraft:deepslate_redstone_ore",
+      "condition": "minecraft:block_state_property"
     }
   ],
   "table": "excessive_utilities:block/resonating_redstone_crystal"
