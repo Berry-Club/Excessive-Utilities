@@ -31,6 +31,8 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 			val charge = stack.getOrDefault(ModDataComponents.CHARGE.get(), 0)
 			if (charge <= 0) return
 
+			stack.set(ModDataComponents.CHARGE.get(),  charge - 1)
+
 			val movement = entity.deltaMovement
 			val dy = movement.y
 			val gravity = entity.gravity
