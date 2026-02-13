@@ -208,7 +208,7 @@ class ServerConfig(
 
 		angelRingGpCost = builder
 			.comment("The amount of GP to be consumed while flying with an Angel Ring.")
-			.defineInRange("angelRingGpCost", 0.5, 0.0, Double.MAX_VALUE)
+			.defineInRange("angelRingGpCost", 64.0, 0.0, Double.MAX_VALUE)
 
 		builder.pop()
 
