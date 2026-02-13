@@ -50,7 +50,18 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 				override fun isStillValid(): Boolean {
 					if (!player.isAlive || player.isRemoved) return false
 
-					return player.inventory.contains { stack -> ItemStack.isSameItemSameComponents(stack, gpStack) }
+					val hasStack = player.inventory.contains { stack -> ItemStack.isSameItemSameComponents(stack, gpStack) }
+
+					if (!hasStack) {
+						val attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT)
+						if (attribute != null && attribute.hasModifier(ATTRIBUTE_MODIFIER_NAME)) {
+							attribute.removeModifier(ATTRIBUTE_MODIFIER_NAME)
+							player.abilities.flying = false
+							player.onUpdateAbilities()
+						}
+					}
+
+					return hasStack
 				}
 
 				override fun getAmount(): Double {
