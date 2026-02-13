@@ -22,7 +22,7 @@ object ModItems : AaronItemRegistry() {
 	val ENDER_SHARD: DeferredItem<Item> =
 		basic("ender_shard")
 	val DEMON_INGOT: DeferredItem<Item> = // TODO: Throw Gold in Lava in the Nether
-		basic("demon_ingot")
+		basic("demon_ingot", properties = Item.Properties().fireResistant())
 	val DROP_OF_EVIL =
 		basic("drop_of_evil")
 	val ENCHANTED_INGOT: DeferredItem<Item> =
@@ -39,7 +39,7 @@ object ModItems : AaronItemRegistry() {
 		basic("red_coal")
 	val REDSTONE_GEAR: DeferredItem<Item> =
 		basic("redstone_gear")
-	val RESONATING_REDSTONE_CRYSTAL: DeferredItem<Item> = // TODO: Drop from redstone ore
+	val RESONATING_REDSTONE_CRYSTAL: DeferredItem<Item> =
 		basic("resonating_redstone_crystal")
 	val UPGRADE_BASE: DeferredItem<Item> =
 		basic("upgrade_base")
