@@ -255,9 +255,9 @@ class ModRecipeProvider(
 					'F' to Tags.Items.FEATHERS.asIngredient(),
 					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
 					'L' to ModItems.GOLDEN_LASSO.withComponent(
-								ModDataComponents.ENTITY_TYPE.get(),
-								EntityType.CHICKEN.builtInRegistryHolder()
-							).asIngredient(),
+						ModDataComponents.ENTITY_TYPE.get(),
+						EntityType.CHICKEN.builtInRegistryHolder()
+					).asIngredient(),
 					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
 				)
 			),
@@ -268,9 +268,9 @@ class ModRecipeProvider(
 					'I' to Items.INK_SAC.asIngredient(),
 					'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
 					'L' to ModItems.GOLDEN_LASSO.withComponent(
-								ModDataComponents.ENTITY_TYPE.get(),
-								EntityType.SQUID.builtInRegistryHolder()
-							).asIngredient(),
+						ModDataComponents.ENTITY_TYPE.get(),
+						EntityType.SQUID.builtInRegistryHolder()
+					).asIngredient(),
 					'C' to ModItems.CHICKEN_WING_RING.asIngredient(),
 					'E' to Tags.Items.ENDER_PEARLS.asIngredient()
 				)

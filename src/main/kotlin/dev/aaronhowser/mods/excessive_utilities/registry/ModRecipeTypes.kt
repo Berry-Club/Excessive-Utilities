@@ -22,7 +22,7 @@ object ModRecipeTypes {
 	val ENCHANTER: DeferredHolder<RecipeType<*>, RecipeType<EnchanterRecipe>> =
 		registerRecipeType("enchanter")
 
-	val QED : DeferredHolder<RecipeType<*>, RecipeType<QEDRecipe>> =
+	val QED: DeferredHolder<RecipeType<*>, RecipeType<QEDRecipe>> =
 		registerRecipeType("qed")
 
 	private fun <T : Recipe<*>> registerRecipeType(

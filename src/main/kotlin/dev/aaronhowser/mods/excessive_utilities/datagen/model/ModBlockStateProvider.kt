@@ -51,8 +51,8 @@ class ModBlockStateProvider(
 		val block = ModBlocks.ENDER_QUARRY.get()
 
 		val side = modLoc("block/ender_quarry/side")
-		val sideOn = modLoc("block/ender_quarry/side_on")
-		val sideFinished = modLoc("block/ender_quarry/side_finished")
+		modLoc("block/ender_quarry/side_on")
+		modLoc("block/ender_quarry/side_finished")
 		val top = modLoc("block/ender_quarry/top")
 		val bottom = modLoc("block/ender_quarry/bottom")
 

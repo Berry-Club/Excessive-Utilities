@@ -6,7 +6,6 @@ import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
@@ -36,11 +35,11 @@ class ModItemModelProvider(
 		val itemNode = ModItems.FLAT_TRANSFER_NODE_ITEMS.get()
 		val fluidNode = ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
 
-		getBuilder(getName(itemNode).toString())
+		getBuilder(getName(itemNode))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/flat_transfer_node/items"))
 
-		getBuilder(getName(fluidNode).toString())
+		getBuilder(getName(fluidNode))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/flat_transfer_node/fluids"))
 
@@ -56,7 +55,7 @@ class ModItemModelProvider(
 		for (item in bewlrItems) {
 			val name = getName(item)
 
-			getBuilder(name.toString())
+			getBuilder(name)
 				.parent(ModelFile.UncheckedModelFile("builtin/entity"))
 
 			handledItems.add(item)
@@ -71,33 +70,33 @@ class ModItemModelProvider(
 		val sword = ModItems.ETHERIC_SWORD.get()
 		val shears = ModItems.PRECISION_SHEARS.get()
 
-		getBuilder(getName(axe).toString())
+		getBuilder(getName(axe))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/unstable_tools/axe_base"))
 			.texture("layer1", modLoc("item/unstable_tools/axe_glow"))
 
-		getBuilder(getName(pickaxe).toString())
+		getBuilder(getName(pickaxe))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/unstable_tools/pickaxe_base"))
 			.texture("layer1", modLoc("item/unstable_tools/pickaxe_glow"))
 			.texture("layer2", modLoc("item/unstable_tools/pickaxe_outline"))
 
-		getBuilder(getName(hoe).toString())
+		getBuilder(getName(hoe))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/unstable_tools/hoe_base"))
 			.texture("layer1", modLoc("item/unstable_tools/hoe_glow"))
 
-		getBuilder(getName(shovel).toString())
+		getBuilder(getName(shovel))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/unstable_tools/shovel_base"))
 			.texture("layer1", modLoc("item/unstable_tools/shovel_glow"))
 
-		getBuilder(getName(sword).toString())
+		getBuilder(getName(sword))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/unstable_tools/sword_base"))
 			.texture("layer1", modLoc("item/unstable_tools/sword_glow"))
 
-		getBuilder(getName(shears).toString())
+		getBuilder(getName(shears))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/unstable_tools/shears_base"))
 			.texture("layer1", modLoc("item/unstable_tools/shears_glow"))
@@ -113,11 +112,11 @@ class ModItemModelProvider(
 	fun wateringCan() {
 		val item = ModItems.WATERING_CAN.get()
 
-		val base = getBuilder(getName(item).toString())
+		val base = getBuilder(getName(item))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/watering_can"))
 
-		val broken = getBuilder(getName(item).toString() + "_broken")
+		val broken = getBuilder(getName(item) + "_broken")
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))
 			.texture("layer0", modLoc("item/watering_can_broken"))
 
@@ -132,7 +131,7 @@ class ModItemModelProvider(
 
 	fun lassos() {
 		val goldenLasso = ModItems.GOLDEN_LASSO.get()
-		val goldenName = getName(goldenLasso).toString()
+		val goldenName = getName(goldenLasso)
 
 		val goldenBaseModel = getBuilder(goldenName)
 			.parent(ModelFile.UncheckedModelFile("item/generated"))
@@ -149,7 +148,7 @@ class ModItemModelProvider(
 			.end()
 
 		val cursedLasso = ModItems.CURSED_LASSO.get()
-		val cursedName = getName(cursedLasso).toString()
+		val cursedName = getName(cursedLasso)
 
 		val cursedBaseModel = getBuilder(cursedName)
 			.parent(ModelFile.UncheckedModelFile("item/generated"))
@@ -173,12 +172,12 @@ class ModItemModelProvider(
 		val item = ModItems.ENDER_SHARD.get()
 
 		fun getModelForCount(count: Int): ItemModelBuilder {
-			return getBuilder(getName(item).toString() + "_" + count)
+			return getBuilder(getName(item) + "_" + count)
 				.parent(ModelFile.UncheckedModelFile("item/generated"))
 				.texture("layer0", modLoc("item/ender_shard/$count"))
 		}
 
-		val model = getBuilder(getName(item).toString())
+		val model = getBuilder(getName(item))
 			.parent(ModelFile.UncheckedModelFile("item/generated"))
 			.texture("layer0", modLoc("item/ender_shard/1"))
 
@@ -222,9 +221,7 @@ class ModItemModelProvider(
 		}
 	}
 
-	private fun getName(item: Item): ResourceLocation {
-		return BuiltInRegistries.ITEM.getKey(item)
-	}
+	private fun getName(item: Item): String = BuiltInRegistries.ITEM.getKey(item).toString()
 
 	companion object {
 		val ENDER_SHARD_COUNT = ExcessiveUtilities.modResource("ender_shard_count")

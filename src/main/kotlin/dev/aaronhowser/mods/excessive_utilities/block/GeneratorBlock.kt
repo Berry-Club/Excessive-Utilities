@@ -11,7 +11,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.MutableComponent
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.*
 import net.minecraft.world.entity.LivingEntity

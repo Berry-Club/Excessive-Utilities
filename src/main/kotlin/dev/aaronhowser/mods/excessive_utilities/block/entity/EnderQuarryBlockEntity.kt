@@ -131,7 +131,7 @@ class EnderQuarryBlockEntity(
 
 		val firstDirection = dirToProperty
 			.entries
-			.firstOrNull { (dir, property) -> firstFenceState.getValue(property) }
+			.firstOrNull { (_, property) -> firstFenceState.getValue(property) }
 			?.key
 			?: return false
 
