@@ -16,6 +16,7 @@ object RingRechargeGuiRenderer {
 
 	val LAYER_NAME: ResourceLocation = ExcessiveUtilities.modResource("ring_recharge_gui_layer")
 
+	//TODO: Render with horse jump bar or whatever instead
 	fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
 		val player = AaronClientUtil.localPlayer ?: return
 
