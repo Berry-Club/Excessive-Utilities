@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
@@ -26,9 +27,7 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 			addGpConsumer(entity, stack)
 		}
 
-		if (entity is Player && KeyHandler.isHoldingSpace(entity)) {
-			if (entity.onGround() || entity.isPassenger || entity.abilities.flying) return
-
+		if (entity is Player && canPlayerUse(entity)) {
 			val movement = entity.deltaMovement
 			val dy = movement.y
 			val gravity = entity.gravity
@@ -42,9 +41,20 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
-		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
+		val DEFAULT_PROPERTIES: () -> Properties = {
+			Properties()
+				.stacksTo(1)
+				.component(ModDataComponents.CHARGE.get(), 0)
+		}
 
-		fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
+		private fun canPlayerUse(player: Player): Boolean {
+			return KeyHandler.isHoldingSpace(player)
+					&& !player.onGround()
+					&& !player.isPassenger
+					&& !player.abilities.flying
+		}
+
+		private fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
 			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)
 
 			val currentConsumers = handler.getConsumers()
@@ -66,7 +76,7 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 				}
 
 				override fun getAmount(): Double {
-					if (player.hasInfiniteMaterials() || !KeyHandler.isHoldingSpace(player)) return 0.0
+					if (player.hasInfiniteMaterials() || !canPlayerUse(player)) return 0.0
 
 					return ServerConfig.CONFIG.flyingSquidRingGpCost.get()
 				}

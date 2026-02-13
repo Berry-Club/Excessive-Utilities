@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
@@ -44,7 +45,11 @@ class ChickenWingRingItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
-		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
+		val DEFAULT_PROPERTIES: () -> Properties = {
+			Properties()
+				.stacksTo(1)
+				.component(ModDataComponents.CHARGE.get(), 0)
+		}
 
 		fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
 			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)
