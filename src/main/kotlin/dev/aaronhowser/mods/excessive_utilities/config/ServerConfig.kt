@@ -102,11 +102,11 @@ class ServerConfig(
 		builder.push("flying_squid_ring")
 
 		flyingSquidRingThrustMultiplier = builder
-			.comment("How much strength should the Ring of the Flying Squid push you upwards, compared to your gravity?")
+			.comment("How many times stronger than your gravity the upward thrust of the Ring of the Flying Squid is.")
 			.defineInRange("flyingSquidRingThrustMultiplier", 1.1, 0.0, Double.MAX_VALUE)
 
 		flyingSquidRingMaxUpwardSpeed = builder
-			.comment("The maximum upward speed in blocks per tick that the Ring of the Flying Squid will allow.")
+			.comment("The maximum upward speed in blocks per tick that the Ring of the Flying Squid will push you.")
 			.defineInRange("flyingSquidRingMaxUpwardSpeed", 1.0, 0.0, Double.MAX_VALUE)
 
 		flyingSquidRingDurationTicks = builder
