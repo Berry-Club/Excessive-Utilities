@@ -28,14 +28,27 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 		}
 
 		if (entity is Player && canPlayerUse(entity)) {
+			val charge = stack.getOrDefault(ModDataComponents.CHARGE.get(), 0)
+			if (charge <= 0) return
+
 			val movement = entity.deltaMovement
 			val dy = movement.y
 			val gravity = entity.gravity
 			var newDy = dy + gravity * ServerConfig.CONFIG.flyingSquidRingThrustMultiplier.get()
-			newDy = minOf(newDy, ServerConfig.CONFIG.flyingSquidRingMaxUpwardSpeed.get())
+			newDy = newDy.coerceAtMost(ServerConfig.CONFIG.flyingSquidRingMaxUpwardSpeed.get())
 
 			entity.deltaMovement = Vec3(movement.x, newDy, movement.z)
 			entity.resetFallDistance()
+		} else {
+			val maxCharge = ServerConfig.CONFIG.flyingSquidRingDurationTicks.get()
+			val currentCharge = stack.getOrDefault(ModDataComponents.CHARGE.get(), 0)
+			if (currentCharge >= maxCharge) return
+
+			val rechargeTime = ServerConfig.CONFIG.flyingSquidRingRechargeTicks.get()
+			val chargePerTick = maxCharge.toDouble() / rechargeTime
+
+			val newCharge = (currentCharge + chargePerTick).toInt().coerceAtMost(maxCharge)
+			stack.set(ModDataComponents.CHARGE.get(), newCharge)
 		}
 
 	}
