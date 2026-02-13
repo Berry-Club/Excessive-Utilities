@@ -34,6 +34,7 @@ class ServerConfig(
 	lateinit var creativeMillGeneration: ModConfigSpec.DoubleValue
 
 	lateinit var speedUpgradeGpCostMultiplier: ModConfigSpec.DoubleValue
+	lateinit var angelRingGpCost: ModConfigSpec.DoubleValue
 
 	lateinit var culinaryFePerFoodValue: ModConfigSpec.DoubleValue
 	lateinit var culinaryTicksPerSaturationValue: ModConfigSpec.DoubleValue
@@ -204,6 +205,10 @@ class ServerConfig(
 				"Note that you can also change the GP cost formula directly using KubeJS.",
 			)
 			.defineInRange("speedUpgradeGpCostMultiplier", 1.0, 0.0, Double.MAX_VALUE)
+
+		angelRingGpCost = builder
+			.comment("The amount of GP to be consumed while flying with an Angel Ring.")
+			.defineInRange("angelRingGpCost", 0.5, 0.0, Double.MAX_VALUE)
 
 		builder.pop()
 

@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import net.minecraft.server.level.ServerPlayer
@@ -47,7 +48,9 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 				}
 
 				override fun getAmount(): Double {
-					return 10.0
+					if (player.hasInfiniteMaterials() || !player.abilities.flying) return 0.0
+
+					return ServerConfig.CONFIG.angelRingGpCost.get()
 				}
 			}
 
