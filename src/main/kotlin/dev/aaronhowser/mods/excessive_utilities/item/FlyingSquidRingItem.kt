@@ -31,9 +31,11 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 		if (entity is Player && KeyHandler.isHoldingSpace(entity)) {
 			val movement = entity.deltaMovement
 			val dy = movement.y
-			val newDy = minOf(dy + 0.015, 0.2)
+			val gravity = entity.gravity
+			val newDy = dy + gravity * 1.1
 
 			entity.deltaMovement = Vec3(movement.x, newDy, movement.z)
+			entity.resetFallDistance()
 		}
 
 	}
