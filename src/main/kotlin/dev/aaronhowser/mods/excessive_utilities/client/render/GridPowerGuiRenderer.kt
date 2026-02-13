@@ -20,7 +20,7 @@ object GridPowerGuiRenderer {
 
 	val LAYER_NAME: ResourceLocation = ExcessiveUtilities.modResource("grid_power_gui_layer")
 
-	fun renderGridPower(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
+	fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
 		val player = AaronClientUtil.localPlayer ?: return
 
 		if (!player.isHolding { it.isItem(ModItemTagsProvider.RENDER_GP_WHILE_HOLDING) }) {

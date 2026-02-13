@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.event
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
+import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.EnderQuarryBER
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
@@ -152,7 +153,13 @@ object ClientEvents {
 		event.registerAbove(
 			VanillaGuiLayers.CROSSHAIR,
 			GridPowerGuiRenderer.LAYER_NAME,
-			GridPowerGuiRenderer::renderGridPower
+			GridPowerGuiRenderer::render
+		)
+
+		event.registerAbove(
+			VanillaGuiLayers.CROSSHAIR,
+			RingRechargeGuiRenderer.LAYER_NAME,
+			RingRechargeGuiRenderer::render
 		)
 	}
 
