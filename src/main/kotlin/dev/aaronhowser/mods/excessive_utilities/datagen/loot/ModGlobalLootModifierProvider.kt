@@ -24,7 +24,7 @@ class ModGlobalLootModifierProvider(
 						.hasBlockStateProperties(Blocks.REDSTONE_ORE)
 						.build()
 				),
-				ModBlockLootTablesSubProvider.RESONATING_REDSTONE_CRYSTAL
+				OtherLootTableSubProvider.RESONATING_REDSTONE_CRYSTAL
 			)
 		)
 	}
