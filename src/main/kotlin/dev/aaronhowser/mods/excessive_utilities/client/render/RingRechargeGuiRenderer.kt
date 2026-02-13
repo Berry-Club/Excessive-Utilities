@@ -28,12 +28,14 @@ object RingRechargeGuiRenderer {
 			?: return
 
 		val maxCharge = when {
-			ringStack.isItem(ModItems.RING_OF_THE_FLYING_SQUID) -> ServerConfig.CONFIG.flyingSquidRingDurationTicks
-			ringStack.isItem(ModItems.CHICKEN_WING_RING) -> ServerConfig.CONFIG.chickenWingRingDurationTicks
+			ringStack.isItem(ModItems.RING_OF_THE_FLYING_SQUID) -> ServerConfig.CONFIG.flyingSquidRingDurationTicks.get()
+			ringStack.isItem(ModItems.CHICKEN_WING_RING) -> ServerConfig.CONFIG.chickenWingRingDurationTicks.get()
 			else -> return
 		}
 
 		val charge = ringStack.getOrDefault(ModDataComponents.CHARGE, 0)
+
+		if (charge >= maxCharge) return
 
 		val component = Component.literal("$charge / $maxCharge")
 
