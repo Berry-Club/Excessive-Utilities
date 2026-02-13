@@ -1355,6 +1355,12 @@ class ModRecipeProvider(
 
 	private fun buildNamedRecipes(recipeOutput: RecipeOutput) {
 		shapelessRecipe(
+			Items.REDSTONE,
+			8,
+			listOf(ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient())
+		).save(recipeOutput, modLoc("redstone_from_resonating_redstone_crystal"))
+
+		shapelessRecipe(
 			ModItems.WATERING_CAN,
 			listOf(
 				ModItems.WATERING_CAN
