@@ -195,11 +195,8 @@ class ModItemModelProvider(
 
 	private fun basicItems() {
 		val skipThese = setOf(
-			ModItems.ANGEL_RING.get(),
 			ModItems.SOUL_FRAGMENT.get(),
-			ModItems.ENDER_SHARD.get(),
 			ModItems.LUNAR_REACTIVE_DUST.get(),
-			ModItems.OPINIUM_CORE.get(),
 			ModItems.UNSTABLE_INGOT.get(),
 			ModItems.SEMI_UNSTABLE_NUGGET.get(),
 			ModItems.MOBIUS_INGOT.get(),
@@ -208,15 +205,7 @@ class ModItemModelProvider(
 			ModItems.COMPOUND_BOW.get(),
 			ModItems.CREATIVE_BUILDERS_WAND.get(),
 			ModItems.CREATIVE_DESTRUCTION_WAND.get(),
-			ModItems.FLAT_TRANSFER_NODE_ITEMS.get(),
-			ModItems.FLAT_TRANSFER_NODE_FLUIDS.get(),
 			ModItems.SUN_CRYSTAL.get(),
-			ModItems.HEALING_AXE.get(),
-			ModItems.REVERSING_HOE.get(),
-			ModItems.DESTRUCTION_PICKAXE.get(),
-			ModItems.PRECISION_SHEARS.get(),
-			ModItems.EROSION_SHOVEL.get(),
-			ModItems.ETHERIC_SWORD.get(),
 			ModItems.PAINTBRUSH.get(),
 			ModItems.KIKOKU.get(),
 			ModItems.LUX_SABER.get(),

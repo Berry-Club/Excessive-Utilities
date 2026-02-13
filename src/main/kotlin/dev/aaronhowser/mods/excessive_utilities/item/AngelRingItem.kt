@@ -12,6 +12,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.NeoForgeMod
 
+//TODO:
+// Types
+// Render on back
 class AngelRingItem(properties: Properties) : Item(properties) {
 
 	override fun inventoryTick(
