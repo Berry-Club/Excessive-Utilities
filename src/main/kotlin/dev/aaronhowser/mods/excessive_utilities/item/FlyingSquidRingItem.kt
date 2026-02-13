@@ -15,6 +15,14 @@ import net.minecraft.world.phys.Vec3
 
 class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 
+	override fun shouldCauseReequipAnimation(
+		oldStack: ItemStack,
+		newStack: ItemStack,
+		slotChanged: Boolean
+	): Boolean {
+		return slotChanged
+	}
+
 	override fun inventoryTick(
 		stack: ItemStack,
 		level: Level,

@@ -16,6 +16,14 @@ import net.minecraft.world.phys.Vec3
 // Lasts 10 seconds, recharges in 5 seconds
 class ChickenWingRingItem(properties: Properties) : Item(properties) {
 
+	override fun shouldCauseReequipAnimation(
+		oldStack: ItemStack,
+		newStack: ItemStack,
+		slotChanged: Boolean
+	): Boolean {
+		return slotChanged
+	}
+
 	override fun inventoryTick(
 		stack: ItemStack,
 		level: Level,
@@ -28,8 +36,11 @@ class ChickenWingRingItem(properties: Properties) : Item(properties) {
 			addGpConsumer(entity, stack)
 		}
 
-		if (entity is Player && KeyHandler.isHoldingSpace(entity)) {
-			if (entity.onGround() || entity.isPassenger || entity.abilities.flying) return
+		if (entity is Player && canPlayerUse(entity)) {
+			val charge = stack.getOrDefault(ModDataComponents.CHARGE.get(), 0)
+			if (charge <= 0) return
+
+			stack.set(ModDataComponents.CHARGE.get(), charge - 1)
 
 			val movement = entity.deltaMovement
 			val dy = movement.y
@@ -40,6 +51,16 @@ class ChickenWingRingItem(properties: Properties) : Item(properties) {
 
 			entity.deltaMovement = Vec3(movement.x, newDy, movement.z)
 			entity.resetFallDistance()
+		} else {
+			val maxCharge = ServerConfig.CONFIG.chickenWingRingDurationTicks.get()
+			val currentCharge = stack.getOrDefault(ModDataComponents.CHARGE.get(), 0)
+			if (currentCharge >= maxCharge) return
+
+			val rechargeTime = ServerConfig.CONFIG.chickenWingRingRechargeTicks.get()
+			val chargePerTick = maxCharge.toDouble() / rechargeTime
+
+			val newCharge = (currentCharge + chargePerTick).toInt().coerceAtMost(maxCharge)
+			stack.set(ModDataComponents.CHARGE.get(), newCharge)
 		}
 
 	}
@@ -49,6 +70,13 @@ class ChickenWingRingItem(properties: Properties) : Item(properties) {
 			Properties()
 				.stacksTo(1)
 				.component(ModDataComponents.CHARGE.get(), 0)
+		}
+
+		private fun canPlayerUse(player: Player): Boolean {
+			return KeyHandler.isHoldingSpace(player)
+					&& !player.onGround()
+					&& !player.isPassenger
+					&& player.deltaMovement.y < 0
 		}
 
 		fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
@@ -73,11 +101,7 @@ class ChickenWingRingItem(properties: Properties) : Item(properties) {
 				}
 
 				override fun getAmount(): Double {
-					if (
-						player.hasInfiniteMaterials()
-						|| !KeyHandler.isHoldingSpace(player)
-						|| player.deltaMovement.y >= 0
-					) return 0.0
+					if (player.hasInfiniteMaterials() || !canPlayerUse(player)) return 0.0
 
 					return ServerConfig.CONFIG.chickenWingRingGpCost.get()
 				}
