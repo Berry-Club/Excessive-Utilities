@@ -25,6 +25,7 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
+		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
 
 		fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
 			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)

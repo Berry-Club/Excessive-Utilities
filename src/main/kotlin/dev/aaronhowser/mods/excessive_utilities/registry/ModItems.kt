@@ -200,8 +200,8 @@ object ModItems : AaronItemRegistry() {
 		basic("chicken_wing_ring")
 	val RING_OF_THE_FLYING_SQUID =
 		basic("ring_of_the_flying_squid")
-	val ANGEL_RING =
-		basic("angel_ring")
+	val ANGEL_RING: DeferredItem<AngelRingItem> =
+		register("angel_ring", ::AngelRingItem, AngelRingItem.DEFAULT_PROPERTIES)
 
 	// Items not reimplemented:
 	// - Contract (used only for Chunk Loading Ward)
