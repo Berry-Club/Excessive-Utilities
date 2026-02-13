@@ -39,7 +39,7 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 				return existing
 			}
 
-			val new = object : GridPowerContribution.HeldItem(ringStack, player) {
+			val new = object : GridPowerContribution.HeldItem(ringStack.copy(), player) {
 				override fun isStillValid(): Boolean {
 					if (!player.isAlive || player.isRemoved) return false
 
