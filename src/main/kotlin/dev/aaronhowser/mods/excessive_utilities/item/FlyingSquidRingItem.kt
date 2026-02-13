@@ -32,7 +32,8 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 			val movement = entity.deltaMovement
 			val dy = movement.y
 			val gravity = entity.gravity
-			val newDy = dy + gravity * 1.1
+			var newDy = dy + gravity * ServerConfig.CONFIG.flyingSquidRingThrustMultiplier.get()
+			newDy = minOf(newDy, ServerConfig.CONFIG.flyingSquidRingMaxUpwardSpeed.get())
 
 			entity.deltaMovement = Vec3(movement.x, newDy, movement.z)
 			entity.resetFallDistance()

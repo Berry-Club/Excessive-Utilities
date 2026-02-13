@@ -58,6 +58,9 @@ class ServerConfig(
 	lateinit var enderQuarryFencePerimeterLimit: ModConfigSpec.IntValue
 	lateinit var enderQuarryMarkerSearchDistance: ModConfigSpec.IntValue
 
+	lateinit var flyingSquidRingThrustMultiplier: ModConfigSpec.DoubleValue
+	lateinit var flyingSquidRingMaxUpwardSpeed: ModConfigSpec.DoubleValue
+
 	init {
 		general()
 		heatingCoil()
@@ -66,6 +69,23 @@ class ServerConfig(
 		gridPower()
 		feGenerators()
 		enderQuarry()
+		rings()
+	}
+
+	private fun rings() {
+		builder.push("rings")
+
+		builder.comment("GP costs are defined elsewhere!")
+
+		flyingSquidRingThrustMultiplier = builder
+			.comment("How much strength should the Ring of the Flying Squid push you upwards, compared to your gravity?")
+			.defineInRange("flyingSquidRingThrustMultiplier", 1.1, 0.0, Double.MAX_VALUE)
+
+		flyingSquidRingMaxUpwardSpeed = builder
+			.comment("The maximum upward speed in blocks per tick that the Ring of the Flying Squid will allow.")
+			.defineInRange("flyingSquidRingMaxUpwardSpeed", 1.0, 0.0, Double.MAX_VALUE)
+
+		builder.pop()
 	}
 
 	private fun enderQuarry() {
