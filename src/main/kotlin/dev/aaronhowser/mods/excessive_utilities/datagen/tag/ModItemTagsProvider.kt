@@ -39,7 +39,10 @@ class ModItemTagsProvider(
 				ModBlocks.DRAGON_EGG_MILL.asItem(),
 				ModBlocks.CREATIVE_MILL.asItem(),
 				ModBlocks.RESONATOR.asItem(),
-				ModBlocks.WIRELESS_FE_TRANSMITTER.asItem()
+				ModBlocks.WIRELESS_FE_TRANSMITTER.asItem(),
+				ModItems.RING_OF_THE_FLYING_SQUID.get(),
+				ModItems.ANGEL_RING.get(),
+				ModItems.CHICKEN_WING_RING.get()
 			)
 
 		tag(PISTONS)
