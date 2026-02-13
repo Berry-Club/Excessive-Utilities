@@ -60,6 +60,8 @@ class ServerConfig(
 
 	lateinit var flyingSquidRingThrustMultiplier: ModConfigSpec.DoubleValue
 	lateinit var flyingSquidRingMaxUpwardSpeed: ModConfigSpec.DoubleValue
+	lateinit var flyingSquidRingDurationTicks: ModConfigSpec.IntValue
+	lateinit var flyingSquidRingRechargeTicks: ModConfigSpec.IntValue
 
 	init {
 		general()
@@ -84,6 +86,14 @@ class ServerConfig(
 		flyingSquidRingMaxUpwardSpeed = builder
 			.comment("The maximum upward speed in blocks per tick that the Ring of the Flying Squid will allow.")
 			.defineInRange("flyingSquidRingMaxUpwardSpeed", 1.0, 0.0, Double.MAX_VALUE)
+
+		flyingSquidRingDurationTicks = builder
+			.comment("The number of ticks that the Ring of the Flying Squid will last.")
+			.defineInRange("flyingSquidRingDurationTicks", 20 * 15, 1, Int.MAX_VALUE)
+
+		flyingSquidRingRechargeTicks = builder
+			.comment("The number of ticks that the Ring of the Flying Squid will take to fully recharge.")
+			.defineInRange("flyingSquidRingRechargeTicks", 20 * 10, 1, Int.MAX_VALUE)
 
 		builder.pop()
 	}

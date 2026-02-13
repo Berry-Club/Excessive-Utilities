@@ -12,8 +12,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 
-// Weak jetpack
-// Lasts 15 seconds, recharges in 10 seconds
 class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 
 	override fun inventoryTick(
