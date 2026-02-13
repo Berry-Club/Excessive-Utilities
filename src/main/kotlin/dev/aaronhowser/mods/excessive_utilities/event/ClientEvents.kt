@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRender
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.EnderQuarryBER
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
+import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.ClientKeyHandler
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
@@ -173,6 +174,11 @@ object ClientEvents {
 	@SubscribeEvent
 	fun onRegisterMenuScreens(event: RegisterMenuScreensEvent) {
 		ModMenuTypes.registerScreens(event)
+	}
+
+	@SubscribeEvent
+	fun beforeClientTick(event: ClientTickEvent.Pre) {
+		ClientKeyHandler.updateControls()
 	}
 
 }
