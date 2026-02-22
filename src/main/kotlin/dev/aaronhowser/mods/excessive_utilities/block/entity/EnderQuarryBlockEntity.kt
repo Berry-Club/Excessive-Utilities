@@ -160,25 +160,25 @@ class EnderQuarryBlockEntity(
 			}
 		}
 
+		for (leftover in leftoverStacks) {
+			Block.popResource(level, blockPos.above(), leftover)
+		}
+
 	}
 
 	private fun gatherDrops(level: ServerLevel, target: BlockPos): List<ItemStack> {
 		val targetState = level.getBlockState(target)
-		var tool = ItemStack.EMPTY
+
+		var tool = Items.NETHERITE_PICKAXE.defaultInstance
 
 		if (targetState.requiresCorrectToolForDrops()) {
-			val pickaxe = Items.NETHERITE_PICKAXE.defaultInstance
-			if (pickaxe.isCorrectToolForDrops(targetState)) {
-				tool = pickaxe
+			val shovel = Items.NETHERITE_SHOVEL.defaultInstance
+			if (shovel.isCorrectToolForDrops(targetState)) {
+				tool = shovel
 			} else {
-				val shovel = Items.NETHERITE_SHOVEL.defaultInstance
-				if (shovel.isCorrectToolForDrops(targetState)) {
-					tool = shovel
-				} else {
-					val axe = Items.NETHERITE_AXE.defaultInstance
-					if (axe.isCorrectToolForDrops(targetState)) {
-						tool = axe
-					}
+				val axe = Items.NETHERITE_AXE.defaultInstance
+				if (axe.isCorrectToolForDrops(targetState)) {
+					tool = axe
 				}
 			}
 		}
