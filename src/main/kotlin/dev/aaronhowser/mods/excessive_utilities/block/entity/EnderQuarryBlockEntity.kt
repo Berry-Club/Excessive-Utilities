@@ -69,6 +69,63 @@ class EnderQuarryBlockEntity(
 		setChanged()
 	}
 
+	fun tick() {
+		if (fakePlayer?.get() == null) {
+			initFakePlayer()
+		}
+	}
+
+	fun checkBoundaries(level: ServerLevel): Boolean {
+		val min = minPos ?: return false
+		val max = maxPos ?: return false
+		val type = boundaryType ?: return false
+
+		val y = blockPos.y
+		val mutablePos = BlockPos.MutableBlockPos()
+
+		if (type == BoundaryType.FENCE) {
+			for (x in min.x..max.x) {
+				mutablePos.set(x, y, min.z)
+				val minState = level.getBlockState(mutablePos)
+				if (!minState.isBlock(BlockTags.FENCES)) return false
+
+				mutablePos.set(x, y, max.z)
+				val maxState = level.getBlockState(mutablePos)
+				if (!maxState.isBlock(BlockTags.FENCES)) return false
+			}
+
+			for (z in min.z..max.z) {
+				mutablePos.set(min.x, y, z)
+				val minState = level.getBlockState(mutablePos)
+				if (!minState.isBlock(BlockTags.FENCES)) return false
+
+				mutablePos.set(max.x, y, z)
+				val maxState = level.getBlockState(mutablePos)
+				if (!maxState.isBlock(BlockTags.FENCES)) return false
+			}
+		} else if (type == BoundaryType.MARKER) {
+			val corners = listOf(
+				BlockPos(min.x, y, min.z),
+				BlockPos(min.x, y, max.z),
+				BlockPos(max.x, y, min.z),
+				BlockPos(max.x, y, max.z)
+			)
+
+			var markers = 0
+
+			for (corner in corners) {
+				val cornerState = level.getBlockState(corner)
+				if (cornerState.isBlock(ModBlocks.ENDER_MARKER)) {
+					markers++
+				}
+			}
+
+			if (markers < 3) return false
+		}
+
+		return true
+	}
+
 	fun trySetBoundaries(level: ServerLevel) {
 		val horizontals = Direction.Plane.HORIZONTAL
 
