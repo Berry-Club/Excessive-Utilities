@@ -67,6 +67,9 @@ class ServerConfig(
 	lateinit var flyingSquidRingDurationTicks: ModConfigSpec.IntValue
 	lateinit var flyingSquidRingRechargeTicks: ModConfigSpec.IntValue
 
+	lateinit var enderQuarryFePerBlock: ModConfigSpec.DoubleValue
+	lateinit var enderQuarryBlocksPerTick: ModConfigSpec.DoubleValue
+
 	init {
 		general()
 		heatingCoil()
@@ -76,6 +79,20 @@ class ServerConfig(
 		feGenerators()
 		enderQuarry()
 		rings()
+	}
+
+	private fun enderQuarryFePerBlock() {
+		builder.push("ender_quarry")
+
+		enderQuarryFePerBlock = builder
+			.comment("The amount of FE the Ender Quarry will use per block mined.")
+			.defineInRange("enderQuarryFePerBlock", 10.0, 0.0, Double.MAX_VALUE)
+
+		enderQuarryBlocksPerTick = builder
+			.comment("The maximum number of blocks the Ender Quarry will mine per tick.")
+			.defineInRange("enderQuarryBlocksPerTick", 0.5, 0.0, Double.MAX_VALUE)
+
+		builder.pop()
 	}
 
 	private fun rings() {
