@@ -83,8 +83,17 @@ class EnderQuarryBlockEntity(
 				return
 			}
 
-			target = targetPos ?: return
+			target = targetPos
 		}
+
+		while (target != null && !canQuarryMineBlock(level, target)) {
+			advanceTargetPos(level)
+			target = targetPos ?: return
+			progressThroughBlock = 0.0
+			feProgress = 0.0
+		}
+
+		if (target == null) return
 
 		val blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
 		progressThroughBlock += blocksPerTick
@@ -102,7 +111,7 @@ class EnderQuarryBlockEntity(
 	/**
 	 * @return true if the Quarry should try to mine the block, false if it should skip it and move on to the next one
 	 */
-	private fun isValidBlock(level: ServerLevel, target: BlockPos): Boolean {
+	private fun canQuarryMineBlock(level: ServerLevel, target: BlockPos): Boolean {
 		val state = level.getBlockState(target)
 		if (state.isAir
 			|| state.hasBlockEntity()
