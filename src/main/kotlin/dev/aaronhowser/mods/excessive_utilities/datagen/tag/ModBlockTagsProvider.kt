@@ -54,6 +54,7 @@ class ModBlockTagsProvider(
 			)
 
 		tag(CREATIVE_HARVEST_BLACKLIST)
+		tag(ENDER_QUARRY_BLACKLIST)
 	}
 
 	companion object {
@@ -64,6 +65,7 @@ class ModBlockTagsProvider(
 		val RENDER_GP_WHILE_LOOKING_AT = create("render_gp_while_looking_at")
 		val VALID_FOR_DRAGON_EGG_MILL = create("valid_for_dragon_egg_mill")
 		val CREATIVE_HARVEST_BLACKLIST = create("creative_harvest_blacklist")
+		val ENDER_QUARRY_BLACKLIST = create("ender_quarry_blacklist")
 	}
 
 }

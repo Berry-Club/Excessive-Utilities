@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import com.mojang.authlib.GameProfile
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
@@ -18,6 +19,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -87,6 +89,31 @@ class EnderQuarryBlockEntity(
 		val blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
 		progressThroughBlock += blocksPerTick
 
+		while (progressThroughBlock >= 1.0) {
+			progressThroughBlock -= 1.0
+			mineBlock(level, target)
+		}
+	}
+
+	private fun mineBlock(level: ServerLevel, target: BlockPos) {
+
+	}
+
+	/**
+	 * @return true if the Quarry should try to mine the block, false if it should skip it and move on to the next one
+	 */
+	private fun isValidBlock(level: ServerLevel, target: BlockPos): Boolean {
+		val state = level.getBlockState(target)
+		if (state.isAir
+			|| state.hasBlockEntity()
+			|| state.isBlock(Blocks.COBBLESTONE)
+			|| state.isBlock(ModBlockTagsProvider.ENDER_QUARRY_BLACKLIST)
+		) return false
+
+		val unbreakable = state.getDestroySpeed(level, target) < 0
+		if (unbreakable) return false
+
+		return true
 	}
 
 	private fun advanceTargetPos(level: ServerLevel) {
@@ -94,8 +121,9 @@ class EnderQuarryBlockEntity(
 		val min = minBoundary ?: return
 		val max = maxBoundary ?: return
 
-		if (currentTarget.x < max.x - 1) {
-			targetPos = currentTarget.offset(1, 0, 0)
+		if (currentTarget.y > level.minBuildHeight) {
+			targetPos = currentTarget.below()
+			return
 		}
 
 	}
