@@ -112,6 +112,27 @@ object ModBlocks : AaronBlockRegistry() {
 	val QUANTUM_QUARRY_ACTUATOR =
 		basicBlock("quantum_quarry_actuator")
 
+	// Upgrades
+
+	val ENDER_QUARRY_UPGRADE_BASE =
+		basicBlock("ender_quarry_upgrade_base")
+	val ENDER_QUARRY_FORTUNE_UPGRADE =
+		basicBlock("ender_quarry_fortune_upgrade")
+	val ENDER_QUARRY_FORTUNE_TWO_UPGRADE =
+		basicBlock("ender_quarry_fortune_two_upgrade")
+	val ENDER_QUARRY_FORTUNE_THREE_UPGRADE =
+		basicBlock("ender_quarry_fortune_three_upgrade")
+	val ENDER_QUARRY_SILK_TOUCH_UPGRADE =
+		basicBlock("ender_quarry_silk_touch_upgrade")
+	val ENDER_QUARRY_SPEED_UPGRADE =
+		basicBlock("ender_quarry_speed_upgrade")
+	val ENDER_QUARRY_SPEED_TWO_UPGRADE =
+		basicBlock("ender_quarry_speed_two_upgrade")
+	val ENDER_QUARRY_SPEED_THREE_UPGRADE =
+		basicBlock("ender_quarry_speed_three_upgrade")
+	val ENDER_QUARRY_WORLD_HOLE_UPGRADE =
+		basicBlock("ender_quarry_world_hole_upgrade")
+
 	// Spikes
 
 	val WOODEN_SPIKE: DeferredBlock<SpikeBlock> =
@@ -171,29 +192,6 @@ object ModBlocks : AaronBlockRegistry() {
 				properties = BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN)
 			)
 		}
-
-	// Upgrades
-
-	val ENDER_QUARRY_UPGRADE_BASE =
-		basicBlock("ender_quarry_upgrade_base")
-	val ENDER_QUARRY_FORTUNE_UPGRADE =
-		basicBlock("ender_quarry_fortune_upgrade")
-	val ENDER_QUARRY_FORTUNE_TWO_UPGRADE =
-		basicBlock("ender_quarry_fortune_two_upgrade")
-	val ENDER_QUARRY_FORTUNE_THREE_UPGRADE =
-		basicBlock("ender_quarry_fortune_three_upgrade")
-	val ENDER_QUARRY_PUMP_UPGRADE =
-		basicBlock("ender_quarry_pump_upgrade")
-	val ENDER_QUARRY_SILK_TOUCH_UPGRADE =
-		basicBlock("ender_quarry_silk_touch_upgrade")
-	val ENDER_QUARRY_SPEED_UPGRADE =
-		basicBlock("ender_quarry_speed_upgrade")
-	val ENDER_QUARRY_SPEED_TWO_UPGRADE =
-		basicBlock("ender_quarry_speed_two_upgrade")
-	val ENDER_QUARRY_SPEED_THREE_UPGRADE =
-		basicBlock("ender_quarry_speed_three_upgrade")
-	val ENDER_QUARRY_WORLD_HOLE_UPGRADE =
-		basicBlock("ender_quarry_world_hole_upgrade")
 
 	// Storage
 
@@ -437,7 +435,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("dark_ineffable_glass") { SemiPermeableGlassBlock.Dark(isSolidForMobsOnly = false) }
 
 	// Blocks not reimplemented:
-	// - Screen
-	// - Chunk Loading Ward
+	// - Screen (Hard)
+	// - Chunk Loading Ward (Use FTB Chunks or something)
+	// - Ender Quarry Pump Upgrade (Use the Ender-Thermic Pump)
 
 }

@@ -61,7 +61,6 @@ object ModBlockLang {
 			addBlock(ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE, "Ender Quarry Fortune I Upgrade")
 			addBlock(ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE, "Ender Quarry Fortune II Upgrade")
 			addBlock(ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE, "Ender Quarry Fortune III Upgrade")
-			addBlock(ModBlocks.ENDER_QUARRY_PUMP_UPGRADE, "Ender Quarry Pump Upgrade")
 			addBlock(ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE, "Ender Quarry Silk Touch Upgrade")
 			addBlock(ModBlocks.ENDER_QUARRY_SPEED_UPGRADE, "Ender Quarry Speed I Upgrade")
 			addBlock(ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE, "Ender Quarry Speed II Upgrade")
