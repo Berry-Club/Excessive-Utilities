@@ -16,6 +16,7 @@ import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
+import net.minecraft.util.Mth
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
@@ -93,6 +94,9 @@ class EnderQuarryBlockEntity(
 
 		if (target == null) return
 
+		val fePerBlock = ServerConfig.CONFIG.enderQuarryFePerBlock.get()
+		if (energyStorage.energyStored < fePerBlock) return
+
 		val blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
 		progressThroughBlock += blocksPerTick
 
@@ -100,6 +104,18 @@ class EnderQuarryBlockEntity(
 			progressThroughBlock -= 1.0
 			mineBlock(level, target)
 			advanceTargetPos(level)
+
+			feProgress += fePerBlock
+			val feToExtract = Mth.floor(feProgress)
+			if (feToExtract > 0) {
+				energyStorage.extractEnergy(feToExtract, false)
+				feProgress -= feToExtract
+			}
+
+			if (energyStorage.energyStored < fePerBlock) {
+				progressThroughBlock = 0.0
+				break
+			}
 		}
 	}
 
