@@ -81,9 +81,10 @@ class EnderQuarryBlockEntity(
 		val type = boundaryType ?: return false
 
 		val y = blockPos.y
-		val mutablePos = BlockPos.MutableBlockPos()
 
 		if (type == BoundaryType.FENCE) {
+			val mutablePos = BlockPos.MutableBlockPos()
+
 			for (x in min.x..max.x) {
 				mutablePos.set(x, y, min.z)
 				val minState = level.getBlockState(mutablePos)
@@ -366,6 +367,7 @@ class EnderQuarryBlockEntity(
 		const val TARGET_POS_NBT = "TargetPos"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
 		const val BOUNDARY_TYPE_NBT = "BoundaryType"
+		const val BOUNDARY_CHECKED_NBT = "BoundariesChecked"
 	}
 
 	enum class BoundaryType(val id: String) : StringRepresentable {
