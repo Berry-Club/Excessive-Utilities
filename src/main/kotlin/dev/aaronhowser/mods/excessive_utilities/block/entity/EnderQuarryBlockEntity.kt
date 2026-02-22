@@ -125,8 +125,11 @@ class EnderQuarryBlockEntity(
 	}
 
 	private fun mineBlock(level: ServerLevel, target: BlockPos) {
-		val targetState = level.getBlockState(target)
+		val drops = gatherDrops(level, target)
+	}
 
+	private fun gatherDrops(level: ServerLevel, target: BlockPos): List<ItemStack> {
+		val targetState = level.getBlockState(target)
 		var tool = ItemStack.EMPTY
 
 		if (targetState.requiresCorrectToolForDrops()) {
@@ -161,8 +164,7 @@ class EnderQuarryBlockEntity(
 			lootParams.withParameter(LootContextParams.BLOCK_ENTITY, be)
 		}
 
-		val drops = targetState.getDrops(lootParams)
-
+		return targetState.getDrops(lootParams)
 	}
 
 	/**
