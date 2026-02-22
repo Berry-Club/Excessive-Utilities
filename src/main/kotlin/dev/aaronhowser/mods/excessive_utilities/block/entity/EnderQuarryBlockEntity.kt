@@ -63,7 +63,7 @@ class EnderQuarryBlockEntity(
 	var boundaryType: BoundaryType? = null
 		private set
 
-	private fun tick(level: ServerLevel) {
+	private fun serverTick(level: ServerLevel) {
 		if (fakePlayer?.get() == null) {
 			initFakePlayer()
 		}
@@ -105,7 +105,7 @@ class EnderQuarryBlockEntity(
 	}
 
 	private fun mineBlock(level: ServerLevel, target: BlockPos) {
-
+		level.setBlock(target, Blocks.COBBLESTONE.defaultBlockState(), Block.UPDATE_ALL)
 	}
 
 	/**
@@ -466,6 +466,17 @@ class EnderQuarryBlockEntity(
 		const val TARGET_POS_NBT = "TargetPos"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
 		const val BOUNDARY_TYPE_NBT = "BoundaryType"
+
+		fun tick(
+			level: Level,
+			blockPos: BlockPos,
+			blockState: BlockState,
+			blockEntity: EnderQuarryBlockEntity
+		) {
+			if (level is ServerLevel) {
+				blockEntity.serverTick(level)
+			}
+		}
 	}
 
 	enum class BoundaryType(val id: String) : StringRepresentable {

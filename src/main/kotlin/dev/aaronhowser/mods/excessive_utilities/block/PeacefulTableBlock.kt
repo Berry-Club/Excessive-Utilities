@@ -19,7 +19,11 @@ class PeacefulTableBlock : Block(Properties.ofFullCopy(Blocks.CRAFTING_TABLE)), 
 		return PeacefulTableBlockEntity(pos, state)
 	}
 
-	override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
+	override fun <T : BlockEntity> getTicker(
+		level: Level,
+		state: BlockState,
+		blockEntityType: BlockEntityType<T>
+	): BlockEntityTicker<T>? {
 		return BaseEntityBlock.createTickerHelper(
 			blockEntityType,
 			ModBlockEntityTypes.PEACEFUL_TABLE.get(),
