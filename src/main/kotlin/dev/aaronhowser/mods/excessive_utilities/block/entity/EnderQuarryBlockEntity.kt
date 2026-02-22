@@ -39,29 +39,65 @@ class EnderQuarryBlockEntity(
 	private var uuid: UUID? = null
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
+	/**
+	 * The exclusive minimum position of the mining area.
+	 */
 	var minBoundary: BlockPos? = null
 		private set
 
+	/**
+	 * The exclusive maximum position of the mining area.
+	 */
 	var maxBoundary: BlockPos? = null
 		private set
 
+	/**
+	 * The current target position that the Quarry is trying to mine.
+	 * It will always stay less than the max boundary and more than the min boundary.
+	 */
 	var targetPos: BlockPos? = null
 		private set
 
 	var boundaryType: BoundaryType? = null
 		private set
 
-	fun tick() {
+	private fun tick(level: ServerLevel) {
 		if (fakePlayer?.get() == null) {
 			initFakePlayer()
 		}
+
+		progressMine(level)
 	}
 
 	var progressThroughBlock = 0.0
 	var feProgress = 0.0
 
 	fun progressMine(level: ServerLevel) {
-		val target = targetPos
+		var target = targetPos
+
+		if (target == null) {
+			if (!checkBoundaries(level)) {
+				trySetBoundaries(level)
+				return
+			}
+
+			target = targetPos ?: return
+		}
+
+		val blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
+		progressThroughBlock += blocksPerTick
+
+	}
+
+	private fun advanceTargetPos(level: ServerLevel) {
+		val currentTarget = targetPos ?: return
+		val min = minBoundary ?: return
+		val max = maxBoundary ?: return
+
+		if (currentTarget.x < max.x - 1) {
+			targetPos = currentTarget.offset(1, 0, 0)
+		}
+
 	}
 
 	fun checkBoundaries(level: ServerLevel): Boolean {
