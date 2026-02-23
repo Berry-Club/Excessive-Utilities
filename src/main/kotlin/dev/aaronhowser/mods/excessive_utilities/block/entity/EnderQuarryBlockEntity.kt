@@ -54,7 +54,18 @@ class EnderQuarryBlockEntity(
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
 	private val upgradePositions: MutableSet<BlockPos> = mutableSetOf()
-	fun addUpgradePosition(pos: BlockPos) = upgradePositions.add(pos)
+	fun addUpgrade(upgradeBe: EnderQuarryUpgradeBlockEntity): Boolean {
+		if (upgradeBe.upgradeType == EnderQuarryUpgradeType.NONE) return false
+
+		val currentUpgrades = getUpgrades()
+		val newUpgradeType = upgradeBe.upgradeType
+		for (upgrade in currentUpgrades) {
+			if (upgrade == newUpgradeType) return false
+			if (upgrade in newUpgradeType.getIncompatibleUpgrades()) return false
+		}
+
+		return upgradePositions.add(upgradeBe.blockPos)
+	}
 
 	var boundaryType: BoundaryType? = null
 		private set
