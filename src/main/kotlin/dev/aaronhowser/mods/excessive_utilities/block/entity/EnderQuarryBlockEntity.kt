@@ -105,7 +105,7 @@ class EnderQuarryBlockEntity(
 			val pos = iterator.next()
 
 			val be = level.getBlockEntity(pos)
-			if (be is EnderQuarryUpgradeBlockEntity) {
+			if (be is EnderQuarryUpgradeBlockEntity && be.getQuarryPos() == blockPos) {
 				upgrades.add(be.upgradeType)
 			} else {
 				iterator.remove()
