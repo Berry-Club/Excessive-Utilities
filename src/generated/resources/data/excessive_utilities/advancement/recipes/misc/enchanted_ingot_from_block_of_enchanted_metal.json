@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_bedrockium_ingot": {
+    "has_log": {
       "conditions": {
         "items": [
           {
-            "items": "excessive_utilities:bedrockium_ingot"
+            "items": "#minecraft:logs"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:block_of_bedrockium"
+        "recipe": "excessive_utilities:enchanted_ingot_from_block_of_enchanted_metal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_bedrockium_ingot"
+      "has_log"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:block_of_bedrockium"
+      "excessive_utilities:enchanted_ingot_from_block_of_enchanted_metal"
     ]
   }
 }

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_evil_infused_iron_ingot": {
+    "has_log": {
       "conditions": {
         "items": [
           {
-            "items": "excessive_utilities:evil_infused_iron_ingot"
+            "items": "#minecraft:logs"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:block_of_evil_infused_iron"
+        "recipe": "excessive_utilities:block_of_evil_infused_iron_from_evil_infused_iron_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_evil_infused_iron_ingot"
+      "has_log"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:block_of_evil_infused_iron"
+      "excessive_utilities:block_of_evil_infused_iron_from_evil_infused_iron_ingot"
     ]
   }
 }

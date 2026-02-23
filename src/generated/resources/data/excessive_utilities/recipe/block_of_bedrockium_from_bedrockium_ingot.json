@@ -2,14 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "#": {
+    "P": {
       "item": "excessive_utilities:bedrockium_ingot"
     }
   },
   "pattern": [
-    "###",
-    "###",
-    "###"
+    "PPP",
+    "PPP",
+    "PPP"
   ],
   "result": {
     "count": 1,

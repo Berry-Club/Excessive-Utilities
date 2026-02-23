@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_demon_ingot": {
+    "has_log": {
       "conditions": {
         "items": [
           {
-            "items": "excessive_utilities:demon_ingot"
+            "items": "#minecraft:logs"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:block_of_demon_metal"
+        "recipe": "excessive_utilities:block_of_enchanted_metal_from_enchanted_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_demon_ingot"
+      "has_log"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:block_of_demon_metal"
+      "excessive_utilities:block_of_enchanted_metal_from_enchanted_ingot"
     ]
   }
 }

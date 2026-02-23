@@ -1518,35 +1518,42 @@ class ModRecipeProvider(
 			)
 		).save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
 
-		nineBlockStorageRecipes(
-			recipeOutput,
-			RecipeCategory.MISC,
+		fun packed(
+			packed: ItemLike,
+			unpacked: ItemLike
+		) {
+			val packedName = packed.asItem().builtInRegistryHolder().key().location().path
+			val unpackedName = unpacked.asItem().builtInRegistryHolder().key().location().path
+
+			shapedRecipe(
+				unpacked,
+				"PPP,PPP,PPP",
+				mapOf('P' to packed.asIngredient())
+			).save(recipeOutput, modLoc("${unpackedName}_from_${packedName}"))
+
+			shapelessRecipe(
+				packed,
+				listOf(unpacked.asIngredient())
+			).save(recipeOutput, modLoc("${packedName}_from_${unpackedName}"))
+		}
+
+		packed(
 			ModItems.DEMON_INGOT,
-			RecipeCategory.MISC,
 			ModBlocks.BLOCK_OF_DEMON_METAL
 		)
 
-		nineBlockStorageRecipes(
-			recipeOutput,
-			RecipeCategory.MISC,
+		packed(
 			ModItems.ENCHANTED_INGOT,
-			RecipeCategory.MISC,
 			ModBlocks.BLOCK_OF_ENCHANTED_METAL
 		)
 
-		nineBlockStorageRecipes(
-			recipeOutput,
-			RecipeCategory.MISC,
+		packed(
 			ModItems.EVIL_INFUSED_IRON_INGOT,
-			RecipeCategory.MISC,
 			ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON
 		)
 
-		nineBlockStorageRecipes(
-			recipeOutput,
-			RecipeCategory.MISC,
+		packed(
 			ModItems.BEDROCKIUM_INGOT,
-			RecipeCategory.MISC,
 			ModBlocks.BLOCK_OF_BEDROCKIUM
 		)
 

@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_block_of_demon_metal": {
+    "has_log": {
       "conditions": {
         "items": [
           {
-            "items": "excessive_utilities:block_of_demon_metal"
+            "items": "#minecraft:logs"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:demon_ingot"
+        "recipe": "excessive_utilities:block_of_bedrockium_from_bedrockium_ingot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_block_of_demon_metal"
+      "has_log"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:demon_ingot"
+      "excessive_utilities:block_of_bedrockium_from_bedrockium_ingot"
     ]
   }
 }
