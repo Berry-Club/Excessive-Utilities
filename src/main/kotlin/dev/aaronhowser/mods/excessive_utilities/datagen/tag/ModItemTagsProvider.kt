@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.tag
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.add
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -26,9 +27,15 @@ class ModItemTagsProvider(
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(RENDER_GP_WHILE_HOLDING)
 			.add(
-				ModItems.SPEED_UPGRADE.get(),
-				ModItems.POWER_MANAGER.get(),
-				ModItems.RESONATING_REDSTONE_CRYSTAL.get(),
+				ModItems.SPEED_UPGRADE,
+				ModItems.POWER_MANAGER,
+				ModItems.RESONATING_REDSTONE_CRYSTAL,
+				ModItems.RING_OF_THE_FLYING_SQUID,
+				ModItems.ANGEL_RING,
+				ModItems.CHICKEN_WING_RING,
+				ModItems.RED_COAL,
+			)
+			.add(
 				ModBlocks.MANUAL_MILL.asItem(),
 				ModBlocks.WATER_MILL.asItem(),
 				ModBlocks.WIND_MILL.asItem(),
@@ -40,10 +47,6 @@ class ModItemTagsProvider(
 				ModBlocks.CREATIVE_MILL.asItem(),
 				ModBlocks.RESONATOR.asItem(),
 				ModBlocks.WIRELESS_FE_TRANSMITTER.asItem(),
-				ModItems.RING_OF_THE_FLYING_SQUID.get(),
-				ModItems.ANGEL_RING.get(),
-				ModItems.CHICKEN_WING_RING.get(),
-				ModItems.RED_COAL.get()
 			)
 
 		tag(PISTONS)
@@ -60,16 +63,16 @@ class ModItemTagsProvider(
 
 		tag(SPEED_UPGRADES)
 			.add(
-				ModItems.SPEED_UPGRADE.get(),
-				ModItems.SPEED_UPGRADE_MAGICAL.get(),
-				ModItems.SPEED_UPGRADE_ULTIMATE.get()
+				ModItems.SPEED_UPGRADE,
+				ModItems.SPEED_UPGRADE_MAGICAL,
+				ModItems.SPEED_UPGRADE_ULTIMATE,
 			)
 
 		tag(INTERACT_WITH_FLAT_TRANSFER_NODES)
 			.add(
-				ModItems.WRENCH.get(),
-				ModItems.FLAT_TRANSFER_NODE_ITEMS.get(),
-				ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
+				ModItems.WRENCH,
+				ModItems.FLAT_TRANSFER_NODE_ITEMS,
+				ModItems.FLAT_TRANSFER_NODE_FLUIDS,
 			)
 			.addTags(
 				Tags.Items.TOOLS_WRENCH
@@ -77,19 +80,83 @@ class ModItemTagsProvider(
 
 		tag(FILTERS)
 			.add(
-				ModItems.ITEM_FILTER.get(),
-				ModItems.ADVANCED_ITEM_FILTER.get(),
-				ModItems.FLUID_FILTER.get(),
+				ModItems.ITEM_FILTER,
+				ModItems.ADVANCED_ITEM_FILTER,
+				ModItems.FLUID_FILTER,
 			)
 
 		tag(Tags.Items.TOOLS_WRENCH)
 			.add(
-				ModItems.WRENCH.get()
+				ModItems.WRENCH
 			)
 
 		tag(Tags.Items.DYES_MAGENTA)
 			.add(
-				ModItems.LUNAR_REACTIVE_DUST.get()
+				ModItems.LUNAR_REACTIVE_DUST
+			)
+
+		tag(ItemTags.PICKAXES)
+			.add(
+				ModItems.DESTRUCTION_PICKAXE
+			)
+
+		tag(ItemTags.SHOVELS)
+			.add(
+				ModItems.EROSION_SHOVEL
+			)
+
+		tag(ItemTags.AXES)
+			.add(
+				ModItems.HEALING_AXE,
+				ModItems.FIRE_AXE
+			)
+
+		tag(ItemTags.HOES)
+			.add(
+				ModItems.REVERSING_HOE
+			)
+
+		tag(Tags.Items.TOOLS_SHEAR)
+			.add(
+				ModItems.PRECISION_SHEARS
+			)
+
+		tag(ItemTags.SWORDS)
+			.add(
+				ModItems.ETHERIC_SWORD,
+				ModItems.KIKOKU,
+				ModItems.LUX_SABER
+			)
+
+		tag(Tags.Items.MINING_TOOL_TOOLS)
+			.add(
+				ModItems.DESTRUCTION_PICKAXE,
+				ModItems.EROSION_SHOVEL,
+				ModItems.HEALING_AXE,
+				ModItems.FIRE_AXE
+			)
+			.addTag(
+				SICKLES
+			)
+
+		tag(ItemTags.DURABILITY_ENCHANTABLE)
+			.remove(
+				ModItems.DESTRUCTION_PICKAXE.get(),
+				ModItems.EROSION_SHOVEL.get(),
+				ModItems.HEALING_AXE.get(),
+				ModItems.ETHERIC_SWORD.get(),
+				ModItems.REVERSING_HOE.get(),
+				ModItems.PRECISION_SHEARS.get()
+			)
+
+		tag(SICKLES)
+			.add(
+				ModItems.WOODEN_SICKLE,
+				ModItems.STONE_SICKLE,
+				ModItems.IRON_SICKLE,
+				ModItems.GOLDEN_SICKLE,
+				ModItems.DIAMOND_SICKLE,
+				ModItems.NETHERITE_SICKLE,
 			)
 	}
 
@@ -104,6 +171,7 @@ class ModItemTagsProvider(
 		val INTERACT_WITH_FLAT_TRANSFER_NODES = create("interact_with_flat_transfer_nodes")
 		val REMOVE_FLAT_TRANSFER_NODES = create("remove_flat_transfer_nodes")
 		val FILTERS = create("filters")
+		val SICKLES = common("sickles")
 	}
 
 }
