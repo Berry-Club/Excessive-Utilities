@@ -900,6 +900,23 @@ class ModRecipeProvider(
 					'P' to ModBlocks.ENDER_THERMIC_PUMP.asIngredient(),
 					'X' to Items.DIAMOND_PICKAXE.asIngredient()
 				)
+			),
+			shapedRecipe(
+				ModBlocks.FILING_CABINET,
+				"ICI,ICI,ICI",
+				mapOf(
+					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+					'C' to Tags.Items.CHESTS_WOODEN.asIngredient(
+					)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ADVANCED_FILING_CABINET,
+				"WCW,WCW,WCW",
+				mapOf(
+					'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
+					'C' to ModBlocks.FILING_CABINET.asIngredient()
+				)
 			)
 		)
 

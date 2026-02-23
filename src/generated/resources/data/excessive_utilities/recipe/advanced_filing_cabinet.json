@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "excessive_utilities:filing_cabinet"
+    },
+    "W": {
+      "item": "excessive_utilities:magical_wood"
+    }
+  },
+  "pattern": [
+    "WCW",
+    "WCW",
+    "WCW"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:advanced_filing_cabinet"
+  }
+}
