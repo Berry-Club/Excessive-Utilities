@@ -3,6 +3,11 @@
     "excessive_utilities:magical_wood",
     "excessive_utilities:magnum_torch",
     "excessive_utilities:peaceful_table",
-    "excessive_utilities:trading_post"
+    "excessive_utilities:trading_post",
+    "excessive_utilities:wooden_spike",
+    "excessive_utilities:slightly_larger_chest",
+    "excessive_utilities:mini_chest",
+    "excessive_utilities:magical_planks",
+    "excessive_utilities:diagonal_wood"
   ]
 }
