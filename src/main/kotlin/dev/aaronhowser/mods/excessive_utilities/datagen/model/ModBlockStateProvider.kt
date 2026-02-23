@@ -34,6 +34,7 @@ class ModBlockStateProvider(
 		enderQuarryUpgrades()
 	}
 
+	// TODO: The weird arm connector thing, needs a block state also
 	private fun enderQuarryUpgrades() {
 		val blocks = mapOf(
 			ModBlocks.ENDER_QUARRY_UPGRADE_BASE to "base",
