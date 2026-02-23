@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.TrashCanBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.TrashCanBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.InteractionResult

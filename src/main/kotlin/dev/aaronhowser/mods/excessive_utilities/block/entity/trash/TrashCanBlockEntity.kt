@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.entity
+package dev.aaronhowser.mods.excessive_utilities.block.entity.trash
 
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -60,6 +60,7 @@ open class TrashCanBlockEntity(
 		return blockState.block.name
 	}
 
+	//TODO: Menu for the regular Trash Can
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
 		return if (isChest) {
 			ChestMenu.threeRows(containerId, playerInventory)
