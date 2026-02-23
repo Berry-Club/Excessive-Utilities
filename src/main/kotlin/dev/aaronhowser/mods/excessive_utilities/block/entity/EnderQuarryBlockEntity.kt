@@ -190,7 +190,8 @@ class EnderQuarryBlockEntity(
 		val drops = gatherDrops(level, target)
 		placeDrops(level, drops)
 
-		val hasWorldHoleUpgrade = false
+		val hasWorldHoleUpgrade = getUpgrades().contains(EnderQuarryUpgradeType.WORLD_HOLE)
+
 		if (hasWorldHoleUpgrade) {
 			level.removeBlock(target, false)
 		} else {
@@ -281,10 +282,12 @@ class EnderQuarryBlockEntity(
 	 * @return true if the Quarry should try to mine the block, false if it should skip it and move on to the next one
 	 */
 	private fun canQuarryMineBlock(level: ServerLevel, target: BlockPos): Boolean {
+		val skipCobble = !getUpgrades().contains(EnderQuarryUpgradeType.WORLD_HOLE)
 		val state = level.getBlockState(target)
+
 		if (state.isAir
 			|| state.hasBlockEntity()
-			|| state.isBlock(Blocks.COBBLESTONE)
+			|| (skipCobble && state.isBlock(Blocks.COBBLESTONE))
 			|| state.isBlock(ModBlockTagsProvider.ENDER_QUARRY_BLACKLIST)
 		) return false
 
