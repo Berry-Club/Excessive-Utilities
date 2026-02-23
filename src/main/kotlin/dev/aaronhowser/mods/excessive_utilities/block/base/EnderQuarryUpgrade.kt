@@ -6,6 +6,7 @@ import java.util.function.DoubleSupplier
 enum class EnderQuarryUpgrade(
 	val feMultiplierGetter: DoubleSupplier
 ) {
+	NONE({ 1.0 }),
 	SILK_TOUCH(ServerConfig.CONFIG.eqSilkTouchCostMultiplier),
 	FORTUNE_ONE(ServerConfig.CONFIG.eqFortuneOneCostMultiplier),
 	FORTUNE_TWO(ServerConfig.CONFIG.eqFortuneTwoCostMultiplier),
