@@ -39,7 +39,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 	val RESONATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<ResonatorBlockEntity>> =
 		register("resonator", ::ResonatorBlockEntity, ModBlocks.RESONATOR)
 	val TRASH_CAN: DeferredHolder<BlockEntityType<*>, BlockEntityType<TrashCanBlockEntity>> =
-		register("trash_can", ::TrashCanBlockEntity, ModBlocks.TRASH_CAN, ModBlocks.TRASH_CAN_FLUID, ModBlocks.TRASH_CAN_ENERGY)
+		register("trash_can", ::TrashCanBlockEntity, ModBlocks.TRASH_CAN, ModBlocks.TRASH_CAN_CHEST)
 	val ENDER_QUARRY: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryBlockEntity>> =
 		register("ender_quarry", ::EnderQuarryBlockEntity, ModBlocks.ENDER_QUARRY)
 	val ENDER_QUARRY_UPGRADE: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryUpgradeBlockEntity>> =
