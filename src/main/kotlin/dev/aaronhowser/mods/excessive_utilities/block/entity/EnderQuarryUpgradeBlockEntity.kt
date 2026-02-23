@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState
 class EnderQuarryUpgradeBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state) {
+) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY_UPGRADE.get(), pos, state) {
 
 	var upgrade: EnderQuarryUpgrade = EnderQuarryUpgrade.NONE
 		set(value) {

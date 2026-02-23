@@ -42,6 +42,20 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("resonator", ::ResonatorBlockEntity, ModBlocks.RESONATOR)
 	val ENDER_QUARRY: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryBlockEntity>> =
 		register("ender_quarry", ::EnderQuarryBlockEntity, ModBlocks.ENDER_QUARRY)
+	val ENDER_QUARRY_UPGRADE: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryUpgradeBlockEntity>> =
+		register(
+			"ender_quarry_upgrade",
+			::EnderQuarryUpgradeBlockEntity,
+			ModBlocks.ENDER_QUARRY_UPGRADE_BASE,
+			ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE,
+			ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE,
+			ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE,
+			ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE,
+			ModBlocks.ENDER_QUARRY_SPEED_UPGRADE,
+			ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE,
+			ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE,
+			ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE
+		)
 
 	val MANUAL_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<ManualMillBlockEntity>> =
 		register("manual_mill", ::ManualMillBlockEntity, ModBlocks.MANUAL_MILL)
