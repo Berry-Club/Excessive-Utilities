@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-22T22:20:44.5801495	Item Models: excessive_utilities
+// 1.21.1	2026-02-23T00:31:31.2105176	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 1b5cdcaf8035c8ad20d95987b1190cfdedb942fd assets/excessive_utilities/models/item/angel_ring.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
@@ -60,6 +60,7 @@ c3bbb5daeabc4dceed4352f06247c88220b8e2c1 assets/excessive_utilities/models/item/
 0b902b3f5c92f60eba0be485552ead3db26d2a67 assets/excessive_utilities/models/item/reversing_hoe.json
 b7392fffd9849735f5cf83718174e0599976d763 assets/excessive_utilities/models/item/ring_of_the_flying_squid.json
 210ffe9baa145bc72f868d79ab547792cb97c00c assets/excessive_utilities/models/item/sonar_goggles.json
+f5cdd222d15da217cf61897fb32e9cb816b120a9 assets/excessive_utilities/models/item/soul_fragment.json
 45904b309174ba63b86041e49885562a76beede5 assets/excessive_utilities/models/item/speed_upgrade.json
 62c843d4e178186143817b71049ae1730721060f assets/excessive_utilities/models/item/speed_upgrade_magical.json
 c3eb7bb4f0f129e3235897c58c981351c1e2906c assets/excessive_utilities/models/item/speed_upgrade_ultimate.json
