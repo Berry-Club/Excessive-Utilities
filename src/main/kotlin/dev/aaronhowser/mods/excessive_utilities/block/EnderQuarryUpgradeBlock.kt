@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgradeType
+import dev.aaronhowser.mods.excessive_utilities.block.entity.EnderQuarryBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.EnderQuarryUpgradeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -79,17 +80,23 @@ class EnderQuarryUpgradeBlock(
 		placer: LivingEntity?,
 		stack: ItemStack
 	) {
-		val be = level.getBlockEntity(pos)
-		if (be is EnderQuarryUpgradeBlockEntity) {
-			for (dir in Direction.entries) {
-				val posThere = pos.relative(dir)
+		val be = level.getBlockEntity(pos) as? EnderQuarryUpgradeBlockEntity ?: return
 
-				val stateThere = level.getBlockState(posThere)
-				if (stateThere.isBlock(ModBlockTagsProvider.ENDER_QUARRY_PART)) {
-					be.parentBlock = posThere
-					return
-				}
+		for (dir in Direction.entries) {
+			val posThere = pos.relative(dir)
+
+			val stateThere = level.getBlockState(posThere)
+			if (stateThere.isBlock(ModBlockTagsProvider.ENDER_QUARRY_PART)) {
+				be.parentBlock = posThere
+				break
 			}
+		}
+
+		val quarryPos = be.getQuarryPos() ?: return
+		val quarryBe = level.getBlockEntity(quarryPos) as? EnderQuarryBlockEntity ?: return
+
+		if (!quarryBe.addUpgrade(be)) {
+			level.destroyBlock(pos, true)
 		}
 	}
 
