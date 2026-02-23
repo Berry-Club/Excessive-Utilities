@@ -36,6 +36,8 @@ class ServerConfig(
 	lateinit var dragonEggMillGeneration: ModConfigSpec.DoubleValue
 	lateinit var creativeMillGeneration: ModConfigSpec.DoubleValue
 
+	lateinit var redCoalGpCost: ModConfigSpec.DoubleValue
+	lateinit var redCoalBurnTimeMultiplier: ModConfigSpec.DoubleValue
 	lateinit var speedUpgradeGpCostMultiplier: ModConfigSpec.DoubleValue
 	lateinit var chickenWingRingGpCost: ModConfigSpec.DoubleValue
 	lateinit var flyingSquidRingGpCost: ModConfigSpec.DoubleValue
@@ -341,6 +343,14 @@ class ServerConfig(
 
 		builder.push("gp_usage")
 
+		redCoalGpCost = builder
+			.comment("The amount of GP to be occupied while a piece of Red Coal is burning in a Furnace.")
+			.defineInRange("redCoalGpCost", 1.0, 0.0, Double.MAX_VALUE)
+
+		redCoalBurnTimeMultiplier = builder
+			.comment("How many times longer should a piece of Red Coal burn in a Furnace compared to regular coal.")
+			.defineInRange("redCoalBurnTimeMultiplier", 7.0, 0.0, Double.MAX_VALUE)
+
 		speedUpgradeGpCostMultiplier = builder
 			.comment(
 				"The multiplier applied to the GP cost of Speed Upgrades.",
@@ -349,15 +359,15 @@ class ServerConfig(
 			.defineInRange("speedUpgradeGpCostMultiplier", 1.0, 0.0, Double.MAX_VALUE)
 
 		chickenWingRingGpCost = builder
-			.comment("The amount of GP to be consumed while using a Chicken Wing Ring.")
+			.comment("The amount of GP to be occupied while using a Chicken Wing Ring.")
 			.defineInRange("chickenWingRingGpCost", 1.0, 0.0, Double.MAX_VALUE)
 
 		flyingSquidRingGpCost = builder
-			.comment("The amount of GP to be consumed while using a Flying Squid Ring.")
+			.comment("The amount of GP to be occupied while using a Flying Squid Ring.")
 			.defineInRange("flyingSquidRingGpCost", 16.0, 0.0, Double.MAX_VALUE)
 
 		angelRingGpCost = builder
-			.comment("The amount of GP to be consumed while flying with an Angel Ring.")
+			.comment("The amount of GP to be occupied while flying with an Angel Ring.")
 			.defineInRange("angelRingGpCost", 64.0, 0.0, Double.MAX_VALUE)
 
 		builder.pop()

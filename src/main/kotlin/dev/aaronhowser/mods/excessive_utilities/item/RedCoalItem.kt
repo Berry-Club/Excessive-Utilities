@@ -1,7 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
+import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -27,7 +32,32 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 
 		@JvmStatic
 		fun getBurnTime(furnace: AbstractFurnaceBlockEntity, stack: ItemStack): Int {
+			val coalTime = 1600
+			val owner = stack.get(ModDataComponents.OWNER) ?: return coalTime
+			val level = furnace.level as? ServerLevel ?: return coalTime
 
+			val handler = GridPowerHandler.get(level).getGrid(owner)
+			val capacity = handler.getCapacity()
+			val usage = handler.getUsage()
+			val space = capacity - usage
+
+			val requirement = ServerConfig.CONFIG.redCoalGpCost.get()
+			if (space >= requirement) {
+				return coalTime
+			}
+
+			val boost = ServerConfig.CONFIG.redCoalBurnTimeMultiplier.get()
+			val boostedTime = Mth.ceil(coalTime * boost)
+			val lastTick = level.gameTime + boostedTime
+
+			val gpConsumer = object : GridPowerContribution {
+				override fun getAmount(): Double = requirement
+				override fun isStillValid(): Boolean = level.gameTime < lastTick
+			}
+
+			handler.addConsumer(gpConsumer)
+
+			return boostedTime
 		}
 	}
 
