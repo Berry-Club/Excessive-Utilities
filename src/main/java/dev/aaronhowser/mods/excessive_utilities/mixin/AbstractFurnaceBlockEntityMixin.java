@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.mixin;
 
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem;
 import dev.aaronhowser.mods.excessive_utilities.item.RedCoalItem;
+import dev.aaronhowser.mods.excessive_utilities.item.WirelessHeatingCoilItem;
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity;
@@ -36,10 +37,18 @@ public abstract class AbstractFurnaceBlockEntityMixin {
 	)
 	private void eu$redCoalBurnTime(ItemStack fuel, CallbackInfoReturnable<Integer> cir) {
 		if (fuel.is(ModItems.RED_COAL)) {
-			cir.setReturnValue(RedCoalItem.getBurnTime(
-					(AbstractFurnaceBlockEntity) (Object) this,
-					fuel
-			));
+			cir.setReturnValue(
+					RedCoalItem.getBurnTime(
+							(AbstractFurnaceBlockEntity) (Object) this,
+							fuel
+					));
+		} else if (fuel.is(ModItems.WIRELESS_RF_HEATING_COIL)) {
+			cir.setReturnValue(
+					WirelessHeatingCoilItem.getBurnTime(
+							(AbstractFurnaceBlockEntity) (Object) this,
+							fuel
+					)
+			);
 		}
 	}
 
