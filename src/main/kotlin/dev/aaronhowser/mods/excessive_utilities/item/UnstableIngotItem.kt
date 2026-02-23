@@ -28,7 +28,7 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 		var shouldExplode = countdown <= 0
 
 		if (entity is Player && entity.containerMenu !is CraftingMenu) {
-			shouldExplode = false
+			shouldExplode = true
 		}
 
 		if (shouldExplode) {
@@ -52,7 +52,7 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
-		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
+		val STABLE_PROPERTIES: Properties = Properties().stacksTo(1)
 	}
 
 }
