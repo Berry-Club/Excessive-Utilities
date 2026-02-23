@@ -6,6 +6,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
 
 class RedCoalItem(properties: Properties) : Item(properties) {
 
@@ -23,6 +24,11 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 
 	companion object {
 		val DEFAULT_PROPERTIES: Properties = Properties()
+
+		@JvmStatic
+		fun getBurnTime(furnace: AbstractFurnaceBlockEntity, stack: ItemStack): Int {
+
+		}
 	}
 
 }
