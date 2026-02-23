@@ -42,7 +42,8 @@ class ModItemTagsProvider(
 				ModBlocks.WIRELESS_FE_TRANSMITTER.asItem(),
 				ModItems.RING_OF_THE_FLYING_SQUID.get(),
 				ModItems.ANGEL_RING.get(),
-				ModItems.CHICKEN_WING_RING.get()
+				ModItems.CHICKEN_WING_RING.get(),
+				ModItems.RED_COAL.get()
 			)
 
 		tag(PISTONS)
