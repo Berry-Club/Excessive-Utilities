@@ -202,8 +202,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("mini_chest", ::MiniChestBlock)
 	val PLAYER_CHEST =
 		basicBlock("player_chest")
-	val FILING_CABINET =
-		basicBlock("filing_cabinet")
+	val FILING_CABINET: DeferredBlock<FilingCabinetBlock> =
+		registerBlock("filing_cabinet", ::FilingCabinetBlock)
 	val ADVANCED_FILING_CABINET =
 		basicBlock("advanced_filing_cabinet")
 	val STONE_DRUM: DeferredBlock<DrumBlock> =
