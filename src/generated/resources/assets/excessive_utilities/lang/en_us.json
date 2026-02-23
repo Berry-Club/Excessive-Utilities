@@ -328,5 +328,8 @@
   "item.excessive_utilities.wrench": "Wrench",
   "itemGroup.excessive_utilities": "Excessive Utilities",
   "message.excessive_utilities.doom_effect_time": "The Spectre of Death will arrive in %d seconds.",
-  "tooltip.excessive_utilities.soul_of_a_forgotten_deity": "Soul of a Forgotten Deity"
+  "tooltip.excessive_utilities.soul_debt": "Soul Debt: %d",
+  "tooltip.excessive_utilities.soul_health_modifier": "Current Health Modifier: %s",
+  "tooltip.excessive_utilities.soul_of_a_forgotten_deity": "Soul of a Forgotten Deity",
+  "tooltip.excessive_utilities.soul_surplus": "Soul Surplus: %d"
 }
