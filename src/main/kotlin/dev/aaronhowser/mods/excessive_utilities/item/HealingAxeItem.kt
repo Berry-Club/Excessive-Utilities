@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import net.minecraft.core.component.DataComponents
 import net.minecraft.tags.EntityTypeTags
 import net.minecraft.world.entity.Entity

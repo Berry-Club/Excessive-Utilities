@@ -118,8 +118,8 @@ object ModItems : AaronItemRegistry() {
 
 	val KIKOKU =
 		basic("kikoku")
-	val FIRE_AXE =
-		basic("fire_axe")
+	val FIRE_AXE: DeferredItem<FireAxeItem> =
+		register("fire_axe", ::FireAxeItem, FireAxeItem.DEFAULT_PROPERTIES)
 	val LUX_SABER =
 		basic("lux_saber")
 	val COMPOUND_BOW =

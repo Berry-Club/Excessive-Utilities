@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.item
+package dev.aaronhowser.mods.excessive_utilities.item.tier
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems

@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.HoeItem

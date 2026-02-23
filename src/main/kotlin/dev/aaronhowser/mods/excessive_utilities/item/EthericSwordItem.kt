@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.giveOrDropStack
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
+import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.component.DataComponents
 import net.minecraft.network.chat.Component
