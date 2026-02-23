@@ -1,5 +1,11 @@
 {
   "type": "neoforge:add_table",
-  "conditions": [],
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "this",
+      "predicate": {}
+    }
+  ],
   "table": "excessive_utilities:entity/soul_fragment"
 }

@@ -57,7 +57,14 @@ class ModGlobalLootModifierProvider(
 		add(
 			"soul_fragment",
 			AddTableLootModifier(
-				emptyArray(),
+				arrayOf(
+					LootItemEntityPropertyCondition
+						.hasProperties(
+							LootContext.EntityTarget.THIS,
+							EntityPredicate.Builder.entity()
+						)
+						.build()
+				),
 				OtherLootTableSubProvider.SOUL_FRAGMENT
 			)
 		)
