@@ -53,6 +53,7 @@ class FilingCabinetBlockEntity(
 
 				if (!simulate) {
 					storedEntries[stackComponents] = currentCount + amountToInsert
+					setChanged()
 				}
 
 				val remainder = stack.copy()
@@ -61,7 +62,37 @@ class FilingCabinetBlockEntity(
 			}
 
 			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-				TODO("Not yet implemented")
+				val item = storedItem
+
+				if (item == null || amount <= 0) {
+					return ItemStack.EMPTY
+				}
+
+				val (data, amountStored) = storedEntries.entries.elementAtOrNull(slot) ?: return ItemStack.EMPTY
+
+				val amountToRemove = amount.coerceAtMost(amountStored)
+				if (amountToRemove <= 0) {
+					return ItemStack.EMPTY
+				}
+
+				if (!simulate) {
+					val newCount = amountStored - amountToRemove
+
+					if (newCount <= 0) {
+						storedEntries.remove(data)
+						if (storedEntries.isEmpty()) {
+							storedItem = null
+						}
+					} else {
+						storedEntries[data] = newCount
+					}
+
+					setChanged()
+				}
+
+				val stack = recreateStack(item, data)
+				stack.count = amountToRemove
+				return stack
 			}
 
 			override fun getSlotLimit(slot: Int): Int {
