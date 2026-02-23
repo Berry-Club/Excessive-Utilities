@@ -128,6 +128,8 @@ class EnderQuarryBlockEntity(
 	var feProgress = 0.0
 
 	fun progressMine(level: ServerLevel) {
+		if (level.hasNeighborSignal(blockPos)) return
+
 		confirmTarget(level) ?: return
 
 		var fePerBlock = ServerConfig.CONFIG.enderQuarryFePerBlock.get()
