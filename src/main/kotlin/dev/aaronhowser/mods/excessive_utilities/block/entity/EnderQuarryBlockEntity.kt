@@ -51,6 +51,13 @@ class EnderQuarryBlockEntity(
 	private var uuid: UUID? = null
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
+	private val upgradePositions: MutableSet<BlockPos> = mutableSetOf()
+	private val upgrades: MutableSet<EnderQuarryUpgradeBlockEntity> = mutableSetOf()
+
+	fun addUpgrade(upgrade: EnderQuarryUpgradeBlockEntity) {
+		val type = upgrade.upgradeType
+	}
+
 	/**
 	 * The exclusive minimum position of the mining area.
 	 */

@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import net.minecraft.util.StringRepresentable
 import java.util.function.DoubleSupplier
 
-enum class EnderQuarryUpgrade(
+enum class EnderQuarryUpgradeType(
 	val id: String,
 	val feMultiplierGetter: DoubleSupplier
 ) : StringRepresentable {

@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgrade
+import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgradeType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
@@ -15,7 +15,7 @@ class EnderQuarryUpgradeBlockEntity(
 	state: BlockState
 ) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY_UPGRADE.get(), pos, state) {
 
-	var upgrade: EnderQuarryUpgrade = EnderQuarryUpgrade.NONE
+	var upgradeType: EnderQuarryUpgradeType = EnderQuarryUpgradeType.NONE
 		set(value) {
 			if (field == value) return
 			field = value
@@ -48,7 +48,7 @@ class EnderQuarryUpgradeBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		tag.putString(UPGRADE_TAG, upgrade.id)
+		tag.putString(UPGRADE_TYPE_TAG, upgradeType.id)
 		val pPos = parentBlock
 		if (pPos != null) {
 			tag.putLong(PARENT_POS_TAG, pPos.asLong())
@@ -58,14 +58,14 @@ class EnderQuarryUpgradeBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		upgrade = EnderQuarryUpgrade.valueOf(tag.getString(UPGRADE_TAG))
+		upgradeType = EnderQuarryUpgradeType.valueOf(tag.getString(UPGRADE_TYPE_TAG))
 		if (tag.contains(PARENT_POS_TAG)) {
 			parentBlock = BlockPos.of(tag.getLong(PARENT_POS_TAG))
 		}
 	}
 
 	companion object {
-		const val UPGRADE_TAG = "Upgrade"
+		const val UPGRADE_TYPE_TAG = "UpgradeType"
 		const val PARENT_POS_TAG = "ParentPos"
 	}
 
