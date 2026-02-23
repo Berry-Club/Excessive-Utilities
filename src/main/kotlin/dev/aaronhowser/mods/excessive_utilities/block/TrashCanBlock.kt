@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.FluidTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.TrashCanBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.util.StringRepresentable
@@ -10,6 +11,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
+import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
@@ -17,7 +19,7 @@ class TrashCanBlock(
 	val type: Type
 ) : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
 
-	override fun newBlockEntity(pos: BlockPos, state: BlockState): TrashCanBlockEntity? {
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
 		if (type == Type.CHEST) {
 			val be = TrashCanBlockEntity(pos, state)
 			be.isChest = true
@@ -26,6 +28,10 @@ class TrashCanBlock(
 
 		if (type == Type.ITEM) {
 			return TrashCanBlockEntity(pos, state)
+		}
+
+		if (type == Type.FLUID) {
+			return FluidTrashCanBlockEntity(pos, state)
 		}
 
 		return null
