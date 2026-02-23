@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/orientable_vertical",
+  "textures": {
+    "front": "excessive_utilities:block/filing_cabinet/advanced_front",
+    "side": "excessive_utilities:block/filing_cabinet/advanced_side"
+  }
+}

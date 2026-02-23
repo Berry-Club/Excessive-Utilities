@@ -32,6 +32,67 @@ class ModBlockStateProvider(
 		enderQuarry()
 		enderMarker()
 		enderQuarryUpgrades()
+		filingCabinets()
+	}
+
+	private fun filingCabinets() {
+		val base = ModBlocks.FILING_CABINET.get()
+		val advanced = ModBlocks.ADVANCED_FILING_CABINET.get()
+
+		val modelBase = models()
+			.orientableVertical(
+				name(base),
+				modLoc("block/filing_cabinet/base_side"),
+				modLoc("block/filing_cabinet/base_front")
+			)
+
+		val modelAdvanced = models()
+			.orientableVertical(
+				name(advanced),
+				modLoc("block/filing_cabinet/advanced_side"),
+				modLoc("block/filing_cabinet/advanced_front")
+			)
+
+		getVariantBuilder(base)
+			.forAllStates {
+				val facing = it.getValue(MiniChestBlock.FACING)
+
+				val yRotation = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				ConfiguredModel
+					.builder()
+					.modelFile(modelBase)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		getVariantBuilder(advanced)
+			.forAllStates {
+				val facing = it.getValue(MiniChestBlock.FACING)
+
+				val yRotation = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				ConfiguredModel
+					.builder()
+					.modelFile(modelAdvanced)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		simpleBlockItem(base, modelBase)
+		simpleBlockItem(advanced, modelAdvanced)
 	}
 
 	// TODO: The weird arm connector thing, needs a block state also
