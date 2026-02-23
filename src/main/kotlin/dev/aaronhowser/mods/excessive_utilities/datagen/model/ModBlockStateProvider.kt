@@ -31,9 +31,36 @@ class ModBlockStateProvider(
 		machineBlock()
 		enderQuarry()
 		enderMarker()
+		enderQuarryUpgrades()
 	}
 
-	//TODO: Rectangular model
+	private fun enderQuarryUpgrades() {
+		val blocks = mapOf(
+			ModBlocks.ENDER_QUARRY_UPGRADE_BASE to "base",
+			ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE to "world_hole",
+			ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE to "silk_touch",
+			ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE to "fortune_one",
+			ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE to "fortune_two",
+			ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE to "fortune_three",
+			ModBlocks.ENDER_QUARRY_SPEED_UPGRADE to "speed_one",
+			ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE to "speed_two",
+			ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE to "speed_three",
+		)
+
+		for ((block, texture) in blocks) {
+			val name = name(block.get())
+			val model = models()
+				.singleTexture(
+					name,
+					mcLoc("block/block"),
+					modLoc("block/ender_quarry_upgrade/$texture")
+				)
+
+			simpleBlockWithItem(block.get(), model)
+		}
+	}
+
+	//TODO: Fix model
 	private fun enderMarker() {
 		val block = ModBlocks.ENDER_MARKER.get()
 
