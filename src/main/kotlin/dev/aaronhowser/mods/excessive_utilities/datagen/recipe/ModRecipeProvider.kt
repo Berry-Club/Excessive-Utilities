@@ -994,6 +994,82 @@ class ModRecipeProvider(
 					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
 					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
 				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE,
+				" P ,RUR",
+				mapOf(
+					'P' to Items.GOLDEN_PICKAXE.defaultInstance.apply {
+						enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
+					}.asIngredient(),
+					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+					'U' to ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE.asIngredient()
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE,
+				"P P,RUR",
+				mapOf(
+					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+						enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
+					}.asIngredient(),
+					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+					'U' to ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE.asIngredient()
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE,
+				" P ,RBR",
+				mapOf(
+					'P' to Items.IRON_PICKAXE.defaultInstance.apply {
+						enchant(enchantments.getOrThrow(Enchantments.SILK_TOUCH), 1)
+					}.asIngredient(),
+					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_QUARRY_SPEED_UPGRADE,
+				" P ,SBS",
+				mapOf(
+					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+						enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 1)
+					}.asIngredient(),
+					'S' to ModItems.SPEED_UPGRADE.asIngredient(),
+					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE,
+				" P ,SUS",
+				mapOf(
+					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+						enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 3)
+					}.asIngredient(),
+					'S' to ModItems.SPEED_UPGRADE_MAGICAL.asIngredient(),
+					'U' to ModBlocks.ENDER_QUARRY_SPEED_UPGRADE.asIngredient(
+					)
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE,
+				"P P,SUS",
+				mapOf(
+					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+						enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 5)
+					}.asIngredient(),
+					'S' to ModItems.STACK_UPGRADE.asIngredient(),
+					'U' to ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE.asIngredient()
+				)
+			),
+			shapedRecipe(
+				ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE,
+				" T ,QBQ",
+				mapOf(
+					'T' to ModBlocks.TRASH_CAN.asIngredient(),
+					'Q' to Blocks.QUARTZ_BLOCK.asIngredient(),
+					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+				)
 			)
 		)
 
