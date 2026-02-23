@@ -37,7 +37,7 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 				entity.x, entity.y, entity.z,
 				4f,
 				false,
-				Level.ExplosionInteraction.MOB
+				Level.ExplosionInteraction.NONE
 			)
 
 			stack.count = 0
@@ -52,11 +52,7 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
-		val DEFAULT_PROPERTIES: () -> Properties = {
-			Properties()
-				.stacksTo(1)
-				.component(ModDataComponents.COUNTDOWN, 20 * 10)
-		}
+		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
 	}
 
 }
