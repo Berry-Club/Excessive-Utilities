@@ -929,6 +929,15 @@ class ModRecipeProvider(
 					'S' to ModItems.DIVISION_SIGIL.asIngredient(),
 					'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
 				)
+			),
+			shapedRecipe(
+				ModItems.SEMI_UNSTABLE_NUGGET,
+				"N,S,D",
+				mapOf(
+					'N' to Tags.Items.NUGGETS_GOLD.asIngredient(),
+					'S' to ModItems.DIVISION_SIGIL.asIngredient(),
+					'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
+				)
 			)
 		)
 
@@ -1601,6 +1610,21 @@ class ModRecipeProvider(
 				ModBlocks.MINI_CHEST.asIngredient()
 			)
 		).save(recipeOutput, modLoc("chest_from_mini_chests"))
+
+		shapelessRecipe(
+			ModItems.UNSTABLE_INGOT,
+			listOf(
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
+			)
+		).save(recipeOutput, modLoc("mobius_ingot_from_semi_unstable_nuggets"))
 
 		val cores = OpiniumCoreContentsComponent.getDefaultTiers()
 		for ((i, core) in cores.withIndex()) {
