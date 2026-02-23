@@ -195,7 +195,6 @@ class ModItemModelProvider(
 	private fun basicItems() {
 		val skipThese = setOf(
 			ModItems.SOUL_FRAGMENT.get(),
-			ModItems.LUNAR_REACTIVE_DUST.get(),
 			ModItems.UNSTABLE_INGOT.get(),
 			ModItems.SEMI_UNSTABLE_NUGGET.get(),
 			ModItems.MOBIUS_INGOT.get(),

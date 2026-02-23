@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-13T08:07:33.2677379	Item Models: excessive_utilities
+// 1.21.1	2026-02-22T22:20:44.5801495	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 1b5cdcaf8035c8ad20d95987b1190cfdedb942fd assets/excessive_utilities/models/item/angel_ring.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
@@ -44,6 +44,7 @@ b0572e7fd1269eb34216a41f6af904259993abec assets/excessive_utilities/models/item/
 b8ce398d5409c61d511dcc6cdbb912fca2dd9641 assets/excessive_utilities/models/item/indexer_remote.json
 1682ce328bb115e4d1ef2446372a9e676dc9f2c0 assets/excessive_utilities/models/item/iron_sickle.json
 1e13a69390961ab8ee787c4bc2b7f1c76ec8f9a9 assets/excessive_utilities/models/item/item_filter.json
+51b4830aa1a9f640cbf0e417a09ef8570c5c26fa assets/excessive_utilities/models/item/lunar_reactive_dust.json
 34c063c725f8c913b5c1393175528bc6712d3001 assets/excessive_utilities/models/item/magical_apple.json
 0feecdbf86f2248c82f6d70b39932e916409d39b assets/excessive_utilities/models/item/moon_stone.json
 dd9f77f45e5bdfc10ac63e52baaa7341b45d0c02 assets/excessive_utilities/models/item/netherite_sickle.json
