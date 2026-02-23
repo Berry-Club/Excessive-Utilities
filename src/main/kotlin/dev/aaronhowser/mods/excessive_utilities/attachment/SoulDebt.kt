@@ -10,6 +10,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.player.Player
+import net.neoforged.neoforge.event.entity.player.PlayerEvent
 
 data class SoulDebt(
 	val netSoulFragments: Int
@@ -58,6 +59,31 @@ data class SoulDebt(
 			)
 
 			maxHealthAttribute.addPermanentModifier(modifier)
+		}
+
+		fun onRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+			if (event.isEndConquered) return
+
+			val player = event.entity
+			val debt = player.getData(ModAttachmentTypes.SOUL_DEBT)
+
+			when (ServerConfig.CONFIG.soulFragmentResetOnDeath.get()) {
+				OnDeathConfig.KEEP -> {
+					// do nothing
+				}
+
+				OnDeathConfig.RESET -> {
+					player.setData(ModAttachmentTypes.SOUL_DEBT, SoulDebt(0))
+					updateSoulDebt(player)
+				}
+
+				OnDeathConfig.REMOVE_NEGATIVE -> {
+					if (debt.netSoulFragments < 0) {
+						player.setData(ModAttachmentTypes.SOUL_DEBT, SoulDebt(0))
+						updateSoulDebt(player)
+					}
+				}
+			}
 		}
 	}
 

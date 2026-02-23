@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
 import dev.aaronhowser.mods.excessive_utilities.block.AngelBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
@@ -210,6 +211,11 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onPlayerChangeDimension(event: PlayerEvent.PlayerChangedDimensionEvent) {
 		KeyHandler.remove(event.entity)
+	}
+
+	@SubscribeEvent
+	fun onPlayerRespawn(event: PlayerEvent.PlayerRespawnEvent) {
+		SoulDebt.onRespawn(event)
 	}
 
 }
