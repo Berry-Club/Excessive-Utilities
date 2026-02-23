@@ -14,7 +14,7 @@ class ServerConfig(
 	lateinit var flatFluidTransferNodeSpeed: ModConfigSpec.IntValue
 	lateinit var peacefulTableOnlyInPeaceful: ModConfigSpec.BooleanValue
 	lateinit var peacefulTableChancePerTick: ModConfigSpec.DoubleValue
-	lateinit var soulFragmentHealth: ModConfigSpec.DoubleValue
+	lateinit var healthPerSoulFragment: ModConfigSpec.DoubleValue
 	lateinit var soulFragmentResetOnDeath: ModConfigSpec.EnumValue<SoulDebt.OnDeathConfig>
 
 	lateinit var heatingCoilBurnTime: ModConfigSpec.IntValue
@@ -391,9 +391,9 @@ class ServerConfig(
 			.comment("The chance per tick that the Peaceful Table will try to generate a drop.")
 			.defineInRange("peacefulTableChancePerTick", 1.0 / 20 / 30, 0.0, 1.0)
 
-		soulFragmentHealth = builder
+		healthPerSoulFragment = builder
 			.comment("The amount of health that each Soul Fragment is worth.")
-			.defineInRange("soulFragmentHealth", 2.0, 0.0, Double.MAX_VALUE)
+			.defineInRange("healthPerSoulFragment", 2.0, 0.0, Double.MAX_VALUE)
 
 		soulFragmentResetOnDeath = builder
 			.comment(
@@ -402,7 +402,7 @@ class ServerConfig(
 				"RESET: You reset to having 0 Soul Debt/Surplus",
 				"REMOVE_NEGATIVE: You keep Soul Surplus, but reset Soul Debt to 0"
 			)
-			.defineEnum("healthPerSoulFragment", SoulDebt.OnDeathConfig.KEEP)
+			.defineEnum("soulFragmentResetOnDeath", SoulDebt.OnDeathConfig.KEEP)
 
 	}
 

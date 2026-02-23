@@ -54,7 +54,7 @@ data class SoulDebt(
 
 			val modifier = AttributeModifier(
 				ATTRIBUTE_MODIFIER_NAME,
-				netSoulFragments.toDouble() * ServerConfig.CONFIG.soulFragmentHealth.get(),
+				netSoulFragments.toDouble() * ServerConfig.CONFIG.healthPerSoulFragment.get(),
 				AttributeModifier.Operation.ADD_VALUE
 			)
 
