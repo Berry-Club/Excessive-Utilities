@@ -106,7 +106,7 @@ class ServerConfig(
 			.comment("The maximum number of blocks the Ender Quarry will mine per tick.")
 			.defineInRange("enderQuarryBlocksPerTick", 0.5, 0.0, Double.MAX_VALUE)
 
-		builder.push("upgrades")
+		builder.push("eq_upgrades")
 
 		eqSpeedOneSpeedMultiplier = builder
 			.comment("How many times faster the Ender Quarry mines with a Speed I Upgrade.")
@@ -120,7 +120,7 @@ class ServerConfig(
 			.comment("How many times faster the Ender Quarry mines with a Speed III Upgrade.")
 			.defineInRange("eqSpeedThreeSpeedMultiplier", 3.0, 0.0, Double.MAX_VALUE)
 
-		builder.push("costs")
+		builder.push("eq_costs")
 
 		eqSilkTouchCostMultiplier = builder
 			.comment("How many times more FE the Ender Quarry will drain when it has a Silk Touch Upgrade.")

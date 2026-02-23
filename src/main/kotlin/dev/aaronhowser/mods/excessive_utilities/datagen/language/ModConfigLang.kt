@@ -33,6 +33,18 @@ object ModConfigLang {
 			add("excessive_utilities.configuration.drums", "Drums")
 			add("excessive_utilities.configuration.magnumTorchRadius", "Magnum Torch Radius")
 			add("excessive_utilities.configuration.generatorParticleDensity", "Generator Particle Density")
+			add("excessive_utilities.configuration.enderQuarryFencePerimeterLimit", "Ender Quarry Fence Perimeter Limit")
+			add("excessive_utilities.configuration.enderQuarryBlocksPerTick", "Ender Quarry Blocks Per Tick")
+			add("excessive_utilities.configuration.eqSpeedThreeSpeedMultiplier", "Ender Quarry Speed III Speed Multiplier")
+			add("excessive_utilities.configuration.ender_quarry", "Ender Quarry")
+			add("excessive_utilities.configuration.eq_costs", "Ender Quarry Costs")
+			add("excessive_utilities.configuration.enderQuarryFePerBlock", "Ender Quarry FE Per Block")
+			add("excessive_utilities.configuration.rings", "Rings")
+			add("excessive_utilities.configuration.eqSpeedOneSpeedMultiplier", "Ender Quarry Speed I Speed Multiplier")
+			add("excessive_utilities.configuration.eqSpeedTwoSpeedMultiplier", "Ender Quarry Speed II Speed Multiplier")
+			add("excessive_utilities.configuration.enderQuarryMarkerSearchDistance", "Ender Quarry Marker Search Distance")
+			add("excessive_utilities.configuration.watering_can", "Watering Can")
+			add("excessive_utilities.configuration.eq_upgrades", "Upgrades")
 		}
 	}
 
