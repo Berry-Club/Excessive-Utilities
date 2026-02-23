@@ -1,15 +1,16 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.item.Item
+import net.minecraft.world.item.HoeItem
+import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 
-//TODO: Make it a HoeItem
-class ReversingHoeItem(properties: Properties) : Item(properties) {
+class ReversingHoeItem(properties: Properties) : HoeItem(UnstableTier, properties) {
 
 	override fun useOn(context: UseOnContext): InteractionResult {
 		val level = context.level
@@ -45,12 +46,21 @@ class ReversingHoeItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
-		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
+		val DEFAULT_PROPERTIES: Properties = Properties()
+			.stacksTo(1)
+			.component(DataComponents.UNBREAKABLE, Unbreakable(false))
 
 		val CONVERSIONS: MutableMap<Block, Block> =
 			mutableMapOf(
-				Blocks.GRASS_BLOCK to Blocks.DIRT,
 				Blocks.COBBLESTONE to Blocks.STONE,
+				Blocks.GRAVEL to Blocks.COBBLESTONE,
+				Blocks.SAND to Blocks.GRAVEL,
+				Blocks.MAGMA_BLOCK to Blocks.LAVA,
+				Blocks.OBSIDIAN to Blocks.LAVA,
+				Blocks.TERRACOTTA to Blocks.CLAY,
+				Blocks.FARMLAND to Blocks.DIRT,
+				Blocks.DIRT to Blocks.GRASS_BLOCK,
+				Blocks.DEAD_BUSH to Blocks.OAK_SAPLING
 			)
 	}
 
