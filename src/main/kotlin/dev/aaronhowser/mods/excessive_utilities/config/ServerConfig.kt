@@ -345,11 +345,11 @@ class ServerConfig(
 
 		redCoalGpCost = builder
 			.comment("The amount of GP to be occupied while a piece of Red Coal is burning in a Furnace.")
-			.defineInRange("redCoalGpCost", 1.0, 0.0, Double.MAX_VALUE)
+			.defineInRange("redCoalGpCost", 4.0, 0.0, Double.MAX_VALUE)
 
 		redCoalBurnTimeMultiplier = builder
 			.comment("How many times longer should a piece of Red Coal burn in a Furnace compared to regular coal.")
-			.defineInRange("redCoalBurnTimeMultiplier", 7.0, 0.0, Double.MAX_VALUE)
+			.defineInRange("redCoalBurnTimeMultiplier", 8.0, 0.0, Double.MAX_VALUE)
 
 		speedUpgradeGpCostMultiplier = builder
 			.comment(

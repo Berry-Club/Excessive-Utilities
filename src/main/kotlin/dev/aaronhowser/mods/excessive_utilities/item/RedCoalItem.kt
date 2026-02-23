@@ -48,7 +48,7 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 			val space = capacity - usage
 
 			val requirement = ServerConfig.CONFIG.redCoalGpCost.get()
-			if (space >= requirement) {
+			if (space < requirement) {
 				return coalTime
 			}
 
