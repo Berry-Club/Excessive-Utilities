@@ -246,17 +246,17 @@ class EnderQuarryBlockEntity(
 
 		if (EnderQuarryUpgradeType.SILK_TOUCH in upgrades) {
 			tool.enchant(enchantmentRegistry.getHolderOrThrow(Enchantments.SILK_TOUCH), 1)
-		}
+		} else {
+			val fortuneLevel = when {
+				EnderQuarryUpgradeType.FORTUNE_THREE in upgrades -> 3
+				EnderQuarryUpgradeType.FORTUNE_TWO in upgrades -> 2
+				EnderQuarryUpgradeType.FORTUNE_ONE in upgrades -> 1
+				else -> 0
+			}
 
-		val fortuneLevel = when {
-			EnderQuarryUpgradeType.FORTUNE_ONE in upgrades -> 1
-			EnderQuarryUpgradeType.FORTUNE_TWO in upgrades -> 2
-			EnderQuarryUpgradeType.FORTUNE_THREE in upgrades -> 3
-			else -> 0
-		}
-
-		if (fortuneLevel > 0) {
-			tool.enchant(enchantmentRegistry.getHolderOrThrow(Enchantments.FORTUNE), fortuneLevel)
+			if (fortuneLevel > 0) {
+				tool.enchant(enchantmentRegistry.getHolderOrThrow(Enchantments.FORTUNE), fortuneLevel)
+			}
 		}
 
 		val lootParams = LootParams.Builder(level)
