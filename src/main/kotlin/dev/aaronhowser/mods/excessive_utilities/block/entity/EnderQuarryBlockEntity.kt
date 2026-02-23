@@ -69,12 +69,6 @@ class EnderQuarryBlockEntity(
 		return true
 	}
 
-	fun removeUpgrade(pos: BlockPos) {
-		if (upgradePositions.remove(pos)) {
-			setChanged()
-		}
-	}
-
 	var boundaryType: BoundaryType? = null
 		private set
 
