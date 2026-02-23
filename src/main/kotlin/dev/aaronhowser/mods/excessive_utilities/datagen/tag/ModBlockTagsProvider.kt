@@ -55,6 +55,20 @@ class ModBlockTagsProvider(
 
 		tag(CREATIVE_HARVEST_BLACKLIST)
 		tag(ENDER_QUARRY_BLACKLIST)
+
+		tag(ENDER_QUARRY_PART)
+			.add(
+				ModBlocks.ENDER_QUARRY.get(),
+				ModBlocks.ENDER_QUARRY_UPGRADE_BASE.get(),
+				ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE.get(),
+				ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE.get(),
+				ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE.get(),
+				ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE.get(),
+				ModBlocks.ENDER_QUARRY_SPEED_UPGRADE.get(),
+				ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE.get(),
+				ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE.get(),
+				ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE.get(),
+			)
 	}
 
 	companion object {
@@ -66,6 +80,7 @@ class ModBlockTagsProvider(
 		val VALID_FOR_DRAGON_EGG_MILL = create("valid_for_dragon_egg_mill")
 		val CREATIVE_HARVEST_BLACKLIST = create("creative_harvest_blacklist")
 		val ENDER_QUARRY_BLACKLIST = create("ender_quarry_blacklist")
+		val ENDER_QUARRY_PART = create("ender_quarry_part")
 	}
 
 }

@@ -1,8 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgrade
 import dev.aaronhowser.mods.excessive_utilities.block.entity.EnderQuarryUpgradeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
@@ -17,6 +21,17 @@ class EnderQuarryUpgradeBlock(
 		val blockEntity = EnderQuarryUpgradeBlockEntity(pos, state)
 		blockEntity.upgrade = type
 		return blockEntity
+	}
+
+	override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
+		for (dir in Direction.entries) {
+			val stateThere = level.getBlockState(pos.relative(dir))
+			if (stateThere.isBlock(ModBlockTagsProvider.ENDER_QUARRY_PART)) {
+				return true
+			}
+		}
+
+		return false
 	}
 
 }
