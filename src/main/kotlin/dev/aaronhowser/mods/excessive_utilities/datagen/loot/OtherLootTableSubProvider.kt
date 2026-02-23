@@ -1,12 +1,18 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.loot
 
+import dev.aaronhowser.mods.aaron.datagen.LootItemStack
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModTooltipLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
 import net.minecraft.world.level.storage.loot.entries.EmptyLootItem
@@ -38,6 +44,13 @@ class OtherLootTableSubProvider(
 				)
 		)
 
+		val forgottenSoul = ModItems.SOUL_FRAGMENT.withComponent(
+			DataComponents.LORE,
+			ItemLore(
+				listOf(ModTooltipLang.SOUL_OF_A_FORGOTTEN_DEITY.toComponent())
+			)
+		)
+
 		output.accept(
 			SOUL_FRAGMENT,
 			LootTable
@@ -45,7 +58,7 @@ class OtherLootTableSubProvider(
 				.withPool(
 					LootPool.lootPool()
 						.add(EmptyLootItem.emptyItem().setWeight(43046721))
-						.add(LootItem.lootTableItem(ModItems.SOUL_FRAGMENT.get()).setWeight(1))
+						.add(LootItemStack.lootTableStack(forgottenSoul).setWeight(1))
 				)
 		)
 
@@ -56,7 +69,7 @@ class OtherLootTableSubProvider(
 				.withPool(
 					LootPool.lootPool()
 						.add(EmptyLootItem.emptyItem().setWeight(43046721))
-						.add(LootItem.lootTableItem(ModItems.SOUL_FRAGMENT.get()).setWeight(10))
+						.add(LootItemStack.lootTableStack(forgottenSoul).setWeight(10))
 				)
 		)
 	}
