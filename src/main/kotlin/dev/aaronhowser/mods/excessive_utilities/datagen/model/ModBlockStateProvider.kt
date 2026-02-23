@@ -40,17 +40,19 @@ class ModBlockStateProvider(
 		val advanced = ModBlocks.ADVANCED_FILING_CABINET.get()
 
 		val modelBase = models()
-			.orientableVertical(
+			.orientable(
 				name(base),
 				modLoc("block/filing_cabinet/base_side"),
-				modLoc("block/filing_cabinet/base_front")
+				modLoc("block/filing_cabinet/base_front"),
+				modLoc("block/filing_cabinet/base_side"),
 			)
 
 		val modelAdvanced = models()
-			.orientableVertical(
+			.orientable(
 				name(advanced),
 				modLoc("block/filing_cabinet/advanced_side"),
-				modLoc("block/filing_cabinet/advanced_front")
+				modLoc("block/filing_cabinet/advanced_front"),
+				modLoc("block/filing_cabinet/advanced_side"),
 			)
 
 		getVariantBuilder(base)
