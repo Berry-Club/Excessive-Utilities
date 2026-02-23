@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.mill.*
+import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.EnergyTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.FluidTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.TrashCanBlockEntity
 import net.minecraft.core.registries.BuiltInRegistries
@@ -44,6 +45,8 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("trash_can", ::TrashCanBlockEntity, ModBlocks.TRASH_CAN, ModBlocks.TRASH_CAN_CHEST)
 	val FLUID_TRASH_CAN: DeferredHolder<BlockEntityType<*>, BlockEntityType<FluidTrashCanBlockEntity>> =
 		register("fluid_trash_can", ::FluidTrashCanBlockEntity, ModBlocks.TRASH_CAN_FLUID)
+	val ENERGY_TRASH_CAN: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnergyTrashCanBlockEntity>> =
+		register("energy_trash_can", ::EnergyTrashCanBlockEntity, ModBlocks.TRASH_CAN_ENERGY)
 	val ENDER_QUARRY: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryBlockEntity>> =
 		register("ender_quarry", ::EnderQuarryBlockEntity, ModBlocks.ENDER_QUARRY)
 	val ENDER_QUARRY_UPGRADE: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryUpgradeBlockEntity>> =

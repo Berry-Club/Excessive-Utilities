@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.EnergyTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.FluidTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.TrashCanBlockEntity
 import net.minecraft.core.BlockPos
@@ -32,6 +33,10 @@ class TrashCanBlock(
 
 		if (type == Type.FLUID) {
 			return FluidTrashCanBlockEntity(pos, state)
+		}
+
+		if (type == Type.ENERGY) {
+			return EnergyTrashCanBlockEntity(pos, state)
 		}
 
 		return null
