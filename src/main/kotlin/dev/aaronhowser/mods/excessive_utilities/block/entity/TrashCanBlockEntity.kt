@@ -20,7 +20,7 @@ import net.neoforged.neoforge.items.IItemHandler
 open class TrashCanBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state), MenuProvider {
+) : BlockEntity(ModBlockEntityTypes.TRASH_CAN.get(), pos, state), MenuProvider {
 
 	var isChest: Boolean = false
 		set(value) {
