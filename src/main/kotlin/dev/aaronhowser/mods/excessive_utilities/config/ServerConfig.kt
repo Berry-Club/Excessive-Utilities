@@ -70,6 +70,10 @@ class ServerConfig(
 	lateinit var enderQuarryFePerBlock: ModConfigSpec.DoubleValue
 	lateinit var enderQuarryBlocksPerTick: ModConfigSpec.DoubleValue
 
+	lateinit var eqSpeedOneSpeedMultiplier: ModConfigSpec.DoubleValue
+	lateinit var eqSpeedTwoSpeedMultiplier: ModConfigSpec.DoubleValue
+	lateinit var eqSpeedThreeSpeedMultiplier: ModConfigSpec.DoubleValue
+
 	lateinit var eqSilkTouchCostMultiplier: ModConfigSpec.DoubleValue
 	lateinit var eqFortuneOneCostMultiplier: ModConfigSpec.DoubleValue
 	lateinit var eqFortuneTwoCostMultiplier: ModConfigSpec.DoubleValue
@@ -104,6 +108,20 @@ class ServerConfig(
 
 		builder.push("upgrades")
 
+		eqSpeedOneSpeedMultiplier = builder
+			.comment("How many times faster the Ender Quarry mines with a Speed I Upgrade.")
+			.defineInRange("eqSpeedOneSpeedMultiplier", 1.5, 0.0, Double.MAX_VALUE)
+
+		eqSpeedTwoSpeedMultiplier = builder
+			.comment("How many times faster the Ender Quarry mines with a Speed II Upgrade.")
+			.defineInRange("eqSpeedTwoSpeedMultiplier", 2.0, 0.0, Double.MAX_VALUE)
+
+		eqSpeedThreeSpeedMultiplier = builder
+			.comment("How many times faster the Ender Quarry mines with a Speed III Upgrade.")
+			.defineInRange("eqSpeedThreeSpeedMultiplier", 3.0, 0.0, Double.MAX_VALUE)
+
+		builder.push("costs")
+
 		eqSilkTouchCostMultiplier = builder
 			.comment("How many times more FE the Ender Quarry will drain when it has a Silk Touch Upgrade.")
 			.defineInRange("eqSilkTouchCostMultiplier", 1.5, 0.0, Double.MAX_VALUE)
@@ -135,6 +153,8 @@ class ServerConfig(
 		eqWorldHoleCostMultiplier = builder
 			.comment("How many times more FE the Ender Quarry will drain when it has a World Hole Upgrade.")
 			.defineInRange("eqWorldHoleCostMultiplier", 1.0, 0.0, Double.MAX_VALUE)
+
+		builder.pop()
 
 		builder.pop()
 

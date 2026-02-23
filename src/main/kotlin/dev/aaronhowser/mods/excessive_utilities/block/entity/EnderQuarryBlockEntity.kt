@@ -145,10 +145,24 @@ class EnderQuarryBlockEntity(
 
 		if (target == null) return
 
-		val fePerBlock = ServerConfig.CONFIG.enderQuarryFePerBlock.get()
+		val upgrades = getUpgrades()
+
+		var fePerBlock = ServerConfig.CONFIG.enderQuarryFePerBlock.get()
+
+		for (upgrade in upgrades) {
+			fePerBlock *= upgrade.feMultiplierGetter.asDouble
+		}
+
 		if (energyStorage.energyStored < fePerBlock) return
 
-		val blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
+		var blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
+
+		when {
+			EnderQuarryUpgradeType.SPEED_ONE in upgrades -> blocksPerTick *= ServerConfig.CONFIG.eqSpeedOneSpeedMultiplier.get()
+			EnderQuarryUpgradeType.SPEED_TWO in upgrades -> blocksPerTick *= ServerConfig.CONFIG.eqSpeedTwoSpeedMultiplier.get()
+			EnderQuarryUpgradeType.SPEED_THREE in upgrades -> blocksPerTick *= ServerConfig.CONFIG.eqSpeedThreeSpeedMultiplier.get()
+		}
+
 		progressThroughBlock += blocksPerTick
 
 		while (progressThroughBlock >= 1.0) {
