@@ -45,7 +45,9 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 
 	companion object {
 		val DEFAULT_PROPERTIES: () -> Properties = {
-			Properties().component(ModDataComponents.COUNTDOWN, 20 * 10)
+			Properties()
+				.stacksTo(1)
+				.component(ModDataComponents.COUNTDOWN, 20 * 10)
 		}
 	}
 
