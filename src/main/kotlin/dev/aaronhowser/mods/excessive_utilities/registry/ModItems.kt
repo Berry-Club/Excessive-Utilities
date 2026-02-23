@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.*
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
@@ -17,12 +18,16 @@ object ModItems : AaronItemRegistry() {
 
 	val BEDROCKIUM_INGOT: DeferredItem<BedrockiumIngotItem> =
 		register("bedrockium_ingot", ::BedrockiumIngotItem)
-	val SOUL_FRAGMENT =
-		basic("soul_fragment")
+	val SOUL_FRAGMENT: DeferredItem<Item> =
+		basic(
+			"soul_fragment",
+			Item.Properties()
+				.component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+		)
 	val ENDER_SHARD: DeferredItem<Item> =
 		basic("ender_shard")
 	val DEMON_INGOT: DeferredItem<Item> = // TODO: Throw Gold in Lava in the Nether
-		basic("demon_ingot", properties = Item.Properties().fireResistant())
+		basic("demon_ingot", Item.Properties().fireResistant())
 	val DROP_OF_EVIL =
 		basic("drop_of_evil")
 	val ENCHANTED_INGOT: DeferredItem<Item> =
