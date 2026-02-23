@@ -49,6 +49,7 @@ class ReversingHoeItem(properties: Properties) : HoeItem(UnstableTier, propertie
 		val DEFAULT_PROPERTIES: Properties = Properties()
 			.stacksTo(1)
 			.component(DataComponents.UNBREAKABLE, Unbreakable(false))
+			.attributes(createAttributes(UnstableTier, -3f, 0f))
 
 		val CONVERSIONS: MutableMap<Block, Block> =
 			mutableMapOf(
