@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
@@ -25,7 +25,7 @@ class FilingCabinetBlockEntity(
 ) : BlockEntity(ModBlockEntityTypes.FILING_CABINET.get(), pos, blockState) {
 
 	private var storedItem: Item? = null
-	private val storedEntries: MutableMap<DataComponentMap, Int> = mutableMapOf()
+	private val storedEntries: MutableMap<DataComponentPatch, Int> = mutableMapOf()
 
 	fun getItemCount(): Int = storedEntries.values.sum()
 
@@ -58,7 +58,7 @@ class FilingCabinetBlockEntity(
 					return stack
 				}
 
-				val stackComponents = stack.components
+				val stackComponents = stack.componentsPatch
 				val currentCount = storedEntries.getOrDefault(stackComponents, 0)
 
 				if (!simulate) {
@@ -131,7 +131,7 @@ class FilingCabinetBlockEntity(
 			val entryTag = CompoundTag()
 			entryTag.putInt(COUNT_NBT, count)
 
-			val dataTag = DataComponentMap.CODEC.encodeStart(registryOps, data).getOrThrow()
+			val dataTag = DataComponentPatch.CODEC.encodeStart(registryOps, data).getOrThrow()
 			entryTag.put(DATA_NBT, dataTag)
 
 			entriesList.add(entryTag)
@@ -161,7 +161,7 @@ class FilingCabinetBlockEntity(
 			val count = tag.getInt(COUNT_NBT)
 			val dataTag = tag.getCompound(DATA_NBT)
 
-			val data = DataComponentMap.CODEC.decode(NbtOps.INSTANCE, dataTag).getOrThrow().first
+			val data = DataComponentPatch.CODEC.decode(NbtOps.INSTANCE, dataTag).getOrThrow().first
 			storedEntries[data] = count
 		}
 	}
@@ -174,7 +174,7 @@ class FilingCabinetBlockEntity(
 
 		const val MAX_ITEMS = 540
 
-		private fun recreateStack(item: Item, data: DataComponentMap): ItemStack {
+		private fun recreateStack(item: Item, data: DataComponentPatch): ItemStack {
 			val stack = ItemStack(item)
 			stack.applyComponents(data)
 			return stack
