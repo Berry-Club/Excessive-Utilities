@@ -45,6 +45,29 @@ class EnderQuarryUpgradeBlockEntity(
 		return null
 	}
 
+	override fun setRemoved() {
+		val level = level ?: return
+
+		super.setRemoved()
+
+		val quarryPos = getQuarryPos() ?: return
+		val quarryBe = level.getBlockEntity(quarryPos)
+		if (quarryBe is EnderQuarryBlockEntity) {
+			quarryBe.removeUpgrade(blockPos)
+		}
+	}
+
+	override fun clearRemoved() {
+		super.clearRemoved()
+
+		val level = level ?: return
+		val quarryPos = getQuarryPos() ?: return
+		val quarryBe = level.getBlockEntity(quarryPos)
+		if (quarryBe is EnderQuarryBlockEntity) {
+			quarryBe.addUpgrade(this)
+		}
+	}
+
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 

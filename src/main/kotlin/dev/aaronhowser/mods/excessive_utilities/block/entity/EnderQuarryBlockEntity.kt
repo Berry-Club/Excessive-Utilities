@@ -64,7 +64,15 @@ class EnderQuarryBlockEntity(
 			if (upgrade in newUpgradeType.getIncompatibleUpgrades()) return false
 		}
 
-		return upgradePositions.add(upgradeBe.blockPos)
+		upgradePositions.add(upgradeBe.blockPos)
+		setChanged()
+		return true
+	}
+
+	fun removeUpgrade(pos: BlockPos) {
+		if (upgradePositions.remove(pos)) {
+			setChanged()
+		}
 	}
 
 	var boundaryType: BoundaryType? = null
