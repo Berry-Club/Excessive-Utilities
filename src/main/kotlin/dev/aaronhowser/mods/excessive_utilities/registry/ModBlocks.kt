@@ -64,6 +64,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("resturbed_mob_spawner")
 	val SCANNER =
 		basicBlock("scanner")
+	val MOON_STORE_ORE: DeferredBlock<MoonStoreOreBlock> =
+		registerBlock("moon_store_ore", ::MoonStoreOreBlock)
 
 	// Redstone stuff
 
