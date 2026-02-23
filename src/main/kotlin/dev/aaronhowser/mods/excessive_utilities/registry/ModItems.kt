@@ -36,8 +36,8 @@ object ModItems : AaronItemRegistry() {
 		basic("lunar_reactive_dust")
 	val MOON_STONE = // TODO: Drop from hidden ores that look like stone during the day
 		basic("moon_stone")
-	val RED_COAL =
-		basic("red_coal")
+	val RED_COAL: DeferredItem<RedCoalItem> =
+		register("red_coal", ::RedCoalItem, RedCoalItem.DEFAULT_PROPERTIES)
 	val REDSTONE_GEAR: DeferredItem<Item> =
 		basic("redstone_gear")
 	val RESONATING_REDSTONE_CRYSTAL: DeferredItem<Item> =

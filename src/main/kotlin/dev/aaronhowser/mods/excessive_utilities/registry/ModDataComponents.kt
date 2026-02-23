@@ -48,5 +48,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		uuid("bag")
 	val CHARGE: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("charge")
+	val OWNER: DeferredHolder<DataComponentType<*>, DataComponentType<UUID>> =
+		uuid("owner")
 
 }
