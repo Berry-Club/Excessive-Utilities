@@ -12,78 +12,56 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 
-open class TrashCanBlockEntity(
+class FluidTrashCanBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.TRASH_CAN.get(), pos, state), MenuProvider {
-
-	var isChest: Boolean = false
-		set(value) {
-			field = value
-			setChanged()
-		}
+) : BlockEntity(ModBlockEntityTypes.FLUID_TRASH_CAN.get(), pos, state), MenuProvider {
 
 	private val filterContainer = ImprovedSimpleContainer(this, 1)
 	val filterStack: ItemStack get() = filterContainer.getItem(FILTER_SLOT)
 
-	private val itemHandler: IItemHandler =
-		object : IItemHandler {
-			override fun getSlots(): Int = 27
-			override fun getStackInSlot(slot: Int): ItemStack = ItemStack.EMPTY
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = ItemStack.EMPTY
-			override fun getSlotLimit(slot: Int): Int = 64
-			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = true
-
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				return if (passesFilter(stack)) {
-					ItemStack.EMPTY
-				} else {
-					stack
-				}
+	private val fluidHandler =
+		object : IFluidHandler {
+			override fun getTanks(): Int = 1
+			override fun getFluidInTank(tank: Int): FluidStack = FluidStack.EMPTY
+			override fun getTankCapacity(tank: Int): Int = Int.MAX_VALUE
+			override fun fill(resource: FluidStack, action: IFluidHandler.FluidAction): Int = resource.amount
+			override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack = FluidStack.EMPTY
+			override fun drain(maxDrain: Int, action: IFluidHandler.FluidAction): FluidStack = FluidStack.EMPTY
+			override fun isFluidValid(tank: Int, stack: FluidStack): Boolean {
+				//TODO: Implement filter logic
+				return true
 			}
 		}
 
-	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
-
-	// TODO: Implement filter logic
-	fun passesFilter(stack: ItemStack): Boolean {
-		if (filterStack.isEmpty) return true
-		return true
-	}
+	fun getFluidHandler(direction: Direction?): IFluidHandler = fluidHandler
 
 	override fun getDisplayName(): Component {
 		return blockState.block.name
 	}
 
-	//TODO: Menu for the regular Trash Can
+	// TODO: Make menu for the filter
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
-		return if (isChest) {
-			ChestMenu.threeRows(containerId, playerInventory)
-		} else {
-			ChestMenu.oneRow(containerId, playerInventory)
-		}
+		return null
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
-		tag.putBoolean(IS_CHEST_TAG, isChest)
 		ContainerHelper.saveAllItems(tag, filterContainer.items, registries)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
-		isChest = tag.getBoolean(IS_CHEST_TAG)
 		ContainerHelper.loadAllItems(tag, filterContainer.items, registries)
 	}
 
 	companion object {
-		const val IS_CHEST_TAG = "IsChest"
 		const val FILTER_SLOT = 0
 	}
 

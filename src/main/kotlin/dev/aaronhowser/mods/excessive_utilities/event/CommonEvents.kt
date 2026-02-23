@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.AngelBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
 import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.MagmaticGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.FluidTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.TrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
@@ -87,6 +88,12 @@ object CommonEvents {
 			Capabilities.ItemHandler.BLOCK,
 			ModBlockEntityTypes.TRASH_CAN.get(),
 			TrashCanBlockEntity::getItemHandler
+		)
+
+		event.registerBlockEntity(
+			Capabilities.FluidHandler.BLOCK,
+			ModBlockEntityTypes.FLUID_TRASH_CAN.get(),
+			FluidTrashCanBlockEntity::getFluidHandler
 		)
 
 		event.registerBlockEntity(
