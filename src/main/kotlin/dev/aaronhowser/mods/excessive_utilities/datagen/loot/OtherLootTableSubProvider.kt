@@ -48,6 +48,17 @@ class OtherLootTableSubProvider(
 						.add(LootItem.lootTableItem(ModItems.SOUL_FRAGMENT.get()).setWeight(1))
 				)
 		)
+
+		output.accept(
+			SOUL_FRAGMENT_KIKOKU,
+			LootTable
+				.lootTable()
+				.withPool(
+					LootPool.lootPool()
+						.add(EmptyLootItem.emptyItem().setWeight(43046721))
+						.add(LootItem.lootTableItem(ModItems.SOUL_FRAGMENT.get()).setWeight(10))
+				)
+		)
 	}
 
 	companion object {
@@ -65,6 +76,7 @@ class OtherLootTableSubProvider(
 		val DROP_OF_EVIL = createPoolRk("entity/drop_of_evil")
 		val RESONATING_REDSTONE_CRYSTAL = createPoolRk("block/resonating_redstone_crystal")
 		val SOUL_FRAGMENT = createPoolRk("entity/soul_fragment")
+		val SOUL_FRAGMENT_KIKOKU = createPoolRk("entity/soul_fragment_kikoku")
 	}
 
 }

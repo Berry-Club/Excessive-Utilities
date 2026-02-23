@@ -1,5 +1,6 @@
-// 1.21.1	2026-02-23T00:50:52.5534256	Global Loot Modifiers : excessive_utilities
+// 1.21.1	2026-02-23T00:52:21.9562503	Global Loot Modifiers : excessive_utilities
 08e4a11a643735797d929ddc280f43b0db43fd88 data/excessive_utilities/loot_modifiers/drop_of_evil_from_wither_skeleton.json
 2dee97ba1eac15343a4565e85603cc57bd07d06a data/excessive_utilities/loot_modifiers/resonating_crystal_from_redstone_ore.json
 7510eaa1782faebcc13ca72dd3447f62b122c894 data/excessive_utilities/loot_modifiers/soul_fragment.json
-f1a54ea3c768f0c14f5ec57a36a4fc27b5ba88f7 data/neoforge/loot_modifiers/global_loot_modifiers.json
+c8c1c8a9a3a04a96aa511d4981f8e9293d228f1d data/excessive_utilities/loot_modifiers/soul_fragment_kikoku_bonus.json
+73578461307e83b1692e8bbc12051f5891faa799 data/neoforge/loot_modifiers/global_loot_modifiers.json

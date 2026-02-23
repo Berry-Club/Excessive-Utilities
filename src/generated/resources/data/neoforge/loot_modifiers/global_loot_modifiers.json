@@ -2,7 +2,8 @@
   "entries": [
     "excessive_utilities:resonating_crystal_from_redstone_ore",
     "excessive_utilities:drop_of_evil_from_wither_skeleton",
-    "excessive_utilities:soul_fragment"
+    "excessive_utilities:soul_fragment",
+    "excessive_utilities:soul_fragment_kikoku_bonus"
   ],
   "replace": false
 }

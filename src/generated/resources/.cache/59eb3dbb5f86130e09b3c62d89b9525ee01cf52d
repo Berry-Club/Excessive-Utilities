@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-23T00:48:42.7188146	Loot Tables
+// 1.21.1	2026-02-23T00:52:21.9487407	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 dfd3eb1c14ba5a4b83fdae1b1844caadf489ebdb data/excessive_utilities/loot_table/blocks/advanced_observer.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
@@ -170,3 +170,4 @@ ed5b2765b540c4534a58b76893008ebeb62a88c6 data/excessive_utilities/loot_table/blo
 49fbce5f2fe0bca5067de285be22cf2a20832a17 data/excessive_utilities/loot_table/block/resonating_redstone_crystal.json
 e9c8ef39db473316a06b9cb142f00884106eca95 data/excessive_utilities/loot_table/entity/drop_of_evil.json
 1bcc05c6a14a16845ac53396f0cbbb853f84d946 data/excessive_utilities/loot_table/entity/soul_fragment.json
+77fac199f3f45c421ceb295494c0bb73468d63f6 data/excessive_utilities/loot_table/entity/soul_fragment_kikoku.json

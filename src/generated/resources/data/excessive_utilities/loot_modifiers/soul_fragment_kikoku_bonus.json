@@ -1,0 +1,17 @@
+{
+  "type": "neoforge:add_table",
+  "conditions": [
+    {
+      "condition": "minecraft:entity_properties",
+      "entity": "attacker",
+      "predicate": {
+        "equipment": {
+          "mainhand": {
+            "items": "excessive_utilities:kikoku"
+          }
+        }
+      }
+    }
+  ],
+  "table": "excessive_utilities:entity/soul_fragment_kikoku"
+}

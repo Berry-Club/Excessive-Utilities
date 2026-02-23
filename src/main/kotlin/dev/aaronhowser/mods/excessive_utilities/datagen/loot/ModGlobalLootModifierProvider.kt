@@ -1,8 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.loot
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.advancements.critereon.EntityEquipmentPredicate
 import net.minecraft.advancements.critereon.EntityPredicate
 import net.minecraft.advancements.critereon.EntityTypePredicate
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.world.entity.EntityType
@@ -66,6 +69,29 @@ class ModGlobalLootModifierProvider(
 						.build()
 				),
 				OtherLootTableSubProvider.SOUL_FRAGMENT
+			)
+		)
+
+		add(
+			"soul_fragment_kikoku_bonus",
+			AddTableLootModifier(
+				arrayOf(
+					LootItemEntityPropertyCondition
+						.hasProperties(
+							LootContext.EntityTarget.ATTACKER,
+							EntityPredicate.Builder
+								.entity()
+								.equipment(
+									EntityEquipmentPredicate.Builder
+										.equipment()
+										.mainhand(ItemPredicate.Builder.item().of(ModItems.KIKOKU.get()))
+										.build()
+								)
+								.build()
+						)
+						.build()
+				),
+				OtherLootTableSubProvider.SOUL_FRAGMENT_KIKOKU
 			)
 		)
 
