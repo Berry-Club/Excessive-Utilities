@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgrade
 import dev.aaronhowser.mods.excessive_utilities.block.entity.EnderQuarryUpgradeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -28,6 +29,14 @@ class EnderQuarryUpgradeBlock(
 	}
 
 	override fun canSurvive(state: BlockState, level: LevelReader, pos: BlockPos): Boolean {
+		val myBe = level.getBlockEntity(pos)
+		if (myBe is EnderQuarryUpgradeBlockEntity) {
+			val parentPos = myBe.parentBlock ?: return false
+			val parentState = level.getBlockState(parentPos)
+
+			return parentState.isBlock(ModBlockTagsProvider.ENDER_QUARRY_PART)
+		}
+
 		for (dir in Direction.entries) {
 			val stateThere = level.getBlockState(pos.relative(dir))
 			if (stateThere.isBlock(ModBlocks.ENDER_QUARRY)) {
@@ -36,9 +45,10 @@ class EnderQuarryUpgradeBlock(
 
 			val beThere = level.getBlockEntity(pos.relative(dir))
 			if (beThere is EnderQuarryUpgradeBlockEntity) {
-				val quarryPos = beThere.quarryPos ?: continue
-				val stateAtQuarry = level.getBlockState(quarryPos)
-				if (stateAtQuarry.isBlock(ModBlocks.ENDER_QUARRY)) {
+				val parentPos = beThere.parentBlock ?: continue
+				val parentState = level.getBlockState(parentPos)
+
+				if (parentState.isBlock(ModBlockTagsProvider.ENDER_QUARRY_PART)) {
 					return true
 				}
 			}
@@ -75,14 +85,8 @@ class EnderQuarryUpgradeBlock(
 				val posThere = pos.relative(dir)
 
 				val stateThere = level.getBlockState(posThere)
-				if (stateThere.isBlock(ModBlocks.ENDER_QUARRY)) {
-					be.quarryPos = posThere
-					return
-				}
-
-				val beThere = level.getBlockEntity(posThere)
-				if (beThere is EnderQuarryUpgradeBlockEntity) {
-					be.quarryPos = beThere.quarryPos
+				if (stateThere.isBlock(ModBlockTagsProvider.ENDER_QUARRY_PART)) {
+					be.parentBlock = posThere
 					return
 				}
 			}
