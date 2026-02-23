@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.NbtOps
 import net.minecraft.nbt.Tag
+import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
@@ -123,12 +124,14 @@ class FilingCabinetBlockEntity(
 		val item = storedItem ?: return
 		tag.putString(ITEM_NBT, item.builtInRegistryHolder().key().toString())
 
+		val registryOps = RegistryOps.create(NbtOps.INSTANCE, registries)
+
 		val entriesList = ListTag()
 		for ((data, count) in storedEntries) {
 			val entryTag = CompoundTag()
 			entryTag.putInt(COUNT_NBT, count)
 
-			val dataTag = DataComponentMap.CODEC.encodeStart(NbtOps.INSTANCE, data).getOrThrow()
+			val dataTag = DataComponentMap.CODEC.encodeStart(registryOps, data).getOrThrow()
 			entryTag.put(DATA_NBT, dataTag)
 
 			entriesList.add(entryTag)
