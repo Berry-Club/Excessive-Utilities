@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
+import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgrade
 import dev.aaronhowser.mods.excessive_utilities.block.mill.*
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -114,24 +115,24 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Upgrades
 
-	val ENDER_QUARRY_UPGRADE_BASE =
-		basicBlock("ender_quarry_upgrade_base")
-	val ENDER_QUARRY_FORTUNE_UPGRADE =
-		basicBlock("ender_quarry_fortune_upgrade")
-	val ENDER_QUARRY_FORTUNE_TWO_UPGRADE =
-		basicBlock("ender_quarry_fortune_two_upgrade")
-	val ENDER_QUARRY_FORTUNE_THREE_UPGRADE =
-		basicBlock("ender_quarry_fortune_three_upgrade")
-	val ENDER_QUARRY_SILK_TOUCH_UPGRADE =
-		basicBlock("ender_quarry_silk_touch_upgrade")
-	val ENDER_QUARRY_SPEED_UPGRADE =
-		basicBlock("ender_quarry_speed_upgrade")
-	val ENDER_QUARRY_SPEED_TWO_UPGRADE =
-		basicBlock("ender_quarry_speed_two_upgrade")
-	val ENDER_QUARRY_SPEED_THREE_UPGRADE =
-		basicBlock("ender_quarry_speed_three_upgrade")
-	val ENDER_QUARRY_WORLD_HOLE_UPGRADE =
-		basicBlock("ender_quarry_world_hole_upgrade")
+	val ENDER_QUARRY_UPGRADE_BASE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_upgrade_base") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.NONE) }
+	val ENDER_QUARRY_FORTUNE_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_fortune_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.FORTUNE_ONE) }
+	val ENDER_QUARRY_FORTUNE_TWO_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_fortune_two_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.FORTUNE_TWO) }
+	val ENDER_QUARRY_FORTUNE_THREE_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_fortune_three_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.FORTUNE_THREE) }
+	val ENDER_QUARRY_SILK_TOUCH_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_silk_touch_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.SILK_TOUCH) }
+	val ENDER_QUARRY_SPEED_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_speed_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.SPEED_ONE) }
+	val ENDER_QUARRY_SPEED_TWO_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_speed_two_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.SPEED_TWO) }
+	val ENDER_QUARRY_SPEED_THREE_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_speed_three_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.SPEED_THREE) }
+	val ENDER_QUARRY_WORLD_HOLE_UPGRADE: DeferredBlock<EnderQuarryUpgradeBlock> =
+		registerBlock("ender_quarry_world_hole_upgrade") { EnderQuarryUpgradeBlock(EnderQuarryUpgrade.WORLD_HOLE) }
 
 	// Spikes
 
