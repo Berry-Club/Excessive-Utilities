@@ -18,7 +18,19 @@ class TrashCanBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
+		if (tag.contains(TYPE_TAG)) {
+			val typeString = tag.getString(TYPE_TAG)
+			trashCanType = TrashCanBlock.Type.valueOf(typeString)
+		}
+	}
 
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+
+		val type = trashCanType
+		if (type != null) {
+			tag.putString(TYPE_TAG, type.name)
+		}
 	}
 
 	companion object {
