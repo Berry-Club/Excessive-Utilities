@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-23T00:31:31.2105176	Item Models: excessive_utilities
+// 1.21.1	2026-02-23T02:30:45.0738618	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 1b5cdcaf8035c8ad20d95987b1190cfdedb942fd assets/excessive_utilities/models/item/angel_ring.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
@@ -70,7 +70,6 @@ a2054e2d130c5803ef9a33a4f3c388ad81b36c3e assets/excessive_utilities/models/item/
 affe31894bd8dd951fc9adfa947b33f9b55eec7e assets/excessive_utilities/models/item/upgrade_base.json
 829fd123e8b9cfd401d1765a22bbc0c59bebd068 assets/excessive_utilities/models/item/watering_can.json
 b44ada3f081b1066c987ee49b97e734ea7c70133 assets/excessive_utilities/models/item/watering_can_broken.json
-decfa4e2773933f5a6d142b7563c5882fa8f2353 assets/excessive_utilities/models/item/wireless_rf_heating_coil.json
 939625b6b70c53df41e9ad75328e1c373874f93f assets/excessive_utilities/models/item/wooden_sickle.json
 3ed537948f48cabc001e1a17db058b6b1320626d assets/excessive_utilities/models/item/world_interaction_upgrade.json
 fdc7fcca7503b0261974368e5ccf461c9d31ca67 assets/excessive_utilities/models/item/wrench.json

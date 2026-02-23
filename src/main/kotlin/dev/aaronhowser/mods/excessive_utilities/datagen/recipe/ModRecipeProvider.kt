@@ -1465,7 +1465,7 @@ class ModRecipeProvider(
 			),
 			ResonatorRecipeBuilder(
 				Blocks.IRON_BARS.asIngredient(),
-				ModItems.WIRELESS_RF_HEATING_COIL.toStack(),
+				ModItems.HEATING_COIL.toStack(),
 				16.0
 			),
 			ResonatorRecipeBuilder(

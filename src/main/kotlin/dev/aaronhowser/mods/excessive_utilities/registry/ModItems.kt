@@ -3,7 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.*
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
@@ -36,6 +35,7 @@ object ModItems : AaronItemRegistry() {
 		basic("lunar_reactive_dust")
 	val MOON_STONE = // TODO: Drop from hidden ores that look like stone during the day
 		basic("moon_stone")
+
 	@JvmField
 	val RED_COAL: DeferredItem<RedCoalItem> =
 		register("red_coal", ::RedCoalItem, RedCoalItem.DEFAULT_PROPERTIES)
@@ -131,10 +131,6 @@ object ModItems : AaronItemRegistry() {
 	@JvmField
 	val HEATING_COIL =
 		register("heating_coil", ::HeatingCoilItem, HeatingCoilItem.DEFAULT_PROPERTIES)
-
-	@JvmField
-	val WIRELESS_RF_HEATING_COIL =
-		basic("wireless_rf_heating_coil")
 	val POWER_MANAGER =
 		basic("power_manager")
 	val SUN_CRYSTAL =
@@ -208,5 +204,6 @@ object ModItems : AaronItemRegistry() {
 
 	// Items not reimplemented:
 	// - Contract (used only for Chunk Loading Ward)
+	// - Wireless Heating Coil (annoying to implement)
 
 }

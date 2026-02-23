@@ -74,7 +74,6 @@ object ModItemLang {
 			addItem(ModItems.MAGICAL_BOOMERANG, "Magical Boomerang")
 
 			addItem(ModItems.HEATING_COIL, "Heating Coil")
-			addItem(ModItems.WIRELESS_RF_HEATING_COIL, "Wireless RF Heating Coil")
 			addItem(ModItems.POWER_MANAGER, "Power Manager")
 			addItem(ModItems.SUN_CRYSTAL, "Sun Crystal")
 			addItem(ModItems.BIOME_MARKER, "Biome Marker")
