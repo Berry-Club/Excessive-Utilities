@@ -31,7 +31,10 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
-class FlatTransferNodeEntity(entityType: EntityType<*>, level: Level) : Entity(entityType, level), MenuProvider {
+class FlatTransferNodeEntity(
+	entityType: EntityType<*>,
+	level: Level
+) : Entity(entityType, level), MenuProvider {
 
 	var isItemNode: Boolean
 		get() = entityData.get(IS_ITEM_NODE_DATA)

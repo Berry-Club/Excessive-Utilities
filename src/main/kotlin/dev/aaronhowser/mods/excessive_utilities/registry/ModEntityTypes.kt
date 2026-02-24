@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
+import dev.aaronhowser.mods.excessive_utilities.entity.MagicalBoomerangEntity
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
@@ -15,7 +16,7 @@ object ModEntityTypes {
 	val ENTITY_TYPE_REGISTRY: DeferredRegister<EntityType<*>> =
 		DeferredRegister.create(BuiltInRegistries.ENTITY_TYPE, ExcessiveUtilities.MOD_ID)
 
-	val FLAT_TRANSFER_NODE =
+	val FLAT_TRANSFER_NODE: DeferredHolder<EntityType<*>, EntityType<FlatTransferNodeEntity>> =
 		registerEntityType(
 			"flat_transfer_node",
 			MobCategory.MISC,
@@ -24,6 +25,14 @@ object ModEntityTypes {
 		) {
 			eyeHeight(0.5f)
 		}
+
+	val MAGICAL_BOOMERANG: DeferredHolder<EntityType<*>, EntityType<MagicalBoomerangEntity>> =
+		registerEntityType(
+			"magical_boomerang",
+			MobCategory.MISC,
+			0.5f, 0.5f,
+			::MagicalBoomerangEntity
+		)
 
 	fun <T : Entity> registerEntityType(
 		name: String,
