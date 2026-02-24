@@ -1,8 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.EquipmentSlotGroup
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.HoeItem
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.context.UseOnContext
@@ -50,7 +54,18 @@ class ReversingHoeItem(properties: Properties) : HoeItem(UnstableTier, propertie
 		val DEFAULT_PROPERTIES: Properties = Properties()
 			.stacksTo(1)
 			.component(DataComponents.UNBREAKABLE, Unbreakable(false))
-			.attributes(createAttributes(UnstableTier, -3f, 0f))
+			.attributes(
+				createAttributes(UnstableTier, -3f, 0f)
+					.withModifierAdded(
+						Attributes.BLOCK_INTERACTION_RANGE,
+						AttributeModifier(
+							ExcessiveUtilities.modResource("reversing_hoe_range"),
+							4.0,
+							AttributeModifier.Operation.ADD_VALUE
+						),
+						EquipmentSlotGroup.MAINHAND
+					)
+			)
 
 		val CONVERSIONS: MutableMap<Block, Block> =
 			mutableMapOf(
