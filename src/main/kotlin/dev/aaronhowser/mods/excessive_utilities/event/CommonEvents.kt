@@ -15,6 +15,7 @@ import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
+import dev.aaronhowser.mods.excessive_utilities.item.DestructionPickaxeItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -201,6 +202,7 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onBlockDrops(event: BlockDropsEvent) {
 		AngelBlock.handleDropEvent(event)
+		DestructionPickaxeItem.handleDropEvent(event)
 	}
 
 	@SubscribeEvent
