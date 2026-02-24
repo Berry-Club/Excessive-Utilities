@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.item.component
 
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
-import dev.aaronhowser.mods.aaron.serialization.AaronExtraCodecs
+import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
@@ -47,7 +47,7 @@ data class MagicalSnowGlobeProgressComponent(
 		val STREAM_CODEC: StreamCodec<ByteBuf?, MagicalSnowGlobeProgressComponent> =
 			ByteBufCodecs.map(
 				::HashMap,
-				AaronExtraCodecs.tagKeyStreamCodec(Registries.BIOME),
+				AaronExtraStreamCodecs.tagKeyStreamCodec(Registries.BIOME),
 				ByteBufCodecs.BOOL
 			).map(::MagicalSnowGlobeProgressComponent, MagicalSnowGlobeProgressComponent::requirements)
 	}

@@ -25,8 +25,6 @@ class FireAxeItem(properties: Properties) : AxeItem(OpiniumTier, properties) {
 		pos: BlockPos,
 		miningEntity: LivingEntity
 	): Boolean {
-		if (!isCorrectToolForDrops(stack, state)) return false
-
 		if (level is ServerLevel && state.isBlock(ModBlockTagsProvider.FIRE_AXE_MINEABLE)) {
 			val blockWalker = BlockWalker(
 				level = level,
