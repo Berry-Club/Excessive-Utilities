@@ -1,11 +1,15 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.ThrowableProjectile
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
@@ -41,6 +45,16 @@ class MagicalBoomerangEntity(
 	override fun onHitEntity(result: EntityHitResult) {
 		super.onHitEntity(result)
 		isReturning = true
+
+		val hitEntity = result.entity
+		if (hitEntity == owner && hitEntity is Player) {
+			val boomerangStack = hitEntity.inventory
+				.items
+				.firstOrNull { it.isItem(ModItems.MAGICAL_BOOMERANG) && it.has(ModDataComponents.THROWN) }
+
+			boomerangStack?.remove(ModDataComponents.THROWN)
+			discard()
+		}
 	}
 
 	override fun tick() {
