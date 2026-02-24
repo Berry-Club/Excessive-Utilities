@@ -92,6 +92,14 @@ class MagicalBoomerangEntity(
 				damageSources().thrown(this, owner),
 				getDamage()
 			)
+
+			val burnerangLevel = getEnchantmentLevel(ModEnchantmentProvider.BURNERANG)
+			if (burnerangLevel > 0) {
+				hitEntity.remainingFireTicks = maxOf(
+					hitEntity.remainingFireTicks,
+					20 * 5 * burnerangLevel
+				)
+			}
 		}
 	}
 
