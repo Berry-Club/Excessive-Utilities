@@ -52,7 +52,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		uuid("owner")
 	val COUNTDOWN: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("countdown")
-	val IS_THROWN: DeferredHolder<DataComponentType<*>, DataComponentType<Unit>> =
-		unit("is_thrown")
+	val THROWN_BOOMERANG: DeferredHolder<DataComponentType<*>, DataComponentType<UUID>> =
+		uuid("thrown_boomerang")
 
 }

@@ -52,9 +52,9 @@ class MagicalBoomerangEntity(
 		if (hitEntity == owner && hitEntity is Player) {
 			val boomerangStack = hitEntity.inventory
 				.items
-				.firstOrNull { it.isItem(ModItems.MAGICAL_BOOMERANG) && it.has(ModDataComponents.IS_THROWN) }
+				.firstOrNull { it.isItem(ModItems.MAGICAL_BOOMERANG) && it.get(ModDataComponents.THROWN_BOOMERANG) == uuid }
 
-			boomerangStack?.remove(ModDataComponents.IS_THROWN)
+			boomerangStack?.remove(ModDataComponents.THROWN_BOOMERANG)
 			discard()
 		}
 	}

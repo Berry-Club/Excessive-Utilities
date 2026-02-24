@@ -1,12 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.setUnit
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.entity.MagicalBoomerangEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -22,16 +23,33 @@ class MagicalBoomerangItem(properties: Properties) : Item(properties) {
 	): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(usedHand)
 
-		if (stack.has(ModDataComponents.IS_THROWN)) return InteractionResultHolder.fail(stack)
+		if (stack.has(ModDataComponents.THROWN_BOOMERANG)) return InteractionResultHolder.fail(stack)
 
 		if (level.isServerSide) {
 			val boomerang = MagicalBoomerangEntity(level, player)
 			boomerang.shootFromRotation(player, player.xRot, player.yRot, 0f, 1.5f, 0f)
 			level.addFreshEntity(boomerang)
-			stack.setUnit(ModDataComponents.IS_THROWN)
+			stack.set(ModDataComponents.THROWN_BOOMERANG, boomerang.uuid)
 		}
 
 		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+	}
+
+	override fun inventoryTick(
+		stack: ItemStack,
+		level: Level,
+		entity: Entity,
+		slotId: Int,
+		isSelected: Boolean
+	) {
+		if (level is ServerLevel) {
+			val boomerangId = stack.get(ModDataComponents.THROWN_BOOMERANG) ?: return
+			val boomerangEntity = level.getEntity(boomerangId)
+
+			if (boomerangEntity == null) {
+				stack.remove(ModDataComponents.THROWN_BOOMERANG)
+			}
+		}
 	}
 
 	companion object {
@@ -44,7 +62,7 @@ class MagicalBoomerangItem(properties: Properties) : Item(properties) {
 			holdingEntity: LivingEntity?,
 			int: Int
 		): Float {
-			return if (stack.has(ModDataComponents.IS_THROWN)) 1f else 0f
+			return if (stack.has(ModDataComponents.THROWN_BOOMERANG)) 1f else 0f
 		}
 
 	}
