@@ -8,6 +8,7 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.projectile.ThrowableProjectile
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.Vec3
 
 class MagicalBoomerangEntity(
 	entityType: EntityType<MagicalBoomerangEntity>,
@@ -18,6 +19,8 @@ class MagicalBoomerangEntity(
 		owner = entity
 		setPos(entity.x, entity.eyeY - 0.1, entity.z)
 	}
+
+	private var isReturning: Boolean = false
 
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {}
 
@@ -32,6 +35,18 @@ class MagicalBoomerangEntity(
 		super.tick()
 
 		carryItems()
+		returnToOwner()
+	}
+
+	private fun returnToOwner() {
+		if (!isReturning) return
+		val owner = owner ?: return
+		val targetPos = Vec3(owner.x, owner.eyeY - 0.4, owner.z)
+
+		val currentSpeed = deltaMovement.length()
+		val newDirection = position().vectorTo(targetPos).normalize()
+
+		deltaMovement = newDirection.scale(currentSpeed.coerceAtLeast(0.1))
 	}
 
 	private fun carryItems() {
