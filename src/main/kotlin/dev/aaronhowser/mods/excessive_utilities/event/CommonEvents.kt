@@ -16,6 +16,7 @@ import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHand
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.DestructionPickaxeItem
+import dev.aaronhowser.mods.excessive_utilities.item.ErosionShovelItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -203,6 +204,7 @@ object CommonEvents {
 	fun onBlockDrops(event: BlockDropsEvent) {
 		AngelBlock.handleDropEvent(event)
 		DestructionPickaxeItem.handleDropEvent(event)
+		ErosionShovelItem.handleDropEvent(event)
 	}
 
 	@SubscribeEvent

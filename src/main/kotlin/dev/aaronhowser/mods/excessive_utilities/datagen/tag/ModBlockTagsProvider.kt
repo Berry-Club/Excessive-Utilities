@@ -251,6 +251,13 @@ class ModBlockTagsProvider(
 			.addTags(
 				Tags.Blocks.STONES,
 			)
+
+		tag(EROSION_SHOVEL_TARGET)
+			.addTags(
+				BlockTags.DIRT,
+				Tags.Blocks.SANDS,
+				Tags.Blocks.GRAVELS
+			)
 	}
 
 	companion object {
@@ -265,6 +272,7 @@ class ModBlockTagsProvider(
 		val ENDER_QUARRY_PART = create("ender_quarry_part")
 		val FIRE_AXE_MINEABLE = create("mineable/fire_axe")
 		val DESTRUCTION_PICKAXE_TARGET = create("destruction_pickaxe_target")
+		val EROSION_SHOVEL_TARGET = create("erosion_shovel_target")
 	}
 
 }
