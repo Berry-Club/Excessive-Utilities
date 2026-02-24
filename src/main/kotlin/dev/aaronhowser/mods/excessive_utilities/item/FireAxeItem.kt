@@ -35,12 +35,14 @@ class FireAxeItem(properties: Properties) : AxeItem(OpiniumTier, properties) {
 				maxTotalBlocks = 10000,
 				onFinished = { walkedBlocks ->
 					for (log in walkedBlocks) {
-						level.destroyBlock(log.block.pos, true, miningEntity)
+						if (log.block.state.isBlock(ModBlockTagsProvider.FIRE_AXE_MINEABLE)) {
+							level.destroyBlock(log.block.pos, true, miningEntity)
+						}
 					}
 				}
 			)
 
-			blockWalker.start(5)
+			blockWalker.start(100)
 		}
 
 		return true
