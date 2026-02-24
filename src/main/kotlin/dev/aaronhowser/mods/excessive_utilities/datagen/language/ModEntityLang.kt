@@ -7,6 +7,7 @@ object ModEntityLang {
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
 			addEntityType(ModEntityTypes.FLAT_TRANSFER_NODE, "Flat Transfer Node")
+			addEntityType(ModEntityTypes.MAGICAL_BOOMERANG, "Magical Boomerang")
 		}
 	}
 
