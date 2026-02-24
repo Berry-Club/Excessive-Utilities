@@ -242,6 +242,9 @@ class ModBlockTagsProvider(
 				ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE,
 				ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE
 			)
+
+		tag(FIRE_AXE_MINEABLE)
+			.addTag(BlockTags.LOGS)
 	}
 
 	companion object {
@@ -254,6 +257,7 @@ class ModBlockTagsProvider(
 		val CREATIVE_HARVEST_BLACKLIST = create("creative_harvest_blacklist")
 		val ENDER_QUARRY_BLACKLIST = create("ender_quarry_blacklist")
 		val ENDER_QUARRY_PART = create("ender_quarry_part")
+		val FIRE_AXE_MINEABLE = create("mineable/fire_axe")
 	}
 
 }
