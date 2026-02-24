@@ -15,7 +15,7 @@ class MagicalBoomerangItem(properties: Properties) : Item(properties) {
 		level: Level,
 		player: Player,
 		usedHand: InteractionHand
-	): InteractionResultHolder<ItemStack?> {
+	): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(usedHand)
 
 		if (level.isServerSide) {

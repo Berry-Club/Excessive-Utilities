@@ -5,13 +5,14 @@ import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.projectile.Projectile
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.projectile.ThrowableProjectile
 import net.minecraft.world.level.Level
 
 class MagicalBoomerangEntity(
-	entityType: EntityType<out Projectile>,
+	entityType: EntityType<MagicalBoomerangEntity>,
 	level: Level
-) : Projectile(entityType, level) {
+) : ThrowableProjectile(entityType, level) {
 
 	constructor(level: Level, entity: LivingEntity) : this(ModEntityTypes.MAGICAL_BOOMERANG.get(), level) {
 		owner = entity
@@ -19,12 +20,29 @@ class MagicalBoomerangEntity(
 	}
 
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {}
-	override fun handlePortal() {}
 
+	override fun canUsePortal(allowPassengers: Boolean): Boolean = false
 	override fun isInvulnerable(): Boolean = true
 	override fun isInvulnerableTo(source: DamageSource): Boolean = true
 
 	override fun isNoGravity(): Boolean = true
 	override fun getDefaultGravity(): Double = 0.0
+
+	override fun tick() {
+		super.tick()
+
+		carryItems()
+	}
+
+	private fun carryItems() {
+		val aabb = boundingBox.inflate(3.0)
+		val itemEntities = level().getEntitiesOfClass(ItemEntity::class.java, aabb)
+
+		for (itemEntity in itemEntities) {
+			if (itemEntity.isAlive) {
+				itemEntity.setPos(position())
+			}
+		}
+	}
 
 }
