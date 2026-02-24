@@ -8,6 +8,8 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.projectile.ThrowableProjectile
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
 
 class MagicalBoomerangEntity(
@@ -30,6 +32,16 @@ class MagicalBoomerangEntity(
 
 	override fun isNoGravity(): Boolean = true
 	override fun getDefaultGravity(): Double = 0.0
+
+	override fun onHitBlock(result: BlockHitResult) {
+		super.onHitBlock(result)
+		isReturning = true
+	}
+
+	override fun onHitEntity(result: EntityHitResult) {
+		super.onHitEntity(result)
+		isReturning = true
+	}
 
 	override fun tick() {
 		super.tick()
