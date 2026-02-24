@@ -57,15 +57,9 @@ class MagicalBoomerangEntity(
 	private fun getSpeed(): Double {
 		val zoomerangLevel = getEnchantmentLevel(ModEnchantmentProvider.ZOOMERANG)
 
-		if (isReturning) {
-			val baseSpeed = 2.0
-			val speedMultiplier = 1.0 + zoomerangLevel
-			return baseSpeed * speedMultiplier
-		} else {
-			val baseSpeed = 1.5
-			val speedMultiplier = 1.0 + (zoomerangLevel * 0.3)
-			return baseSpeed * speedMultiplier
-		}
+		val baseSpeed = 1.5
+		val speedMultiplier = 1.0 + (zoomerangLevel * 0.3)
+		return baseSpeed * speedMultiplier
 	}
 
 	override fun onHitBlock(result: BlockHitResult) {
@@ -93,9 +87,9 @@ class MagicalBoomerangEntity(
 	override fun tick() {
 		super.tick()
 
-		carryItems()
 		returnToOwner()
 		breakPlants()
+		carryItems()
 	}
 
 	private fun breakPlants() {
