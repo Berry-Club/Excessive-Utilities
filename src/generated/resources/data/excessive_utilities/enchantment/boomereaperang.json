@@ -1,0 +1,20 @@
+{
+  "anvil_cost": 1,
+  "description": {
+    "translate": "enchantment.excessive_utilities.boomereaperang"
+  },
+  "max_cost": {
+    "base": 150,
+    "per_level_above_first": 0
+  },
+  "max_level": 1,
+  "min_cost": {
+    "base": 4,
+    "per_level_above_first": 0
+  },
+  "slots": [
+    "hand"
+  ],
+  "supported_items": "#excessive_utilities:magical_boomerang_enchantable",
+  "weight": 1
+}

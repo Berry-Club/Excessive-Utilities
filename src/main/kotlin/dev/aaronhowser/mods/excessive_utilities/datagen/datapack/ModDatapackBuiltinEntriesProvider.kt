@@ -21,6 +21,7 @@ class ModDatapackBuiltinEntriesProvider(
 	companion object {
 		val BUILDER: RegistrySetBuilder = RegistrySetBuilder()
 			.add(Registries.DAMAGE_TYPE, ModDamageTypeProvider::bootstrap)
+			.add(Registries.ENCHANTMENT, ModEnchantmentProvider::bootstrap)
 	}
 
 }

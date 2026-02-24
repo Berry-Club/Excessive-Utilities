@@ -166,6 +166,11 @@ class ModItemTagsProvider(
 			.addTag(
 				SICKLES
 			)
+
+		tag(MAGICAL_BOOMERANG_ENCHANTABLE)
+			.add(
+				ModItems.MAGICAL_BOOMERANG
+			)
 	}
 
 	companion object {
@@ -180,6 +185,7 @@ class ModItemTagsProvider(
 		val REMOVE_FLAT_TRANSFER_NODES = create("remove_flat_transfer_nodes")
 		val FILTERS = create("filters")
 		val SICKLES = common("sickles")
+		val MAGICAL_BOOMERANG_ENCHANTABLE = create("magical_boomerang_enchantable")
 	}
 
 }
