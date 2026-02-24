@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModEnchantmentProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -131,7 +132,8 @@ class MagicalBoomerangEntity(
 		val boomereaperangLevel = getEnchantmentLevel(ModEnchantmentProvider.BOOMEREAPERANG)
 		if (boomereaperangLevel <= 0) return
 
-		val aabb = boundingBox.inflate(3.0)
+		val boomereaperangRadius = ServerConfig.CONFIG.boomereaperangRadius.get()
+		val aabb = boundingBox.inflate(boomereaperangRadius)
 		val blockPosList = BlockPos.betweenClosed(
 			BlockPos.containing(aabb.minX, aabb.minY, aabb.minZ),
 			BlockPos.containing(aabb.maxX, aabb.maxY, aabb.maxZ)
@@ -167,7 +169,8 @@ class MagicalBoomerangEntity(
 	}
 
 	private fun carryItems() {
-		val aabb = boundingBox.inflate(3.0)
+		val itemPickupRadius = ServerConfig.CONFIG.boomerangItemPickupRadius.get()
+		val aabb = boundingBox.inflate(itemPickupRadius)
 		val itemEntities = level().getEntitiesOfClass(ItemEntity::class.java, aabb)
 
 		for (itemEntity in itemEntities) {

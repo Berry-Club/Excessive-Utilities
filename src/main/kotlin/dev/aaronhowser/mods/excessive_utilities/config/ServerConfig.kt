@@ -89,6 +89,9 @@ class ServerConfig(
 	lateinit var eqSpeedThreeCostMultiplier: ModConfigSpec.DoubleValue
 	lateinit var eqWorldHoleCostMultiplier: ModConfigSpec.DoubleValue
 
+	lateinit var boomerangItemPickupRadius: ModConfigSpec.DoubleValue
+	lateinit var boomereaperangRadius: ModConfigSpec.DoubleValue
+
 	init {
 		general()
 		heatingCoil()
@@ -99,6 +102,21 @@ class ServerConfig(
 		enderQuarry()
 		rings()
 		enderQuarryFePerBlock()
+		boomerang()
+	}
+
+	private fun boomerang() {
+		builder.push("boomerang")
+
+		boomerangItemPickupRadius = builder
+			.comment("The radius in blocks around the Boomerang that it will pick up items.")
+			.defineInRange("boomerangItemPickupRadius", 4.0, 0.0, Double.MAX_VALUE)
+
+		boomereaperangRadius = builder
+			.comment("The radius in blocks around the Boomerang that it will break plants if it has the Boomereaperang enchantment.")
+			.defineInRange("boomereaperangRadius", 4.0, 0.0, Double.MAX_VALUE)
+
+		builder.pop()
 	}
 
 	private fun enderQuarryFePerBlock() {
