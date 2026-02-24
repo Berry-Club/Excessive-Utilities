@@ -44,6 +44,8 @@ class MagicalBoomerangEntity(
 
 	override fun onHitEntity(result: EntityHitResult) {
 		super.onHitEntity(result)
+		if (tickCount < 10) return
+
 		isReturning = true
 
 		val hitEntity = result.entity
