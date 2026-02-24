@@ -63,8 +63,8 @@ object ModItems : AaronItemRegistry() {
 
 	// Tools
 
-	val DESTRUCTION_PICKAXE =
-		basic("destruction_pickaxe")
+	val DESTRUCTION_PICKAXE: DeferredItem<DestructionPickaxeItem> =
+		register("destruction_pickaxe", ::DestructionPickaxeItem, DestructionPickaxeItem.DEFAULT_PROPERTIES)
 	val EROSION_SHOVEL =
 		basic("erosion_shovel")
 	val ETHERIC_SWORD: DeferredItem<EthericSwordItem> =

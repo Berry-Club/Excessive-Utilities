@@ -10,6 +10,7 @@ import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.BlockTagsProvider
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
@@ -245,6 +246,11 @@ class ModBlockTagsProvider(
 
 		tag(FIRE_AXE_MINEABLE)
 			.addTag(BlockTags.LOGS)
+
+		tag(DESTRUCTION_PICKAXE_TARGET)
+			.addTags(
+				Tags.Blocks.STONES,
+			)
 	}
 
 	companion object {
@@ -258,6 +264,7 @@ class ModBlockTagsProvider(
 		val ENDER_QUARRY_BLACKLIST = create("ender_quarry_blacklist")
 		val ENDER_QUARRY_PART = create("ender_quarry_part")
 		val FIRE_AXE_MINEABLE = create("mineable/fire_axe")
+		val DESTRUCTION_PICKAXE_TARGET = create("destruction_pickaxe_target")
 	}
 
 }
