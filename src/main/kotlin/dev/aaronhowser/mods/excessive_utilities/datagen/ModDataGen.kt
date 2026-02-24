@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvid
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModDamageTypeTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEnchantmentTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.core.HolderLookup
@@ -92,10 +93,10 @@ object ModDataGen {
 			event.includeServer(),
 			ModDamageTypeTagsProvider(output, lookupWithDatapack, existingFileHelper)
 		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModEnchantmentTagsProvider(output, dataPackProvider.registryProvider, existingFileHelper)
-//		)
+		generator.addProvider(
+			event.includeServer(),
+			ModEnchantmentTagsProvider(output, lookupWithDatapack, existingFileHelper)
+		)
 //		generator.addProvider(
 //			event.includeServer(),
 //			ModBiomeTagsProvider(output, lookupProvider, existingFileHelper)

@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.datapack
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEnchantmentTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
@@ -22,6 +23,7 @@ object ModEnchantmentProvider {
 
 	fun bootstrap(context: BootstrapContext<Enchantment>) {
 		val itemGetter = context.lookup(Registries.ITEM)
+		val enchantmentGetter = context.lookup(Registries.ENCHANTMENT)
 
 		context.register(
 			BLADERANG,
@@ -51,7 +53,9 @@ object ModEnchantmentProvider {
 					1,
 					EquipmentSlotGroup.HAND
 				)
-			).build(BOOMEREAPERANG.location())
+			)
+				.exclusiveWith(enchantmentGetter.getOrThrow(ModEnchantmentTagsProvider.BOOMERANG_BLOCK_INTERACTION))
+				.build(BOOMEREAPERANG.location())
 		)
 
 		context.register(
@@ -81,7 +85,9 @@ object ModEnchantmentProvider {
 					1,
 					EquipmentSlotGroup.HAND
 				)
-			).build(KABOOMERANG.location())
+			)
+				.exclusiveWith(enchantmentGetter.getOrThrow(ModEnchantmentTagsProvider.BOOMERANG_BLOCK_INTERACTION))
+				.build(KABOOMERANG.location())
 		)
 
 		context.register(

@@ -3,6 +3,7 @@
   "description": {
     "translate": "enchantment.excessive_utilities.boomereaperang"
   },
+  "exclusive_set": "#excessive_utilities:boomerang_block_interaction",
   "max_cost": {
     "base": 150,
     "per_level_above_first": 0
