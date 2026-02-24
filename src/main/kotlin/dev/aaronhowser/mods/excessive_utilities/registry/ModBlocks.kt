@@ -343,8 +343,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicCopiedBlock("block_of_unstable_ingot", Blocks.IRON_BLOCK)
 	val BLOCK_OF_EVIL_INFUSED_IRON: DeferredBlock<Block> =
 		basicCopiedBlock("block_of_evil_infused_iron", Blocks.IRON_BLOCK)
-	val BLOCK_OF_DEMON_METAL: DeferredBlock<Block> = // TODO: BlockItem that's fire resistant
-		basicCopiedBlock("block_of_demon_metal", Blocks.IRON_BLOCK)
+	val BLOCK_OF_DEMON_METAL: DeferredBlock<Block> =
+		registerBlockWithoutItem("block_of_demon_metal") { Block(BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)) }
 	val BLOCK_OF_ENCHANTED_METAL: DeferredBlock<Block> =
 		basicCopiedBlock("block_of_enchanted_metal", Blocks.IRON_BLOCK)
 	val ENDER_INFUSED_OBSIDIAN: DeferredBlock<Block> =

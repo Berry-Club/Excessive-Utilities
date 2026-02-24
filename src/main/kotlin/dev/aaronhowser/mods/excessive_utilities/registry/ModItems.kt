@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.*
+import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
@@ -157,10 +158,19 @@ object ModItems : AaronItemRegistry() {
 			{ FlatTransferNodeItem(it, isItemNode = false) },
 			FlatTransferNodeItem.DEFAULT_PROPERTIES
 		)
+
+	// Block Items
+
 	val ANGEL_BLOCK: DeferredItem<AngelBlockItem> =
 		register("angel_block", ::AngelBlockItem)
 	val MAGICAL_SNOW_GLOBE: DeferredItem<MagicalSnowGlobeBlockItem> =
 		register("magical_snow_globe", ::MagicalSnowGlobeBlockItem, MagicalSnowGlobeBlockItem.DEFAULT_PROPERTIES)
+	val BLOCK_OF_DEMON_METAL: DeferredItem<Item> =
+		register(
+			"block_of_demon_metal",
+			{ BlockItem(ModBlocks.BLOCK_OF_DEMON_METAL.get(), it) },
+			Item.Properties().fireResistant()
+		)
 
 	// Transfer Node Upgrades
 
