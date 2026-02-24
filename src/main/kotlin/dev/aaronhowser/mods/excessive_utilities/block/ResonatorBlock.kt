@@ -7,7 +7,6 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEn
 import dev.aaronhowser.mods.excessive_utilities.block.entity.ResonatorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.world.Containers
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity

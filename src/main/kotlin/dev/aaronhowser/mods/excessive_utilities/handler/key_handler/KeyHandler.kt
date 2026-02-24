@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.handler.key_handler
 
 import net.minecraft.world.entity.player.Player
 import java.util.*
-import kotlin.collections.set
 
 /*
 * Copied mostly from this:
