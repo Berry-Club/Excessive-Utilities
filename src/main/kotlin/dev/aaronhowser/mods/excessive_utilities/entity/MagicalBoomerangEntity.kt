@@ -1,10 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModEnchantmentProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -15,7 +17,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.ThrowableProjectile
 import net.minecraft.world.item.ItemStack
@@ -171,9 +172,9 @@ class MagicalBoomerangEntity(
 	private fun carryItems() {
 		val itemPickupRadius = ServerConfig.CONFIG.boomerangItemPickupRadius.get()
 		val aabb = boundingBox.inflate(itemPickupRadius)
-		val itemEntities = level().getEntitiesOfClass(ItemEntity::class.java, aabb)
+		val pickupEntities = level().getEntities(this, aabb).filter { it.isEntity(ModEntityTypeTagsProvider.BOOMERANG_PICKUP) }
 
-		for (itemEntity in itemEntities) {
+		for (itemEntity in pickupEntities) {
 			if (itemEntity.isAlive) {
 				itemEntity.setPos(position())
 			}

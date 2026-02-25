@@ -21,12 +21,19 @@ class ModEntityTypeTagsProvider(
 			.add(
 				EntityType.PLAYER
 			)
+
+		tag(BOOMERANG_PICKUP)
+			.add(
+				EntityType.ITEM,
+				EntityType.EXPERIENCE_ORB
+			)
 	}
 
 	companion object {
 		private fun create(id: String): TagKey<EntityType<*>> = TagKey.create(Registries.ENTITY_TYPE, ExcessiveUtilities.modResource(id))
 
 		val LASSO_BLACKLIST = create("lasso_blacklist")
+		val BOOMERANG_PICKUP = create("boomerang_pickup")
 	}
 
 }
