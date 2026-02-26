@@ -1,0 +1,43 @@
+{
+  "values": {
+    "#c:cobblestones": {
+      "Name": "minecraft:stone"
+    },
+    "#c:gravels": {
+      "Name": "minecraft:cobblestone"
+    },
+    "#c:sands": {
+      "Name": "minecraft:gravel"
+    },
+    "#minecraft:terracotta": {
+      "Name": "minecraft:clay"
+    },
+    "minecraft:dead_bush": {
+      "Name": "minecraft:oak_sapling",
+      "Properties": {
+        "stage": "0"
+      }
+    },
+    "minecraft:dirt": {
+      "Name": "minecraft:grass_block",
+      "Properties": {
+        "snowy": "false"
+      }
+    },
+    "minecraft:farmland": {
+      "Name": "minecraft:dirt"
+    },
+    "minecraft:magma_block": {
+      "Name": "minecraft:lava",
+      "Properties": {
+        "level": "0"
+      }
+    },
+    "minecraft:obsidian": {
+      "Name": "minecraft:lava",
+      "Properties": {
+        "level": "0"
+      }
+    }
+  }
+}

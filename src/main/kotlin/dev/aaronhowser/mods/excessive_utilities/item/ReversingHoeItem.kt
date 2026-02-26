@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
 import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionResult
@@ -10,8 +11,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.HoeItem
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.context.UseOnContext
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 
@@ -41,9 +40,9 @@ class ReversingHoeItem(properties: Properties) : HoeItem(UnstableTier, propertie
 			}
 		}
 
-		val conversion = CONVERSIONS[state.block]
+		val conversion = state.block.builtInRegistryHolder().getData(ReversingHoeConversion.DATA_MAP)
 		if (conversion != null) {
-			level.setBlockAndUpdate(pos, conversion.defaultBlockState())
+			level.setBlockAndUpdate(pos, conversion.outputState)
 			return InteractionResult.sidedSuccess(level.isClientSide)
 		}
 
@@ -65,19 +64,6 @@ class ReversingHoeItem(properties: Properties) : HoeItem(UnstableTier, propertie
 						),
 						EquipmentSlotGroup.MAINHAND
 					)
-			)
-
-		val CONVERSIONS: MutableMap<Block, Block> =
-			mutableMapOf(
-				Blocks.COBBLESTONE to Blocks.STONE,
-				Blocks.GRAVEL to Blocks.COBBLESTONE,
-				Blocks.SAND to Blocks.GRAVEL,
-				Blocks.MAGMA_BLOCK to Blocks.LAVA,
-				Blocks.OBSIDIAN to Blocks.LAVA,
-				Blocks.TERRACOTTA to Blocks.CLAY,
-				Blocks.FARMLAND to Blocks.DIRT,
-				Blocks.DIRT to Blocks.GRASS_BLOCK,
-				Blocks.DEAD_BUSH to Blocks.OAK_SAPLING
 			)
 	}
 
