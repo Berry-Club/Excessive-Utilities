@@ -1,9 +1,9 @@
-// 1.21.1	2026-02-24T02:27:56.6233897	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-02-26T23:18:18.0439266	Tags for minecraft:block mod id excessive_utilities
 2bef9f868fc60a1a3de29857c00073febf29cd62 data/c/tags/block/mineable/sickle.json
 7d564c8a834c5d607ca80b9a8dba9380b0335386 data/excessive_utilities/tags/block/collectable_by_boomereaperang.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/excessive_utilities/tags/block/creative_harvest_blacklist.json
 174446959ea51f74caed5b70a109ef3f49ecea86 data/excessive_utilities/tags/block/destruction_pickaxe_target.json
-35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/excessive_utilities/tags/block/ender_quarry_blacklist.json
+f8b9073a9052798f83bdc2da8698d17de3e9f417 data/excessive_utilities/tags/block/ender_quarry_blacklist.json
 649d76d2175d8567a6fd6a41e88c6e82900d6aa5 data/excessive_utilities/tags/block/ender_quarry_part.json
 8970eaead49e586815b02b3e41010dbe9693ff29 data/excessive_utilities/tags/block/erosion_shovel_target.json
 b147fcff5c0b4d72df1cb7809b063b2562180832 data/excessive_utilities/tags/block/mineable/fire_axe.json

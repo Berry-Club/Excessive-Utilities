@@ -1,3 +1,7 @@
 {
-  "values": []
+  "values": [
+    "minecraft:dirt",
+    "minecraft:bedrock",
+    "minecraft:cobblestone"
+  ]
 }

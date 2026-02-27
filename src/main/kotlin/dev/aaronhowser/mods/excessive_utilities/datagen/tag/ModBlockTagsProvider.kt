@@ -229,6 +229,11 @@ class ModBlockTagsProvider(
 
 		tag(CREATIVE_HARVEST_BLACKLIST)
 		tag(ENDER_QUARRY_BLACKLIST)
+			.add(
+				Blocks.DIRT,
+				Blocks.BEDROCK,
+				Blocks.COBBLESTONE
+			)
 
 		tag(ENDER_QUARRY_PART)
 			.add(

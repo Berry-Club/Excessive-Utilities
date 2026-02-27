@@ -190,7 +190,7 @@ class EnderQuarryBlockEntity(
 		if (hasWorldHoleUpgrade) {
 			level.removeBlock(target, false)
 		} else {
-			level.setBlock(target, Blocks.COBBLESTONE.defaultBlockState(), Block.UPDATE_ALL)
+			level.setBlock(target, Blocks.DIRT.defaultBlockState(), Block.UPDATE_ALL)
 		}
 	}
 
