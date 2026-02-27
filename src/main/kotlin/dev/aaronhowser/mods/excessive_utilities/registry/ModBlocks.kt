@@ -110,8 +110,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("furnace")
 	val ENCHANTER =
 		basicBlock("enchanter")
-	val QUANTUM_QUARRY =
-		basicBlock("quantum_quarry")
+	val QUANTUM_QUARRY: DeferredBlock<QuantumQuarryBlock> =
+		registerBlock("quantum_quarry", ::QuantumQuarryBlock)
 	val QUANTUM_QUARRY_ACTUATOR =
 		basicBlock("quantum_quarry_actuator")
 

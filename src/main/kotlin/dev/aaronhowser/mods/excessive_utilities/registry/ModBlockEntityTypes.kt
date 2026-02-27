@@ -51,6 +51,8 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("ender_quarry", ::EnderQuarryBlockEntity, ModBlocks.ENDER_QUARRY)
 	val FILING_CABINET: DeferredHolder<BlockEntityType<*>, BlockEntityType<FilingCabinetBlockEntity>> =
 		register("filing_cabinet", ::FilingCabinetBlockEntity, ModBlocks.FILING_CABINET, ModBlocks.ADVANCED_FILING_CABINET)
+	val QUANTUM_QUARRY: DeferredHolder<BlockEntityType<*>, BlockEntityType<QuantumQuarryBlockEntity>> =
+		register("quantum_quarry", ::QuantumQuarryBlockEntity, ModBlocks.QUANTUM_QUARRY)
 
 	val ENDER_QUARRY_UPGRADE: DeferredHolder<BlockEntityType<*>, BlockEntityType<EnderQuarryUpgradeBlockEntity>> =
 		register(
