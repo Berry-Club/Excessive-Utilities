@@ -9,9 +9,11 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.resources.ResourceKey
 import net.minecraft.util.Unit
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.component.CustomData
+import net.minecraft.world.level.biome.Biome
 import net.neoforged.neoforge.fluids.SimpleFluidContent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -54,5 +56,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		int("countdown")
 	val THROWN_BOOMERANG: DeferredHolder<DataComponentType<*>, DataComponentType<UUID>> =
 		uuid("thrown_boomerang")
+	val BIOME: DeferredHolder<DataComponentType<*>, DataComponentType<ResourceKey<Biome>>> =
+		register("biome", ResourceKey.codec(Registries.BIOME), ResourceKey.streamCodec(Registries.BIOME))
 
 }

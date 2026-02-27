@@ -1,8 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -46,13 +48,36 @@ class QuantumQuarryBlockEntity(
 	}
 
 	private fun initializeTarget(miningDimensionLevel: ServerLevel) {
-		val nextChunkPos = ChunkPos(
+		var nextChunkPos = ChunkPos(
 			miningDimensionLevel.random.nextInt(-100_000, 100_000),
 			miningDimensionLevel.random.nextInt(-100_000, 100_000)
 		)
 
+		val filter = getBiomeFilter()
+		val filteredBiome = filter.get(ModDataComponents.BIOME)
+		if (filteredBiome != null) {
+			val referencePos = nextChunkPos.getBlockAt(0, 0, 0)
+			val nearestBiome = miningDimensionLevel
+				.findClosestBiome3d(
+					{ holder -> holder.isHolder(filteredBiome) },
+					referencePos,
+					20_000,
+					32,
+					64
+				)
+
+			if (nearestBiome != null) {
+				val biomePos = nearestBiome.first
+				nextChunkPos = ChunkPos(biomePos)
+			}
+		}
+
 		targetChunk = nextChunkPos
-		targetBlockPos = BlockPos(nextChunkPos.minBlockX, miningDimensionLevel.maxBuildHeight, nextChunkPos.minBlockZ)
+		targetBlockPos = BlockPos(
+			nextChunkPos.minBlockX,
+			miningDimensionLevel.maxBuildHeight,
+			nextChunkPos.minBlockZ
+		)
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
