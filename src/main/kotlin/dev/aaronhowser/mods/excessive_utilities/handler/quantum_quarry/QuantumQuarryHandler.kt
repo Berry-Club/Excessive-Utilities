@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.saveddata.SavedData
+import kotlin.math.abs
 
 class QuantumQuarryHandler : SavedData() {
 
@@ -17,22 +18,41 @@ class QuantumQuarryHandler : SavedData() {
 		return tag
 	}
 
+	/**
+	 * Follows this pattern:
+	 * 234
+	 * 516
+	 * 789
+	 * Don't spiral outwards, just skip internal chunks until the radius is reached, then move to the next radius.
+	 */
 	fun getNextChunk(): ChunkPos {
+		// If in the bottom right corner, make the radius larger and jump to the new top left
 		if (mostRecentChunk.x == radius && mostRecentChunk.z == radius) {
 			radius++
 			mostRecentChunk = ChunkPos(-radius, -radius)
-
 			setDirty()
 			return mostRecentChunk
 		}
 
-		if (mostRecentChunk.x == radius) {
-			mostRecentChunk = ChunkPos(-radius, mostRecentChunk.z + 1)
+		// If on the top or bottom line, move horizontally
+		if (abs(mostRecentChunk.z) == radius) {
+			mostRecentChunk = ChunkPos(mostRecentChunk.x + 1, mostRecentChunk.z)
 			setDirty()
 			return mostRecentChunk
 		}
 
-		mostRecentChunk = ChunkPos(mostRecentChunk.x + 1, mostRecentChunk.z)
+		// In the middle rows
+
+		// If on the left, jump right
+		if (mostRecentChunk.x == -radius) {
+			mostRecentChunk = ChunkPos(radius, mostRecentChunk.z)
+			setDirty()
+			return mostRecentChunk
+		}
+
+		// Can only be on the right, jump back left and go down one
+
+		mostRecentChunk = ChunkPos(-radius, mostRecentChunk.z + 1)
 		setDirty()
 		return mostRecentChunk
 	}
