@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -22,12 +23,17 @@ class QuantumQuarryBlockEntity(
 ) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state) {
 
 	private val energyStorage = EnergyStorage(1_000_000)
+	private val container = ImprovedSimpleContainer(this, 3)
 
 	private var uuid: UUID? = null
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
 	private var targetChunk: ChunkPos? = null
 	private var targetBlockPos: BlockPos? = null
+
+	private fun getItemFilter() = container.getItem(ITEM_FILTER_SLOT_INDEX)
+	private fun getEnchantedBook() = container.getItem(ENCHANTED_BOOK_SLOT_INDEX)
+	private fun getBiomeFilter() = container.getItem(BIOME_FILTER_SLOT_INDEX)
 
 	private fun serverTick(quarryLevel: ServerLevel, miningDimensionLevel: ServerLevel) {
 		if (targetChunk == null || targetBlockPos == null) {
@@ -89,6 +95,9 @@ class QuantumQuarryBlockEntity(
 		const val TARGET_CHUNK_POS_NBT = "TargetChunkPos"
 		const val TARGET_BLOCK_POS_NBT = "TargetBlockPos"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
+		const val ITEM_FILTER_SLOT_INDEX = 0
+		const val ENCHANTED_BOOK_SLOT_INDEX = 1
+		const val BIOME_FILTER_SLOT_INDEX = 2
 
 		fun tick(
 			level: Level,
