@@ -86,13 +86,7 @@ class QuantumQuarryBlockEntity(
 
 	override fun setRemoved() {
 		super.setRemoved()
-
-		val level = level
-		val targetChunk = targetChunk
-		if (level is ServerLevel && targetChunk != null) {
-			val miningDimensionLevel = getMiningLevel(level)
-			miningDimensionLevel?.setChunkForced(targetChunk.x, targetChunk.z, false)
-		}
+		setChunkForced(level, targetChunk, false)
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -154,8 +148,10 @@ class QuantumQuarryBlockEntity(
 			}
 		}
 
-		private fun getMiningLevel(level: ServerLevel): ServerLevel? {
-			return level.server.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL)
+		private fun setChunkForced(quarryLevel: Level?, chunkPos: ChunkPos?, forced: Boolean) {
+			if (quarryLevel !is ServerLevel || chunkPos == null) return
+			val miningLevel = quarryLevel.server.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL) ?: return
+			miningLevel.setChunkForced(chunkPos.x, chunkPos.z, forced)
 		}
 	}
 
