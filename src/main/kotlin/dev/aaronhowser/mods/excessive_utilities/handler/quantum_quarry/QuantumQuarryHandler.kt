@@ -17,6 +17,26 @@ class QuantumQuarryHandler : SavedData() {
 		return tag
 	}
 
+	fun getNextChunk(): ChunkPos {
+		if (mostRecentChunk.x == radius && mostRecentChunk.z == radius) {
+			radius++
+			mostRecentChunk = ChunkPos(-radius, -radius)
+
+			setDirty()
+			return mostRecentChunk
+		}
+
+		if (mostRecentChunk.x == radius) {
+			mostRecentChunk = ChunkPos(-radius, mostRecentChunk.z + 1)
+			setDirty()
+			return mostRecentChunk
+		}
+
+		mostRecentChunk = ChunkPos(mostRecentChunk.x + 1, mostRecentChunk.z)
+		setDirty()
+		return mostRecentChunk
+	}
+
 	companion object {
 		const val SAVED_DATA_NAME = "eu_quantum_quarry_handler"
 		const val RADIUS_TAG = "Radius"
