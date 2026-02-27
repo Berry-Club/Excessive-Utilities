@@ -47,6 +47,13 @@ class QuantumQuarryBlockEntity(
 
 	}
 
+	private var progressThroughBlock = 0.0
+	private var feProgress = 0.0
+
+	fun progressMine(level: ServerLevel) {
+		if (level.hasNeighborSignal(blockPos)) return
+	}
+
 	private fun targetNewChunk(miningDimensionLevel: ServerLevel) {
 		val previousChunk = targetChunk
 		if (previousChunk != null) {

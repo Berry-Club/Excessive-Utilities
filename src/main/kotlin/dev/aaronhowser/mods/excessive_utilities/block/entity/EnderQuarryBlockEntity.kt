@@ -126,8 +126,8 @@ class EnderQuarryBlockEntity(
 		progressMine(level)
 	}
 
-	var progressThroughBlock = 0.0
-	var feProgress = 0.0
+	private var progressThroughBlock = 0.0
+	private var feProgress = 0.0
 
 	fun progressMine(level: ServerLevel) {
 		if (level.hasNeighborSignal(blockPos)) return
