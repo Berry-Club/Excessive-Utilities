@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -12,7 +13,7 @@ class QuantumQuarryBlockEntity(
 	state: BlockState
 ) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state) {
 
-	private fun serverTick(level: ServerLevel) {
+	private fun serverTick(quarryLevel: ServerLevel, miningDimensionLevel: ServerLevel) {
 
 	}
 
@@ -24,7 +25,8 @@ class QuantumQuarryBlockEntity(
 			blockEntity: QuantumQuarryBlockEntity
 		) {
 			if (level is ServerLevel) {
-				blockEntity.serverTick(level)
+				val miningDimensionLevel = level.server.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL) ?: return
+				blockEntity.serverTick(level, miningDimensionLevel)
 			}
 		}
 	}

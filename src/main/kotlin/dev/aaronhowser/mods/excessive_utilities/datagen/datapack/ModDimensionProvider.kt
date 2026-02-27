@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
@@ -13,10 +14,10 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 
 object ModDimensionProvider {
 
-	private fun createRk(name: String): ResourceKey<LevelStem> =
-		ResourceKey.create(Registries.LEVEL_STEM, ExcessiveUtilities.modResource(name))
-
-	val QUANTUM_QUARRY = createRk("quantum_quarry")
+	val QUANTUM_QUARRY_LEVEL_STEM: ResourceKey<LevelStem> =
+		ResourceKey.create(Registries.LEVEL_STEM, ExcessiveUtilities.modResource("quantum_quarry"))
+	val QUANTUM_QUARRY_LEVEL: ResourceKey<Level> =
+		ResourceKey.create(Registries.DIMENSION, ExcessiveUtilities.modResource("quantum_quarry"))
 
 	fun bootstrap(context: BootstrapContext<LevelStem>) {
 		val dimensionTypeLookup =
@@ -47,7 +48,7 @@ object ModDimensionProvider {
 			)
 
 		context.register(
-			QUANTUM_QUARRY,
+			QUANTUM_QUARRY_LEVEL_STEM,
 			LevelStem(
 				overworldDimensionType,
 				chunkGenerator
