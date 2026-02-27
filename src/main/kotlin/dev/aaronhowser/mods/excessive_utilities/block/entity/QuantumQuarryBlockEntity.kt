@@ -39,7 +39,7 @@ class QuantumQuarryBlockEntity(
 
 	private fun serverTick(quarryLevel: ServerLevel, miningDimensionLevel: ServerLevel) {
 		if (targetChunk == null || targetBlockPos == null) {
-			initializeTarget(miningDimensionLevel)
+			targetNewChunk(miningDimensionLevel)
 		}
 
 		val targetChunk = targetChunk ?: return
@@ -47,14 +47,13 @@ class QuantumQuarryBlockEntity(
 
 	}
 
-	private fun initializeTarget(miningDimensionLevel: ServerLevel) {
+	private fun targetNewChunk(miningDimensionLevel: ServerLevel) {
 		var nextChunkPos = ChunkPos(
 			miningDimensionLevel.random.nextInt(-100_000, 100_000),
 			miningDimensionLevel.random.nextInt(-100_000, 100_000)
 		)
 
-		val filter = getBiomeFilter()
-		val filteredBiome = filter.get(ModDataComponents.BIOME)
+		val filteredBiome = getBiomeFilter().get(ModDataComponents.BIOME)
 		if (filteredBiome != null) {
 			val referencePos = nextChunkPos.getBlockAt(0, 0, 0)
 			val nearestBiome = miningDimensionLevel
