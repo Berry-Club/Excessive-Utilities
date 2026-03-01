@@ -54,6 +54,15 @@ class QuantumQuarryBlockEntity(
 		if (level.hasNeighborSignal(blockPos)) return
 	}
 
+	// Start at the top of the chunk's minimum corner,
+	// and then mine downwards until it hits bedrock.
+	// Then do +1 to the X, and repeat until at max X.
+	// Go back to minX, then do +1 to Z, and repeat until at max Z.
+	// Then pick a new chunk and repeat.
+	private fun advanceTarget(miningDimensionLevel: ServerLevel) {
+
+	}
+
 	private fun targetNewChunk(miningDimensionLevel: ServerLevel) {
 		val previousChunk = targetChunk
 		if (previousChunk != null) {
