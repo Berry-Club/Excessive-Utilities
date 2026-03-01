@@ -52,7 +52,6 @@ class EnderQuarryBlockEntity(
 
 	private val energyStorage = EnergyStorage(1_000_000)
 
-	private var uuid: UUID? = null
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
 	private val upgradePositions: MutableSet<BlockPos> = mutableSetOf()
@@ -566,12 +565,7 @@ class EnderQuarryBlockEntity(
 	private fun initFakePlayer() {
 		val level = level as? ServerLevel ?: return
 
-		if (this.uuid == null) {
-			this.uuid = UUID.randomUUID()
-			setChanged()
-		}
-
-		val gameProfile = GameProfile(this.uuid, "EU_EnderQuarry")
+		val gameProfile = GameProfile(UUID.randomUUID(), "EU_EnderQuarry")
 		val fakePlayer = FakePlayerFactory.get(level, gameProfile)
 
 		fakePlayer.isSilent = true

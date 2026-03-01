@@ -29,7 +29,6 @@ class QuantumQuarryBlockEntity(
 	private val energyStorage = EnergyStorage(1_000_000)
 	private val container = ImprovedSimpleContainer(this, 3)
 
-	private var uuid: UUID? = null
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
 	private var targetChunk: ChunkPos? = null
@@ -116,12 +115,7 @@ class QuantumQuarryBlockEntity(
 	private fun initFakePlayer() {
 		val level = level as? ServerLevel ?: return
 
-		if (this.uuid == null) {
-			this.uuid = UUID.randomUUID()
-			setChanged()
-		}
-
-		val gameProfile = GameProfile(this.uuid, "EU_QuantumQuarry")
+		val gameProfile = GameProfile(UUID.randomUUID(), "EU_QuantumQuarry")
 		val fakePlayer = FakePlayerFactory.get(level, gameProfile)
 
 		fakePlayer.isSilent = true
