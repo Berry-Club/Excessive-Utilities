@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import com.mojang.authlib.GameProfile
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
+import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgradeType
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
@@ -39,6 +39,7 @@ import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.items.wrapper.InvWrapper
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -50,7 +51,9 @@ class EnderQuarryBlockEntity(
 	state: BlockState
 ) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state) {
 
-	private val energyStorage = EnergyStorage(1_000_000)
+	private val energyStorage: EnergyStorage = EnergyStorage(1_000_000)
+	val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
+	val itemHandler: InvWrapper = InvWrapper(bufferContainer)
 
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
@@ -122,7 +125,31 @@ class EnderQuarryBlockEntity(
 			initFakePlayer()
 		}
 
+		pushOutItems(level)
+		if (!bufferContainer.isEmpty) return
+
 		progressMine(level)
+	}
+
+	private fun pushOutItems(level: ServerLevel) {
+		if (bufferContainer.isEmpty) return
+
+		val adjacentItemHandlers = Direction.entries
+			.mapNotNull { level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos.relative(it), it.opposite) }
+
+		for (destinationHandler in adjacentItemHandlers) {
+			for (slot in 0 until itemHandler.slots) {
+				val stack = itemHandler.getStackInSlot(slot)
+				if (stack.isEmpty) continue
+
+				val simRemainder = ItemHandlerHelper.insertItemStacked(destinationHandler, stack, true)
+				val amountAccepted = stack.count - simRemainder.count
+				if (amountAccepted > 0) {
+					val extracted = itemHandler.extractItem(slot, amountAccepted, false)
+					ItemHandlerHelper.insertItemStacked(destinationHandler, extracted, false)
+				}
+			}
+		}
 	}
 
 	private var progressThroughBlock = 0.0
@@ -179,7 +206,9 @@ class EnderQuarryBlockEntity(
 
 	private fun actuallyMineBlock(level: ServerLevel, target: BlockPos) {
 		val drops = gatherDrops(level, target)
-		placeDrops(level, drops)
+		for (drop in drops) {
+			bufferContainer.addItem(drop)
+		}
 
 		val hasWorldHoleUpgrade = getUpgrades().contains(EnderQuarryUpgradeType.WORLD_HOLE)
 
@@ -188,32 +217,6 @@ class EnderQuarryBlockEntity(
 		} else {
 			level.setBlock(target, Blocks.DIRT.defaultBlockState(), Block.UPDATE_ALL)
 		}
-	}
-
-	private fun placeDrops(level: ServerLevel, drops: List<ItemStack>) {
-		val leftoverStacks = mutableListOf<ItemStack>()
-
-		val itemHandler = level.getCapability(
-			Capabilities.ItemHandler.BLOCK,
-			blockPos.relative(Direction.UP),
-			Direction.DOWN
-		)
-
-		if (itemHandler == null) {
-			leftoverStacks.addAll(drops)
-		} else {
-			for (drop in drops) {
-				val leftover = ItemHandlerHelper.insertItemStacked(itemHandler, drop, false)
-				if (leftover.isNotEmpty()) {
-					leftoverStacks.add(leftover)
-				}
-			}
-		}
-
-		for (leftover in leftoverStacks) {
-			Block.popResourceFromFace(level, blockPos, Direction.UP, leftover)
-		}
-
 	}
 
 	private fun gatherDrops(level: ServerLevel, target: BlockPos): List<ItemStack> {
