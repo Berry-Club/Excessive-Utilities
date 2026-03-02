@@ -174,6 +174,13 @@ object CommonEvents {
 
 		event.registerBlockEntity(
 			Capabilities.EnergyStorage.BLOCK,
+			ModBlockEntityTypes.QUANTUM_QUARRY.get(),
+			QuantumQuarryBlockEntity::getEnergyCapability
+		)
+
+
+		event.registerBlockEntity(
+			Capabilities.EnergyStorage.BLOCK,
 			ModBlockEntityTypes.CREATIVE_ENERGY_SOURCE.get(),
 			CreativeEnergySourceBlockEntity::getEnergyCapability
 		)

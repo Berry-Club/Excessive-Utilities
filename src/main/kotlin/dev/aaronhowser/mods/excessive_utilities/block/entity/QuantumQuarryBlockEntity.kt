@@ -28,6 +28,7 @@ import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.EnergyStorage
+import net.neoforged.neoforge.energy.IEnergyStorage
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -295,6 +296,10 @@ class QuantumQuarryBlockEntity(
 
 				blockEntity.serverTick(level, miningDimensionLevel)
 			}
+		}
+
+		fun getEnergyCapability(quarry: QuantumQuarryBlockEntity, direction: Direction?): IEnergyStorage {
+			return quarry.energyStorage
 		}
 
 		private fun setChunkForced(quarryLevel: Level?, chunkPos: ChunkPos?, forced: Boolean) {
