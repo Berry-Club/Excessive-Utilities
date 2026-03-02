@@ -3,18 +3,25 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import com.mojang.authlib.GameProfile
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
+import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.Items
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.loot.LootParams
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.EnergyStorage
@@ -47,16 +54,64 @@ class QuantumQuarryBlockEntity(
 			targetNewChunk(miningDimensionLevel)
 		}
 
-		val targetChunk = targetChunk ?: return
-		val targetBlockPos = targetBlockPos ?: return
-
+		progressMine(quarryLevel)
 	}
 
 	private var progressThroughBlock = 0.0
 	private var feProgress = 0.0
 
-	fun progressMine(level: ServerLevel) {
-		if (level.hasNeighborSignal(blockPos)) return
+	private fun progressMine(miningDimensionLevel: ServerLevel) {
+		if (miningDimensionLevel.hasNeighborSignal(blockPos)) return
+
+		val fePerBlock = ServerConfig.CONFIG.quantumQuarryFePerBlock.get()
+		if (energyStorage.energyStored < fePerBlock) return
+
+		val blocksPerTick = ServerConfig.CONFIG.quantumQuarryBlocksPerTick.get()
+		progressThroughBlock += blocksPerTick
+
+		while (progressThroughBlock >= 1.0) {
+			progressThroughBlock -= 1.0
+
+			val target = targetBlockPos ?: return
+		}
+	}
+
+	private fun getDrops(miningDimensionLevel: ServerLevel, target: BlockPos): List<ItemStack> {
+		val targetState = miningDimensionLevel.getBlockState(target)
+
+		var tool = Items.NETHERITE_PICKAXE.defaultInstance
+		if (targetState.requiresCorrectToolForDrops()) {
+			val shovel = Items.NETHERITE_SHOVEL.defaultInstance
+			if (shovel.isCorrectToolForDrops(targetState)) {
+				tool = shovel
+			} else {
+				val axe = Items.NETHERITE_AXE.defaultInstance
+				if (axe.isCorrectToolForDrops(targetState)) {
+					tool = axe
+				}
+			}
+		}
+
+		val enchantmentLookup = miningDimensionLevel.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+		val enchantments = getEnchantedBook().getAllEnchantments(enchantmentLookup)
+		tool.set(DataComponents.ENCHANTMENTS, enchantments)
+
+		val lootParams = LootParams.Builder(miningDimensionLevel)
+			.withParameter(LootContextParams.ORIGIN, target.center)
+			.withParameter(LootContextParams.TOOL, tool)
+			.withParameter(LootContextParams.BLOCK_STATE, targetState)
+
+		val player = fakePlayer?.get()
+		if (player != null) {
+			lootParams.withParameter(LootContextParams.THIS_ENTITY, player)
+		}
+
+		val be = miningDimensionLevel.getBlockEntity(target)
+		if (be != null) {
+			lootParams.withParameter(LootContextParams.BLOCK_ENTITY, be)
+		}
+
+		return targetState.getDrops(lootParams)
 	}
 
 	private fun canQuarryMineBlock(miningDimensionLevel: ServerLevel, blockPos: BlockPos): Boolean {
