@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.entity.EnderQuarryBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -53,6 +55,17 @@ class EnderQuarryBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)), EntityBl
 		}
 
 		return InteractionResult.SUCCESS
+	}
+
+	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
+		if (!state.isBlock(newState.block)) {
+			val be = level.getBlockEntity(pos)
+			if (be is ContainerContainer) {
+				be.dropContents(level, pos)
+			}
+		}
+
+		super.onRemove(state, level, pos, newState, movedByPiston)
 	}
 
 }

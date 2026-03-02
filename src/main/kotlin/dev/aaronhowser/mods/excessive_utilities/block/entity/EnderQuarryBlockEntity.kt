@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import com.mojang.authlib.GameProfile
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgradeType
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
@@ -22,6 +23,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -50,11 +52,13 @@ import java.util.*
 class EnderQuarryBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state) {
+) : BlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state), ContainerContainer {
 
 	private val energyStorage: EnergyStorage = EnergyStorage(1_000_000)
-	val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
-	val itemHandler: InvWrapper = InvWrapper(bufferContainer)
+	private val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
+	private val itemHandler: InvWrapper = InvWrapper(bufferContainer)
+
+	override fun getContainer(): Container = bufferContainer
 
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
