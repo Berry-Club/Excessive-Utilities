@@ -90,6 +90,8 @@ class QuantumQuarryBlockEntity(
 				energyStorage.extractEnergy(feToExtract, false)
 				feProgress -= feToExtract
 			}
+
+			advanceTarget(miningDimensionLevel)
 		}
 	}
 
