@@ -540,24 +540,6 @@ class EnderQuarryBlockEntity(
 			}
 		}
 
-		for (dir in directions) {
-			val checkPos = markerPos.relative(dir).mutable()
-			var locationsChecked = 0
-
-			while (locationsChecked < searchDistance) {
-				locationsChecked++
-				checkPos.move(dir)
-
-				val checkState = level.getBlockState(checkPos)
-				if (checkState.isBlock(ModBlocks.ENDER_MARKER)) {
-					markers.add(checkPos.immutable())
-					break
-				}
-			}
-
-			if (markers.size == 3) break
-		}
-
 		if (markers.size < 3) return false
 
 		val minX = markers.minOf(BlockPos::getX)
