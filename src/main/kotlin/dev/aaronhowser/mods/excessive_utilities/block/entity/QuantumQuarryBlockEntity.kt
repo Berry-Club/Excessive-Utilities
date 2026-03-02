@@ -8,16 +8,19 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionPro
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
@@ -69,14 +72,27 @@ class QuantumQuarryBlockEntity(
 		val blocksPerTick = ServerConfig.CONFIG.quantumQuarryBlocksPerTick.get()
 		progressThroughBlock += blocksPerTick
 
+		val myLevel = level ?: return
+
 		while (progressThroughBlock >= 1.0) {
 			progressThroughBlock -= 1.0
 
 			val target = targetBlockPos ?: return
+			val drops = gatherDrops(miningDimensionLevel, target)
+			for (drop in drops) {
+				Block.popResourceFromFace(myLevel, worldPosition, Direction.UP, drop)
+			}
+
+			feProgress += fePerBlock
+			val feToExtract = Mth.floor(feProgress)
+			if (feToExtract > 0) {
+				energyStorage.extractEnergy(feToExtract, false)
+				feProgress -= feToExtract
+			}
 		}
 	}
 
-	private fun getDrops(miningDimensionLevel: ServerLevel, target: BlockPos): List<ItemStack> {
+	private fun gatherDrops(miningDimensionLevel: ServerLevel, target: BlockPos): List<ItemStack> {
 		val targetState = miningDimensionLevel.getBlockState(target)
 
 		var tool = Items.NETHERITE_PICKAXE.defaultInstance
