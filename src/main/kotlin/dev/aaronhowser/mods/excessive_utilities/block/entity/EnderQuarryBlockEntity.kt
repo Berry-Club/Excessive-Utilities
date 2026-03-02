@@ -128,7 +128,7 @@ class EnderQuarryBlockEntity(
 	private var progressThroughBlock = 0.0
 	private var feProgress = 0.0
 
-	fun progressMine(level: ServerLevel) {
+	private fun progressMine(level: ServerLevel) {
 		if (level.hasNeighborSignal(blockPos)) return
 
 		confirmTarget(level) ?: return
@@ -148,22 +148,7 @@ class EnderQuarryBlockEntity(
 		}
 
 		progressThroughBlock += blocksPerTick
-		mineBlocks(level, fePerBlock)
-	}
 
-	private fun confirmTarget(level: ServerLevel): BlockPos? {
-		if (targetPos == null) {
-			if (!checkBoundaries(level)) {
-				trySetBoundaries(level)
-			}
-
-			advanceTargetPos(level)
-		}
-
-		return targetPos
-	}
-
-	private fun mineBlocks(level: ServerLevel, fePerBlock: Double) {
 		while (progressThroughBlock > 1.0) {
 			progressThroughBlock -= 1.0
 
@@ -178,6 +163,18 @@ class EnderQuarryBlockEntity(
 				feProgress -= feToExtract
 			}
 		}
+	}
+
+	private fun confirmTarget(level: ServerLevel): BlockPos? {
+		if (targetPos == null) {
+			if (!checkBoundaries(level)) {
+				trySetBoundaries(level)
+			}
+
+			advanceTargetPos(level)
+		}
+
+		return targetPos
 	}
 
 	private fun actuallyMineBlock(level: ServerLevel, target: BlockPos) {
