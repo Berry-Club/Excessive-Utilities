@@ -76,7 +76,7 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 	val MANUAL_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<ManualMillBlockEntity>> =
 		register("manual_mill", ::ManualMillBlockEntity, ModBlocks.MANUAL_MILL)
 	val GP_PANEL: DeferredHolder<BlockEntityType<*>, BlockEntityType<GpPanelBlockEntity>> =
-		register("gp_panel", ::GpPanelBlockEntity, ModBlocks.SOLAR_PANEL)
+		register("gp_panel", ::GpPanelBlockEntity, ModBlocks.SOLAR_PANEL, ModBlocks.LUNAR_PANEL)
 	val LAVA_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<LavaMillBlockEntity>> =
 		register("lava_mill", ::LavaMillBlockEntity, ModBlocks.LAVA_MILL)
 	val FIRE_MILL: DeferredHolder<BlockEntityType<*>, BlockEntityType<FireMillBlockEntity>> =
