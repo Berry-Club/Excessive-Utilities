@@ -38,6 +38,65 @@ class ModBlockStateProvider(
 		quantumQuarryActuator()
 		peacefulTable()
 		cursedEarth()
+		chandelier()
+	}
+
+	private fun chandelier() {
+		val block = ModBlocks.CHANDELIER.get()
+
+		val texture = modLoc("block/chandelier")
+
+		val model = models()
+			.withExistingParent(name(block), "block/block")
+			.texture("particle", texture)
+			.texture("texture", texture)
+			.renderType(RenderType.cutout().name)
+
+			.element {
+				from(8f, 0f, 0.8f)
+				to(8f, 16f, 15.2f)
+				shade(false)
+
+				rotation()
+					.origin(8f, 8f, 8f)
+					.axis(Direction.Axis.Y)
+					.angle(45f)
+					.end()
+
+				face(Direction.EAST) {
+					texture("#texture")
+					uvs(0f, 0f, 16f, 16f)
+				}
+
+				face(Direction.WEST) {
+					texture("#texture")
+					uvs(0f, 0f, 16f, 16f)
+				}
+			}
+
+			.element {
+				from(0.8f, 0f, 8f)
+				to(15.2f, 16f, 8f)
+				shade(false)
+
+				rotation()
+					.origin(8f, 8f, 8f)
+					.axis(Direction.Axis.Y)
+					.angle(45f)
+					.end()
+
+				face(Direction.NORTH) {
+					texture("#texture")
+					uvs(0f, 0f, 16f, 16f)
+				}
+
+				face(Direction.SOUTH) {
+					texture("#texture")
+					uvs(0f, 0f, 16f, 16f)
+				}
+			}
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun cursedEarth() {
