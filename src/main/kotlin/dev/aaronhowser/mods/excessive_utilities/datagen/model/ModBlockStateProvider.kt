@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.element
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -64,39 +65,40 @@ class ModBlockStateProvider(
 			.texture("side", side)
 			.texture("particle", top)
 
-			.element()
-			.from(0f, 12f, 0f)
-			.to(16f, 16f, 16f)
-			.allFaces { dir, fb ->
-				val texture = when (dir) {
-					Direction.UP -> "#top"
-					Direction.DOWN -> "#bottom"
-					else -> "#side"
-				}
+			.element {
+				from(0f, 12f, 0f)
+				to(16f, 16f, 16f)
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
 
-				fb.texture(texture)
-				fb.cullface(dir)
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
 			}
-			.end()
+
 
 		fun leg(minX: Float, minZ: Float) {
 			model = model
-				.element()
-				.from(minX, 0f, minZ)
-				.to(minX + 4, 12f, minZ + 4)
-				.allFacesExcept(
-					{ dir, fb ->
-						val texture = when (dir) {
-							Direction.DOWN -> "#bottom"
-							else -> "#side"
-						}
+				.element {
+					from(minX, 0f, minZ)
+					to(minX + 4, 12f, minZ + 4)
+					allFacesExcept(
+						{ dir, fb ->
+							val texture = when (dir) {
+								Direction.DOWN -> "#bottom"
+								else -> "#side"
+							}
 
-						fb.texture(texture)
-						fb.cullface(dir)
-					},
-					setOf(Direction.UP)
-				)
-				.end()
+							fb.texture(texture)
+							fb.cullface(dir)
+						},
+						setOf(Direction.UP)
+					)
+				}
 		}
 
 		leg(1f, 1f)
@@ -159,20 +161,20 @@ class ModBlockStateProvider(
 			.texture("side", side)
 			.texture("particle", side)
 
-			.element()
-			.from(0f, 0f, 0f)
-			.to(16f, 15f, 16f)
-			.allFaces { dir, fb ->
-				val texture = when (dir) {
-					Direction.UP -> "#top"
-					Direction.DOWN -> "#bottom"
-					else -> "#side"
-				}
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 15f, 16f)
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
 
-				fb.texture(texture)
-				fb.cullface(dir)
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
 			}
-			.end()
 
 		simpleBlockWithItem(block, model)
 	}
@@ -196,26 +198,26 @@ class ModBlockStateProvider(
 				.texture("particle", mcLoc("block/stone"))
 				.renderType(RenderType.cutout().name)
 
-				.element()
-				.from(0f, 0f, 0f)
-				.to(16f, 16f, 16f)
-				.allFaces { dir, fb ->
-					fb.texture("#stone")
-					fb.cullface(dir)
-					fb.uvs(0f, 0f, 16f, 16f)
+				.element {
+					from(0f, 0f, 0f)
+					to(16f, 16f, 16f)
+					allFaces { dir, fb ->
+						fb.texture("#stone")
+						fb.cullface(dir)
+						fb.uvs(0f, 0f, 16f, 16f)
+					}
 				}
-				.end()
 
-				.element()
-				.from(0f, 0f, 0f)
-				.to(16f, 16f, 16f)
-				.allFaces { dir, fb ->
-					fb.texture("#overlay")
-					fb.cullface(dir)
-					fb.uvs(0f, 0f, 16f, 16f)
+				.element {
+					from(0f, 0f, 0f)
+					to(16f, 16f, 16f)
+					allFaces { dir, fb ->
+						fb.texture("#overlay")
+						fb.cullface(dir)
+						fb.uvs(0f, 0f, 16f, 16f)
+					}
+					emissivity(8, 8)
 				}
-				.emissivity(8, 8)
-				.end()
 
 			getVariantBuilder(block)
 				.forAllStates {
@@ -373,38 +375,39 @@ class ModBlockStateProvider(
 			.texture("particle", modLoc("block/generator/side"))
 			.renderType(RenderType.cutout().name)
 
-			.element()
-			.from(0f, 0f, 0f)
-			.to(16f, 16f, 16f)
-			.allFaces { dir, fb ->
-				fb.uvs(0f, 0f, 16f, 16f)
-				fb.cullface(dir)
-				fb.tintindex(0)
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
+				allFaces { dir, fb ->
+					fb.uvs(0f, 0f, 16f, 16f)
+					fb.cullface(dir)
+					fb.tintindex(0)
 
-				when (dir) {
-					Direction.DOWN -> fb.texture("#bottom")
-					Direction.UP -> fb.texture("#top")
-					else -> fb.texture("#side")
+					when (dir) {
+						Direction.DOWN -> fb.texture("#bottom")
+						Direction.UP -> fb.texture("#top")
+						else -> fb.texture("#side")
+					}
 				}
 			}
-			.end()
 
-			.element()
-			.from(0f, 0f, 0f)
-			.to(16f, 16f, 16f)
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
 
-			.face(Direction.UP)
-			.uvs(0f, 0f, 16f, 16f)
-			.cullface(Direction.UP)
-			.texture("#top_overlay")
-			.rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN)
-			.end()
+				face(Direction.UP)
+					.uvs(0f, 0f, 16f, 16f)
+					.cullface(Direction.UP)
+					.texture("#top_overlay")
+					.rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN)
+					.end()
 
-			.face(Direction.NORTH)
-			.uvs(0f, 0f, 16f, 16f)
-			.cullface(Direction.NORTH)
-			.texture("#front_overlay")
-			.end()
+				face(Direction.NORTH)
+					.uvs(0f, 0f, 16f, 16f)
+					.cullface(Direction.NORTH)
+					.texture("#front_overlay")
+					.end()
+			}
 
 		survivalGenerator()
 		makeGenerator(ModBlocks.FURNACE_GENERATOR.get(), "nothing")
@@ -521,18 +524,18 @@ class ModBlockStateProvider(
 			.texture("bottom", bottom)
 			.texture("particle", side)
 
-			.element()
-			.from(5f, 0f, 5f)
-			.to(11f, 6f, 11f)
-			.allFaces { dir, fb ->
-				when (dir) {
-					Direction.NORTH -> fb.texture("#front")
-					Direction.UP -> fb.texture("#top")
-					Direction.DOWN -> fb.texture("#bottom")
-					else -> fb.texture("#side")
+			.element {
+				from(5f, 0f, 5f)
+				to(11f, 6f, 11f)
+				allFaces { dir, fb ->
+					when (dir) {
+						Direction.NORTH -> fb.texture("#front")
+						Direction.UP -> fb.texture("#top")
+						Direction.DOWN -> fb.texture("#bottom")
+						else -> fb.texture("#side")
+					}
 				}
 			}
-			.end()
 
 		getVariantBuilder(block)
 			.forAllStates {

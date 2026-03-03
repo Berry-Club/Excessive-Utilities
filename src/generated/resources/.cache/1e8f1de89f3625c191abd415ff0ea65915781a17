@@ -1,3 +1,4 @@
-// 1.21.1	2026-02-25T17:11:37.6244896	Tags for minecraft:entity_type mod id excessive_utilities
+// 1.21.1	2026-03-03T10:11:16.9476518	Tags for minecraft:entity_type mod id excessive_utilities
 c922a1dd9635b859b5ef273b97b42a7112d348c9 data/excessive_utilities/tags/entity_type/boomerang_pickup.json
+35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/excessive_utilities/tags/entity_type/cursed_earth_blacklist.json
 6ded3ea2e35a47445f95b3e2a263d918575d48cf data/excessive_utilities/tags/entity_type/lasso_blacklist.json
