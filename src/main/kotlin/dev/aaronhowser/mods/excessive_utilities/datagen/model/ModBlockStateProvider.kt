@@ -147,7 +147,7 @@ class ModBlockStateProvider(
 			// Latch
 			.element {
 				from(6f, 5f, 0f)
-				to(10f, 12f, 1f)
+				to(10f, 11f, 1f)
 
 				allFacesExcept(
 					{ dir, fb ->
@@ -162,21 +162,6 @@ class ModBlockStateProvider(
 						fb.cullface(dir)
 					},
 					setOf(Direction.SOUTH)
-				)
-			}
-
-			// Handle
-			.element {
-				from(5f, 14f, 6f)
-				to(11f, 15f, 10f)
-
-				allFacesExcept(
-					{ dir, fb ->
-						val texture = if (dir == Direction.UP) "#top" else "#side"
-						fb.texture(texture)
-						fb.cullface(dir)
-					},
-					setOf(Direction.DOWN)
 				)
 			}
 

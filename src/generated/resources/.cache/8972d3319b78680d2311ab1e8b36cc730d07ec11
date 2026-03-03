@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-03T12:10:46.6769738	Block States: excessive_utilities
+// 1.21.1	2026-03-03T12:12:04.0822405	Block States: excessive_utilities
 8fb96ad4646ce4b9716e8d3e8a34229fdc507e4c assets/excessive_utilities/blockstates/advanced_filing_cabinet.json
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 b234a9e9783bbcba2f25a6fb38362e61ecabf128 assets/excessive_utilities/blockstates/bedrock_bricks.json
@@ -77,7 +77,7 @@ d789b98b7c6a387f582ab9acbe79d0adaf66dd83 assets/excessive_utilities/models/block
 22b6dd405aff552155f94905007a70610255a066 assets/excessive_utilities/models/block/block_of_evil_infused_iron.json
 29126fd8b5e793dd5cc712250fcee39843353f65 assets/excessive_utilities/models/block/border_stone.json
 a91dc8d62190f9ba41f23f18ec4a8df44a0b05c1 assets/excessive_utilities/models/block/chandelier.json
-c94ed025adddd4c7492e3521761d71c861b8a06c assets/excessive_utilities/models/block/creative_chest.json
+090ab67823c0aecfe8db8968510d2d64588d09e8 assets/excessive_utilities/models/block/creative_chest.json
 c824a11567f0110bf2bfbdde3185ac052c7b1d88 assets/excessive_utilities/models/block/creative_energy_source.json
 3bb08b1a0cfcf78459df1384e3dc5d2464b5ca7a assets/excessive_utilities/models/block/creative_harvest.json
 fd30d10e1e0930e048e3e261568ca913358abd99 assets/excessive_utilities/models/block/creative_mill.json

@@ -69,42 +69,8 @@
       ],
       "to": [
         10,
-        12,
-        1
-      ]
-    },
-    {
-      "faces": {
-        "east": {
-          "cullface": "east",
-          "texture": "#side"
-        },
-        "north": {
-          "cullface": "north",
-          "texture": "#side"
-        },
-        "south": {
-          "cullface": "south",
-          "texture": "#side"
-        },
-        "up": {
-          "cullface": "up",
-          "texture": "#top"
-        },
-        "west": {
-          "cullface": "west",
-          "texture": "#side"
-        }
-      },
-      "from": [
-        5,
-        14,
-        6
-      ],
-      "to": [
         11,
-        15,
-        10
+        1
       ]
     }
   ],
