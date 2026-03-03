@@ -111,7 +111,26 @@ class ModBlockStateProvider(
 					)
 				}
 
-			simpleBlockWithItem(block, model)
+			getVariantBuilder(block)
+				.forAllStates {
+					val facing = it.getValue(TrashCanBlock.FACING)
+
+					val yRot = when (facing) {
+						Direction.NORTH -> 0
+						Direction.EAST -> 90
+						Direction.SOUTH -> 180
+						Direction.WEST -> 270
+						else -> 0
+					}
+
+					ConfiguredModel
+						.builder()
+						.modelFile(model)
+						.rotationY(yRot)
+						.build()
+				}
+
+			simpleBlockItem(block, model)
 		}
 
 	}
