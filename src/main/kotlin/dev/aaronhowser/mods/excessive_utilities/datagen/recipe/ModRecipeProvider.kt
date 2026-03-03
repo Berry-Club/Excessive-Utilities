@@ -47,902 +47,999 @@ class ModRecipeProvider(
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
 		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
 
-		val recipes = listOf(
-			shapedRecipe(
-				ModBlocks.MAGICAL_SNOW_GLOBE.toStack(),
-				"GSN,DLA,EW ",
-				mapOf(
-					'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
-					'S' to ItemTags.SAPLINGS.asIngredient(),
-					'N' to Items.SNOWBALL.asIngredient(),
-					'D' to ItemTags.WOODEN_DOORS.asIngredient(),
-					'L' to ItemTags.LOGS.asIngredient(),
-					'A' to Items.GRASS_BLOCK.asIngredient(),
-					'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
-					'W' to Items.NETHER_STAR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.BUILDERS_WAND.toStack(),
-				"  G, W ,W  ",
-				mapOf(
-					'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'W' to ModBlocks.MAGICAL_WOOD.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.DESTRUCTION_WAND.toStack(),
-				" GG, WG,W  ",
-				mapOf(
-					'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'W' to ModBlocks.MAGICAL_WOOD.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.TRASH_CAN.toStack(),
-				"SSS,CHC,CCC",
-				mapOf(
-					'S' to Tags.Items.STONES.asIngredient(),
-					'H' to Tags.Items.CHESTS_WOODEN.asIngredient(),
-					'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.TRASH_CAN_FLUID.toStack(),
-				"SSS,CBC,CCC",
-				mapOf(
-					'S' to Tags.Items.STONES.asIngredient(),
-					'B' to Items.BUCKET.asIngredient(),
-					'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.TRASH_CAN_ENERGY.toStack(),
-				"SSS,CRC,CCC",
-				mapOf(
-					'S' to Tags.Items.STONES.asIngredient(),
-					'R' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
-					'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ANGEL_BLOCK.toStack(),
-				" G ,FOF",
-				mapOf(
-					'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'F' to Tags.Items.FEATHERS.asIngredient(),
-					'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.SOLAR_PANEL.toStack(3),
-				"LLL,PRP",
-				mapOf(
-					'L' to Tags.Items.GEMS_LAPIS.asIngredient(),
-					'P' to ModBlocks.POLISHED_STONE.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.LUNAR_PANEL.toStack(3),
-				"LLL,PRP",
-				mapOf(
-					'L' to ModItems.LUNAR_REACTIVE_DUST.asIngredient(),
-					'P' to ModBlocks.POLISHED_STONE.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.LAVA_MILL.toStack(),
-				"SSS,SRS,SGS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
-					'G' to Tags.Items.INGOTS_GOLD.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.WATER_MILL.toStack(),
-				"SSS,GRG,SSS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
-					'G' to ModItems.REDSTONE_GEAR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.WIND_MILL.toStack(),
-				"SSS, GR,SSS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
-					'G' to ModItems.REDSTONE_GEAR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.FIRE_MILL.toStack(),
-				"SRS,SGS,SFS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
-					'G' to ModItems.REDSTONE_GEAR.asIngredient(),
-					'F' to Tags.Items.FENCES_NETHER_BRICK.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.MANUAL_MILL.toStack(),
-				" G ,SRS",
-				mapOf(
-					'G' to ModItems.REDSTONE_GEAR.asIngredient(),
-					'S' to ModBlocks.POLISHED_STONE.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.DRAGON_EGG_MILL.toStack(),
-				"SGS,NGN,SIS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'G' to ModItems.REDSTONE_GEAR.asIngredient(),
-					'N' to Items.NETHER_STAR.asIngredient(),
-					'I' to ModItems.EYE_OF_REDSTONE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.REDSTONE_CLOCK.toStack(),
-				"SRS,RTR,SRS",
-				mapOf(
-					'S' to Tags.Items.STONES.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'T' to Blocks.REDSTONE_TORCH.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.GLASS_CUTTER.toStack(),
-				"  I, SI,I  ",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'S' to Tags.Items.RODS_WOODEN.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.RESONATOR.toStack(),
-				"DCD,IRI,III",
-				mapOf(
-					'D' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'C' to Tags.Items.STORAGE_BLOCKS_COAL.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.REDSTONE_GEAR.toStack(),
-				" T ,TPT, T ",
-				mapOf(
-					'T' to Items.REDSTONE_TORCH.asIngredient(),
-					'P' to ItemTags.PLANKS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.MOON_STONE,
-				"LLL,LDL,LLL",
-				mapOf(
-					'L' to ModItems.LUNAR_REACTIVE_DUST.asIngredient(),
-					'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.SPEED_UPGRADE_MAGICAL,
-				"AIA,IUI,AIA",
-				mapOf(
-					'A' to ModItems.MAGICAL_APPLE.asIngredient(),
-					'I' to ModItems.ENCHANTED_INGOT.asIngredient(),
-					'U' to ModItems.SPEED_UPGRADE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.SPEED_UPGRADE_ULTIMATE,
-				"EIE,IUI,EIE",
-				mapOf(
-					'E' to ModItems.DROP_OF_EVIL.asIngredient(),
-					'I' to ModItems.EVIL_INFUSED_IRON_INGOT.asIngredient(),
-					'U' to ModItems.SPEED_UPGRADE_MAGICAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.CHICKEN_WING_RING,
-				"FIF,ILI,RIR",
-				mapOf(
-					'F' to Tags.Items.FEATHERS.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'L' to ModItems.GOLDEN_LASSO.withComponent(
-						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.CHICKEN.builtInRegistryHolder()
-					).asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.RING_OF_THE_FLYING_SQUID,
-				"IDI,LCE,IDI",
-				mapOf(
-					'I' to Items.INK_SAC.asIngredient(),
-					'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
-					'L' to ModItems.GOLDEN_LASSO.withComponent(
-						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.SQUID.builtInRegistryHolder()
-					).asIngredient(),
-					'C' to ModItems.CHICKEN_WING_RING.asIngredient(),
-					'E' to Tags.Items.ENDER_PEARLS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.ANGEL_RING,
-				"GIG,ISI,BIH",
-				mapOf(
-					'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
-					'I' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'S' to ModItems.RING_OF_THE_FLYING_SQUID.asIngredient(),
-					'B' to ModItems.GOLDEN_LASSO.withComponent(
-						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.BAT.builtInRegistryHolder()
-					).asIngredient(),
-					'H' to ModItems.CURSED_LASSO.withComponent(
-						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.GHAST.builtInRegistryHolder()
-					).asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.POWER_MANAGER,
-				" R,SS,SS",
-				mapOf(
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
-					'S' to Tags.Items.STONES.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.BAG_OF_HOLDING,
-				"GGG,CMC,GGG",
-				mapOf(
-					'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'C' to Tags.Items.CHESTS_WOODEN.asIngredient(),
-					'M' to ModBlocks.MAGICAL_WOOD.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.THICKENED_GLASS_BORDERED,
-				4,
-				"GG,GG",
-				mapOf(
-					'G' to ModBlocks.THICKENED_GLASS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.THICKENED_GLASS_PATTERNED,
-				4,
-				"GG,GG",
-				mapOf(
-					'G' to ModBlocks.THICKENED_GLASS_BORDERED.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ETHEREAL_GLASS,
-				8,
-				"GGG,GMG,GGG",
-				mapOf(
-					'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
-					'M' to ModItems.MOON_STONE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.INEFFABLE_GLASS,
-				8,
-				"GGG,GMG,GGG",
-				mapOf(
-					'G' to ModBlocks.THICKENED_GLASS.asIngredient(),
-					'M' to ModItems.MOON_STONE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.DARK_INEFFABLE_GLASS,
-				8,
-				"GGG,GMG,GGG",
-				mapOf(
-					'G' to Blocks.TINTED_GLASS.asIngredient(),
-					'M' to ModItems.MOON_STONE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.TRANSFER_PIPE,
-				64,
-				"SSS,GRG,SSS",
-				mapOf(
-					'S' to Items.STONE_SLAB.asIngredient(),
-					'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.PLAYER_CHEST,
-				"SSS,SES,SRS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'E' to Tags.Items.CHESTS_ENDER.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.WRENCH,
-				" DI, IR,I  ",
-				mapOf(
-					'D' to Tags.Items.DYES_RED.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.MAGICAL_BOOMERANG,
-				" M ,M M",
-				mapOf(
-					'M' to ModBlocks.MAGICAL_WOOD.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.ITEM_FILTER,
-				"RSR,STS,RSR",
-				mapOf(
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'S' to Tags.Items.RODS_WOODEN.asIngredient(),
-					'T' to Tags.Items.STRINGS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.FLUID_FILTER,
-				"LSL,STS,LSL",
-				mapOf(
-					'L' to Tags.Items.GEMS_LAPIS.asIngredient(),
-					'S' to Tags.Items.RODS_WOODEN.asIngredient(),
-					'T' to Tags.Items.STRINGS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ITEM_TRANSFER_NODE,
-				4,
-				"RPR,SCS",
-				mapOf(
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'P' to ModBlocks.TRANSFER_PIPE.asIngredient(),
-					'S' to Tags.Items.STONES.asIngredient(),
-					'C' to Tags.Items.CHESTS_WOODEN.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.TRANSFER_FILTER,
-				4,
-				"RFR,SPS",
-				mapOf(
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'F' to ModItems.ITEM_FILTER.asIngredient(),
-					'S' to Tags.Items.STONES.asIngredient(),
-					'P' to ModBlocks.TRANSFER_PIPE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.FLUID_TRANSFER_NODE,
-				4,
-				"RPR,SCS",
-				mapOf(
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'P' to ModBlocks.TRANSFER_PIPE.asIngredient(),
-					'S' to Tags.Items.STONES.asIngredient(),
-					'C' to Items.BUCKET.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENERGY_TRANSFER_NODE,
-				4,
-				"RPR,GBG",
-				mapOf(
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'P' to ModBlocks.TRANSFER_PIPE.asIngredient(),
-					'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'B' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.INDEXER,
-				"SRS,SFS,SRS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
-					'F' to Items.ITEM_FRAME.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.INDEXER_REMOTE,
-				"SES,SFS,SES",
-				mapOf(
-					'S' to Tags.Items.STONES.asIngredient(),
-					'E' to ModItems.EYE_OF_REDSTONE.asIngredient(),
-					'F' to Items.ITEM_FRAME.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.STONE_DRUM,
-				"CSC,CBC,CSC",
-				mapOf(
-					'S' to Tags.Items.COBBLESTONES_NORMAL.asIngredient(),
-					'C' to Blocks.COBBLESTONE_SLAB.asIngredient(),
-					'B' to Items.BOWL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.IRON_DRUM,
-				"IPI,ICI,IPI",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'P' to Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE.asIngredient(),
-					'C' to Blocks.CAULDRON.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.REINFORCED_LARGE_DRUM,
-				"DPD,DID,DPD",
-				mapOf(
-					'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
-					'P' to Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE.asIngredient(),
-					'I' to ModBlocks.IRON_DRUM.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.DEMONICALLY_GARGANTUAN_DRUM,
-				"DKD,DRD,DKD",
-				mapOf(
-					'D' to ModItems.DEMON_INGOT.asIngredient(),
-					'K' to ModItems.KLEIN_BOTTLE.asIngredient(),
-					'R' to ModBlocks.REINFORCED_LARGE_DRUM.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.BEDROCKIUM_DRUM,
-				"DBD,DRD,DBD",
-				mapOf(
-					'D' to ModItems.BEDROCKIUM_INGOT.asIngredient(),
-					'B' to ModBlocks.BEDROCKIUM_DRUM.asIngredient(),
-					'R' to ModBlocks.DEMONICALLY_GARGANTUAN_DRUM.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.MACHINE_BLOCK,
-				4,
-				"IRI,RCR,IRI",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'C' to Tags.Items.CHESTS_WOODEN.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.FURNACE,
-				"BBB,BMB,BBB",
-				mapOf(
-					'B' to Tags.Items.BRICKS.asIngredient(),
-					'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.CRUSHER,
-				"IPI,IMI,IPI",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'P' to ModItemTagsProvider.PISTONS.asIngredient(),
-					'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENCHANTER,
-				" E ,DMD,III",
-				mapOf(
-					'E' to Items.ENCHANTED_BOOK.asIngredient(),
-					'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
-					'M' to ModBlocks.MACHINE_BLOCK.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.SURVIVAL_GENERATOR,
-				"CCC,CIC,RFR",
-				mapOf(
-					'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'F' to Items.FURNACE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.FURNACE_GENERATOR,
-				"III,IMI,RFR",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'M' to ModBlocks.MACHINE_BLOCK.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'F' to Items.FURNACE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.CULINARY_GENERATOR,
-				"PPP,PFP,RMR",
-				mapOf(
-					'P' to Tags.Items.CROPS.asIngredient(),
-					'F' to Tags.Items.FOODS_COOKED_MEAT.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.MAGMATIC_GENERATOR,
-				"GGG,GLG,RMR",
-				mapOf(
-					'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'L' to Items.LAVA_BUCKET.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.HEATED_REDSTONE_GENERATOR,
-				"RRR,RBR,RMR",
-				mapOf(
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'B' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.MAGMATIC_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_GENERATOR,
-				"EEE,EOE,RMR",
-				mapOf(
-					'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
-					'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.POTION_GENERATOR,
-				"BBB,BSB,RMR",
-				mapOf(
-					'B' to Tags.Items.RODS_BLAZE.asIngredient(),
-					'S' to Blocks.BREWING_STAND.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.PINK_GENERATOR,
-				"DDD,DWD,RMR",
-				mapOf(
-					'D' to Tags.Items.DYES_PINK.asIngredient(),
-					'W' to Items.PINK_WOOL.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR,
-				"III,ICI,RMR",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'C' to Blocks.COAL_BLOCK.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.EXPLOSIVE_GENERATOR,
-				"GGG,GTG,RMR",
-				mapOf(
-					'G' to Tags.Items.GUNPOWDERS.asIngredient(),
-					'T' to Blocks.TNT.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.NETHER_STAR_GENERATOR,
-				"WWW,WSW,RMR",
-				mapOf(
-					'W' to Items.WITHER_SKELETON_SKULL.asIngredient(),
-					'S' to Items.NETHER_STAR.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.HALITOSIS_GENERATOR,
-				"PPP,PEP,RMR",
-				mapOf(
-					'P' to Blocks.PURPUR_BLOCK.asIngredient(),
-					'E' to Blocks.END_ROD.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.FROSTY_GENERATOR,
-				"SSS,SIS,RMR",
-				mapOf(
-					'S' to Items.SNOWBALL.asIngredient(),
-					'I' to Items.ICE.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.DEATH_GENERATOR,
-				"CCC,CEC,RMR",
-				mapOf(
-					'C' to ModItemTagsProvider.CORPSE_PARTS.asIngredient(),
-					'E' to Items.SPIDER_EYE.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.DISENCHANTMENT_GENERATOR,
-				"WWW,WEW,RMR",
-				mapOf(
-					'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
-					'E' to Blocks.ENCHANTING_TABLE.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.SLIMY_GENERATOR,
-				"sss,sSs,RMR",
-				mapOf(
-					's' to Tags.Items.SLIME_BALLS.asIngredient(),
-					'S' to Blocks.SLIME_BLOCK.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.DEEP_DARK_PORTAL,
-				"CCC,C C,CCC",
-				mapOf(
-					'C' to ModBlocks.COMPRESSED_BLOCK.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.WIRELESS_FE_TRANSMITTER,
-				4,
-				"R,S",
-				mapOf(
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
-					'S' to ModBlocks.STONEBURNT.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.WIRELESS_FE_BATTERY,
-				"SSS,BRB,SSS",
-				mapOf(
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'B' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.QUANTUM_QUARRY_ACTUATOR,
-				"ERE,EDE,SSS",
-				mapOf(
-					'E' to Tags.Items.END_STONES.asIngredient(),
-					'R' to Blocks.END_ROD.asIngredient(),
-					'D' to Items.DIAMOND_PICKAXE.asIngredient(),
-					'S' to ModBlocks.STONEBURNT.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.QUANTUM_QUARRY,
-				"ESE,SGS,ESE",
-				mapOf(
-					'E' to Tags.Items.END_STONES.asIngredient(),
-					'S' to ModBlocks.STONEBURNT.asIngredient(),
-					'G' to ModBlocks.MAGICAL_SNOW_GLOBE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.REDSTONE_LANTERN,
-				"RSR,SCS,RPR",
-				mapOf(
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'S' to ModBlocks.POLISHED_STONE.asIngredient(),
-					'C' to ItemTags.COALS.asIngredient(),
-					'P' to Items.REPEATER.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.SLIGHTLY_LARGER_CHEST,
-				"SSS,SCS,SSS",
-				mapOf(
-					'S' to Tags.Items.RODS_WOODEN.asIngredient(),
-					'C' to Tags.Items.CHESTS_WOODEN.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.MAGICAL_APPLE,
-				"AAA,AWA,AAA",
-				mapOf(
-					'A' to Items.APPLE.asIngredient(),
-					'W' to ModBlocks.MAGICAL_WOOD.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.TROWEL,
-				"  I, B ,S  ",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'B' to Items.STONE_BUTTON.asIngredient(),
-					'S' to Tags.Items.RODS_WOODEN.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.BIOME_MARKER,
-				"PIP,ISI,PIP",
-				mapOf(
-					'P' to Tags.Items.DYES_PURPLE.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'S' to ItemTags.SAPLINGS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.TERRAFORMER,
-				"ECE,RPR",
-				mapOf(
-					'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
-					'C' to ModBlocks.CLIMOGRAPH_BASE_UNIT.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'P' to Items.REPEATER.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ANTENNA,
-				"E E,ISI, I ",
-				mapOf(
-					'E' to Blocks.END_ROD.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'S' to ItemTags.SAPLINGS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.CLIMOGRAPH_BASE_UNIT,
-				"IDI,SMS,IDI",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
-					'S' to ItemTags.SAPLINGS.asIngredient(),
-					'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.KIKOKU,
-				"O,O,S",
-				mapOf(
-					'O' to perfectOpiniumCore.asIngredient(),
-					'S' to Tags.Items.RODS_WOODEN.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.FLAT_TRANSFER_NODE_ITEMS,
-				8,
-				"A, ,N",
-				mapOf(
-					'A' to ItemTags.ANVIL.asIngredient(),
-					'N' to ModBlocks.ITEM_TRANSFER_NODE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.FLAT_TRANSFER_NODE_FLUIDS,
-				8,
-				"A, ,N",
-				mapOf(
-					'A' to ItemTags.ANVIL.asIngredient(),
-					'N' to ModBlocks.FLUID_TRANSFER_NODE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.COMPOUND_BOW,
-				" OS,I S, OS",
-				mapOf(
-					'O' to perfectOpiniumCore.asIngredient(),
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'S' to Tags.Items.STRINGS.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.FIRE_AXE,
-				"OO,OS, S",
-				mapOf(
-					'O' to perfectOpiniumCore.asIngredient(),
-					'S' to Tags.Items.RODS_WOODEN.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_PORCUPINE,
-				"SES,EME,SES",
-				mapOf(
-					'S' to Tags.Items.STRINGS.asIngredient(),
-					'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
-					'M' to ModItems.POWER_MANAGER.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.LUX_SABER,
-				"EGE,ECE,ERE",
-				mapOf(
-					'E' to ModItems.EVIL_INFUSED_IRON_INGOT.asIngredient(),
-					'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
-					'C' to ModItems.SUN_CRYSTAL.asIngredient(),
-					'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY,
-				"OSO,CDC,PXP",
-				mapOf(
-					'O' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient(),
-					'S' to ItemTags.SAPLINGS.asIngredient(),
-					'C' to ModBlocks.ENDER_CORE.asIngredient(),
-					'D' to ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.asIngredient(),
-					'P' to ModBlocks.ENDER_THERMIC_PUMP.asIngredient(),
-					'X' to Items.DIAMOND_PICKAXE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.FILING_CABINET,
-				"ICI,ICI,ICI",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'C' to Tags.Items.CHESTS_WOODEN.asIngredient(
-					)
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ADVANCED_FILING_CABINET,
-				"WCW,WCW,WCW",
-				mapOf(
-					'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
-					'C' to ModBlocks.FILING_CABINET.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.UNSTABLE_INGOT.withComponent(
-					ModDataComponents.COUNTDOWN.get(),
-					20 * 10
-				),
-				"I,S,D",
-				mapOf(
-					'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-					'S' to ModItems.DIVISION_SIGIL.asIngredient(),
-					'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModItems.SEMI_UNSTABLE_NUGGET,
-				"N,S,D",
-				mapOf(
-					'N' to Tags.Items.NUGGETS_GOLD.asIngredient(),
-					'S' to ModItems.DIVISION_SIGIL.asIngredient(),
-					'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
+		shapedRecipe(
+			ModBlocks.MAGICAL_SNOW_GLOBE.toStack(),
+			"GSN,DLA,EW ",
+			mapOf(
+				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
+				'S' to ItemTags.SAPLINGS.asIngredient(),
+				'N' to Items.SNOWBALL.asIngredient(),
+				'D' to ItemTags.WOODEN_DOORS.asIngredient(),
+				'L' to ItemTags.LOGS.asIngredient(),
+				'A' to Items.GRASS_BLOCK.asIngredient(),
+				'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
+				'W' to Items.NETHER_STAR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.BUILDERS_WAND.toStack(),
+			"  G, W ,W  ",
+			mapOf(
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'W' to ModBlocks.MAGICAL_WOOD.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.DESTRUCTION_WAND.toStack(),
+			" GG, WG,W  ",
+			mapOf(
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'W' to ModBlocks.MAGICAL_WOOD.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.TRASH_CAN.toStack(),
+			"SSS,CHC,CCC",
+			mapOf(
+				'S' to Tags.Items.STONES.asIngredient(),
+				'H' to Tags.Items.CHESTS_WOODEN.asIngredient(),
+				'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.TRASH_CAN_FLUID.toStack(),
+			"SSS,CBC,CCC",
+			mapOf(
+				'S' to Tags.Items.STONES.asIngredient(),
+				'B' to Items.BUCKET.asIngredient(),
+				'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.TRASH_CAN_ENERGY.toStack(),
+			"SSS,CRC,CCC",
+			mapOf(
+				'S' to Tags.Items.STONES.asIngredient(),
+				'R' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
+				'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ANGEL_BLOCK.toStack(),
+			" G ,FOF",
+			mapOf(
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'F' to Tags.Items.FEATHERS.asIngredient(),
+				'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.SOLAR_PANEL.toStack(3),
+			"LLL,PRP",
+			mapOf(
+				'L' to Tags.Items.GEMS_LAPIS.asIngredient(),
+				'P' to ModBlocks.POLISHED_STONE.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.LUNAR_PANEL.toStack(3),
+			"LLL,PRP",
+			mapOf(
+				'L' to ModItems.LUNAR_REACTIVE_DUST.asIngredient(),
+				'P' to ModBlocks.POLISHED_STONE.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.LAVA_MILL.toStack(),
+			"SSS,SRS,SGS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.WATER_MILL.toStack(),
+			"SSS,GRG,SSS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'G' to ModItems.REDSTONE_GEAR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.WIND_MILL.toStack(),
+			"SSS, GR,SSS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'G' to ModItems.REDSTONE_GEAR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.FIRE_MILL.toStack(),
+			"SRS,SGS,SFS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'G' to ModItems.REDSTONE_GEAR.asIngredient(),
+				'F' to Tags.Items.FENCES_NETHER_BRICK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.MANUAL_MILL.toStack(),
+			" G ,SRS",
+			mapOf(
+				'G' to ModItems.REDSTONE_GEAR.asIngredient(),
+				'S' to ModBlocks.POLISHED_STONE.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.DRAGON_EGG_MILL.toStack(),
+			"SGS,NGN,SIS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'G' to ModItems.REDSTONE_GEAR.asIngredient(),
+				'N' to Items.NETHER_STAR.asIngredient(),
+				'I' to ModItems.EYE_OF_REDSTONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.REDSTONE_CLOCK.toStack(),
+			"SRS,RTR,SRS",
+			mapOf(
+				'S' to Tags.Items.STONES.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'T' to Blocks.REDSTONE_TORCH.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.GLASS_CUTTER.toStack(),
+			"  I, SI,I  ",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.RESONATOR.toStack(),
+			"DCD,IRI,III",
+			mapOf(
+				'D' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'C' to Tags.Items.STORAGE_BLOCKS_COAL.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.REDSTONE_GEAR.toStack(),
+			" T ,TPT, T ",
+			mapOf(
+				'T' to Items.REDSTONE_TORCH.asIngredient(),
+				'P' to ItemTags.PLANKS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.MOON_STONE,
+			"LLL,LDL,LLL",
+			mapOf(
+				'L' to ModItems.LUNAR_REACTIVE_DUST.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.SPEED_UPGRADE_MAGICAL,
+			"AIA,IUI,AIA",
+			mapOf(
+				'A' to ModItems.MAGICAL_APPLE.asIngredient(),
+				'I' to ModItems.ENCHANTED_INGOT.asIngredient(),
+				'U' to ModItems.SPEED_UPGRADE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.SPEED_UPGRADE_ULTIMATE,
+			"EIE,IUI,EIE",
+			mapOf(
+				'E' to ModItems.DROP_OF_EVIL.asIngredient(),
+				'I' to ModItems.EVIL_INFUSED_IRON_INGOT.asIngredient(),
+				'U' to ModItems.SPEED_UPGRADE_MAGICAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.CHICKEN_WING_RING,
+			"FIF,ILI,RIR",
+			mapOf(
+				'F' to Tags.Items.FEATHERS.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'L' to ModItems.GOLDEN_LASSO.withComponent(
+					ModDataComponents.ENTITY_TYPE.get(),
+					EntityType.CHICKEN.builtInRegistryHolder()
+				).asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.RING_OF_THE_FLYING_SQUID,
+			"IDI,LCE,IDI",
+			mapOf(
+				'I' to Items.INK_SAC.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
+				'L' to ModItems.GOLDEN_LASSO.withComponent(
+					ModDataComponents.ENTITY_TYPE.get(),
+					EntityType.SQUID.builtInRegistryHolder()
+				).asIngredient(),
+				'C' to ModItems.CHICKEN_WING_RING.asIngredient(),
+				'E' to Tags.Items.ENDER_PEARLS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.ANGEL_RING,
+			"GIG,ISI,BIH",
+			mapOf(
+				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
+				'I' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'S' to ModItems.RING_OF_THE_FLYING_SQUID.asIngredient(),
+				'B' to ModItems.GOLDEN_LASSO.withComponent(
+					ModDataComponents.ENTITY_TYPE.get(),
+					EntityType.BAT.builtInRegistryHolder()
+				).asIngredient(),
+				'H' to ModItems.CURSED_LASSO.withComponent(
+					ModDataComponents.ENTITY_TYPE.get(),
+					EntityType.GHAST.builtInRegistryHolder()
+				).asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.POWER_MANAGER,
+			" R,SS,SS",
+			mapOf(
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'S' to Tags.Items.STONES.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.BAG_OF_HOLDING,
+			"GGG,CMC,GGG",
+			mapOf(
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'C' to Tags.Items.CHESTS_WOODEN.asIngredient(),
+				'M' to ModBlocks.MAGICAL_WOOD.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.THICKENED_GLASS_BORDERED,
+			4,
+			"GG,GG",
+			mapOf(
+				'G' to ModBlocks.THICKENED_GLASS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.THICKENED_GLASS_PATTERNED,
+			4,
+			"GG,GG",
+			mapOf(
+				'G' to ModBlocks.THICKENED_GLASS_BORDERED.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ETHEREAL_GLASS,
+			8,
+			"GGG,GMG,GGG",
+			mapOf(
+				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
+				'M' to ModItems.MOON_STONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.INEFFABLE_GLASS,
+			8,
+			"GGG,GMG,GGG",
+			mapOf(
+				'G' to ModBlocks.THICKENED_GLASS.asIngredient(),
+				'M' to ModItems.MOON_STONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.DARK_INEFFABLE_GLASS,
+			8,
+			"GGG,GMG,GGG",
+			mapOf(
+				'G' to Blocks.TINTED_GLASS.asIngredient(),
+				'M' to ModItems.MOON_STONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.TRANSFER_PIPE,
+			64,
+			"SSS,GRG,SSS",
+			mapOf(
+				'S' to Items.STONE_SLAB.asIngredient(),
+				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.PLAYER_CHEST,
+			"SSS,SES,SRS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'E' to Tags.Items.CHESTS_ENDER.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.WRENCH,
+			" DI, IR,I  ",
+			mapOf(
+				'D' to Tags.Items.DYES_RED.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.MAGICAL_BOOMERANG,
+			" M ,M M",
+			mapOf(
+				'M' to ModBlocks.MAGICAL_WOOD.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.ITEM_FILTER,
+			"RSR,STS,RSR",
+			mapOf(
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient(),
+				'T' to Tags.Items.STRINGS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.FLUID_FILTER,
+			"LSL,STS,LSL",
+			mapOf(
+				'L' to Tags.Items.GEMS_LAPIS.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient(),
+				'T' to Tags.Items.STRINGS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ITEM_TRANSFER_NODE,
+			4,
+			"RPR,SCS",
+			mapOf(
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'P' to ModBlocks.TRANSFER_PIPE.asIngredient(),
+				'S' to Tags.Items.STONES.asIngredient(),
+				'C' to Tags.Items.CHESTS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.TRANSFER_FILTER,
+			4,
+			"RFR,SPS",
+			mapOf(
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'F' to ModItems.ITEM_FILTER.asIngredient(),
+				'S' to Tags.Items.STONES.asIngredient(),
+				'P' to ModBlocks.TRANSFER_PIPE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.FLUID_TRANSFER_NODE,
+			4,
+			"RPR,SCS",
+			mapOf(
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'P' to ModBlocks.TRANSFER_PIPE.asIngredient(),
+				'S' to Tags.Items.STONES.asIngredient(),
+				'C' to Items.BUCKET.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENERGY_TRANSFER_NODE,
+			4,
+			"RPR,GBG",
+			mapOf(
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'P' to ModBlocks.TRANSFER_PIPE.asIngredient(),
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'B' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.INDEXER,
+			"SRS,SFS,SRS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'F' to Items.ITEM_FRAME.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.INDEXER_REMOTE,
+			"SES,SFS,SES",
+			mapOf(
+				'S' to Tags.Items.STONES.asIngredient(),
+				'E' to ModItems.EYE_OF_REDSTONE.asIngredient(),
+				'F' to Items.ITEM_FRAME.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.STONE_DRUM,
+			"CSC,CBC,CSC",
+			mapOf(
+				'S' to Tags.Items.COBBLESTONES_NORMAL.asIngredient(),
+				'C' to Blocks.COBBLESTONE_SLAB.asIngredient(),
+				'B' to Items.BOWL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.IRON_DRUM,
+			"IPI,ICI,IPI",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'P' to Blocks.HEAVY_WEIGHTED_PRESSURE_PLATE.asIngredient(),
+				'C' to Blocks.CAULDRON.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.REINFORCED_LARGE_DRUM,
+			"DPD,DID,DPD",
+			mapOf(
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
+				'P' to Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE.asIngredient(),
+				'I' to ModBlocks.IRON_DRUM.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.DEMONICALLY_GARGANTUAN_DRUM,
+			"DKD,DRD,DKD",
+			mapOf(
+				'D' to ModItems.DEMON_INGOT.asIngredient(),
+				'K' to ModItems.KLEIN_BOTTLE.asIngredient(),
+				'R' to ModBlocks.REINFORCED_LARGE_DRUM.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.BEDROCKIUM_DRUM,
+			"DBD,DRD,DBD",
+			mapOf(
+				'D' to ModItems.BEDROCKIUM_INGOT.asIngredient(),
+				'B' to ModBlocks.BEDROCKIUM_DRUM.asIngredient(),
+				'R' to ModBlocks.DEMONICALLY_GARGANTUAN_DRUM.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.MACHINE_BLOCK,
+			4,
+			"IRI,RCR,IRI",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'C' to Tags.Items.CHESTS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.FURNACE,
+			"BBB,BMB,BBB",
+			mapOf(
+				'B' to Tags.Items.BRICKS.asIngredient(),
+				'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.CRUSHER,
+			"IPI,IMI,IPI",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'P' to ModItemTagsProvider.PISTONS.asIngredient(),
+				'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENCHANTER,
+			" E ,DMD,III",
+			mapOf(
+				'E' to Items.ENCHANTED_BOOK.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
+				'M' to ModBlocks.MACHINE_BLOCK.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.SURVIVAL_GENERATOR,
+			"CCC,CIC,RFR",
+			mapOf(
+				'C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'F' to Items.FURNACE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.FURNACE_GENERATOR,
+			"III,IMI,RFR",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'M' to ModBlocks.MACHINE_BLOCK.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'F' to Items.FURNACE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.CULINARY_GENERATOR,
+			"PPP,PFP,RMR",
+			mapOf(
+				'P' to Tags.Items.CROPS.asIngredient(),
+				'F' to Tags.Items.FOODS_COOKED_MEAT.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.MAGMATIC_GENERATOR,
+			"GGG,GLG,RMR",
+			mapOf(
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'L' to Items.LAVA_BUCKET.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.HEATED_REDSTONE_GENERATOR,
+			"RRR,RBR,RMR",
+			mapOf(
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'B' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.MAGMATIC_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_GENERATOR,
+			"EEE,EOE,RMR",
+			mapOf(
+				'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
+				'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.POTION_GENERATOR,
+			"BBB,BSB,RMR",
+			mapOf(
+				'B' to Tags.Items.RODS_BLAZE.asIngredient(),
+				'S' to Blocks.BREWING_STAND.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.PINK_GENERATOR,
+			"DDD,DWD,RMR",
+			mapOf(
+				'D' to Tags.Items.DYES_PINK.asIngredient(),
+				'W' to Items.PINK_WOOL.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.HIGH_TEMPERATURE_FURNACE_GENERATOR,
+			"III,ICI,RMR",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'C' to Blocks.COAL_BLOCK.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.EXPLOSIVE_GENERATOR,
+			"GGG,GTG,RMR",
+			mapOf(
+				'G' to Tags.Items.GUNPOWDERS.asIngredient(),
+				'T' to Blocks.TNT.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.NETHER_STAR_GENERATOR,
+			"WWW,WSW,RMR",
+			mapOf(
+				'W' to Items.WITHER_SKELETON_SKULL.asIngredient(),
+				'S' to Items.NETHER_STAR.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.HALITOSIS_GENERATOR,
+			"PPP,PEP,RMR",
+			mapOf(
+				'P' to Blocks.PURPUR_BLOCK.asIngredient(),
+				'E' to Blocks.END_ROD.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.FROSTY_GENERATOR,
+			"SSS,SIS,RMR",
+			mapOf(
+				'S' to Items.SNOWBALL.asIngredient(),
+				'I' to Items.ICE.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.DEATH_GENERATOR,
+			"CCC,CEC,RMR",
+			mapOf(
+				'C' to ModItemTagsProvider.CORPSE_PARTS.asIngredient(),
+				'E' to Items.SPIDER_EYE.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.DISENCHANTMENT_GENERATOR,
+			"WWW,WEW,RMR",
+			mapOf(
+				'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
+				'E' to Blocks.ENCHANTING_TABLE.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.SLIMY_GENERATOR,
+			"sss,sSs,RMR",
+			mapOf(
+				's' to Tags.Items.SLIME_BALLS.asIngredient(),
+				'S' to Blocks.SLIME_BLOCK.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.DEEP_DARK_PORTAL,
+			"CCC,C C,CCC",
+			mapOf(
+				'C' to ModBlocks.COMPRESSED_BLOCK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.WIRELESS_FE_TRANSMITTER,
+			4,
+			"R,S",
+			mapOf(
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'S' to ModBlocks.STONEBURNT.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.WIRELESS_FE_BATTERY,
+			"SSS,BRB,SSS",
+			mapOf(
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'B' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.QUANTUM_QUARRY_ACTUATOR,
+			"ERE,EDE,SSS",
+			mapOf(
+				'E' to Tags.Items.END_STONES.asIngredient(),
+				'R' to Blocks.END_ROD.asIngredient(),
+				'D' to Items.DIAMOND_PICKAXE.asIngredient(),
+				'S' to ModBlocks.STONEBURNT.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.QUANTUM_QUARRY,
+			"ESE,SGS,ESE",
+			mapOf(
+				'E' to Tags.Items.END_STONES.asIngredient(),
+				'S' to ModBlocks.STONEBURNT.asIngredient(),
+				'G' to ModBlocks.MAGICAL_SNOW_GLOBE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.REDSTONE_LANTERN,
+			"RSR,SCS,RPR",
+			mapOf(
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'S' to ModBlocks.POLISHED_STONE.asIngredient(),
+				'C' to ItemTags.COALS.asIngredient(),
+				'P' to Items.REPEATER.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.SLIGHTLY_LARGER_CHEST,
+			"SSS,SCS,SSS",
+			mapOf(
+				'S' to Tags.Items.RODS_WOODEN.asIngredient(),
+				'C' to Tags.Items.CHESTS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.MAGICAL_APPLE,
+			"AAA,AWA,AAA",
+			mapOf(
+				'A' to Items.APPLE.asIngredient(),
+				'W' to ModBlocks.MAGICAL_WOOD.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.TROWEL,
+			"  I, B ,S  ",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'B' to Items.STONE_BUTTON.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.BIOME_MARKER,
+			"PIP,ISI,PIP",
+			mapOf(
+				'P' to Tags.Items.DYES_PURPLE.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'S' to ItemTags.SAPLINGS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.TERRAFORMER,
+			"ECE,RPR",
+			mapOf(
+				'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
+				'C' to ModBlocks.CLIMOGRAPH_BASE_UNIT.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'P' to Items.REPEATER.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ANTENNA,
+			"E E,ISI, I ",
+			mapOf(
+				'E' to Blocks.END_ROD.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'S' to ItemTags.SAPLINGS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.CLIMOGRAPH_BASE_UNIT,
+			"IDI,SMS,IDI",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
+				'S' to ItemTags.SAPLINGS.asIngredient(),
+				'M' to ModBlocks.MACHINE_BLOCK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.KIKOKU,
+			"O,O,S",
+			mapOf(
+				'O' to perfectOpiniumCore.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.FLAT_TRANSFER_NODE_ITEMS,
+			8,
+			"A, ,N",
+			mapOf(
+				'A' to ItemTags.ANVIL.asIngredient(),
+				'N' to ModBlocks.ITEM_TRANSFER_NODE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.FLAT_TRANSFER_NODE_FLUIDS,
+			8,
+			"A, ,N",
+			mapOf(
+				'A' to ItemTags.ANVIL.asIngredient(),
+				'N' to ModBlocks.FLUID_TRANSFER_NODE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.COMPOUND_BOW,
+			" OS,I S, OS",
+			mapOf(
+				'O' to perfectOpiniumCore.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'S' to Tags.Items.STRINGS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.FIRE_AXE,
+			"OO,OS, S",
+			mapOf(
+				'O' to perfectOpiniumCore.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_PORCUPINE,
+			"SES,EME,SES",
+			mapOf(
+				'S' to Tags.Items.STRINGS.asIngredient(),
+				'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
+				'M' to ModItems.POWER_MANAGER.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.LUX_SABER,
+			"EGE,ECE,ERE",
+			mapOf(
+				'E' to ModItems.EVIL_INFUSED_IRON_INGOT.asIngredient(),
+				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
+				'C' to ModItems.SUN_CRYSTAL.asIngredient(),
+				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY,
+			"OSO,CDC,PXP",
+			mapOf(
+				'O' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient(),
+				'S' to ItemTags.SAPLINGS.asIngredient(),
+				'C' to ModBlocks.ENDER_CORE.asIngredient(),
+				'D' to ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.asIngredient(),
+				'P' to ModBlocks.ENDER_THERMIC_PUMP.asIngredient(),
+				'X' to Items.DIAMOND_PICKAXE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.FILING_CABINET,
+			"ICI,ICI,ICI",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'C' to Tags.Items.CHESTS_WOODEN.asIngredient(
 				)
 			)
-		)
+		).save(recipeOutput)
 
-		for (recipe in recipes) {
-			recipe.save(recipeOutput)
-		}
+		shapedRecipe(
+			ModBlocks.ADVANCED_FILING_CABINET,
+			"WCW,WCW,WCW",
+			mapOf(
+				'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
+				'C' to ModBlocks.FILING_CABINET.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.UNSTABLE_INGOT.withComponent(
+				ModDataComponents.COUNTDOWN.get(),
+				20 * 10
+			),
+			"I,S,D",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'S' to ModItems.DIVISION_SIGIL.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.SEMI_UNSTABLE_NUGGET,
+			"N,S,D",
+			mapOf(
+				'N' to Tags.Items.NUGGETS_GOLD.asIngredient(),
+				'S' to ModItems.DIVISION_SIGIL.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.PEACEFUL_TABLE,
+			"EPE,PNP,EPE",
+			mapOf(
+				'E' to Tags.Items.GEMS_EMERALD.asIngredient(),
+				'P' to ItemTags.PLANKS.asIngredient(),
+				'N' to Tags.Items.ENDER_PEARLS.asIngredient()
+			)
+		).save(recipeOutput)
 
 		fun sickle(output: ItemLike, material: TagKey<Item>): ShapedRecipeBuilder {
 			return shapedRecipe(
@@ -1020,99 +1117,100 @@ class ModRecipeProvider(
 
 		val enchantments = holderLookup.lookup(Registries.ENCHANTMENT).get()
 
-		val quarryUpgrades = listOf(
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE,
-				" P ,RBR",
-				mapOf(
-					'P' to Items.IRON_PICKAXE.defaultInstance.apply {
-						enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
-					}.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE,
-				" P ,RUR",
-				mapOf(
-					'P' to Items.GOLDEN_PICKAXE.defaultInstance.apply {
-						enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
-					}.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'U' to ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE,
-				"P P,RUR",
-				mapOf(
-					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
-						enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
-					}.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'U' to ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE,
-				" P ,RBR",
-				mapOf(
-					'P' to Items.IRON_PICKAXE.defaultInstance.apply {
-						enchant(enchantments.getOrThrow(Enchantments.SILK_TOUCH), 1)
-					}.asIngredient(),
-					'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
-					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_SPEED_UPGRADE,
-				" P ,SBS",
-				mapOf(
-					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
-						enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 1)
-					}.asIngredient(),
-					'S' to ModItems.SPEED_UPGRADE.asIngredient(),
-					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE,
-				" P ,SUS",
-				mapOf(
-					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
-						enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 3)
-					}.asIngredient(),
-					'S' to ModItems.SPEED_UPGRADE_MAGICAL.asIngredient(),
-					'U' to ModBlocks.ENDER_QUARRY_SPEED_UPGRADE.asIngredient(
-					)
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE,
-				"P P,SUS",
-				mapOf(
-					'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
-						enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 5)
-					}.asIngredient(),
-					'S' to ModItems.STACK_UPGRADE.asIngredient(),
-					'U' to ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE.asIngredient()
-				)
-			),
-			shapedRecipe(
-				ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE,
-				" T ,QBQ",
-				mapOf(
-					'T' to ModBlocks.TRASH_CAN.asIngredient(),
-					'Q' to Blocks.QUARTZ_BLOCK.asIngredient(),
-					'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE,
+			" P ,RBR",
+			mapOf(
+				'P' to Items.IRON_PICKAXE.defaultInstance.apply {
+					enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
+				}.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE,
+			" P ,RUR",
+			mapOf(
+				'P' to Items.GOLDEN_PICKAXE.defaultInstance.apply {
+					enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
+				}.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'U' to ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE,
+			"P P,RUR",
+			mapOf(
+				'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+					enchant(enchantments.getOrThrow(Enchantments.FORTUNE), 1)
+				}.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'U' to ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE,
+			" P ,RBR",
+			mapOf(
+				'P' to Items.IRON_PICKAXE.defaultInstance.apply {
+					enchant(enchantments.getOrThrow(Enchantments.SILK_TOUCH), 1)
+				}.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
+				'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_SPEED_UPGRADE,
+			" P ,SBS",
+			mapOf(
+				'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+					enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 1)
+				}.asIngredient(),
+				'S' to ModItems.SPEED_UPGRADE.asIngredient(),
+				'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE,
+			" P ,SUS",
+			mapOf(
+				'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+					enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 3)
+				}.asIngredient(),
+				'S' to ModItems.SPEED_UPGRADE_MAGICAL.asIngredient(),
+				'U' to ModBlocks.ENDER_QUARRY_SPEED_UPGRADE.asIngredient(
 				)
 			)
-		)
+		).save(recipeOutput)
 
-		for (recipe in quarryUpgrades) {
-			recipe.save(recipeOutput)
-		}
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE,
+			"P P,SUS",
+			mapOf(
+				'P' to Items.DIAMOND_PICKAXE.defaultInstance.apply {
+					enchant(enchantments.getOrThrow(Enchantments.EFFICIENCY), 5)
+				}.asIngredient(),
+				'S' to ModItems.STACK_UPGRADE.asIngredient(),
+				'U' to ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE,
+			" T ,QBQ",
+			mapOf(
+				'T' to ModBlocks.TRASH_CAN.asIngredient(),
+				'Q' to Blocks.QUARTZ_BLOCK.asIngredient(),
+				'B' to ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asIngredient()
+			)
+		).save(recipeOutput)
 
 	}
 
