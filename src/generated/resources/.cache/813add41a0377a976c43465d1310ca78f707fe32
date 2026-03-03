@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-24T02:20:08.4391953	Tags for minecraft:item mod id excessive_utilities
+// 1.21.1	2026-03-03T12:28:47.1976809	Tags for minecraft:item mod id excessive_utilities
 1c83000a2817348e18f4bc04d17b3eabe7695e1f data/c/tags/item/dyes/magenta.json
 4f9bdf86ef56df2d6abcc811dda7e2bed52b0289 data/c/tags/item/pistons.json
 e9f0b7f2c6a1fe6eb0d259d2a1eb056f23929936 data/c/tags/item/sickles.json
@@ -6,6 +6,7 @@ a9fc732d820e0cda4d35fb56727c9620bc0898a4 data/c/tags/item/tools/mining_tool.json
 9c3429a45d5ce3db5f9a44f11488a69deee3106c data/c/tags/item/tools/shear.json
 060bba5f6ee4d3a8ad7fe6cd87fe82167ba9c5e3 data/c/tags/item/tools/wrench.json
 50a922b6b7c90503a7e47bffb505e8a6444b87e5 data/excessive_utilities/tags/item/corpse_parts.json
+89758bebcdbbe44f410b4e115e3e8c46ddc965f7 data/excessive_utilities/tags/item/double_anvil_enchantments.json
 80431bab59005d53e9aa4bbd0de2f30acdc84622 data/excessive_utilities/tags/item/filters.json
 22a8f3e473d7ecc774df7103fc48068858cb5506 data/excessive_utilities/tags/item/interact_with_flat_transfer_nodes.json
 4033aa8830f23f8653730d8eaf916ba65df9e571 data/excessive_utilities/tags/item/magical_boomerang_enchantable.json

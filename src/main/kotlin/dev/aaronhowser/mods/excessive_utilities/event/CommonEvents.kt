@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
 import dev.aaronhowser.mods.excessive_utilities.block.AngelBlock
@@ -10,6 +11,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.generator.MagmaticG
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.EnergyTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.FluidTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.trash.TrashCanBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
@@ -26,12 +28,17 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.Enchantment
+import net.minecraft.world.item.enchantment.EnchantmentHelper
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -278,6 +285,37 @@ object CommonEvents {
 			itemEntity.item = demonStack
 			itemEntity.deltaMovement = Vec3.ZERO
 		}
+	}
+
+	@SubscribeEvent
+	fun onAnvilUpdate(event: AnvilUpdateEvent) {
+		val leftStack = event.left
+		val rightStack = event.right
+		val player = event.player
+
+		if (leftStack.isItem(ModItemTagsProvider.DOUBLE_ANVIL_ENCHANTMENTS) && rightStack.isItem(Items.ENCHANTED_BOOK)) {
+			val currentEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(leftStack)
+			val bookEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(rightStack)
+
+			val newEnchantments = ItemEnchantments.Mutable(currentEnchantments)
+
+			for ((enchantment, level) in bookEnchantments.entrySet()) {
+				val noIncompatibleEnchantments = newEnchantments.keySet().all { Enchantment.areCompatible(enchantment, it) }
+				val valid = player.hasInfiniteMaterials() || (noIncompatibleEnchantments && leftStack.supportsEnchantment(enchantment))
+				if (!valid) continue
+
+				val currentLevel = newEnchantments.getLevel(enchantment)
+				if (currentLevel < level * 2) {
+					newEnchantments.set(enchantment, level * 2)
+				}
+			}
+
+			val output = leftStack.copy()
+			EnchantmentHelper.setEnchantments(output, newEnchantments.toImmutable())
+
+			event.output = output
+		}
+
 	}
 
 }

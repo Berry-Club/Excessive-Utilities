@@ -171,6 +171,13 @@ class ModItemTagsProvider(
 			.add(
 				ModItems.MAGICAL_BOOMERANG
 			)
+
+		tag(DOUBLE_ANVIL_ENCHANTMENTS)
+			.add(
+				ModItems.KIKOKU,
+				ModItems.COMPOUND_BOW,
+				ModItems.FIRE_AXE
+			)
 	}
 
 	companion object {
@@ -186,6 +193,7 @@ class ModItemTagsProvider(
 		val FILTERS = create("filters")
 		val SICKLES = common("sickles")
 		val MAGICAL_BOOMERANG_ENCHANTABLE = create("magical_boomerang_enchantable")
+		val DOUBLE_ANVIL_ENCHANTMENTS = create("double_anvil_enchantments")
 	}
 
 }
