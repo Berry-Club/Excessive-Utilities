@@ -23,7 +23,7 @@ class ModItemModelProvider(
 
 	override fun registerModels() {
 		lassos()
-		unstableTools()
+		unstableItems()
 		bewlrs()
 		flatTransferNodes()
 		enderShard()
@@ -84,13 +84,26 @@ class ModItemModelProvider(
 		}
 	}
 
-	fun unstableTools() {
+	//TODO: Make the glows emmissive, and make the ingot's glow red when about to explode
+	fun unstableItems() {
 		val axe = ModItems.HEALING_AXE.get()
 		val pickaxe = ModItems.DESTRUCTION_PICKAXE.get()
 		val hoe = ModItems.REVERSING_HOE.get()
 		val shovel = ModItems.EROSION_SHOVEL.get()
 		val sword = ModItems.ETHERIC_SWORD.get()
 		val shears = ModItems.PRECISION_SHEARS.get()
+		val ingot = ModItems.UNSTABLE_INGOT.get()
+		val nugget = ModItems.SEMI_UNSTABLE_NUGGET.get()
+
+		getBuilder(getName(ingot))
+			.parent(ModelFile.UncheckedModelFile("item/generated"))
+			.texture("layer0", modLoc("item/unstable_ingot/base"))
+			.texture("layer1", modLoc("item/unstable_ingot/glow"))
+
+		getBuilder(getName(nugget))
+			.parent(ModelFile.UncheckedModelFile("item/generated"))
+			.texture("layer0", modLoc("item/unstable_nugget/base"))
+			.texture("layer1", modLoc("item/unstable_nugget/glow"))
 
 		getBuilder(getName(axe))
 			.parent(ModelFile.UncheckedModelFile("item/handheld"))

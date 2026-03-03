@@ -1,4 +1,4 @@
-// 1.21.1	2026-02-24T01:47:10.3793813	Item Models: excessive_utilities
+// 1.21.1	2026-03-03T10:27:54.8957134	Item Models: excessive_utilities
 9d6996bb263b4e33b72427d7b5e0dbea7f0b9ebb assets/excessive_utilities/models/item/advanced_item_filter.json
 1b5cdcaf8035c8ad20d95987b1190cfdedb942fd assets/excessive_utilities/models/item/angel_ring.json
 ba9bed41335a88b8d00e7f12d6917c3c0a918eba assets/excessive_utilities/models/item/bag_of_holding.json
@@ -62,6 +62,7 @@ c3bbb5daeabc4dceed4352f06247c88220b8e2c1 assets/excessive_utilities/models/item/
 1e851894011908de13e487dd32e1b72ba2d5276a assets/excessive_utilities/models/item/resonating_redstone_crystal.json
 0b902b3f5c92f60eba0be485552ead3db26d2a67 assets/excessive_utilities/models/item/reversing_hoe.json
 b7392fffd9849735f5cf83718174e0599976d763 assets/excessive_utilities/models/item/ring_of_the_flying_squid.json
+07447c193a2ab6dc4984703a40e7a999ad0bd0a3 assets/excessive_utilities/models/item/semi_unstable_nugget.json
 210ffe9baa145bc72f868d79ab547792cb97c00c assets/excessive_utilities/models/item/sonar_goggles.json
 f5cdd222d15da217cf61897fb32e9cb816b120a9 assets/excessive_utilities/models/item/soul_fragment.json
 45904b309174ba63b86041e49885562a76beede5 assets/excessive_utilities/models/item/speed_upgrade.json
@@ -70,6 +71,7 @@ c3eb7bb4f0f129e3235897c58c981351c1e2906c assets/excessive_utilities/models/item/
 4bf0a23978d89c8edbe0110ed94fcd551db4f549 assets/excessive_utilities/models/item/stack_upgrade.json
 a2054e2d130c5803ef9a33a4f3c388ad81b36c3e assets/excessive_utilities/models/item/stone_sickle.json
 6ed40dbfd1a1d91e3a8757b05cad1a1aa00b95f5 assets/excessive_utilities/models/item/trowel.json
+5b015afa7f7cacd0d1c4ccd80d6a4e08f0929ab3 assets/excessive_utilities/models/item/unstable_ingot.json
 affe31894bd8dd951fc9adfa947b33f9b55eec7e assets/excessive_utilities/models/item/upgrade_base.json
 829fd123e8b9cfd401d1765a22bbc0c59bebd068 assets/excessive_utilities/models/item/watering_can.json
 b44ada3f081b1066c987ee49b97e734ea7c70133 assets/excessive_utilities/models/item/watering_can_broken.json
