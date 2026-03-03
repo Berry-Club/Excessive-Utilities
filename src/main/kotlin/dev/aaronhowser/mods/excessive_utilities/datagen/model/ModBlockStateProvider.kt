@@ -40,6 +40,80 @@ class ModBlockStateProvider(
 		cursedEarth()
 		chandelier()
 		magnumTorch()
+		trashCans()
+	}
+
+	private fun trashCans() {
+		val blocks = mapOf(
+			"item" to ModBlocks.TRASH_CAN.get(),
+			"fluid" to ModBlocks.TRASH_CAN_FLUID.get(),
+			"energy" to ModBlocks.TRASH_CAN_ENERGY.get(),
+		)
+
+		for ((type, block) in blocks) {
+
+			val side = modLoc("block/trash_can/${type}/side")
+			val top = modLoc("block/trash_can/${type}/top")
+			val bottom = modLoc("block/trash_can/${type}/bottom")
+
+			val model = models()
+				.withExistingParent(name(block), mcLoc("block/block"))
+				.texture("side", side)
+				.texture("top", top)
+				.texture("bottom", bottom)
+				.texture("particle", side)
+
+				.element {
+					from(2f, 0f, 2f)
+					to(14f, 10f, 14f)
+
+					allFacesExcept(
+						{ dir, fb ->
+							val texture = when (dir) {
+								Direction.DOWN -> "#bottom"
+								else -> "#side"
+							}
+
+							fb.texture(texture)
+							fb.cullface(dir)
+						},
+						setOf(Direction.UP)
+					)
+				}
+
+				.element {
+					from(1f, 10f, 1f)
+					to(15f, 14f, 15f)
+
+					allFaces { dir, fb ->
+						val texture = when (dir) {
+							Direction.UP -> "#top"
+							Direction.DOWN -> "#bottom"
+							else -> "#side"
+						}
+
+						fb.texture(texture)
+						fb.cullface(dir)
+					}
+				}
+
+				.element {
+					from(5f, 14f, 6f)
+					to(11f, 15f, 10f)
+
+					allFacesExcept(
+						{ dir, fb ->
+							val texture = if (dir == Direction.UP) "#top" else "#side"
+							fb.texture(texture)
+							fb.cullface(dir)
+						},
+						setOf(Direction.DOWN)
+					)
+				}
+
+			simpleBlockWithItem(block, model)
+		}
+
 	}
 
 	private fun magnumTorch() {
