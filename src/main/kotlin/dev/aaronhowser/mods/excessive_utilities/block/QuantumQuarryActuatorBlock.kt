@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.QuantumQuarryActuat
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -26,6 +27,21 @@ class QuantumQuarryActuatorBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN))
 		}
 
 		return adjacentQuantumQuarries == 1
+	}
+
+	override fun updateShape(
+		state: BlockState,
+		direction: Direction,
+		neighborState: BlockState,
+		level: LevelAccessor,
+		pos: BlockPos,
+		neighborPos: BlockPos
+	): BlockState {
+		return if (canSurvive(state, level, pos)) {
+			state
+		} else {
+			Blocks.AIR.defaultBlockState()
+		}
 	}
 
 }
