@@ -30,8 +30,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("advanced_observer")
 	val CONVEYOR_BELT =
 		basicBlock("conveyor_belt")
-	val CURSED_EARTH =
-		basicBlock("cursed_earth")
+	val CURSED_EARTH: DeferredBlock<CursedEarthBlock> =
+		registerBlock("cursed_earth", ::CursedEarthBlock)
 	val ENDER_COLLECTOR =
 		basicBlock("ender_collector")
 	val MAGICAL_WOOD: DeferredBlock<MagicalWoodBlock> =
