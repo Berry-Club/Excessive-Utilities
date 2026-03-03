@@ -1088,7 +1088,6 @@ class ModBlockStateProvider(
 			ModBlocks.SANDY_GLASS.get(),
 			ModBlocks.QUANTUM_QUARRY.get(),
 			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.get(),
-			ModBlocks.REDSTONE_CLOCK.get()
 		)
 
 		for (block in blocks) {
