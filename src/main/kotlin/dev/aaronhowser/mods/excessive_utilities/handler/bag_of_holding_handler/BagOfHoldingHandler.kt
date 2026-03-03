@@ -47,7 +47,7 @@ class BagOfHoldingHandler : SavedData() {
 		}
 
 		fun get(level: ServerLevel): BagOfHoldingHandler {
-			if (level.server.overworld() != Level.OVERWORLD) {
+			if (level != level.server.overworld()) {
 				return get(level.server.overworld())
 			}
 

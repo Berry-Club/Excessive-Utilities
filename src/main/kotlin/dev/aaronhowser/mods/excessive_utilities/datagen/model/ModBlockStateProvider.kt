@@ -822,7 +822,8 @@ class ModBlockStateProvider(
 			ModBlocks.SOUND_MUFFLER.get(),
 			ModBlocks.RAINBOW_GENERATOR.get(),
 			ModBlocks.SANDY_GLASS.get(),
-			ModBlocks.QUANTUM_QUARRY.get()
+			ModBlocks.QUANTUM_QUARRY.get(),
+			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.get()
 		)
 
 		for (block in blocks) {

@@ -48,6 +48,16 @@ class ModRecipeProvider(
 		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
 
 		shapedRecipe(
+			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.toStack(),
+			"QDQ,DOD,QDQ",
+			mapOf(
+				'Q' to ModBlocks.QUARTZBURNT.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
+				'O' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
 			ModBlocks.CHANDELIER.toStack(),
 			"GDG,TTT, T ",
 			mapOf(
