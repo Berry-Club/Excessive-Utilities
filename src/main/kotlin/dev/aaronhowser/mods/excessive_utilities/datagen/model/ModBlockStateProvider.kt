@@ -43,6 +43,33 @@ class ModBlockStateProvider(
 		trashCans()
 		trashChest()
 		gpPanels()
+		dragonEggMill()
+		creativeMill()
+	}
+
+	private fun creativeMill() {
+		val block = ModBlocks.CREATIVE_MILL.get()
+
+		val side = modLoc("block/creative_mill/side")
+		val top = modLoc("block/creative_mill/top")
+
+		val model = models()
+			.cubeTop(name(block), side, top)
+
+		simpleBlockWithItem(block, model)
+	}
+
+	private fun dragonEggMill() {
+		val block = ModBlocks.DRAGON_EGG_MILL.get()
+
+		val side = modLoc("block/dragon_egg_mill/side")
+		val top = modLoc("block/dragon_egg_mill/top")
+		val bottom = modLoc("block/mill_bottom")
+
+		val model = models()
+			.cubeBottomTop(name(block), side, bottom, top)
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun gpPanels() {
@@ -52,7 +79,7 @@ class ModBlockStateProvider(
 		)
 
 		val side = modLoc("block/gp_panel/side")
-		val bottom = modLoc("block/gp_panel/bottom")
+		val bottom = modLoc("block/mill_bottom")
 
 		for ((type, block) in blocks) {
 			val top = modLoc("block/gp_panel/$type")

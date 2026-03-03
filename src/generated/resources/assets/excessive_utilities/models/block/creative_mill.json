@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "side": "excessive_utilities:block/creative_mill/side",
+    "top": "excessive_utilities:block/creative_mill/top"
+  }
+}

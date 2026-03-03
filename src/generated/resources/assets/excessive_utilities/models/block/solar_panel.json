@@ -41,7 +41,7 @@
     }
   ],
   "textures": {
-    "bottom": "excessive_utilities:block/gp_panel/bottom",
+    "bottom": "excessive_utilities:block/mill_bottom",
     "particle": "excessive_utilities:block/gp_panel/side",
     "side": "excessive_utilities:block/gp_panel/side",
     "top": "excessive_utilities:block/gp_panel/solar"
