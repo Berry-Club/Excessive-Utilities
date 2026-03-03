@@ -314,6 +314,7 @@ object CommonEvents {
 			EnchantmentHelper.setEnchantments(output, newEnchantments.toImmutable())
 
 			event.output = output
+			event.cost = 40
 		}
 
 	}
