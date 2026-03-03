@@ -48,8 +48,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("last_millennium_portal")
 	val RAIN_MUFFLER =
 		basicBlock("rain_muffler")
-	val SOUND_MUFFLER =
-		basicBlock("sound_muffler")
+	val SOUND_MUFFLER: DeferredBlock<SoundMufflerBlock> =
+		registerBlock("sound_muffler", ::SoundMufflerBlock)
 	val TRADING_POST =
 		basicBlock("trading_post")
 	val CREATIVE_HARVEST: DeferredBlock<CreativeHarvestBlock> =
