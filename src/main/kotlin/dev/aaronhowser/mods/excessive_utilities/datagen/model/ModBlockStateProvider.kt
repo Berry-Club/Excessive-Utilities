@@ -1,10 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
-import dev.aaronhowser.mods.excessive_utilities.block.MiniChestBlock
-import dev.aaronhowser.mods.excessive_utilities.block.MoonStoreOreBlock
-import dev.aaronhowser.mods.excessive_utilities.block.SlightlyLargerChestBlock
+import dev.aaronhowser.mods.excessive_utilities.block.*
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.Direction
@@ -36,6 +33,45 @@ class ModBlockStateProvider(
 		filingCabinets()
 		moonStoneOre()
 		resonator()
+		quantumQuarryActuator()
+	}
+
+	private fun quantumQuarryActuator() {
+		val block = ModBlocks.QUANTUM_QUARRY_ACTUATOR.get()
+
+		val top = modLoc("block/quantum_quarry_actuator/top")
+		val bottom = modLoc("block/quantum_quarry_actuator/bottom")
+		val side = modLoc("block/quantum_quarry_actuator/side")
+
+		val model = models().orientableWithBottom(name(block), side, side, bottom, top)
+
+		getVariantBuilder(block)
+			.forAllStates {
+				val facing = it.getValue(QuantumQuarryActuatorBlock.FACING)
+
+				val yRotation = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val xRotation = when (facing) {
+					Direction.UP -> 0
+					Direction.DOWN -> 180
+					else -> 90
+				}
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.rotationY(yRotation)
+					.rotationX(xRotation)
+					.build()
+			}
+
+		simpleBlockItem(block, model)
 	}
 
 	private fun resonator() {
