@@ -44,7 +44,7 @@ class ModBlockStateProvider(
 		val bottom = modLoc("block/peaceful_table/bottom")
 		val side = modLoc("block/peaceful_table/side")
 
-		val model = models()
+		var model = models()
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("top", top)
 			.texture("bottom", bottom)
@@ -66,23 +66,30 @@ class ModBlockStateProvider(
 			}
 			.end()
 
-			.element()
-			.from(1f, 0f, 1f)
-			.to(5f, 12f, 5f)
-			.allFacesExcept(
-				{ dir, fb ->
-					val texture = when (dir) {
-						Direction.DOWN -> "#bottom"
-						else -> "#side"
-					}
+		fun leg(minX: Float, minZ: Float) {
+			model = model
+				.element()
+				.from(minX, 0f, minZ)
+				.to(minX + 4, 12f, minZ + 4)
+				.allFacesExcept(
+					{ dir, fb ->
+						val texture = when (dir) {
+							Direction.DOWN -> "#bottom"
+							else -> "#side"
+						}
 
-					fb.texture(texture)
-					fb.cullface(dir)
-				},
-				setOf(Direction.UP)
-			)
-			.end()
+						fb.texture(texture)
+						fb.cullface(dir)
+					},
+					setOf(Direction.UP)
+				)
+				.end()
+		}
 
+		leg(1f, 1f)
+		leg(11f, 1f)
+		leg(1f, 11f)
+		leg(11f, 11f)
 
 		simpleBlockWithItem(block, model)
 	}
