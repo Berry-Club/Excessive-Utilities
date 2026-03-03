@@ -123,8 +123,8 @@ object ModItems : AaronItemRegistry() {
 		register("fire_axe", ::FireAxeItem, FireAxeItem.DEFAULT_PROPERTIES)
 	val LUX_SABER =
 		basic("lux_saber")
-	val COMPOUND_BOW =
-		basic("compound_bow")
+	val COMPOUND_BOW: DeferredItem<CompoundBowItem> =
+		register("compound_bow", ::CompoundBowItem)
 	val MAGICAL_BOOMERANG: DeferredItem<MagicalBoomerangItem> =
 		register("magical_boomerang", ::MagicalBoomerangItem, MagicalBoomerangItem.DEFAULT_PROPERTIES)
 
