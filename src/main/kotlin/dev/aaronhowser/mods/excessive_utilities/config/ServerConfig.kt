@@ -96,6 +96,9 @@ class ServerConfig(
 	lateinit var boomerangItemPickupRadius: ModConfigSpec.DoubleValue
 	lateinit var boomereaperangRadius: ModConfigSpec.DoubleValue
 
+	lateinit var cursedEarthChance: ModConfigSpec.DoubleValue
+	lateinit var cursedEarthMaxSpawnedMobs: ModConfigSpec.IntValue
+
 	init {
 		general()
 		heatingCoil()
@@ -107,6 +110,19 @@ class ServerConfig(
 		quantumQuarry()
 		rings()
 		boomerang()
+		cursedEarth()
+	}
+
+	private fun cursedEarth() {
+		builder.section("cursed_earth") {
+			cursedEarthChance = builder
+				.comment("The chance per tick that a Cursed Earth block will try to spawn a mob.")
+				.defineInRange("cursedEarthChance", 1.0 / 40, 0.0, 1.0)
+
+			cursedEarthMaxSpawnedMobs = builder
+				.comment("The maximum number of mobs around a Cursed Earth before it stops trying to spawn more.")
+				.defineInRange("cursedEarthMaxSpawnedMobs", 10, 1, Int.MAX_VALUE)
+		}
 	}
 
 	private fun quantumQuarry() {

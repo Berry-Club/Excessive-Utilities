@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -99,14 +100,17 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 			}
 		}
 
-		private fun spawnMonster(level: ServerLevel, pos: BlockPos, random: RandomSource) {
+		private fun spawnMonster(level: ServerLevel, cursedEarthPos: BlockPos, random: RandomSource) {
 			if (level.difficulty == Difficulty.PEACEFUL) return
+			if (!random.chance(ServerConfig.CONFIG.cursedEarthChance.get())) return
+
+			val pos = cursedEarthPos.above()
 
 			val nearbyEntities = level.getEntitiesOfClass(
 				LivingEntity::class.java,
 				AABB(pos).inflate(8.0)
 			)
-			if (nearbyEntities.count() > 8) return
+			if (nearbyEntities.count() > ServerConfig.CONFIG.cursedEarthMaxSpawnedMobs.get()) return
 
 			val possibleMobs = level
 				.getBiome(pos)
