@@ -48,6 +48,16 @@ class ModRecipeProvider(
 		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
 
 		shapedRecipe(
+			ModBlocks.CHANDELIER.toStack(),
+			"GDG,TTT, T ",
+			mapOf(
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
+				'T' to Items.TORCH.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
 			ModBlocks.MAGICAL_SNOW_GLOBE.toStack(),
 			"GSN,DLA,EW ",
 			mapOf(
