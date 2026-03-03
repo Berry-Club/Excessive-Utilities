@@ -143,6 +143,8 @@ class EnderQuarryBlockEntity(
 			.mapNotNull { level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos.relative(it), it.opposite) }
 
 		for (destinationHandler in adjacentItemHandlers) {
+			if (bufferContainer.isEmpty) break
+
 			for (slot in 0 until itemHandler.slots) {
 				val stack = itemHandler.getStackInSlot(slot)
 				if (stack.isEmpty) continue

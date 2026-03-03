@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.ImprovedSimpleContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -18,6 +19,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
+import net.minecraft.world.Container
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.ChunkPos
@@ -27,20 +29,29 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.items.wrapper.InvWrapper
 import java.lang.ref.WeakReference
 import java.util.*
 
 class QuantumQuarryBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state) {
+) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state), ContainerContainer {
 
 	private val energyStorage = EnergyStorage(1_000_000)
+
+	private val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
+	private val itemHandler: InvWrapper = InvWrapper(bufferContainer)
 	private val upgradesContainer = ImprovedSimpleContainer(this, 3)
+
+	override fun getContainers(): List<Container> = listOf(bufferContainer, upgradesContainer)
 
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 
@@ -75,6 +86,38 @@ class QuantumQuarryBlockEntity(
 		}
 
 		return true
+	}
+
+	private fun pushOutItems(level: ServerLevel) {
+		if (bufferContainer.isEmpty) return
+
+		val adjacentItemHandlers = mutableSetOf<IItemHandler>()
+
+		for (actuatorPos in actuatorPositions) {
+			for (direction in Direction.entries) {
+				val adjacentPos = actuatorPos.relative(direction)
+				if (adjacentPos == blockPos) continue
+
+				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, adjacentPos, direction.opposite)
+				if (itemHandler != null) adjacentItemHandlers.add(itemHandler)
+			}
+		}
+
+		for (destinationHandler in adjacentItemHandlers) {
+			if (bufferContainer.isEmpty) break
+
+			for (slot in 0 until itemHandler.slots) {
+				val stack = itemHandler.getStackInSlot(slot)
+				if (stack.isEmpty) continue
+
+				val simRemainder = ItemHandlerHelper.insertItemStacked(destinationHandler, stack, true)
+				val amountAccepted = stack.count - simRemainder.count
+				if (amountAccepted > 0) {
+					val extracted = itemHandler.extractItem(slot, amountAccepted, false)
+					ItemHandlerHelper.insertItemStacked(destinationHandler, extracted, false)
+				}
+			}
+		}
 	}
 
 	private var progressThroughBlock = 0.0
