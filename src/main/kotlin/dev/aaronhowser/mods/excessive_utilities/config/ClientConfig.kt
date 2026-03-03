@@ -22,7 +22,7 @@ class ClientConfig(
 
 		soundMufflerRadius = builder
 			.comment("The radius in blocks that sound mufflers will affect")
-			.defineInRange("soundMufflerRadius", 16.0, 0.0, Double.MAX_VALUE)
+			.defineInRange("soundMufflerRadius", 8.0, 0.0, Double.MAX_VALUE)
 
 	}
 
