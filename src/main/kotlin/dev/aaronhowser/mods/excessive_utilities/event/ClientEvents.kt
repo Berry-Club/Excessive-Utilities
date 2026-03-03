@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRen
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.EnderQuarryBER
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.MagicalBoomerangEntityRenderer
+import dev.aaronhowser.mods.excessive_utilities.client.render.layer.AngelRingWingsLayer
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.ClientKeyHandler
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
@@ -15,9 +16,13 @@ import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.item.MagicalBoomerangItem
 import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
 import dev.aaronhowser.mods.excessive_utilities.registry.*
+import net.minecraft.client.model.PlayerModel
+import net.minecraft.client.player.AbstractClientPlayer
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.NoopRenderer
+import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.renderer.entity.player.PlayerRenderer
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
@@ -107,6 +112,19 @@ object ClientEvents {
 		) { stack, level, entity, seed ->
 			if (entity != null && entity.isUsingItem && entity.getUseItem() == stack) 1.0f else 0.0f
 		}
+	}
+
+	@SubscribeEvent
+	fun addEntityRenderLayers(event: EntityRenderersEvent.AddLayers) {
+
+		for (skin in event.skins) {
+			val renderer = event.getSkin(skin) as? PlayerRenderer
+			if (renderer is RenderLayerParent<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>>) {
+				val layer = AngelRingWingsLayer(renderer)
+				renderer.addLayer(layer)
+			}
+		}
+
 	}
 
 	@SubscribeEvent
