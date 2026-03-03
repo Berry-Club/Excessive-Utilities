@@ -1,8 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.client.render.layer
 
-import com.mojang.blaze3d.vertex.PoseStack
-import com.mojang.blaze3d.vertex.VertexConsumer
-import net.minecraft.client.model.EntityModel
+import net.minecraft.client.model.AgeableListModel
 import net.minecraft.client.model.geom.ModelPart
 import net.minecraft.client.model.geom.PartPose
 import net.minecraft.client.model.geom.builders.CubeDeformation
@@ -10,15 +8,17 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder
 import net.minecraft.client.model.geom.builders.LayerDefinition
 import net.minecraft.client.model.geom.builders.MeshDefinition
 import net.minecraft.client.player.AbstractClientPlayer
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.Mth
 
 class AngelRingWingsModel(
 	root: ModelPart
-) : EntityModel<AbstractClientPlayer>(RenderType::entityCutoutNoCull) {
+) : AgeableListModel<AbstractClientPlayer>() {
 
 	private val leftWing: ModelPart = root.getChild("left_wing")
 	private val rightWing: ModelPart = root.getChild("right_wing")
+
+	override fun headParts(): Iterable<ModelPart> = emptyList()
+	override fun bodyParts(): Iterable<ModelPart> = listOf(leftWing, rightWing)
 
 	override fun setupAnim(
 		entity: AbstractClientPlayer,
@@ -28,17 +28,9 @@ class AngelRingWingsModel(
 		netHeadYaw: Float,
 		headPitch: Float
 	) {
-
-	}
-
-	override fun renderToBuffer(
-		poseStack: PoseStack,
-		buffer: VertexConsumer,
-		packedLight: Int,
-		packedOverlay: Int,
-		color: Int
-	) {
-
+		val wingFlap = Mth.sin(ageInTicks * 0.5f) * 0.5f + 0.5f
+		leftWing.zRot = Mth.PI / 12f + wingFlap * Mth.PI / 6f
+		rightWing.zRot = -Mth.PI / 12f - wingFlap * Mth.PI / 6f
 	}
 
 	companion object {
