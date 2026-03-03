@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-03T07:48:05.2358067	Loot Tables
+// 1.21.1	2026-03-03T08:51:06.6352549	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 dfd3eb1c14ba5a4b83fdae1b1844caadf489ebdb data/excessive_utilities/loot_table/blocks/advanced_observer.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
@@ -30,7 +30,7 @@ e4bd688c2449f194a954dde593f7e94bc22e01b0 data/excessive_utilities/loot_table/blo
 d0675bb778ac43a1ec8b7bcb1286fa3461f8e8f1 data/excessive_utilities/loot_table/blocks/crossed_stone.json
 3a45ad757be5b8e532c84b504e0fde9d004e88a5 data/excessive_utilities/loot_table/blocks/crusher.json
 bf055ea0ba6439072d5dc78927de18242f9aeb1c data/excessive_utilities/loot_table/blocks/culinary_generator.json
-b10be53e9add5cd773409b9aa7282bd9fc2b76a5 data/excessive_utilities/loot_table/blocks/cursed_earth.json
+460b355a9b5d3adf32a8ea50b1dcf609c3832d7f data/excessive_utilities/loot_table/blocks/cursed_earth.json
 0c122d84eca71c6875ea307fd54d901ada6d763a data/excessive_utilities/loot_table/blocks/dark_ineffable_glass.json
 137bc2792e7facb94b701bc806b95829df0239fa data/excessive_utilities/loot_table/blocks/death_generator.json
 8bf05f599907672cf5f307955faad8048cc6b02e data/excessive_utilities/loot_table/blocks/deepslate_moon_stone_ore.json

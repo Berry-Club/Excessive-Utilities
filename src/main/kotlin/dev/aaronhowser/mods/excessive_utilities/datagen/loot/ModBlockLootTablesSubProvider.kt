@@ -7,6 +7,7 @@ import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.storage.loot.IntRange
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.LootTable
@@ -26,7 +27,8 @@ class ModBlockLootTablesSubProvider(
 	override fun generate() {
 		val noDropSelfBlocks = setOf(
 			ModBlocks.MOON_STORE_ORE.get(),
-			ModBlocks.DEEPSLATE_MOON_STONE_ORE.get()
+			ModBlocks.DEEPSLATE_MOON_STONE_ORE.get(),
+			ModBlocks.CURSED_EARTH.get()
 		)
 
 		val dropSelfBlocks = knownBlocks - noDropSelfBlocks
@@ -67,6 +69,7 @@ class ModBlockLootTablesSubProvider(
 				)
 		)
 
+		add(ModBlocks.CURSED_EARTH.get()) { block -> createSingleItemTableWithSilkTouch(block, Blocks.DIRT) }
 
 	}
 
