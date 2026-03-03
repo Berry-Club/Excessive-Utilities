@@ -605,15 +605,23 @@ class ModBlockStateProvider(
 			ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE to "speed_three",
 		)
 
-		for ((block, texture) in blocks) {
-			val name = name(block.get())
-			val model = models()
-				.cubeAll(
-					name,
-					modLoc("block/ender_quarry_upgrade/$texture")
-				)
+		for ((deferred, texture) in blocks) {
+			val block = deferred.get()
 
-			simpleBlockWithItem(block.get(), model)
+			val model = models()
+				.withExistingParent(name(block), mcLoc("block/block"))
+				.texture("texture", modLoc("block/ender_quarry_upgrade/$texture"))
+				.element {
+					from(1f, 1f, 1f)
+					to(15f, 15f, 15f)
+					allFaces { dir, fb ->
+						fb.texture("#texture")
+						fb.cullface(dir)
+						fb.uvs(0f, 0f, 16f, 16f)
+					}
+				}
+
+			simpleBlockWithItem(block, model)
 		}
 	}
 
