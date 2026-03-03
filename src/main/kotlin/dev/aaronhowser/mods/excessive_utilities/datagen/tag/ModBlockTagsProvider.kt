@@ -283,6 +283,12 @@ class ModBlockTagsProvider(
 
 		tag(BlockTags.DIRT)
 			.add(ModBlocks.CURSED_EARTH.get())
+
+		tag(GLASS_CUTTER_MINEABLE)
+			.addTags(
+				Tags.Blocks.GLASS_BLOCKS,
+				Tags.Blocks.GLASS_PANES
+			)
 	}
 
 	companion object {
@@ -300,6 +306,7 @@ class ModBlockTagsProvider(
 		val EROSION_SHOVEL_TARGET = create("erosion_shovel_target")
 		val COLLECTABLE_BY_BOOMEREAPERANG = create("collectable_by_boomereaperang")
 		val CURSED_EARTH_REPLACEABLE = create("cursed_earth_replaceable")
+		val GLASS_CUTTER_MINEABLE = create("mineable/glass_cutter")
 	}
 
 }

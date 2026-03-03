@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-03T08:07:13.4387806	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-03-03T14:37:38.8399209	Tags for minecraft:block mod id excessive_utilities
 2bef9f868fc60a1a3de29857c00073febf29cd62 data/c/tags/block/mineable/sickle.json
 7d564c8a834c5d607ca80b9a8dba9380b0335386 data/excessive_utilities/tags/block/collectable_by_boomereaperang.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/excessive_utilities/tags/block/creative_harvest_blacklist.json
@@ -8,6 +8,7 @@ f8b9073a9052798f83bdc2da8698d17de3e9f417 data/excessive_utilities/tags/block/end
 649d76d2175d8567a6fd6a41e88c6e82900d6aa5 data/excessive_utilities/tags/block/ender_quarry_part.json
 8970eaead49e586815b02b3e41010dbe9693ff29 data/excessive_utilities/tags/block/erosion_shovel_target.json
 b147fcff5c0b4d72df1cb7809b063b2562180832 data/excessive_utilities/tags/block/mineable/fire_axe.json
+0b8dc777f12e3ac734cab3b6b1382caa0aff238e data/excessive_utilities/tags/block/mineable/glass_cutter.json
 2bd371f63b72eecd4710ed9ef16fcf54baec3f19 data/excessive_utilities/tags/block/render_gp_while_looking_at.json
 fdf0229f5dd8b82a9a07d37302c8eab1ed4ebeab data/excessive_utilities/tags/block/valid_for_dragon_egg_mill.json
 8126d8bca8572cc70eb7efba0151b0979b238c50 data/minecraft/tags/block/dirt.json
