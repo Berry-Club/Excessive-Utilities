@@ -3,7 +3,8 @@
 	"minVersion": "0.8",
 	"package": "dev.aaronhowser.mods.excessive_utilities.mixin",
 	"mixins": [
-		"AbstractFurnaceBlockEntityMixin", "LevelMixin"
+		"AbstractFurnaceBlockEntityMixin",
+		"LevelMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1
