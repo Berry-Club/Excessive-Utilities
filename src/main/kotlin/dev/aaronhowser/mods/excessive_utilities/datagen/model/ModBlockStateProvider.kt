@@ -23,6 +23,7 @@ class ModBlockStateProvider(
 
 	override fun registerStatesAndModels() {
 		singleTextureBlocks()
+		singleTextureCutout()
 		blackoutCurtain()
 		athenaBlocks()
 		slightlyLargerChest()
@@ -1092,6 +1093,22 @@ class ModBlockStateProvider(
 
 		for (block in blocks) {
 			simpleBlockWithItem(block, cubeAll(block))
+		}
+	}
+
+	private fun singleTextureCutout() {
+		val blocks = listOf(
+			ModBlocks.RESTURBED_MOB_SPAWNER.get()
+		)
+
+		for (block in blocks) {
+			val name = name(block)
+			val texture = modLoc("block/$name")
+			val model = models()
+				.cubeAll(name, texture)
+				.renderType(RenderType.cutout().name)
+
+			simpleBlockWithItem(block, model)
 		}
 	}
 
