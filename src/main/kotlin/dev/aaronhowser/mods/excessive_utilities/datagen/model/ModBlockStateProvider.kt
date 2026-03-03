@@ -42,11 +42,50 @@ class ModBlockStateProvider(
 		magnumTorch()
 		trashCans()
 		trashChest()
+		gpPanels()
+	}
+
+	private fun gpPanels() {
+		val blocks = mapOf(
+			"lunar" to ModBlocks.LUNAR_PANEL.get(),
+			"solar" to ModBlocks.SOLAR_PANEL.get()
+		)
+
+		val side = modLoc("block/gp_panel/side")
+		val bottom = modLoc("block/gp_panel/bottom")
+
+		for ((type, block) in blocks) {
+			val top = modLoc("block/gp_panel/$type")
+
+			val model = models()
+				.withExistingParent(name(block), mcLoc("block/block"))
+				.texture("side", side)
+				.texture("top", top)
+				.texture("bottom", bottom)
+				.texture("particle", side)
+
+				.element {
+					from(0f, 0f, 0f)
+					to(16f, 4f, 16f)
+
+					allFaces { dir, fb ->
+						val texture = when (dir) {
+							Direction.UP -> "#top"
+							Direction.DOWN -> "#bottom"
+							else -> "#side"
+						}
+
+						fb.texture(texture)
+						fb.cullface(dir)
+					}
+				}
+
+			simpleBlockWithItem(block, model)
+		}
 	}
 
 	private fun trashChest() {
 		val block = ModBlocks.TRASH_CAN_CHEST.get()
-
 
 		val side = modLoc("block/trash_can/chest/side")
 		val front = modLoc("block/trash_can/chest/front")
