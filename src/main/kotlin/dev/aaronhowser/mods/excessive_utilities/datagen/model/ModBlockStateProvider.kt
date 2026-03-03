@@ -96,7 +96,11 @@ class ModBlockStateProvider(
 				}
 			}
 
-		simpleBlockWithItem(block, model)
+		simpleBlock(block, model)
+
+		itemModels()
+			.withExistingParent(name(block), "item/generated")
+			.texture("layer0", texture)
 	}
 
 	private fun cursedEarth() {
