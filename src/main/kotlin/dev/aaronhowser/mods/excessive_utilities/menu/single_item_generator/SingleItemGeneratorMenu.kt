@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -9,6 +10,7 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
+import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
 class SingleItemGeneratorMenu(
@@ -40,7 +42,11 @@ class SingleItemGeneratorMenu(
 	fun getBurnTimeRemaining(): Int = generatorContainerData.get(GeneratorBlockEntity.BURN_TIME_REMAINING_DATA_INDEX)
 
 	override fun addSlots() {
+		val upgradeSlot = Slot(generatorContainer, GeneratorContainer.UPGRADE_SLOT, 8, 42)
+		val inputSlots = Slot(generatorContainer, GeneratorContainer.INPUT_SLOT, 69, 42)
 
+		this.addSlot(upgradeSlot)
+		this.addSlot(inputSlots)
 	}
 
 	override fun quickMoveStack(player: Player, index: Int): ItemStack {
