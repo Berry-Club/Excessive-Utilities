@@ -7,14 +7,20 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
+import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.SingleItemGeneratorMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.IntTag
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -30,7 +36,7 @@ abstract class GeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(type, pos, blockState), ContainerContainer {
+) : BlockEntity(type, pos, blockState), ContainerContainer, MenuProvider {
 
 	abstract val generatorType: GeneratorType
 	var ownerUuid: UUID? = null
@@ -60,7 +66,6 @@ abstract class GeneratorBlockEntity(
 					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
 					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
 					BURN_TIME_REMAINING_DATA_INDEX -> burnTimeRemaining
-					MAX_BURN_TIME_DATA_INDEX -> fePerTick
 					else -> -1
 				}
 			}
@@ -161,6 +166,13 @@ abstract class GeneratorBlockEntity(
 
 	protected open fun clientTick(level: Level) {}
 
+	override fun getDisplayName(): Component = blockState.block.name
+
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
+		val container = container ?: return null
+		return SingleItemGeneratorMenu(containerId, playerInventory, container, containerData)
+	}
+
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
@@ -199,11 +211,10 @@ abstract class GeneratorBlockEntity(
 		const val FE_PER_TICK_NBT = "FePerTick"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
 
-		const val GENERATOR_CONTAINER_DATA_SIZE = 4
+		const val GENERATOR_CONTAINER_DATA_SIZE = 3
 		const val MAX_ENERGY_DATA_INDEX = 0
 		const val CURRENT_ENERGY_DATA_INDEX = 1
 		const val BURN_TIME_REMAINING_DATA_INDEX = 2
-		const val MAX_BURN_TIME_DATA_INDEX = 3
 
 		fun tick(
 			level: Level,
