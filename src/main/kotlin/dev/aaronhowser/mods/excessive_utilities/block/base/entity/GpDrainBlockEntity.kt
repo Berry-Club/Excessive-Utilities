@@ -39,6 +39,14 @@ abstract class GpDrainBlockEntity(
 
 	abstract fun getGpUsage(): Double
 
+	protected fun isOverloaded(): Boolean {
+		val level = level as? ServerLevel ?: return false
+		val owner = ownerUuid ?: return false
+
+		val grid = GridPowerHandler.get(level).getGrid(owner)
+		return grid.isOverloaded()
+	}
+
 	protected open fun serverTick(level: ServerLevel) {
 		val owner = ownerUuid ?: return
 
