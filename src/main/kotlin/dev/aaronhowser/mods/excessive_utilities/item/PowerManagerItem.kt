@@ -24,25 +24,36 @@ class PowerManagerItem(properties: Properties) : Item(properties) {
 		if (level is ServerLevel) {
 			val grid = GridPowerHandler.get(level).getGrid(player)
 
-			player.tell("Producers:")
-			for (producer in grid.getProducers()) {
-				val component = Component.literal("- ")
-					.append(producer.getDisplayName())
-					.append(": ")
-					.append(producer.getDisplayText())
+			val producers = grid.getProducers()
+			if (producers.isNotEmpty()) {
+				player.tell("Producers:")
+				for (producer in producers) {
+					val component = Component.literal("- ")
+						.append(producer.getDisplayName())
+						.append(": ")
+						.append(producer.getDisplayText())
 
-				player.tell(component)
+					player.tell(component)
+				}
 			}
 
-			player.tell("Consumers:")
-			for (consumer in grid.getConsumers()) {
-				val component = Component.literal("- ")
-					.append(consumer.getDisplayName())
-					.append(": ")
-					.append(consumer.getDisplayText())
+			val consumers = grid.getConsumers()
+			if (consumers.isNotEmpty()) {
+				player.tell("Consumers:")
+				for (consumer in consumers) {
+					val component = Component.literal("- ")
+						.append(consumer.getDisplayName())
+						.append(": ")
+						.append(consumer.getDisplayText())
 
-				player.tell(component)
+					player.tell(component)
+				}
 			}
+
+			if (producers.isEmpty() && consumers.isEmpty()) {
+				player.tell("No producers or consumers found.")
+			}
+
 		}
 
 		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
