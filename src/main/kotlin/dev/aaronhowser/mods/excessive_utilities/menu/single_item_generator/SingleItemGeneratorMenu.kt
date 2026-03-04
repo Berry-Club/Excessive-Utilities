@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.ResonatorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
@@ -35,6 +34,10 @@ class SingleItemGeneratorMenu(
 		addDataSlots(generatorContainerData)
 		addPlayerInventorySlots(90)
 	}
+
+	fun getMaxEnergy(): Int = generatorContainerData.get(GeneratorBlockEntity.MAX_ENERGY_DATA_INDEX)
+	fun getCurrentEnergy(): Int = generatorContainerData.get(GeneratorBlockEntity.CURRENT_ENERGY_DATA_INDEX)
+	fun getBurnTimeRemaining(): Int = generatorContainerData.get(GeneratorBlockEntity.BURN_TIME_REMAINING_DATA_INDEX)
 
 	override fun addSlots() {
 
