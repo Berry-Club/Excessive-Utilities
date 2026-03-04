@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
@@ -70,6 +71,14 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 					if (player.hasInfiniteMaterials() || !player.abilities.flying) return 0.0
 
 					return ServerConfig.CONFIG.angelRingGpCost.get()
+				}
+
+				private val stackCopy = ringStack.copy()
+				override fun getDisplayStack(): ItemStack = stackCopy
+				override fun getDisplayName(): Component = stackCopy.displayName
+				override fun getDisplayText(): Component {
+					val amount = getAmount()
+					return Component.literal("$amount")
 				}
 			}
 

@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
@@ -59,6 +60,13 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 			val gpConsumer = object : GridPowerContribution {
 				override fun getAmount(): Double = requirement
 				override fun isStillValid(): Boolean = level.gameTime < lastTick
+
+				private val stackCopy = stack.copyWithCount(1)
+				override fun getDisplayStack(): ItemStack = stackCopy
+				override fun getDisplayName(): Component = stackCopy.displayName
+				override fun getDisplayText(): Component {
+					return Component.literal("$requirement at ${furnace.blockPos.x} ${furnace.blockPos.y} ${furnace.blockPos.z}")
+				}
 			}
 
 			handler.addConsumer(gpConsumer)

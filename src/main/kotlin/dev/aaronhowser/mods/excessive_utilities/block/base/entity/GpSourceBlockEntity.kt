@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
@@ -7,7 +8,9 @@ import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHand
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -25,6 +28,13 @@ abstract class GpSourceBlockEntity(
 		object : GridPowerContribution {
 			override fun getAmount(): Double = getGpGeneration()
 			override fun isStillValid(): Boolean = !this@GpSourceBlockEntity.isRemoved
+
+			override fun getDisplayStack(): ItemStack = blockState.block.getDefaultInstance()
+			override fun getDisplayName(): Component = blockState.block.name
+			override fun getDisplayText(): Component {
+				val amount = getAmount()
+				return Component.literal("$amount at ${worldPosition.x}, ${worldPosition.y}, ${worldPosition.z}")
+			}
 		}
 
 	abstract fun getGpGeneration(): Double

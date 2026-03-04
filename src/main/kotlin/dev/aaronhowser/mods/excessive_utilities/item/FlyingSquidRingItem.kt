@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerCont
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
@@ -102,6 +103,14 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 					if (player.hasInfiniteMaterials() || !canPlayerUse(player)) return 0.0
 
 					return ServerConfig.CONFIG.flyingSquidRingGpCost.get()
+				}
+
+				private val stackCopy = ringStack.copy()
+				override fun getDisplayStack(): ItemStack = stackCopy
+				override fun getDisplayName(): Component = stackCopy.displayName
+				override fun getDisplayText(): Component {
+					val amount = getAmount()
+					return Component.literal("$amount")
 				}
 			}
 
