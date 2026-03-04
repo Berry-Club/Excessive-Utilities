@@ -64,10 +64,11 @@ class EnergyBar(
 	}
 
 	companion object {
+		val TEXTURE = ExcessiveUtilities.modResource("energy")
+
 		const val WIDTH = 18
 		const val HEIGHT = 57
 		const val TEXTURE_SIZE = 64
-		val TEXTURE = ExcessiveUtilities.modResource("energy")
 	}
 
 }
