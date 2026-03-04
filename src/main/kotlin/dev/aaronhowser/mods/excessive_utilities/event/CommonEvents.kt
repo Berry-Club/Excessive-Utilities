@@ -21,6 +21,7 @@ import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.DestructionPickaxeItem
 import dev.aaronhowser.mods.excessive_utilities.item.ErosionShovelItem
+import dev.aaronhowser.mods.excessive_utilities.item.GlassCutterItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -240,6 +241,7 @@ object CommonEvents {
 		AngelBlock.handleDropEvent(event)
 		DestructionPickaxeItem.handleDropEvent(event)
 		ErosionShovelItem.handleDropEvent(event)
+		GlassCutterItem.handleDropEvent(event)
 	}
 
 	@SubscribeEvent
