@@ -47,6 +47,27 @@ class ModBlockStateProvider(
 		dragonEggMill()
 		creativeMill()
 		creativeChest()
+		conveyorBelt()
+	}
+
+	private fun conveyorBelt() {
+		val block = ModBlocks.CONVEYOR_BELT.get()
+
+		val side = modLoc("block/conveyor_belt/side")
+		val top = modLoc("block/conveyor_belt/top")
+
+		val model = models()
+			.cube(
+				name(block),
+				top,
+				top,
+				top,
+				top,
+				side,
+				side
+			)
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun creativeMill() {

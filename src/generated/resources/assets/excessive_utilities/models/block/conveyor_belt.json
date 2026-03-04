@@ -1,0 +1,11 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "excessive_utilities:block/conveyor_belt/top",
+    "east": "excessive_utilities:block/conveyor_belt/side",
+    "north": "excessive_utilities:block/conveyor_belt/top",
+    "south": "excessive_utilities:block/conveyor_belt/top",
+    "up": "excessive_utilities:block/conveyor_belt/top",
+    "west": "excessive_utilities:block/conveyor_belt/side"
+  }
+}
