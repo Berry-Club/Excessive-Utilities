@@ -9,7 +9,6 @@ object ModBlockLang {
 			addBlock(ModBlocks.COMPRESSED_BLOCK, "Compressed Block")
 			addBlock(ModBlocks.ANGEL_BLOCK, "Angel Block")
 			addBlock(ModBlocks.BLACKOUT_CURTAIN, "Blackout Curtain")
-			addBlock(ModBlocks.ADVANCED_OBSERVER, "Advanced Observer")
 			addBlock(ModBlocks.CONVEYOR_BELT, "Conveyor Belt")
 			addBlock(ModBlocks.CURSED_EARTH, "Cursed Earth")
 			addBlock(ModBlocks.ENDER_COLLECTOR, "Ender Collector")

@@ -26,8 +26,6 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlockWithoutItem("angel_block", ::AngelBlock)
 	val BLACKOUT_CURTAIN: DeferredBlock<BlackoutCurtainBlock> =
 		registerBlock("blackout_curtain", ::BlackoutCurtainBlock)
-	val ADVANCED_OBSERVER =
-		basicBlock("advanced_observer")
 	val CONVEYOR_BELT: DeferredBlock<ConveyorBeltBlock> =
 		registerBlock("conveyor_belt", ::ConveyorBeltBlock)
 	val CURSED_EARTH: DeferredBlock<CursedEarthBlock> =

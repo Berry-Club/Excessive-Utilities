@@ -26,7 +26,6 @@ class ModBlockTagsProvider(
 			.add(
 				ModBlocks.COMPRESSED_BLOCK,
 				ModBlocks.ANGEL_BLOCK,
-				ModBlocks.ADVANCED_OBSERVER,
 				ModBlocks.CONVEYOR_BELT,
 				ModBlocks.ENDER_COLLECTOR,
 				ModBlocks.ENDER_CORE,
