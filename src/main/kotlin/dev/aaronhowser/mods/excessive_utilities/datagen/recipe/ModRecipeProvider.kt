@@ -68,7 +68,7 @@ class ModRecipeProvider(
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.MAGICAL_SNOW_GLOBE.toStack(),
+			ModItems.MAGICAL_SNOW_GLOBE.toStack(),
 			"GSN,DLA,EW ",
 			mapOf(
 				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
@@ -131,7 +131,7 @@ class ModRecipeProvider(
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.ANGEL_BLOCK.toStack(),
+			ModItems.ANGEL_BLOCK.toStack(),
 			" G ,FOF",
 			mapOf(
 				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
