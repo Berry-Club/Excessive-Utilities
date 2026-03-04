@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.entity.ResonatorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
@@ -25,6 +26,19 @@ class SingleItemGeneratorMenu(
 				SimpleContainer(CONTAINER_SIZE),
 				SimpleContainerData(GeneratorBlockEntity.DEFAULT_GENERATOR_CONTAINER_DATA_SIZE)
 			)
+
+	init {
+		checkContainerSize(generatorContainer, CONTAINER_SIZE)
+		checkContainerDataCount(generatorContainerData, GeneratorBlockEntity.DEFAULT_GENERATOR_CONTAINER_DATA_SIZE)
+
+		addSlots()
+		addDataSlots(generatorContainerData)
+		addPlayerInventorySlots(90)
+	}
+
+	override fun addSlots() {
+
+	}
 
 	override fun quickMoveStack(player: Player, index: Int): ItemStack {
 		return ItemStack.EMPTY
