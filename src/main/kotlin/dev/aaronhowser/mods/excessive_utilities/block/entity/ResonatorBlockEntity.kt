@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorMenu
 import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -15,12 +14,14 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.Mth
 import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
@@ -59,6 +60,24 @@ class ResonatorBlockEntity(
 		}
 
 	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
+
+	private val containerData: ContainerData =
+		object : ContainerData {
+			override fun getCount(): Int = CONTAINER_DATA_SIZE
+
+			override fun get(index: Int): Int {
+				return when (index) {
+					PROGRESS_DATA_INDEX -> progress
+					MAX_PROGRESS_DATA_INDEX -> CRAFT_TIME
+					GP_HUNDREDTHS_COST_DATA_INDEX -> Mth.ceil(getGpUsage() * 100)
+					else -> 0
+				}
+			}
+
+			override fun set(index: Int, value: Int) {
+				// No setting from the client
+			}
+		}
 
 	private var progress: Int = 0
 		set(value) {
@@ -143,6 +162,11 @@ class ResonatorBlockEntity(
 		const val INPUT_SLOT = 0
 		const val OUTPUT_SLOT = 1
 		const val UPGRADE_SLOT = 2
+
+		const val CONTAINER_DATA_SIZE = 3
+		const val PROGRESS_DATA_INDEX = 0
+		const val MAX_PROGRESS_DATA_INDEX = 1
+		const val GP_HUNDREDTHS_COST_DATA_INDEX = 2 // GP cost multiplied by 100, because container data only supports ints
 
 		const val CRAFT_TIME = 20 * 10
 	}
