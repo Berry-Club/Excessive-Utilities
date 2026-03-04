@@ -39,7 +39,10 @@ class ConveyorBeltBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 		return SHAPE
 	}
 
+	//TODO: Step up blocks if needed
 	override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity) {
+		if (entity.isCrouching) return
+
 		val movementDirection = state.getValue(FACING)
 
 		val currentVelocity = entity.deltaMovement
