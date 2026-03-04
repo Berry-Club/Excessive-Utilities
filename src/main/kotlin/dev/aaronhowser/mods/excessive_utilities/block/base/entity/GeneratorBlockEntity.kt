@@ -15,6 +15,7 @@ import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -49,6 +50,25 @@ abstract class GeneratorBlockEntity(
 	protected open fun isValidInput(itemStack: ItemStack) = true
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = true
 	protected open fun isValidUpgrade(itemStack: ItemStack) = true
+
+	protected open val containerData: ContainerData =
+		object : ContainerData {
+			override fun getCount(): Int = GENERATOR_CONTAINER_DATA_SIZE
+
+			override fun get(index: Int): Int {
+				return when (index) {
+					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
+					BURN_TIME_REMAINING_DATA_INDEX -> burnTimeRemaining
+					MAX_BURN_TIME_DATA_INDEX -> fePerTick
+					else -> -1
+				}
+			}
+
+			override fun set(index: Int, value: Int) {
+				// Cannot set from container data
+			}
+		}
 
 	protected var lastGeneratedEnergyOnTick: Long = -1L
 	open fun isContributingToRainbowGen(): Boolean {
@@ -178,6 +198,12 @@ abstract class GeneratorBlockEntity(
 		const val BURN_TIME_REMAINING_NBT = "BurnTimeRemaining"
 		const val FE_PER_TICK_NBT = "FePerTick"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
+
+		const val GENERATOR_CONTAINER_DATA_SIZE = 4
+		const val MAX_ENERGY_DATA_INDEX = 0
+		const val CURRENT_ENERGY_DATA_INDEX = 1
+		const val BURN_TIME_REMAINING_DATA_INDEX = 2
+		const val MAX_BURN_TIME_DATA_INDEX = 3
 
 		fun tick(
 			level: Level,
