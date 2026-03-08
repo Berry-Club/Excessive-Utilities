@@ -1,0 +1,15 @@
+{
+	"variants": {
+		"": {
+			"model": "excessive_utilities:block/ender_infused_obsidian"
+		}
+	},
+	"athena:loader": "athena:ctm",
+	"ctm_textures": {
+		"center": "excessive_utilities:block/ender_infused_obsidian/center",
+		"empty": "excessive_utilities:block/ender_infused_obsidian/empty",
+		"horizontal": "excessive_utilities:block/ender_infused_obsidian/horizontal",
+		"particle": "excessive_utilities:block/ender_infused_obsidian/particle",
+		"vertical": "excessive_utilities:block/ender_infused_obsidian/vertical"
+	}
+}

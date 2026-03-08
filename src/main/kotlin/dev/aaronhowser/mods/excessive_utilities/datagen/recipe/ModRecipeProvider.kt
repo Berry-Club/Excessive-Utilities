@@ -51,6 +51,26 @@ class ModRecipeProvider(
 		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
 
 		shapedRecipe(
+			ModBlocks.ENDER_INFUSED_OBSIDIAN.toStack(4),
+			" O ,OEO, O ",
+			mapOf(
+				'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient(),
+				'E' to Items.ENDER_EYE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.QED.toStack(),
+			"ECE,ODO,OOO",
+			mapOf(
+				'E' to Items.ENDER_EYE.asIngredient(),
+				'C' to Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES.asIngredient(),
+				'O' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient(),
+				'D' to ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.asIngredient()
+			)
+		)
+
+		shapedRecipe(
 			ModBlocks.CONVEYOR_BELT.toStack(8),
 			"RRR,IDI,RRR",
 			mapOf(

@@ -52,6 +52,20 @@ class ModBlockStateProvider(
 		conveyorBelt()
 		tradingPost()
 		coloredBlocks()
+		qed()
+	}
+
+	private fun qed() {
+		val block = ModBlocks.QED.get()
+
+		val top = modLoc("block/qed/top")
+		val side = modLoc("block/qed/side")
+		val bottom = modLoc("block/ender_infused_obsidian/particle")
+
+		val model = models()
+			.cubeBottomTop(name(block), side, bottom, top)
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun coloredBlocks() {
@@ -1348,6 +1362,7 @@ class ModBlockStateProvider(
 			ModBlocks.STONEBURNT.get(),
 			ModBlocks.BORDER_STONE.get(),
 			ModBlocks.CROSSED_STONE.get(),
+			ModBlocks.ENDER_INFUSED_OBSIDIAN.get()
 		)
 
 		val translucent = listOf(
