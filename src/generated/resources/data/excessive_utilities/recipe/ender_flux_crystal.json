@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "O": {
+      "item": "excessive_utilities:ender_infused_obsidian"
+    }
+  },
+  "pattern": [
+    " E ",
+    " O ",
+    "OOO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_flux_crystal"
+  }
+}

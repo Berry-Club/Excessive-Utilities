@@ -71,6 +71,15 @@ class ModRecipeProvider(
 		)
 
 		shapedRecipe(
+			ModBlocks.ENDER_FLUX_CRYSTAL.toStack(),
+			" E , O ,OOO",
+			mapOf(
+				'E' to Items.ENDER_EYE.asIngredient(),
+				'O' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
 			ModBlocks.CONVEYOR_BELT.toStack(8),
 			"RRR,IDI,RRR",
 			mapOf(
