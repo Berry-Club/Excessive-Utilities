@@ -16,7 +16,6 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
-import net.minecraft.world.ContainerHelper
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -55,11 +54,33 @@ class QedBlockEntity(
 		if (level.gameTime % 60 == 0L) {
 			updateNearbyCrystals(level)
 		}
+
+		val recipe = getRecipe(level) ?: return
+		progress += amountNearbyCrystals
+
+		while (progress >= recipe.crystalTicks) {
+			val input = CraftingInput.of(3, 3, container.items.subList(0, 9))
+			if (!recipe.matches(input, level)) {
+				progress = 0
+				return
+			}
+		}
 	}
 
 	private fun getRecipe(level: ServerLevel): QedRecipe? {
 		val recipeInput = CraftingInput.of(3, 3, container.items.subList(0, 9))
-		return QedRecipe.getRecipe(level, recipeInput)
+		val recipe = QedRecipe.getRecipe(level, recipeInput) ?: return null
+
+		val currentOutput = container.getItem(OUTPUT_SLOT)
+		if (currentOutput.isEmpty) return recipe
+
+		val newOutput = recipe.assemble(recipeInput, level.registryAccess())
+		if (!ItemStack.isSameItemSameComponents(newOutput, currentOutput)) return null
+
+		val newCount = currentOutput.count + newOutput.count
+		if (newCount > newOutput.maxStackSize) return null
+
+		return recipe
 	}
 
 	fun updateNearbyCrystals(level: ServerLevel) {
