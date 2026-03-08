@@ -64,6 +64,7 @@ class ModBlockStateProvider(
 			"redstone_block" to ModBlocks::getColoredRedstoneBlock,
 			"lapis_block" to ModBlocks::getColoredLapisBlock,
 			"quartz" to ModBlocks::getColoredQuartz,
+			"obsidian" to ModBlocks::getColoredObsidian,
 			"soul_sand" to ModBlocks::getColoredSoulSand,
 		)
 

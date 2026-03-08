@@ -180,18 +180,18 @@ object ModBlockLang {
 					.split(' ')
 					.joinToString(" ") { it.replaceFirstChar { c -> c.uppercase() } }
 
-				addBlock(ModBlocks.getColoredStone(color), "Colored Stone (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredStoneBricks(color), "Colored Stone Bricks (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredBricks(color), "Colored Bricks (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredCoalBlock(color), "Colored Coal Block (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredCobblestone(color), "Colored Cobblestone (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredLapisBlock(color), "Colored Lapis Block (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredPlanks(color), "Colored Planks (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredObsidian(color), "Colored Obsidian (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredQuartz(color), "Colored Quartz Block (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredRedstoneBlock(color), "Colored Redstone Block (${color.getDyeName()})")
-//				addBlock(ModBlocks.getColoredRedstoneLamp(color), "Colored Redstone Lamp (${color.getDyeName()})")
-				addBlock(ModBlocks.getColoredSoulSand(color), "Colored Soul Sand (${color.getDyeName()})")
+				addBlock(ModBlocks.getColoredStone(color), "Colored Stone ($englishName)")
+				addBlock(ModBlocks.getColoredStoneBricks(color), "Colored Stone Bricks ($englishName)")
+				addBlock(ModBlocks.getColoredBricks(color), "Colored Bricks ($englishName)")
+				addBlock(ModBlocks.getColoredCoalBlock(color), "Colored Coal Block ($englishName)")
+				addBlock(ModBlocks.getColoredCobblestone(color), "Colored Cobblestone ($englishName)")
+				addBlock(ModBlocks.getColoredLapisBlock(color), "Colored Lapis Block ($englishName)")
+				addBlock(ModBlocks.getColoredPlanks(color), "Colored Planks ($englishName)")
+				addBlock(ModBlocks.getColoredObsidian(color), "Colored Obsidian ($englishName)")
+				addBlock(ModBlocks.getColoredQuartz(color), "Colored Quartz Block ($englishName)")
+				addBlock(ModBlocks.getColoredRedstoneBlock(color), "Colored Redstone Block ($englishName)")
+//				addBlock(ModBlocks.getColoredRedstoneLamp(color), "Colored Redstone Lamp ($englishName)")
+				addBlock(ModBlocks.getColoredSoulSand(color), "Colored Soul Sand ($englishName)")
 			}
 		}
 	}
