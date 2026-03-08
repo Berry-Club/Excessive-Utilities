@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.recipe.QEDRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.QedRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapedRecipePattern
 
-class QEDRecipeBuilder(
+class QedRecipeBuilder(
 	val result: ItemStack,
 	val count: Int = 1
 ) : RecipeBuilder {
@@ -23,12 +23,12 @@ class QEDRecipeBuilder(
 	private val keys: MutableMap<Char, Ingredient> = mutableMapOf()
 	private val rows: MutableList<String> = mutableListOf()
 
-	fun define(key: Char, ingredient: Ingredient): QEDRecipeBuilder {
+	fun define(key: Char, ingredient: Ingredient): QedRecipeBuilder {
 		keys[key] = ingredient
 		return this
 	}
 
-	fun pattern(vararg rows: String): QEDRecipeBuilder {
+	fun pattern(vararg rows: String): QedRecipeBuilder {
 		this.rows.addAll(rows)
 		return this
 	}
@@ -64,7 +64,7 @@ class QEDRecipeBuilder(
 
 		val pattern = ShapedRecipePattern.of(keys, rows)
 
-		val recipe = QEDRecipe(pattern, result)
+		val recipe = QedRecipe(pattern, result)
 		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
 	}
 }

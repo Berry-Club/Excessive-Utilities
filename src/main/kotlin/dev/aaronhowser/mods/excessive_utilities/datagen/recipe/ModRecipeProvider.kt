@@ -1880,7 +1880,7 @@ class ModRecipeProvider(
 
 	private fun buildQedRecipes(recipeOutput: RecipeOutput) {
 		val recipes = listOf(
-			QEDRecipeBuilder(ModBlocks.ITEM_RETRIEVAL_NODE.toStack())
+			QedRecipeBuilder(ModBlocks.ITEM_RETRIEVAL_NODE.toStack())
 				.pattern(
 					" E ",
 					"NMN",
@@ -1889,7 +1889,7 @@ class ModRecipeProvider(
 				.define('E', Tags.Items.ENDER_PEARLS.asIngredient())
 				.define('N', ModBlocks.ITEM_TRANSFER_NODE.asIngredient())
 				.define('M', Tags.Items.GEMS_EMERALD.asIngredient()),
-			QEDRecipeBuilder(ModBlocks.FLUID_RETRIEVAL_NODE.toStack())
+			QedRecipeBuilder(ModBlocks.FLUID_RETRIEVAL_NODE.toStack())
 				.pattern(
 					" E ",
 					"NDN",
@@ -1898,7 +1898,7 @@ class ModRecipeProvider(
 				.define('E', Tags.Items.ENDER_PEARLS.asIngredient())
 				.define('N', ModBlocks.FLUID_TRANSFER_NODE.asIngredient())
 				.define('D', Tags.Items.GEMS_DIAMOND.asIngredient()),
-			QEDRecipeBuilder(ModBlocks.ENERGY_RETRIEVAL_NODE.toStack())
+			QedRecipeBuilder(ModBlocks.ENERGY_RETRIEVAL_NODE.toStack())
 				.pattern(
 					" E ",
 					"NRN",
@@ -1907,7 +1907,7 @@ class ModRecipeProvider(
 				.define('E', Tags.Items.ENDER_PEARLS.asIngredient())
 				.define('N', ModBlocks.ENERGY_TRANSFER_NODE.asIngredient())
 				.define('R', Tags.Items.DUSTS_REDSTONE.asIngredient()),
-			QEDRecipeBuilder(ModItems.ENDER_TRANSMITTER.toStack())
+			QedRecipeBuilder(ModItems.ENDER_TRANSMITTER.toStack())
 				.pattern(
 					"ETE",
 					"QEQ",
@@ -1916,7 +1916,7 @@ class ModRecipeProvider(
 				.define('E', Tags.Items.ENDER_PEARLS.asIngredient())
 				.define('T', Items.REDSTONE_TORCH.asIngredient())
 				.define('Q', Tags.Items.GEMS_QUARTZ.asIngredient()),
-			QEDRecipeBuilder(ModItems.ENDER_RECEIVER.toStack())
+			QedRecipeBuilder(ModItems.ENDER_RECEIVER.toStack())
 				.pattern(
 					"ERE",
 					"QEQ",
@@ -1925,7 +1925,7 @@ class ModRecipeProvider(
 				.define('E', Tags.Items.ENDER_PEARLS.asIngredient())
 				.define('R', Tags.Items.DUSTS_REDSTONE.asIngredient())
 				.define('Q', Tags.Items.GEMS_QUARTZ.asIngredient()),
-			QEDRecipeBuilder(ModBlocks.ENDER_QUARRY_UPGRADE_BASE.toStack())
+			QedRecipeBuilder(ModBlocks.ENDER_QUARRY_UPGRADE_BASE.toStack())
 				.pattern(
 					" O ",
 					"OQO",
@@ -1933,7 +1933,7 @@ class ModRecipeProvider(
 				)
 				.define('O', ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient())
 				.define('Q', ModBlocks.QUARTZBURNT.asIngredient()),
-			QEDRecipeBuilder(ModBlocks.MAGNUM_TORCH.toStack())
+			QedRecipeBuilder(ModBlocks.MAGNUM_TORCH.toStack())
 				.pattern(
 					"RCH",
 					"CLC",
@@ -1949,7 +1949,7 @@ class ModRecipeProvider(
 				)
 				.define('C', ModBlocks.CHANDELIER.asIngredient())
 				.define('L', ItemTags.LOGS.asIngredient()),
-			QEDRecipeBuilder(ModBlocks.ENDER_MARKER.toStack())
+			QedRecipeBuilder(ModBlocks.ENDER_MARKER.toStack())
 				.pattern(
 					"E",
 					"O",

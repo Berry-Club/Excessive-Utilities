@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
-class QEDRecipe(
+class QedRecipe(
 	val pattern: ShapedRecipePattern,
 	val result: ItemStack
 ) : Recipe<CraftingInput> {
@@ -24,33 +24,33 @@ class QEDRecipe(
 	override fun getType(): RecipeType<*> = ModRecipeTypes.QED.get()
 
 	companion object {
-		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<QEDRecipe>> {
+		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<QedRecipe>> {
 			return recipeManager.getAllRecipesFor(ModRecipeTypes.QED.get())
 		}
 	}
 
-	class Serializer : RecipeSerializer<QEDRecipe> {
-		override fun codec(): MapCodec<QEDRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, QEDRecipe> = STREAM_CODEC
+	class Serializer : RecipeSerializer<QedRecipe> {
+		override fun codec(): MapCodec<QedRecipe> = CODEC
+		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, QedRecipe> = STREAM_CODEC
 
 		companion object {
-			val CODEC: MapCodec<QEDRecipe> =
+			val CODEC: MapCodec<QedRecipe> =
 				RecordCodecBuilder.mapCodec { instance ->
 					instance.group(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
-							.forGetter(QEDRecipe::pattern),
+							.forGetter(QedRecipe::pattern),
 						ItemStack.CODEC
 							.fieldOf("result")
-							.forGetter(QEDRecipe::result)
-					).apply(instance, ::QEDRecipe)
+							.forGetter(QedRecipe::result)
+					).apply(instance, ::QedRecipe)
 				}
 
-			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, QEDRecipe> =
+			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, QedRecipe> =
 				StreamCodec.composite(
-					ShapedRecipePattern.STREAM_CODEC, QEDRecipe::pattern,
-					ItemStack.STREAM_CODEC, QEDRecipe::result,
-					::QEDRecipe
+					ShapedRecipePattern.STREAM_CODEC, QedRecipe::pattern,
+					ItemStack.STREAM_CODEC, QedRecipe::result,
+					::QedRecipe
 				)
 		}
 	}

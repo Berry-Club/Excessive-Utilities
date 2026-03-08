@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.QEDRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.QedRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.ResonatorRecipe
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.item.crafting.RecipeSerializer
@@ -19,7 +19,7 @@ object ModRecipeSerializers {
 	val ENCHANTER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
 		registerRecipeSerializer("enchanter", EnchanterRecipe::Serializer)
 	val QED: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
-		registerRecipeSerializer("qed", QEDRecipe::Serializer)
+		registerRecipeSerializer("qed", QedRecipe::Serializer)
 
 	private fun registerRecipeSerializer(
 		name: String,

@@ -36,7 +36,7 @@ class QedBlockEntity(
 			}
 		}
 
-	private fun serverTick(level1: ServerLevel) {
+	private fun serverTick(level: ServerLevel) {
 
 	}
 
