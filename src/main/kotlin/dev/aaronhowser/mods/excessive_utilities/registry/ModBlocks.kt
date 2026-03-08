@@ -436,14 +436,14 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val COLORED_STONES: Map<DyeColor, DeferredBlock<Block>> =
 		getColorBlockMap("colored_stone", Blocks.STONE)
+	val COLORED_COBBLESTONES: Map<DyeColor, DeferredBlock<Block>> =
+		getColorBlockMap("colored_cobblestone", Blocks.COBBLESTONE)
 	val COLORED_STONE_BRICKS: Map<DyeColor, DeferredBlock<Block>> =
 		getColorBlockMap("colored_stone_bricks", Blocks.STONE_BRICKS)
 	val COLORED_BRICKS: Map<DyeColor, DeferredBlock<Block>> =
 		getColorBlockMap("colored_bricks", Blocks.BRICKS)
 	val COLORED_COAL_BLOCKS: Map<DyeColor, DeferredBlock<Block>> =
 		getColorBlockMap("colored_coal_block", Blocks.COAL_BLOCK)
-	val COLORED_COBBLESTONES: Map<DyeColor, DeferredBlock<Block>> =
-		getColorBlockMap("colored_cobblestone", Blocks.COBBLESTONE)
 	val COLORED_LAPIS_BLOCKS: Map<DyeColor, DeferredBlock<Block>> =
 		getColorBlockMap("colored_lapis_block", Blocks.LAPIS_BLOCK)
 	val COLORED_PLANKS: Map<DyeColor, DeferredBlock<Block>> =
@@ -462,15 +462,15 @@ object ModBlocks : AaronBlockRegistry() {
 		getColorBlockMap("colored_soul_sand", Blocks.SOUL_SAND)
 
 	fun getColoredStone(color: DyeColor): DeferredBlock<Block> = COLORED_STONES.getValue(color)
+	fun getColoredCobblestone(color: DyeColor): DeferredBlock<Block> = COLORED_COBBLESTONES.getValue(color)
 	fun getColoredStoneBricks(color: DyeColor): DeferredBlock<Block> = COLORED_STONE_BRICKS.getValue(color)
 	fun getColoredBricks(color: DyeColor): DeferredBlock<Block> = COLORED_BRICKS.getValue(color)
-	fun getColoredCoalBlock(color: DyeColor): DeferredBlock<Block> = COLORED_COAL_BLOCKS.getValue(color)
-	fun getColoredCobblestone(color: DyeColor): DeferredBlock<Block> = COLORED_COBBLESTONES.getValue(color)
-	fun getColoredLapisBlock(color: DyeColor): DeferredBlock<Block> = COLORED_LAPIS_BLOCKS.getValue(color)
 	fun getColoredPlanks(color: DyeColor): DeferredBlock<Block> = COLORED_PLANKS.getValue(color)
+	fun getColoredCoalBlock(color: DyeColor): DeferredBlock<Block> = COLORED_COAL_BLOCKS.getValue(color)
+	fun getColoredRedstoneBlock(color: DyeColor): DeferredBlock<Block> = COLORED_REDSTONE_BLOCKS.getValue(color)
+	fun getColoredLapisBlock(color: DyeColor): DeferredBlock<Block> = COLORED_LAPIS_BLOCKS.getValue(color)
 	fun getColoredObsidian(color: DyeColor): DeferredBlock<Block> = COLORED_OBSIDIANS.getValue(color)
 	fun getColoredQuartz(color: DyeColor): DeferredBlock<Block> = COLORED_QUARTZES.getValue(color)
-	fun getColoredRedstoneBlock(color: DyeColor): DeferredBlock<Block> = COLORED_REDSTONE_BLOCKS.getValue(color)
 //	fun getColoredRedstoneLamp(color: DyeColor): DeferredBlock<Block> = COLORED_REDSTONE_LAMPS.getValue(color)
 	fun getColoredSoulSand(color: DyeColor): DeferredBlock<Block> = COLORED_SOUL_SANDS.getValue(color)
 
