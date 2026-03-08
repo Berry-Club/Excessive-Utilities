@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.entity.generator
+package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block.base.FurnaceFuelGeneratorType

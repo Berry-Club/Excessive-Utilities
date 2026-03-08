@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block.entity.trash
+package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
