@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
@@ -49,6 +50,33 @@ class ModBlockStateProvider(
 		creativeChest()
 		conveyorBelt()
 		tradingPost()
+		coloredBlocks()
+	}
+
+	private fun coloredBlocks() {
+		val map = mapOf(
+			"stone" to ModBlocks::getColoredStone,
+			"cobblestone" to ModBlocks::getColoredCobblestone,
+			"stone_bricks" to ModBlocks::getColoredStoneBricks,
+			"bricks" to ModBlocks::getColoredBricks,
+			"planks" to ModBlocks::getColoredPlanks,
+			"coal_block" to ModBlocks::getColoredCoalBlock,
+			"redstone_block" to ModBlocks::getColoredRedstoneBlock,
+			"lapis_block" to ModBlocks::getColoredLapisBlock,
+			"quartz" to ModBlocks::getColoredQuartz,
+			"soul_sand" to ModBlocks::getColoredSoulSand,
+		)
+
+		for ((name, getter) in map) {
+			val texture = modLoc("block/colored/$name")
+			for (color in DyeColor.entries) {
+				val block = getter(color).get()
+				val model = models()
+					.cubeAll(name(block), texture)
+
+				simpleBlockWithItem(block, model)
+			}
+		}
 	}
 
 	private fun tradingPost() {
