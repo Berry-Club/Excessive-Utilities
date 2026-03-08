@@ -45,15 +45,10 @@ class FlatTransferNodeEntityRenderer(
 			}
 
 			else -> {
-
+				poseStack.mulPose(Axis.YP.rotationDegrees(-entityYaw))
+				poseStack.translate(0f, 0.25f, 0.5f)
 			}
 		}
-
-//		when (aiming) {
-//			Direction.UP -> poseStack.translate(0f, 0.5f, -0.5f)
-//			Direction.DOWN -> poseStack.translate(0f, 0f, -0.5f)
-//			else -> poseStack.translate(0f, 0.25f, 0.5f)
-//		}
 
 		poseStack.scale(1.8f, 1.8f, 1.8f)
 
