@@ -1,16 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
 import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgradeType
 import dev.aaronhowser.mods.excessive_utilities.block.mill.*
 import net.minecraft.world.item.DyeColor
-import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.TransparentBlock
+import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.registries.DeferredBlock
@@ -457,36 +454,51 @@ object ModBlocks : AaronBlockRegistry() {
 		getColorBlockMap("colored_quartz_block", Blocks.QUARTZ_BLOCK)
 	val COLORED_GLOWSTONES: Map<DyeColor, DeferredBlock<Block>> =
 		getColorBlockMap("colored_glowstone", Blocks.GLOWSTONE)
+	val COLORED_REDSTONE_BLOCKS: Map<DyeColor, DeferredBlock<PoweredBlock>> =
+		getColorBlockMap("colored_redstone_block", Blocks.REDSTONE_BLOCK, ::PoweredBlock)
+	val COLORED_REDSTONE_LAMPS: Map<DyeColor, DeferredBlock<RedstoneLampBlock>> =
+		getColorBlockMap("colored_redstone_lamp", Blocks.REDSTONE_LAMP, ::RedstoneLampBlock)
+	val COLORED_SOUL_SANDS: Map<DyeColor, DeferredBlock<SoulSandBlock>> =
+		getColorBlockMap("colored_soul_sand", Blocks.SOUL_SAND, ::SoulSandBlock)
 
-	//TODO: Implement these because they're more complicated
-	val COLORED_REDSTONE_BLOCKS: Map<DyeColor, DeferredBlock<Block>> =
-		getColorBlockMap("colored_redstone_block", Blocks.REDSTONE_BLOCK)
-//	val COLORED_REDSTONE_LAMPS: Map<DyeColor, DeferredBlock<Block>> =
-//		getColorBlockMap("colored_redstone_lamp", Blocks.REDSTONE_LAMP)
-	val COLORED_SOUL_SANDS: Map<DyeColor, DeferredBlock<Block>> =
-		getColorBlockMap("colored_soul_sand", Blocks.SOUL_SAND)
-
-	fun getColoredStone(color: DyeColor): DeferredBlock<Block> = COLORED_STONES.getValue(color)
-	fun getColoredCobblestone(color: DyeColor): DeferredBlock<Block> = COLORED_COBBLESTONES.getValue(color)
-	fun getColoredStoneBricks(color: DyeColor): DeferredBlock<Block> = COLORED_STONE_BRICKS.getValue(color)
-	fun getColoredBricks(color: DyeColor): DeferredBlock<Block> = COLORED_BRICKS.getValue(color)
-	fun getColoredPlanks(color: DyeColor): DeferredBlock<Block> = COLORED_PLANKS.getValue(color)
-	fun getColoredCoalBlock(color: DyeColor): DeferredBlock<Block> = COLORED_COAL_BLOCKS.getValue(color)
-	fun getColoredRedstoneBlock(color: DyeColor): DeferredBlock<Block> = COLORED_REDSTONE_BLOCKS.getValue(color)
-	fun getColoredLapisBlock(color: DyeColor): DeferredBlock<Block> = COLORED_LAPIS_BLOCKS.getValue(color)
-	fun getColoredObsidian(color: DyeColor): DeferredBlock<Block> = COLORED_OBSIDIANS.getValue(color)
-	fun getColoredQuartz(color: DyeColor): DeferredBlock<Block> = COLORED_QUARTZES.getValue(color)
-//	fun getColoredRedstoneLamp(color: DyeColor): DeferredBlock<Block> = COLORED_REDSTONE_LAMPS.getValue(color)
-	fun getColoredSoulSand(color: DyeColor): DeferredBlock<Block> = COLORED_SOUL_SANDS.getValue(color)
-	fun getColoredGlowstone(color: DyeColor): DeferredBlock<Block> = COLORED_GLOWSTONES.getValue(color)
+	fun getColoredStone(color: DyeColor): DeferredBlock<out Block> = COLORED_STONES.getValue(color)
+	fun getColoredCobblestone(color: DyeColor): DeferredBlock<out Block> = COLORED_COBBLESTONES.getValue(color)
+	fun getColoredStoneBricks(color: DyeColor): DeferredBlock<out Block> = COLORED_STONE_BRICKS.getValue(color)
+	fun getColoredBricks(color: DyeColor): DeferredBlock<out Block> = COLORED_BRICKS.getValue(color)
+	fun getColoredPlanks(color: DyeColor): DeferredBlock<out Block> = COLORED_PLANKS.getValue(color)
+	fun getColoredCoalBlock(color: DyeColor): DeferredBlock<out Block> = COLORED_COAL_BLOCKS.getValue(color)
+	fun getColoredRedstoneBlock(color: DyeColor): DeferredBlock<out Block> = COLORED_REDSTONE_BLOCKS.getValue(color)
+	fun getColoredLapisBlock(color: DyeColor): DeferredBlock<out Block> = COLORED_LAPIS_BLOCKS.getValue(color)
+	fun getColoredObsidian(color: DyeColor): DeferredBlock<out Block> = COLORED_OBSIDIANS.getValue(color)
+	fun getColoredQuartz(color: DyeColor): DeferredBlock<out Block> = COLORED_QUARTZES.getValue(color)
+	fun getColoredRedstoneLamp(color: DyeColor): DeferredBlock<out Block> = COLORED_REDSTONE_LAMPS.getValue(color)
+	fun getColoredSoulSand(color: DyeColor): DeferredBlock<out Block> = COLORED_SOUL_SANDS.getValue(color)
+	fun getColoredGlowstone(color: DyeColor): DeferredBlock<out Block> = COLORED_GLOWSTONES.getValue(color)
 
 	private fun getColorBlockMap(
 		name: String,
 		blockToCopy: Block
 	): Map<DyeColor, DeferredBlock<Block>> {
+		return getColorBlockMap(name, blockToCopy) { properties -> Block(properties) }
+	}
+
+	private fun <T : Block> getColorBlockMap(
+		name: String,
+		blockToCopy: Block,
+		blockConstructor: ((BlockBehaviour.Properties) -> T)
+	): Map<DyeColor, DeferredBlock<T>> {
 		return buildMap {
 			for (color in DyeColor.entries) {
-				put(color, basicCopiedBlock("${name}_${color.serializedName}", blockToCopy))
+				val properties = BlockBehaviour.Properties
+					.ofFullCopy(blockToCopy)
+					.mapColor(color)
+
+				put(
+					color,
+					registerBlock(
+						"${name}_${color.serializedName}"
+					) { blockConstructor(properties) }
+				)
 			}
 		}
 	}
