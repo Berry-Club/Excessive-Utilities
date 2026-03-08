@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding_handler
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.ContainerHelper
@@ -20,7 +21,7 @@ class BagOfHolding(
 		val tag = CompoundTag()
 
 		tag.putUUID(UUID_TAG, bagUUID)
-		ContainerHelper.saveAllItems(tag, container.items, registries)
+		tag.saveItems(container, registries)
 
 		return tag
 	}

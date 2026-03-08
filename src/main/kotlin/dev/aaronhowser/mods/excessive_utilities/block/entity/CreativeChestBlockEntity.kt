@@ -2,6 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadAllItems
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.menu.single_slot.SingleSlotMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -50,13 +52,13 @@ class CreativeChestBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		ContainerHelper.saveAllItems(tag, container.items, registries)
+		tag.saveItems(container, registries)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		ContainerHelper.loadAllItems(tag, container.items, registries)
+		tag.loadAllItems(container, registries)
 	}
 
 

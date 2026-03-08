@@ -2,7 +2,9 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadAllItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorMenu
@@ -143,7 +145,7 @@ class ResonatorBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		ContainerHelper.saveAllItems(tag, container.items, registries)
+		tag.saveItems(container, registries)
 		tag.putInt(PROGRESS_NBT, progress)
 		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
 	}
@@ -151,7 +153,7 @@ class ResonatorBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		ContainerHelper.loadAllItems(tag, container.items, registries)
+		tag.loadAllItems(container, registries)
 		progress = tag.getInt(PROGRESS_NBT)
 	}
 

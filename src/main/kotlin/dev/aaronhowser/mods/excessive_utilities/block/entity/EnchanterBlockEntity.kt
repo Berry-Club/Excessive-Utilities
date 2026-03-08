@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadAllItems
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -139,14 +141,14 @@ class EnchanterBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		ContainerHelper.saveAllItems(tag, container.items, registries)
+		tag.saveItems(container, registries)
 		tag.putInt(PROGRESS_NBT, progress)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		ContainerHelper.loadAllItems(tag, container.items, registries)
+		tag.loadAllItems(container, registries)
 		progress = tag.getInt(PROGRESS_NBT)
 	}
 

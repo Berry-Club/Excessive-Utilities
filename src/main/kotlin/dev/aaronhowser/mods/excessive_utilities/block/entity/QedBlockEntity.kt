@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadAllItems
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedMenu
 import dev.aaronhowser.mods.excessive_utilities.recipe.QedRecipe
@@ -87,14 +89,14 @@ class QedBlockEntity(
 		super.saveAdditional(tag, registries)
 
 		tag.putInt(PROGRESS_NBT, progress)
-		ContainerHelper.saveAllItems(tag, container.items, registries)
+		tag.saveItems(container, registries)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
 		progress = tag.getInt(PROGRESS_NBT)
-		ContainerHelper.loadAllItems(tag, container.items, registries)
+		tag.loadAllItems(container, registries)
 	}
 
 	companion object {

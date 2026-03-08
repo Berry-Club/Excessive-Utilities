@@ -1,7 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadAllItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
@@ -183,7 +185,7 @@ abstract class GeneratorBlockEntity(
 
 		val container = container
 		if (container != null) {
-			ContainerHelper.saveAllItems(tag, container.items, registries)
+			tag.saveItems(container, registries)
 		}
 	}
 
@@ -201,7 +203,7 @@ abstract class GeneratorBlockEntity(
 
 		val container = container
 		if (container != null) {
-			ContainerHelper.loadAllItems(tag, container.items, registries)
+			tag.loadAllItems(container, registries)
 		}
 	}
 
