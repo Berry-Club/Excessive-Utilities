@@ -159,6 +159,23 @@ object ClientEvents {
 			ModBlocks.DISENCHANTMENT_GENERATOR.get(),
 			ModBlocks.SLIMY_GENERATOR.get(),
 		)
+
+		for (color in DyeColor.entries) {
+			event.register(
+				{ stack, tintIndex -> color.textureDiffuseColor },
+				ModBlocks.getColoredStone(color).get(),
+				ModBlocks.getColoredCobblestone(color).get(),
+				ModBlocks.getColoredStoneBricks(color).get(),
+				ModBlocks.getColoredBricks(color).get(),
+				ModBlocks.getColoredPlanks(color).get(),
+				ModBlocks.getColoredCoalBlock(color).get(),
+				ModBlocks.getColoredRedstoneBlock(color).get(),
+				ModBlocks.getColoredLapisBlock(color).get(),
+				ModBlocks.getColoredObsidian(color).get(),
+				ModBlocks.getColoredQuartz(color).get(),
+				ModBlocks.getColoredSoulSand(color).get(),
+			)
+		}
 	}
 
 	@SubscribeEvent
@@ -194,7 +211,7 @@ object ClientEvents {
 
 		for (color in DyeColor.entries) {
 			event.register(
-				{ state, level, pos, tintIndex -> color.textColor },
+				{ state, level, pos, tintIndex -> color.textureDiffuseColor },
 				ModBlocks.getColoredStone(color).get(),
 				ModBlocks.getColoredCobblestone(color).get(),
 				ModBlocks.getColoredStoneBricks(color).get(),
@@ -205,11 +222,9 @@ object ClientEvents {
 				ModBlocks.getColoredLapisBlock(color).get(),
 				ModBlocks.getColoredObsidian(color).get(),
 				ModBlocks.getColoredQuartz(color).get(),
-//				ModBlocks.getColoredRedstoneLamp(color).get(),
 				ModBlocks.getColoredSoulSand(color).get(),
 			)
 		}
-
 	}
 
 	@SubscribeEvent
