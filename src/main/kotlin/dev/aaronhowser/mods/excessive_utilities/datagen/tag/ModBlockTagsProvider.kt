@@ -310,6 +310,12 @@ class ModBlockTagsProvider(
 				Tags.Blocks.GLASS_BLOCKS,
 				Tags.Blocks.GLASS_PANES
 			)
+
+		tag(BlockTags.LOGS)
+			.add(ModBlocks.MAGICAL_WOOD)
+
+		tag(BlockTags.PLANKS)
+			.add(ModBlocks.MAGICAL_PLANKS)
 	}
 
 	companion object {

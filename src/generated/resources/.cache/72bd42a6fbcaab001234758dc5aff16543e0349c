@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-04T06:50:20.6842176	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-03-08T05:01:13.3066554	Tags for minecraft:block mod id excessive_utilities
 9fd87e39153b6701c625917478d409d8ef8951eb data/c/tags/block/glass_blocks.json
 2bef9f868fc60a1a3de29857c00073febf29cd62 data/c/tags/block/mineable/sickle.json
 7d564c8a834c5d607ca80b9a8dba9380b0335386 data/excessive_utilities/tags/block/collectable_by_boomereaperang.json
@@ -13,6 +13,8 @@ b147fcff5c0b4d72df1cb7809b063b2562180832 data/excessive_utilities/tags/block/min
 2bd371f63b72eecd4710ed9ef16fcf54baec3f19 data/excessive_utilities/tags/block/render_gp_while_looking_at.json
 fdf0229f5dd8b82a9a07d37302c8eab1ed4ebeab data/excessive_utilities/tags/block/valid_for_dragon_egg_mill.json
 8126d8bca8572cc70eb7efba0151b0979b238c50 data/minecraft/tags/block/dirt.json
+28956a9b91902468d65653ca633de74c5d8660a7 data/minecraft/tags/block/logs.json
 b112b2fa5b8c5725e1534867d377ac741e3bde77 data/minecraft/tags/block/mineable/axe.json
 66175295faaf34674a2aa37f93a8b659dda20782 data/minecraft/tags/block/mineable/pickaxe.json
 8126d8bca8572cc70eb7efba0151b0979b238c50 data/minecraft/tags/block/mineable/shovel.json
+3b6dcccd68aa030e257aeceb087d6b787579b5dd data/minecraft/tags/block/planks.json
