@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.registry.AaronMenuTypesRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.SingleItemGeneratorMenu
@@ -31,6 +32,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("resonator", ::ResonatorMenu)
 	val SINGLE_ITEM_GENERATOR: DeferredHolder<MenuType<*>, MenuType<SingleItemGeneratorMenu>> =
 		register("single_item_generator", ::SingleItemGeneratorMenu)
+	val QED: DeferredHolder<MenuType<*>, MenuType<QedMenu>> =
+		register("qed", ::QedMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
