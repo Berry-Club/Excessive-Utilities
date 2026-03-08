@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
@@ -10,6 +12,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.TransparentBlock
 import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.registries.DeferredBlock
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -483,6 +486,33 @@ object ModBlocks : AaronBlockRegistry() {
 				put(color, basicCopiedBlock("${name}_${color.serializedName}", blockToCopy))
 			}
 		}
+	}
+
+	fun getColorFromColoredBlock(blockState: BlockState): DyeColor? {
+		val allMaps = listOf(
+			COLORED_STONES,
+			COLORED_COBBLESTONES,
+			COLORED_STONE_BRICKS,
+			COLORED_BRICKS,
+			COLORED_COAL_BLOCKS,
+			COLORED_LAPIS_BLOCKS,
+			COLORED_PLANKS,
+			COLORED_OBSIDIANS,
+			COLORED_QUARTZES,
+			COLORED_REDSTONE_BLOCKS,
+//			COLORED_REDSTONE_LAMPS,
+			COLORED_SOUL_SANDS
+		)
+
+		for (map in allMaps) {
+			for ((color, block) in map) {
+				if (blockState.isBlock(block)) {
+					return color
+				}
+			}
+		}
+
+		return null
 	}
 
 	// Blocks not reimplemented:

@@ -336,6 +336,20 @@ class ModBlockTagsProvider(
 					ModBlocks.getColoredSoulSand(color).get()
 				)
 		}
+
+		tag(Tags.Blocks.DYED)
+			.add(*ModBlocks.COLORED_STONES.values.toTypedArray())
+			.add(*ModBlocks.COLORED_COBBLESTONES.values.toTypedArray())
+			.add(*ModBlocks.COLORED_STONE_BRICKS.values.toTypedArray())
+			.add(*ModBlocks.COLORED_BRICKS.values.toTypedArray())
+			.add(*ModBlocks.COLORED_PLANKS.values.toTypedArray())
+			.add(*ModBlocks.COLORED_COAL_BLOCKS.values.toTypedArray())
+			.add(*ModBlocks.COLORED_REDSTONE_BLOCKS.values.toTypedArray())
+			.add(*ModBlocks.COLORED_LAPIS_BLOCKS.values.toTypedArray())
+			.add(*ModBlocks.COLORED_OBSIDIANS.values.toTypedArray())
+			.add(*ModBlocks.COLORED_QUARTZES.values.toTypedArray())
+			.add(*ModBlocks.COLORED_SOUL_SANDS.values.toTypedArray())
+
 	}
 
 	companion object {
