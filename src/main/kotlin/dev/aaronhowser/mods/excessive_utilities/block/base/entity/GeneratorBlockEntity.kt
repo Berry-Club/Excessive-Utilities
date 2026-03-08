@@ -1,8 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
@@ -180,7 +182,7 @@ abstract class GeneratorBlockEntity(
 
 		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
 		tag.putInt(FE_PER_TICK_NBT, fePerTick)
-		tag.put(STORED_ENERGY_NBT, energyStorage.serializeNBT(registries))
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
 
 		val container = container
@@ -195,11 +197,7 @@ abstract class GeneratorBlockEntity(
 		burnTimeRemaining = tag.getInt(BURN_TIME_REMAINING_NBT)
 		fePerTick = tag.getInt(FE_PER_TICK_NBT)
 		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
-
-		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
-		if (storedEnergyTag is IntTag) {
-			energyStorage.deserializeNBT(registries, storedEnergyTag)
-		}
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 
 		val container = container
 		if (container != null) {

@@ -1,14 +1,15 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.handler.wireless_fe.WirelessFeNetworkHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -54,17 +55,14 @@ class WirelessFeBatteryBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
-		tag.put(STORED_ENERGY_NBT, energyStorage.serializeNBT(registries))
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
 		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
-		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
-		if (storedEnergyTag is IntTag) {
-			energyStorage.deserializeNBT(registries, storedEnergyTag)
-		}
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 	}
 
 	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage

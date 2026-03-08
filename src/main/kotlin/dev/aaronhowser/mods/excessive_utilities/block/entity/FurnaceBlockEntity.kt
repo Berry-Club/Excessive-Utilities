@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -21,12 +22,15 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.EnergyStorage
 import kotlin.jvm.optionals.getOrNull
 
 class FurnaceBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.FURNACE.get(), pos, blockState), ContainerContainer {
+
+	private val energyStorage = EnergyStorage(128_000)
 
 	private val container =
 		object : ImprovedSimpleContainer(this, 3) {
@@ -59,8 +63,24 @@ class FurnaceBlockEntity(
 		return SpeedUpgradeItem.getGpCost(amountUpgrades)
 	}
 
+	private var progress = 0
+
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
+
+		val recipe = getRecipe(level)
+		if (recipe == null) {
+			progress = 0
+			return
+		}
+
+		progress++
+		val maxProgress = ServerConfig.CONFIG.furnaceTicksPerRecipe.get()
+
+		if (progress >= maxProgress) {
+
+		}
+
 	}
 
 	private fun getRecipe(level: Level): RecipeHolder<SmeltingRecipe>? {
@@ -74,12 +94,14 @@ class FurnaceBlockEntity(
 		super.saveAdditional(tag, registries)
 
 		tag.saveItems(container, registries)
+		tag.putInt(PROGRESS_NBT, progress)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
 		tag.loadItems(container, registries)
+		progress = tag.getInt(PROGRESS_NBT)
 	}
 
 	companion object {
@@ -87,6 +109,8 @@ class FurnaceBlockEntity(
 		const val INPUT_SLOT = 0
 		const val OUTPUT_SLOT = 1
 		const val UPGRADE_SLOT = 2
+
+		const val PROGRESS_NBT = "Progress"
 	}
 
 }

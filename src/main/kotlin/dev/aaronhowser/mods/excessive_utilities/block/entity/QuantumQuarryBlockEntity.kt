@@ -5,6 +5,8 @@ import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
@@ -17,7 +19,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.IntTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.Container
@@ -303,7 +304,7 @@ class QuantumQuarryBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		tag.putInt(STORED_ENERGY_NBT, energyStorage.energyStored)
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 
 		val chunkPos = targetChunk
 		if (chunkPos != null) {
@@ -319,10 +320,7 @@ class QuantumQuarryBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
-		if (storedEnergyTag is IntTag) {
-			energyStorage.deserializeNBT(registries, storedEnergyTag)
-		}
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 
 		if (tag.contains(TARGET_CHUNK_POS_NBT)) {
 			val chunkPosLong = tag.getLong(TARGET_CHUNK_POS_NBT)

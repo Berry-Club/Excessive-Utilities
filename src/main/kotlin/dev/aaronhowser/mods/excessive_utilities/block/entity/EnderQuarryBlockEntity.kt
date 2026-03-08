@@ -4,6 +4,7 @@ import com.mojang.authlib.GameProfile
 import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgradeType
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
@@ -15,7 +16,6 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.IntTag
 import net.minecraft.nbt.LongArrayTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
@@ -586,7 +586,7 @@ class EnderQuarryBlockEntity(
 
 		ContainerHelper.saveAllItems(tag, bufferContainer.items, registries)
 
-		tag.putInt(STORED_ENERGY_NBT, energyStorage.energyStored)
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 
 		val min = minBoundary
 		val max = maxBoundary
@@ -615,10 +615,7 @@ class EnderQuarryBlockEntity(
 
 		ContainerHelper.loadAllItems(tag, bufferContainer.items, registries)
 
-		val storedEnergyTag = tag.get(STORED_ENERGY_NBT)
-		if (storedEnergyTag is IntTag) {
-			energyStorage.deserializeNBT(registries, storedEnergyTag)
-		}
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 
 		if (tag.contains(MIN_BOUNDARY_NBT) && tag.contains(MAX_BOUNDARY_NBT)) {
 			minBoundary = BlockPos.of(tag.getLong(MIN_BOUNDARY_NBT))
