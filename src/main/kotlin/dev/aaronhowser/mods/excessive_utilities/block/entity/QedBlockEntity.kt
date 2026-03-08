@@ -47,6 +47,7 @@ class QedBlockEntity(
 		}
 
 	private var amountNearbyCrystals = 0
+	private var progress = 0
 
 	private fun serverTick(level: ServerLevel) {
 		if (level.gameTime % 60 == 0L) {
@@ -85,18 +86,22 @@ class QedBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
+		tag.putInt(PROGRESS_NBT, progress)
 		ContainerHelper.saveAllItems(tag, container.items, registries)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
+		progress = tag.getInt(PROGRESS_NBT)
 		ContainerHelper.loadAllItems(tag, container.items, registries)
 	}
 
 	companion object {
 		const val OUTPUT_SLOT = 9
 		const val CONTAINER_SIZE = 10
+
+		const val PROGRESS_NBT = "Progress"
 
 		fun tick(
 			level: Level,
