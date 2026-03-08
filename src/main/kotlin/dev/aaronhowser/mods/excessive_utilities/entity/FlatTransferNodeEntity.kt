@@ -187,14 +187,14 @@ class FlatTransferNodeEntity(
 
 	override fun addAdditionalSaveData(compound: CompoundTag) {
 		compound.putBoolean(IS_ITEM_NODE_TAG, isItemNode)
-		compound.putInt(AIMING_TAG, aiming.ordinal)
+		compound.putString(AIMING_TAG, aiming.serializedName)
 		ContainerHelper.saveAllItems(compound, container.items, registryAccess())
 	}
 
 	override fun readAdditionalSaveData(compound: CompoundTag) {
 		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
-		val directionOrdinal = compound.getInt(AIMING_TAG)
-		aiming = Direction.entries[directionOrdinal]
+		val directionString = compound.getString(AIMING_TAG)
+		aiming = Direction.byName(directionString) ?: Direction.NORTH
 		ContainerHelper.loadAllItems(compound, container.items, registryAccess())
 	}
 
