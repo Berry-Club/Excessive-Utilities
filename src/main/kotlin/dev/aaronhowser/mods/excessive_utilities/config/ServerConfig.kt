@@ -101,9 +101,13 @@ class ServerConfig(
 	lateinit var cursedEarthMaxSpawnedMobs: ModConfigSpec.IntValue
 	lateinit var cursedEarthCheckRadius: ModConfigSpec.DoubleValue
 
+	lateinit var furnaceFePerTick: ModConfigSpec.IntValue
+	lateinit var furnaceTicksPerRecipe: ModConfigSpec.IntValue
+
 	init {
 		general()
 		heatingCoil()
+		furnace()
 		drums()
 		wateringCan()
 		gridPower()
@@ -113,6 +117,18 @@ class ServerConfig(
 		rings()
 		boomerang()
 		cursedEarth()
+	}
+
+	private fun furnace() {
+		builder.section("furnace") {
+			furnaceFePerTick = builder
+				.comment("The amount of FE the Furnace will burn per tick while active.")
+				.defineInRange("furnaceFePerTick", 20, 0, Int.MAX_VALUE)
+
+			furnaceTicksPerRecipe = builder
+				.comment("The number of ticks it takes for the Furnace to complete a recipe.")
+				.defineInRange("furnaceTicksPerRecipe", 20 * 5, 1, Int.MAX_VALUE)
+		}
 	}
 
 	private fun cursedEarth() {
