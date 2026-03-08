@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.recipe.QedRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -11,6 +12,7 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -38,6 +40,11 @@ class QedBlockEntity(
 
 	private fun serverTick(level: ServerLevel) {
 
+	}
+
+	private fun getRecipe(level: ServerLevel): QedRecipe? {
+		val recipeInput = CraftingInput.of(3, 3, container.items.subList(0, 9))
+		return QedRecipe.getRecipe(level, recipeInput)
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

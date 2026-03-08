@@ -27,6 +27,14 @@ class QedRecipe(
 		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<QedRecipe>> {
 			return recipeManager.getAllRecipesFor(ModRecipeTypes.QED.get())
 		}
+
+		fun getRecipe(level: Level, input: CraftingInput): QedRecipe? {
+			return getAllRecipes(level.recipeManager)
+				.firstOrNull { recipeHolder ->
+					recipeHolder.value.matches(input, level)
+				}
+				?.value
+		}
 	}
 
 	class Serializer : RecipeSerializer<QedRecipe> {
