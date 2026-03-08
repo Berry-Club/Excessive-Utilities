@@ -12,6 +12,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
+import net.minecraft.world.level.block.RedstoneLampBlock
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
@@ -90,6 +91,47 @@ class ModBlockStateProvider(
 
 				simpleBlockWithItem(block, model)
 			}
+		}
+
+		for (color in DyeColor.entries) {
+			val block = ModBlocks.getColoredRedstoneLamp(color).get()
+			val name = name(block)
+
+			val textureOff = modLoc("block/colored/redstone_lamp")
+			val textureOn = modLoc("block/colored/redstone_lamp_on")
+
+			val modelOff = models()
+				.withExistingParent(name, mcLoc("block/block"))
+				.texture("all", textureOff)
+				.texture("particle", textureOff)
+				.element {
+					from(0f, 0f, 0f)
+					to(16f, 16f, 16f)
+					allFaces { dir, fb ->
+						fb.texture("#all")
+						fb.cullface(dir)
+						fb.uvs(0f, 0f, 16f, 16f)
+						fb.tintindex(0)
+					}
+				}
+
+			val modelOn = models()
+				.withExistingParent(name + "_on", modLoc("block/$name"))
+				.texture("all", textureOn)
+				.texture("particle", textureOn)
+
+			getVariantBuilder(block)
+				.forAllStates {
+					val lit = it.getValue(RedstoneLampBlock.LIT)
+					val model = if (lit) modelOn else modelOff
+
+					ConfiguredModel
+						.builder()
+						.modelFile(model)
+						.build()
+				}
+
+			simpleBlockItem(block, modelOff)
 		}
 	}
 

@@ -240,6 +240,10 @@ class ModItemTagsProvider(
 		tag(GLOWSTONES)
 			.add(Items.GLOWSTONE)
 			.add(*ModBlocks.COLORED_GLOWSTONES.map { it.value.asItem() }.toTypedArray())
+
+		tag(REDSTONE_LAMPS)
+			.add(Items.REDSTONE_LAMP)
+			.add(*ModBlocks.COLORED_REDSTONE_LAMPS.map { it.value.asItem() }.toTypedArray())
 	}
 
 	companion object {
@@ -260,6 +264,7 @@ class ModItemTagsProvider(
 		val SOUL_SANDS = common("soul_sands")
 		val BRICK_BLOCKS = common("brick_blocks")
 		val GLOWSTONES = common("glowstones")
+		val REDSTONE_LAMPS = common("redstone_lamps")
 	}
 
 }

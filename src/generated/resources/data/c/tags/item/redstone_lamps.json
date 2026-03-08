@@ -1,0 +1,21 @@
+{
+  "values": [
+    "minecraft:redstone_lamp",
+    "excessive_utilities:colored_redstone_lamp_white",
+    "excessive_utilities:colored_redstone_lamp_orange",
+    "excessive_utilities:colored_redstone_lamp_magenta",
+    "excessive_utilities:colored_redstone_lamp_light_blue",
+    "excessive_utilities:colored_redstone_lamp_yellow",
+    "excessive_utilities:colored_redstone_lamp_lime",
+    "excessive_utilities:colored_redstone_lamp_pink",
+    "excessive_utilities:colored_redstone_lamp_gray",
+    "excessive_utilities:colored_redstone_lamp_light_gray",
+    "excessive_utilities:colored_redstone_lamp_cyan",
+    "excessive_utilities:colored_redstone_lamp_purple",
+    "excessive_utilities:colored_redstone_lamp_blue",
+    "excessive_utilities:colored_redstone_lamp_brown",
+    "excessive_utilities:colored_redstone_lamp_green",
+    "excessive_utilities:colored_redstone_lamp_red",
+    "excessive_utilities:colored_redstone_lamp_black"
+  ]
+}

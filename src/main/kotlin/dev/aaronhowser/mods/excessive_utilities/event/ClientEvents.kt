@@ -170,11 +170,12 @@ object ClientEvents {
 				ModBlocks.getColoredPlanks(color).get(),
 				ModBlocks.getColoredCoalBlock(color).get(),
 				ModBlocks.getColoredRedstoneBlock(color).get(),
+				ModBlocks.getColoredRedstoneLamp(color).get(),
 				ModBlocks.getColoredLapisBlock(color).get(),
 				ModBlocks.getColoredObsidian(color).get(),
 				ModBlocks.getColoredQuartz(color).get(),
 				ModBlocks.getColoredSoulSand(color).get(),
-				ModBlocks.getColoredGlowstone(color).get()
+				ModBlocks.getColoredGlowstone(color).get(),
 			)
 		}
 	}
@@ -220,6 +221,7 @@ object ClientEvents {
 				ModBlocks.getColoredPlanks(color).get(),
 				ModBlocks.getColoredCoalBlock(color).get(),
 				ModBlocks.getColoredRedstoneBlock(color).get(),
+				ModBlocks.getColoredRedstoneLamp(color).get(),
 				ModBlocks.getColoredLapisBlock(color).get(),
 				ModBlocks.getColoredObsidian(color).get(),
 				ModBlocks.getColoredQuartz(color).get(),

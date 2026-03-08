@@ -1280,6 +1280,7 @@ class ModRecipeProvider(
 			makeColoredRecipe(ModBlocks.getColoredQuartz(color), ModItemTagsProvider.QUARTZ_STORAGE_BLOCKS.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredSoulSand(color), ModItemTagsProvider.SOUL_SANDS.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredGlowstone(color), ModItemTagsProvider.GLOWSTONES.asIngredient())
+			makeColoredRecipe(ModBlocks.getColoredRedstoneLamp(color), ModItemTagsProvider.REDSTONE_LAMPS.asIngredient())
 		}
 	}
 

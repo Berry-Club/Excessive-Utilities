@@ -190,7 +190,7 @@ object ModBlockLang {
 				addBlock(ModBlocks.getColoredObsidian(color), "Colored Obsidian ($englishName)")
 				addBlock(ModBlocks.getColoredQuartz(color), "Colored Quartz Block ($englishName)")
 				addBlock(ModBlocks.getColoredRedstoneBlock(color), "Colored Redstone Block ($englishName)")
-//				addBlock(ModBlocks.getColoredRedstoneLamp(color), "Colored Redstone Lamp ($englishName)")
+				addBlock(ModBlocks.getColoredRedstoneLamp(color), "Colored Redstone Lamp ($englishName)")
 				addBlock(ModBlocks.getColoredSoulSand(color), "Colored Soul Sand ($englishName)")
 				addBlock(ModBlocks.getColoredGlowstone(color), "Colored Glowstone ($englishName)")
 			}

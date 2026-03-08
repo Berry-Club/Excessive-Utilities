@@ -1,0 +1,7 @@
+{
+  "parent": "excessive_utilities:block/colored_redstone_lamp_magenta",
+  "textures": {
+    "all": "excessive_utilities:block/colored/redstone_lamp_on",
+    "particle": "excessive_utilities:block/colored/redstone_lamp_on"
+  }
+}
