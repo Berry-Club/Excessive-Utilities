@@ -6,7 +6,7 @@
       "tag": "c:dyes/blue"
     },
     "I": {
-      "tag": "c:bricks/normal"
+      "tag": "c:brick_blocks"
     },
     "P": {
       "item": "excessive_utilities:paintbrush"

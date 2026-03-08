@@ -212,8 +212,6 @@ class ModItemTagsProvider(
 		tag(Tags.Items.STONES)
 			.add(*ModBlocks.COLORED_STONES.map { it.value.asItem() }.toTypedArray())
 
-		tag(Tags.Items.BRICKS)
-			.add(*ModBlocks.COLORED_BRICKS.map { it.value.asItem() }.toTypedArray())
 
 		tag(Tags.Items.STORAGE_BLOCKS_COAL)
 			.add(*ModBlocks.COLORED_COAL_BLOCKS.map { it.value.asItem() }.toTypedArray())
@@ -228,10 +226,20 @@ class ModItemTagsProvider(
 			.add(*ModBlocks.COLORED_REDSTONE_BLOCKS.map { it.value.asItem() }.toTypedArray())
 
 		tag(QUARTZ_STORAGE_BLOCKS)
+			.add(Items.QUARTZ_BLOCK)
 			.add(*ModBlocks.COLORED_QUARTZES.map { it.value.asItem() }.toTypedArray())
 
 		tag(SOUL_SANDS)
+			.add(Items.SOUL_SAND)
 			.add(*ModBlocks.COLORED_SOUL_SANDS.map { it.value.asItem() }.toTypedArray())
+
+		tag(BRICK_BLOCKS)
+			.add(Items.BRICKS)
+			.add(*ModBlocks.COLORED_BRICKS.map { it.value.asItem() }.toTypedArray())
+
+		tag(GLOWSTONES)
+			.add(Items.GLOWSTONE)
+			.add(*ModBlocks.COLORED_GLOWSTONES.map { it.value.asItem() }.toTypedArray())
 	}
 
 	companion object {
@@ -250,6 +258,8 @@ class ModItemTagsProvider(
 		val DOUBLE_ANVIL_ENCHANTMENTS = create("double_anvil_enchantments")
 		val QUARTZ_STORAGE_BLOCKS = common("storage_blocks/quartz")
 		val SOUL_SANDS = common("soul_sands")
+		val BRICK_BLOCKS = common("brick_blocks")
+		val GLOWSTONES = common("glowstones")
 	}
 
 }

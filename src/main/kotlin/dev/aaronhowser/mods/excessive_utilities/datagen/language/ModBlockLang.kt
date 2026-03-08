@@ -192,6 +192,7 @@ object ModBlockLang {
 				addBlock(ModBlocks.getColoredRedstoneBlock(color), "Colored Redstone Block ($englishName)")
 //				addBlock(ModBlocks.getColoredRedstoneLamp(color), "Colored Redstone Lamp ($englishName)")
 				addBlock(ModBlocks.getColoredSoulSand(color), "Colored Soul Sand ($englishName)")
+				addBlock(ModBlocks.getColoredGlowstone(color), "Colored Glowstone ($englishName)")
 			}
 		}
 	}

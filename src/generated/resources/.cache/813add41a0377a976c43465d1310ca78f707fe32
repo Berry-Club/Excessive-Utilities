@@ -1,15 +1,16 @@
-// 1.21.1	2026-03-08T06:09:51.3111602	Tags for minecraft:item mod id excessive_utilities
-748bd849f58257682b90c736a0c43038af93734a data/c/tags/item/bricks.json
+// 1.21.1	2026-03-08T06:16:49.3400567	Tags for minecraft:item mod id excessive_utilities
+391f936c09d7f7b43694f899344222849a8d62a1 data/c/tags/item/brick_blocks.json
 5124cada2ba7e5783038acde07858db18ecdb114 data/c/tags/item/cobblestones/normal.json
 1c83000a2817348e18f4bc04d17b3eabe7695e1f data/c/tags/item/dyes/magenta.json
+45022e45487ed681e90b502130d350750e9fa8f3 data/c/tags/item/glowstones.json
 0a8a572e94e3b6c5ce9ec90b310143da0dd09602 data/c/tags/item/obsidians/normal.json
 4f9bdf86ef56df2d6abcc811dda7e2bed52b0289 data/c/tags/item/pistons.json
 e9f0b7f2c6a1fe6eb0d259d2a1eb056f23929936 data/c/tags/item/sickles.json
-9216dfcd3861799057ae9663f055e03287c910ec data/c/tags/item/soul_sands.json
+3587c0698b4f5a313002ca1e81b4603047bacd56 data/c/tags/item/soul_sands.json
 fd4f1876335cd2c01a9ca026938ede746cff35d8 data/c/tags/item/stones.json
 85feac18a82e7c3edd812d9769196f4558d94660 data/c/tags/item/storage_blocks/coal.json
 a749e7c3b15f980e082d3c05c67248efdbc00102 data/c/tags/item/storage_blocks/lapis.json
-db34944dec878867491c06f4c0f6e3a18ab0c798 data/c/tags/item/storage_blocks/quartz.json
+26f07f40c54ddde606e33942cebdb10994fe4e8d data/c/tags/item/storage_blocks/quartz.json
 567982a105688fe3cbdf2b3550109fd40e5ac97c data/c/tags/item/storage_blocks/redstone.json
 8c925b28136aff6893e4907b1f7428f696ef7ab4 data/c/tags/item/tools/bow.json
 a9fc732d820e0cda4d35fb56727c9620bc0898a4 data/c/tags/item/tools/mining_tool.json

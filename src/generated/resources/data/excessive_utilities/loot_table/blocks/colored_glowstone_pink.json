@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "excessive_utilities:colored_glowstone_pink"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "excessive_utilities:blocks/colored_glowstone_pink"
+}

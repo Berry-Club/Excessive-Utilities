@@ -1271,7 +1271,7 @@ class ModRecipeProvider(
 			makeColoredRecipe(ModBlocks.getColoredStone(color), Tags.Items.STONES.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredCobblestone(color), Tags.Items.COBBLESTONES_NORMAL.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredStoneBricks(color), ItemTags.STONE_BRICKS.asIngredient())
-			makeColoredRecipe(ModBlocks.getColoredBricks(color), Tags.Items.BRICKS_NORMAL.asIngredient())
+			makeColoredRecipe(ModBlocks.getColoredBricks(color), ModItemTagsProvider.BRICK_BLOCKS.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredPlanks(color), ItemTags.PLANKS.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredCoalBlock(color), Tags.Items.STORAGE_BLOCKS_COAL.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredRedstoneBlock(color), Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient())
@@ -1279,6 +1279,7 @@ class ModRecipeProvider(
 			makeColoredRecipe(ModBlocks.getColoredObsidian(color), Tags.Items.OBSIDIANS_NORMAL.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredQuartz(color), ModItemTagsProvider.QUARTZ_STORAGE_BLOCKS.asIngredient())
 			makeColoredRecipe(ModBlocks.getColoredSoulSand(color), ModItemTagsProvider.SOUL_SANDS.asIngredient())
+			makeColoredRecipe(ModBlocks.getColoredGlowstone(color), ModItemTagsProvider.GLOWSTONES.asIngredient())
 		}
 	}
 

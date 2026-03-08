@@ -66,6 +66,7 @@ class ModBlockStateProvider(
 			"quartz" to ModBlocks::getColoredQuartz,
 			"obsidian" to ModBlocks::getColoredObsidian,
 			"soul_sand" to ModBlocks::getColoredSoulSand,
+			"glowstone" to ModBlocks::getColoredGlowstone,
 		)
 
 		for ((name, getter) in map) {

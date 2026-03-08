@@ -455,6 +455,8 @@ object ModBlocks : AaronBlockRegistry() {
 		getColorBlockMap("colored_obsidian", Blocks.OBSIDIAN)
 	val COLORED_QUARTZES: Map<DyeColor, DeferredBlock<Block>> =
 		getColorBlockMap("colored_quartz_block", Blocks.QUARTZ_BLOCK)
+	val COLORED_GLOWSTONES: Map<DyeColor, DeferredBlock<Block>> =
+		getColorBlockMap("colored_glowstone", Blocks.GLOWSTONE)
 
 	//TODO: Implement these because they're more complicated
 	val COLORED_REDSTONE_BLOCKS: Map<DyeColor, DeferredBlock<Block>> =
@@ -476,6 +478,7 @@ object ModBlocks : AaronBlockRegistry() {
 	fun getColoredQuartz(color: DyeColor): DeferredBlock<Block> = COLORED_QUARTZES.getValue(color)
 //	fun getColoredRedstoneLamp(color: DyeColor): DeferredBlock<Block> = COLORED_REDSTONE_LAMPS.getValue(color)
 	fun getColoredSoulSand(color: DyeColor): DeferredBlock<Block> = COLORED_SOUL_SANDS.getValue(color)
+	fun getColoredGlowstone(color: DyeColor): DeferredBlock<Block> = COLORED_GLOWSTONES.getValue(color)
 
 	private fun getColorBlockMap(
 		name: String,
@@ -501,7 +504,8 @@ object ModBlocks : AaronBlockRegistry() {
 			COLORED_QUARTZES,
 			COLORED_REDSTONE_BLOCKS,
 //			COLORED_REDSTONE_LAMPS,
-			COLORED_SOUL_SANDS
+			COLORED_SOUL_SANDS,
+			COLORED_GLOWSTONES
 		)
 
 		for (map in allMaps) {
