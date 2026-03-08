@@ -2,7 +2,9 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
@@ -93,15 +95,17 @@ class FurnaceBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		tag.saveItems(container, registries)
 		tag.putInt(PROGRESS_NBT, progress)
+		tag.saveItems(container, registries)
+		tag.saveEnergy(ENERGY_NBT, energyStorage, registries)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		tag.loadItems(container, registries)
 		progress = tag.getInt(PROGRESS_NBT)
+		tag.loadItems(container, registries)
+		tag.loadEnergy(ENERGY_NBT, energyStorage, registries)
 	}
 
 	companion object {
@@ -111,6 +115,7 @@ class FurnaceBlockEntity(
 		const val UPGRADE_SLOT = 2
 
 		const val PROGRESS_NBT = "Progress"
+		const val ENERGY_NBT = "Energy"
 	}
 
 }
