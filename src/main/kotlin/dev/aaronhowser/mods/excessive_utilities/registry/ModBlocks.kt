@@ -92,8 +92,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("ender_thermic_pump")
 	val QED: DeferredBlock<QedBlock> =
 		registerBlock("qed", ::QedBlock)
-	val ENDER_FLUX_CRYSTAL =
-		basicBlock("ender_flux_crystal")
+	val ENDER_FLUX_CRYSTAL: DeferredBlock<EnderFluxCrystalBlock> =
+		registerBlock("ender_flux_crystal", ::EnderFluxCrystalBlock)
 	val MACHINE_BLOCK =
 		basicBlock("machine_block")
 	val CRUSHER =
