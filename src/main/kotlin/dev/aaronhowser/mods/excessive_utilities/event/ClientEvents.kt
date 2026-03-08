@@ -19,11 +19,11 @@ import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
 import dev.aaronhowser.mods.excessive_utilities.registry.*
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.entity.NoopRenderer
 import net.minecraft.client.renderer.entity.player.PlayerRenderer
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.BlockItem
+import net.minecraft.world.item.DyeColor
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -59,7 +59,6 @@ object ClientEvents {
 		for (block in translucent) {
 			ItemBlockRenderTypes.setRenderLayer(block, RenderType.translucent())
 		}
-
 
 
 	}
@@ -192,6 +191,24 @@ object ClientEvents {
 			ModBlocks.DISENCHANTMENT_GENERATOR.get(),
 			ModBlocks.SLIMY_GENERATOR.get(),
 		)
+
+		for (color in DyeColor.entries) {
+			event.register(
+				{ state, level, pos, tintIndex -> color.textColor },
+				ModBlocks.getColoredStone(color).get(),
+				ModBlocks.getColoredCobblestone(color).get(),
+				ModBlocks.getColoredStoneBricks(color).get(),
+				ModBlocks.getColoredBricks(color).get(),
+				ModBlocks.getColoredPlanks(color).get(),
+				ModBlocks.getColoredCoalBlock(color).get(),
+				ModBlocks.getColoredRedstoneBlock(color).get(),
+				ModBlocks.getColoredLapisBlock(color).get(),
+				ModBlocks.getColoredObsidian(color).get(),
+				ModBlocks.getColoredQuartz(color).get(),
+//				ModBlocks.getColoredRedstoneLamp(color).get(),
+				ModBlocks.getColoredSoulSand(color).get(),
+			)
+		}
 
 	}
 
