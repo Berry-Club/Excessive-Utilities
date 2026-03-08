@@ -53,8 +53,60 @@ class ModBlockStateProvider(
 		tradingPost()
 		coloredBlocks()
 		qed()
+		enderFluxCrystal()
 	}
 
+	//TODO: On
+	private fun enderFluxCrystal() {
+		val block = ModBlocks.ENDER_FLUX_CRYSTAL.get()
+
+		val top = modLoc("block/ender_flux_crystal/top")
+		val side = modLoc("block/ender_flux_crystal/side")
+		val bottom = modLoc("block/ender_flux_crystal/bottom")
+
+		val model = models()
+			.withExistingParent(name(block), mcLoc("block/block"))
+			.texture("top", top)
+			.texture("side", side)
+			.texture("bottom", bottom)
+			.texture("particle", side)
+
+			.element {
+				from(1f, 0f, 1f)
+				to(15f, 7f, 15f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			.element {
+				from(4f, 7f, 4f)
+				to(12f, 15f, 12f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+		simpleBlockWithItem(block, model)
+	}
+
+	//TODO: On
 	private fun qed() {
 		val block = ModBlocks.QED.get()
 
