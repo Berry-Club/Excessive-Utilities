@@ -28,7 +28,7 @@ class QedMenu(
 		checkContainerSize(qedContainer, QedBlockEntity.CONTAINER_SIZE)
 
 		addSlots()
-		addPlayerInventorySlots(90)
+		addPlayerInventorySlots(84)
 	}
 
 	override fun addSlots() {
