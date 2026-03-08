@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.entity
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
@@ -45,14 +46,24 @@ class FlatTransferNodeEntity(
 		private set(value) {
 			entityData.set(AIMING_DATA, value)
 
-			val lookTowards = eyePosition.add(value.stepX.toDouble(), value.stepY.toDouble(), value.stepZ.toDouble())
+			val lookTowards = eyePosition.add(
+				value.stepX.toDouble(),
+				value.stepY.toDouble(),
+				value.stepZ.toDouble()
+			)
+
 			lookAt(EntityAnchorArgument.Anchor.EYES, lookTowards)
 		}
 
 	private val container: SimpleContainer =
 		object : SimpleContainer(1) {
 			override fun canAddItem(stack: ItemStack): Boolean {
-				return stack.isItem(ModItemTagsProvider.FILTERS) && super.canAddItem(stack)
+				if (!super.canAddItem(stack)) return false
+				return if (isItemNode) {
+					stack.isItem(ModItems.ITEM_FILTER)
+				} else {
+					stack.isItem(ModItems.FLUID_FILTER)
+				}
 			}
 		}
 
@@ -113,15 +124,20 @@ class FlatTransferNodeEntity(
 	}
 
 	fun getAsItemStack(): ItemStack {
-		val item = if (isItemNode) ModItems.FLAT_TRANSFER_NODE_ITEMS.get() else ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
-		return item.defaultInstance
+		val item = if (isItemNode) {
+			ModItems.FLAT_TRANSFER_NODE_ITEMS
+		} else {
+			ModItems.FLAT_TRANSFER_NODE_FLUIDS
+		}
+
+		return item.getDefaultInstance()
 	}
 
 	override fun remove(reason: RemovalReason) {
 		if (level().isServerSide && (reason == RemovalReason.DISCARDED || reason == RemovalReason.KILLED)) {
 			val pos = position()
 				.add(0.0, 0.5, 0.0)
-				.add(direction.step().toVec3().scale(0.5))
+				.add(direction.step().toVec3())
 
 			Containers.dropContents(level(), pos.x, pos.y, pos.z, container)
 			Containers.dropItemStack(level(), pos.x, pos.y, pos.z, getAsItemStack())
