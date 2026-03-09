@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-09T15:14:16.6989189	Block States: excessive_utilities
+// 1.21.1	2026-03-09T15:28:42.0434199	Block States: excessive_utilities
 8fb96ad4646ce4b9716e8d3e8a34229fdc507e4c assets/excessive_utilities/blockstates/advanced_filing_cabinet.json
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 b234a9e9783bbcba2f25a6fb38362e61ecabf128 assets/excessive_utilities/blockstates/bedrock_bricks.json
@@ -585,6 +585,7 @@ aee3137e0d672f87f251e3eac1454f4925c44be3 assets/excessive_utilities/models/block
 311250bd45b8a7357e4c617b3c682b07d1d783bb assets/excessive_utilities/models/block/peaceful_table.json
 ec5ac4d2b996fd6bc6facee96901d8a69a4ac312 assets/excessive_utilities/models/block/pink_generator_off.json
 e7120d4d14aeba69b0efc61b4574e4776a23614a assets/excessive_utilities/models/block/pink_generator_on.json
+85f2c36f4b30959be8012e533a37691ffcc8618e assets/excessive_utilities/models/block/polished_stone.json
 3e8d4e065fafb57765e66a64a8cb715d4df4c3b8 assets/excessive_utilities/models/block/potion_generator_off.json
 9c957950ec45b56cc66773f5244acb0309f1c339 assets/excessive_utilities/models/block/potion_generator_on.json
 56d1e5ba6986096c8373c98f1cb763c6d8e3bec5 assets/excessive_utilities/models/block/qed.json
@@ -879,6 +880,7 @@ dd8ca3a06200468cea05fb54c8a6c16a42518c0a assets/excessive_utilities/models/item/
 269a6050e7f362791db43bb1f51654d13e713b99 assets/excessive_utilities/models/item/nether_star_generator.json
 89e99107744997e58cb8c211e6a54b34f2f69b38 assets/excessive_utilities/models/item/peaceful_table.json
 7af51f8a93e08aa7e1806ac831918d418a49b968 assets/excessive_utilities/models/item/pink_generator.json
+2d5b225e58f3ea5f90dd3687cbeb79c442b2c278 assets/excessive_utilities/models/item/polished_stone.json
 89833588b4b4b529b11a14d7e49441385e807344 assets/excessive_utilities/models/item/potion_generator.json
 80cc29bf84e352428ddf1493e49381652330e915 assets/excessive_utilities/models/item/qed.json
 73b496ad5b1a8bd904e0aafd04bee078356e48cb assets/excessive_utilities/models/item/quantum_quarry.json
