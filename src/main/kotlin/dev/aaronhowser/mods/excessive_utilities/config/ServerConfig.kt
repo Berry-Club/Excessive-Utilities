@@ -115,56 +115,34 @@ class ServerConfig(
 		gridPower()
 		wateringCan()
 		rings()
-		cursedEarth()
 	}
 
 	private fun machines() {
 		builder.section("machines") {
 			feGenerators()
-			furnace()
+
+			builder.section("furnace") {
+				furnaceFePerTick = builder
+					.comment("The amount of FE the Furnace will burn per tick while active.")
+					.defineInRange("furnaceFePerTick", 20, 0, Int.MAX_VALUE)
+
+				furnaceTicksPerRecipe = builder
+					.comment("The number of ticks it takes for the Furnace to complete a recipe.")
+					.defineInRange("furnaceTicksPerRecipe", 20 * 5, 1, Int.MAX_VALUE)
+			}
+
+			builder.section("wireless_fe_transmitter") {
+				wirelessFeTransmitterRange = builder
+					.comment("The maximum distance in blocks that Wireless FE Transmitters will connect to blocks.")
+					.defineInRange("wirelessFeTransmitterRange", 4, 1, Int.MAX_VALUE)
+
+				wirelessFeTransmitterRate = builder
+					.comment("The amount of FE per tick that Wireless FE Transmitters will transmit.")
+					.defineInRange("wirelessFeTransmitterRate", 80, 1, Int.MAX_VALUE)
+			}
+
 			enderQuarry()
 			quantumQuarry()
-			wirelessFeTransmitter()
-		}
-	}
-
-	private fun wirelessFeTransmitter() {
-		builder.section("wireless_fe_transmitter") {
-			wirelessFeTransmitterRange = builder
-				.comment("The maximum distance in blocks that Wireless FE Transmitters will connect to blocks.")
-				.defineInRange("wirelessFeTransmitterRange", 4, 1, Int.MAX_VALUE)
-
-			wirelessFeTransmitterRate = builder
-				.comment("The amount of FE per tick that Wireless FE Transmitters will transmit.")
-				.defineInRange("wirelessFeTransmitterRate", 80, 1, Int.MAX_VALUE)
-		}
-	}
-
-	private fun furnace() {
-		builder.section("furnace") {
-			furnaceFePerTick = builder
-				.comment("The amount of FE the Furnace will burn per tick while active.")
-				.defineInRange("furnaceFePerTick", 20, 0, Int.MAX_VALUE)
-
-			furnaceTicksPerRecipe = builder
-				.comment("The number of ticks it takes for the Furnace to complete a recipe.")
-				.defineInRange("furnaceTicksPerRecipe", 20 * 5, 1, Int.MAX_VALUE)
-		}
-	}
-
-	private fun cursedEarth() {
-		builder.section("cursed_earth") {
-			cursedEarthChance = builder
-				.comment("The chance per tick that a Cursed Earth block will try to spawn a mob.")
-				.defineInRange("cursedEarthChance", 1.0 / 40, 0.0, 1.0)
-
-			cursedEarthMaxSpawnedMobs = builder
-				.comment("The maximum number of mobs around a Cursed Earth before it stops trying to spawn more.")
-				.defineInRange("cursedEarthMaxSpawnedMobs", 10, 1, Int.MAX_VALUE)
-
-			cursedEarthCheckRadius = builder
-				.comment("The radius in blocks around a Cursed Earth block that it checks for nearby mobs before trying to spawn more.")
-				.defineInRange("cursedEarthCheckRadius", 8.0, 0.0, Double.MAX_VALUE)
 		}
 	}
 
@@ -468,19 +446,18 @@ class ServerConfig(
 				.defineInRange("peacefulTableChancePerTick", 1.0 / 20 / 30, 0.0, 1.0)
 		}
 
-		builder.section("soul_fragments") {
-			healthPerSoulFragment = builder
-				.comment("The amount of health that each Soul Fragment is worth.")
-				.defineInRange("healthPerSoulFragment", 2.0, 0.0, Double.MAX_VALUE)
+		builder.section("cursed_earth") {
+			cursedEarthChance = builder
+				.comment("The chance per tick that a Cursed Earth block will try to spawn a mob.")
+				.defineInRange("cursedEarthChance", 1.0 / 40, 0.0, 1.0)
 
-			soulFragmentResetOnDeath = builder
-				.comment(
-					"What should happen to your Soul Debt/Surplus when you die.",
-					"KEEP: You keep all of your Soul Debt/Surplus",
-					"RESET: You reset to having 0 Soul Debt/Surplus",
-					"REMOVE_NEGATIVE: You keep Soul Surplus, but reset Soul Debt to 0"
-				)
-				.defineEnum("soulFragmentResetOnDeath", SoulDebt.OnDeathConfig.KEEP)
+			cursedEarthMaxSpawnedMobs = builder
+				.comment("The maximum number of mobs around a Cursed Earth before it stops trying to spawn more.")
+				.defineInRange("cursedEarthMaxSpawnedMobs", 10, 1, Int.MAX_VALUE)
+
+			cursedEarthCheckRadius = builder
+				.comment("The radius in blocks around a Cursed Earth block that it checks for nearby mobs before trying to spawn more.")
+				.defineInRange("cursedEarthCheckRadius", 8.0, 0.0, Double.MAX_VALUE)
 		}
 
 		builder.section("heating_coil") {
@@ -527,6 +504,21 @@ class ServerConfig(
 			boomereaperangRadius = builder
 				.comment("The radius in blocks around the Boomerang that it will break plants if it has the Boomereaperang enchantment.")
 				.defineInRange("boomereaperangRadius", 4.0, 0.0, Double.MAX_VALUE)
+		}
+
+		builder.section("soul_fragments") {
+			healthPerSoulFragment = builder
+				.comment("The amount of health that each Soul Fragment is worth.")
+				.defineInRange("healthPerSoulFragment", 2.0, 0.0, Double.MAX_VALUE)
+
+			soulFragmentResetOnDeath = builder
+				.comment(
+					"What should happen to your Soul Debt/Surplus when you die.",
+					"KEEP: You keep all of your Soul Debt/Surplus",
+					"RESET: You reset to having 0 Soul Debt/Surplus",
+					"REMOVE_NEGATIVE: You keep Soul Surplus, but reset Soul Debt to 0"
+				)
+				.defineEnum("soulFragmentResetOnDeath", SoulDebt.OnDeathConfig.KEEP)
 		}
 	}
 
