@@ -27,11 +27,21 @@ class ModBlockLootTablesSubProvider(
 	}
 
 	override fun generate() {
+		val drums = listOf(
+			ModBlocks.STONE_DRUM.get(),
+			ModBlocks.IRON_DRUM.get(),
+			ModBlocks.REINFORCED_LARGE_DRUM.get(),
+			ModBlocks.DEMONICALLY_GARGANTUAN_DRUM.get(),
+			ModBlocks.BEDROCKIUM_DRUM.get(),
+			ModBlocks.CREATIVE_DRUM.get()
+		)
+
 		val noDropSelfBlocks = setOf(
 			ModBlocks.MOON_STORE_ORE.get(),
 			ModBlocks.DEEPSLATE_MOON_STONE_ORE.get(),
 			ModBlocks.CURSED_EARTH.get(),
-			ModBlocks.MAGICAL_SNOW_GLOBE.get()
+			ModBlocks.MAGICAL_SNOW_GLOBE.get(),
+			*drums.toTypedArray(),
 		)
 
 		val dropSelfBlocks = knownBlocks - noDropSelfBlocks
@@ -91,6 +101,26 @@ class ModBlockLootTablesSubProvider(
 						)
 				)
 		)
+
+		for (drum in drums) {
+			add(
+				drum,
+				LootTable.lootTable()
+					.withPool(
+						LootPool.lootPool()
+							.setRolls(ConstantValue.exactly(1f))
+							.add(
+								LootItem.lootTableItem(drum)
+									.apply(
+										CopyComponentsFunction.copyComponents(
+											CopyComponentsFunction.Source.BLOCK_ENTITY
+										)
+											.include(ModDataComponents.TANK.get())
+									)
+							)
+					)
+			)
+		}
 
 	}
 
