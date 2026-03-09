@@ -130,7 +130,7 @@ object ModItems : AaronItemRegistry() {
 
 	// Misc
 	@JvmField
-	val HEATING_COIL =
+	val HEATING_COIL: DeferredItem<HeatingCoilItem> =
 		register("heating_coil", ::HeatingCoilItem, HeatingCoilItem.DEFAULT_PROPERTIES)
 	val POWER_MANAGER: DeferredItem<PowerManagerItem> =
 		register("power_manager", ::PowerManagerItem, PowerManagerItem.DEFAULT_PROPERTIES)
