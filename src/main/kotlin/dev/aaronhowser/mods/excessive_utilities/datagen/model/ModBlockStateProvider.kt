@@ -1186,15 +1186,30 @@ class ModBlockStateProvider(
 		}
 	}
 
-	//TODO: Fix model
 	private fun enderMarker() {
 		val block = ModBlocks.ENDER_MARKER.get()
 
 		val texture = modLoc("block/ender_marker")
 
 		val model = models()
-			.torch(name(block), texture)
-			.renderType(RenderType.cutout().name)
+			.withExistingParent(name(block), "block/block")
+			.texture("texture", texture)
+			.texture("particle", texture)
+			.element {
+				from(7f, 0f, 7f)
+				to(9f, 13f, 9f)
+
+				allFaces { dir, fb ->
+					fb.texture("#texture")
+					fb.cullface(dir)
+
+					if (dir == Direction.UP) {
+						fb.uvs(7f, 3f, 8f, 4f)
+					} else if (dir == Direction.DOWN) {
+						fb.uvs(7f, 5f, 8f, 6f)
+					}
+				}
+			}
 
 		simpleBlockWithItem(block, model)
 	}

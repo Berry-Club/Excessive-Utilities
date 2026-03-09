@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-09T15:49:40.9553769	Block States: excessive_utilities
+// 1.21.1	2026-03-09T16:03:39.1126347	Block States: excessive_utilities
 8fb96ad4646ce4b9716e8d3e8a34229fdc507e4c assets/excessive_utilities/blockstates/advanced_filing_cabinet.json
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 b234a9e9783bbcba2f25a6fb38362e61ecabf128 assets/excessive_utilities/blockstates/bedrock_bricks.json
@@ -544,7 +544,7 @@ a9d700223c2a584299a49ecc090b20de6d91e11b assets/excessive_utilities/models/block
 bd687114923db6772723940bd6f6803c8f3c0d48 assets/excessive_utilities/models/block/ender_generator_off.json
 b07bc24b79772a49cec6bea30daf81e1042c713b assets/excessive_utilities/models/block/ender_generator_on.json
 8e77a515c8de9dbc5dbddf7fb0a26eeb787aa0df assets/excessive_utilities/models/block/ender_infused_obsidian.json
-89fb20be0db40995f39c2e3a5397a8fda2f858f4 assets/excessive_utilities/models/block/ender_marker.json
+c74c504e819f70791eafc0fa38e428e961580dae assets/excessive_utilities/models/block/ender_marker.json
 d19bedd91e20ce2434abbea97218fdb8e28d4f75 assets/excessive_utilities/models/block/ender_quarry.json
 c9d357ab0e60304861e17f5e431ba4b16f2cd266 assets/excessive_utilities/models/block/ender_quarry_fortune_three_upgrade.json
 2d73f21a4ebb0d14fe4f0149907230ae60067d92 assets/excessive_utilities/models/block/ender_quarry_fortune_two_upgrade.json
