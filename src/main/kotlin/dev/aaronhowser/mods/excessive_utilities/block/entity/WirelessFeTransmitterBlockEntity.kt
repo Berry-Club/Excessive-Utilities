@@ -41,11 +41,20 @@ class WirelessFeTransmitterBlockEntity(
 		val networkEnergy = WirelessFeNetworkHandler.get(level).getNetwork(ownerUuid).energyStorage
 
 		destinationsUsedLastTick = 0
+		val fePerTick = ServerConfig.CONFIG.wirelessFeTransmitterRate.get()
 
 		for (destination in destinationCache) {
+			if (networkEnergy.energyStored <= 0) break
 
+			val maxAmount = minOf(fePerTick, networkEnergy.energyStored)
+			val actualAmount = destination.receiveEnergy(maxAmount, true)
+
+			if (actualAmount > 0) {
+				destination.receiveEnergy(actualAmount, false)
+				networkEnergy.extractEnergy(actualAmount, false)
+				destinationsUsedLastTick++
+			}
 		}
-
 	}
 
 	fun recalculateDestinationCache(level: ServerLevel) {
