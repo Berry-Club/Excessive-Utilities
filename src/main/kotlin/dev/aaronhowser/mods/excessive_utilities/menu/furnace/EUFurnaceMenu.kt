@@ -16,6 +16,7 @@ import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
+//TODO: Progress arrow
 class EUFurnaceMenu(
 	containerId: Int,
 	playerInventory: Inventory,
@@ -36,6 +37,7 @@ class EUFurnaceMenu(
 		checkContainerDataCount(furnaceContainerData, EUFurnaceBlockEntity.CONTAINER_DATA_SIZE)
 
 		addSlots()
+		addDataSlots(furnaceContainerData)
 		addPlayerInventorySlots(90)
 	}
 
