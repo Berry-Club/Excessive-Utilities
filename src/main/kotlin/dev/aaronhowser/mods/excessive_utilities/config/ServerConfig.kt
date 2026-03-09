@@ -45,6 +45,7 @@ class ServerConfig(
 	lateinit var chickenWingRingGpCost: ModConfigSpec.DoubleValue
 	lateinit var flyingSquidRingGpCost: ModConfigSpec.DoubleValue
 	lateinit var angelRingGpCost: ModConfigSpec.DoubleValue
+	lateinit var wirelessFeTransmitterGpCostPerConnection: ModConfigSpec.DoubleValue
 
 	lateinit var culinaryFePerFoodValue: ModConfigSpec.DoubleValue
 	lateinit var culinaryTicksPerSaturationValue: ModConfigSpec.DoubleValue
@@ -104,6 +105,9 @@ class ServerConfig(
 	lateinit var furnaceFePerTick: ModConfigSpec.IntValue
 	lateinit var furnaceTicksPerRecipe: ModConfigSpec.IntValue
 
+	lateinit var wirelessFeTransmitterRange: ModConfigSpec.IntValue
+	lateinit var wirelessFeTransmitterRate: ModConfigSpec.IntValue
+
 	init {
 		general()
 		heatingCoil()
@@ -117,6 +121,18 @@ class ServerConfig(
 		rings()
 		boomerang()
 		cursedEarth()
+	}
+
+	private fun wirelessFeTransmitter() {
+		builder.section("wireless_fe_transmitter") {
+			wirelessFeTransmitterRange = builder
+				.comment("The maximum distance in blocks that Wireless FE Transmitters will connect to blocks.")
+				.defineInRange("wirelessFeTransmitterRange", 4, 1, Int.MAX_VALUE)
+
+			wirelessFeTransmitterRate = builder
+				.comment("The amount of FE per tick that Wireless FE Transmitters will transmit.")
+				.defineInRange("wirelessFeTransmitterRate", 80, 1, Int.MAX_VALUE)
+		}
 	}
 
 	private fun furnace() {
@@ -414,6 +430,10 @@ class ServerConfig(
 				angelRingGpCost = builder
 					.comment("The amount of GP to be occupied while flying with an Angel Ring.")
 					.defineInRange("angelRingGpCost", 64.0, 0.0, Double.MAX_VALUE)
+
+				wirelessFeTransmitterGpCostPerConnection = builder
+					.comment("The amount of GP to be occupied per connection while using a Wireless FE Transmitter.")
+					.defineInRange("wirelessFeTransmitterGpCostPerConnection", 1.0, 0.0, Double.MAX_VALUE)
 			}
 		}
 	}
