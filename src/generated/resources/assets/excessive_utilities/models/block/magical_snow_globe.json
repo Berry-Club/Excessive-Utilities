@@ -5,7 +5,13 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#bottom"
+          "texture": "#bottom",
+          "uv": [
+            3.0,
+            3.0,
+            13.0,
+            13.0
+          ]
         },
         "east": {
           "cullface": "east",
@@ -29,32 +35,32 @@
         }
       },
       "from": [
-        3,
+        2,
         0,
-        3
+        2
       ],
       "to": [
-        13,
-        11,
-        13
+        14,
+        12,
+        14
       ]
     },
     {
       "faces": {
         "up": {
           "cullface": "up",
-          "texture": "minecraft:bottom"
+          "texture": "#bottom"
         }
       },
       "from": [
-        3,
+        2,
         0,
-        3
+        2
       ],
       "to": [
-        13,
+        14,
         0,
-        13
+        14
       ]
     }
   ],

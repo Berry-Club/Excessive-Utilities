@@ -74,8 +74,8 @@ class ModBlockStateProvider(
 			.renderType(RenderType.translucent().name)
 
 			.element {
-				from(3f, 0f, 3f)
-				to(13f, 11f, 13f)
+				from(2f, 0f, 2f)
+				to(14f, 12f, 14f)
 
 				allFaces { dir, fb ->
 					val texture = when (dir) {
@@ -94,12 +94,11 @@ class ModBlockStateProvider(
 			}
 
 			.element {
-				from(3f, 0f, 3f)
-				to(13f, 0f, 13f)
+				from(2f, 0f, 2f)
+				to(14f, 0f, 14f)
 
 				face(Direction.UP) {
-					texture("bottom")
-					uvs(3f, 3f, 13f, 13f)
+					texture("#bottom")
 					cullface(Direction.UP)
 				}
 			}
