@@ -8,11 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.loot.ModLootTableProvide
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModDamageTypeTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEnchantmentTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.*
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.DataGenerator
 import net.minecraft.data.PackOutput

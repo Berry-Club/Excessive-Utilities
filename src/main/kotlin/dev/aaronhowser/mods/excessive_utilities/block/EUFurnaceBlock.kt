@@ -53,7 +53,7 @@ class EUFurnaceBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBl
 		}
 	}
 
-	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return EUFurnaceBlockEntity(pos, state)
 	}
 

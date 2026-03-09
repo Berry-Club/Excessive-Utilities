@@ -15,7 +15,6 @@ import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.Singl
 import dev.aaronhowser.mods.excessive_utilities.menu.single_slot.SingleSlotMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.single_slot.SingleSlotScreen
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.inventory.FurnaceMenu
 import net.minecraft.world.inventory.MenuType
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent
 import net.neoforged.neoforge.registries.DeferredHolder

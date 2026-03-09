@@ -23,7 +23,7 @@ class GpPanelBlock(
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		return SHAPE
 	}
-	
+
 	override fun getBlockEntityType(): BlockEntityType<out GpSourceBlockEntity> = ModBlockEntityTypes.GP_PANEL.get()
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {

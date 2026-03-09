@@ -3,9 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
-import dev.aaronhowser.mods.excessive_utilities.block.entity.EnergyTrashCanBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.FluidTrashCanBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.TrashCanBlockEntity
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.neoforged.neoforge.registries.DeferredHolder

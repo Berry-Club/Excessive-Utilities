@@ -7,10 +7,6 @@ import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
 import dev.aaronhowser.mods.excessive_utilities.block.AngelBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.entity.*
-import dev.aaronhowser.mods.excessive_utilities.block.entity.MagmaticGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.EnergyTrashCanBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.FluidTrashCanBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.TrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
