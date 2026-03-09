@@ -12,13 +12,19 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEn
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
+import dev.aaronhowser.mods.excessive_utilities.menu.furnace.EUFurnaceMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -37,7 +43,7 @@ import kotlin.jvm.optionals.getOrNull
 class EUFurnaceBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : GpDrainBlockEntity(ModBlockEntityTypes.FURNACE.get(), pos, blockState), ContainerContainer {
+) : GpDrainBlockEntity(ModBlockEntityTypes.FURNACE.get(), pos, blockState), ContainerContainer, MenuProvider {
 
 	private val energyStorage = EnergyStorage(128_000)
 
@@ -163,6 +169,12 @@ class EUFurnaceBlockEntity(
 		return level.recipeManager
 			.getRecipeFor(RecipeType.SMELTING, input, level)
 			.getOrNull()
+	}
+
+	override fun getDisplayName(): Component = blockState.block.name
+
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
+		return EUFurnaceMenu(containerId, playerInventory, container, containerData)
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

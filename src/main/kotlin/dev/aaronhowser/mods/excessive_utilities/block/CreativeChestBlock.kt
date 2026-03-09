@@ -21,7 +21,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
-import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
 class CreativeChestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
@@ -55,9 +54,9 @@ class CreativeChestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlo
 		if (be is MenuProvider && level.mayInteract(player, pos)) {
 			player.openMenu(be)
 			return InteractionResult.sidedSuccess(level.isClientSide)
-		} else {
-			return InteractionResult.PASS
 		}
+
+		return InteractionResult.PASS
 	}
 
 	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {

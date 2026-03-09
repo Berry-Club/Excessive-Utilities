@@ -6,7 +6,10 @@ import dev.aaronhowser.mods.excessive_utilities.block.entity.EUFurnaceBlockEntit
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
@@ -22,6 +25,7 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.phys.BlockHitResult
 
 class EUFurnaceBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
 
@@ -74,6 +78,16 @@ class EUFurnaceBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBl
 		}
 
 		super.onRemove(state, level, pos, newState, movedByPiston)
+	}
+
+	override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hitResult: BlockHitResult): InteractionResult {
+		val be = level.getBlockEntity(pos)
+		if (be is MenuProvider && level.mayInteract(player, pos)) {
+			player.openMenu(be)
+			return InteractionResult.sidedSuccess(level.isClientSide)
+		}
+
+		return InteractionResult.PASS
 	}
 
 	companion object {
