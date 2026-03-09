@@ -143,7 +143,9 @@ class EUFurnaceBlockEntity(
 			return
 		}
 
-		progress++
+		val amountUpgrades = container.getItem(UPGRADE_SLOT).count
+		progress += amountUpgrades
+
 		val maxProgress = ServerConfig.CONFIG.furnaceTicksPerRecipe.get()
 
 		if (progress >= maxProgress) {
