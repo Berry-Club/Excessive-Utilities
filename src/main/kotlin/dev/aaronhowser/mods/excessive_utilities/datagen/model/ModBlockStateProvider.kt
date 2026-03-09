@@ -54,6 +54,7 @@ class ModBlockStateProvider(
 		coloredBlocks()
 		qed()
 		enderFluxCrystal()
+		furnace()
 	}
 
 	//TODO: On
@@ -1053,13 +1054,86 @@ class ModBlockStateProvider(
 		simpleBlockWithItem(block, model)
 	}
 
+	private fun furnace() {
+		val block = ModBlocks.FURNACE.get()
+
+		val side = modLoc("block/machine_block/side")
+		val top = modLoc("block/machine_block/top")
+		val bottom = modLoc("block/machine_block/bottom")
+		val overlayOn = modLoc("block/furnace/on")
+		val overlayOff = modLoc("block/furnace/off")
+
+		val modelOff = models()
+			.withExistingParent(name(block) + "_off", mcLoc("block/block"))
+			.texture("side", side)
+			.texture("top", top)
+			.texture("bottom", bottom)
+			.texture("overlay", overlayOff)
+			.texture("particle", side)
+			.renderType(RenderType.cutout().name)
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+					fb.uvs(0f, 0f, 16f, 16f)
+				}
+			}
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
+
+				face(Direction.NORTH) {
+					texture("#overlay")
+					uvs(0f, 0f, 16f, 16f)
+				}
+			}
+
+		val modelOn = models()
+			.withExistingParent(name(block) + "_on", modLoc("block/furnace_off"))
+			.texture("overlay", overlayOn)
+
+		getVariantBuilder(block)
+			.forAllStates {
+				val isLit = it.getValue(EUFurnaceBlock.LIT)
+				val direction = it.getValue(EUFurnaceBlock.FACING)
+
+				val yRotation = when (direction) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val model = if (isLit) modelOn else modelOff
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		simpleBlockItem(block, modelOff)
+	}
+
 	private fun generators() {
 		models()
 			.withExistingParent("generator_base", mcLoc("block/block"))
-			.texture("bottom", modLoc("block/generator/bottom"))
-			.texture("top", modLoc("block/generator/top"))
-			.texture("side", modLoc("block/generator/side"))
-			.texture("particle", modLoc("block/generator/side"))
+			.texture("bottom", modLoc("block/machine_base/bottom"))
+			.texture("top", modLoc("block/machine_base/top"))
+			.texture("side", modLoc("block/machine_base/side"))
+			.texture("particle", modLoc("block/machine_base/side"))
 			.renderType(RenderType.cutout().name)
 
 			.element {

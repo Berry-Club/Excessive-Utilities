@@ -5,33 +5,27 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#bottom",
-          "tintindex": 0
+          "texture": "#bottom"
         },
         "east": {
           "cullface": "east",
-          "texture": "#side",
-          "tintindex": 0
+          "texture": "#side"
         },
         "north": {
           "cullface": "north",
-          "texture": "#side",
-          "tintindex": 0
+          "texture": "#side"
         },
         "south": {
           "cullface": "south",
-          "texture": "#side",
-          "tintindex": 0
+          "texture": "#side"
         },
         "up": {
           "cullface": "up",
-          "texture": "#top",
-          "tintindex": 0
+          "texture": "#top"
         },
         "west": {
           "cullface": "west",
-          "texture": "#side",
-          "tintindex": 0
+          "texture": "#side"
         }
       },
       "from": [
@@ -48,13 +42,7 @@
     {
       "faces": {
         "north": {
-          "cullface": "north",
-          "texture": "#front_overlay"
-        },
-        "up": {
-          "cullface": "up",
-          "rotation": 180,
-          "texture": "#top_overlay"
+          "texture": "#overlay"
         }
       },
       "from": [
@@ -71,9 +59,10 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "bottom": "excessive_utilities:block/machine_base/bottom",
-    "particle": "excessive_utilities:block/machine_base/side",
-    "side": "excessive_utilities:block/machine_base/side",
-    "top": "excessive_utilities:block/machine_base/top"
+    "bottom": "excessive_utilities:block/machine_block/bottom",
+    "overlay": "excessive_utilities:block/furnace/off",
+    "particle": "excessive_utilities:block/machine_block/side",
+    "side": "excessive_utilities:block/machine_block/side",
+    "top": "excessive_utilities:block/machine_block/top"
   }
 }
