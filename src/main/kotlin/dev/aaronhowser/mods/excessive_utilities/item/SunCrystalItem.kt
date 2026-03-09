@@ -6,6 +6,7 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import java.awt.Color
 
 class SunCrystalItem(properties: Properties) : Item(properties) {
 
@@ -23,6 +24,21 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 		stack.set(ModDataComponents.CHARGE, newCharge)
 
 		return false
+	}
+
+	override fun getBarColor(stack: ItemStack): Int {
+		return Color.YELLOW.rgb
+	}
+
+	override fun isBarVisible(stack: ItemStack): Boolean {
+		val charge = stack.get(ModDataComponents.CHARGE.get())
+		return charge != null && charge > 0 && charge < MAX_CHARGE
+	}
+
+	override fun getBarWidth(stack: ItemStack): Int {
+		val charge = stack.get(ModDataComponents.CHARGE.get()) ?: return 0
+
+		return (charge / MAX_CHARGE.toFloat() * 13).toInt()
 	}
 
 	override fun appendHoverText(
