@@ -13,6 +13,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -25,6 +26,9 @@ import net.minecraft.world.item.crafting.SmeltingRecipe
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
+import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.items.wrapper.InvWrapper
+import net.neoforged.neoforge.items.wrapper.RangedWrapper
 import kotlin.jvm.optionals.getOrNull
 
 class FurnaceBlockEntity(
@@ -34,7 +38,7 @@ class FurnaceBlockEntity(
 
 	private val energyStorage = EnergyStorage(128_000)
 
-	private val container =
+	private val container: ImprovedSimpleContainer =
 		object : ImprovedSimpleContainer(this, 3) {
 			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
 				val level = level ?: return false
@@ -55,6 +59,24 @@ class FurnaceBlockEntity(
 		}
 
 	override fun getContainers(): List<Container> = listOf(container)
+	fun getItemHandler(direction: Direction?): IItemHandlerModifiable =
+		object : RangedWrapper(InvWrapper(container), INPUT_SLOT, OUTPUT_SLOT + 1) {
+			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
+				return if (slot == OUTPUT_SLOT) {
+					super.extractItem(slot, amount, simulate)
+				} else {
+					ItemStack.EMPTY
+				}
+			}
+
+			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
+				return if (slot == OUTPUT_SLOT) {
+					stack
+				} else {
+					super.insertItem(slot, stack, simulate)
+				}
+			}
+		}
 
 	override fun getGpUsage(): Double {
 		val level = level ?: return 0.0
