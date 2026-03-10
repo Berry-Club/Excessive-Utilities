@@ -11,6 +11,8 @@ class ServerConfig(
 
 	lateinit var chandelierRadius: ModConfigSpec.IntValue
 	lateinit var magnumTorchRadius: ModConfigSpec.IntValue
+	lateinit var basicFilingCabinetCapacity: ModConfigSpec.IntValue
+	lateinit var advancedFilingCabinetCapacity: ModConfigSpec.IntValue
 	lateinit var flatItemTransferNodeSpeed: ModConfigSpec.IntValue
 	lateinit var flatFluidTransferNodeSpeed: ModConfigSpec.IntValue
 	lateinit var peacefulTableOnlyInPeaceful: ModConfigSpec.BooleanValue
@@ -425,6 +427,16 @@ class ServerConfig(
 		conveyorBeltSpeed = builder
 			.comment("The speed in blocks per tick that Conveyor Belts will move entities.")
 			.defineInRange("conveyorBeltSpeed", 0.1, 0.0, Double.MAX_VALUE)
+
+		builder.section("filing_cabinets") {
+			basicFilingCabinetCapacity = builder
+				.comment("The maximum number of items that a Basic Filing Cabinet can hold.")
+				.defineInRange("basicFilingCabinetCapacity", 270, 1, Int.MAX_VALUE)
+
+			advancedFilingCabinetCapacity = builder
+				.comment("The maximum number of items that an Advanced Filing Cabinet can hold.")
+				.defineInRange("advancedFilingCabinetCapacity", 540, 1, Int.MAX_VALUE)
+		}
 
 		builder.section("flat_transfer_nodes") {
 			flatItemTransferNodeSpeed = builder

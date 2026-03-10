@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
@@ -34,9 +35,9 @@ class FilingCabinetBlockEntity(
 
 	fun getMaxAmount(): Int {
 		return if (blockState.isBlock(ModBlocks.FILING_CABINET)) {
-			270
+			ServerConfig.CONFIG.basicFilingCabinetCapacity.get()
 		} else {
-			540
+			ServerConfig.CONFIG.advancedFilingCabinetCapacity.get()
 		}
 	}
 
