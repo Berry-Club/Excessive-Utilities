@@ -10,12 +10,25 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.biome.Biome
 
 class BiomeMarkerItem(properties: Properties) : Item(properties) {
+
+	override fun useOn(context: UseOnContext): InteractionResult {
+		val level = context.level
+		val pos = context.clickedPos
+		val biome = level.getBiome(pos)
+
+		val stack = context.itemInHand
+		stack.set(ModDataComponents.BIOME, biome)
+
+		return InteractionResult.SUCCESS
+	}
 
 	override fun appendHoverText(
 		stack: ItemStack,

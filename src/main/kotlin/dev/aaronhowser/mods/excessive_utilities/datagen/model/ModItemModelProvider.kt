@@ -32,8 +32,18 @@ class ModItemModelProvider(
 		magicalBoomerang()
 		compoundBow()
 		sunCrystal()
+		biomeMarker()
 
 		basicItems()
+	}
+
+	fun biomeMarker() {
+		val item = ModItems.BIOME_MARKER.get()
+
+		withExistingParent(getName(item), mcLoc("item/generated"))
+			.texture("layer0", modLoc("item/biome_marker/biome_marker"))
+
+		handledItems.add(item)
 	}
 
 	fun sunCrystal() {
