@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import dev.aaronhowser.mods.excessive_utilities.block.base.SimpleContainerBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
@@ -38,7 +39,7 @@ import net.neoforged.neoforge.fluids.FluidUtil
 
 class GeneratorBlock(
 	val beTypeGetter: () -> BlockEntityType<out GeneratorBlockEntity>
-) : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+) : SimpleContainerBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -142,17 +143,6 @@ class GeneratorBlock(
 		} else {
 			ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 		}
-	}
-
-	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
-		if (!state.isBlock(newState.block)) {
-			val be = level.getBlockEntity(pos)
-			if (be is ContainerContainer) {
-				be.dropContents(level, pos)
-			}
-		}
-
-		super.onRemove(state, level, pos, newState, movedByPiston)
 	}
 
 	companion object {

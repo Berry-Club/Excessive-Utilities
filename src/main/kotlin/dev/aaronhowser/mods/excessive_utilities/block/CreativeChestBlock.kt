@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.SimpleContainerBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.entity.CreativeChestBlockEntity
 import net.minecraft.core.BlockPos
@@ -23,7 +24,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class CreativeChestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
+class CreativeChestBlock : SimpleContainerBlock(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -57,17 +58,6 @@ class CreativeChestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlo
 		}
 
 		return InteractionResult.PASS
-	}
-
-	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
-		if (!state.isBlock(newState.block)) {
-			val be = level.getBlockEntity(pos)
-			if (be is ContainerContainer) {
-				be.dropContents(level, pos)
-			}
-		}
-
-		super.onRemove(state, level, pos, newState, movedByPiston)
 	}
 
 	companion object {

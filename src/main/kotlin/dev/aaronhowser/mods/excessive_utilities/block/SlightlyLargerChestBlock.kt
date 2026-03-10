@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.SimpleContainerBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.entity.SlightlyLargerChestBlockEntity
 import net.minecraft.core.BlockPos
@@ -21,7 +22,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 import net.minecraft.world.phys.BlockHitResult
 
-class SlightlyLargerChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), EntityBlock {
+class SlightlyLargerChestBlock : SimpleContainerBlock(Properties.ofFullCopy(Blocks.CHEST)), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -51,16 +52,6 @@ class SlightlyLargerChestBlock : Block(Properties.ofFullCopy(Blocks.CHEST)), Ent
 		}
 
 		return InteractionResult.PASS
-	}
-
-	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
-		if (!state.isBlock(newState.block)) {
-			val be = level.getBlockEntity(pos)
-			if (be is ContainerContainer) {
-				be.dropContents(level, pos)
-			}
-		}
-		super.onRemove(state, level, pos, newState, movedByPiston)
 	}
 
 	override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
