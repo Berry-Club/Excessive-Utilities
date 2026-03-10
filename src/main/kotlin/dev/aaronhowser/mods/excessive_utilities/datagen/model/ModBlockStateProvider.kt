@@ -60,6 +60,24 @@ class ModBlockStateProvider(
 		wirelessFeTransmitter()
 		redstoneLantern()
 		redstoneClock()
+		spikes()
+	}
+
+	private fun spikes() {
+		val spikes = listOf(
+			ModBlocks.WOODEN_SPIKE.get(),
+			ModBlocks.STONE_SPIKE.get(),
+			ModBlocks.IRON_SPIKE.get(),
+			ModBlocks.GOLDEN_SPIKE.get(),
+			ModBlocks.DIAMOND_SPIKE.get(),
+			ModBlocks.NETHERITE_SPIKE.get()
+		)
+
+		for (spike in spikes) {
+			val name = name(spike)
+			val model = models().getExistingFile(modLoc("block/$name"))
+			simpleBlockWithItem(spike, model)
+		}
 	}
 
 	private fun redstoneClock() {
