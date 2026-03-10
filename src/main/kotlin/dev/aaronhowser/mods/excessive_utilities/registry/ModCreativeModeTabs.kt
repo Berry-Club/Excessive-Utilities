@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.item.BiomeMarkerItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
@@ -61,12 +62,18 @@ object ModCreativeModeTabs {
 						continue
 					}
 
+					val skipThese = setOf(
+						ModItems.BIOME_MARKER.get()
+					)
+
 					output.accept(item)
 				}
 
 				for (blockItem in blockItems) {
 					output.accept(blockItem)
 				}
+
+				output.acceptAll(BiomeMarkerItem.getAllCrystals(displayContext.holders))
 			}
 			.build()
 	})
