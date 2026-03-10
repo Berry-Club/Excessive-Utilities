@@ -70,7 +70,8 @@ class ModBlockStateProvider(
 			ModBlocks.IRON_SPIKE.get(),
 			ModBlocks.GOLDEN_SPIKE.get(),
 			ModBlocks.DIAMOND_SPIKE.get(),
-			ModBlocks.NETHERITE_SPIKE.get()
+			ModBlocks.NETHERITE_SPIKE.get(),
+			ModBlocks.CREATIVE_SPIKE.get()
 		)
 
 		for (spike in spikes) {
