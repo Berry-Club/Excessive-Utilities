@@ -1,7 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.base.SimpleContainerBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.GpDrainBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.LivingEntity
@@ -11,6 +13,8 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -25,7 +29,7 @@ import net.neoforged.neoforge.capabilities.Capabilities
 class TransferNodeBlock(
 	val type: Type,
 	val isRetrieval: Boolean
-) : SimpleContainerBlock(
+) : GpDrainBlock(
 	Properties.of()
 		.strength(1.5f, 6f)
 		.requiresCorrectToolForDrops()
@@ -89,6 +93,13 @@ class TransferNodeBlock(
 		return shape
 	}
 
+	override fun getBlockEntityType(): BlockEntityType<out GpDrainBlockEntity> {
+		return when (type) {
+			Type.ITEM -> ModBlockEntityTypes.ITEM_TRANSFER_NODE.get()
+			else -> error("NYI")
+		}
+	}
+
 	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
 		val blockEntity = level.getBlockEntity(pos)
 		if (blockEntity is TransferNodeBlockEntity && placer != null) {
@@ -135,6 +146,10 @@ class TransferNodeBlock(
 		}
 
 		return state
+	}
+
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
+		TODO("Not yet implemented")
 	}
 
 	companion object {
