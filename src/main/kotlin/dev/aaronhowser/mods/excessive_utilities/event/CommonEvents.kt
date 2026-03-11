@@ -16,6 +16,7 @@ import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHand
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.DestructionPickaxeItem
+import dev.aaronhowser.mods.excessive_utilities.item.DestructionWandItem
 import dev.aaronhowser.mods.excessive_utilities.item.ErosionShovelItem
 import dev.aaronhowser.mods.excessive_utilities.item.GlassCutterItem
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
@@ -40,6 +41,7 @@ import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.level.BlockDropsEvent
+import net.neoforged.neoforge.event.level.BlockEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
@@ -326,7 +328,11 @@ object CommonEvents {
 			event.output = output
 			event.cost = 40
 		}
+	}
 
+	@SubscribeEvent
+	fun onBlockBreak(event: BlockEvent.BreakEvent) {
+		DestructionWandItem.handleBreakBlockEvent(event)
 	}
 
 }

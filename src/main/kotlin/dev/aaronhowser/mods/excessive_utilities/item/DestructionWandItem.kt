@@ -35,7 +35,10 @@ class DestructionWandItem(
 			val brokenState = event.state
 			val usedStack = player.mainHandItem
 
-			if (!usedStack.isCorrectToolForDrops(brokenState)) return
+			if (!player.hasInfiniteMaterials() &&
+				brokenState.requiresCorrectToolForDrops()
+				&& !usedStack.isCorrectToolForDrops(brokenState)
+			) return
 
 			var wandItem: DestructionWandItem? = null
 			if (usedStack.item is DestructionWandItem) {
@@ -64,7 +67,9 @@ class DestructionWandItem(
 			breakBlocks(usedStack, positions, level, player)
 		}
 
-		// Copied from ServerPlayerGameMode#destroyBlock
+		/**
+		 * @see net.minecraft.server.level.ServerPlayerGameMode.destroyBlock
+		 */
 		private fun breakBlocks(usedStack: ItemStack, positions: List<BlockPos>, level: Level, player: Player) {
 			isWandActive = true
 			val stackBeforeBreaking = usedStack.copy()
@@ -98,7 +103,7 @@ class DestructionWandItem(
 
 		private fun getPositions(
 			level: Level,
-			origin: BlockPos,
+			startPos: BlockPos,
 			originalBlock: Block,
 			face: Direction,
 			maxCount: Int
@@ -112,12 +117,12 @@ class DestructionWandItem(
 			val walker = BlockWalker
 				.Builder(level)
 				.searchOffsets(searchDirections.map(Direction::getNormal))
-				.startPos(origin)
+				.startPos(startPos)
 				.filter { _, _, state -> state.isBlock(originalBlock) }
 				.maxTotalBlocks(maxCount)
 				.build()
 
-			return walker.locateAllImmediately().map { it.block.pos }
+			return walker.locateAllImmediately().map { it.block.pos } - startPos
 		}
 	}
 
