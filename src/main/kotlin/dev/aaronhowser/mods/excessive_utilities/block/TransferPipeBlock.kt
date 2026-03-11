@@ -2,15 +2,14 @@ package dev.aaronhowser.mods.excessive_utilities.block
 
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.neoforged.neoforge.capabilities.Capabilities
 
 class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
@@ -18,58 +17,64 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 	init {
 		registerDefaultState(
 			stateDefinition.any()
-				.setValue(NORTH, false)
-				.setValue(EAST, false)
-				.setValue(SOUTH, false)
-				.setValue(WEST, false)
-				.setValue(UP, false)
-				.setValue(DOWN, false)
-				.setValue(BLOCKED_DIRECTIONS, 0)
+				.setValue(NORTH, ConnectionType.NONE)
+				.setValue(EAST, ConnectionType.NONE)
+				.setValue(SOUTH, ConnectionType.NONE)
+				.setValue(WEST, ConnectionType.NONE)
+				.setValue(UP, ConnectionType.NONE)
+				.setValue(DOWN, ConnectionType.NONE)
 		)
 	}
 
 	override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-		builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN, BLOCKED_DIRECTIONS)
+		builder.add(NORTH, EAST, SOUTH, WEST, UP, DOWN)
 	}
 
 	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
-		return updateConnections(context.level, context.clickedPos, 0)
+		return updateConnections(context.level, context.clickedPos, defaultBlockState())
 	}
 
 	override fun updateShape(state: BlockState, direction: Direction, neighborState: BlockState, level: LevelAccessor, pos: BlockPos, neighborPos: BlockPos): BlockState {
 		if (level is Level) {
-			val blockedDirections = state.getValue(BLOCKED_DIRECTIONS)
-			return updateConnections(level, pos, blockedDirections)
+
 		}
 
 		return state
 	}
 
-	private fun updateConnections(level: Level, pos: BlockPos, blockedDirections: Int): BlockState {
-		var state = defaultBlockState().setValue(BLOCKED_DIRECTIONS, blockedDirections)
+	private fun updateConnections(level: Level, pos: BlockPos, oldState: BlockState): BlockState {
+		var state = oldState
 
 		for (dir in Direction.entries) {
 			val ordinal = dir.ordinal
 
-			val isBlocked = (blockedDirections and (1 shl ordinal)) != 0
-			val shouldConnect = !isBlocked && canConnectTo(level, pos, dir)
+			val property = CONNECTIONS[ordinal]
+			val isBlocked = state.getValue(property) == ConnectionType.BLOCKED
+			if (isBlocked) continue
 
-			state = state.setValue(CONNECTIONS[ordinal], shouldConnect)
+			state = if (canConnectTo(level, pos, dir)) {
+				state.setValue(property, ConnectionType.CONNECTED)
+			} else {
+				state.setValue(property, ConnectionType.NONE)
+			}
 		}
 
 		return state
 	}
 
 	companion object {
-		val NORTH: BooleanProperty = BlockStateProperties.NORTH
-		val EAST: BooleanProperty = BlockStateProperties.EAST
-		val SOUTH: BooleanProperty = BlockStateProperties.SOUTH
-		val WEST: BooleanProperty = BlockStateProperties.WEST
-		val UP: BooleanProperty = BlockStateProperties.UP
-		val DOWN: BooleanProperty = BlockStateProperties.DOWN
-		val BLOCKED_DIRECTIONS: IntegerProperty = IntegerProperty.create("blocked_directions", 0, 63)
+		private fun connectedProperty(name: String): EnumProperty<ConnectionType> {
+			return EnumProperty.create(name, ConnectionType::class.java, *ConnectionType.entries.toTypedArray())
+		}
 
-		private val CONNECTIONS: Array<BooleanProperty> = arrayOf(DOWN, UP, NORTH, SOUTH, WEST, EAST)
+		val NORTH: EnumProperty<ConnectionType> = connectedProperty("north")
+		val EAST: EnumProperty<ConnectionType> = connectedProperty("east")
+		val SOUTH: EnumProperty<ConnectionType> = connectedProperty("south")
+		val WEST: EnumProperty<ConnectionType> = connectedProperty("west")
+		val UP: EnumProperty<ConnectionType> = connectedProperty("up")
+		val DOWN: EnumProperty<ConnectionType> = connectedProperty("down")
+
+		private val CONNECTIONS: Array<EnumProperty<ConnectionType>> = arrayOf(DOWN, UP, NORTH, SOUTH, WEST, EAST)
 
 		private fun canConnectTo(level: Level, pipePos: BlockPos, direction: Direction): Boolean {
 			val neighborPos = pipePos.relative(direction)
@@ -89,15 +94,33 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 		}
 
 		fun toggleBlocked(level: Level, pipePos: BlockPos, direction: Direction) {
-			val state = level.getBlockState(pipePos)
+			var state = level.getBlockState(pipePos)
 			val pipeBlock = state.block as? TransferPipeBlock ?: return
 
-			val blockedDirections = state.getValue(BLOCKED_DIRECTIONS)
-			val newBlockedDirections = blockedDirections xor (1 shl direction.ordinal)
+			val property = CONNECTIONS[direction.ordinal]
+			val currentConnection = state.getValue(property)
 
-			val newState = pipeBlock.updateConnections(level, pipePos, newBlockedDirections)
+			state = when (currentConnection) {
+				ConnectionType.NONE -> return
+				ConnectionType.BLOCKED -> state.setValue(property, ConnectionType.NONE)
+				ConnectionType.CONNECTED -> state.setValue(property, ConnectionType.BLOCKED)
+			}
+
+			val newState = pipeBlock.updateConnections(level, pipePos, state)
 			level.setBlockAndUpdate(pipePos, newState)
 		}
+	}
+
+	enum class ConnectionType(
+		val id: String,
+		val allowsTravel: Boolean
+	) : StringRepresentable {
+		NONE("none", allowsTravel = false),
+		BLOCKED("blocked", allowsTravel = false),
+		CONNECTED("connected", allowsTravel = true)
+		;
+
+		override fun getSerializedName(): String = id
 	}
 
 }
