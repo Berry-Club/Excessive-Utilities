@@ -5,7 +5,7 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#bottom"
+          "texture": "#base"
         },
         "east": {
           "cullface": "east",
@@ -41,7 +41,7 @@
     }
   ],
   "textures": {
-    "bottom": "excessive_utilities:block/mill/bottom",
+    "base": "excessive_utilities:block/mill/base",
     "particle": "excessive_utilities:block/mill/panel/side",
     "side": "excessive_utilities:block/mill/panel/side",
     "top": "excessive_utilities:block/mill/panel/lunar"

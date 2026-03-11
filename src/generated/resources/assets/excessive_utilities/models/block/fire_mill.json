@@ -17,7 +17,7 @@
         },
         "south": {
           "cullface": "south",
-          "texture": "#bottom"
+          "texture": "#base"
         },
         "up": {
           "cullface": "up",
@@ -51,7 +51,7 @@
         },
         "north": {
           "cullface": "north",
-          "texture": "#bottom"
+          "texture": "#base"
         },
         "south": {
           "cullface": "south",
@@ -101,7 +101,7 @@
         },
         "west": {
           "cullface": "west",
-          "texture": "#bottom"
+          "texture": "#base"
         }
       },
       "from": [
@@ -178,7 +178,7 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "bottom": "excessive_utilities:block/mill/bottom",
+    "base": "excessive_utilities:block/mill/base",
     "fan": "excessive_utilities:block/mill/fan_spinning",
     "particle": "excessive_utilities:block/mill/fire",
     "side": "excessive_utilities:block/mill/fire"

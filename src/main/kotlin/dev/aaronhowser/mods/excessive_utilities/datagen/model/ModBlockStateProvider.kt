@@ -49,6 +49,7 @@ class ModBlockStateProvider(
 		dragonEggMill()
 		creativeMill()
 		fireMill()
+		lavaMill()
 		creativeChest()
 		conveyorBelt()
 		tradingPost()
@@ -500,13 +501,25 @@ class ModBlockStateProvider(
 		simpleBlockWithItem(block, model)
 	}
 
+	private fun lavaMill() {
+		val block = ModBlocks.LAVA_MILL.get()
+
+		val top = modLoc("block/mill/lava")
+		val base = modLoc("block/mill/base")
+
+		val model = models()
+			.cubeBottomTop(name(block), base, base, top)
+
+		simpleBlockWithItem(block, model)
+	}
+
 	private fun fireMill() {
 		val block = ModBlocks.FIRE_MILL.get()
 
 		val model = models()
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("side", modLoc("block/mill/fire"))
-			.texture("bottom", modLoc("block/mill/bottom"))
+			.texture("base", modLoc("block/mill/base"))
 			.texture("fan", modLoc("block/mill/fan_spinning"))
 			.texture("particle", modLoc("block/mill/fire"))
 			.renderType(RenderType.cutout().name)
@@ -518,7 +531,7 @@ class ModBlockStateProvider(
 
 				allFaces { dir, fb ->
 					val texture = when (dir) {
-						Direction.SOUTH -> "#bottom"
+						Direction.SOUTH -> "#base"
 						else -> "#side"
 					}
 
@@ -534,7 +547,7 @@ class ModBlockStateProvider(
 
 				allFaces { dir, fb ->
 					val texture = when (dir) {
-						Direction.NORTH -> "#bottom"
+						Direction.NORTH -> "#base"
 						else -> "#side"
 					}
 
@@ -550,7 +563,7 @@ class ModBlockStateProvider(
 
 				allFaces { dir, fb ->
 					val texture = when (dir) {
-						Direction.WEST -> "#bottom"
+						Direction.WEST -> "#base"
 						else -> "#side"
 					}
 
@@ -599,7 +612,7 @@ class ModBlockStateProvider(
 
 		val side = modLoc("block/mill/dragon_egg/side")
 		val top = modLoc("block/mill/dragon_egg/top")
-		val bottom = modLoc("block/mill/bottom")
+		val bottom = modLoc("block/mill/base")
 
 		val model = models()
 			.cubeBottomTop(name(block), side, bottom, top)
@@ -614,7 +627,7 @@ class ModBlockStateProvider(
 		)
 
 		val side = modLoc("block/mill/panel/side")
-		val bottom = modLoc("block/mill/bottom")
+		val base = modLoc("block/mill/base")
 
 		for ((type, block) in blocks) {
 			val top = modLoc("block/mill/panel/$type")
@@ -623,7 +636,7 @@ class ModBlockStateProvider(
 				.withExistingParent(name(block), mcLoc("block/block"))
 				.texture("side", side)
 				.texture("top", top)
-				.texture("bottom", bottom)
+				.texture("base", base)
 				.texture("particle", side)
 
 				.element {
@@ -633,7 +646,7 @@ class ModBlockStateProvider(
 					allFaces { dir, fb ->
 						val texture = when (dir) {
 							Direction.UP -> "#top"
-							Direction.DOWN -> "#bottom"
+							Direction.DOWN -> "#base"
 							else -> "#side"
 						}
 
