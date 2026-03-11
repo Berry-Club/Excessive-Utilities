@@ -72,6 +72,7 @@ class ItemTransferNodeBlockEntity(
 			newStack.count += extracted.count
 			bufferContainer.setItem(0, newStack)
 			didWorkThisTick = true
+			break
 		}
 	}
 
