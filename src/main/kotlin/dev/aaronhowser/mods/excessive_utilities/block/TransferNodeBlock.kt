@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Block
@@ -11,6 +12,9 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.Shapes
+import net.minecraft.world.phys.shapes.VoxelShape
 import net.neoforged.neoforge.capabilities.Capabilities
 
 
@@ -60,6 +64,25 @@ class TransferNodeBlock(
 		}
 
 		return state
+	}
+
+	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
+		val placedOn = state.getValue(PLACED_ON)
+
+		val nodeShape = NODE_SHAPES[placedOn.ordinal]
+		val pipeShape = TransferPipeBlock.ARM_SHAPES[placedOn.ordinal] ?: Shapes.empty()
+
+		var shape = Shapes.or(nodeShape, pipeShape)
+
+		for (dir in Direction.entries) {
+			val property = CONNECTIONS[dir.ordinal]
+			if (state.getValue(property)) {
+				val pipeShape = TransferPipeBlock.ARM_SHAPES[dir.ordinal] ?: continue
+				shape = Shapes.or(shape, pipeShape)
+			}
+		}
+
+		return shape
 	}
 
 	fun canConnectTo(level: Level, pipePos: BlockPos, direction: Direction): Boolean {
@@ -112,6 +135,16 @@ class TransferNodeBlock(
 
 		// Same order as the Direction enum, so we can use the ordinal as an index
 		val CONNECTIONS: Array<BooleanProperty> = arrayOf(DOWN, UP, NORTH, SOUTH, WEST, EAST)
+
+		val NODE_SHAPES =
+			arrayOf(
+				box(1.0, 0.0, 1.0, 15.0, 3.0, 15.0), // DOWN
+				box(1.0, 13.0, 1.0, 15.0, 16.0, 15.0), // UP
+				box(1.0, 1.0, 0.0, 15.0, 15.0, 3.0), // NORTH
+				box(1.0, 1.0, 13.0, 15.0, 15.0, 16.0), // SOUTH
+				box(0.0, 1.0, 1.0, 3.0, 15.0, 15.0), // WEST
+				box(13.0, 1.0, 1.0, 16.0, 15.0, 15.0) // EAST
+			)
 
 	}
 
