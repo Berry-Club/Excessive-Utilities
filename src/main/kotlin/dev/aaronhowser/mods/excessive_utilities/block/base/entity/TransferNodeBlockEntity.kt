@@ -32,7 +32,7 @@ abstract class TransferNodeBlockEntity(
 			setChanged()
 		}
 
-	protected var didWorkLastTick: Boolean = false
+	protected var didWorkThisTick: Boolean = false
 
 	protected val upgradeContainer: ImprovedSimpleContainer =
 		object : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
@@ -52,7 +52,7 @@ abstract class TransferNodeBlockEntity(
 	}
 
 	override fun getGpUsage(): Double {
-		if (!didWorkLastTick) return 0.0
+		if (!didWorkThisTick) return 0.0
 
 		var usage = 0.0
 

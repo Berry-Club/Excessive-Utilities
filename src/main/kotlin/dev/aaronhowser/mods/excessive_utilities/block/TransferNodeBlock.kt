@@ -85,9 +85,10 @@ class TransferNodeBlock(
 		var shape = Shapes.or(nodeShape, pipeShape, TransferPipeBlock.CENTER_SHAPE)
 
 		for (dir in Direction.entries) {
-			val property = CONNECTIONS[dir.ordinal]
+			val ordinal = dir.ordinal
+			val property = CONNECTIONS[ordinal]
 			if (state.getValue(property)) {
-				val pipeShape = TransferPipeBlock.ARM_SHAPES[dir.ordinal] ?: continue
+				val pipeShape = TransferPipeBlock.ARM_SHAPES[ordinal] ?: continue
 				shape = Shapes.or(shape, pipeShape)
 			}
 		}
