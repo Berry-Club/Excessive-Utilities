@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.block_walker.BlockWalker
+import dev.aaronhowser.mods.aaron.block_walker.ConnectedBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import net.minecraft.core.BlockPos
@@ -117,12 +118,21 @@ class DestructionWandItem(
 			val walker = BlockWalker
 				.Builder(level)
 				.searchOffsets(searchDirections.map(Direction::getNormal))
+				.searchFromTail(true)
 				.startPos(startPos)
 				.filter { _, _, state -> state.isBlock(originalBlock) }
-				.maxTotalBlocks(maxCount)
+				.maxTotalBlocks(maxCount * 3)
 				.build()
 
-			return walker.locateAllImmediately().map { it.block.pos } - startPos
+			val positions = walker
+				.locateAllImmediately()
+				.asSequence()
+				.sortedBy(ConnectedBlock::distance)
+				.map { it.block.pos }
+				.take(maxCount)
+				.toList()
+
+			return positions
 		}
 	}
 
