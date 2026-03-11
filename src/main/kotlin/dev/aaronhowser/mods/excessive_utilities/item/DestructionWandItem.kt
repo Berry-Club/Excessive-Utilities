@@ -81,6 +81,13 @@ class DestructionWandItem(
 				if (blockEntityThere != null) continue
 
 				val stateThere = level.getBlockState(pos)
+
+				if (player.isCreative) {
+					val shouldRemove = stateThere.onDestroyedByPlayer(level, pos, player, false, level.getFluidState(pos))
+					if (shouldRemove) stateThere.block.destroy(level, pos, stateThere)
+					continue
+				}
+
 				usedStack.mineBlock(level, stateThere, pos, player)
 
 				val canHarvest = stateThere.canHarvestBlock(level, pos, player)
