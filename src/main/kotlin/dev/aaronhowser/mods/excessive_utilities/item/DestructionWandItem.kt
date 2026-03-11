@@ -17,7 +17,11 @@ class DestructionWandItem(
 	companion object {
 		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
 
+		private var isWandActive = false
+
 		fun handleBreakBlockEvent(event: BlockEvent.BreakEvent) {
+			if (isWandActive) return
+
 			val player = event.player
 			if (player.isClientSide) return
 
@@ -41,18 +45,21 @@ class DestructionWandItem(
 				false
 			)
 
-			if (hitResult is BlockHitResult) {
-				val level = player.level()
-				val blockPos = event.pos
-				val face = hitResult.direction
+			if (hitResult !is BlockHitResult) return
 
-				val positions = getPositions(level, blockPos, face, wandItem.maxBlocks)
-			}
+			val level = player.level()
+			val blockPos = event.pos
+			val face = hitResult.direction
+
+			val positions = getPositions(level, blockPos, face, wandItem.maxBlocks)
+			if (positions.isEmpty()) return
+
+			isWandActive = true
 
 		}
 
-		private fun getPositions(level: Level, origin: BlockPos, face: Direction, maxCount: Int) {
-
+		private fun getPositions(level: Level, origin: BlockPos, face: Direction, maxCount: Int): List<BlockPos> {
+			return emptyList()
 		}
 	}
 
