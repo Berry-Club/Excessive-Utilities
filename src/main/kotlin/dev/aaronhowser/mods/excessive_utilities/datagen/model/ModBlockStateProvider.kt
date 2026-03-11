@@ -48,6 +48,7 @@ class ModBlockStateProvider(
 		gpPanels()
 		dragonEggMill()
 		creativeMill()
+		fireMill()
 		creativeChest()
 		conveyorBelt()
 		tradingPost()
@@ -499,12 +500,106 @@ class ModBlockStateProvider(
 		simpleBlockWithItem(block, model)
 	}
 
+	private fun fireMill() {
+		val block = ModBlocks.FIRE_MILL.get()
+
+		val model = models()
+			.withExistingParent(name(block), mcLoc("block/block"))
+			.texture("side", modLoc("block/mill/fire"))
+			.texture("bottom", modLoc("block/mill/bottom"))
+			.texture("fan", modLoc("block/mill/fan_spinning"))
+			.texture("particle", modLoc("block/mill/fire"))
+			.renderType(RenderType.cutout().name)
+
+			// North
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 1f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.SOUTH -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			// South
+			.element {
+				from(0f, 0f, 15f)
+				to(16f, 16f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.NORTH -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			// East
+			.element {
+				from(15f, 0f, 0f)
+				to(16f, 16f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.WEST -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			// West
+			.element {
+				from(0f, 0f, 0f)
+				to(1f, 16f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.EAST -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			// Fan
+			.element {
+				from(1f, 7f, 1f)
+				to(15f, 7f, 15f)
+
+				face(Direction.UP) {
+					texture("#fan")
+					cullface(Direction.UP)
+				}
+
+				face(Direction.DOWN) {
+					texture("#fan")
+					cullface(Direction.DOWN)
+				}
+			}
+
+		simpleBlockWithItem(block, model)
+	}
+
 	private fun dragonEggMill() {
 		val block = ModBlocks.DRAGON_EGG_MILL.get()
 
-		val side = modLoc("block/dragon_egg_mill/side")
-		val top = modLoc("block/dragon_egg_mill/top")
-		val bottom = modLoc("block/mill_bottom")
+		val side = modLoc("block/mill/dragon_egg/side")
+		val top = modLoc("block/mill/dragon_egg/top")
+		val bottom = modLoc("block/mill/bottom")
 
 		val model = models()
 			.cubeBottomTop(name(block), side, bottom, top)
@@ -518,11 +613,11 @@ class ModBlockStateProvider(
 			"solar" to ModBlocks.SOLAR_PANEL.get()
 		)
 
-		val side = modLoc("block/gp_panel/side")
-		val bottom = modLoc("block/mill_bottom")
+		val side = modLoc("block/mill/panel/side")
+		val bottom = modLoc("block/mill/bottom")
 
 		for ((type, block) in blocks) {
-			val top = modLoc("block/gp_panel/$type")
+			val top = modLoc("block/mill/panel/$type")
 
 			val model = models()
 				.withExistingParent(name(block), mcLoc("block/block"))

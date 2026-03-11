@@ -41,9 +41,9 @@
     }
   ],
   "textures": {
-    "bottom": "excessive_utilities:block/mill_bottom",
-    "particle": "excessive_utilities:block/gp_panel/side",
-    "side": "excessive_utilities:block/gp_panel/side",
-    "top": "excessive_utilities:block/gp_panel/lunar"
+    "bottom": "excessive_utilities:block/mill/bottom",
+    "particle": "excessive_utilities:block/mill/panel/side",
+    "side": "excessive_utilities:block/mill/panel/side",
+    "top": "excessive_utilities:block/mill/panel/lunar"
   }
 }
