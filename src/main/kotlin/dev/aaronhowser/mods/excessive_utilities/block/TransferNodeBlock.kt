@@ -82,7 +82,7 @@ class TransferNodeBlock(
 		val nodeShape = NODE_SHAPES[placedOn.ordinal]
 		val pipeShape = TransferPipeBlock.ARM_SHAPES[placedOn.ordinal] ?: Shapes.empty()
 
-		var shape = Shapes.or(nodeShape, pipeShape)
+		var shape = Shapes.or(nodeShape, pipeShape, TransferPipeBlock.CENTER_SHAPE)
 
 		for (dir in Direction.entries) {
 			val property = CONNECTIONS[dir.ordinal]
