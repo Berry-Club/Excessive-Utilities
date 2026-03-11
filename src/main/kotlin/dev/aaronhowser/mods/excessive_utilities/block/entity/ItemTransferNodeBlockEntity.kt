@@ -16,6 +16,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class ItemTransferNodeBlockEntity(
 	pos: BlockPos,
@@ -41,7 +42,7 @@ class ItemTransferNodeBlockEntity(
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
 
-		val isOverloaded = isOverloaded()
+		val isOverloaded = isOverloaded() && getGpUsage() > 0.0
 		didWorkThisTick = false
 		if (isOverloaded) return
 
@@ -59,6 +60,20 @@ class ItemTransferNodeBlockEntity(
 
 	private fun pushIntoParent(level: ServerLevel) {
 		val parentHandler = getParentItemHandler(level) ?: return
+
+		val stackInBuffer = bufferContainer.getItem(0)
+		if (stackInBuffer.isEmpty) return
+
+		val inserted = ItemHandlerHelper.insertItemStacked(parentHandler, stackInBuffer, true)
+		val amountInserted = stackInBuffer.count - inserted.count
+		if (amountInserted <= 0) return
+
+		ItemHandlerHelper.insertItemStacked(parentHandler, stackInBuffer, false)
+
+		val newStack = stackInBuffer.copy()
+		newStack.count = amountInserted
+		bufferContainer.setItem(0, newStack)
+		didWorkThisTick = true
 	}
 
 	private fun pullFromParent(level: ServerLevel) {
