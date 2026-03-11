@@ -4,8 +4,11 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.items.IItemHandler
 
 class ItemTransferNodeBlockEntity(
 	pos: BlockPos,
@@ -16,6 +19,10 @@ class ItemTransferNodeBlockEntity(
 
 	override fun getContainers(): List<Container> {
 		return listOf(bufferContainer, upgradeContainer)
+	}
+
+	private fun getParentItemHandler(level: ServerLevel): IItemHandler? {
+		return level.getCapability(Capabilities.ItemHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
 	companion object {

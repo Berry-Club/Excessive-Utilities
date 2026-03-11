@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.Container
@@ -22,7 +23,8 @@ abstract class TransferNodeBlockEntity(
 	blockState: BlockState
 ) : GpDrainBlockEntity(type, pos, blockState), ContainerContainer {
 
-	protected val parentPos: BlockPos = this.blockPos.relative(this.blockState.getValue(TransferNodeBlock.PLACED_ON))
+	protected val placedOnDirection: Direction = this.blockState.getValue(TransferNodeBlock.PLACED_ON)
+	protected val placedOnPos: BlockPos = blockPos.relative(placedOnDirection)
 
 	var isRetrieval: Boolean = false
 		set(value) {
@@ -50,6 +52,8 @@ abstract class TransferNodeBlockEntity(
 	}
 
 	override fun getGpUsage(): Double {
+		if (!didWorkLastTick) return 0.0
+
 		var usage = 0.0
 
 		for (stack in upgradeContainer.items) {
