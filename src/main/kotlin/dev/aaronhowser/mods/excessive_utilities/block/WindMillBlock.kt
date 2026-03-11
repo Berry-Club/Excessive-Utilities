@@ -35,6 +35,7 @@ class WindMillBlock : GpSourceBlock(Properties.ofFullCopy(Blocks.STONE).noOcclus
 				box(0.0, 0.0, 0.0, 16.0, 1.0, 16.0),
 				box(0.0, 1.0, 0.0, 1.0, 15.0, 16.0),
 				box(15.0, 1.0, 0.0, 16.0, 15.0, 16.0),
+				box(1.0, 1.0, 7.0, 15.0, 15.0, 7.1)
 			)
 	}
 
