@@ -23,7 +23,7 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 		fun propertiesWithVolume(volume: Int): Properties {
 			return Properties()
 				.stacksTo(1)
-				.component(ModDataComponents.VOLUME, volume)
+				.component(ModDataComponents.AMOUNT_BLOCKS, volume)
 		}
 
 		private var isWandActive = false
@@ -51,7 +51,7 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 
 			if (wandStack.isEmpty) return
 
-			val amount = wandStack.get(ModDataComponents.VOLUME) ?: return
+			val amount = wandStack.get(ModDataComponents.AMOUNT_BLOCKS) ?: return
 
 			val hitResult = player.pick(
 				player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE),
