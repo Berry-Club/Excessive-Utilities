@@ -178,13 +178,92 @@ class ModBlockStateProvider(
 	}
 
 	private fun transferNodes(armModel: BlockModelBuilder) {
+		val templateName = "transfer_node_template"
+
 		val template = models()
-			.withExistingParent("transfer_node_template", mcLoc("block/block"))
+			.withExistingParent(templateName, mcLoc("block/block"))
 			.texture("particle", "#node")
 
-		fun specific(block: TransferNodeBlock, frontTexture: String) {
+			.element {
+				from(6f, 6f, 6f)
+				to(10f, 10f, 10f)
+
+				allFaces { dir, fb ->
+					fb.texture("#pipe")
+					fb.uvs(6f, 6f, 10f, 10f)
+				}
+			}
+
+			.element {
+				from(6f, 6f, 2f)
+				to(10f, 10f, 6f)
+
+				allFaces { dir, fb ->
+					val uvs = when (dir) {
+						Direction.NORTH -> arrayOf(6f, 6f, 10f, 10f)
+						Direction.EAST -> arrayOf(2f, 6f, 6f, 10f)
+						Direction.SOUTH -> arrayOf(6f, 6f, 10f, 10f)
+						Direction.WEST -> arrayOf(2f, 6f, 6f, 10f)
+						Direction.UP -> arrayOf(6f, 2f, 10f, 6f)
+						Direction.DOWN -> arrayOf(6f, 2f, 10f, 6f)
+					}
+
+					fb.texture("#pipe")
+					fb.uvs(uvs[0], uvs[1], uvs[2], uvs[3])
+				}
+			}
+
+			.element {
+				from(1f, 1f, 0f)
+				to(15f, 15f, 1f)
+
+				allFaces { dir, fb ->
+
+					val uvs = when (dir) {
+						Direction.NORTH -> arrayOf(15f, 1f, 1f, 15f)
+						Direction.EAST -> arrayOf(14f, 1f, 15f, 15f)
+						Direction.SOUTH -> arrayOf(1f, 1f, 15f, 15f)
+						Direction.WEST -> arrayOf(1f, 1f, 2f, 15f)
+						Direction.UP -> arrayOf(1f, 1f, 15f, 2f)
+						Direction.DOWN -> arrayOf(1f, 14f, 15f, 15f)
+					}
+
+					val texture = if (dir == Direction.NORTH) "#back" else "#node"
+					fb.texture(texture)
+				}
+			}
+
+			.element {
+				from(3f, 3f, 1f)
+				to(13f, 13f, 3f)
+
+				allFacesExcept(
+					{ dir, fb ->
+						val uvs = when (dir) {
+							Direction.EAST -> arrayOf(1f, 3f, 3f, 13f)
+							Direction.SOUTH -> arrayOf(3f, 3f, 13f, 13f)
+							Direction.WEST -> arrayOf(13f, 3f, 15f, 13f)
+							Direction.UP -> arrayOf(3f, 13f, 13f, 15f)
+							Direction.DOWN -> arrayOf(3f, 1f, 13f, 3f)
+							else -> return@allFacesExcept
+						}
+
+						fb.texture("#node")
+						fb.uvs(uvs[0], uvs[1], uvs[2], uvs[3])
+					},
+					setOf(Direction.NORTH)
+				)
+			}
+
+		fun specific(block: TransferNodeBlock, texture: String) {
+			val nodeTexture = modLoc(texture)
+
 			val model = models()
-				.withExistingParent(name(block), modLoc("block/transfer_node_template"))
+				.withExistingParent(name(block), modLoc("block/$templateName"))
+				.texture("pipe", modLoc("block/transfer_pipe/pipe"))
+				.texture("node", nodeTexture)
+				.texture("back", modLoc("block/transfer_node/back"))
+				.texture("particle", nodeTexture)
 
 			val builder = getMultipartBuilder(block)
 

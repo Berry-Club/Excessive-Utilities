@@ -1,5 +1,168 @@
 {
   "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#pipe"
+        },
+        "east": {
+          "texture": "#pipe"
+        },
+        "north": {
+          "texture": "#pipe"
+        },
+        "south": {
+          "texture": "#pipe"
+        },
+        "up": {
+          "texture": "#pipe"
+        },
+        "west": {
+          "texture": "#pipe"
+        }
+      },
+      "from": [
+        6,
+        6,
+        6
+      ],
+      "to": [
+        10,
+        10,
+        10
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#pipe",
+          "uv": [
+            6.0,
+            2.0,
+            10.0,
+            6.0
+          ]
+        },
+        "east": {
+          "texture": "#pipe",
+          "uv": [
+            2.0,
+            6.0,
+            6.0,
+            10.0
+          ]
+        },
+        "north": {
+          "texture": "#pipe"
+        },
+        "south": {
+          "texture": "#pipe"
+        },
+        "up": {
+          "texture": "#pipe"
+        },
+        "west": {
+          "texture": "#pipe"
+        }
+      },
+      "from": [
+        6,
+        6,
+        2
+      ],
+      "to": [
+        10,
+        10,
+        6
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#node"
+        },
+        "east": {
+          "texture": "#node"
+        },
+        "north": {
+          "texture": "#back"
+        },
+        "south": {
+          "texture": "#node"
+        },
+        "up": {
+          "texture": "#node"
+        },
+        "west": {
+          "texture": "#node"
+        }
+      },
+      "from": [
+        1,
+        1,
+        0
+      ],
+      "to": [
+        15,
+        15,
+        1
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#node",
+          "uv": [
+            3.0,
+            1.0,
+            13.0,
+            3.0
+          ]
+        },
+        "east": {
+          "texture": "#node",
+          "uv": [
+            1.0,
+            3.0,
+            3.0,
+            13.0
+          ]
+        },
+        "south": {
+          "texture": "#node"
+        },
+        "up": {
+          "texture": "#node",
+          "uv": [
+            3.0,
+            13.0,
+            13.0,
+            15.0
+          ]
+        },
+        "west": {
+          "texture": "#node",
+          "uv": [
+            13.0,
+            3.0,
+            15.0,
+            13.0
+          ]
+        }
+      },
+      "from": [
+        3,
+        3,
+        1
+      ],
+      "to": [
+        13,
+        13,
+        3
+      ]
+    }
+  ],
   "textures": {
     "particle": "#node"
   }
