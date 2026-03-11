@@ -26,6 +26,11 @@ abstract class GpDrainBlock(
 		}
 	}
 
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
+		val type = getBlockEntityType()
+		return type.create(pos, state)
+	}
+
 	override fun <T : BlockEntity> getTicker(level: Level, state: BlockState, blockEntityType: BlockEntityType<T>): BlockEntityTicker<T>? {
 		return BaseEntityBlock.createTickerHelper(
 			blockEntityType,

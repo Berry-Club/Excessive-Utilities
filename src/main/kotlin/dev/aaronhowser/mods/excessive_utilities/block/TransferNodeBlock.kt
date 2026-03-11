@@ -161,10 +161,6 @@ class TransferNodeBlock(
 		return state
 	}
 
-	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
-		TODO("Not yet implemented")
-	}
-
 	companion object {
 		val PLACED_ON: DirectionProperty = DirectionProperty.create("placed_on", Direction.entries)
 		val NORTH: BooleanProperty = BlockStateProperties.NORTH
