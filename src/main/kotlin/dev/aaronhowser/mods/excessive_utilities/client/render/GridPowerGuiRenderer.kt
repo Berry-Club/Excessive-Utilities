@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
+import java.text.DecimalFormat
 
 object GridPowerGuiRenderer {
 
@@ -31,7 +32,11 @@ object GridPowerGuiRenderer {
 			if (!isTag) return
 		}
 
-		val component = Component.literal("${ClientGridPower.usage} / ${ClientGridPower.capacity} GP")
+		val format = DecimalFormat("#,##00.##")
+		val usage = format.format(ClientGridPower.usage)
+		val capacity = format.format(ClientGridPower.capacity)
+
+		val component = Component.literal("$usage / $capacity GP")
 		if (ClientGridPower.isOverloaded) {
 			component.withStyle(ChatFormatting.RED)
 		}
