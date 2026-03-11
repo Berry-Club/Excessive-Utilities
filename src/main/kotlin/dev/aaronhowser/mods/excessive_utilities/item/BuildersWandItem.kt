@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
@@ -69,6 +70,16 @@ class BuildersWandItem(properties: Properties) : Item(properties) {
 			val stateToPlace = block.getStateForPlacement(placeContext) ?: continue
 			level.setBlockAndUpdate(pos, stateToPlace)
 			stateToPlace.block.setPlacedBy(level, pos, stateToPlace, player, stack)
+
+			val soundType = stateToPlace.getSoundType(level, pos, player)
+			level.playSound(
+				null,
+				pos,
+				soundType.placeSound,
+				SoundSource.BLOCKS,
+				(soundType.volume + 1f) / 2f,
+				soundType.pitch * 0.8f
+			)
 
 			stack.consume(1, player)
 			success = true
