@@ -1,7 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.excessive_utilities.block.base.SimpleContainerBlock
+import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -21,7 +25,7 @@ import net.neoforged.neoforge.capabilities.Capabilities
 class TransferNodeBlock(
 	val type: Type,
 	val isRetrieval: Boolean
-) : Block(
+) : SimpleContainerBlock(
 	Properties.of()
 		.strength(1.5f, 6f)
 		.requiresCorrectToolForDrops()
@@ -83,6 +87,13 @@ class TransferNodeBlock(
 		}
 
 		return shape
+	}
+
+	override fun setPlacedBy(level: Level, pos: BlockPos, state: BlockState, placer: LivingEntity?, stack: ItemStack) {
+		val blockEntity = level.getBlockEntity(pos)
+		if (blockEntity is TransferNodeBlockEntity && placer != null) {
+			blockEntity.ownerUuid = placer.uuid
+		}
 	}
 
 	fun canConnectTo(level: Level, pipePos: BlockPos, direction: Direction): Boolean {
