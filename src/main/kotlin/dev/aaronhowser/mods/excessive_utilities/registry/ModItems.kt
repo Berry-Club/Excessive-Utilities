@@ -109,9 +109,9 @@ object ModItems : AaronItemRegistry() {
 	val CREATIVE_BUILDERS_WAND =
 		basic("creative_builders_wand")
 	val DESTRUCTION_WAND: DeferredItem<DestructionWandItem> =
-		register("destruction_wand", { DestructionWandItem(maxBlocks = 9, it) }, DestructionWandItem.DEFAULT_PROPERTIES)
+		register("destruction_wand", ::DestructionWandItem, DestructionWandItem.propertiesWithVolume(9))
 	val CREATIVE_DESTRUCTION_WAND: DeferredItem<DestructionWandItem> =
-		register("creative_destruction_wand", { DestructionWandItem(maxBlocks = 47, it) }, DestructionWandItem.DEFAULT_PROPERTIES)
+		register("creative_destruction_wand", ::DestructionWandItem, DestructionWandItem.propertiesWithVolume(47))
 	val INDEXER_REMOTE =
 		basic("indexer_remote")
 

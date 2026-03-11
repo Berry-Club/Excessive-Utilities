@@ -27,6 +27,8 @@ object ModDataComponents : AaronDataComponentRegistry() {
 
 	val RADIUS: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("radius")
+	val VOLUME: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
+		int("volume")
 	val ENTITY_DATA: DeferredHolder<DataComponentType<*>, DataComponentType<CustomData>> =
 		register("entity_data", CustomData.CODEC, CustomData.STREAM_CODEC)
 	val ENTITY_TYPE: DeferredHolder<DataComponentType<*>, DataComponentType<Holder<EntityType<*>>>> =

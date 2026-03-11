@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.block_walker.BlockWalker
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.InteractionHand
@@ -16,13 +17,14 @@ import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.event.EventHooks
 import net.neoforged.neoforge.event.level.BlockEvent
 
-class DestructionWandItem(
-	val maxBlocks: Int,
-	properties: Properties
-) : Item(properties) {
+class DestructionWandItem(properties: Properties) : Item(properties) {
 
 	companion object {
-		val DEFAULT_PROPERTIES: Properties = Properties().stacksTo(1)
+		fun propertiesWithVolume(volume: Int): Properties {
+			return Properties()
+				.stacksTo(1)
+				.component(ModDataComponents.VOLUME, volume)
+		}
 
 		private var isWandActive = false
 
@@ -40,14 +42,16 @@ class DestructionWandItem(
 				&& !usedStack.isCorrectToolForDrops(brokenState)
 			) return
 
-			var wandItem: DestructionWandItem? = null
+			var wandStack = ItemStack.EMPTY
 			if (usedStack.item is DestructionWandItem) {
-				wandItem = usedStack.item as DestructionWandItem
+				wandStack = usedStack
 			} else if (player.offhandItem.item is DestructionWandItem) {
-				wandItem = player.offhandItem.item as DestructionWandItem
+				wandStack = player.offhandItem
 			}
 
-			if (wandItem == null) return
+			if (wandStack.isEmpty) return
+
+			val amount = wandStack.get(ModDataComponents.VOLUME) ?: return
 
 			val hitResult = player.pick(
 				player.getAttributeValue(Attributes.BLOCK_INTERACTION_RANGE),
@@ -61,7 +65,7 @@ class DestructionWandItem(
 			val blockPos = event.pos
 			val face = hitResult.direction
 
-			val positions = getPositions(level, blockPos, brokenState.block, face, wandItem.maxBlocks)
+			val positions = getPositions(level, blockPos, brokenState.block, face, amount)
 			if (positions.isEmpty()) return
 
 			breakBlocks(usedStack, positions, level, player)
