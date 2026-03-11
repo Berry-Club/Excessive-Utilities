@@ -75,7 +75,10 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 		if (!stack.isItem(Tags.Items.TOOLS_WRENCH)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
 		if (level.isServerSide) {
-			toggleBlocked(level, pos, hitResult.direction)
+			val delta = pos.center.vectorTo(hitResult.location)
+			val direction = Direction.getNearest(delta)
+
+			toggleBlocked(level, pos, direction)
 		}
 
 		return ItemInteractionResult.sidedSuccess(level.isClientSide)
