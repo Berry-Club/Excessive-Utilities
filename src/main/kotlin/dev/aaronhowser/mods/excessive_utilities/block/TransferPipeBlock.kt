@@ -31,6 +31,8 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 		val DOWN: BooleanProperty = BlockStateProperties.DOWN
 		val BLOCKED_DIRECTIONS: IntegerProperty = IntegerProperty.create("blocked_directions", 0x000000, 0x111111)
 
+		private val CONNECTIONS: Array<BooleanProperty> = arrayOf(DOWN, UP, NORTH, SOUTH, WEST, EAST)
+
 		private fun canConnectTo(level: Level, pipePos: BlockPos, direction: Direction): Boolean {
 			val neighborPos = pipePos.relative(direction)
 
@@ -46,6 +48,17 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 
 			val hasEnergyHandler = level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, direction.opposite) != null
 			return hasEnergyHandler
+		}
+
+		fun toggleBlocked(level: Level, pipePos: BlockPos, direction: Direction) {
+			val state = level.getBlockState(pipePos)
+			val pipeBlock = state.block as? TransferPipeBlock ?: return
+
+			val blockedDirections = state.getValue(BLOCKED_DIRECTIONS)
+			val newBlockedDirections = blockedDirections xor (1 shl direction.ordinal)
+
+			val newState = pipeBlock.updateConnections(level, pipePos, newBlockedDirections)
+			level.setBlockAndUpdate(pipePos, newState)
 		}
 	}
 
