@@ -36,6 +36,7 @@ class ItemTransferNodeBlockEntity(
 		super.serverTick(level)
 		didWorkThisTick = false
 
+		pullFromParent(level)
 
 	}
 
