@@ -35,6 +35,7 @@ class BuildersWandItem(properties: Properties) : Item(properties) {
 		if (positions.isEmpty()) return InteractionResult.FAIL
 
 		val block = clickedState.block
+		var success = false
 
 		for (pos in positions) {
 			if (!level.mayInteract(player, pos)) continue
@@ -70,9 +71,10 @@ class BuildersWandItem(properties: Properties) : Item(properties) {
 			stateToPlace.block.setPlacedBy(level, pos, stateToPlace, player, stack)
 
 			stack.consume(1, player)
+			success = true
 		}
 
-		return InteractionResult.SUCCESS
+		return if (success) InteractionResult.SUCCESS else InteractionResult.FAIL
 	}
 
 	companion object {
@@ -113,6 +115,7 @@ class BuildersWandItem(properties: Properties) : Item(properties) {
 				.map { it.block.pos }
 				.sortedBy { it.distSqr(clickedBlockPos) }
 				.take(maxCount)
+				.map { it.relative(clickedFace) }
 				.toList()
 
 			return positions
