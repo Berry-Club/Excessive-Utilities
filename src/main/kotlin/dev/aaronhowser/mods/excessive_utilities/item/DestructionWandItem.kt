@@ -112,7 +112,7 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 			isWandActive = false
 		}
 
-		private fun getPositions(
+		fun getPositions(
 			level: Level,
 			startPos: BlockPos,
 			originalBlock: Block,
