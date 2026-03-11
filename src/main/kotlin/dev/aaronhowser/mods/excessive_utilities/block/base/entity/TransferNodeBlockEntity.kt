@@ -17,6 +17,7 @@ import net.minecraft.world.level.block.state.BlockState
 
 abstract class TransferNodeBlockEntity(
 	type: BlockEntityType<*>,
+	val isRetrieval: Boolean,
 	pos: BlockPos,
 	blockState: BlockState
 ) : GpDrainBlockEntity(type, pos, blockState), ContainerContainer {
@@ -26,7 +27,13 @@ abstract class TransferNodeBlockEntity(
 	protected val upgradeContainer =
 		object : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
 			override fun canAddItem(stack: ItemStack): Boolean {
-				return stack.isItem(ModItemTagsProvider.TRANSFER_NODE_UPGRADES)
+				val tag = if (isRetrieval) {
+					ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES
+				} else {
+					ModItemTagsProvider.TRANSFER_NODE_UPGRADES
+				}
+
+				return stack.isItem(tag)
 			}
 		}
 
