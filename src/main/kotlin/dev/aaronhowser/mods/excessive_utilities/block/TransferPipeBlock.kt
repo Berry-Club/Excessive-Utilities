@@ -1,10 +1,16 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
@@ -12,7 +18,9 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.common.Tags
 
 class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 
@@ -51,11 +59,25 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 		return state
 	}
 
-	companion object {
-		private fun connectedProperty(name: String): EnumProperty<ConnectionType> {
-			return EnumProperty.create(name, ConnectionType::class.java, *ConnectionType.entries.toTypedArray())
+	override fun useItemOn(
+		stack: ItemStack,
+		state: BlockState,
+		level: Level,
+		pos: BlockPos,
+		player: Player,
+		hand: InteractionHand,
+		hitResult: BlockHitResult
+	): ItemInteractionResult {
+		if (!stack.isItem(Tags.Items.TOOLS_WRENCH)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+
+		if (level.isServerSide) {
+			toggleBlocked(level, pos, hitResult.direction)
 		}
 
+		return ItemInteractionResult.sidedSuccess(level.isClientSide)
+	}
+
+	companion object {
 		val NORTH: EnumProperty<ConnectionType> = connectedProperty("north")
 		val EAST: EnumProperty<ConnectionType> = connectedProperty("east")
 		val SOUTH: EnumProperty<ConnectionType> = connectedProperty("south")
@@ -64,6 +86,10 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 		val DOWN: EnumProperty<ConnectionType> = connectedProperty("down")
 
 		private val CONNECTIONS: Array<EnumProperty<ConnectionType>> = arrayOf(DOWN, UP, NORTH, SOUTH, WEST, EAST)
+
+		private fun connectedProperty(name: String): EnumProperty<ConnectionType> {
+			return EnumProperty.create(name, ConnectionType::class.java, *ConnectionType.entries.toTypedArray())
+		}
 
 		private fun updateConnections(level: Level, pos: BlockPos, oldState: BlockState): BlockState {
 			var state = oldState
