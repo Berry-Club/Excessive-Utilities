@@ -67,6 +67,8 @@ class DestructionWandItem(
 			val stackBeforeBreaking = usedStack.copy()
 
 			for (pos in positions) {
+				if (!level.mayInteract(player, pos)) continue
+
 				val blockEntityThere = level.getBlockEntity(pos)
 				if (blockEntityThere != null) continue
 
