@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.block.base.TransferNodePing
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -37,6 +38,8 @@ class ItemTransferNodeBlockEntity(
 		return level.getCapability(Capabilities.ItemHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
+	private val ping = TransferNodePing(blockPos, placedOnDirection)
+
 	private var cooldown = 20
 
 	override fun serverTick(level: ServerLevel) {
@@ -51,11 +54,22 @@ class ItemTransferNodeBlockEntity(
 		cooldown = 20
 
 		if (isRetrieval) {
-			pushIntoParent(level)
+			pullerTick(level)
 		} else {
-			pullFromParent(level)
+			pusherTick(level)
 		}
+	}
 
+	private fun pullerTick(level: ServerLevel) {
+		pushIntoParent(level)
+	}
+
+	private fun pusherTick(level: ServerLevel) {
+		pullFromParent(level)
+		if (bufferContainer.isEmpty) {
+			ping.reset()
+			return
+		}
 	}
 
 	private fun pushIntoParent(level: ServerLevel) {

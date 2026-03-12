@@ -12,4 +12,15 @@ class TransferNodePing(
 	var currentPingPos: BlockPos = homePos
 		private set
 
+	var movingInDirection: Direction = homePlacedOnDirection.opposite
+		private set
+
+	private val forkPositions: MutableList<BlockPos> = mutableListOf()
+
+	fun reset() {
+		currentPingPos = homePos
+		movingInDirection = homePlacedOnDirection.opposite
+		forkPositions.clear()
+	}
+
 }
