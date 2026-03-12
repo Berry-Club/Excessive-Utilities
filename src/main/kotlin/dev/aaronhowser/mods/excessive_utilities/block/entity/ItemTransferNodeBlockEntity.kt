@@ -130,7 +130,7 @@ class ItemTransferNodeBlockEntity(
 		ItemHandlerHelper.insertItemStacked(parentHandler, stackInBuffer, false)
 
 		val newStack = stackInBuffer.copy()
-		newStack.count = amountInserted
+		newStack.shrink(amountInserted)
 		bufferContainer.setItem(0, newStack)
 		didWorkThisTick = true
 	}
