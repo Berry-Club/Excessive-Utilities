@@ -60,12 +60,26 @@ class ItemTransferNodeBlockEntity(
 		}
 	}
 
+	// Pull from distant inventories into the buffer,
+	// then push from the buffer into the parent inventory.
+	// if there's already stuff in the buffer, there's no reason to try to continue filling it,
+	// so just reset the ping and don't continue searching
 	private fun pullerTick(level: ServerLevel) {
 		pushIntoParent(level)
+
+		if (!bufferContainer.isEmpty) {
+			ping.reset()
+			return
+		}
+
 	}
 
+	// Pull from the parent inventory into the buffer,
+	// then search for somewhere to push the items in the buffer to.
+	// If there's nothing in the buffer, don't bother searching for somewhere to put it
 	private fun pusherTick(level: ServerLevel) {
 		pullFromParent(level)
+
 		if (bufferContainer.isEmpty) {
 			ping.reset()
 			return
