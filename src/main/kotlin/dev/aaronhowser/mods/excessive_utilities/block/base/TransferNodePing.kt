@@ -15,23 +15,43 @@ class TransferNodePing(
 	var currentPingPos: BlockPos = homePos
 		private set
 
-	var movingInDirection: Direction = homePlacedOnDirection.opposite
-		private set
-
-	private val forkPositions: MutableList<BlockPos> = mutableListOf()
+	private var cameFromDirection: Direction = homePlacedOnDirection
 
 	fun reset() {
 		currentPingPos = homePos
-		movingInDirection = homePlacedOnDirection.opposite
-		forkPositions.clear()
+		cameFromDirection = homePlacedOnDirection
 	}
 
+	//TODO: Remember forks and if there's nowhere for it to go, backtrack to the last fork and try a different path
+	/** @return `true` if the ping advanced properly, `false` if it had nowhere to march to */
+	fun march(level: Level): Boolean {
+		val nextDirections = getNextDirections(level).toMutableList()
+
+		nextDirections.removeIf { dir ->
+			val nextPos = currentPingPos.relative(dir)
+			val blockThere = level.getBlockState(nextPos).block
+
+			blockThere !is TransferPipeBlock && blockThere !is TransferNodeBlock
+		}
+
+		if (nextDirections.isEmpty()) return false
+
+		val nextIndex = level.random.nextInt(nextDirections.size)
+		val nextDirection = nextDirections[nextIndex]
+
+		currentPingPos = currentPingPos.relative(nextDirection)
+		cameFromDirection = nextDirection.opposite
+
+		return true
+	}
+
+	/** @return A list of directions that Transfer Pipes are allowed to search from, or that the Ping can march to */
 	fun getNextDirections(level: Level): List<Direction> {
 		val stateAtPingPos = level.getBlockState(currentPingPos)
 		val block = stateAtPingPos.block
 
 		val directions = Direction.entries.toMutableList()
-		directions.remove(movingInDirection.opposite)
+		directions.remove(cameFromDirection)
 
 		when (block) {
 			is TransferPipeBlock -> {
