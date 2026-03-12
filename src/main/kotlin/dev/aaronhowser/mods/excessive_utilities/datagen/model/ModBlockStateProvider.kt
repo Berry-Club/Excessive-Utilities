@@ -66,19 +66,21 @@ class ModBlockStateProvider(
 		redstoneLantern()
 		redstoneClock()
 		spikes()
-		transferPipe()
+		transferPipes()
+		transferNodes()
 	}
 
-	private fun transferPipe() {
-		val block = ModBlocks.TRANSFER_PIPE.get()
-
-		val pipeTexture = modLoc("block/transfer_pipe/pipe")
-		val blockedTexture = modLoc("block/transfer_pipe/blocked")
+	private fun transferPipe(
+		block: TransferPipeBlock,
+		textureName: String,
+		blockedTextureName: String? = null
+	) {
+		val texture = modLoc(textureName)
 
 		val coreModel = models()
 			.withExistingParent(name(block) + "_core", mcLoc("block/block"))
-			.texture("pipe", pipeTexture)
-			.texture("particle", pipeTexture)
+			.texture("pipe", texture)
+			.texture("particle", texture)
 			.renderType(RenderType.cutout().name)
 
 			.element {
@@ -94,8 +96,8 @@ class ModBlockStateProvider(
 		// Aiming north
 		val armModel = models()
 			.withExistingParent(name(block) + "_arm", mcLoc("block/block"))
-			.texture("pipe", pipeTexture)
-			.texture("particle", pipeTexture)
+			.texture("pipe", texture)
+			.texture("particle", texture)
 
 			.element {
 				from(6f, 6f, 0f)
@@ -116,10 +118,6 @@ class ModBlockStateProvider(
 					fb.uvs(uvs[0], uvs[1], uvs[2], uvs[3])
 				}
 			}
-
-		val armBlockedModel = models()
-			.withExistingParent(name(block) + "_arm_blocked", modLoc("block/" + name(block) + "_arm"))
-			.texture("pipe", blockedTexture)
 
 		val builder = getMultipartBuilder(block)
 			.part()
@@ -172,13 +170,43 @@ class ModBlockStateProvider(
 		}
 
 		addArms(TransferPipeBlock.ConnectionType.CONNECTED, armModel)
-		addArms(TransferPipeBlock.ConnectionType.BLOCKED, armBlockedModel)
 
-		transferNodes(armModel)
+		if (blockedTextureName != null) {
+			val blockedTexture = modLoc(blockedTextureName)
+
+			val armBlockedModel = models()
+				.withExistingParent(name(block) + "_arm_blocked", modLoc("block/" + name(block) + "_arm"))
+				.texture("pipe", blockedTexture)
+
+			addArms(TransferPipeBlock.ConnectionType.BLOCKED, armBlockedModel)
+		}
 	}
 
-	private fun transferNodes(armModel: BlockModelBuilder) {
+	private fun transferPipes() {
+		transferPipe(
+			ModBlocks.TRANSFER_PIPE.get(),
+			"block/transfer_pipe/pipe",
+			"block/transfer_pipe/blocked"
+		)
+
+		transferPipe(
+			ModBlocks.RATIONING_PIPE.get(),
+			"block/transfer_pipe/rationing",
+			null
+		)
+
+		transferPipe(
+			ModBlocks.HYPER_RATIONING_PIPE.get(),
+			"block/transfer_pipe/hyper_rationing",
+			null
+		)
+	}
+
+	private fun transferNodes() {
 		val templateName = "transfer_node_template"
+
+		val armModel = models()
+			.getExistingFile(modLoc("block/transfer_pipe_arm"))
 
 		val template = models()
 			.withExistingParent(templateName, mcLoc("block/block"))
