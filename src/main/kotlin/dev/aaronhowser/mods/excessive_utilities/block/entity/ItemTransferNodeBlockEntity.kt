@@ -93,18 +93,45 @@ class ItemTransferNodeBlockEntity(
 			ping.reset()
 			return
 		}
+
+		// Try to push into inventories at the ping position
+		// If nothing was pushed, move the ping forward and try again next tick
+		// If something was pushed, keep the ping where it is so it can continue pushing into it next tick
+
+		pushIntoPingPos(level)
+		if (bufferContainer.isEmpty) {
+			ping.march(level)
+		}
+	}
+
+	private fun pushIntoPingPos(level: ServerLevel) {
+		val stackInBuffer = bufferContainer.getItem(0)
+		if (stackInBuffer.isEmpty) return
+
+		val itemHandlers = getItemHandlersAroundPing(level)
+		if (itemHandlers.isEmpty()) return
+
+		for (handler in itemHandlers) {
+			val simRemainer = ItemHandlerHelper.insertItemStacked(handler, stackInBuffer, true)
+			val amountAccepted = stackInBuffer.count - simRemainer.count
+			if (amountAccepted <= 0) continue
+
+			ItemHandlerHelper.insertItemStacked(handler, stackInBuffer, false)
+			stackInBuffer.shrink(amountAccepted)
+			bufferContainer.setItem(0, stackInBuffer)
+			didWorkThisTick = true
+
+			if (stackInBuffer.isEmpty) break
+		}
 	}
 
 	private fun pullFromPingPos(level: ServerLevel) {
-		val possibleDirections = ping.getNextDirections(level)
-		val pingPos = ping.currentPingPos
+		val itemHandlers = getItemHandlersAroundPing(level)
+		if (itemHandlers.isEmpty()) return
 
 		val amountToExtract = if (hasStackUpgrade()) 64 else 1
 
-		for (dir in possibleDirections) {
-			val neighborPos = pingPos.relative(dir)
-			val handler = level.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, dir.opposite) ?: continue
-
+		for (handler in itemHandlers) {
 			for (slot in 0 until handler.slots) {
 				val simExtract = handler.extractItem(slot, amountToExtract, true)
 				if (simExtract.isEmpty) continue
@@ -115,6 +142,20 @@ class ItemTransferNodeBlockEntity(
 				return
 			}
 		}
+	}
+
+	private fun getItemHandlersAroundPing(level: ServerLevel): List<IItemHandler> {
+		val possibleDirections = ping.getNextDirections(level)
+		val pingPos = ping.currentPingPos
+
+		val handlers = mutableListOf<IItemHandler>()
+		for (dir in possibleDirections) {
+			val neighborPos = pingPos.relative(dir)
+			val handler = level.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, dir.opposite) ?: continue
+			handlers.add(handler)
+		}
+
+		return handlers
 	}
 
 	private fun pushIntoParent(level: ServerLevel) {
