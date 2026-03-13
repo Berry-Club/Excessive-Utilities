@@ -231,10 +231,11 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val TRANSFER_PIPE: DeferredBlock<TransferPipeBlock> =
 		registerBlock("transfer_pipe", ::TransferPipeBlock)
-	val RATIONING_PIPE: DeferredBlock<TransferPipeBlock> =
-		registerBlock("rationing_pipe", ::TransferPipeBlock)
-	val HYPER_RATIONING_PIPE: DeferredBlock<TransferPipeBlock> =
-		registerBlock("hyper_rationing_pipe", ::TransferPipeBlock)
+	//TODO
+//	val RATIONING_PIPE: DeferredBlock<TransferPipeBlock> =
+//		registerBlock("rationing_pipe", ::TransferPipeBlock)
+//	val HYPER_RATIONING_PIPE: DeferredBlock<TransferPipeBlock> =
+//		registerBlock("hyper_rationing_pipe", ::TransferPipeBlock)
 	val ITEM_TRANSFER_NODE: DeferredBlock<TransferNodeBlock> =
 		registerBlock("item_transfer_node") { TransferNodeBlock(TransferNodeBlock.Type.ITEM, isRetrieval = false) }
 	val FLUID_TRANSFER_NODE: DeferredBlock<TransferNodeBlock> =

@@ -190,17 +190,17 @@ class ModBlockStateProvider(
 			"block/transfer_pipe/blocked"
 		)
 
-		transferPipe(
-			ModBlocks.RATIONING_PIPE.get(),
-			"block/transfer_pipe/rationing",
-			null
-		)
-
-		transferPipe(
-			ModBlocks.HYPER_RATIONING_PIPE.get(),
-			"block/transfer_pipe/hyper_rationing",
-			null
-		)
+//		transferPipe(
+//			ModBlocks.RATIONING_PIPE.get(),
+//			"block/transfer_pipe/rationing",
+//			null
+//		)
+//
+//		transferPipe(
+//			ModBlocks.HYPER_RATIONING_PIPE.get(),
+//			"block/transfer_pipe/hyper_rationing",
+//			null
+//		)
 	}
 
 	private fun transferNodes() {
