@@ -10,6 +10,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
+import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.minecraft.world.level.block.RedstoneLampBlock
@@ -187,6 +188,48 @@ class ModBlockStateProvider(
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("pipe", texture)
 			.renderType(RenderType.cutout().name)
+
+			.transforms()
+
+			.transform(ItemDisplayContext.GUI)
+			.rotation(30f, 225f, 0f)
+			.translation(0f, 0f, 0f)
+			.scale(0.625f, 0.625f, 0.625f)
+			.end()
+
+			.transform(ItemDisplayContext.GROUND)
+			.translation(0f, 3f, 0f)
+			.scale(0.25f, 0.25f, 0.25f)
+			.end()
+
+			.transform(ItemDisplayContext.FIXED)
+			.rotation(0f, 180f, 0f)
+			.scale(0.5f, 0.5f, 0.5f)
+			.end()
+
+			.transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND)
+			.rotation(75f, 45f, 0f)
+			.translation(0f, 2.5f, 0f)
+			.scale(0.375f, 0.375f, 0.375f)
+			.end()
+
+			.transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND)
+			.rotation(75f, 45f, 0f)
+			.translation(0f, 2.5f, 0f)
+			.scale(0.375f, 0.375f, 0.375f)
+			.end()
+
+			.transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND)
+			.rotation(0f, 45f, 0f)
+			.scale(0.4f, 0.4f, 0.4f)
+			.end()
+
+			.transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND)
+			.rotation(0f, 225f, 0f)
+			.scale(0.4f, 0.4f, 0.4f)
+			.end()
+
+			.end()
 
 			// Vertical
 			.element {
