@@ -11,6 +11,9 @@ object ModMenuLang {
 	const val ITEM_FILTER_TAGS = "tooltip.excessive_utilities.item_filter.tags"
 	const val ITEM_FILTER_IGNORE_DAMAGE = "tooltip.excessive_utilities.item_filter.ignore_damage"
 	const val ITEM_FILTER_IGNORE_ALL_COMPONENTS = "tooltip.excessive_utilities.item_filter.ignore_all_components"
+	const val FLUID_FILTER_INVERTED = "tooltip.excessive_utilities.fluid_filter.inverted"
+	const val FLUID_FILTER_TAGS = "tooltip.excessive_utilities.fluid_filter.tags"
+	const val FLUID_FILTER_IGNORE_ALL_COMPONENTS = "tooltip.excessive_utilities.fluid_filter.ignore_all_components"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -23,6 +26,9 @@ object ModMenuLang {
 			add(ITEM_FILTER_TAGS, "Use Tags")
 			add(ITEM_FILTER_IGNORE_DAMAGE, "Ignore Damage")
 			add(ITEM_FILTER_IGNORE_ALL_COMPONENTS, "Ignore All Components")
+			add(FLUID_FILTER_INVERTED, "Inverted")
+			add(FLUID_FILTER_TAGS, "Use Tags")
+			add(FLUID_FILTER_IGNORE_ALL_COMPONENTS, "Ignore All Components")
 		}
 	}
 
