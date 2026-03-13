@@ -2,11 +2,13 @@ package dev.aaronhowser.mods.excessive_utilities.block.entity
 
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.TransferNodePing
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
@@ -15,6 +17,10 @@ import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -27,9 +33,15 @@ class ItemTransferNodeBlockEntity(
 ) : TransferNodeBlockEntity(ModBlockEntityTypes.ITEM_TRANSFER_NODE.get(), pos, blockState) {
 
 	private val bufferContainer = ImprovedSimpleContainer(this, BUFFER_CONTAINER_SIZE)
+	private val filterContainer =
+		object : ImprovedSimpleContainer(this, FILTER_CONTAINER_SIZE) {
+			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+				return stack.isItem(ModItems.ITEM_FILTER.get())
+			}
+		}
 
 	override fun getContainers(): List<Container> {
-		return listOf(bufferContainer, upgradeContainer)
+		return listOf(bufferContainer, upgradeContainer, filterContainer)
 	}
 
 	fun hasStackUpgrade(): Boolean {
@@ -222,6 +234,35 @@ class ItemTransferNodeBlockEntity(
 		}
 	}
 
+	private val containerData =
+		object : ContainerData {
+			override fun getCount(): Int = CONTAINER_DATA_SIZE
+
+			override fun get(index: Int): Int {
+				return when (index) {
+					X_DATA_INDEX -> ping.currentPingPos.x
+					Y_DATA_INDEX -> ping.currentPingPos.y
+					Z_DATA_INDEX -> ping.currentPingPos.z
+					else -> 0
+				}
+			}
+
+			override fun set(index: Int, value: Int) {
+				// Noop
+			}
+		}
+
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
+		return ItemTransferNodeMenu(
+			containerId,
+			playerInventory,
+			upgradeContainer,
+			bufferContainer,
+			filterContainer,
+			containerData
+		)
+	}
+
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
@@ -236,6 +277,13 @@ class ItemTransferNodeBlockEntity(
 
 	companion object {
 		const val BUFFER_CONTAINER_SIZE = 1
+		const val FILTER_CONTAINER_SIZE = 1
+
+		const val CONTAINER_DATA_SIZE = 3
+		const val X_DATA_INDEX = 0
+		const val Y_DATA_INDEX = 1
+		const val Z_DATA_INDEX = 2
+
 	}
 
 }

@@ -12,8 +12,10 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
+import net.minecraft.world.MenuProvider
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -22,7 +24,7 @@ abstract class TransferNodeBlockEntity(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
 	blockState: BlockState
-) : GpDrainBlockEntity(type, pos, blockState), ContainerContainer {
+) : GpDrainBlockEntity(type, pos, blockState), ContainerContainer, MenuProvider {
 
 	protected val placedOnDirection: Direction = this.blockState.getValue(TransferNodeBlock.PLACED_ON)
 	protected val placedOnPos: BlockPos = blockPos.relative(placedOnDirection)
@@ -98,6 +100,8 @@ abstract class TransferNodeBlockEntity(
 	}
 
 	abstract fun activeTick(level: ServerLevel)
+
+	override fun getDisplayName(): Component = blockState.block.name
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
