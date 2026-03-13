@@ -209,7 +209,7 @@ class ModBlockStateProvider(
 		val armModel = models()
 			.getExistingFile(modLoc("block/transfer_pipe_arm"))
 
-		val template = models()
+		models()
 			.withExistingParent(templateName, mcLoc("block/block"))
 			.texture("particle", "#node")
 
@@ -248,7 +248,7 @@ class ModBlockStateProvider(
 
 				allFaces { dir, fb ->
 
-					val uvs = when (dir) {
+					when (dir) {
 						Direction.NORTH -> arrayOf(15f, 1f, 1f, 15f)
 						Direction.EAST -> arrayOf(14f, 1f, 15f, 15f)
 						Direction.SOUTH -> arrayOf(1f, 1f, 15f, 15f)
