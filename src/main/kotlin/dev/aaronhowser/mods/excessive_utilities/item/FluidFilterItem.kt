@@ -2,10 +2,9 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
-import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu.FluidFilterMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.ChatFormatting
@@ -37,7 +36,7 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 
 		if (level.isServerSide) {
 			val menuConstructor = MenuConstructor { containerId, playerInventory, player ->
-				ItemFilterMenu(containerId, playerInventory, usedHand)
+				FluidFilterMenu(containerId, playerInventory, usedHand)
 			}
 
 			val provider = SimpleMenuProvider(menuConstructor, usedStack.hoverName)
