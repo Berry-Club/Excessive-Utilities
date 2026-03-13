@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.base.TransferNodePing
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -44,8 +45,15 @@ class ItemTransferNodeBlockEntity(
 		return listOf(bufferContainer, upgradeContainer, filterContainer)
 	}
 
-	fun hasStackUpgrade(): Boolean {
+	private fun hasStackUpgrade(): Boolean {
 		return upgradeContainer.countItem(ModItems.STACK_UPGRADE.get()) > 0
+	}
+
+	private fun passesFilter(stack: ItemStack): Boolean {
+		val filterStack = filterContainer.getItem(0)
+		if (filterStack.isEmpty) return true
+
+		return ItemFilterItem.passesFilter(filterStack, stack)
 	}
 
 	private fun getParentItemHandler(level: ServerLevel): IItemHandler? {
@@ -155,7 +163,7 @@ class ItemTransferNodeBlockEntity(
 		for (handler in itemHandlers) {
 			for (slot in 0 until handler.slots) {
 				val simExtract = handler.extractItem(slot, amountToExtract, true)
-				if (simExtract.isEmpty) continue
+				if (simExtract.isEmpty || !passesFilter(simExtract)) continue
 
 				val extracted = handler.extractItem(slot, amountToExtract, false)
 				bufferContainer.setItem(0, extracted)
@@ -208,7 +216,7 @@ class ItemTransferNodeBlockEntity(
 		if (stackInBuffer.isEmpty) {
 			for (slot in 0 until parentHandler.slots) {
 				val simExtract = parentHandler.extractItem(slot, amountToExtract, true)
-				if (simExtract.isEmpty) continue
+				if (simExtract.isEmpty || !passesFilter(simExtract)) continue
 
 				val extracted = parentHandler.extractItem(slot, amountToExtract, false)
 				bufferContainer.setItem(0, extracted)
