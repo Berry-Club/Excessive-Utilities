@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -22,6 +23,7 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
 import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
@@ -112,53 +114,65 @@ class FluidTransferNodeBlockEntity(
 	}
 
 	private fun pushIntoPingPos(level: ServerLevel) {
-		val stackInBuffer = bufferContainer.getItem(0)
-		if (stackInBuffer.isEmpty) return
+		val fluidInBuffer = bufferTank.fluid
+		if (fluidInBuffer.isEmpty) return
 
-		val itemHandlers = getItemHandlersAroundPing(level)
-		if (itemHandlers.isEmpty()) return
+		val fluidHandlers = getFluidHandlersAroundPing(level)
+		if (fluidHandlers.isEmpty()) return
 
-		for (handler in itemHandlers) {
-			val simulatedRemainder = ItemHandlerHelper.insertItemStacked(handler, stackInBuffer.copy(), true)
-			val amountAccepted = stackInBuffer.count - simulatedRemainder.count
-			if (amountAccepted <= 0) continue
+		for (handler in fluidHandlers) {
+			val amountInserted = handler.fill(fluidInBuffer, IFluidHandler.FluidAction.EXECUTE)
+			if (amountInserted <= 0) continue
 
-			val remainder = ItemHandlerHelper.insertItemStacked(handler, stackInBuffer, false)
-
-			bufferContainer.setItem(0, remainder)
+			bufferTank.drain(amountInserted, IFluidHandler.FluidAction.EXECUTE)
 			didWorkThisTick = true
-
-			if (remainder.isEmpty) break
 		}
 	}
 
 	private fun pullFromPingPos(level: ServerLevel) {
-		val itemHandlers = getItemHandlersAroundPing(level)
-		if (itemHandlers.isEmpty()) return
+		val fluidHandlers = getFluidHandlersAroundPing(level)
+		if (fluidHandlers.isEmpty()) return
 
-		val amountToExtract = if (hasStackUpgrade()) 64 else 1
+		val amountInBuffer = bufferTank.fluidAmount
+		val amountThatCanFit = bufferTank.capacity - amountInBuffer
+		if (amountThatCanFit <= 0) return
 
-		for (handler in itemHandlers) {
-			for (slot in 0 until handler.slots) {
-				val simExtract = handler.extractItem(slot, amountToExtract, true)
-				if (simExtract.isEmpty || !passesFilter(simExtract)) continue
+		val maxAmount = if (hasStackUpgrade()) 1_000 else 200
+		val amountToExtract = amountThatCanFit.coerceAtMost(maxAmount)
 
-				val extracted = handler.extractItem(slot, amountToExtract, false)
-				bufferContainer.setItem(0, extracted)
-				didWorkThisTick = true
-				return
+		val filterStack = filterContainer.getItem(0)
+
+		for (handler in fluidHandlers) {
+			val simulated = handler.drain(amountToExtract, IFluidHandler.FluidAction.SIMULATE)
+			if (simulated.isEmpty) continue
+
+			if (filterStack.isItem(ModItems.FLUID_FILTER)) {
+				val passesFilter = FluidFilterItem.passesFilter(filterStack, simulated)
+				if (!passesFilter) continue
 			}
+
+			val actualExtracted = handler.drain(amountToExtract, IFluidHandler.FluidAction.EXECUTE)
+			if (actualExtracted.isEmpty) continue
+
+			if (filterStack.isItem(ModItems.FLUID_FILTER)) {
+				val passesFilter = FluidFilterItem.passesFilter(filterStack, actualExtracted)
+				if (!passesFilter) continue
+			}
+
+			bufferTank.fill(actualExtracted, IFluidHandler.FluidAction.EXECUTE)
+			didWorkThisTick = true
+			return
 		}
 	}
 
-	private fun getItemHandlersAroundPing(level: ServerLevel): List<IItemHandler> {
+	private fun getFluidHandlersAroundPing(level: ServerLevel): List<IFluidHandler> {
 		val possibleDirections = ping.getNextDirections(level)
 		val pingPos = ping.currentPingPos
 
-		val handlers = mutableListOf<IItemHandler>()
+		val handlers = mutableListOf<IFluidHandler>()
 		for (dir in possibleDirections) {
 			val neighborPos = pingPos.relative(dir)
-			val handler = level.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, dir.opposite) ?: continue
+			val handler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, dir.opposite) ?: continue
 			handlers.add(handler)
 		}
 
