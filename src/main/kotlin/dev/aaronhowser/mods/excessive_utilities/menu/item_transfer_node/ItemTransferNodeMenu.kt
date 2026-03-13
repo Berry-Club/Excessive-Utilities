@@ -39,16 +39,16 @@ class ItemTransferNodeMenu(
 		checkContainerSize(upgradesContainer, TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE)
 
 		addSlots()
-		addPlayerInventorySlots(84)
+		addPlayerInventorySlots(91)
 	}
 
 	override fun addSlots() {
-		val filterSlot = FilteredSlot(filterContainer, 0, 80, 34) { it.isItem(ModItemTagsProvider.FILTERS) }
+		val filterSlot = FilteredSlot(filterContainer, 0, 8, 58) { it.isItem(ModItemTagsProvider.FILTERS) }
 		this.addSlot(filterSlot)
 
 		for (i in 0 until TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE) {
-			val x = 8 + i * 18
-			val y = 8
+			val x = 35 + i * 18
+			val y = 58
 
 			val slot = FilteredSlot(upgradesContainer, i, x, y) {
 				it.isItem(ModItemTagsProvider.TRANSFER_NODE_UPGRADES) || it.isItem(ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES)
@@ -57,7 +57,7 @@ class ItemTransferNodeMenu(
 			this.addSlot(slot)
 		}
 
-		val bufferSlot = Slot(bufferContainer, 0, 80, 8)
+		val bufferSlot = Slot(bufferContainer, 0, 80, 28)
 		this.addSlot(bufferSlot)
 	}
 

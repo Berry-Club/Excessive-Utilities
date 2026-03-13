@@ -128,7 +128,7 @@ abstract class TransferNodeBlockEntity(
 	}
 
 	companion object {
-		const val UPGRADE_CONTAINER_SIZE = 5
+		const val UPGRADE_CONTAINER_SIZE = 6
 
 		const val UPGRADES_NBT = "Upgrades"
 		const val IS_RETRIEVAL_NBT = "IsRetrieval"
