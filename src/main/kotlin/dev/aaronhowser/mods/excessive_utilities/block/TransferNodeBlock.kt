@@ -1,11 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GpDrainBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.FluidTransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.InteractionResult
@@ -101,6 +102,11 @@ class TransferNodeBlock(
 
 	override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hitResult: BlockHitResult): InteractionResult {
 		val be = level.getBlockEntity(pos)
+
+		if (be is FluidTransferNodeBlockEntity) {
+			player.openMenu(be) { it.writeBlockPos(pos) }
+			return InteractionResult.sidedSuccess(level.isClientSide)
+		}
 
 		if (be is MenuProvider) {
 			player.openMenu(be)
