@@ -23,8 +23,7 @@ class TransferNodePing(
 	}
 
 	//TODO: Remember forks and if there's nowhere for it to go, backtrack to the last fork and try a different path
-	/** @return `true` if the ping advanced properly, `false` if it had nowhere to march to */
-	fun march(level: Level): Boolean {
+	fun march(level: Level) {
 		val nextDirections = getNextDirections(level).toMutableList()
 
 		nextDirections.removeIf { dir ->
@@ -34,15 +33,16 @@ class TransferNodePing(
 			blockThere !is TransferPipeBlock && blockThere !is TransferNodeBlock
 		}
 
-		if (nextDirections.isEmpty()) return false
+		if (nextDirections.isEmpty()) {
+			reset()
+			return
+		}
 
 		val nextIndex = level.random.nextInt(nextDirections.size)
 		val nextDirection = nextDirections[nextIndex]
 
 		currentPingPos = currentPingPos.relative(nextDirection)
 		cameFromDirection = nextDirection.opposite
-
-		return true
 	}
 
 	/** @return A list of directions that Transfer Pipes are allowed to search from, or that the Ping can march to */
