@@ -32,7 +32,8 @@ class CreativeChestBlockEntity(
 		object : ExtractOnlyInvWrapper(container) {
 			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
 				val stackInSlot = container.getItem(slot)
-				return stackInSlot.copy()
+				val amountToTake = minOf(amount, stackInSlot.maxStackSize)
+				return stackInSlot.copyWithCount(amountToTake)
 			}
 		}
 
