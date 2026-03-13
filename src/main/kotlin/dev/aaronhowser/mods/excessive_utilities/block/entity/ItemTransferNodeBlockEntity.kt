@@ -4,9 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
-import dev.aaronhowser.mods.excessive_utilities.block.base.TransferNodePing
 import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
@@ -14,7 +12,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -60,37 +57,11 @@ class ItemTransferNodeBlockEntity(
 		return level.getCapability(Capabilities.ItemHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
-	private val ping = TransferNodePing(blockPos, placedOnDirection)
-
-	override fun activeTick(level: ServerLevel) {
-		if (isRetrieval) {
-			pullerTick(level)
-		} else {
-			pusherTick(level)
-		}
-
-		val pingPos = ping.currentPingPos
-
-		for (i in 0 until 5) {
-			val x = pingPos.x + 0.5 + level.random.nextRange(-0.5, 0.5)
-			val y = pingPos.y + 0.5 + level.random.nextRange(-0.5, 0.5)
-			val z = pingPos.z + 0.5 + level.random.nextRange(-0.5, 0.5)
-
-			level.sendParticles(
-				DustParticleOptions.REDSTONE,
-				x, y, z,
-				1,
-				0.0, 0.0, 0.0,
-				0.0
-			)
-		}
-	}
-
 	// Pull from distant inventories into the buffer,
 	// then push from the buffer into the parent inventory.
 	// if there's already stuff in the buffer, there's no reason to try to continue filling it,
 	// so just reset the ping and don't continue searching
-	private fun pullerTick(level: ServerLevel) {
+	override fun pullerTick(level: ServerLevel) {
 		pushIntoParent(level)
 
 		if (!bufferContainer.isEmpty) {
@@ -112,7 +83,7 @@ class ItemTransferNodeBlockEntity(
 	// Pull from the parent inventory into the buffer,
 	// then search for somewhere to push the items in the buffer to.
 	// If there's nothing in the buffer, don't bother searching for somewhere to put it
-	private fun pusherTick(level: ServerLevel) {
+	override fun pusherTick(level: ServerLevel) {
 		pullFromParent(level)
 
 		if (bufferContainer.isEmpty) {

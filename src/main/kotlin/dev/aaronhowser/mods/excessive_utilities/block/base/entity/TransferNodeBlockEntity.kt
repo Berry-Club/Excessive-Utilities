@@ -3,14 +3,17 @@ package dev.aaronhowser.mods.excessive_utilities.block.base.entity
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.block.base.TransferNodePing
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -28,6 +31,8 @@ abstract class TransferNodeBlockEntity(
 
 	protected val placedOnDirection: Direction = this.blockState.getValue(TransferNodeBlock.PLACED_ON)
 	protected val placedOnPos: BlockPos = blockPos.relative(placedOnDirection)
+
+	protected val ping = TransferNodePing(blockPos, placedOnDirection)
 
 	var isRetrieval: Boolean = false
 		set(value) {
@@ -99,7 +104,38 @@ abstract class TransferNodeBlockEntity(
 		}
 	}
 
-	abstract fun activeTick(level: ServerLevel)
+	protected open fun activeTick(level: ServerLevel) {
+		if (isRetrieval) {
+			pullerTick(level)
+		} else {
+			pusherTick(level)
+		}
+
+		spawnParticles(level)
+	}
+
+	protected open fun spawnParticles(level: ServerLevel) {
+		if (!didWorkThisTick) return
+
+		val pingPos = ping.currentPingPos
+
+		for (i in 0 until 5) {
+			val x = pingPos.x + 0.5 + level.random.nextRange(-0.5, 0.5)
+			val y = pingPos.y + 0.5 + level.random.nextRange(-0.5, 0.5)
+			val z = pingPos.z + 0.5 + level.random.nextRange(-0.5, 0.5)
+
+			level.sendParticles(
+				DustParticleOptions.REDSTONE,
+				x, y, z,
+				1,
+				0.0, 0.0, 0.0,
+				0.0
+			)
+		}
+	}
+
+	abstract fun pullerTick(level: ServerLevel)
+	abstract fun pusherTick(level: ServerLevel)
 
 	override fun getDisplayName(): Component = blockState.block.name
 
