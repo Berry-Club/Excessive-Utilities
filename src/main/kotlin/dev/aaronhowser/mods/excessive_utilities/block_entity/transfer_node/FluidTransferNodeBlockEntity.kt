@@ -25,7 +25,6 @@ import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
-import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class FluidTransferNodeBlockEntity(
@@ -62,8 +61,8 @@ class FluidTransferNodeBlockEntity(
 		return ItemFilterItem.Companion.passesFilter(filterStack, stack)
 	}
 
-	private fun getParentItemHandler(level: ServerLevel): IItemHandler? {
-		return level.getCapability(Capabilities.ItemHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
+	private fun getParentFluidHandler(level: ServerLevel): IFluidHandler? {
+		return level.getCapability(Capabilities.FluidHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
 	// Pull from distant tanks into the buffer,
@@ -180,25 +179,23 @@ class FluidTransferNodeBlockEntity(
 	}
 
 	private fun pushIntoParent(level: ServerLevel) {
-		val parentHandler = getParentItemHandler(level) ?: return
+		val parentHandler = getParentFluidHandler(level) ?: return
 
-		val stackInBuffer = bufferContainer.getItem(0)
-		if (stackInBuffer.isEmpty) return
+		val fluidInBuffer = bufferTank.fluid
+		if (fluidInBuffer.isEmpty) return
 
-		val inserted = ItemHandlerHelper.insertItemStacked(parentHandler, stackInBuffer, true)
-		val amountInserted = stackInBuffer.count - inserted.count
-		if (amountInserted <= 0) return
+		val amountToInsert = parentHandler.fill(fluidInBuffer, IFluidHandler.FluidAction.SIMULATE)
+		if (amountToInsert <= 0) return
 
-		ItemHandlerHelper.insertItemStacked(parentHandler, stackInBuffer, false)
+		val actualAmountInserted = parentHandler.fill(fluidInBuffer, IFluidHandler.FluidAction.EXECUTE)
+		if (actualAmountInserted <= 0) return
 
-		val newStack = stackInBuffer.copy()
-		newStack.shrink(amountInserted)
-		bufferContainer.setItem(0, newStack)
+		bufferTank.drain(actualAmountInserted, IFluidHandler.FluidAction.EXECUTE)
 		didWorkThisTick = true
 	}
 
 	private fun pullFromParent(level: ServerLevel) {
-		val parentHandler = getParentItemHandler(level) ?: return
+		val parentHandler = getParentFluidHandler(level) ?: return
 
 		val stackInBuffer = bufferContainer.getItem(0)
 		if (stackInBuffer.isFull()) return
