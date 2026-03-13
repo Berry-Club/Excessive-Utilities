@@ -195,10 +195,13 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 
 				// If we're ignoring damage, remove the damage component and compare the rest
 				if (ignoreDamage) {
-					val leftWithoutDamage = stackInFilter.copy().apply { remove(DataComponents.DAMAGE) }
-					val rightWithoutDamage = checkedStack.copy().apply { remove(DataComponents.DAMAGE) }
-					val matchesNonDamageComponents = ItemStack.isSameItemSameComponents(leftWithoutDamage, rightWithoutDamage)
+					val leftWithoutDamage = stackInFilter.copy()
+					val rightWithoutDamage = checkedStack.copy()
 
+					leftWithoutDamage.remove(DataComponents.DAMAGE)
+					rightWithoutDamage.remove(DataComponents.DAMAGE)
+
+					val matchesNonDamageComponents = ItemStack.isSameItemSameComponents(leftWithoutDamage, rightWithoutDamage)
 					return matchesNonDamageComponents != isInverted
 				}
 
