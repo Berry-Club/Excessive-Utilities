@@ -184,8 +184,8 @@ object ModItems : AaronItemRegistry() {
 		basic("stack_upgrade")
 	val WORLD_INTERACTION_UPGRADE =
 		basic("world_interaction_upgrade")
-	val ITEM_FILTER =
-		basic("item_filter")
+	val ITEM_FILTER: DeferredItem<ItemFilterItem> =
+		register("item_filter", ::ItemFilterItem, PROPERTIES_SINGLE_STACK)
 	val FLUID_FILTER =
 		basic("fluid_filter")
 	val BREADTH_FIRST_SEARCH_UPGRADE =

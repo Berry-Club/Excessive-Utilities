@@ -55,5 +55,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		uuid("thrown_boomerang")
 	val BIOME: DeferredHolder<DataComponentType<*>, DataComponentType<Holder<Biome>>> =
 		register("biome", Biome.CODEC, ByteBufCodecs.holderRegistry(Registries.BIOME))
+	val ITEM_FILTER_FLAGS: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
+		int("item_filter_flags")
 
 }
