@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu
 
+import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
@@ -17,7 +18,7 @@ class ItemFilterMenu(
 	containerId: Int,
 	playerInventory: Inventory,
 	val hand: InteractionHand
-) : MenuWithInventory(ModMenuTypes.ITEM_FILTER.get(), containerId, playerInventory) {
+) : MenuWithInventory(ModMenuTypes.ITEM_FILTER.get(), containerId, playerInventory), MenuWithButtons {
 
 	constructor(
 		containerId: Int,
@@ -77,4 +78,34 @@ class ItemFilterMenu(
 	override fun stillValid(player: Player): Boolean {
 		return getFilterStack().isItem(ModItems.ITEM_FILTER)
 	}
+
+	override fun handleButtonPressed(buttonId: Int) {
+		val filterStack = getFilterStack()
+
+		val toggledFlag = when (buttonId) {
+			TOGGLE_INVERTED_BUTTON_ID -> ItemFilterItem.Flag.INVERTED
+			TOGGLE_USE_TAGS_BUTTON_ID -> ItemFilterItem.Flag.USE_TAGS
+			TOGGLE_IGNORE_DAMAGE_BUTTON_ID -> ItemFilterItem.Flag.IGNORE_DAMAGE
+			TOGGLE_IGNORE_ALL_COMPONENTS_BUTTON_ID -> ItemFilterItem.Flag.IGNORE_ALL_COMPONENTS
+			else -> return
+		}
+
+		val flags = getFlags().toMutableList()
+
+		if (toggledFlag in flags) {
+			flags.remove(toggledFlag)
+		} else {
+			flags.add(toggledFlag)
+		}
+
+		ItemFilterItem.setFlags(filterStack, *flags.toTypedArray())
+	}
+
+	companion object {
+		const val TOGGLE_INVERTED_BUTTON_ID = 0
+		const val TOGGLE_USE_TAGS_BUTTON_ID = 1
+		const val TOGGLE_IGNORE_DAMAGE_BUTTON_ID = 2
+		const val TOGGLE_IGNORE_ALL_COMPONENTS_BUTTON_ID = 3
+	}
+
 }
