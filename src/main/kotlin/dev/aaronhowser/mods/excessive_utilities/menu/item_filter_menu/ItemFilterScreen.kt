@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.item.component.ItemFilterFlagsCo
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
+//TODO: Texture and move buttons around
 class ItemFilterScreen(
 	menu: ItemFilterMenu,
 	playerInventory: Inventory,
