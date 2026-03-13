@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
 //TODO: Render the ping XYZ
+//TODO: Render the fluid in the buffer
 class FluidTransferNodeScreen(
 	menu: FluidTransferNodeMenu,
 	playerInventory: Inventory,
