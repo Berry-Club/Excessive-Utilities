@@ -51,8 +51,8 @@ class ItemFilterMenu(
 
 	override fun addSlots() {
 		for (i in 0 until ItemFilterItem.CONTAINER_SIZE) {
-			val x = 8 + (i % 9) * 18
-			val y = 8 + (i / 9) * 18
+			val x = 8 + (i % 4) * 18
+			val y = 8 + (i / 4) * 18
 
 			val slot = object : SlotItemHandler(filterItems, i, x, y) {
 				override fun mayPlace(stack: ItemStack): Boolean = true
