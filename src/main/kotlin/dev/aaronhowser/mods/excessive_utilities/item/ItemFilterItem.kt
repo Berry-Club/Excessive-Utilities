@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterMenu
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.Level
 
@@ -40,6 +42,46 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 		}
 
 		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
+	}
+
+	override fun appendHoverText(
+		stack: ItemStack,
+		context: TooltipContext,
+		tooltipComponents: MutableList<Component>,
+		tooltipFlag: TooltipFlag
+	) {
+		val flags = getFlags(stack)
+		for (flag in flags) {
+			val component = flag.getMessage(true).withStyle(ChatFormatting.BLUE)
+			tooltipComponents.add(component)
+		}
+
+		for (y in 0 until 4) {
+			val stacks = mutableListOf<ItemStack>()
+
+			for (x in 0 until 4) {
+				val slot = y * 4 + x
+				val ghostStack = getGhostStack(stack, slot)
+
+				if (ghostStack.isNotEmpty()) {
+					stacks.add(ghostStack)
+				}
+			}
+
+			if (stacks.isEmpty()) continue
+
+			val component = Component.empty()
+			for ((i, stack) in stacks.withIndex()) {
+				component.append(stack.hoverName)
+
+				if (i < stacks.size - 1) {
+					component.append(Component.literal(", "))
+				}
+			}
+
+			tooltipComponents.add(component)
+		}
+
 	}
 
 	companion object {
