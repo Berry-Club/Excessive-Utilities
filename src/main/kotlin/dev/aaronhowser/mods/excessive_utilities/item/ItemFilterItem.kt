@@ -31,7 +31,8 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 				ItemFilterMenu(containerId, playerInventory, usedHand)
 			}
 
-			player.openMenu(SimpleMenuProvider(menuConstructor, usedStack.hoverName))
+			val provider = SimpleMenuProvider(menuConstructor, usedStack.hoverName)
+			player.openMenu(provider) { data -> data.writeEnum(usedHand) }
 		}
 
 		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
