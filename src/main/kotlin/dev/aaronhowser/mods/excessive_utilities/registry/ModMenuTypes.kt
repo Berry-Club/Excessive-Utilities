@@ -6,6 +6,8 @@ import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTran
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu.FluidFilterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu.FluidFilterScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.furnace.EUFurnaceMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.furnace.EUFurnaceScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterMenu
@@ -38,6 +40,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("flat_transfer_node", ::FlatTransferNodeMenu)
 	val ITEM_TRANSFER_NODE: DeferredHolder<MenuType<*>, MenuType<ItemTransferNodeMenu>> =
 		register("item_transfer_node", ::ItemTransferNodeMenu)
+	val FLUID_TRANSFER_NODE: DeferredHolder<MenuType<*>, MenuType<FluidTransferNodeMenu>> =
+		register("fluid_transfer_node") { IMenuTypeExtension.create(FluidTransferNodeMenu::fromNetwork) }
 	val SINGLE_SLOT: DeferredHolder<MenuType<*>, MenuType<SingleSlotMenu>> =
 		register("single_slot", ::SingleSlotMenu)
 	val RESONATOR: DeferredHolder<MenuType<*>, MenuType<ResonatorMenu>> =
@@ -56,6 +60,7 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
 		event.register(ITEM_TRANSFER_NODE.get(), ::ItemTransferNodeScreen)
+		event.register(FLUID_TRANSFER_NODE.get(), ::FluidTransferNodeScreen)
 		event.register(SINGLE_SLOT.get(), ::SingleSlotScreen)
 		event.register(RESONATOR.get(), ::ResonatorScreen)
 		event.register(SINGLE_ITEM_GENERATOR.get(), ::SingleItemGeneratorScreen)
