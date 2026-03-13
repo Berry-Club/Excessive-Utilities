@@ -1,13 +1,39 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
+import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.component.DataComponents
+import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.SimpleMenuProvider
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
 
 class ItemFilterItem(properties: Properties) : Item(properties) {
+
+	override fun use(
+		level: Level,
+		player: Player,
+		usedHand: InteractionHand
+	): InteractionResultHolder<ItemStack?> {
+		val usedStack = player.getItemInHand(usedHand)
+
+		if (level.isServerSide) {
+			val menuConstructor = MenuConstructor { containerId, playerInventory, player ->
+				ItemFilterMenu(containerId, playerInventory, usedHand)
+			}
+
+			player.openMenu(SimpleMenuProvider(menuConstructor, usedStack.hoverName))
+		}
+
+		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
+	}
 
 	companion object {
 		fun setFlags(filterStack: ItemStack, vararg flags: Flag) {
