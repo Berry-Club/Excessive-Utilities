@@ -248,7 +248,6 @@ class ModBlockStateProvider(
 		val armModel = models()
 			.getExistingFile(modLoc("block/transfer_pipe_arm"))
 
-		// FIXME: Make this aim down, not north
 		models()
 			.withExistingParent(templateName, mcLoc("block/block"))
 			.texture("particle", "#node")
@@ -257,24 +256,24 @@ class ModBlockStateProvider(
 				from(6f, 6f, 6f)
 				to(10f, 10f, 10f)
 
-				allFaces { dir, fb ->
+				allFaces { _, fb ->
 					fb.texture("#pipe")
 					fb.uvs(6f, 6f, 10f, 10f)
 				}
 			}
 
 			.element {
-				from(6f, 6f, 2f)
-				to(10f, 10f, 6f)
+				from(6f, 2f, 6f)
+				to(10f, 6f, 10f)
 
 				allFaces { dir, fb ->
 					val uvs = when (dir) {
-						Direction.NORTH -> arrayOf(6f, 6f, 10f, 10f)
+						Direction.DOWN -> arrayOf(6f, 6f, 10f, 10f)
 						Direction.EAST -> arrayOf(2f, 6f, 6f, 10f)
-						Direction.SOUTH -> arrayOf(6f, 6f, 10f, 10f)
+						Direction.UP -> arrayOf(6f, 6f, 10f, 10f)
 						Direction.WEST -> arrayOf(2f, 6f, 6f, 10f)
-						Direction.UP -> arrayOf(6f, 2f, 10f, 6f)
-						Direction.DOWN -> arrayOf(6f, 2f, 10f, 6f)
+						Direction.NORTH -> arrayOf(6f, 2f, 10f, 6f)
+						Direction.SOUTH -> arrayOf(6f, 2f, 10f, 6f)
 					}
 
 					fb.texture("#pipe")
@@ -283,44 +282,43 @@ class ModBlockStateProvider(
 			}
 
 			.element {
-				from(1f, 1f, 0f)
-				to(15f, 15f, 1f)
+				from(1f, 0f, 1f)
+				to(15f, 1f, 15f)
 
 				allFaces { dir, fb ->
-
 					when (dir) {
-						Direction.NORTH -> arrayOf(15f, 1f, 1f, 15f)
+						Direction.DOWN -> arrayOf(15f, 1f, 1f, 15f)
 						Direction.EAST -> arrayOf(14f, 1f, 15f, 15f)
-						Direction.SOUTH -> arrayOf(1f, 1f, 15f, 15f)
+						Direction.UP -> arrayOf(1f, 1f, 15f, 15f)
 						Direction.WEST -> arrayOf(1f, 1f, 2f, 15f)
-						Direction.UP -> arrayOf(1f, 1f, 15f, 2f)
-						Direction.DOWN -> arrayOf(1f, 14f, 15f, 15f)
+						Direction.NORTH -> arrayOf(1f, 1f, 15f, 2f)
+						Direction.SOUTH -> arrayOf(1f, 14f, 15f, 15f)
 					}
 
-					val texture = if (dir == Direction.NORTH) "#back" else "#node"
+					val texture = if (dir == Direction.DOWN) "#back" else "#node"
 					fb.texture(texture)
 				}
 			}
 
 			.element {
-				from(3f, 3f, 1f)
-				to(13f, 13f, 3f)
+				from(3f, 1f, 3f)
+				to(13f, 3f, 13f)
 
 				allFacesExcept(
 					{ dir, fb ->
 						val uvs = when (dir) {
 							Direction.EAST -> arrayOf(1f, 3f, 3f, 13f)
-							Direction.SOUTH -> arrayOf(3f, 3f, 13f, 13f)
+							Direction.UP -> arrayOf(3f, 3f, 13f, 13f)
 							Direction.WEST -> arrayOf(13f, 3f, 15f, 13f)
-							Direction.UP -> arrayOf(3f, 13f, 13f, 15f)
-							Direction.DOWN -> arrayOf(3f, 1f, 13f, 3f)
+							Direction.NORTH -> arrayOf(3f, 13f, 13f, 15f)
+							Direction.SOUTH -> arrayOf(3f, 1f, 13f, 3f)
 							else -> return@allFacesExcept
 						}
 
 						fb.texture("#node")
 						fb.uvs(uvs[0], uvs[1], uvs[2], uvs[3])
 					},
-					setOf(Direction.NORTH)
+					setOf(Direction.DOWN)
 				)
 			}
 
@@ -341,33 +339,12 @@ class ModBlockStateProvider(
 			builder.part()
 				.modelFile(model)
 				.addModel()
-				.condition(TransferNodeBlock.PLACED_ON, Direction.NORTH)
+				.condition(TransferNodeBlock.PLACED_ON, Direction.DOWN)
 				.end()
 
 				.part()
 				.modelFile(model)
-				.rotationY(90)
-				.addModel()
-				.condition(TransferNodeBlock.PLACED_ON, Direction.EAST)
-				.end()
-
-				.part()
-				.modelFile(model)
-				.rotationY(180)
-				.addModel()
-				.condition(TransferNodeBlock.PLACED_ON, Direction.SOUTH)
-				.end()
-
-				.part()
-				.modelFile(model)
-				.rotationY(270)
-				.addModel()
-				.condition(TransferNodeBlock.PLACED_ON, Direction.WEST)
-				.end()
-
-				.part()
-				.modelFile(model)
-				.rotationX(270)
+				.rotationX(180)
 				.addModel()
 				.condition(TransferNodeBlock.PLACED_ON, Direction.UP)
 				.end()
@@ -376,7 +353,30 @@ class ModBlockStateProvider(
 				.modelFile(model)
 				.rotationX(90)
 				.addModel()
-				.condition(TransferNodeBlock.PLACED_ON, Direction.DOWN)
+				.condition(TransferNodeBlock.PLACED_ON, Direction.NORTH)
+				.end()
+
+				.part()
+				.modelFile(model)
+				.rotationX(270)
+				.addModel()
+				.condition(TransferNodeBlock.PLACED_ON, Direction.SOUTH)
+				.end()
+
+				.part()
+				.modelFile(model)
+				.rotationX(90)
+				.rotationY(90)
+				.addModel()
+				.condition(TransferNodeBlock.PLACED_ON, Direction.EAST)
+				.end()
+
+				.part()
+				.modelFile(model)
+				.rotationX(90)
+				.rotationY(270)
+				.addModel()
+				.condition(TransferNodeBlock.PLACED_ON, Direction.WEST)
 				.end()
 
 				.part()

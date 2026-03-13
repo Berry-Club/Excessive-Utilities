@@ -5,40 +5,13 @@
         "model": "excessive_utilities:block/energy_retrieval_node"
       },
       "when": {
-        "placed_on": "north"
+        "placed_on": "down"
       }
     },
     {
       "apply": {
         "model": "excessive_utilities:block/energy_retrieval_node",
-        "y": 90
-      },
-      "when": {
-        "placed_on": "east"
-      }
-    },
-    {
-      "apply": {
-        "model": "excessive_utilities:block/energy_retrieval_node",
-        "y": 180
-      },
-      "when": {
-        "placed_on": "south"
-      }
-    },
-    {
-      "apply": {
-        "model": "excessive_utilities:block/energy_retrieval_node",
-        "y": 270
-      },
-      "when": {
-        "placed_on": "west"
-      }
-    },
-    {
-      "apply": {
-        "model": "excessive_utilities:block/energy_retrieval_node",
-        "x": 270
+        "x": 180
       },
       "when": {
         "placed_on": "up"
@@ -50,7 +23,36 @@
         "x": 90
       },
       "when": {
-        "placed_on": "down"
+        "placed_on": "north"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/energy_retrieval_node",
+        "x": 270
+      },
+      "when": {
+        "placed_on": "south"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/energy_retrieval_node",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "placed_on": "east"
+      }
+    },
+    {
+      "apply": {
+        "model": "excessive_utilities:block/energy_retrieval_node",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "placed_on": "west"
       }
     },
     {
