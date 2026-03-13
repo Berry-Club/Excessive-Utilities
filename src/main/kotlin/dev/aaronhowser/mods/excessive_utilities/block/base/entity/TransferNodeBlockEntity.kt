@@ -52,6 +52,18 @@ abstract class TransferNodeBlockEntity(
 		return listOf(upgradeContainer)
 	}
 
+	protected fun getSpeedUpgradeCount(): Int {
+		var count = 0
+
+		for (stack in upgradeContainer.items) {
+			if (stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)) {
+				count += stack.count
+			}
+		}
+
+		return count
+	}
+
 	override fun getGpUsage(): Double {
 		if (!didWorkThisTick) return 0.0
 
@@ -86,18 +98,6 @@ abstract class TransferNodeBlockEntity(
 	}
 
 	abstract fun activeTick(level: ServerLevel)
-
-	protected fun getSpeedUpgradeCount(): Int {
-		var count = 0
-
-		for (stack in upgradeContainer.items) {
-			if (stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)) {
-				count += stack.count
-			}
-		}
-
-		return count
-	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
