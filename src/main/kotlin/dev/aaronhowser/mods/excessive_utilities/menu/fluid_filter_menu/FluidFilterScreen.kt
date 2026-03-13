@@ -5,9 +5,7 @@ import dev.aaronhowser.mods.aaron.menu.components.ChangingTextButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.FluidFilterFlagsComponent
-import dev.aaronhowser.mods.excessive_utilities.item.component.ItemFilterFlagsComponent
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 

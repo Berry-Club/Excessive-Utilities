@@ -1,11 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.util.EnderQuarryUpgradeType
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderQuarryBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderQuarryUpgradeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import dev.aaronhowser.mods.excessive_utilities.util.EnderQuarryUpgradeType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.LivingEntity

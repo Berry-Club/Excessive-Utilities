@@ -1,10 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
-import dev.aaronhowser.mods.excessive_utilities.util.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import dev.aaronhowser.mods.excessive_utilities.util.ConfigurableFluidTank
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup

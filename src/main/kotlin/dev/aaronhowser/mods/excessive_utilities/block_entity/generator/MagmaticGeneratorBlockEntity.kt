@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup

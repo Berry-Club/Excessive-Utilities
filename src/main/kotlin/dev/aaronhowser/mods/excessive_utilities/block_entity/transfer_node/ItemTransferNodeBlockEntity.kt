@@ -50,7 +50,7 @@ class ItemTransferNodeBlockEntity(
 		val filterStack = filterContainer.getItem(0)
 		if (filterStack.isEmpty) return true
 
-		return ItemFilterItem.Companion.passesFilter(filterStack, stack)
+		return ItemFilterItem.passesFilter(filterStack, stack)
 	}
 
 	private fun getParentItemHandler(level: ServerLevel): IItemHandler? {

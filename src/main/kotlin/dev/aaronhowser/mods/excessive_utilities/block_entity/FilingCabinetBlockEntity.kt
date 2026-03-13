@@ -22,7 +22,6 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.items.IItemHandler
-import kotlin.collections.iterator
 
 class FilingCabinetBlockEntity(
 	pos: BlockPos,

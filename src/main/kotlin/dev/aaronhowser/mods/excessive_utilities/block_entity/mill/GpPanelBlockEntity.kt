@@ -19,9 +19,9 @@ class GpPanelBlockEntity(
 		val level = level ?: return 0.0
 
 		val amount = if (requiresDay) {
-			ServerConfig.Companion.CONFIG.solarPanelGeneration.get()
+			ServerConfig.CONFIG.solarPanelGeneration.get()
 		} else {
-			ServerConfig.Companion.CONFIG.lunarPanelGeneration.get()
+			ServerConfig.CONFIG.lunarPanelGeneration.get()
 		}
 
 		val canSeeSky = level.canSeeSky(worldPosition.above())

@@ -1,11 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
