@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.core.NonNullList
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
@@ -13,6 +14,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.Level
 
 class ItemFilterItem(properties: Properties) : Item(properties) {
@@ -36,6 +38,8 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
+		const val CONTAINER_SIZE = 16
+
 		fun setFlags(filterStack: ItemStack, vararg flags: Flag) {
 			var flagsInt = 0
 			for (flag in flags) {
@@ -56,6 +60,37 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 			}
 
 			return flags
+		}
+
+		fun getGhostStack(filterStack: ItemStack, slot: Int): ItemStack {
+			if (!filterStack.isItem(ModItems.ITEM_FILTER)) return ItemStack.EMPTY
+			if (slot !in 0 until CONTAINER_SIZE) return ItemStack.EMPTY
+
+			val filterItems = getFilterItems(filterStack)
+			return filterItems[slot]
+		}
+
+		fun placeGhostInSlot(filterStack: ItemStack, slot: Int, stackToPlace: ItemStack) {
+			if (!filterStack.isItem(ModItems.ITEM_FILTER)) return
+			if (slot !in 0 until CONTAINER_SIZE) return
+
+			val filterItems = getFilterItems(filterStack)
+			filterItems[slot] = stackToPlace.copyWithCount(1)
+
+			val isEmpty = filterItems.all(ItemStack::isEmpty)
+			if (isEmpty) {
+				filterStack.remove(DataComponents.CONTAINER)
+			} else {
+				val newComponent = ItemContainerContents.fromItems(filterItems)
+				filterStack.set(DataComponents.CONTAINER, newComponent)
+			}
+		}
+
+		fun getFilterItems(filterStack: ItemStack): NonNullList<ItemStack> {
+			val list = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY)
+			val container = filterStack.get(DataComponents.CONTAINER) ?: return list
+			container.copyInto(list)
+			return list
 		}
 
 		fun passesFilter(filterStack: ItemStack, checkedStack: ItemStack): Boolean {
