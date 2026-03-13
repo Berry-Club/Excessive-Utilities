@@ -54,7 +54,7 @@ class FluidFilterScreen(
 
 		ignoreAllComponentsButton = ChangingTextButton(
 			x = rightPos - buttonWidth - 5,
-			y = topPos + 5 + (20 + 5) * 3,
+			y = topPos + 5 + (20 + 5) * 2,
 			width = buttonWidth,
 			height = 20,
 			messageGetter = { ItemFilterItem.Flag.IGNORE_ALL_COMPONENTS.getMessage(menu.ignoreAllComponents()) },

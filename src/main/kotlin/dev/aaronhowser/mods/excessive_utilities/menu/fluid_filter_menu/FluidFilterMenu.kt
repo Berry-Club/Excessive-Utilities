@@ -11,6 +11,7 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.neoforged.neoforge.fluids.FluidUtil
 import net.neoforged.neoforge.items.ItemStackHandler
 import net.neoforged.neoforge.items.SlotItemHandler
 
@@ -60,7 +61,7 @@ class FluidFilterMenu(
 			val y = 8 + (i / 4) * 18
 
 			val slot = object : SlotItemHandler(filterItems, i, x, y) {
-				override fun mayPlace(stack: ItemStack): Boolean = true
+				override fun mayPlace(stack: ItemStack): Boolean = FluidUtil.getFluidContained(stack).isPresent
 				override fun mayPickup(player: Player): Boolean = true
 				override fun getMaxStackSize(): Int = 1
 				override fun getMaxStackSize(stack: ItemStack): Int = 1

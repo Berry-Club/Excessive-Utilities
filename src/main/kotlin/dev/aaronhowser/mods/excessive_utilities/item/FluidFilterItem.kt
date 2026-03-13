@@ -117,7 +117,7 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 		}
 
 		fun getGhostStack(filterStack: ItemStack, slot: Int): ItemStack {
-			if (!filterStack.isItem(ModItems.ITEM_FILTER)) return ItemStack.EMPTY
+			if (!filterStack.isItem(ModItems.FLUID_FILTER)) return ItemStack.EMPTY
 			if (slot !in 0 until CONTAINER_SIZE) return ItemStack.EMPTY
 
 			val filterItems = getFilterItems(filterStack)
@@ -125,7 +125,7 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 		}
 
 		fun placeGhostInSlot(filterStack: ItemStack, slot: Int, stackToPlace: ItemStack) {
-			if (!filterStack.isItem(ModItems.ITEM_FILTER)) return
+			if (!filterStack.isItem(ModItems.FLUID_FILTER)) return
 			if (slot !in 0 until CONTAINER_SIZE) return
 
 			val filterItems = getFilterItems(filterStack)
