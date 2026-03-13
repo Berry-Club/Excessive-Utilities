@@ -32,7 +32,7 @@ object GridPowerGuiRenderer {
 			if (!isTag) return
 		}
 
-		val format = DecimalFormat("#,##00.##")
+		val format = DecimalFormat("#,##0.##")
 		val usage = format.format(ClientGridPower.usage)
 		val capacity = format.format(ClientGridPower.capacity)
 
