@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node
 
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
@@ -23,9 +22,9 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank
-import net.neoforged.neoforge.items.ItemHandlerHelper
 
 class FluidTransferNodeBlockEntity(
 	pos: BlockPos,
@@ -197,37 +196,31 @@ class FluidTransferNodeBlockEntity(
 	private fun pullFromParent(level: ServerLevel) {
 		val parentHandler = getParentFluidHandler(level) ?: return
 
-		val stackInBuffer = bufferContainer.getItem(0)
-		if (stackInBuffer.isFull()) return
+		val amountThatCanFit = bufferTank.capacity - bufferTank.fluidAmount
+		if (amountThatCanFit <= 0) return
 
-		var amountToExtract = if (hasStackUpgrade()) 64 else 1
+		val maxAmount = if (hasStackUpgrade()) 1_000 else 200
+		val amountToExtract = amountThatCanFit.coerceAtMost(maxAmount)
+		if (amountToExtract <= 0) return
 
-		if (stackInBuffer.isEmpty) {
-			for (slot in 0 until parentHandler.slots) {
-				val simExtract = parentHandler.extractItem(slot, amountToExtract, true)
-				if (simExtract.isEmpty || !passesFilter(simExtract)) continue
+		val fluidInBuffer = bufferTank.fluid
 
-				val extracted = parentHandler.extractItem(slot, amountToExtract, false)
-				bufferContainer.setItem(0, extracted)
-				didWorkThisTick = true
-				break
-			}
+		for (tankIndex in 0 until parentHandler.tanks) {
+			val simulated = parentHandler.drain(amountToExtract, IFluidHandler.FluidAction.SIMULATE)
+			if (simulated.isEmpty) continue
 
-			return
-		}
+			val canExtract = fluidInBuffer.isEmpty || FluidStack.isSameFluidSameComponents(fluidInBuffer, simulated)
+			if (!canExtract) continue
 
-		amountToExtract = amountToExtract.coerceAtMost(stackInBuffer.maxStackSize - stackInBuffer.count)
+			val actualExtracted = parentHandler.drain(amountToExtract, IFluidHandler.FluidAction.EXECUTE)
+			if (actualExtracted.isEmpty) continue
 
-		for (slot in 0 until parentHandler.slots) {
-			val simExtract = parentHandler.extractItem(slot, amountToExtract, true)
-			if (simExtract.isEmpty || !ItemStack.isSameItemSameComponents(simExtract, stackInBuffer)) continue
+			val canDefinitelyExtract = fluidInBuffer.isEmpty || FluidStack.isSameFluidSameComponents(fluidInBuffer, actualExtracted)
+			if (!canDefinitelyExtract) continue
 
-			val extracted = parentHandler.extractItem(slot, amountToExtract, false)
-			val newStack = stackInBuffer.copy()
-			newStack.count += extracted.count
-			bufferContainer.setItem(0, newStack)
+			bufferTank.fill(actualExtracted, IFluidHandler.FluidAction.EXECUTE)
 			didWorkThisTick = true
-			break
+			return
 		}
 	}
 
