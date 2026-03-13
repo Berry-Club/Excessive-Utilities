@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
-import dev.aaronhowser.mods.excessive_utilities.block.base.EnderQuarryUpgradeType
+import dev.aaronhowser.mods.excessive_utilities.util.EnderQuarryUpgradeType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.*
 import net.minecraft.world.level.block.state.BlockBehaviour

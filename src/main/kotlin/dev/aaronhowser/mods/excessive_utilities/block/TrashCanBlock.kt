@@ -1,8 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.EnergyTrashCanBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.FluidTrashCanBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.TrashCanBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.EnergyTrashCanBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.FluidTrashCanBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.TrashCanBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.StringRepresentable

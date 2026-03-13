@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.block.entity.QuantumQuarryActuatorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.QuantumQuarryActuatorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

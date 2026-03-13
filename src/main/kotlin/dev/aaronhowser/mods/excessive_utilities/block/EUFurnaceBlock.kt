@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.SimpleContainerBlock
-import dev.aaronhowser.mods.excessive_utilities.block.entity.EUFurnaceBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.EUFurnaceBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

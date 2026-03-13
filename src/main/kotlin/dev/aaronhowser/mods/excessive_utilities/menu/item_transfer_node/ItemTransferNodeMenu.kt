@@ -3,8 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.entity.ItemTransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.ItemTransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container

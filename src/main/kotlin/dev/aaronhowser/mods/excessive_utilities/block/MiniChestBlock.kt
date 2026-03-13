@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.excessive_utilities.block.base.SimpleContainerBlock
-import dev.aaronhowser.mods.excessive_utilities.block.entity.MiniChestBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.MiniChestBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.InteractionResult

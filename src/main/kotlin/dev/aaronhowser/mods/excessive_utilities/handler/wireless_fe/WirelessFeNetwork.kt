@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.handler.wireless_fe
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.WirelessFeBatteryBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.WirelessFeBatteryBlockEntity
 import net.neoforged.neoforge.energy.IEnergyStorage
 import java.util.*
 

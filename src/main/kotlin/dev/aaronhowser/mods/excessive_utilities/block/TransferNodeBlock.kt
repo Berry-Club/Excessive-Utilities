@@ -1,10 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.block.base.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block.base.GpDrainBlock
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GpDrainBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction

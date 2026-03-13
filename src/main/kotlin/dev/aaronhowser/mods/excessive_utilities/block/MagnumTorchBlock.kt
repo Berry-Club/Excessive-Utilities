@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.MagnumTorchBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.MagnumTorchBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block

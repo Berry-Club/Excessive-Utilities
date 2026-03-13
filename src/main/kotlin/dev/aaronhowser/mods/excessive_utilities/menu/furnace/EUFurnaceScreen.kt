@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.menu.furnace
 import dev.aaronhowser.mods.aaron.menu.BaseScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.entity.EUFurnaceBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.EUFurnaceBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory

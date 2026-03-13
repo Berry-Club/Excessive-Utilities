@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.SoundMufflerBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.SoundMufflerBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks

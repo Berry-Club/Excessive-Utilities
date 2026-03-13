@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.PeacefulTableBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.PeacefulTableBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter

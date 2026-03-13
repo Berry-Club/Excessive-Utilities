@@ -1,0 +1,68 @@
+package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
+
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank
+
+class MagmaticGeneratorBlockEntity(
+	pos: BlockPos,
+	blockState: BlockState,
+) : GeneratorBlockEntity(ModBlockEntityTypes.MAGMATIC_GENERATOR.get(), pos, blockState) {
+
+	override val generatorType: GeneratorType = GeneratorType.MAGMATIC
+
+	val tank: FluidTank =
+		object : FluidTank(1_000_000) {
+			override fun isFluidValid(stack: FluidStack): Boolean {
+				val fuelMap = MagmaticGeneratorFuel.DATA_MAP
+				val fluidFuel = stack.fluid.builtInRegistryHolder().getData(fuelMap)
+
+				return fluidFuel != null
+			}
+		}
+
+	override fun tryStartBurning(level: ServerLevel): Boolean {
+		if (burnTimeRemaining > 0) return false
+
+		val fluidInTank = tank.fluid
+		if (fluidInTank.isEmpty) return false
+
+		val fuelMap = MagmaticGeneratorFuel.DATA_MAP
+		val fluidFuel = fluidInTank.fluid.builtInRegistryHolder().getData(fuelMap) ?: return false
+
+		fePerTick = fluidFuel.fePerTick
+		burnTimeRemaining = fluidFuel.ticksPerMb
+
+		tank.drain(1, IFluidHandler.FluidAction.EXECUTE)
+		setChanged()
+
+		return true
+	}
+
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+		tank.writeToNBT(registries, tag)
+	}
+
+	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.loadAdditional(tag, registries)
+		tank.readFromNBT(registries, tag)
+	}
+
+	companion object {
+		fun getFluidCapability(blockEntity: MagmaticGeneratorBlockEntity, direction: Direction?): IFluidHandler {
+			return blockEntity.tank
+		}
+	}
+
+}

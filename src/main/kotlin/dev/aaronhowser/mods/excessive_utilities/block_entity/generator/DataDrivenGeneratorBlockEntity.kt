@@ -1,0 +1,88 @@
+package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
+
+import dev.aaronhowser.mods.excessive_utilities.util.DataDrivenGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
+
+open class DataDrivenGeneratorBlockEntity(
+	type: BlockEntityType<*>,
+	val dataDrivenGeneratorType: DataDrivenGeneratorType,
+	pos: BlockPos,
+	blockState: BlockState,
+) : GeneratorBlockEntity(type, pos, blockState) {
+
+	override val generatorType: GeneratorType = dataDrivenGeneratorType.baseGeneratorType
+
+	override fun isValidInput(itemStack: ItemStack): Boolean {
+		val fuelMap = dataDrivenGeneratorType.fuelDataMap
+		val itemFuel = itemStack.item.builtInRegistryHolder().getData(fuelMap)
+
+		return itemFuel != null
+	}
+
+	override fun tryStartBurning(level: ServerLevel): Boolean {
+		if (burnTimeRemaining > 0) return false
+		val container = container ?: return false
+
+		val fuelMap = dataDrivenGeneratorType.fuelDataMap
+
+		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
+		if (inputStack.isEmpty) return false
+
+		val itemFuel = inputStack.item.builtInRegistryHolder().getData(fuelMap) ?: return false
+
+		fePerTick = itemFuel.fePerTick
+		burnTimeRemaining = itemFuel.burnTime
+
+		inputStack.shrink(1)
+		setChanged()
+
+		return true
+	}
+
+	companion object {
+		fun ender(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
+			dataDrivenGeneratorType = DataDrivenGeneratorType.ENDER,
+			pos = pos,
+			blockState = state
+		)
+
+		fun explosive(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
+			dataDrivenGeneratorType = DataDrivenGeneratorType.EXPLOSIVE,
+			pos = pos,
+			blockState = state
+		)
+
+		fun pink(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.PINK_GENERATOR.get(),
+			dataDrivenGeneratorType = DataDrivenGeneratorType.PINK,
+			pos = pos,
+			blockState = state
+		)
+
+		fun frosty(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.FROSTY_GENERATOR.get(),
+			dataDrivenGeneratorType = DataDrivenGeneratorType.FROSTY,
+			pos = pos,
+			blockState = state
+		)
+
+		fun halitosis(pos: BlockPos, state: BlockState) = DataDrivenGeneratorBlockEntity(
+			type = ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
+			dataDrivenGeneratorType = DataDrivenGeneratorType.HALITOSIS,
+			pos = pos,
+			blockState = state
+		)
+
+	}
+
+}

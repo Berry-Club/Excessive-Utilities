@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.block.entity.MagicalSnowGlobeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.MagicalSnowGlobeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.LivingEntity

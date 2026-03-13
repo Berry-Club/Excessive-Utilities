@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.menu.resonator
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.aaron.menu.components.OutputSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.excessive_utilities.block.entity.ResonatorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.ResonatorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container

@@ -1,8 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.excessive_utilities.block.base.GeneratorContainer
-import dev.aaronhowser.mods.excessive_utilities.block.base.entity.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer

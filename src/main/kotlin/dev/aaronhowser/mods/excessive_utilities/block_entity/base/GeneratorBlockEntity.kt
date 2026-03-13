@@ -1,0 +1,235 @@
+package dev.aaronhowser.mods.excessive_utilities.block_entity.base
+
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
+import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
+import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.SingleItemGeneratorMenu
+import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Container
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.Level
+import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.energy.EnergyStorage
+import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandlerModifiable
+import java.util.*
+
+abstract class GeneratorBlockEntity(
+	type: BlockEntityType<*>,
+	pos: BlockPos,
+	blockState: BlockState
+) : BlockEntity(type, pos, blockState), ContainerContainer, MenuProvider {
+
+	abstract val generatorType: GeneratorType
+	var ownerUuid: UUID? = null
+
+	protected open val energyStorage = EnergyStorage(1_000_000)
+
+	protected open val container: GeneratorContainer? =
+		object : GeneratorContainer(this@GeneratorBlockEntity, amountInputs = 1) {
+			override fun canPlaceInput(stack: ItemStack): Boolean = isValidInput(stack)
+			override fun canPlaceSecondaryInput(stack: ItemStack): Boolean = isValidSecondaryInput(stack)
+			override fun canPlaceUpgrade(stack: ItemStack): Boolean = isValidUpgrade(stack)
+		}
+
+	override fun getContainers(): List<Container> = listOfNotNull(container)
+	open fun getItemHandler(direction: Direction?): IItemHandlerModifiable? = container?.itemHandler
+
+	protected open fun isValidInput(itemStack: ItemStack) = true
+	protected open fun isValidSecondaryInput(itemStack: ItemStack) = true
+	protected open fun isValidUpgrade(itemStack: ItemStack) = true
+
+	protected open val containerData: ContainerData =
+		object : ContainerData {
+			override fun getCount(): Int = DEFAULT_GENERATOR_CONTAINER_DATA_SIZE
+
+			override fun get(index: Int): Int {
+				return when (index) {
+					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
+					BURN_TIME_REMAINING_DATA_INDEX -> burnTimeRemaining
+					else -> -1
+				}
+			}
+
+			override fun set(index: Int, value: Int) {
+				// Cannot set from container data
+			}
+		}
+
+	protected var lastGeneratedEnergyOnTick: Long = -1L
+	open fun isContributingToRainbowGen(): Boolean {
+		val currentTick = level?.gameTime ?: return false
+		return lastGeneratedEnergyOnTick >= currentTick - 10L
+	}
+
+	protected var fePerTick: Int = 0
+		set(value) {
+			if (field == value) return
+			field = value
+			setChanged()
+		}
+
+	protected var burnTimeRemaining: Int = 0
+		set(value) {
+			if (field == value) return
+			field = value
+			setChanged()
+		}
+
+	protected open fun serverTick(level: ServerLevel) {
+		addToNetwork(level)
+
+		val speed = container?.getSpeed() ?: 1
+		var success = false
+		for (i in 0 until speed) {
+			if (generatorTick(level)) success = true
+		}
+
+		if (success) {
+			lastGeneratedEnergyOnTick = level.gameTime
+			effectOnSuccess(level)
+		}
+	}
+
+	protected open fun addToNetwork(level: ServerLevel) {
+		val owner = ownerUuid ?: return
+		val network = RainbowGeneratorHandler.get(level).getGeneratorNetwork(owner)
+		network.addGenerator(this)
+	}
+
+	protected open fun effectOnSuccess(level: ServerLevel) {}
+
+	/**
+	 * @return true if it generated energy
+	 */
+	protected open fun generatorTick(level: ServerLevel): Boolean {
+		if (burnTimeRemaining <= 0) {
+			fePerTick = 0
+			val wasLit = blockState.getValue(GeneratorBlock.LIT)
+			val shouldBeLit = tryStartBurning(level)
+			changeLitState(level, wasLit, shouldBeLit)
+			if (burnTimeRemaining <= 0) return false
+		}
+
+		val wasLit = blockState.getValue(GeneratorBlock.LIT)
+		val shouldBeLit = generateEnergy(level)
+		changeLitState(level, wasLit, shouldBeLit)
+
+		return shouldBeLit
+	}
+
+	protected open fun changeLitState(level: ServerLevel, wasLit: Boolean, shouldBeLit: Boolean) {
+		if (wasLit != shouldBeLit) {
+			val blockState = level.getBlockState(worldPosition)
+			level.setBlockAndUpdate(
+				worldPosition,
+				blockState.setValue(GeneratorBlock.LIT, shouldBeLit)
+			)
+		}
+	}
+
+	protected abstract fun tryStartBurning(level: ServerLevel): Boolean
+
+	/**
+	 * @return true if it generated energy
+	 */
+	protected open fun generateEnergy(level: ServerLevel): Boolean {
+		val remainingCapacity = energyStorage.maxEnergyStored - energyStorage.energyStored
+		if (remainingCapacity <= 0) return false
+
+		val energyToGenerate = fePerTick.coerceAtMost(remainingCapacity)
+		energyStorage.receiveEnergy(energyToGenerate, false)
+
+		burnTimeRemaining--
+		setChanged()
+		return true
+	}
+
+	protected open fun clientTick(level: Level) {}
+
+	override fun getDisplayName(): Component = blockState.block.name
+
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
+		val container = container ?: return null
+		return SingleItemGeneratorMenu(containerId, playerInventory, container, containerData)
+	}
+
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+
+		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
+		tag.putInt(FE_PER_TICK_NBT, fePerTick)
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
+
+		val container = container
+		if (container != null) {
+			tag.saveItems(container, registries)
+		}
+	}
+
+	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.loadAdditional(tag, registries)
+
+		burnTimeRemaining = tag.getInt(BURN_TIME_REMAINING_NBT)
+		fePerTick = tag.getInt(FE_PER_TICK_NBT)
+		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+
+		val container = container
+		if (container != null) {
+			tag.loadItems(container, registries)
+		}
+	}
+
+	companion object {
+		const val OWNER_UUID_NBT = "OwnerUUID"
+		const val BURN_TIME_REMAINING_NBT = "BurnTimeRemaining"
+		const val FE_PER_TICK_NBT = "FePerTick"
+		const val STORED_ENERGY_NBT = "StoredEnergy"
+
+		const val DEFAULT_GENERATOR_CONTAINER_DATA_SIZE = 3
+		const val MAX_ENERGY_DATA_INDEX = 0
+		const val CURRENT_ENERGY_DATA_INDEX = 1
+		const val BURN_TIME_REMAINING_DATA_INDEX = 2
+
+		fun tick(
+			level: Level,
+			blockPos: BlockPos,
+			blockState: BlockState,
+			blockEntity: GeneratorBlockEntity
+		) {
+			if (level is ServerLevel) {
+				blockEntity.serverTick(level)
+			} else {
+				blockEntity.clientTick(level)
+			}
+		}
+
+		fun getEnergyCapability(transmitter: GeneratorBlockEntity, direction: Direction?): IEnergyStorage {
+			return transmitter.energyStorage
+		}
+	}
+
+}

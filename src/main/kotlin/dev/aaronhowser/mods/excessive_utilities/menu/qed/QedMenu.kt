@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.menu.qed
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.aaron.menu.components.OutputSlot
-import dev.aaronhowser.mods.excessive_utilities.block.entity.QedBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.QedBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer

@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.block.entity.CreativeHarvestBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.CreativeHarvestBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel

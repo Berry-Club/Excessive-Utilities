@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.event
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
-import dev.aaronhowser.mods.excessive_utilities.block.entity.SoundMufflerBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.SoundMufflerBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
