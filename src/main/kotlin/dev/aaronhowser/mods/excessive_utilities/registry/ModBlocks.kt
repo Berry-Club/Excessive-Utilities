@@ -540,5 +540,6 @@ object ModBlocks : AaronBlockRegistry() {
 	// - Chunk Loading Ward (Use FTB Chunks or something)
 	// - Ender Quarry Pump Upgrade (Use the Ender-Thermic Pump)
 	// - Rain Muffler (Just mute it in your sound settings)
+	// - Analog Crafter (Added to vanilla)
 
 }
