@@ -7,7 +7,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
-import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
@@ -239,11 +239,11 @@ class FluidTransferNodeBlockEntity(
 		}
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
-		return ItemTransferNodeMenu(
+		return FluidTransferNodeMenu(
 			containerId,
 			playerInventory,
 			upgradeContainer,
-			bufferContainer,
+			this,
 			filterContainer,
 			containerData
 		)
@@ -252,7 +252,9 @@ class FluidTransferNodeBlockEntity(
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
-		tag.saveItems(bufferContainer, registries)
+		val bufferTag = CompoundTag()
+		bufferTank.writeToNBT(registries, bufferTag)
+		tag.put(BUFFER_NBT, bufferTag)
 
 		if (!filterContainer.isEmpty) {
 			val filterTag = CompoundTag()
@@ -264,7 +266,8 @@ class FluidTransferNodeBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
-		tag.loadItems(bufferContainer, registries)
+		val bufferTag = tag.getCompound(BUFFER_NBT)
+		bufferTank.readFromNBT(registries, bufferTag)
 
 		if (tag.contains(FILTER_NBT)) {
 			val filterTag = tag.getCompound(FILTER_NBT)
@@ -274,6 +277,7 @@ class FluidTransferNodeBlockEntity(
 
 	companion object {
 		const val FILTER_NBT = "Filter"
+		const val BUFFER_NBT = "BufferTank"
 
 		const val TANK_SIZE = 64_000
 		const val FILTER_CONTAINER_SIZE = 1
