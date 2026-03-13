@@ -115,8 +115,6 @@ abstract class TransferNodeBlockEntity(
 	}
 
 	protected open fun spawnParticles(level: ServerLevel) {
-		if (!didWorkThisTick) return
-
 		val pingPos = ping.currentPingPos
 
 		for (i in 0 until 5) {
