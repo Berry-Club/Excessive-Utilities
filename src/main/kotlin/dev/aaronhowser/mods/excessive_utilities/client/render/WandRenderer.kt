@@ -41,7 +41,8 @@ object WandRenderer {
 		val cameraPos = event.camera.position
 
 		if (builderWand != null) {
-			renderBuilderWand(level, pos, face, builderWand, player, poseStack, bufferSource, cameraPos)
+			val success = renderBuilderWand(level, pos, face, builderWand, player, poseStack, bufferSource, cameraPos)
+			if (success) event.isCanceled = true
 		}
 
 	}
@@ -55,16 +56,17 @@ object WandRenderer {
 		poseStack: PoseStack,
 		bufferSource: MultiBufferSource,
 		cameraPos: Vec3
-	) {
+	): Boolean {
 		val clickedState = level.getBlockState(clickedPos)
-		if (clickedState.isAir) return
+		if (clickedState.isAir) return false
 		val blockItem = clickedState.block.asItem()
-		if (blockItem == Items.AIR) return
+		if (blockItem == Items.AIR) return false
 
 		val amountInInventory = player.inventory.countItem(blockItem)
 
-		val maxAmount = wandStack.get(ModDataComponents.AMOUNT_BLOCKS) ?: return
+		val maxAmount = wandStack.getOrDefault(ModDataComponents.AMOUNT_BLOCKS, 0)
 		val amountCanPlace = minOf(maxAmount, amountInInventory)
+		if (amountCanPlace <= 0) return false
 
 		val positions = BuildersWandItem.getPositions(
 			level,
@@ -87,6 +89,8 @@ object WandRenderer {
 				r = 1f, g = 1f, b = 1f, a = 1f
 			)
 		}
+
+		return true
 	}
 
 	private fun renderDestructionWand(destructionWand: ItemStack, event: RenderHighlightEvent.Block) {
