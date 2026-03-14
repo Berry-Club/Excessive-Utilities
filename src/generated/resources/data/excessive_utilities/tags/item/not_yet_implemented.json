@@ -1,0 +1,15 @@
+{
+  "values": [
+    "excessive_utilities:terraformer",
+    "excessive_utilities:climograph_base_unit",
+    "excessive_utilities:antenna",
+    "excessive_utilities:cooler",
+    "excessive_utilities:dehostilifier",
+    "excessive_utilities:dehumidifier",
+    "excessive_utilities:heater",
+    "excessive_utilities:humidifier",
+    "excessive_utilities:magic_absorption",
+    "excessive_utilities:magic_infuser",
+    "excessive_utilities:redstone_glass"
+  ]
+}

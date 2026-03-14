@@ -269,6 +269,21 @@ class ModItemTagsProvider(
 			.addTags(
 				SPEED_UPGRADES
 			)
+
+		tag(NOT_YET_IMPLEMENTED)
+			.add(
+				ModBlocks.TERRAFORMER.asItem(),
+				ModBlocks.CLIMOGRAPH_BASE_UNIT.asItem(),
+				ModBlocks.ANTENNA.asItem(),
+				ModBlocks.COOLER.asItem(),
+				ModBlocks.DEHOSTILIFIER.asItem(),
+				ModBlocks.DEHUMIDIFIER.asItem(),
+				ModBlocks.HEATER.asItem(),
+				ModBlocks.HUMIDIFIER.asItem(),
+				ModBlocks.MAGIC_ABSORPTION.asItem(),
+				ModBlocks.MAGIC_INFUSER.asItem(),
+				ModBlocks.REDSTONE_GLASS.asItem(),
+			)
 	}
 
 	companion object {
@@ -293,6 +308,8 @@ class ModItemTagsProvider(
 		val BRICK_BLOCKS = common("brick_blocks")
 		val GLOWSTONES = common("glowstones")
 		val REDSTONE_LAMPS = common("redstone_lamps")
+
+		val NOT_YET_IMPLEMENTED = create("not_yet_implemented")
 	}
 
 }

@@ -1,8 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.BiomeMarkerItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import net.minecraft.core.registries.BuiltInRegistries
@@ -29,6 +31,8 @@ object ModCreativeModeTabs {
 				val blockItems = mutableListOf<BlockItem>()
 
 				for (deferred in ModItems.ITEM_REGISTRY.entries) {
+					if (deferred.isHolder(ModItemTagsProvider.NOT_YET_IMPLEMENTED)) continue
+
 					val item = deferred.get()
 					if (item is BlockItem) {
 						blockItems.add(item)
