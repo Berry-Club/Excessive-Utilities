@@ -1,12 +1,15 @@
 package dev.aaronhowser.mods.excessive_utilities.client.render
 
 import com.mojang.blaze3d.vertex.PoseStack
+import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
-import dev.aaronhowser.mods.aaron.client.render.RenderUtil
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
 import dev.aaronhowser.mods.excessive_utilities.item.BuildersWandItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
@@ -15,6 +18,7 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.client.event.RenderHighlightEvent
 import java.util.function.Predicate
+import kotlin.math.sqrt
 
 object WandRenderer {
 
@@ -26,15 +30,18 @@ object WandRenderer {
 
 		if (builderWand == null && destructionWand == null) return
 
+		event.isCanceled = true
+
 		val level = player.level()
 		val hit = event.target
 		val pos = hit.blockPos
 		val face = hit.direction
 
 		val poseStack = event.poseStack
+		val bufferSource = event.multiBufferSource
 
 		if (builderWand != null) {
-			renderBuilderWand(level, pos, face, builderWand, player, poseStack)
+			renderBuilderWand(level, pos, face, builderWand, player, poseStack, bufferSource)
 		}
 
 	}
@@ -45,7 +52,8 @@ object WandRenderer {
 		face: Direction,
 		wandStack: ItemStack,
 		player: Player,
-		poseStack: PoseStack
+		poseStack: PoseStack,
+		bufferSource: MultiBufferSource
 	) {
 		val clickedState = level.getBlockState(clickedPos)
 		if (clickedState.isAir) return
@@ -65,10 +73,18 @@ object WandRenderer {
 			amountCanPlace
 		)
 
-		for (pos in positions) {
-			val offset = clickedPos.center.vectorTo(pos.center)
+		val linesConsumer = bufferSource.getBuffer(RenderType.lines())
 
-			RenderUtil.renderCubeThroughWalls(poseStack, offset, 1f, 0xFFFFFFFF.toInt())
+		for (pos in positions) {
+			val offset = clickedPos.toVec3().vectorTo(pos.toVec3()).toVector3f()
+
+			renderCubeWireframe(
+				poseStack,
+				linesConsumer,
+				offset.x, offset.y, offset.z,
+				offset.x + 1, offset.y + 1, offset.z + 1,
+				r = 0f, g = 1f, b = 0f, a = 0.5f
+			)
 		}
 	}
 
@@ -95,6 +111,85 @@ object WandRenderer {
 		}
 
 		return null
+	}
+
+	private fun renderCubeWireframe(
+		poseStack: PoseStack,
+		vertexConsumer: VertexConsumer,
+		minX: Float, minY: Float, minZ: Float,
+		maxX: Float, maxY: Float, maxZ: Float,
+		r: Float, g: Float, b: Float, a: Float
+	) {
+		val pose = poseStack.last()
+
+		val nnn = floatArrayOf(minX, minY, minZ) // Negative X, Negative Y, Negative Z
+		val nnp = floatArrayOf(minX, minY, maxZ) // Negative X, Negative Y, Positive Z
+		val npn = floatArrayOf(minX, maxY, minZ) // Negative X, Positive Y, Negative Z
+		val npp = floatArrayOf(minX, maxY, maxZ) // Negative X, Positive Y, Positive Z
+		val pnn = floatArrayOf(maxX, minY, minZ) // Positive X, Negative Y, Negative Z
+		val pnp = floatArrayOf(maxX, minY, maxZ) // Positive X, Negative Y, Positive Z
+		val ppn = floatArrayOf(maxX, maxY, minZ) // Positive X, Positive Y, Negative Z
+		val ppp = floatArrayOf(maxX, maxY, maxZ) // Positive X, Positive Y, Positive Z
+
+		val lines = listOf(
+			// Bottom face
+			nnn to nnp,
+			nnp to pnp,
+			pnp to pnn,
+			pnn to nnn,
+
+			// Top face
+			npn to npp,
+			npp to ppp,
+			ppp to ppn,
+			ppn to npn,
+
+			// Vertical edges
+			nnn to npn,
+			nnp to npp,
+			pnn to ppn,
+			pnp to ppp
+		)
+
+		for (edge in lines) {
+			val (start, end) = edge
+			drawLine(
+				vertexConsumer, pose,
+				start[0], start[1], start[2],
+				end[0], end[1], end[2],
+				r, g, b, a
+			)
+		}
+
+	}
+
+	private fun drawLine(
+		vertexConsumer: VertexConsumer,
+		pose: PoseStack.Pose,
+		x1: Float, y1: Float, z1: Float,
+		x2: Float, y2: Float, z2: Float,
+		r: Float, g: Float, b: Float, a: Float
+	) {
+		var dx = x2 - x1
+		var dy = y2 - y1
+		var dz = z2 - z1
+
+		val length = sqrt(dx * dx + dy * dy + dz * dz)
+		if (length == 0f) return
+
+		dx /= length
+		dy /= length
+		dz /= length
+
+		vertexConsumer
+			.addVertex(pose, x1, y1, z1)
+			.setColor(r, g, b, a)
+			.setNormal(pose, dx, dy, dz)
+
+		vertexConsumer
+			.addVertex(pose, x2, y2, z2)
+			.setColor(r, g, b, a)
+			.setNormal(pose, dx, dy, dz)
 	}
 
 }
