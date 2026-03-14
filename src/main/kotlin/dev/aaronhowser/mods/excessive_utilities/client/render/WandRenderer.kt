@@ -16,6 +16,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
+import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.client.event.RenderHighlightEvent
 import java.util.function.Predicate
 import kotlin.math.sqrt
@@ -30,8 +31,6 @@ object WandRenderer {
 
 		if (builderWand == null && destructionWand == null) return
 
-		event.isCanceled = true
-
 		val level = player.level()
 		val hit = event.target
 		val pos = hit.blockPos
@@ -39,9 +38,10 @@ object WandRenderer {
 
 		val poseStack = event.poseStack
 		val bufferSource = event.multiBufferSource
+		val cameraPos = event.camera.position
 
 		if (builderWand != null) {
-			renderBuilderWand(level, pos, face, builderWand, player, poseStack, bufferSource)
+			renderBuilderWand(level, pos, face, builderWand, player, poseStack, bufferSource, cameraPos)
 		}
 
 	}
@@ -53,7 +53,8 @@ object WandRenderer {
 		wandStack: ItemStack,
 		player: Player,
 		poseStack: PoseStack,
-		bufferSource: MultiBufferSource
+		bufferSource: MultiBufferSource,
+		cameraPos: Vec3
 	) {
 		val clickedState = level.getBlockState(clickedPos)
 		if (clickedState.isAir) return
@@ -76,14 +77,14 @@ object WandRenderer {
 		val linesConsumer = bufferSource.getBuffer(RenderType.lines())
 
 		for (pos in positions) {
-			val offset = clickedPos.toVec3().vectorTo(pos.toVec3()).toVector3f()
+			val offset = cameraPos.vectorTo(pos.toVec3()).toVector3f()
 
 			renderCubeWireframe(
 				poseStack,
 				linesConsumer,
 				offset.x, offset.y, offset.z,
 				offset.x + 1, offset.y + 1, offset.z + 1,
-				r = 0f, g = 1f, b = 0f, a = 0.5f
+				r = 1f, g = 1f, b = 1f, a = 1f
 			)
 		}
 	}
