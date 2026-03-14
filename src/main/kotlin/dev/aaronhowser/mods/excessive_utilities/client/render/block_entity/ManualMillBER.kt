@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 
+// TODO: Add the gear to the item model
 class ManualMillBER(
 	val context: BlockEntityRendererProvider.Context
 ) : BlockEntityRenderer<ManualMillBlockEntity> {
@@ -25,14 +26,15 @@ class ManualMillBER(
 		packedLight: Int,
 		packedOverlay: Int
 	) {
-		val turnDegrees = Mth.lerp(partialTick, blockEntity.prevTurnDegrees, blockEntity.turnDegrees)
+		val turnDegrees = Mth.rotLerp(partialTick, blockEntity.prevTurnDegrees, blockEntity.turnDegrees)
 		val itemRenderer = context.itemRenderer
 
 		poseStack.pushPose()
 
-		poseStack.translate(0.5, 0.5, 0.5)
+		poseStack.translate(0.5, 0.4, 0.5)
 
 		poseStack.mulPose(Axis.YP.rotationDegrees(turnDegrees))
+		poseStack.mulPose(Axis.XP.rotationDegrees(90f))
 
 		itemRenderer.renderStatic(
 			gearStack,

@@ -28,7 +28,7 @@ class ManualMillBlockEntity(
 	var prevTurnDegrees: Float = 0f
 	var turnDegrees: Float = 0f
 		set(value) {
-			field = turnDegrees % 360f
+			field = value % 360f
 		}
 
 	override fun getGpGeneration(): Double {
@@ -60,8 +60,8 @@ class ManualMillBlockEntity(
 	}
 
 	override fun clientTick(level: Level) {
+		prevTurnDegrees = turnDegrees
 		if (isBeingCranked) {
-			prevTurnDegrees = turnDegrees
 			turnDegrees += 15f
 		}
 	}

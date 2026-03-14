@@ -928,7 +928,7 @@ class ModBlockStateProvider(
 
 			.element {
 				from(0f, 0f, 0f)
-				to(16f, 7f, 16f)
+				to(16f, 6f, 16f)
 
 				allFaces { dir, fb ->
 					val texture = if (dir.axis == Direction.Axis.Y) "#top" else "#side"
