@@ -92,7 +92,7 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 					level.playSound(
 						null,
 						pos,
-						soundType.placeSound,
+						soundType.breakSound,
 						SoundSource.BLOCKS,
 						(soundType.volume + 1f) / 2f,
 						soundType.pitch * 0.8f
