@@ -48,6 +48,7 @@ class ManualMillBlockEntity(
 
 		val wasBeingCranked = isBeingCranked
 		isBeingCranked = playersCranking.isNotEmpty()
+
 		if (wasBeingCranked != isBeingCranked) {
 			setChanged()
 		}

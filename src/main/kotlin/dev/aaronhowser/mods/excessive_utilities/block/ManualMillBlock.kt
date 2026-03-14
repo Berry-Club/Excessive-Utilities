@@ -7,12 +7,15 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.phys.shapes.CollisionContext
+import net.minecraft.world.phys.shapes.VoxelShape
 
 class ManualMillBlock : GpSourceBlock(Properties.ofFullCopy(Blocks.STONE).noOcclusion()) {
 
@@ -32,6 +35,14 @@ class ManualMillBlock : GpSourceBlock(Properties.ofFullCopy(Blocks.STONE).noOccl
 		}
 
 		return InteractionResult.PASS
+	}
+
+	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
+		return SHAPE
+	}
+
+	companion object {
+		val SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 6.0, 16.0)
 	}
 
 }
