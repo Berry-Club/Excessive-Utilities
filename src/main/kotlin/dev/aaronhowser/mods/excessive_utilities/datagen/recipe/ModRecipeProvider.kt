@@ -2060,6 +2060,13 @@ class ModRecipeProvider(
 			).save(recipeOutput, modLoc(name))
 		}
 
+		slimy(
+			"slime_balls_and_milk",
+			Tags.Items.SLIME_BALLS.asIngredient(),
+			SizedFluidIngredient.of(Tags.Fluids.MILK, 250),
+			10,
+			5 * 20,
+		)
 
 
 	}
