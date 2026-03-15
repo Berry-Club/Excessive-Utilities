@@ -47,7 +47,13 @@ object ClientEvents {
 		// Doing it here instead of in the model because Athena doesn't even LOAD the model
 		val cutout = listOf(
 			ModBlocks.INEFFABLE_GLASS.get(),
-			ModBlocks.INVERTED_ETHEREAL_GLASS.get()
+			ModBlocks.INVERTED_ETHEREAL_GLASS.get(),
+			ModBlocks.HEART_GLASS.get(),
+			ModBlocks.EDGED_GLASS.get(),
+			ModBlocks.SWIRLING_GLASS.get(),
+			ModBlocks.THICKENED_GLASS.get(),
+			ModBlocks.THICKENED_GLASS_BORDERED.get(),
+			ModBlocks.THICKENED_GLASS_PATTERNED.get(),
 		)
 
 		for (block in cutout) {
