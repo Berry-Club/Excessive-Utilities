@@ -32,10 +32,12 @@ class SingleItemFuelRecipe(
 		fun getRecipe(
 			level: Level,
 			type: GeneratorType,
-			input: ItemStack,
+			stack: ItemStack,
 		): SingleItemFuelRecipe? {
+			val input = SingleRecipeInput(stack)
+
 			return getAllRecipesOfType(type, level.recipeManager)
-				.firstOrNull { it.value.matches(SingleRecipeInput(input), level) }
+				.firstOrNull { it.value.matches(input, level) }
 				?.value
 		}
 
