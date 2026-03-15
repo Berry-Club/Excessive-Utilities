@@ -7,8 +7,10 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.EnchanterRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.QedRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.ResonatorRecipeBuilder
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleItemFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
+import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -40,7 +42,10 @@ class ModRecipeProvider(
 	lookupProvider: CompletableFuture<HolderLookup.Provider>
 ) : AaronRecipeProvider(output, lookupProvider) {
 
+	private fun modLoc(name: String) = ExcessiveUtilities.modResource(name)
+
 	override fun buildRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
+		buildGeneratorFuelRecipes(recipeOutput)
 		buildShapedRecipes(recipeOutput, holderLookup)
 		buildShapelessRecipes(recipeOutput)
 		buildResonatorRecipes(recipeOutput)
@@ -1985,6 +1990,56 @@ class ModRecipeProvider(
 			.save(recipeOutput)
 	}
 
-	private fun modLoc(name: String) = ExcessiveUtilities.modResource(name)
+	private fun buildGeneratorFuelRecipes(recipeOutput: RecipeOutput) {
+		fun singleItem(name: String, type: SingleItemFuelRecipe.GeneratorType, ingredient: Ingredient, burnTime: Int, duration: Int) {
+			SingleItemFuelRecipeBuilder(
+				type,
+				ingredient,
+				burnTime,
+				duration
+			).save(recipeOutput, modLoc(name))
+		}
+
+		fun ender(name: String, ingredient: Ingredient, burnTime: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.ENDER, ingredient, burnTime, duration)
+		fun explosive(name: String, ingredient: Ingredient, burnTime: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.EXPLOSIVE, ingredient, burnTime, duration)
+		fun pink(name: String, ingredient: Ingredient, burnTime: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.PINK, ingredient, burnTime, duration)
+		fun netherStar(name: String, ingredient: Ingredient, burnTime: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.NETHER_STAR, ingredient, burnTime, duration)
+		fun frosty(name: String, ingredient: Ingredient, burnTime: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.FROSTY, ingredient, burnTime, duration)
+		fun halitosis(name: String, ingredient: Ingredient, burnTime: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.HALITOSIS, ingredient, burnTime, duration)
+		fun death(name: String, ingredient: Ingredient, burnTime: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.DEATH, ingredient, burnTime, duration)
+
+
+		ender("ender_pearls", Tags.Items.ENDER_PEARLS.asIngredient(), 40, 20 * (60 + 20)) // 1:20
+		ender("ender_eye", Items.ENDER_EYE.asIngredient(), 80, 20 * (2 * 60 + 40)) // 2:40
+
+		// TODO: Make sure these are correct
+
+		pink("pink_dyes", Tags.Items.DYES_PINK.asIngredient(), 40, 10)
+		pink("dyed_pink", Tags.Items.DYED_PINK.asIngredient(), 40, 10)
+
+		death("bones", Tags.Items.BONES.asIngredient(), 40, 20 * 20)
+		death("bone_blocks", Tags.Items.STORAGE_BLOCKS_BONE_MEAL.asIngredient(), 150, 20 * 20)
+		death("bone_meal", Items.BONE_MEAL.asIngredient(), 40, 20 * 10)
+		death("rotten_flesh", Items.ROTTEN_FLESH.asIngredient(), 20, 20 * 20)
+		death("skeleton_skull", Items.SKELETON_SKULL.asIngredient(), 100, 20 * 20)
+		death("wither_skeleton_skull", Items.WITHER_SKELETON_SKULL.asIngredient(), 150, 20 * 20)
+
+		explosive("tnt", Items.TNT.asIngredient(), 160, 20 * (2 * 60 + 40)) // 2:40
+		explosive("tnt_minecart", Items.TNT_MINECART.asIngredient(), 200, 20 * (2 * 60 + 40)) // 2:40
+		explosive("gunpowder", Tags.Items.GUNPOWDERS.asIngredient(), 160, 20 * 20) // 20 seconds
+
+		netherStar("nether_star", Items.NETHER_STAR.asIngredient(), 4_000, 20 * 60 * 2) // 2 minutes
+		netherStar("firework_star", Items.FIREWORK_STAR.asIngredient(), 20, 20) // 20 seconds
+
+		halitosis("dragon_breath", Items.DRAGON_BREATH.asIngredient(), 40, 20 * 60 * 10) // 10 minutes
+
+		frosty("ice", Items.ICE.asIngredient(), 40, 20 * 2) // 2 seconds
+		frosty("packed_ice", Items.PACKED_ICE.asIngredient(), 40, 20 * 2 * 9) // 18 seconds
+		frosty("blue_ice", Items.BLUE_ICE.asIngredient(), 40, 20 * 2 * 9 * 9) // 162 seconds
+		frosty("snowball", Items.SNOWBALL.asIngredient(), 40, 5) // 5 seconds
+		frosty("snow_block", Items.SNOW_BLOCK.asIngredient(), 40, 20) // 20 seconds
+		frosty("snow", Items.SNOW.asIngredient(), 40, 3) // 3 seconds
+
+	}
 
 }

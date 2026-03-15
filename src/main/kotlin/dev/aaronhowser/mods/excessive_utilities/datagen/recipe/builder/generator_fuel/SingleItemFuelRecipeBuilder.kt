@@ -39,7 +39,12 @@ class SingleItemFuelRecipeBuilder(
 			.requirements(AdvancementRequirements.Strategy.OR)
 
 		val recipe = SingleItemFuelRecipe(generatorType, ingredient, fePerTick, duration)
-		recipeOutput.accept(realId, recipe, advancement.build(realId.withPrefix("recipes/generator_fuel/$generatorType/")))
+
+		recipeOutput.accept(
+			realId,
+			recipe,
+			advancement.build(realId.withPrefix("recipes/generator_fuel/${generatorType.id}/"))
+		)
 	}
 
 }
