@@ -26,7 +26,7 @@ enum class DataDrivenGeneratorType(
 
 	;
 
-	val fuelDataMap: SingleItemFuelRecipe.GeneratorType by lazy {
+	val fuelRecipeType: SingleItemFuelRecipe.GeneratorType by lazy {
 		when (this) {
 			ENDER -> SingleItemFuelRecipe.GeneratorType.ENDER
 			EXPLOSIVE -> SingleItemFuelRecipe.GeneratorType.EXPLOSIVE

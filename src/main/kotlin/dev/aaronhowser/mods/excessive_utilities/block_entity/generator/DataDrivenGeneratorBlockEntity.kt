@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.util.DataDrivenGeneratorType
 import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
@@ -20,26 +21,26 @@ open class DataDrivenGeneratorBlockEntity(
 
 	override val generatorType: GeneratorType = dataDrivenGeneratorType.baseGeneratorType
 
-	override fun isValidInput(itemStack: ItemStack): Boolean {
-		val fuelMap = dataDrivenGeneratorType.fuelDataMap
-		val itemFuel = itemStack.item.builtInRegistryHolder().getData(fuelMap)
+	protected fun getRecipe(itemStack: ItemStack): SingleItemFuelRecipe? {
+		val level = level ?: return null
+		return SingleItemFuelRecipe.getRecipe(level, dataDrivenGeneratorType.fuelRecipeType, itemStack)
+	}
 
-		return itemFuel != null
+	override fun isValidInput(itemStack: ItemStack): Boolean {
+		return getRecipe(itemStack) != null
 	}
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false
 		val container = container ?: return false
 
-		val fuelMap = dataDrivenGeneratorType.fuelDataMap
-
 		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (inputStack.isEmpty) return false
 
-		val itemFuel = inputStack.item.builtInRegistryHolder().getData(fuelMap) ?: return false
+		val recipe = getRecipe(inputStack) ?: return false
 
-		fePerTick = itemFuel.fePerTick
-		burnTimeRemaining = itemFuel.burnTime
+		fePerTick = recipe.fePerTick
+		burnTimeRemaining = recipe.duration
 
 		inputStack.shrink(1)
 		setChanged()
