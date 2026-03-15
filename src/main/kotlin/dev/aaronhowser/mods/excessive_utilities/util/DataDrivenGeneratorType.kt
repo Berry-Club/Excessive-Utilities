@@ -1,9 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.util
 
-import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
+import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.SingleItemFuelRecipe
 import net.minecraft.util.StringRepresentable
-import net.minecraft.world.item.Item
-import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 enum class DataDrivenGeneratorType(
 	private val id: String,
@@ -28,15 +26,15 @@ enum class DataDrivenGeneratorType(
 
 	;
 
-	val fuelDataMap: DataMapType<Item, GeneratorItemFuel> by lazy {
+	val fuelDataMap: SingleItemFuelRecipe.GeneratorType by lazy {
 		when (this) {
-			ENDER -> GeneratorItemFuel.ENDER
-			EXPLOSIVE -> GeneratorItemFuel.EXPLOSIVE
-			PINK -> GeneratorItemFuel.PINK
-			NETHER_STAR -> GeneratorItemFuel.NETHER_STAR
-			FROSTY -> GeneratorItemFuel.FROSTY
-			HALITOSIS -> GeneratorItemFuel.HALITOSIS
-			DEATH -> GeneratorItemFuel.DEATH
+			ENDER -> SingleItemFuelRecipe.GeneratorType.ENDER
+			EXPLOSIVE -> SingleItemFuelRecipe.GeneratorType.EXPLOSIVE
+			PINK -> SingleItemFuelRecipe.GeneratorType.PINK
+			NETHER_STAR -> SingleItemFuelRecipe.GeneratorType.NETHER_STAR
+			FROSTY -> SingleItemFuelRecipe.GeneratorType.FROSTY
+			HALITOSIS -> SingleItemFuelRecipe.GeneratorType.HALITOSIS
+			DEATH -> SingleItemFuelRecipe.GeneratorType.DEATH
 		}
 	}
 

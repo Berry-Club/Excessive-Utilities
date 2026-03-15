@@ -9,7 +9,6 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.*
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.datamap.GeneratorItemFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
@@ -222,13 +221,6 @@ object CommonEvents {
 
 	@SubscribeEvent
 	fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
-		event.register(GeneratorItemFuel.ENDER)
-		event.register(GeneratorItemFuel.EXPLOSIVE)
-		event.register(GeneratorItemFuel.PINK)
-		event.register(GeneratorItemFuel.NETHER_STAR)
-		event.register(GeneratorItemFuel.FROSTY)
-		event.register(GeneratorItemFuel.HALITOSIS)
-		event.register(GeneratorItemFuel.DEATH)
 		event.register(MagmaticGeneratorFuel.DATA_MAP)
 		event.register(NetherLavaDunkConversion.DATA_MAP)
 	}
