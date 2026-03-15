@@ -5,9 +5,11 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
+import io.netty.buffer.ByteBuf
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
+import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeInput
@@ -18,6 +20,7 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 class ItemAndFluidFuelRecipe(
+	val generatorType: GeneratorType,
 	val itemIngredient: Ingredient,
 	val fluidIngredient: SizedFluidIngredient,
 	fePerTick: Int,
@@ -36,6 +39,21 @@ class ItemAndFluidFuelRecipe(
 	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.ITEM_AND_FLUID_FUEL.get()
 	override fun getType(): RecipeType<*> = ModRecipeTypes.ITEM_AND_FLUID_FUEL.get()
 
+	enum class GeneratorType(
+		val id: String
+	) : StringRepresentable {
+		SLIMY("slimy"),
+		HEATED_REDSTONE("heated_redstone"),
+		;
+
+		override fun getSerializedName(): String = id
+
+		companion object {
+			val CODEC: StringRepresentable.EnumCodec<GeneratorType> = StringRepresentable.fromEnum { entries.toTypedArray() }
+			val STREAM_CODEC: StreamCodec<ByteBuf, GeneratorType> = ByteBufCodecs.fromCodec(CODEC)
+		}
+	}
+
 	class Input(
 		private val itemStack: ItemStack,
 		private val fluidStack: FluidStack
@@ -53,6 +71,9 @@ class ItemAndFluidFuelRecipe(
 			val CODEC: MapCodec<ItemAndFluidFuelRecipe> =
 				RecordCodecBuilder.mapCodec { instance ->
 					instance.group(
+						GeneratorType.CODEC
+							.fieldOf("generator_type")
+							.forGetter(ItemAndFluidFuelRecipe::generatorType),
 						Ingredient.CODEC
 							.fieldOf("item_ingredient")
 							.forGetter(ItemAndFluidFuelRecipe::itemIngredient),
@@ -70,6 +91,7 @@ class ItemAndFluidFuelRecipe(
 
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, ItemAndFluidFuelRecipe> =
 				StreamCodec.composite(
+					GeneratorType.STREAM_CODEC, ItemAndFluidFuelRecipe::generatorType,
 					Ingredient.CONTENTS_STREAM_CODEC, ItemAndFluidFuelRecipe::itemIngredient,
 					SizedFluidIngredient.STREAM_CODEC, ItemAndFluidFuelRecipe::fluidIngredient,
 					ByteBufCodecs.VAR_INT, ItemAndFluidFuelRecipe::fePerTick,
