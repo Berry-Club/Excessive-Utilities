@@ -2071,6 +2071,7 @@ class ModBlockStateProvider(
 		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), "culinary")
 		makeGenerator(ModBlocks.DISENCHANTMENT_GENERATOR.get(), "disenchantment")
 		makeGenerator(ModBlocks.POTION_GENERATOR.get(), "potion")
+		makeGenerator(ModBlocks.OVERCLOCKED_GENERATOR.get(), "overclocked")
 	}
 
 	private fun survivalGenerator() {
