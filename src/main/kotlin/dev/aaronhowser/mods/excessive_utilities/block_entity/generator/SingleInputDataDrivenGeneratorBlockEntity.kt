@@ -14,16 +14,16 @@ import net.minecraft.world.level.block.state.BlockState
 
 open class SingleInputDataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
-	val singleInputDataDrivenGeneratorType: SingleInputDataDrivenGeneratorType,
+	val specificType: SingleInputDataDrivenGeneratorType,
 	pos: BlockPos,
 	blockState: BlockState,
 ) : GeneratorBlockEntity(type, pos, blockState) {
 
-	override val generatorType: GeneratorType = singleInputDataDrivenGeneratorType.baseGeneratorType
+	override val generatorType: GeneratorType = specificType.baseGeneratorType
 
 	protected fun getRecipe(itemStack: ItemStack): SingleItemFuelRecipe? {
 		val level = level ?: return null
-		return SingleItemFuelRecipe.getRecipe(level, singleInputDataDrivenGeneratorType.fuelRecipeType, itemStack)
+		return SingleItemFuelRecipe.getRecipe(level, specificType.fuelRecipeType, itemStack)
 	}
 
 	override fun isValidInput(itemStack: ItemStack): Boolean {
@@ -51,35 +51,35 @@ open class SingleInputDataDrivenGeneratorBlockEntity(
 	companion object {
 		fun ender(pos: BlockPos, state: BlockState) = SingleInputDataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.ENDER_GENERATOR.get(),
-			singleInputDataDrivenGeneratorType = SingleInputDataDrivenGeneratorType.ENDER,
+			specificType = SingleInputDataDrivenGeneratorType.ENDER,
 			pos = pos,
 			blockState = state
 		)
 
 		fun explosive(pos: BlockPos, state: BlockState) = SingleInputDataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.EXPLOSIVE_GENERATOR.get(),
-			singleInputDataDrivenGeneratorType = SingleInputDataDrivenGeneratorType.EXPLOSIVE,
+			specificType = SingleInputDataDrivenGeneratorType.EXPLOSIVE,
 			pos = pos,
 			blockState = state
 		)
 
 		fun pink(pos: BlockPos, state: BlockState) = SingleInputDataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.PINK_GENERATOR.get(),
-			singleInputDataDrivenGeneratorType = SingleInputDataDrivenGeneratorType.PINK,
+			specificType = SingleInputDataDrivenGeneratorType.PINK,
 			pos = pos,
 			blockState = state
 		)
 
 		fun frosty(pos: BlockPos, state: BlockState) = SingleInputDataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.FROSTY_GENERATOR.get(),
-			singleInputDataDrivenGeneratorType = SingleInputDataDrivenGeneratorType.FROSTY,
+			specificType = SingleInputDataDrivenGeneratorType.FROSTY,
 			pos = pos,
 			blockState = state
 		)
 
 		fun halitosis(pos: BlockPos, state: BlockState) = SingleInputDataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.HALITOSIS_GENERATOR.get(),
-			singleInputDataDrivenGeneratorType = SingleInputDataDrivenGeneratorType.HALITOSIS,
+			specificType = SingleInputDataDrivenGeneratorType.HALITOSIS,
 			pos = pos,
 			blockState = state
 		)

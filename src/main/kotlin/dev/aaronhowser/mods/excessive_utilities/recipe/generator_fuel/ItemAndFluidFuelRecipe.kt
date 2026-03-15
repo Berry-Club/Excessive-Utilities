@@ -37,6 +37,24 @@ class ItemAndFluidFuelRecipe(
 	override fun getType(): RecipeType<*> = ModRecipeTypes.ITEM_AND_FLUID_FUEL.get()
 
 	companion object {
+		fun isValidFluid(
+			fluidStack: FluidStack,
+			generatorType: GeneratorType,
+			recipeManager: RecipeManager,
+		): Boolean {
+			return getAllRecipesOfType(generatorType, recipeManager)
+				.any { it.value.fluidIngredient.test(fluidStack.copyWithAmount(99999)) }
+		}
+
+		fun isValidItem(
+			itemStack: ItemStack,
+			generatorType: GeneratorType,
+			recipeManager: RecipeManager,
+		): Boolean {
+			return getAllRecipesOfType(generatorType, recipeManager)
+				.any { it.value.itemIngredient.test(itemStack) }
+		}
+
 		fun getRecipe(
 			level: Level,
 			type: GeneratorType,
