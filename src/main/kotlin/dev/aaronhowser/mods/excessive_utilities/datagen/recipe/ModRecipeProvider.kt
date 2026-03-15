@@ -2050,15 +2050,18 @@ class ModRecipeProvider(
 
 		magmatic("lavas", SizedFluidIngredient.of(Tags.Fluids.LAVA, 1), 100, 1) // 100,000 FE per bucket
 
-		fun slimy(name: String, ingredient: Ingredient, fluidIngredient: SizedFluidIngredient, fePerTick: Int, duration: Int) {
+		fun itemFluid(name: String, type: ItemAndFluidFuelRecipe.GeneratorType, itemIngredient: Ingredient, fluidIngredient: SizedFluidIngredient, fePerTick: Int, duration: Int) {
 			ItemAndFluidFuelRecipeBuilder(
-				ItemAndFluidFuelRecipe.GeneratorType.SLIMY,
-				ingredient,
+				type,
+				itemIngredient,
 				fluidIngredient,
 				fePerTick,
 				duration
 			).save(recipeOutput, modLoc(name))
 		}
+
+		fun slimy(name: String, ingredient: Ingredient, fluidIngredient: SizedFluidIngredient, fePerTick: Int, duration: Int) = itemFluid(name, ItemAndFluidFuelRecipe.GeneratorType.SLIMY, ingredient, fluidIngredient, fePerTick, duration)
+		fun heatedRedstone(name: String, ingredient: Ingredient, fluidIngredient: SizedFluidIngredient, fePerTick: Int, duration: Int) = itemFluid(name, ItemAndFluidFuelRecipe.GeneratorType.HEATED_REDSTONE, ingredient, fluidIngredient, fePerTick, duration)
 
 		slimy(
 			"slime_balls_and_milk",
@@ -2068,6 +2071,13 @@ class ModRecipeProvider(
 			5 * 20,
 		)
 
+		heatedRedstone(
+			"redstone_and_lava",
+			Tags.Items.DUSTS_REDSTONE.asIngredient(),
+			SizedFluidIngredient.of(Tags.Fluids.LAVA, 250),
+			3200, // 20,000 FE per cycle
+			125, // 6.25 seconds
+		)
 
 	}
 
