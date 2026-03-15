@@ -54,7 +54,8 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 		fePerTick = recipe.fePerTick
 		burnTimeRemaining = recipe.duration
 
-		inputItemStack.shrink(recipe.fluidIngredient.amount())
+		inputItemStack.shrink(1)
+		tank.drain(recipe.fluidIngredient.amount(), IFluidHandler.FluidAction.EXECUTE)
 		setChanged()
 
 		return true
