@@ -6,7 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
-import dev.aaronhowser.mods.excessive_utilities.util.SingleInputDataDrivenGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SingleInputDataDrivenGeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.ColorParticleOption
 import net.minecraft.core.particles.ParticleTypes

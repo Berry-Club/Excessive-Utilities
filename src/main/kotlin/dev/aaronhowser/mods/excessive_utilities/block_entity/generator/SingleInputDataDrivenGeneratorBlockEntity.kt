@@ -3,9 +3,9 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.util.SingleInputDataDrivenGeneratorType
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SingleInputDataDrivenGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack

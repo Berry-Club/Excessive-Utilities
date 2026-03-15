@@ -9,9 +9,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.SingleItemGeneratorMenu
-import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup

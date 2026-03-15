@@ -5,9 +5,9 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.item.HeatingCoilItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import dev.aaronhowser.mods.excessive_utilities.util.FurnaceFuelGeneratorType
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.FurnaceFuelGeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth

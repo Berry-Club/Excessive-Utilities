@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.util
+package dev.aaronhowser.mods.excessive_utilities.block_entity.base
 
 import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block.TransferPipeBlock

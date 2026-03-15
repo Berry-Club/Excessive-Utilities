@@ -9,7 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedMenu
 import dev.aaronhowser.mods.excessive_utilities.recipe.QedRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

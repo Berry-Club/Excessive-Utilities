@@ -9,8 +9,8 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
-import dev.aaronhowser.mods.excessive_utilities.util.EnderQuarryUpgradeType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.EnderQuarryUpgradeType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup

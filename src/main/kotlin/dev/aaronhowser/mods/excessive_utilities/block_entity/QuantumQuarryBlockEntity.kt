@@ -12,7 +12,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionPro
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
-import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup

@@ -3,8 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorContainer
-import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponents

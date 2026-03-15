@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import dev.aaronhowser.mods.excessive_utilities.util.EnderQuarryUpgradeType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.EnderQuarryUpgradeType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag

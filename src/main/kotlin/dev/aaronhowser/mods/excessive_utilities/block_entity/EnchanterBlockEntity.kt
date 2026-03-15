@@ -10,7 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.recipe.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.util.ContainerContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
