@@ -15,17 +15,12 @@ import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
 class MagmaticFuelRecipe(
-	val itemIngredient: Ingredient,
 	val fluidIngredient: SizedFluidIngredient,
 	fePerTick: Int,
 	duration: Int
 ) : GeneratorFuelRecipe<MagmaticFuelRecipe.Input>(fePerTick, duration) {
 
 	override fun matches(input: Input, level: Level): Boolean {
-		val itemStack = input.getItem(0)
-		if (!itemIngredient.isEmpty && !itemIngredient.test(itemStack)) return false
-
-		if (fluidIngredient.fluids.isEmpty()) return true
 		val fluidStack = input.getFluid()
 		return fluidIngredient.test(fluidStack)
 	}
@@ -36,10 +31,9 @@ class MagmaticFuelRecipe(
 	companion object {
 		fun getRecipe(
 			level: Level,
-			itemStack: ItemStack,
 			fluidStack: FluidStack
 		): MagmaticFuelRecipe? {
-			val input = Input(itemStack, fluidStack)
+			val input = Input(fluidStack)
 			return getAllRecipes(level.recipeManager)
 				.firstOrNull { it.value.matches(input, level) }
 				?.value
@@ -53,11 +47,10 @@ class MagmaticFuelRecipe(
 	}
 
 	class Input(
-		private val itemStack: ItemStack,
 		private val fluidStack: FluidStack
 	) : RecipeInput {
-		override fun size(): Int = 1
-		override fun getItem(index: Int): ItemStack = itemStack
+		override fun size(): Int = 0
+		override fun getItem(index: Int): ItemStack = ItemStack.EMPTY
 		fun getFluid(): FluidStack = fluidStack
 	}
 
@@ -69,11 +62,8 @@ class MagmaticFuelRecipe(
 			val CODEC: MapCodec<MagmaticFuelRecipe> =
 				RecordCodecBuilder.mapCodec { instance ->
 					instance.group(
-						Ingredient.CODEC
-							.fieldOf("item_ingredient")
-							.forGetter(MagmaticFuelRecipe::itemIngredient),
 						SizedFluidIngredient.FLAT_CODEC
-							.fieldOf("fluid_ingredient")
+							.fieldOf("ingredient")
 							.forGetter(MagmaticFuelRecipe::fluidIngredient),
 						Codec.INT
 							.fieldOf("fe_per_tick")
@@ -86,7 +76,6 @@ class MagmaticFuelRecipe(
 
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, MagmaticFuelRecipe> =
 				StreamCodec.composite(
-					Ingredient.CONTENTS_STREAM_CODEC, MagmaticFuelRecipe::itemIngredient,
 					SizedFluidIngredient.STREAM_CODEC, MagmaticFuelRecipe::fluidIngredient,
 					ByteBufCodecs.VAR_INT, MagmaticFuelRecipe::fePerTick,
 					ByteBufCodecs.VAR_INT, MagmaticFuelRecipe::duration,

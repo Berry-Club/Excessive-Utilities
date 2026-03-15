@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datamap.MagmaticGeneratorFuel
+import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.MagmaticFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.util.GeneratorType
 import net.minecraft.core.BlockPos
@@ -30,6 +31,11 @@ class MagmaticGeneratorBlockEntity(
 				return fluidFuel != null
 			}
 		}
+
+	fun getRecipe(): MagmaticFuelRecipe? {
+		val level = level ?: return null
+		return MagmaticFuelRecipe.getRecipe(level, tank.fluid)
+	}
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
 		if (burnTimeRemaining > 0) return false
