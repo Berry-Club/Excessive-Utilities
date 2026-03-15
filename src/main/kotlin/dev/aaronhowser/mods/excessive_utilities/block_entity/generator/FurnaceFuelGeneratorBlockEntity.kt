@@ -38,8 +38,13 @@ class FurnaceFuelGeneratorBlockEntity(
 		val burnTime = inputStack.getBurnTime(RecipeType.SMELTING)
 		if (burnTime <= 0) return false
 
-		fePerTick = furnaceFuelGeneratorType.fePerTick
-		burnTimeRemaining = Mth.ceil(burnTime * furnaceFuelGeneratorType.burnTimeMultiplier)
+		if (furnaceFuelGeneratorType == FurnaceFuelGeneratorType.OVERCLOCKED) {
+			fePerTick = furnaceFuelGeneratorType.fePerTick * burnTime
+			burnTimeRemaining = 1
+		} else {
+			fePerTick = furnaceFuelGeneratorType.fePerTick
+			burnTimeRemaining = Mth.ceil(burnTime * furnaceFuelGeneratorType.burnTimeMultiplier)
+		}
 
 		if (inputStack.isItem(ModItems.HEATING_COIL)) {
 			HeatingCoilItem.burnInFuelSlot(inputStack)
