@@ -19,19 +19,37 @@ class WorldInteractionItemRecipe(
 ) : Recipe<WorldInteractionItemRecipe.Input> {
 
 	override fun matches(input: Input, level: Level): Boolean {
-		TODO("Not yet implemented")
+		if (requiredOnBlock != null && !requiredOnBlock.test(input.onBlock)) {
+			return false
+		}
+
+		for (requiredAdjacent in requiredAdjacentBlocks) {
+			var foundMatch = false
+			for (adjacent in input.adjacentBlocks) {
+				if (requiredAdjacent.test(adjacent)) {
+					foundMatch = true
+					break
+				}
+			}
+
+			if (!foundMatch) {
+				return false
+			}
+		}
+
+		return !(requiredBlockBehind != null && !requiredBlockBehind.test(input.blockBehind))
 	}
 
 	override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack {
-		TODO("Not yet implemented")
+		return output.copy()
 	}
 
 	override fun canCraftInDimensions(width: Int, height: Int): Boolean {
-		TODO("Not yet implemented")
+		return true
 	}
 
 	override fun getResultItem(registries: HolderLookup.Provider): ItemStack {
-		TODO("Not yet implemented")
+		return output
 	}
 
 	override fun getSerializer(): RecipeSerializer<*> {
