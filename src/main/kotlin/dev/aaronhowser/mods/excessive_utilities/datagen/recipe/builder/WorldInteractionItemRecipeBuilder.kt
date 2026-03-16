@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
 
-import dev.aaronhowser.mods.aaron.recipe.block_state_ingredient.BlockStateIngredient
 import dev.aaronhowser.mods.excessive_utilities.recipe.WorldInteractionItemRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion

@@ -3,8 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
-import dev.aaronhowser.mods.aaron.recipe.block_state_ingredient.SingleBlockIngredient
-import dev.aaronhowser.mods.aaron.recipe.block_state_ingredient.TagBlockStateIngredient
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.EnchanterRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.QedRecipeBuilder
@@ -15,6 +13,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleItemFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
 import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.ItemAndFluidFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -2087,10 +2086,10 @@ class ModRecipeProvider(
 	private fun buildWorldInteractionRecipes(recipeOutput: RecipeOutput) {
 
 		WorldInteractionItemRecipeBuilder(
-			requiredOnBlock = TagBlockStateIngredient(Tags.Blocks.COBBLESTONES),
+			requiredOnBlock = BlockStateIngredient(Tags.Blocks.COBBLESTONES),
 			requiredAdjacentBlocks = listOf(
-				SingleBlockIngredient(Blocks.WATER),
-				SingleBlockIngredient(Blocks.LAVA)
+				BlockStateIngredient(Blocks.WATER),
+				BlockStateIngredient(Blocks.LAVA)
 			),
 			requiredBlockBehind = null,
 			output = Items.COBBLESTONE.asItem().defaultInstance

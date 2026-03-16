@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.recipe
 
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import dev.aaronhowser.mods.aaron.recipe.block_state_ingredient.BlockStateIngredient
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
 import net.minecraft.core.HolderLookup
@@ -103,7 +103,7 @@ class WorldInteractionItemRecipe(
 						BlockStateIngredient.CODEC
 							.optionalFieldOf("on")
 							.forGetter(WorldInteractionItemRecipe::optionalRequiredOnBlock),
-						BlockStateIngredient.LIST_CODEC
+						BlockStateIngredient.CODEC.listOf()
 							.optionalFieldOf("adjacent", emptyList())
 							.forGetter(WorldInteractionItemRecipe::requiredAdjacentBlocks),
 						BlockStateIngredient.CODEC

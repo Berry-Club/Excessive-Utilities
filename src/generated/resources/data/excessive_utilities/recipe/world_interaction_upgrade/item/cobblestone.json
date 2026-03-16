@@ -2,15 +2,13 @@
   "type": "excessive_utilities:world_interaction_item",
   "adjacent": [
     {
-      "block": "minecraft:water"
+      "properties": {}
     },
     {
-      "block": "minecraft:lava"
+      "properties": {}
     }
   ],
-  "on": {
-    "tag": "c:cobblestones"
-  },
+  "on": "c:cobblestones",
   "output": {
     "count": 1,
     "id": "minecraft:cobblestone"
