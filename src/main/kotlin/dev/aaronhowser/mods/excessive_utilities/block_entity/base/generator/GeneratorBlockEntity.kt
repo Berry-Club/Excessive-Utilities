@@ -131,7 +131,7 @@ abstract class GeneratorBlockEntity(
 			val wasLit = blockState.getValue(GeneratorBlock.LIT)
 			val shouldBeLit = tryStartBurning(level)
 			changeLitState(level, wasLit, shouldBeLit)
-			if (burnTimeRemaining <= 0) return false
+			return shouldBeLit
 		}
 
 		val wasLit = blockState.getValue(GeneratorBlock.LIT)
