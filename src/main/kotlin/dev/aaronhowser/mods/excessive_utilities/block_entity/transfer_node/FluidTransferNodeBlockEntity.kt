@@ -8,9 +8,11 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBl
 import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeMenu
+import dev.aaronhowser.mods.excessive_utilities.recipe.WorldInteractionFluidRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -194,6 +196,8 @@ class FluidTransferNodeBlockEntity(
 	}
 
 	private fun pullFromParent(level: ServerLevel) {
+		if (worldInteraction(level)) return
+
 		val parentHandler = getParentFluidHandler(level) ?: return
 
 		val amountThatCanFit = bufferTank.capacity - bufferTank.fluidAmount
@@ -222,6 +226,49 @@ class FluidTransferNodeBlockEntity(
 			didWorkThisTick = true
 			return
 		}
+	}
+
+	private fun worldInteraction(level: ServerLevel): Boolean {
+		val hasUpgrade = upgradeContainer.countItem(ModItems.WORLD_INTERACTION_UPGRADE.get()) > 0
+		if (!hasUpgrade) return false
+
+		val craftedRecipe = tryCraftRecipe(level)
+		return craftedRecipe
+	}
+
+	private fun tryCraftRecipe(level: ServerLevel): Boolean {
+		val onBlock = level.getBlockState(placedOnPos)
+		val blockBehind = level.getBlockState(placedOnPos.relative(placedOnDirection))
+		val adjacentBlocks = buildList {
+			for (dir in Direction.entries) {
+				if (dir.axis == placedOnDirection.axis) continue
+				add(level.getBlockState(placedOnPos.relative(dir)))
+			}
+		}
+
+		val recipe = WorldInteractionFluidRecipe.getRecipe(level, onBlock, adjacentBlocks, blockBehind) ?: return false
+
+		val amountToExtract = if (hasStackUpgrade()) 1_000 else 25
+		val output = recipe.output.copyWithAmount(amountToExtract)
+
+		val fluidInBuffer = bufferTank.fluid
+		if (fluidInBuffer.isEmpty) {
+			bufferTank.fill(output, IFluidHandler.FluidAction.EXECUTE)
+			didWorkThisTick = true
+			return true
+		}
+
+		if (!FluidStack.isSameFluidSameComponents(fluidInBuffer, output)) return false
+
+		val amountThatFits = bufferTank.capacity - bufferTank.fluidAmount
+		val amountToAdd = output.amount.coerceAtMost(amountThatFits)
+		if (amountToAdd <= 0) return false
+
+		val newStack = fluidInBuffer.copy()
+		newStack.grow(amountToAdd)
+		bufferTank.fill(newStack, IFluidHandler.FluidAction.EXECUTE)
+		didWorkThisTick = true
+		return true
 	}
 
 	private val containerData =

@@ -279,7 +279,6 @@ class ItemTransferNodeBlockEntity(
 		bufferContainer.setItem(0, newStack);
 		didWorkThisTick = true
 		return true
-
 	}
 
 	private fun pullFromParent(level: ServerLevel) {
