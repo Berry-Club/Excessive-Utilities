@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.EnderQuarryBER
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.ManualMillBER
+import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.RainbowGeneratorBER
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.ResturbedMobSpawnerBER
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.FlatTransferNodeEntityRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.MagicalBoomerangEntityRenderer
@@ -275,6 +276,7 @@ object ClientEvents {
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.ENDER_QUARRY.get(), ::EnderQuarryBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.MANUAL_MILL.get(), ::ManualMillBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.RESTURBED_MOB_SPAWNER.get(), ::ResturbedMobSpawnerBER)
+		event.registerBlockEntityRenderer(ModBlockEntityTypes.RAINBOW_GENERATOR.get(), ::RainbowGeneratorBER)
 	}
 
 	@SubscribeEvent
