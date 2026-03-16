@@ -122,7 +122,11 @@ class WateringCanItem(
 
 			if (stateThere.isBlock(Blocks.FIRE)) {
 				level.removeBlock(pos, false)
-			} else if (stateThere.isBlock(ModBlocks.ENDER_LILY) && ServerConfig.CONFIG.funnyEnderLilyTeleporting.get()) {
+			} else if (
+				!isReinforced
+				&& stateThere.isBlock(ModBlocks.ENDER_LILY)
+				&& ServerConfig.CONFIG.funnyEnderLilyTeleporting.get()
+			) {
 				val teleportSuccess = EnderLilyBlock.teleportAway(level, pos, stateThere)
 				if (teleportSuccess) {
 					level.removeBlock(pos, false)
