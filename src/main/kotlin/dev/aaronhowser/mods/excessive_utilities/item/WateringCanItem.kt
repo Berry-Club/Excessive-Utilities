@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.setUnit
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
@@ -39,7 +40,7 @@ class WateringCanItem(
 		newStack: ItemStack,
 		slotChanged: Boolean
 	): Boolean {
-		return slotChanged
+		return !oldStack.isItem(newStack.item)
 	}
 
 	override fun use(
@@ -49,7 +50,7 @@ class WateringCanItem(
 	): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(usedHand)
 
-		if (player.isFakePlayer) {
+		if (player.isFakePlayer && ServerConfig.CONFIG.isWateringCanBreakable.get()) {
 			stack.setUnit(ModDataComponents.IS_BROKEN)
 		}
 
@@ -76,7 +77,8 @@ class WateringCanItem(
 		remainingUseDuration: Int
 	) {
 		if (level !is ServerLevel || livingEntity !is Player) return
-		if (livingEntity.isFakePlayer) {
+
+		if (livingEntity.isFakePlayer && ServerConfig.CONFIG.isWateringCanBreakable.get()) {
 			stack.setUnit(ModDataComponents.IS_BROKEN)
 			return
 		}

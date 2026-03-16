@@ -58,6 +58,7 @@ class ServerConfig(
 	lateinit var deathGeneratorEffectRadius: ModConfigSpec.DoubleValue
 	lateinit var rainbowGeneratorFePerTick: ModConfigSpec.IntValue
 
+	lateinit var isWateringCanBreakable: ModConfigSpec.BooleanValue
 	lateinit var wateringCanRadius: ModConfigSpec.IntValue
 	lateinit var wateringCanTickChance: ModConfigSpec.DoubleValue
 	lateinit var wateringCanWaterUsagePerTick: ModConfigSpec.IntValue
@@ -267,6 +268,10 @@ class ServerConfig(
 
 	private fun wateringCan() {
 		builder.section("watering_can") {
+			isWateringCanBreakable = builder
+				.comment("Whether the Watering Can should be broken when used by a fake player.")
+				.define("isWateringCanBreakable", true)
+
 			wateringCanRadius = builder
 				.comment("The radius in blocks around the player that the Watering Can will effect.")
 				.defineInRange("wateringCanRadius", 3, 1, Int.MAX_VALUE)
