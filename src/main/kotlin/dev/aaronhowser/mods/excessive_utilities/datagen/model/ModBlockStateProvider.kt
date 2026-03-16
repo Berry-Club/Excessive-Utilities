@@ -14,6 +14,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.minecraft.world.level.block.RedstoneLampBlock
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
@@ -72,6 +73,27 @@ class ModBlockStateProvider(
 		spikes()
 		transferPipes()
 		transferNodes()
+		enderLily()
+	}
+
+	private fun enderLily() {
+		val block = ModBlocks.ENDER_LILY.get()
+
+		getVariantBuilder(block)
+			.forAllStates {
+				val age = it.getValue(CropBlock.AGE)
+				val nameWithAge = name(block) + "_$age"
+
+				val model = models()
+					.cross(nameWithAge, modLoc("block/ender_lily/$age"))
+					.renderType(RenderType.cutout().name)
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.build()
+			}
+
 	}
 
 	//TODO: Make this not nullable, make textures

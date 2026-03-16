@@ -319,11 +319,15 @@ class ModItemModelProvider(
 			ModItems.MAGICAL_BOOMERANG.get()
 		)
 
+		val blockItemsToModel = listOf(
+			ModItems.ENDER_LILY.get()
+		)
+
 		for (deferred in ModItems.ITEM_REGISTRY.entries) {
 			val item = deferred.get()
 			if (item in handledItems || item in skipThese) continue
 
-			if (item !is BlockItem) {
+			if (item !is BlockItem && item !in blockItemsToModel) {
 				basicItem(item)
 			}
 		}

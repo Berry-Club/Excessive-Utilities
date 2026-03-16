@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "age=0": {
+      "model": "excessive_utilities:block/ender_lily_0"
+    },
+    "age=1": {
+      "model": "excessive_utilities:block/ender_lily_1"
+    },
+    "age=2": {
+      "model": "excessive_utilities:block/ender_lily_2"
+    },
+    "age=3": {
+      "model": "excessive_utilities:block/ender_lily_3"
+    },
+    "age=4": {
+      "model": "excessive_utilities:block/ender_lily_4"
+    },
+    "age=5": {
+      "model": "excessive_utilities:block/ender_lily_5"
+    },
+    "age=6": {
+      "model": "excessive_utilities:block/ender_lily_6"
+    },
+    "age=7": {
+      "model": "excessive_utilities:block/ender_lily_7"
+    }
+  }
+}
