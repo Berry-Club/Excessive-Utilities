@@ -47,9 +47,20 @@ class CulinaryGeneratorBlockEntity(
 			val nutrition = foodProperties.nutrition
 			val saturation = foodProperties.saturation
 
-			val totalFe = nutrition * saturation * 8000
-			val fePerTick = nutrition * 8
-			val duration = Mth.ceil(totalFe.toDouble() / fePerTick)
+			var feTotal = nutrition * saturation * 8000
+			var fePerTick = nutrition * 8
+
+			if (feTotal > 64_000) {
+				val tier = Mth.floor((feTotal - 1) / 64_000)
+				feTotal /= (tier + 1)
+			}
+
+			if (fePerTick > 64) {
+				val tier = (fePerTick - 1) / 64
+				fePerTick /= (tier + 1)
+			}
+
+			val duration = Mth.ceil(feTotal.toDouble() / fePerTick)
 
 			return fePerTick to duration
 		}
