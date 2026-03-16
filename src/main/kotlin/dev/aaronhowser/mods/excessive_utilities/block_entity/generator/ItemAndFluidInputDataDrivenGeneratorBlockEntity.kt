@@ -8,6 +8,8 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.ItemAndFlu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -59,6 +61,18 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 		setChanged()
 
 		return true
+	}
+
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+
+		tank.writeToNBT(registries, tag)
+	}
+
+	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.loadAdditional(tag, registries)
+
+		tank.readFromNBT(registries, tag)
 	}
 
 	companion object {
