@@ -10,10 +10,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.crafting.RecipeInput
-import net.minecraft.world.item.crafting.RecipeSerializer
-import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import java.util.*
@@ -64,6 +61,27 @@ class WorldInteractionItemRecipe(
 
 	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.WORLD_INTERACTION_ITEM.get()
 	override fun getType(): RecipeType<*> = ModRecipeTypes.WORLD_INTERACTION_ITEM.get()
+
+	companion object {
+		fun getRecipe(
+			level: Level,
+			onBlock: BlockState,
+			adjacentBlocks: List<BlockState>,
+			blockBehind: BlockState
+		): WorldInteractionItemRecipe? {
+			val input = Input(onBlock, adjacentBlocks, blockBehind)
+
+			return getAllRecipes(level.recipeManager)
+				.firstOrNull { recipeHolder ->
+					recipeHolder.value.matches(input, level)
+				}
+				?.value
+		}
+
+		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<WorldInteractionItemRecipe>> {
+			return recipeManager.getAllRecipesFor(ModRecipeTypes.WORLD_INTERACTION_ITEM.get())
+		}
+	}
 
 	class Input(
 		val onBlock: BlockState,

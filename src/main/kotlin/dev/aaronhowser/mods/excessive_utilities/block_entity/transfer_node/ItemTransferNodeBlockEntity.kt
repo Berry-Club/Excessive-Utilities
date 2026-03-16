@@ -8,9 +8,11 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
+import dev.aaronhowser.mods.excessive_utilities.recipe.WorldInteractionItemRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
@@ -176,7 +178,48 @@ class ItemTransferNodeBlockEntity(
 		didWorkThisTick = true
 	}
 
+	private fun worldInteraction(level: ServerLevel): Boolean {
+		val hasUpgrade = upgradeContainer.countItem(ModItems.WORLD_INTERACTION_UPGRADE.get()) > 0
+		if (!hasUpgrade) return false
+
+		val onBlock = level.getBlockState(placedOnPos)
+		val blockBehind = level.getBlockState(placedOnPos.relative(placedOnDirection))
+		val adjacentBlocks = buildList {
+			for (dir in Direction.entries) {
+				if (dir.axis == placedOnDirection.axis) continue
+				add(level.getBlockState(placedOnPos.relative(dir)))
+			}
+		}
+
+		val recipe = WorldInteractionItemRecipe.getRecipe(level, onBlock, adjacentBlocks, blockBehind) ?: return false
+
+		val amountToExtract = if (hasStackUpgrade()) 64 else 1
+		val input = WorldInteractionItemRecipe.Input(onBlock, adjacentBlocks, blockBehind)
+		val output = recipe.assemble(input, level.registryAccess()).copyWithCount(amountToExtract)
+
+		val stackInBuffer = bufferContainer.getItem(0)
+		if (stackInBuffer.isEmpty) {
+			bufferContainer.setItem(0, output)
+			didWorkThisTick = true
+			return true
+		}
+
+		if (!ItemStack.isSameItemSameComponents(stackInBuffer, output)) return false
+
+		val amountThatFits = stackInBuffer.maxStackSize - stackInBuffer.count
+		val amountToAdd = output.count.coerceAtMost(amountThatFits)
+		if (amountToAdd <= 0) return false
+
+		val newStack = stackInBuffer.copy()
+		newStack.grow(amountToAdd)
+		bufferContainer.setItem(0, newStack);
+		didWorkThisTick = true
+		return true
+	}
+
 	private fun pullFromParent(level: ServerLevel) {
+		if (worldInteraction(level)) return
+
 		val parentHandler = getParentItemHandler(level) ?: return
 
 		val stackInBuffer = bufferContainer.getItem(0)
