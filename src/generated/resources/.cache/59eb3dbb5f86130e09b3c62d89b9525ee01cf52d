@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-15T23:04:53.3772724	Loot Tables
+// 1.21.1	2026-03-16T00:39:56.3038802	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
 ac31ab7f157f056f8d68ab88ed82665e96def45d data/excessive_utilities/loot_table/blocks/antenna.json
@@ -259,7 +259,7 @@ f6b52ecda7d4a4517ce4a259166cde98c9c312a8 data/excessive_utilities/loot_table/blo
 95d8df54dafb1b8d5bc9ec5b4d9f287baf6cd6ac data/excessive_utilities/loot_table/blocks/ender_flux_crystal.json
 3f2d52453897d39cc4fc277832817b2fe7ae7995 data/excessive_utilities/loot_table/blocks/ender_generator.json
 2b86b1decbde0776fcb35657db21889c22ba3ac1 data/excessive_utilities/loot_table/blocks/ender_infused_obsidian.json
-0fb5c3f4f89e7e462649d87fb2f1b2398dc69f5f data/excessive_utilities/loot_table/blocks/ender_lily.json
+bb4e38f034d37ee08ed66699231c561f1fa777ec data/excessive_utilities/loot_table/blocks/ender_lily.json
 59226b36c7817515807f504b1070b1672a5f59e7 data/excessive_utilities/loot_table/blocks/ender_marker.json
 615731d948fb3b963e437bfb1d4d2cb9410fecf7 data/excessive_utilities/loot_table/blocks/ender_porcupine.json
 1e05f129b41b86ce093faddd8e97488a972b3928 data/excessive_utilities/loot_table/blocks/ender_quarry.json
