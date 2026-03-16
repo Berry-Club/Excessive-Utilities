@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.client.render
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
+import dev.aaronhowser.mods.aaron.client.render.AaronRenderTypes
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
 import dev.aaronhowser.mods.excessive_utilities.item.BuildersWandItem
@@ -10,7 +11,6 @@ import dev.aaronhowser.mods.excessive_utilities.item.DestructionWandItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
@@ -82,7 +82,7 @@ object WandRenderer {
 			amountCanPlace
 		)
 
-		val linesConsumer = bufferSource.getBuffer(RenderType.lines())
+		val linesConsumer = bufferSource.getBuffer(AaronRenderTypes.LINES_THROUGH_WALL_RENDER_TYPE)
 
 		for (pos in positions) {
 			val offset = cameraPos.vectorTo(pos.toVec3()).toVector3f()
@@ -123,7 +123,7 @@ object WandRenderer {
 			amount
 		)
 
-		val linesConsumer = bufferSource.getBuffer(RenderType.lines())
+		val linesConsumer = bufferSource.getBuffer(AaronRenderTypes.LINES_THROUGH_WALL_RENDER_TYPE)
 
 		for (pos in positions) {
 			val offset = cameraPos.vectorTo(pos.toVec3()).toVector3f()
