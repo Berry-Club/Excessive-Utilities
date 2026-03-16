@@ -78,8 +78,17 @@ class WorldInteractionItemRecipe(
 				?.value
 		}
 
+		// Sort recipes so the most specific ones are checked first
 		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<WorldInteractionItemRecipe>> {
 			return recipeManager.getAllRecipesFor(ModRecipeTypes.WORLD_INTERACTION_ITEM.get())
+				.sortedWith(compareByDescending<RecipeHolder<WorldInteractionItemRecipe>> {
+					it.value.optionalRequiredOnBlock.isPresent
+				}.thenByDescending {
+					it.value.requiredAdjacentBlocks.size
+				}.thenByDescending {
+					it.value.optionalRequiredBlockBehind.isPresent
+				}
+				)
 		}
 	}
 
