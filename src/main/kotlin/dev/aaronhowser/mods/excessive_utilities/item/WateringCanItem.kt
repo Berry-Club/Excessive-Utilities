@@ -6,7 +6,9 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.setUnit
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block.EnderLilyBlock
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.particles.ParticleTypes
@@ -115,10 +117,16 @@ class WateringCanItem(
 			if (!level.mayInteract(livingEntity, pos)) continue
 
 			val stateThere = level.getBlockState(pos)
+
 			stateThere.randomTick(level, pos, level.random)
 
 			if (stateThere.isBlock(Blocks.FIRE)) {
 				level.removeBlock(pos, false)
+			} else if (stateThere.isBlock(ModBlocks.ENDER_LILY) && ServerConfig.CONFIG.funnyEnderLilyTeleporting.get()) {
+				val teleportSuccess = EnderLilyBlock.teleportAway(level, pos, stateThere)
+				if (teleportSuccess) {
+					level.removeBlock(pos, false)
+				}
 			}
 
 			spawnParticles(level, pos)

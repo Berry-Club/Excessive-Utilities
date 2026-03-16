@@ -59,7 +59,7 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 	companion object {
 
 		/** Does not remove the original */
-		private fun teleportAway(level: LevelAccessor, lilyPos: BlockPos, lilyState: BlockState): Boolean {
+		fun teleportAway(level: LevelAccessor, lilyPos: BlockPos, lilyState: BlockState): Boolean {
 			val mutable = lilyPos.mutable()
 			val radius = 16
 
