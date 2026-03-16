@@ -127,10 +127,7 @@ class WateringCanItem(
 				&& stateThere.isBlock(ModBlocks.ENDER_LILY)
 				&& ServerConfig.CONFIG.funnyEnderLilyTeleporting.get()
 			) {
-				val teleportSuccess = EnderLilyBlock.teleportAway(level, pos, stateThere)
-				if (teleportSuccess) {
-					level.removeBlock(pos, false)
-				}
+				EnderLilyBlock.teleportAway(level, pos, stateThere)
 			}
 
 			spawnParticles(level, pos)

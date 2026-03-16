@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
@@ -53,6 +54,14 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 		)
 	}
 
+	override fun growCrops(level: Level, pos: BlockPos, state: BlockState) {
+		super.growCrops(level, pos, state)
+
+		if (level.getBlockState(pos.below()).isBlock(Tags.Blocks.END_STONES)) {
+			super.growCrops(level, pos, state)
+		}
+	}
+
 	override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
 		if (!ServerConfig.CONFIG.funnyEnderLilyTeleporting.get()) return
 
@@ -68,7 +77,6 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 			if (shouldTeleport) {
 				val success = teleportAway(level, pos, state)
 				if (success) {
-					level.removeBlock(pos, false)
 					return
 				}
 			}
@@ -92,7 +100,6 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 			if (shouldTeleportAway) {
 				val success = teleportAway(level, currentPos, state)
 				if (success) {
-					level.removeBlock(currentPos, false)
 					return state
 				}
 			}
@@ -103,7 +110,7 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 
 	companion object {
 
-		/** Does not remove the original */
+		/** Removes the original */
 		fun teleportAway(level: LevelAccessor, lilyPos: BlockPos, lilyState: BlockState): Boolean {
 			val mutable = lilyPos.mutable()
 			val radius = 16
@@ -128,6 +135,7 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 						1f
 					)
 
+					level.removeBlock(lilyPos, false)
 					return true
 				}
 			}
