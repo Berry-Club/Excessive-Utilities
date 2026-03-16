@@ -1,4 +1,4 @@
-newmtl base
+newmtl bottom
 map_Kd excessive_utilities:block/spike/iron_spike_base
 
 newmtl side

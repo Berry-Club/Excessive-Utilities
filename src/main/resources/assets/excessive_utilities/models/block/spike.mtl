@@ -1,0 +1,9 @@
+# Made in Blockbench 5.0.7
+
+newmtl side
+map_Kd side.png
+
+newmtl bottom
+map_Kd base.png
+
+newmtl none
