@@ -492,7 +492,54 @@ class ModBlockStateProvider(
 		for (spike in spikes) {
 			val name = name(spike)
 			val model = models().getExistingFile(modLoc("block/$name"))
-			simpleBlockWithItem(spike, model)
+			simpleBlock(spike, model)
+
+			itemModels()
+				.withExistingParent(name, modLoc("block/$name"))
+				.transforms {
+					transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
+						rotation(10f, -45f, 170f)
+						translation(0f, 1.5f, -2.75f)
+						scale(0.375f, 0.375f, 0.375f)
+					}
+
+					transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND) {
+						rotation(10f, 45f, -170f)
+						translation(0f, 1.5f, -2.75f)
+						scale(0.375f, 0.375f, 0.375f)
+					}
+
+					transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
+						rotation(0f, -45f, 170f)
+						translation(0f, 1.5f, -2.75f)
+						scale(0.375f, 0.375f, 0.375f)
+					}
+
+					transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND) {
+						rotation(0f, 45f, -170f)
+						translation(0f, 1.5f, -2.75f)
+						scale(0.375f, 0.375f, 0.375f)
+					}
+
+					transform(ItemDisplayContext.GUI) {
+						rotation(30f, 225f, 0f)
+						translation(0f, 0f, 0f)
+						scale(0.625f, 0.625f, 0.625f)
+					}
+
+					transform(ItemDisplayContext.GROUND) {
+						translation(0f, 3f, 0f)
+						scale(0.25f, 0.25f, 0.25f)
+					}
+
+					transform(ItemDisplayContext.FIXED) {
+						rotation(0f, 180f, 0f)
+						translation(0f, 0f, 0f)
+						scale(0.5f, 0.5f, 0.5f)
+					}
+
+				}
+
 		}
 	}
 
