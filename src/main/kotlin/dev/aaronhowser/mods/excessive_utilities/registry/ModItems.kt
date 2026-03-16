@@ -180,9 +180,9 @@ object ModItems : AaronItemRegistry() {
 		register("speed_upgrade_magical", ::SpeedUpgradeItem, SpeedUpgradeItem.MAGICAL_PROPERTIES)
 	val SPEED_UPGRADE_ULTIMATE: DeferredItem<SpeedUpgradeItem> =
 		register("speed_upgrade_ultimate", ::SpeedUpgradeItem, SpeedUpgradeItem.ULTIMATE_PROPERTIES)
-	val STACK_UPGRADE =
+	val STACK_UPGRADE: DeferredItem<Item> =
 		basic("stack_upgrade")
-	val WORLD_INTERACTION_UPGRADE =
+	val WORLD_INTERACTION_UPGRADE: DeferredItem<Item> =
 		basic("world_interaction_upgrade")
 	val ITEM_FILTER: DeferredItem<ItemFilterItem> =
 		register("item_filter", ::ItemFilterItem, PROPERTIES_SINGLE_STACK)
@@ -198,7 +198,7 @@ object ModItems : AaronItemRegistry() {
 		basic("ender_receiver")
 	val ENDER_TRANSMITTER =
 		basic("ender_transmitter")
-	val CREATIVE_UPGRADE =
+	val CREATIVE_UPGRADE: DeferredItem<Item> =
 		basic("creative_upgrade")
 
 	// Rings

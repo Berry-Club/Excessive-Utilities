@@ -61,5 +61,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		register("item_filter_flags", ItemFilterFlagsComponent.CODEC, ItemFilterFlagsComponent.STREAM_CODEC)
 	val FLUID_FILTER_FLAGS: DeferredHolder<DataComponentType<*>, DataComponentType<FluidFilterFlagsComponent>> =
 		register("fluid_filter_flags", FluidFilterFlagsComponent.CODEC, FluidFilterFlagsComponent.STREAM_CODEC)
+	val FREQUENCY: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
+		int("frequency")
 
 }
