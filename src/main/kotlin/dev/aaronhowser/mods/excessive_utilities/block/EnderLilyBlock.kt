@@ -46,7 +46,10 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 
 			if (shouldTeleportAway) {
 				val success = teleportAway(level, currentPos, state)
-				if (success) return Blocks.AIR.defaultBlockState()
+				if (success) {
+					level.removeBlock(currentPos, false)
+					return state
+				}
 			}
 		}
 
