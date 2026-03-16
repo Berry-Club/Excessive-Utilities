@@ -20,7 +20,8 @@
     {
       "apply": {
         "model": "excessive_utilities:block/fluid_retrieval_node",
-        "x": 90
+        "x": 90,
+        "y": 180
       },
       "when": {
         "placed_on": "north"
@@ -29,7 +30,7 @@
     {
       "apply": {
         "model": "excessive_utilities:block/fluid_retrieval_node",
-        "x": 270
+        "x": 90
       },
       "when": {
         "placed_on": "south"
@@ -39,7 +40,7 @@
       "apply": {
         "model": "excessive_utilities:block/fluid_retrieval_node",
         "x": 90,
-        "y": 90
+        "y": 270
       },
       "when": {
         "placed_on": "east"
@@ -49,7 +50,7 @@
       "apply": {
         "model": "excessive_utilities:block/fluid_retrieval_node",
         "x": 90,
-        "y": 270
+        "y": 90
       },
       "when": {
         "placed_on": "west"
