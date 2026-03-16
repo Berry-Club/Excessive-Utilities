@@ -70,7 +70,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val RED_ORCHID =
 		basicBlock("red_orchid")
 	val ENDER_LILY =
-		basicBlock("ender_lily")
+		registerBlockWithoutItem("ender_lily", ::EnderLilyBlock)
 
 	// Redstone stuff
 

@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.*
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemNameBlockItem
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -156,6 +157,8 @@ object ModItems : AaronItemRegistry() {
 
 	// Block Items
 
+	val ENDER_LILY: DeferredItem<BlockItem> =
+		register("ender_lily", { BlockItem(ModBlocks.ENDER_LILY.get(), it) })
 	val ANGEL_BLOCK: DeferredItem<AngelBlockItem> =
 		register("angel_block", ::AngelBlockItem)
 	val MAGICAL_SNOW_GLOBE: DeferredItem<MagicalSnowGlobeBlockItem> =
