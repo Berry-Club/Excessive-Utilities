@@ -28,7 +28,7 @@ class DisenchantmentGenerator(
 		if (burnTimeRemaining > 0 || container == null) return false
 
 		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
-		if (!inputStack.isItem(Items.ENCHANTED_BOOK)) return false
+		if (inputStack.isEmpty) return false
 
 		val totalPower = getPowerFromEnchantment(level, inputStack)
 		if (totalPower <= 0) return false
