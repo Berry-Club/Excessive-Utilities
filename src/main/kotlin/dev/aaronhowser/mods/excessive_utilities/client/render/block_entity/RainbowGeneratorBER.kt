@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import dev.aaronhowser.mods.aaron.client.render.RenderUtil
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.RainbowGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -23,10 +24,15 @@ class RainbowGeneratorBER(
 	) {
 		if (!blockEntity.blockState.getValue(GeneratorBlock.LIT)) return
 
-		val tick = blockEntity.level?.gameTime ?: 0
-		val time = tick + partialTick
+		val width = ClientConfig.CONFIG.rainbowGeneratorRayWidth.get().toFloat()
+		val length = ClientConfig.CONFIG.rainbowGeneratorRayLength.get().toFloat()
 
-		val centerColor = getColorFromTime(time / 200)
+		if (width <= 0 || length <= 0) return
+
+		val tick = blockEntity.level?.gameTime ?: 0
+		val time = tick + partialTick * ClientConfig.CONFIG.rainbowGeneratorTimeFactor.get().toFloat()
+
+		val centerColor = getColorFromTime(time)
 		val outerColor = centerColor and 0x00FFFFFF
 
 		poseStack.pushPose()
@@ -34,12 +40,12 @@ class RainbowGeneratorBER(
 
 		RenderUtil.renderDragonRays(
 			poseStack = poseStack,
-			time = time / 200,
+			time = time,
 			bufferSource = bufferSource,
 			centerColor = centerColor,
 			outerColor = outerColor,
-			rayLength = 2.5f,
-			rayWidth = 0.4f
+			rayLength = length,
+			rayWidth = width
 		)
 
 		poseStack.popPose()
