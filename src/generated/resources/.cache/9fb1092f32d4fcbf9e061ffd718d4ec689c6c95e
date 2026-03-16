@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-16T04:29:49.5796154	Recipes
+// 1.21.1	2026-03-16T04:34:04.4732896	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 dae80cf8a41d63d2b6b6e8c8f2980d67accd0b86 data/excessive_utilities/advancement/recipes/enchanter/block_of_enchanted_metal.json
 b46a12420ffdc8e03d9817941889851b7a2c85dc data/excessive_utilities/advancement/recipes/enchanter/block_of_evil_infused_iron.json
@@ -744,7 +744,7 @@ c53bf39bac8d4c17ccd91dec2884b916296ea11b data/excessive_utilities/recipe/generat
 d25e17a55d0d12aa8f9626546c5119886079d19f data/excessive_utilities/recipe/generator_fuel/frosty/snow_block.json
 ebc85a0932820a2de393678a891edf6dbc7d609e data/excessive_utilities/recipe/generator_fuel/halitosis/dragon_breath.json
 41bd51ea23bb44592955f4adbe65b832339bbef8 data/excessive_utilities/recipe/generator_fuel/heated_redstone/redstone_and_lava.json
-bace84a414eda85f65cfd47dd49c057531a98afe data/excessive_utilities/recipe/generator_fuel/magmatic/lavas.json
+42ccbbcbcbe945a5cbcac42377925314b2726cf0 data/excessive_utilities/recipe/generator_fuel/magmatic/lavas.json
 83d6cce6f916a99003e62edb5b22c84da51db76e data/excessive_utilities/recipe/generator_fuel/nether_star/firework_star.json
 4053851df4774c425109e1c1a25b37207af8833c data/excessive_utilities/recipe/generator_fuel/nether_star/nether_star.json
 a3165652dcd370396db62052c99efd4af40c2fbc data/excessive_utilities/recipe/generator_fuel/pink/dyed_pink.json

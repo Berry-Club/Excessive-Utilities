@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.MagmaticFuelRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.generator_fuel.SingleFluidFuelRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -12,7 +12,7 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
-class MagmaticFuelRecipeBuilder(
+class SingleFluidFuelRecipeBuilder(
 	val fluidIngredient: SizedFluidIngredient,
 	val fePerTick: Int,
 	val duration: Int
@@ -35,7 +35,7 @@ class MagmaticFuelRecipeBuilder(
 			.rewards(AdvancementRewards.Builder.recipe(realId))
 			.requirements(AdvancementRequirements.Strategy.OR)
 
-		val recipe = MagmaticFuelRecipe(fluidIngredient, fePerTick, duration)
+		val recipe = SingleFluidFuelRecipe(fluidIngredient, fePerTick, duration)
 
 		recipeOutput.accept(
 			realId,

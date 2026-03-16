@@ -6,7 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.*
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.ItemAndFluidFuelRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.MagmaticFuelRecipeBuilder
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleFluidFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleItemFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
@@ -2047,7 +2047,7 @@ class ModRecipeProvider(
 		frosty("snow", Items.SNOW.asIngredient(), 40, 3) // 3 seconds
 
 		fun magmatic(name: String, ingredient: SizedFluidIngredient, fePerTick: Int, duration: Int) {
-			MagmaticFuelRecipeBuilder(ingredient, fePerTick, duration).save(recipeOutput, modLoc(name))
+			SingleFluidFuelRecipeBuilder(ingredient, fePerTick, duration).save(recipeOutput, modLoc(name))
 		}
 
 		magmatic("lavas", SizedFluidIngredient.of(Tags.Fluids.LAVA, 1), 100, 1) // 100,000 FE per bucket
