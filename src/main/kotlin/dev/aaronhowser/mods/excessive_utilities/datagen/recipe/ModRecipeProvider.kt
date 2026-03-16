@@ -3,10 +3,13 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
+import dev.aaronhowser.mods.aaron.recipe.block_state_ingredient.SingleBlockIngredient
+import dev.aaronhowser.mods.aaron.recipe.block_state_ingredient.TagBlockStateIngredient
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.EnchanterRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.QedRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.ResonatorRecipeBuilder
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.WorldInteractionItemRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.ItemAndFluidFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.MagmaticFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleItemFuelRecipeBuilder
@@ -57,6 +60,7 @@ class ModRecipeProvider(
 		buildNamedRecipes(recipeOutput)
 		buildSmeltingRecipes(recipeOutput)
 		buildQedRecipes(recipeOutput)
+		buildWorldInteractionRecipes(recipeOutput)
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -2078,6 +2082,19 @@ class ModRecipeProvider(
 			3200, // 20,000 FE per cycle
 			125, // 6.25 seconds
 		)
+	}
+
+	private fun buildWorldInteractionRecipes(recipeOutput: RecipeOutput) {
+
+		WorldInteractionItemRecipeBuilder(
+			requiredOnBlock = TagBlockStateIngredient(Tags.Blocks.COBBLESTONES),
+			requiredAdjacentBlocks = listOf(
+				SingleBlockIngredient(Blocks.WATER),
+				SingleBlockIngredient(Blocks.LAVA)
+			),
+			requiredBlockBehind = null,
+			output = Items.COBBLESTONE.asItem().defaultInstance
+		).save(recipeOutput, modLoc("cobblestone"))
 
 	}
 

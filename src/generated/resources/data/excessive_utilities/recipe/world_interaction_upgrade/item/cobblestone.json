@@ -1,0 +1,18 @@
+{
+  "type": "excessive_utilities:world_interaction_item",
+  "adjacent": [
+    {
+      "block": "minecraft:water"
+    },
+    {
+      "block": "minecraft:lava"
+    }
+  ],
+  "on": {
+    "tag": "c:cobblestones"
+  },
+  "output": {
+    "count": 1,
+    "id": "minecraft:cobblestone"
+  }
+}
