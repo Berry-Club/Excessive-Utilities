@@ -2059,21 +2059,63 @@ class ModBlockStateProvider(
 			}
 
 		survivalGenerator()
-		makeGenerator(ModBlocks.FURNACE_GENERATOR.get(), "nothing")
-		makeGenerator(ModBlocks.MAGMATIC_GENERATOR.get(), "nothing")
-		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get(), "nothing")
-		makeGenerator(ModBlocks.FROSTY_GENERATOR.get(), "nothing")
-		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get(), "nothing")
-		makeGenerator(ModBlocks.PINK_GENERATOR.get(), "pink")
-		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), "death")
-		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), "ender")
-		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), "explosive")
-		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), "culinary")
-		makeGenerator(ModBlocks.DISENCHANTMENT_GENERATOR.get(), "disenchantment")
-		makeGenerator(ModBlocks.POTION_GENERATOR.get(), "potion")
-		makeGenerator(ModBlocks.OVERCLOCKED_GENERATOR.get(), "overclocked")
-		makeGenerator(ModBlocks.HEATED_REDSTONE_GENERATOR.get(), "heated_redstone")
-		makeGenerator(ModBlocks.SLIMY_GENERATOR.get(), "nothing")
+		makeGenerator(ModBlocks.FURNACE_GENERATOR.get())
+		makeGenerator(ModBlocks.MAGMATIC_GENERATOR.get())
+		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get())
+		makeGenerator(ModBlocks.FROSTY_GENERATOR.get(), frontOnOverlayName = "on_frosty")
+		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get())
+		makeGenerator(ModBlocks.PINK_GENERATOR.get(), topOverlayName = "pink")
+		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), topOverlayName = "death")
+		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), topOverlayName = "ender")
+		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), topOverlayName = "explosive")
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), topOverlayName = "culinary")
+		makeGenerator(ModBlocks.DISENCHANTMENT_GENERATOR.get(), topOverlayName = "disenchantment")
+		makeGenerator(ModBlocks.POTION_GENERATOR.get(), topOverlayName = "potion")
+		makeGenerator(ModBlocks.OVERCLOCKED_GENERATOR.get(), topOverlayName = "overclocked")
+		makeGenerator(ModBlocks.HEATED_REDSTONE_GENERATOR.get(), topOverlayName = "heated_redstone")
+		makeGenerator(ModBlocks.SLIMY_GENERATOR.get())
+	}
+
+	private fun makeGenerator(
+		generatorBlock: GeneratorBlock,
+		topOverlayName: String = "nothing",
+		frontOnOverlayName: String = "on"
+	) {
+		val name = name(generatorBlock)
+
+		val modelOff = models()
+			.withExistingParent(name + "_off", modLoc("generator_base"))
+			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
+			.texture("front_overlay", modLoc("block/generator/off"))
+
+		val modelOn = models()
+			.withExistingParent(name + "_on", modLoc("generator_base"))
+			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
+			.texture("front_overlay", modLoc("block/generator/$frontOnOverlayName"))
+
+		getVariantBuilder(generatorBlock)
+			.forAllStates {
+				val direction = it.getValue(GeneratorBlock.FACING)
+				val isLit = it.getValue(GeneratorBlock.LIT)
+
+				val yRotation = when (direction) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val modelFile = if (isLit) modelOn else modelOff
+
+				ConfiguredModel
+					.builder()
+					.modelFile(modelFile)
+					.rotationY(yRotation)
+					.build()
+			}
+
+		simpleBlockItem(generatorBlock, modelOff)
 	}
 
 	private fun survivalGenerator() {
@@ -2116,47 +2158,6 @@ class ModBlockStateProvider(
 			}
 
 		simpleBlockItem(block, modelOff)
-	}
-
-	private fun makeGenerator(
-		generatorBlock: GeneratorBlock,
-		topOverlayName: String
-	) {
-		val name = name(generatorBlock)
-
-		val modelOff = models()
-			.withExistingParent(name + "_off", modLoc("generator_base"))
-			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
-			.texture("front_overlay", modLoc("block/generator/off"))
-
-		val modelOn = models()
-			.withExistingParent(name + "_on", modLoc("generator_base"))
-			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
-			.texture("front_overlay", modLoc("block/generator/on"))
-
-		getVariantBuilder(generatorBlock)
-			.forAllStates {
-				val direction = it.getValue(GeneratorBlock.FACING)
-				val isLit = it.getValue(GeneratorBlock.LIT)
-
-				val yRotation = when (direction) {
-					Direction.NORTH -> 0
-					Direction.EAST -> 90
-					Direction.SOUTH -> 180
-					Direction.WEST -> 270
-					else -> 0
-				}
-
-				val modelFile = if (isLit) modelOn else modelOff
-
-				ConfiguredModel
-					.builder()
-					.modelFile(modelFile)
-					.rotationY(yRotation)
-					.build()
-			}
-
-		simpleBlockItem(generatorBlock, modelOff)
 	}
 
 	private fun miniChest() {
