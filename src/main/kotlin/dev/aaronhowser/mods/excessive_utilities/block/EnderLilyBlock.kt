@@ -6,6 +6,8 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
 import net.minecraft.world.level.*
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.CropBlock
@@ -93,6 +95,15 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 				val stateThere = level.getBlockState(mutable)
 				if (stateThere.canBeReplaced() && lilyState.canSurvive(level, mutable)) {
 					level.setBlock(mutable, lilyState, 3)
+
+					level.playSound(
+						null,
+						lilyPos,
+						SoundEvents.ENDERMAN_TELEPORT,
+						SoundSource.BLOCKS,
+						1f,
+						1f
+					)
 
 					return true
 				}
