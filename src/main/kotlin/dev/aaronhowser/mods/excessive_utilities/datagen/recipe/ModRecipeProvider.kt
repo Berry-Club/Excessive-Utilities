@@ -4,10 +4,7 @@ import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.EnchanterRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.QedRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.ResonatorRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.WorldInteractionItemRecipeBuilder
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.*
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.ItemAndFluidFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.MagmaticFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleItemFuelRecipeBuilder
@@ -38,7 +35,9 @@ import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
@@ -2113,6 +2112,16 @@ class ModRecipeProvider(
 			requiredBlockBehind = BlockStateIngredient(Blocks.WATER),
 			output = Items.STONE.asItem().defaultInstance
 		).save(recipeOutput, modLoc("stone"))
+
+		WorldInteractionFluidRecipeBuilder(
+			requiredOnBlock = BlockStateIngredient(Blocks.WATER),
+			requiredAdjacentBlocks = listOf(
+				BlockStateIngredient(Blocks.WATER),
+				BlockStateIngredient(Blocks.WATER),
+			),
+			requiredBlockBehind = null,
+			output = FluidStack(Fluids.WATER, 1)
+		).save(recipeOutput, modLoc("water"))
 
 	}
 

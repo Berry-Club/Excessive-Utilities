@@ -59,8 +59,8 @@ class WorldInteractionFluidRecipe(
 	override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 	override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.WORLD_INTERACTION_ITEM.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.WORLD_INTERACTION_ITEM.get()
+	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.WORLD_INTERACTION_FLUID.get()
+	override fun getType(): RecipeType<*> = ModRecipeTypes.WORLD_INTERACTION_FLUID.get()
 
 	companion object {
 		fun getRecipe(
