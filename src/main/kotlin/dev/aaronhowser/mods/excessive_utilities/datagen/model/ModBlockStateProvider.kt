@@ -91,6 +91,7 @@ class ModBlockStateProvider(
 			.texture("bottom", modLoc("block/machine_base/bottom"))
 			.texture("overlay", modLoc("block/crusher/off"))
 			.texture("particle", modLoc("block/machine_base/side"))
+			.renderType(RenderType.cutout().name)
 
 			.element {
 				from(0f, 0f, 0f)
@@ -120,6 +121,7 @@ class ModBlockStateProvider(
 
 		val modelOn = models()
 			.withExistingParent(name + "_on", modLoc("block/$name" + "_off"))
+			.texture("overlay", modLoc("block/crusher/on"))
 
 		getVariantBuilder(block)
 			.forAllStates {

@@ -58,6 +58,7 @@
       ]
     }
   ],
+  "render_type": "minecraft:cutout",
   "textures": {
     "bottom": "excessive_utilities:block/machine_base/bottom",
     "overlay": "excessive_utilities:block/crusher/off",

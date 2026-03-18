@@ -1,3 +1,6 @@
 {
-  "parent": "excessive_utilities:block/crusher_off"
+  "parent": "excessive_utilities:block/crusher_off",
+  "textures": {
+    "overlay": "excessive_utilities:block/crusher/on"
+  }
 }
