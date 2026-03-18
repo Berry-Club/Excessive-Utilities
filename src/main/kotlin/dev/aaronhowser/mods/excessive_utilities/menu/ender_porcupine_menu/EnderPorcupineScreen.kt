@@ -120,6 +120,82 @@ class EnderPorcupineScreen(
 		addRenderableWidget(minZIncreaseButton)
 		addRenderableWidget(minZDecreaseButton)
 
+		val increaseMaxButtonY = topPos + 124
+		val decreaseMaxButtonY = topPos + 156
+
+		maxXIncreaseButton = ImageButton(
+			xButtonX,
+			increaseMaxButtonY,
+			16,
+			16,
+			UP
+		) {
+			val packet = ClientClickedMenuButton(EnderPorcupineMenu.INCREASE_MAX_X_BUTTON_ID)
+			packet.messageServer()
+		}
+
+		maxXDecreaseButton = ImageButton(
+			xButtonX,
+			decreaseMaxButtonY,
+			16,
+			16,
+			DOWN
+		) {
+			val packet = ClientClickedMenuButton(EnderPorcupineMenu.DECREASE_MAX_X_BUTTON_ID)
+			packet.messageServer()
+		}
+
+		maxYIncreaseButton = ImageButton(
+			yButtonX,
+			increaseMaxButtonY,
+			16,
+			16,
+			UP
+		) {
+			val packet = ClientClickedMenuButton(EnderPorcupineMenu.INCREASE_MAX_Y_BUTTON_ID)
+			packet.messageServer()
+		}
+
+		maxYDecreaseButton = ImageButton(
+			yButtonX,
+			decreaseMaxButtonY,
+			16,
+			16,
+			DOWN
+		) {
+			val packet = ClientClickedMenuButton(EnderPorcupineMenu.DECREASE_MAX_Y_BUTTON_ID)
+			packet.messageServer()
+		}
+
+		maxZIncreaseButton = ImageButton(
+			zButtonX,
+			increaseMaxButtonY,
+			16,
+			16,
+			UP
+		) {
+			val packet = ClientClickedMenuButton(EnderPorcupineMenu.INCREASE_MAX_Z_BUTTON_ID)
+			packet.messageServer()
+		}
+
+		maxZDecreaseButton = ImageButton(
+			zButtonX,
+			decreaseMaxButtonY,
+			16,
+			16,
+			DOWN
+		) {
+			val packet = ClientClickedMenuButton(EnderPorcupineMenu.DECREASE_MAX_Z_BUTTON_ID)
+			packet.messageServer()
+		}
+
+		addRenderableWidget(maxXIncreaseButton)
+		addRenderableWidget(maxXDecreaseButton)
+		addRenderableWidget(maxYIncreaseButton)
+		addRenderableWidget(maxYDecreaseButton)
+		addRenderableWidget(maxZIncreaseButton)
+		addRenderableWidget(maxZDecreaseButton)
+
 	}
 
 	override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
