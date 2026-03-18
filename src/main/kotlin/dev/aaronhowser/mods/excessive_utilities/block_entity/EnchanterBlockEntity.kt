@@ -15,8 +15,13 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.state.BlockState
@@ -26,7 +31,7 @@ import net.neoforged.neoforge.items.wrapper.InvWrapper
 class EnchanterBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : GpDrainBlockEntity(ModBlockEntityTypes.ENCHANTER.get(), pos, blockState), ContainerContainer {
+) : GpDrainBlockEntity(ModBlockEntityTypes.ENCHANTER.get(), pos, blockState), ContainerContainer, MenuProvider {
 
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 	override fun getContainers(): List<Container> = listOf(container)
@@ -149,6 +154,13 @@ class EnchanterBlockEntity(
 		return recipe
 	}
 
+
+	override fun getDisplayName(): Component = blockState.block.name
+
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
+		TODO("Not yet implemented")
+	}
+
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
 
@@ -171,5 +183,7 @@ class EnchanterBlockEntity(
 		const val RIGHT_INPUT_SLOT = 1
 		const val OUTPUT_SLOT = 2
 		const val UPGRADE_SLOT = 3
+
+		const val CONTAINER_DATA_SIZE = 0
 	}
 }

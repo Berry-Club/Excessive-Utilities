@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronMenuTypesRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu.EnderPorcupineMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu.EnderPorcupineScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
@@ -60,6 +61,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("fluid_filter") { IMenuTypeExtension.create(::FluidFilterMenu) }
 	val ENDER_PORCUPINE: DeferredHolder<MenuType<*>, MenuType<EnderPorcupineMenu>> =
 		register("ender_porcupine", ::EnderPorcupineMenu)
+	val ENCHANTER: DeferredHolder<MenuType<*>, MenuType<EnchanterMenu>> =
+		register("enchanter", ::EnchanterMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
