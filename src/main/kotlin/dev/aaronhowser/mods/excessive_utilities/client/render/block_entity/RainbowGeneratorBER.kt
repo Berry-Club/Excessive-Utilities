@@ -30,7 +30,7 @@ class RainbowGeneratorBER(
 		if (width <= 0 || length <= 0) return
 
 		val tick = blockEntity.level?.gameTime ?: 0
-		val time = tick + partialTick * ClientConfig.CONFIG.rainbowGeneratorTimeFactor.get().toFloat()
+		val time = (tick + partialTick) * ClientConfig.CONFIG.rainbowGeneratorTimeFactor.get().toFloat()
 
 		val centerColor = getColorFromTime(time)
 		val outerColor = centerColor and 0x00FFFFFF
