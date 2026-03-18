@@ -53,6 +53,14 @@ class EnderPorcupineMenu(
 		containerData.set(dataIndex, next)
 	}
 
+	fun getMinX(): Int = containerData.get(EnderPorcupineBlockEntity.MIN_X_DATA_INDEX)
+	fun getMinY(): Int = containerData.get(EnderPorcupineBlockEntity.MIN_Y_DATA_INDEX)
+	fun getMinZ(): Int = containerData.get(EnderPorcupineBlockEntity.MIN_Z_DATA_INDEX)
+
+	fun getMaxX(): Int = containerData.get(EnderPorcupineBlockEntity.MAX_X_DATA_INDEX)
+	fun getMaxY(): Int = containerData.get(EnderPorcupineBlockEntity.MAX_Y_DATA_INDEX)
+	fun getMaxZ(): Int = containerData.get(EnderPorcupineBlockEntity.MAX_Z_DATA_INDEX)
+
 	override fun quickMoveStack(player: Player, index: Int): ItemStack = ItemStack.EMPTY
 	override fun stillValid(player: Player): Boolean = true
 

@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.menu.BaseScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.ImageButton
 import net.minecraft.client.gui.components.WidgetSprites
@@ -17,6 +18,8 @@ class EnderPorcupineScreen(
 ) : BaseScreen<EnderPorcupineMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+
+	override val showInventoryLabel: Boolean = false
 
 	private lateinit var minXIncreaseButton: Button
 	private lateinit var minYIncreaseButton: Button
@@ -38,8 +41,8 @@ class EnderPorcupineScreen(
 		super.baseInit()
 
 		minXIncreaseButton = ImageButton(
-			0,
-			0,
+			leftPos + 8,
+			topPos + 20,
 			16,
 			16,
 			UP
@@ -47,6 +50,23 @@ class EnderPorcupineScreen(
 			val packet = ClientClickedMenuButton(EnderPorcupineMenu.INCREASE_MIN_X_BUTTON_ID)
 			packet.messageServer()
 		}
+
+		addRenderableWidget(minXIncreaseButton)
+	}
+
+	override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+		super.renderLabels(guiGraphics, mouseX, mouseY)
+
+		val minX = menu.getMinX()
+		val minY = menu.getMinY()
+		val minZ = menu.getMinZ()
+
+		val maxX = menu.getMaxX()
+		val maxY = menu.getMaxY()
+		val maxZ = menu.getMaxZ()
+
+
+
 	}
 
 	companion object {
