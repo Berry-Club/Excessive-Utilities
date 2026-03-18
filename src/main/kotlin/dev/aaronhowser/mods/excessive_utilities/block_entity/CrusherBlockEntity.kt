@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.block.CrusherBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -88,6 +89,7 @@ class CrusherBlockEntity(
 		val recipe = getRecipe()?.value
 		if (recipe == null) {
 			progress = 0
+			updateBlockState(isCrafting = false)
 			return
 		}
 
@@ -95,6 +97,8 @@ class CrusherBlockEntity(
 		val speedUpgrades = container.getItem(UPGRADE_SLOT).count
 
 		val maxProgress = 200 // TODO: Configurable
+
+		var success = false
 
 		for (i in 0 until speedUpgrades + 1) {
 			if (energyStorage.energyStored < fePerTick) break
@@ -106,6 +110,18 @@ class CrusherBlockEntity(
 				craftRecipe(level, recipe)
 				progress -= maxProgress
 			}
+
+			success = true
+		}
+
+		updateBlockState(isCrafting = success)
+	}
+
+	private fun updateBlockState(isCrafting: Boolean) {
+		val wasEnabled = blockState.getValue(CrusherBlock.ENABLED)
+		if (wasEnabled != isCrafting) {
+			val newState = blockState.setValue(CrusherBlock.ENABLED, isCrafting)
+			level?.setBlockAndUpdate(blockPos, newState)
 		}
 	}
 
