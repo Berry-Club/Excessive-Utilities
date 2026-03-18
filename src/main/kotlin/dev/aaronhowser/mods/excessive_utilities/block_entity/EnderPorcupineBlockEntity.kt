@@ -62,13 +62,12 @@ class EnderPorcupineBlockEntity(
 			.sortedByDescending(BlockPos::getY)
 	}
 
-	// Every second, move to the next offset in the list
 	fun getCurrentOffset(): Vec3i {
-		val level = level ?: return Vec3i.ZERO
-
 		val volume = allOffsets.size
 		if (volume == 0) return Vec3i.ZERO
+		if (volume == 1) return allOffsets[0]
 
+		val level = level ?: return Vec3i.ZERO
 		val ticksPerStep = ServerConfig.CONFIG.enderPorcupineMarchTime.get()
 		val step = (level.gameTime / ticksPerStep).toInt()
 		val index = step % volume
