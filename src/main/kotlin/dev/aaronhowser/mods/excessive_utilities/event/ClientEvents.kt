@@ -189,6 +189,17 @@ object ClientEvents {
 				ModBlocks.getColoredGlowstone(color).get(),
 			)
 		}
+
+		event.register(
+			{ stack, tintIndex ->
+				if (tintIndex == 1) {
+					stack.getOrDefault(ModDataComponents.COLOR, DyeColor.WHITE).textureDiffuseColor
+				} else {
+					0xFFFFFF
+				}
+			},
+			ModItems.PAINTBRUSH.get()
+		)
 	}
 
 	@SubscribeEvent
