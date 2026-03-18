@@ -33,6 +33,7 @@ class ModItemModelProvider(
 		compoundBow()
 		sunCrystal()
 		biomeMarker()
+		paintbrush()
 
 		basicItems()
 	}
@@ -323,7 +324,6 @@ class ModItemModelProvider(
 			ModItems.KLEIN_BOTTLE.get(),
 			ModItems.BIOME_MARKER.get(),
 			ModItems.SUN_CRYSTAL.get(),
-			ModItems.PAINTBRUSH.get(),
 			ModItems.KIKOKU.get(),
 			ModItems.LUX_SABER.get(),
 			ModItems.MAGICAL_BOOMERANG.get()
