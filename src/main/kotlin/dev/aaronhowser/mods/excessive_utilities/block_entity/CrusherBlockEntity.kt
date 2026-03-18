@@ -91,8 +91,10 @@ class CrusherBlockEntity(
 			return
 		}
 
-		val fePerTick = 20
+		val fePerTick = 20 // TODO: Configurable
 		val speedUpgrades = container.getItem(UPGRADE_SLOT).count
+
+		val maxProgress = 200 // TODO: Configurable
 
 		for (i in 0 until speedUpgrades + 1) {
 			if (energyStorage.energyStored < fePerTick) break
@@ -100,9 +102,9 @@ class CrusherBlockEntity(
 			progress++
 			energyStorage.extractEnergy(fePerTick, false)
 
-			if (progress >= 200) {
+			while (progress >= maxProgress) {
 				craftRecipe(level, recipe)
-				progress = 0
+				progress -= maxProgress
 			}
 		}
 	}
@@ -117,7 +119,7 @@ class CrusherBlockEntity(
 		if (stackInOutput.isNotEmpty()) {
 			stackInOutput.grow(primaryOutputStack.count)
 		} else {
-			container.setItem(SECONDARY_OUTPUT_SLOT, primaryOutputStack)
+			container.setItem(PRIMARY_OUTPUT_SLOT, primaryOutputStack)
 		}
 
 		val secondaryOutputStack = recipe.getSecondaryOutput()
