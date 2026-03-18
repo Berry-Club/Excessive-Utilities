@@ -75,6 +75,44 @@ class ModBlockStateProvider(
 		transferNodes()
 		enderLily()
 		redOrchid()
+		enderPorcupine()
+	}
+
+	private fun enderPorcupine() {
+		val block = ModBlocks.ENDER_PORCUPINE.get()
+
+		val model = models()
+			.withExistingParent(name(block), mcLoc("block/block"))
+			.texture("texture", modLoc("block/ender_porcupine"))
+			.texture("particle", modLoc("block/ender_porcupine"))
+
+			.element {
+				from(2f, 0f, 0f)
+				to(2f, 16f, 16f)
+
+				face(Direction.NORTH) {
+					texture("#texture")
+				}
+
+				face(Direction.SOUTH) {
+					texture("#texture")
+				}
+			}
+
+			.element {
+				from(14f, 0f, 0f)
+				to(14f, 16f, 16f)
+
+				face(Direction.NORTH) {
+					texture("#texture")
+				}
+
+				face(Direction.SOUTH) {
+					texture("#texture")
+				}
+			}
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun redOrchid() {
