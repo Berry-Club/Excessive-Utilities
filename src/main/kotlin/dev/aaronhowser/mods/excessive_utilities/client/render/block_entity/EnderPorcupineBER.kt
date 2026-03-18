@@ -1,9 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.client.render.block_entity
 
 import com.mojang.blaze3d.vertex.PoseStack
+import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.client.render.AaronRenderTypes
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -20,6 +23,9 @@ class EnderPorcupineBER(
 		packedLight: Int,
 		packedOverlay: Int
 	) {
+		val player = AaronClientUtil.localPlayer ?: return
+		if (!player.isHolding { it.isItem(ModItemTagsProvider.RENDER_ENDER_PORCUPINE_WHILE_HOLDING) }) return
+
 		val offset = blockEntity.getCurrentOffset()
 		val linesConsumer = bufferSource.getBuffer(AaronRenderTypes.LINES_THROUGH_WALL_RENDER_TYPE)
 

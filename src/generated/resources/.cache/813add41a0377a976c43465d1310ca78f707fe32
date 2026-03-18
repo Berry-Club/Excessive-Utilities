@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-16T01:35:42.4039821	Tags for minecraft:item mod id excessive_utilities
+// 1.21.1	2026-03-17T22:07:49.9698822	Tags for minecraft:item mod id excessive_utilities
 391f936c09d7f7b43694f899344222849a8d62a1 data/c/tags/item/brick_blocks.json
 5124cada2ba7e5783038acde07858db18ecdb114 data/c/tags/item/cobblestones/normal.json
 1c83000a2817348e18f4bc04d17b3eabe7695e1f data/c/tags/item/dyes/magenta.json
@@ -24,6 +24,7 @@ a9fc732d820e0cda4d35fb56727c9620bc0898a4 data/c/tags/item/tools/mining_tool.json
 22a8f3e473d7ecc774df7103fc48068858cb5506 data/excessive_utilities/tags/item/interact_with_flat_transfer_nodes.json
 4033aa8830f23f8653730d8eaf916ba65df9e571 data/excessive_utilities/tags/item/magical_boomerang_enchantable.json
 0b9e9aa824d55d3aef9708141da26fb0c1a03384 data/excessive_utilities/tags/item/not_yet_implemented.json
+ee6e37bc56b0e6231916adfbefe9b8bfe043324a data/excessive_utilities/tags/item/render_ender_porcupine_while_holding.json
 7f2a080bad2ea7ea204a920cc04518e56b629820 data/excessive_utilities/tags/item/render_gp_while_holding.json
 1cb57e8fb624526a9458fd3cc5a30d149f469bae data/excessive_utilities/tags/item/retrieval_node_upgrades.json
 a4fcf166f6bbc92de938e9ff282c5b11b045b4c6 data/excessive_utilities/tags/item/speed_upgrades.json

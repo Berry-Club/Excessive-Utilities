@@ -288,6 +288,12 @@ class ModItemTagsProvider(
 				ModBlocks.TRADING_POST.asItem(),
 				ModBlocks.INDEXER.asItem()
 			)
+
+		tag(RENDER_ENDER_PORCUPINE_WHILE_HOLDING)
+			.add(
+				ModBlocks.ENDER_PORCUPINE.asItem(),
+				ModItems.WRENCH.get()
+			)
 	}
 
 	companion object {
@@ -297,21 +303,25 @@ class ModItemTagsProvider(
 		val TRANSFER_NODE_UPGRADES = create("transfer_node_upgrades")
 		val RETRIEVAL_NODE_UPGRADES = create("retrieval_node_upgrades")
 		val SPEED_UPGRADES = create("speed_upgrades")
-
-		val RENDER_GP_WHILE_HOLDING = create("render_gp_while_holding")
-		val PISTONS = common("pistons")
-		val CORPSE_PARTS = create("corpse_parts")
-		val INTERACT_WITH_FLAT_TRANSFER_NODES = create("interact_with_flat_transfer_nodes")
-		val REMOVE_FLAT_TRANSFER_NODES = create("remove_flat_transfer_nodes")
 		val FILTERS = create("filters")
 		val SICKLES = common("sickles")
-		val MAGICAL_BOOMERANG_ENCHANTABLE = create("magical_boomerang_enchantable")
-		val DOUBLE_ANVIL_ENCHANTMENTS = create("double_anvil_enchantments")
-		val QUARTZ_STORAGE_BLOCKS = common("storage_blocks/quartz")
+
+		val RENDER_GP_WHILE_HOLDING = create("render_gp_while_holding")
+		val RENDER_ENDER_PORCUPINE_WHILE_HOLDING = create("render_ender_porcupine_while_holding")
+
+		val INTERACT_WITH_FLAT_TRANSFER_NODES = create("interact_with_flat_transfer_nodes")
+		val REMOVE_FLAT_TRANSFER_NODES = create("remove_flat_transfer_nodes")
+
+		val PISTONS = common("pistons")
+		val CORPSE_PARTS = create("corpse_parts")
 		val SOUL_SANDS = common("soul_sands")
 		val BRICK_BLOCKS = common("brick_blocks")
 		val GLOWSTONES = common("glowstones")
 		val REDSTONE_LAMPS = common("redstone_lamps")
+		val QUARTZ_STORAGE_BLOCKS = common("storage_blocks/quartz")
+
+		val MAGICAL_BOOMERANG_ENCHANTABLE = create("magical_boomerang_enchantable")
+		val DOUBLE_ANVIL_ENCHANTMENTS = create("double_anvil_enchantments")
 
 		val NOT_YET_IMPLEMENTED = create("not_yet_implemented")
 	}
