@@ -1625,115 +1625,117 @@ class ModRecipeProvider(
 	}
 
 	private fun buildEnchanterRecipes(recipeOutput: RecipeOutput) {
-		val recipes = listOf(
-			EnchanterRecipeBuilder(
-				Tags.Items.BOOKSHELVES.asIngredient(),
-				1,
-				Tags.Items.GEMS_LAPIS.asIngredient(),
-				1,
-				64_00 / (80 * 20),
-				80 * 20,
-				ModBlocks.MAGICAL_WOOD.toStack()
-			),
-			EnchanterRecipeBuilder(
-				Tags.Items.STORAGE_BLOCKS_GOLD.asIngredient(),
-				1,
-				Tags.Items.GEMS_LAPIS.asIngredient(),
-				9,
-				24_000 / (20 * 30),
-				20 * 30,
-				ModBlocks.BLOCK_OF_ENCHANTED_METAL.toStack()
-			),
-			EnchanterRecipeBuilder(
-				Tags.Items.INGOTS_GOLD.asIngredient(),
-				1,
-				Tags.Items.GEMS_LAPIS.asIngredient(),
-				1,
-				8_000 / (20 * 10),
-				20 * 10,
-				ModItems.ENCHANTED_INGOT.toStack()
-			),
-			EnchanterRecipeBuilder(
-				Tags.Items.STORAGE_BLOCKS_IRON.asIngredient(),
-				8,
-				Items.NETHER_STAR.asIngredient(),
-				1,
-				192_000 / (20 * 240),
-				20 * 240,
-				ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.toStack(8)
-			),
-			EnchanterRecipeBuilder(
-				Tags.Items.INGOTS_IRON.asIngredient(),
-				8,
-				Items.NETHER_STAR.asIngredient(),
-				1,
-				64_000 / (20 * 20),
-				20 * 20,
-				ModItems.EVIL_INFUSED_IRON_INGOT.toStack(8)
-			),
-			EnchanterRecipeBuilder(
-				Items.APPLE.asIngredient(),
-				16,
-				Tags.Items.GEMS_LAPIS.asIngredient(),
-				1,
-				16_000 / (20 * 80),
-				20 * 80,
-				ModItems.MAGICAL_APPLE.toStack(16)
-			)
-		)
+		EnchanterRecipeBuilder(
+			Tags.Items.BOOKSHELVES.asIngredient(),
+			1,
+			Tags.Items.GEMS_LAPIS.asIngredient(),
+			1,
+			64_00 / (80 * 20),
+			80 * 20,
+			ModBlocks.MAGICAL_WOOD.toStack()
+		).save(recipeOutput)
 
-		for (recipe in recipes) {
-			recipe.save(recipeOutput)
-		}
+		EnchanterRecipeBuilder(
+			Tags.Items.STORAGE_BLOCKS_GOLD.asIngredient(),
+			1,
+			Tags.Items.GEMS_LAPIS.asIngredient(),
+			9,
+			24_000 / (20 * 30),
+			20 * 30,
+			ModBlocks.BLOCK_OF_ENCHANTED_METAL.toStack()
+		).save(recipeOutput)
+
+		EnchanterRecipeBuilder(
+			Tags.Items.INGOTS_GOLD.asIngredient(),
+			1,
+			Tags.Items.GEMS_LAPIS.asIngredient(),
+			1,
+			8_000 / (20 * 10),
+			20 * 10,
+			ModItems.ENCHANTED_INGOT.toStack()
+		).save(recipeOutput)
+
+		EnchanterRecipeBuilder(
+			Tags.Items.STORAGE_BLOCKS_IRON.asIngredient(),
+			8,
+			Items.NETHER_STAR.asIngredient(),
+			1,
+			192_000 / (20 * 240),
+			20 * 240,
+			ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.toStack(8)
+		).save(recipeOutput)
+
+		EnchanterRecipeBuilder(
+			Tags.Items.INGOTS_IRON.asIngredient(),
+			8,
+			Items.NETHER_STAR.asIngredient(),
+			1,
+			64_000 / (20 * 20),
+			20 * 20,
+			ModItems.EVIL_INFUSED_IRON_INGOT.toStack(8)
+		).save(recipeOutput)
+
+		EnchanterRecipeBuilder(
+			Items.APPLE.asIngredient(),
+			16,
+			Tags.Items.GEMS_LAPIS.asIngredient(),
+			1,
+			16_000 / (20 * 80),
+			20 * 80,
+			ModItems.MAGICAL_APPLE.toStack(16)
+		).save(recipeOutput)
+
 	}
 
 	private fun buildResonatorRecipes(recipeOutput: RecipeOutput) {
-		val recipes = listOf(
-			ResonatorRecipeBuilder(
-				ModBlocks.POLISHED_STONE.asIngredient(),
-				ModBlocks.STONEBURNT.toStack(),
-				8.0
-			),
-			ResonatorRecipeBuilder(
-				Blocks.QUARTZ_BLOCK.asIngredient(),
-				ModBlocks.QUARTZBURNT.toStack(),
-				8.0
-			),
-			ResonatorRecipeBuilder(
-				ModBlocks.STONEBURNT.asIngredient(),
-				ModBlocks.RAINBOW_STONE.toStack(),
-				64.0
-			),
-			ResonatorRecipeBuilder(
-				Tags.Items.GEMS_LAPIS.asIngredient(),
-				ModItems.LUNAR_REACTIVE_DUST.toStack(),
-				16.0
-			),
-			ResonatorRecipeBuilder(
-				ItemTags.COALS.asIngredient(),
-				ModItems.RED_COAL.toStack(),
-				16.0
-			),
-			ResonatorRecipeBuilder(
-				Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE.asIngredient(),
-				ModItems.UPGRADE_BASE.toStack(),
-				8.0
-			),
-			ResonatorRecipeBuilder(
-				Blocks.IRON_BARS.asIngredient(),
-				ModItems.HEATING_COIL.toStack(),
-				16.0
-			),
-			ResonatorRecipeBuilder(
-				ModBlocks.THICKENED_GLASS.asIngredient(),
-				ModBlocks.REDSTONE_GLASS.toStack(),
-				1.0
-			)
-		)
+		ResonatorRecipeBuilder(
+			ModBlocks.POLISHED_STONE.asIngredient(),
+			ModBlocks.STONEBURNT.toStack(),
+			8.0
+		).save(recipeOutput)
 
-		for (recipe in recipes) {
-			recipe.save(recipeOutput)
-		}
+		ResonatorRecipeBuilder(
+			Blocks.QUARTZ_BLOCK.asIngredient(),
+			ModBlocks.QUARTZBURNT.toStack(),
+			8.0
+		).save(recipeOutput)
+
+		ResonatorRecipeBuilder(
+			ModBlocks.STONEBURNT.asIngredient(),
+			ModBlocks.RAINBOW_STONE.toStack(),
+			64.0
+		).save(recipeOutput)
+
+		ResonatorRecipeBuilder(
+			Tags.Items.GEMS_LAPIS.asIngredient(),
+			ModItems.LUNAR_REACTIVE_DUST.toStack(),
+			16.0
+		).save(recipeOutput)
+
+		ResonatorRecipeBuilder(
+			ItemTags.COALS.asIngredient(),
+			ModItems.RED_COAL.toStack(),
+			16.0
+		).save(recipeOutput)
+
+		ResonatorRecipeBuilder(
+			Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE.asIngredient(),
+			ModItems.UPGRADE_BASE.toStack(),
+			8.0
+		).save(recipeOutput)
+
+		ResonatorRecipeBuilder(
+			Blocks.IRON_BARS.asIngredient(),
+			ModItems.HEATING_COIL.toStack(),
+			16.0
+		).save(recipeOutput)
+
+		ResonatorRecipeBuilder(
+			ModBlocks.THICKENED_GLASS.asIngredient(),
+			ModBlocks.REDSTONE_GLASS.toStack(),
+			1.0
+		).save(recipeOutput)
+
 	}
 
 	private fun buildNamedRecipes(recipeOutput: RecipeOutput) {
