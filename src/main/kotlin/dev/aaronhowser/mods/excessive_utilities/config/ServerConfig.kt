@@ -22,6 +22,7 @@ class ServerConfig(
 	lateinit var healingAxeHealthTransferAmount: ModConfigSpec.DoubleValue
 	lateinit var conveyorBeltSpeed: ModConfigSpec.DoubleValue
 	lateinit var funnyEnderLilyTeleporting: ModConfigSpec.BooleanValue
+	lateinit var enderPorcupineMarchTime: ModConfigSpec.IntValue
 
 	lateinit var heatingCoilBurnTime: ModConfigSpec.IntValue
 	lateinit var heatingCoilBurnCost: ModConfigSpec.IntValue
@@ -432,6 +433,10 @@ class ServerConfig(
 		funnyEnderLilyTeleporting = builder
 			.comment("Whether Ender Lilies should teleport away when they get wet.")
 			.define("funnyEnderLilyTeleporting", true)
+
+		enderPorcupineMarchTime = builder
+			.comment("The number of ticks that the Ender Porcupine will wait at each position before moving to the next one")
+			.defineInRange("enderPorcupineMarchTime", 20, 1, Int.MAX_VALUE)
 
 		builder.section("filing_cabinets") {
 			basicFilingCabinetCapacity = builder

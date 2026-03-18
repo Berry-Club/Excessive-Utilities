@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toBlockPos
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu.EnderPorcupineMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -68,7 +69,7 @@ class EnderPorcupineBlockEntity(
 		val volume = allOffsets.size
 		if (volume == 0) return Vec3i.ZERO
 
-		val ticksPerStep = 20
+		val ticksPerStep = ServerConfig.CONFIG.enderPorcupineMarchTime.get()
 		val step = (level.gameTime / ticksPerStep).toInt()
 		val index = step % volume
 
