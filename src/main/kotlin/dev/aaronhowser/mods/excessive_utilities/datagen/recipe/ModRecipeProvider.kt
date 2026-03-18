@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withCount
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.*
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.ItemAndFluidFuelRecipeBuilder
@@ -28,6 +29,7 @@ import net.minecraft.util.Unit
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
@@ -2129,13 +2131,95 @@ class ModRecipeProvider(
 	}
 
 	private fun buildCrusherRecipes(recipeOutput: RecipeOutput) {
+		fun recipe(
+			ingredient: Ingredient,
+			primary: ItemStack,
+			secondary: ItemStack = ItemStack.EMPTY,
+			secondaryChance: Float = 0f
+		) {
+			CrusherRecipeBuilder(ingredient, primary, secondary, secondaryChance).save(recipeOutput)
+		}
 
-		CrusherRecipeBuilder(
+		recipe(
 			Tags.Items.ORES_DIAMOND.asIngredient(),
 			Items.DIAMOND.defaultInstance,
-			Items.DIAMOND.defaultInstance.copyWithCount(3),
+			Items.DIAMOND.withCount(3),
 			0.2f
-		).save(recipeOutput)
+		)
+
+		recipe(
+			Tags.Items.ORES_EMERALD.asIngredient(),
+			Items.EMERALD.defaultInstance,
+			Items.EMERALD.withCount(3),
+			0.2f
+		)
+
+		recipe(
+			Tags.Items.ORES_QUARTZ.asIngredient(),
+			Items.QUARTZ.defaultInstance,
+			Items.QUARTZ.withCount(3),
+			0.2f
+		)
+
+		recipe(
+			Tags.Items.ORES_GOLD.asIngredient(),
+			Items.RAW_GOLD.withCount(2),
+			Items.RAW_IRON.defaultInstance,
+			0.1f
+		)
+
+		recipe(
+			Tags.Items.ORES_IRON.asIngredient(),
+			Items.RAW_IRON.withCount(2),
+			Items.RAW_GOLD.defaultInstance,
+			0.1f
+		)
+
+		recipe(
+			Tags.Items.ORES_REDSTONE.asIngredient(),
+			Items.REDSTONE.withCount(8)
+		)
+
+		recipe(
+			Tags.Items.ORES_LAPIS.asIngredient(),
+			Items.LAPIS_LAZULI.withCount(8)
+		)
+
+		recipe(
+			Tags.Items.ORES_COAL.asIngredient(),
+			Items.COAL.withCount(4)
+		)
+
+		recipe(
+			Tags.Items.DUSTS_GLOWSTONE.asIngredient(),
+			Items.GLOWSTONE_DUST.withCount(4)
+		)
+
+		recipe(
+			Tags.Items.COBBLESTONES.asIngredient(),
+			Items.GRAVEL.defaultInstance,
+			Items.SAND.defaultInstance,
+			0.1f
+		)
+
+		recipe(
+			Tags.Items.GRAVELS.asIngredient(),
+			Items.SAND.defaultInstance,
+		)
+
+		recipe(
+			Tags.Items.RODS_BLAZE.asIngredient(),
+			Items.BLAZE_POWDER.withCount(2),
+			Items.BLAZE_ROD.defaultInstance,
+			0.4f
+		)
+
+		recipe(
+			Tags.Items.BONES.asIngredient(),
+			Items.BONE_MEAL.withCount(3),
+			Items.BONE.defaultInstance,
+			0.5f
+		)
 
 	}
 

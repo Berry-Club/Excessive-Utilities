@@ -1,0 +1,15 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "tag": "c:rods/blaze"
+  },
+  "primary_output": {
+    "count": 2,
+    "id": "minecraft:blaze_powder"
+  },
+  "secondary_chance": 0.4,
+  "secondary_output": {
+    "count": 1,
+    "id": "minecraft:blaze_rod"
+  }
+}

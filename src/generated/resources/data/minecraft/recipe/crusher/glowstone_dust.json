@@ -1,0 +1,10 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "tag": "c:dusts/glowstone"
+  },
+  "primary_output": {
+    "count": 4,
+    "id": "minecraft:glowstone_dust"
+  }
+}

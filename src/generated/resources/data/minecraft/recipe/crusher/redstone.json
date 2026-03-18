@@ -1,0 +1,10 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "tag": "c:ores/redstone"
+  },
+  "primary_output": {
+    "count": 8,
+    "id": "minecraft:redstone"
+  }
+}
