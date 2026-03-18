@@ -3,17 +3,27 @@ package dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
+import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.item.ItemStack
 
 class EnderPorcupineMenu(
 	containerId: Int,
 	val containerData: ContainerData
-) : AbstractContainerMenu(ModMenuTypes.RESONATOR.get(), containerId), MenuWithButtons {
+) : AbstractContainerMenu(ModMenuTypes.ENDER_PORCUPINE.get(), containerId), MenuWithButtons {
+
+	constructor(containerId: Int, playerInventory: Inventory) :
+			this(
+				containerId,
+				SimpleContainerData(EnderPorcupineBlockEntity.CONTAINER_DATA_SIZE),
+			)
 
 	init {
+		checkContainerDataCount(containerData, EnderPorcupineBlockEntity.CONTAINER_DATA_SIZE)
+
 		addDataSlots(containerData)
 	}
 
