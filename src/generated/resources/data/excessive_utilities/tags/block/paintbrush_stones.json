@@ -15,6 +15,7 @@
     "excessive_utilities:colored_stone_brown",
     "excessive_utilities:colored_stone_green",
     "excessive_utilities:colored_stone_red",
-    "excessive_utilities:colored_stone_black"
+    "excessive_utilities:colored_stone_black",
+    "#c:stones"
   ]
 }

@@ -367,20 +367,70 @@ class ModBlockTagsProvider(
 					redstoneLamp
 				)
 
-			tag(COLORED_STONES).add(stone)
-			tag(COLORED_COBBLESTONES).add(cobble)
-			tag(COLORED_STONE_BRICKS).add(stoneBricks)
-			tag(COLORED_BRICKS).add(bricks)
-			tag(COLORED_COAL_BLOCKS).add(coal)
-			tag(COLORED_LAPIS_BLOCKS).add(lapis)
-			tag(COLORED_PLANKS).add(planks)
-			tag(COLORED_OBSIDIANS).add(obsidian)
-			tag(COLORED_QUARTZES).add(quartz)
-			tag(COLORED_GLOWSTONES).add(glowstone)
-			tag(COLORED_REDSTONE_BLOCKS).add(redstone)
-			tag(COLORED_REDSTONE_LAMPS).add(redstoneLamp)
-			tag(COLORED_SOUL_SANDS).add(soulSand)
+			tag(PAINTBRUSH_STONES).add(stone)
+			tag(PAINTBRUSH_COBBLESTONES).add(cobble)
+			tag(PAINTBRUSH_STONE_BRICKS).add(stoneBricks)
+			tag(PAINTBRUSH_BRICKS).add(bricks)
+			tag(PAINTBRUSH_COAL_BLOCKS).add(coal)
+			tag(PAINTBRUSH_LAPIS_BLOCKS).add(lapis)
+			tag(PAINTBRUSH_PLANKS).add(planks)
+			tag(PAINTBRUSH_OBSIDIANS).add(obsidian)
+			tag(PAINTBRUSH_QUARTZES).add(quartz)
+			tag(PAINTBRUSH_GLOWSTONES).add(glowstone)
+			tag(PAINTBRUSH_REDSTONE_BLOCKS).add(redstone)
+			tag(PAINTBRUSH_REDSTONE_LAMPS).add(redstoneLamp)
+			tag(PAINTBRUSH_SOUL_SANDS).add(soulSand)
 		}
+
+		tag(PAINTBRUSH_STONES)
+			.addTag(Tags.Blocks.STONES)
+
+		tag(PAINTBRUSH_COBBLESTONES)
+			.addTag(Tags.Blocks.COBBLESTONES_NORMAL)
+
+		tag(PAINTBRUSH_STONE_BRICKS)
+			.addTag(BlockTags.STONE_BRICKS)
+
+		tag(PAINTBRUSH_BRICKS)
+			.add(Blocks.BRICKS)
+
+		tag(PAINTBRUSH_COAL_BLOCKS)
+			.addTag(Tags.Blocks.STORAGE_BLOCKS_COAL)
+
+		tag(PAINTBRUSH_LAPIS_BLOCKS)
+			.addTag(Tags.Blocks.STORAGE_BLOCKS_LAPIS)
+
+		tag(PAINTBRUSH_OBSIDIANS)
+			.addTag(Tags.Blocks.OBSIDIANS_NORMAL)
+
+		tag(PAINTBRUSH_PLANKS)
+			.addTag(BlockTags.PLANKS)
+
+		tag(PAINTBRUSH_REDSTONE_BLOCKS)
+			.addTag(Tags.Blocks.STORAGE_BLOCKS_REDSTONE)
+
+		tag(PAINTBRUSH_SOUL_SANDS)
+			.add(Blocks.SOUL_SAND)
+
+		tag(PAINTBRUSH_WOOLS)
+			.add(
+				Blocks.WHITE_WOOL,
+				Blocks.ORANGE_WOOL,
+				Blocks.MAGENTA_WOOL,
+				Blocks.LIGHT_BLUE_WOOL,
+				Blocks.YELLOW_WOOL,
+				Blocks.LIME_WOOL,
+				Blocks.PINK_WOOL,
+				Blocks.GRAY_WOOL,
+				Blocks.LIGHT_GRAY_WOOL,
+				Blocks.CYAN_WOOL,
+				Blocks.PURPLE_WOOL,
+				Blocks.BLUE_WOOL,
+				Blocks.BROWN_WOOL,
+				Blocks.GREEN_WOOL,
+				Blocks.RED_WOOL,
+				Blocks.BLACK_WOOL
+			)
 
 		tag(Tags.Blocks.DYED)
 			.add(*ModBlocks.COLORED_STONES.values.toTypedArray())
@@ -441,7 +491,7 @@ class ModBlockTagsProvider(
 
 		tag(PAINTBRUSH_BLACKLIST)
 
-		tag(VANILLA_WOOLS)
+		tag(PAINTBRUSH_WOOLS)
 			.add(
 				Blocks.WHITE_WOOL,
 				Blocks.ORANGE_WOOL,
@@ -486,20 +536,20 @@ class ModBlockTagsProvider(
 		val COLLECTABLE_BY_BOOMEREAPERANG = create("collectable_by_boomereaperang")
 		val CURSED_EARTH_REPLACEABLE = create("cursed_earth_replaceable")
 
-		val VANILLA_WOOLS = create("vanilla_wools")
-		val COLORED_STONES = create("colored_stones")
-		val COLORED_COBBLESTONES = create("colored_cobblestones")
-		val COLORED_STONE_BRICKS = create("colored_stone_bricks")
-		val COLORED_BRICKS = create("colored_bricks")
-		val COLORED_COAL_BLOCKS = create("colored_coal_blocks")
-		val COLORED_LAPIS_BLOCKS = create("colored_lapis_blocks")
-		val COLORED_PLANKS = create("colored_planks")
-		val COLORED_OBSIDIANS = create("colored_obsidians")
-		val COLORED_QUARTZES = create("colored_quartzes")
-		val COLORED_GLOWSTONES = create("colored_glowstones")
-		val COLORED_REDSTONE_BLOCKS = create("colored_redstone_blocks")
-		val COLORED_REDSTONE_LAMPS = create("colored_redstone_lamps")
-		val COLORED_SOUL_SANDS = create("colored_soul_sands")
+		val PAINTBRUSH_WOOLS = create("paintbrush_wools")
+		val PAINTBRUSH_STONES = create("paintbrush_stones")
+		val PAINTBRUSH_COBBLESTONES = create("paintbrush_cobblestones")
+		val PAINTBRUSH_STONE_BRICKS = create("paintbrush_stone_bricks")
+		val PAINTBRUSH_BRICKS = create("paintbrush_bricks")
+		val PAINTBRUSH_COAL_BLOCKS = create("paintbrush_coal_blocks")
+		val PAINTBRUSH_LAPIS_BLOCKS = create("paintbrush_lapis_blocks")
+		val PAINTBRUSH_PLANKS = create("paintbrush_planks")
+		val PAINTBRUSH_OBSIDIANS = create("paintbrush_obsidians")
+		val PAINTBRUSH_QUARTZES = create("paintbrush_quartzes")
+		val PAINTBRUSH_GLOWSTONES = create("paintbrush_glowstones")
+		val PAINTBRUSH_REDSTONE_BLOCKS = create("paintbrush_redstone_blocks")
+		val PAINTBRUSH_REDSTONE_LAMPS = create("paintbrush_redstone_lamps")
+		val PAINTBRUSH_SOUL_SANDS = create("paintbrush_soul_sands")
 
 	}
 

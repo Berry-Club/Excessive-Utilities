@@ -15,6 +15,7 @@
     "excessive_utilities:colored_bricks_brown",
     "excessive_utilities:colored_bricks_green",
     "excessive_utilities:colored_bricks_red",
-    "excessive_utilities:colored_bricks_black"
+    "excessive_utilities:colored_bricks_black",
+    "minecraft:bricks"
   ]
 }
