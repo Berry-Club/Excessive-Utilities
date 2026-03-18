@@ -32,7 +32,18 @@ class EnderPorcupineBER(
 			linesConsumer,
 			x, y, z,
 			x + 1f, y + 1f, z + 1f,
-			1f, 1f, 1f, 1f
+			1f, 1f, 1f, 0.5f
+		)
+
+		val minOffset = blockEntity.minimumOffset
+		val maxOffset = blockEntity.maximumOffset
+
+		WandRenderer.renderCubeWireframe(
+			poseStack,
+			linesConsumer,
+			minOffset.x.toFloat(), minOffset.y.toFloat(), minOffset.z.toFloat(),
+			maxOffset.x.toFloat() + 1f, maxOffset.y.toFloat() + 1f, maxOffset.z.toFloat() + 1f,
+			0f, 1f, 0f, 0.2f
 		)
 
 	}
