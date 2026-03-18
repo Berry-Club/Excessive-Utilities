@@ -7,10 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRender
 import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
-import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.EnderQuarryBER
-import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.ManualMillBER
-import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.RainbowGeneratorBER
-import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.ResturbedMobSpawnerBER
+import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.*
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.FlatTransferNodeEntityRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.MagicalBoomerangEntityRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.layer.AngelRingWingsLayer
@@ -277,6 +274,7 @@ object ClientEvents {
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.MANUAL_MILL.get(), ::ManualMillBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.RESTURBED_MOB_SPAWNER.get(), ::ResturbedMobSpawnerBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.RAINBOW_GENERATOR.get(), ::RainbowGeneratorBER)
+		event.registerBlockEntityRenderer(ModBlockEntityTypes.ENDER_PORCUPINE.get(), ::EnderPorcupineBER)
 	}
 
 	@SubscribeEvent

@@ -160,7 +160,7 @@ object WandRenderer {
 		return null
 	}
 
-	private fun renderCubeWireframe(
+	fun renderCubeWireframe(
 		poseStack: PoseStack,
 		vertexConsumer: VertexConsumer,
 		minX: Float, minY: Float, minZ: Float,
@@ -210,7 +210,7 @@ object WandRenderer {
 
 	}
 
-	private fun drawLine(
+	fun drawLine(
 		vertexConsumer: VertexConsumer,
 		pose: PoseStack.Pose,
 		x1: Float, y1: Float, z1: Float,
