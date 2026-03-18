@@ -15,6 +15,9 @@ class ClientConfig(
 	lateinit var rainbowGeneratorRayWidth: ModConfigSpec.DoubleValue
 	lateinit var rainbowGeneratorRayLength: ModConfigSpec.DoubleValue
 
+	lateinit var enderPorcupineSearchVolumeColor: ModConfigSpec.ConfigValue<Int>
+	lateinit var enderPorcupineCurrentTargetColor: ModConfigSpec.ConfigValue<Int>
+
 	init {
 		general()
 	}
@@ -41,6 +44,16 @@ class ClientConfig(
 			rainbowGeneratorRayLength = builder
 				.comment("The length of the Rainbow Generator's rays")
 				.defineInRange("rainbowGeneratorRayLength", 2.5, 0.0, Double.MAX_VALUE)
+		}
+
+		builder.section("ender_porcupine") {
+			enderPorcupineSearchVolumeColor = builder
+				.comment("The color of the Ender Porcupine's search volume, in the integer version of a hexadecimal number of format 0xAARRGGBB.")
+				.define("enderPorcupineSearchVolumeColor", 0x66FFFFFF)
+
+			enderPorcupineCurrentTargetColor = builder
+				.comment("The color of the Ender Porcupine's current target highlight, in the integer version of a hexadecimal number of format 0xAARRGGBB.")
+				.define("enderPorcupineCurrentTargetColor", 0xFFFFFFFF.toInt())
 		}
 
 	}
