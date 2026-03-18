@@ -13,6 +13,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.util.Unit
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.level.biome.Biome
 import net.neoforged.neoforge.fluids.SimpleFluidContent
@@ -63,5 +64,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		register("fluid_filter_flags", FluidFilterFlagsComponent.CODEC, FluidFilterFlagsComponent.STREAM_CODEC)
 	val FREQUENCY: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("frequency")
+	val COLOR: DeferredHolder<DataComponentType<*>, DataComponentType<DyeColor>> =
+		register("color", DyeColor.CODEC, DyeColor.STREAM_CODEC)
 
 }

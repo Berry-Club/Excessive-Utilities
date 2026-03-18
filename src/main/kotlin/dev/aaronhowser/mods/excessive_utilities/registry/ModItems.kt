@@ -71,8 +71,8 @@ object ModItems : AaronItemRegistry() {
 		register("reversing_hoe", ::ReversingHoeItem, ReversingHoeItem.DEFAULT_PROPERTIES)
 	val PRECISION_SHEARS =
 		basic("precision_shears")
-	val PAINTBRUSH =
-		basic("paintbrush")
+	val PAINTBRUSH: DeferredItem<PaintbrushItem> =
+		register("paintbrush", ::PaintbrushItem, PaintbrushItem.DEFAULT_PROPERTIES)
 	val GLASS_CUTTER: DeferredItem<GlassCutterItem> =
 		register("glass_cutter", ::GlassCutterItem, GlassCutterItem.DEFAULT_PROPERTIES)
 	val TROWEL: DeferredItem<TrowelItem> =
