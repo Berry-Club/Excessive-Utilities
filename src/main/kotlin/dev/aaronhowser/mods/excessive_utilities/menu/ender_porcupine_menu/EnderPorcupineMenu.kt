@@ -18,67 +18,29 @@ class EnderPorcupineMenu(
 	}
 
 	override fun handleButtonPressed(buttonId: Int) {
-		when (buttonId) {
-			INCREASE_MIN_X_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MIN_X_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MIN_X_DATA_INDEX, current + 1)
-			}
+		val dataIndex = when (buttonId) {
+			INCREASE_MIN_X_BUTTON_ID, DECREASE_MIN_X_BUTTON_ID -> EnderPorcupineBlockEntity.MIN_X_DATA_INDEX
+			INCREASE_MIN_Y_BUTTON_ID, DECREASE_MIN_Y_BUTTON_ID -> EnderPorcupineBlockEntity.MIN_Y_DATA_INDEX
+			INCREASE_MIN_Z_BUTTON_ID, DECREASE_MIN_Z_BUTTON_ID -> EnderPorcupineBlockEntity.MIN_Z_DATA_INDEX
 
-			INCREASE_MIN_Y_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MIN_Y_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MIN_Y_DATA_INDEX, current + 1)
-			}
-
-			INCREASE_MIN_Z_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MIN_Z_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MIN_Z_DATA_INDEX, current + 1)
-			}
-
-			DECREASE_MIN_X_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MIN_X_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MIN_X_DATA_INDEX, current - 1)
-			}
-
-			DECREASE_MIN_Y_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MIN_Y_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MIN_Y_DATA_INDEX, current - 1)
-			}
-
-			DECREASE_MIN_Z_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MIN_Z_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MIN_Z_DATA_INDEX, current - 1)
-			}
-
-			INCREASE_MAX_X_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MAX_X_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MAX_X_DATA_INDEX, current + 1)
-			}
-
-			INCREASE_MAX_Y_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MAX_Y_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MAX_Y_DATA_INDEX, current + 1)
-			}
-
-			INCREASE_MAX_Z_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MAX_Z_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MAX_Z_DATA_INDEX, current + 1)
-			}
-
-			DECREASE_MAX_X_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MAX_X_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MAX_X_DATA_INDEX, current - 1)
-			}
-
-			DECREASE_MAX_Y_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MAX_Y_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MAX_Y_DATA_INDEX, current - 1)
-			}
-
-			DECREASE_MAX_Z_BUTTON_ID -> {
-				val current = containerData.get(EnderPorcupineBlockEntity.MAX_Z_DATA_INDEX)
-				containerData.set(EnderPorcupineBlockEntity.MAX_Z_DATA_INDEX, current - 1)
-			}
+			INCREASE_MAX_X_BUTTON_ID, DECREASE_MAX_X_BUTTON_ID -> EnderPorcupineBlockEntity.MAX_X_DATA_INDEX
+			INCREASE_MAX_Y_BUTTON_ID, DECREASE_MAX_Y_BUTTON_ID -> EnderPorcupineBlockEntity.MAX_Y_DATA_INDEX
+			INCREASE_MAX_Z_BUTTON_ID, DECREASE_MAX_Z_BUTTON_ID -> EnderPorcupineBlockEntity.MAX_Z_DATA_INDEX
+			else -> return
 		}
+
+		val current = containerData.get(dataIndex)
+		val next = when (buttonId) {
+			INCREASE_MIN_X_BUTTON_ID, INCREASE_MIN_Y_BUTTON_ID, INCREASE_MIN_Z_BUTTON_ID,
+			INCREASE_MAX_X_BUTTON_ID, INCREASE_MAX_Y_BUTTON_ID, INCREASE_MAX_Z_BUTTON_ID -> current + 1
+
+			DECREASE_MIN_X_BUTTON_ID, DECREASE_MIN_Y_BUTTON_ID, DECREASE_MIN_Z_BUTTON_ID,
+			DECREASE_MAX_X_BUTTON_ID, DECREASE_MAX_Y_BUTTON_ID, DECREASE_MAX_Z_BUTTON_ID -> current - 1
+
+			else -> return
+		}
+
+		containerData.set(dataIndex, next)
 	}
 
 	override fun quickMoveStack(player: Player, index: Int): ItemStack = ItemStack.EMPTY
