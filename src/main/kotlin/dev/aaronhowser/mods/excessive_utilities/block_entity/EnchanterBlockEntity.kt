@@ -112,11 +112,23 @@ class EnchanterBlockEntity(
 		val leftStack = container.getItem(LEFT_INPUT_SLOT)
 		val rightStack = container.getItem(RIGHT_INPUT_SLOT)
 
+		val cache = recipeCache
+		if (cache != null) {
+			if (cache.value
+					.matches(
+						EnchanterRecipe.Input(leftStack, rightStack),
+						level
+					)
+			) {
+				return cache
+			}
+		}
+
 		var recipe = EnchanterRecipe.getRecipe(level, leftStack, rightStack)
 
 		if (recipe != null) {
-			val stackInOutput = container.getItem(ResonatorBlockEntity.OUTPUT_SLOT)
-			val recipeOutput = recipe.value.getResultItem(level.registryAccess()).copy()
+			val stackInOutput = container.getItem(OUTPUT_SLOT)
+			val recipeOutput = recipe.value.getResultItem(level.registryAccess())
 
 			if (stackInOutput.isNotEmpty() && ItemStack.isSameItemSameComponents(stackInOutput, recipeOutput)) {
 				val canFit = stackInOutput.count + recipeOutput.count <= stackInOutput.maxStackSize
