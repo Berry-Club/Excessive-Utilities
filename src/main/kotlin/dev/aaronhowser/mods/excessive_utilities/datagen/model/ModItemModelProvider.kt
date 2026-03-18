@@ -37,7 +37,17 @@ class ModItemModelProvider(
 		basicItems()
 	}
 
-	fun biomeMarker() {
+	private fun paintbrush() {
+		val item = ModItems.PAINTBRUSH.get()
+
+		withExistingParent(getName(item), mcLoc("item/generated"))
+			.texture("layer0", modLoc("item/paintbrush/base"))
+			.texture("layer1", modLoc("item/paintbrush/brush"))
+
+		handledItems.add(item)
+	}
+
+	private fun biomeMarker() {
 		val item = ModItems.BIOME_MARKER.get()
 
 		withExistingParent(getName(item), mcLoc("item/generated"))
@@ -46,7 +56,7 @@ class ModItemModelProvider(
 		handledItems.add(item)
 	}
 
-	fun sunCrystal() {
+	private fun sunCrystal() {
 		val item = ModItems.SUN_CRYSTAL.get()
 
 		withExistingParent(getName(item), mcLoc("item/generated"))
@@ -56,7 +66,7 @@ class ModItemModelProvider(
 		handledItems.add(item)
 	}
 
-	fun compoundBow() {
+	private fun compoundBow() {
 		val item = ModItems.COMPOUND_BOW.get()
 
 		val baseModel =
@@ -112,7 +122,7 @@ class ModItemModelProvider(
 		handledItems.add(item)
 	}
 
-	fun magicalBoomerang() {
+	private fun magicalBoomerang() {
 		val item = ModItems.MAGICAL_BOOMERANG.get()
 
 		val baseModel = getBuilder(getName(item))
@@ -132,7 +142,7 @@ class ModItemModelProvider(
 		handledItems.add(item)
 	}
 
-	fun flatTransferNodes() {
+	private fun flatTransferNodes() {
 		val itemNode = ModItems.FLAT_TRANSFER_NODE_ITEMS.get()
 		val fluidNode = ModItems.FLAT_TRANSFER_NODE_FLUIDS.get()
 
@@ -148,7 +158,7 @@ class ModItemModelProvider(
 		handledItems.add(fluidNode)
 	}
 
-	fun bewlrs() {
+	private fun bewlrs() {
 		val bewlrItems = listOf(
 			ModItems.OPINIUM_CORE.get()
 		)
@@ -164,7 +174,7 @@ class ModItemModelProvider(
 	}
 
 	//TODO: Make the glows emmissive, and make the ingot's glow red when about to explode
-	fun unstableItems() {
+	private fun unstableItems() {
 		val axe = ModItems.HEALING_AXE.get()
 		val pickaxe = ModItems.DESTRUCTION_PICKAXE.get()
 		val hoe = ModItems.REVERSING_HOE.get()
@@ -223,7 +233,7 @@ class ModItemModelProvider(
 		handledItems.add(shears)
 	}
 
-	fun wateringCan() {
+	private fun wateringCan() {
 		val item = ModItems.WATERING_CAN.get()
 
 		val base = getBuilder(getName(item))
@@ -243,7 +253,7 @@ class ModItemModelProvider(
 		handledItems.add(item)
 	}
 
-	fun lassos() {
+	private fun lassos() {
 		val goldenLasso = ModItems.GOLDEN_LASSO.get()
 		val goldenName = getName(goldenLasso)
 
@@ -282,7 +292,7 @@ class ModItemModelProvider(
 		handledItems.add(cursedLasso)
 	}
 
-	fun enderShard() {
+	private fun enderShard() {
 		val item = ModItems.ENDER_SHARD.get()
 
 		fun getModelForCount(count: Int): ItemModelBuilder {
@@ -334,10 +344,9 @@ class ModItemModelProvider(
 		}
 	}
 
-	private fun getName(item: Item): String = BuiltInRegistries.ITEM.getKey(item).toString()
-
 	companion object {
 		val ENDER_SHARD_COUNT = ExcessiveUtilities.modResource("ender_shard_count")
+		private fun getName(item: Item): String = BuiltInRegistries.ITEM.getKey(item).toString()
 	}
 
 }
