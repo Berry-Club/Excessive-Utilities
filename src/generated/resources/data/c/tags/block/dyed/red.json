@@ -10,6 +10,8 @@
     "excessive_utilities:colored_lapis_block_red",
     "excessive_utilities:colored_obsidian_red",
     "excessive_utilities:colored_quartz_block_red",
-    "excessive_utilities:colored_soul_sand_red"
+    "excessive_utilities:colored_soul_sand_red",
+    "excessive_utilities:colored_glowstone_red",
+    "excessive_utilities:colored_redstone_lamp_red"
   ]
 }

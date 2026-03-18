@@ -227,7 +227,7 @@ class ModBlockTagsProvider(
 			)
 			.add(*ModBlocks.COLORED_PLANKS.map { it.value }.toTypedArray())
 
-		tag(MINEABLE_WITH_SICKLE)
+		tag(SICKLE_MINEABLE)
 			.addTags(
 				BlockTags.FLOWERS,
 				BlockTags.LEAVES
@@ -336,20 +336,50 @@ class ModBlockTagsProvider(
 		for (color in DyeColor.entries) {
 			val tagName = common("dyed/${color.serializedName}")
 
+			val stone = ModBlocks.getColoredStone(color).get()
+			val cobble = ModBlocks.getColoredCobblestone(color).get()
+			val stoneBricks = ModBlocks.getColoredStoneBricks(color).get()
+			val bricks = ModBlocks.getColoredBricks(color).get()
+			val planks = ModBlocks.getColoredPlanks(color).get()
+			val coal = ModBlocks.getColoredCoalBlock(color).get()
+			val redstone = ModBlocks.getColoredRedstoneBlock(color).get()
+			val lapis = ModBlocks.getColoredLapisBlock(color).get()
+			val obsidian = ModBlocks.getColoredObsidian(color).get()
+			val quartz = ModBlocks.getColoredQuartz(color).get()
+			val soulSand = ModBlocks.getColoredSoulSand(color).get()
+			val glowstone = ModBlocks.getColoredGlowstone(color).get()
+			val redstoneLamp = ModBlocks.getColoredRedstoneLamp(color).get()
+
 			tag(tagName)
 				.add(
-					ModBlocks.getColoredStone(color).get(),
-					ModBlocks.getColoredCobblestone(color).get(),
-					ModBlocks.getColoredStoneBricks(color).get(),
-					ModBlocks.getColoredBricks(color).get(),
-					ModBlocks.getColoredPlanks(color).get(),
-					ModBlocks.getColoredCoalBlock(color).get(),
-					ModBlocks.getColoredRedstoneBlock(color).get(),
-					ModBlocks.getColoredLapisBlock(color).get(),
-					ModBlocks.getColoredObsidian(color).get(),
-					ModBlocks.getColoredQuartz(color).get(),
-					ModBlocks.getColoredSoulSand(color).get()
+					stone,
+					cobble,
+					stoneBricks,
+					bricks,
+					planks,
+					coal,
+					redstone,
+					lapis,
+					obsidian,
+					quartz,
+					soulSand,
+					glowstone,
+					redstoneLamp
 				)
+
+			tag(COLORED_STONES).add(stone)
+			tag(COLORED_COBBLESTONES).add(cobble)
+			tag(COLORED_STONE_BRICKS).add(stoneBricks)
+			tag(COLORED_BRICKS).add(bricks)
+			tag(COLORED_COAL_BLOCKS).add(coal)
+			tag(COLORED_LAPIS_BLOCKS).add(lapis)
+			tag(COLORED_PLANKS).add(planks)
+			tag(COLORED_OBSIDIANS).add(obsidian)
+			tag(COLORED_QUARTZES).add(quartz)
+			tag(COLORED_GLOWSTONES).add(glowstone)
+			tag(COLORED_REDSTONE_BLOCKS).add(redstone)
+			tag(COLORED_REDSTONE_LAMPS).add(redstoneLamp)
+			tag(COLORED_SOUL_SANDS).add(soulSand)
 		}
 
 		tag(Tags.Blocks.DYED)
@@ -408,26 +438,69 @@ class ModBlockTagsProvider(
 			.add(
 				ModBlocks.ENDER_PORCUPINE
 			)
+
+		tag(PAINTBRUSH_BLACKLIST)
+
+		tag(VANILLA_WOOLS)
+			.add(
+				Blocks.WHITE_WOOL,
+				Blocks.ORANGE_WOOL,
+				Blocks.MAGENTA_WOOL,
+				Blocks.LIGHT_BLUE_WOOL,
+				Blocks.YELLOW_WOOL,
+				Blocks.LIME_WOOL,
+				Blocks.PINK_WOOL,
+				Blocks.GRAY_WOOL,
+				Blocks.LIGHT_GRAY_WOOL,
+				Blocks.CYAN_WOOL,
+				Blocks.PURPLE_WOOL,
+				Blocks.BLUE_WOOL,
+				Blocks.BROWN_WOOL,
+				Blocks.GREEN_WOOL,
+				Blocks.RED_WOOL,
+				Blocks.BLACK_WOOL
+			)
 	}
 
 	companion object {
 		private fun create(id: String): TagKey<Block> = BlockTags.create(ExcessiveUtilities.modResource(id))
 		private fun common(id: String): TagKey<Block> = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", id))
 
-		val MINEABLE_WITH_SICKLE = common("mineable/sickle")
-		val RENDER_GP_WHILE_LOOKING_AT = create("render_gp_while_looking_at")
-		val VALID_FOR_DRAGON_EGG_MILL = create("valid_for_dragon_egg_mill")
-		val CREATIVE_HARVEST_BLACKLIST = create("creative_harvest_blacklist")
-		val ENDER_QUARRY_BLACKLIST = create("ender_quarry_blacklist")
-		val ENDER_QUARRY_PART = create("ender_quarry_part")
+		val SICKLE_MINEABLE = common("mineable/sickle")
+		val GLASS_CUTTER_MINEABLE = create("mineable/glass_cutter")
 		val FIRE_AXE_MINEABLE = create("mineable/fire_axe")
+
 		val DESTRUCTION_PICKAXE_TARGET = create("destruction_pickaxe_target")
 		val EROSION_SHOVEL_TARGET = create("erosion_shovel_target")
-		val COLLECTABLE_BY_BOOMEREAPERANG = create("collectable_by_boomereaperang")
-		val CURSED_EARTH_REPLACEABLE = create("cursed_earth_replaceable")
-		val GLASS_CUTTER_MINEABLE = create("mineable/glass_cutter")
+
+		val RENDER_GP_WHILE_LOOKING_AT = create("render_gp_while_looking_at")
+		val VALID_FOR_DRAGON_EGG_MILL = create("valid_for_dragon_egg_mill")
+
+		val CREATIVE_HARVEST_BLACKLIST = create("creative_harvest_blacklist")
+		val ENDER_QUARRY_BLACKLIST = create("ender_quarry_blacklist")
+		val PAINTBRUSH_BLACKLIST = create("paintbrush_blacklist")
 		val FE_TRANSMITTER_BLACKLIST = create("fe_transmitter_blacklist")
 		val ENDER_PORCUPINE_BLACKLIST = create("ender_porcupine_blacklist")
+
+		val ENDER_QUARRY_PART = create("ender_quarry_part")
+		val COLLECTABLE_BY_BOOMEREAPERANG = create("collectable_by_boomereaperang")
+		val CURSED_EARTH_REPLACEABLE = create("cursed_earth_replaceable")
+
+		val VANILLA_WOOLS = create("vanilla_wools")
+		val COLORED_STONES = create("colored_stones")
+		val COLORED_COBBLESTONES = create("colored_cobblestones")
+		val COLORED_STONE_BRICKS = create("colored_stone_bricks")
+		val COLORED_BRICKS = create("colored_bricks")
+		val COLORED_COAL_BLOCKS = create("colored_coal_blocks")
+		val COLORED_LAPIS_BLOCKS = create("colored_lapis_blocks")
+		val COLORED_PLANKS = create("colored_planks")
+		val COLORED_OBSIDIANS = create("colored_obsidians")
+		val COLORED_QUARTZES = create("colored_quartzes")
+		val COLORED_GLOWSTONES = create("colored_glowstones")
+		val COLORED_REDSTONE_BLOCKS = create("colored_redstone_blocks")
+		val COLORED_REDSTONE_LAMPS = create("colored_redstone_lamps")
+		val COLORED_SOUL_SANDS = create("colored_soul_sands")
+
 	}
 
 }

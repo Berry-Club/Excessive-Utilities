@@ -10,6 +10,8 @@
     "excessive_utilities:colored_lapis_block_cyan",
     "excessive_utilities:colored_obsidian_cyan",
     "excessive_utilities:colored_quartz_block_cyan",
-    "excessive_utilities:colored_soul_sand_cyan"
+    "excessive_utilities:colored_soul_sand_cyan",
+    "excessive_utilities:colored_glowstone_cyan",
+    "excessive_utilities:colored_redstone_lamp_cyan"
   ]
 }

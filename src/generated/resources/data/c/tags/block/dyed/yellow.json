@@ -10,6 +10,8 @@
     "excessive_utilities:colored_lapis_block_yellow",
     "excessive_utilities:colored_obsidian_yellow",
     "excessive_utilities:colored_quartz_block_yellow",
-    "excessive_utilities:colored_soul_sand_yellow"
+    "excessive_utilities:colored_soul_sand_yellow",
+    "excessive_utilities:colored_glowstone_yellow",
+    "excessive_utilities:colored_redstone_lamp_yellow"
   ]
 }

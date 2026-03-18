@@ -51,7 +51,7 @@ class SickleItem(properties: Properties) : Item(properties) {
 			return Properties()
 				.component(
 					DataComponents.TOOL,
-					tier.createToolProperties(ModBlockTagsProvider.MINEABLE_WITH_SICKLE)
+					tier.createToolProperties(ModBlockTagsProvider.SICKLE_MINEABLE)
 				)
 				.component(
 					ModDataComponents.RADIUS.get(),
