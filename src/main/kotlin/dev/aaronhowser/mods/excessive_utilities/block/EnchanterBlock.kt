@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.DirectionProperty
 
 class EnchanterBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
@@ -19,11 +20,12 @@ class EnchanterBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 		registerDefaultState(
 			stateDefinition.any()
 				.setValue(FACING, Direction.NORTH)
+				.setValue(ENABLED, false)
 		)
 	}
 
 	override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-		builder.add(FACING)
+		builder.add(FACING, ENABLED)
 	}
 
 	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
@@ -37,6 +39,7 @@ class EnchanterBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 
 	companion object {
 		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val ENABLED: BooleanProperty = BlockStateProperties.ENABLED
 	}
 
 }

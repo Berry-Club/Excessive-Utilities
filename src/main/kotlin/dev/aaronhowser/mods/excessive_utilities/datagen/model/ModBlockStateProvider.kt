@@ -77,6 +77,82 @@ class ModBlockStateProvider(
 		redOrchid()
 		enderPorcupine()
 		crusher()
+		enchanter()
+	}
+
+	private fun enchanter() {
+		val block = ModBlocks.ENCHANTER.get()
+
+		val name = name(block)
+
+		val model = models()
+			.withExistingParent(name + "_off", mcLoc("block/block"))
+			.texture("top_overlay", modLoc("block/enchanter/top"))
+			.texture("top", modLoc("block/machine_base/top"))
+			.texture("side", modLoc("block/enchanter/side"))
+			.texture("front", modLoc("block/machine_base/side"))
+			.texture("bottom", modLoc("block/machine_base/bottom"))
+			.texture("overlay", modLoc("block/enchanter/face_off"))
+			.texture("particle", modLoc("block/enchanter/top"))
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 0f)
+
+				face(Direction.NORTH) {
+					texture("#overlay")
+					cullface(Direction.NORTH)
+				}
+
+				face(Direction.UP) {
+					texture("#top_overlay")
+					cullface(Direction.UP)
+				}
+			}
+
+		val modelOn = models()
+			.withExistingParent(name + "_on", modLoc("block/$name" + "_off"))
+			.texture("overlay", modLoc("block/enchanter/face_on"))
+
+		getVariantBuilder(block)
+			.forAllStates {
+				val facing = it.getValue(EnchanterBlock.FACING)
+				val enabled = it.getValue(EnchanterBlock.ENABLED)
+
+				val yRot = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val model = if (enabled) modelOn else model
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.rotationY(yRot)
+					.build()
+			}
+
+		simpleBlockItem(block, model)
 	}
 
 	private fun crusher() {

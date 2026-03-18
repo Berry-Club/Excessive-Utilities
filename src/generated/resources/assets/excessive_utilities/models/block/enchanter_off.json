@@ -1,0 +1,74 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "cullface": "down",
+          "texture": "#bottom"
+        },
+        "east": {
+          "cullface": "east",
+          "texture": "#side"
+        },
+        "north": {
+          "cullface": "north",
+          "texture": "#side"
+        },
+        "south": {
+          "cullface": "south",
+          "texture": "#side"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#top"
+        },
+        "west": {
+          "cullface": "west",
+          "texture": "#side"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "cullface": "north",
+          "texture": "#overlay"
+        },
+        "up": {
+          "cullface": "up",
+          "texture": "#top_overlay"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        16,
+        0
+      ]
+    }
+  ],
+  "textures": {
+    "bottom": "excessive_utilities:block/machine_base/bottom",
+    "front": "excessive_utilities:block/machine_base/side",
+    "overlay": "excessive_utilities:block/enchanter/face_off",
+    "particle": "excessive_utilities:block/enchanter/top",
+    "side": "excessive_utilities:block/enchanter/side",
+    "top": "excessive_utilities:block/machine_base/top",
+    "top_overlay": "excessive_utilities:block/enchanter/top"
+  }
+}
