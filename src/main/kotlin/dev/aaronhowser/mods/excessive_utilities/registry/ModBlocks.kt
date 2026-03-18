@@ -99,8 +99,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("ender_flux_crystal", ::EnderFluxCrystalBlock)
 	val MACHINE_BLOCK: DeferredBlock<Block> =
 		basicCopiedBlock("machine_block", Blocks.STONE)
-	val CRUSHER =
-		basicBlock("crusher")
+	val CRUSHER: DeferredBlock<CrusherBlock> =
+		registerBlock("crusher", ::CrusherBlock)
 	val FURNACE: DeferredBlock<EUFurnaceBlock> =
 		registerBlock("furnace", ::EUFurnaceBlock)
 	val ENCHANTER: DeferredBlock<EnchanterBlock> =
