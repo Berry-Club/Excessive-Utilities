@@ -41,8 +41,12 @@ class EnderPorcupineBlockEntity(
 	var allOffsets: List<BlockPos> = emptyList()
 		private set
 
+	init {
+		updateOffsets()
+	}
+
 	private fun updateOffsets() {
-		allOffsets = BlockPos.betweenClosed(minimumOffset, maximumOffset).toList()
+		allOffsets = BlockPos.betweenClosed(minimumOffset, maximumOffset).map(BlockPos::immutable)
 	}
 
 	// Every second, move to the next offset in the list
