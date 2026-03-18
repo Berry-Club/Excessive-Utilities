@@ -4,8 +4,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDyeName
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
@@ -49,7 +49,7 @@ class PaintbrushItem(properties: Properties) : Item(properties) {
 
 		private fun setBrushColor(blockState: BlockState, brushStack: ItemStack): Boolean {
 			for (dyeColor in DyeColor.entries) {
-				val tag = ResourceKey.create(
+				val tag = TagKey.create(
 					Registries.BLOCK,
 					ResourceLocation.fromNamespaceAndPath(
 						"c",
