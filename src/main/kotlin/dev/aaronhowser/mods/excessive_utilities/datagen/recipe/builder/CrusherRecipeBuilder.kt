@@ -15,8 +15,8 @@ import net.minecraft.world.item.crafting.Ingredient
 class CrusherRecipeBuilder(
 	val ingredient: Ingredient,
 	val primaryOutput: ItemStack,
-	val secondaryOutput: ItemStack,
-	val secondaryChance: Float,
+	val secondaryOutput: ItemStack = ItemStack.EMPTY,
+	val secondaryChance: Float = 0f
 ) : RecipeBuilder {
 
 	private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()

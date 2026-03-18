@@ -59,6 +59,7 @@ class ModRecipeProvider(
 		buildSmeltingRecipes(recipeOutput)
 		buildQedRecipes(recipeOutput)
 		buildWorldInteractionRecipes(recipeOutput)
+		buildCrusherRecipes(recipeOutput)
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -2124,6 +2125,17 @@ class ModRecipeProvider(
 			requiredBlockBehind = null,
 			output = FluidStack(Fluids.WATER, 1)
 		).save(recipeOutput, modLoc("water"))
+
+	}
+
+	private fun buildCrusherRecipes(recipeOutput: RecipeOutput) {
+
+		CrusherRecipeBuilder(
+			Tags.Items.ORES_DIAMOND.asIngredient(),
+			Items.DIAMOND.defaultInstance,
+			Items.DIAMOND.defaultInstance.copyWithCount(3),
+			0.2f
+		).save(recipeOutput)
 
 	}
 

@@ -1,0 +1,15 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "tag": "c:ores/diamond"
+  },
+  "primary_output": {
+    "count": 1,
+    "id": "minecraft:diamond"
+  },
+  "secondary_chance": 0.2,
+  "secondary_output": {
+    "count": 3,
+    "id": "minecraft:diamond"
+  }
+}

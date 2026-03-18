@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-17T23:13:19.4599289	Recipes
+// 1.21.1	2026-03-18T02:15:48.5524198	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 dae80cf8a41d63d2b6b6e8c8f2980d67accd0b86 data/excessive_utilities/advancement/recipes/enchanter/block_of_enchanted_metal.json
 b46a12420ffdc8e03d9817941889851b7a2c85dc data/excessive_utilities/advancement/recipes/enchanter/block_of_evil_infused_iron.json
@@ -879,3 +879,5 @@ f11d6093335f049a4d66862c206d6064e6394f90 data/excessive_utilities/recipe/world_i
 17f7185d8b8682b04bd00abffb47475eb6b5c325 data/excessive_utilities/recipe/world_interaction_upgrade/item/cobblestone.json
 26eaa743bd17588df7cee58ae37659bfe42cac8a data/excessive_utilities/recipe/world_interaction_upgrade/item/stone.json
 94c2df923ffaef3eb6f06389eb1ca31dbd1839d5 data/excessive_utilities/recipe/wrench.json
+9b27e4f739e60da8ff470035deb0c16dbc3c7a12 data/minecraft/advancement/recipes/crusher/diamond.json
+51949c8615f865fe33a494d050c1da199eb1bc2e data/minecraft/recipe/crusher/diamond.json
