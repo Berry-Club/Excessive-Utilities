@@ -76,6 +76,74 @@ class ModBlockStateProvider(
 		enderLily()
 		redOrchid()
 		enderPorcupine()
+		crusher()
+	}
+
+	private fun crusher() {
+		val block = ModBlocks.CRUSHER.get()
+
+		val name = name(block)
+
+		val modelOff = models()
+			.withExistingParent(name + "_off", mcLoc("block/block"))
+			.texture("side", modLoc("block/machine_base/side"))
+			.texture("top", modLoc("block/machine_base/top"))
+			.texture("bottom", modLoc("block/machine_base/bottom"))
+			.texture("overlay", modLoc("block/crusher/off"))
+			.texture("particle", modLoc("block/machine_base/side"))
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 0f)
+
+				face(Direction.NORTH) {
+					texture("#overlay")
+					cullface(Direction.NORTH)
+				}
+			}
+
+		val modelOn = models()
+			.withExistingParent(name + "_on", modLoc("block/$name" + "_off"))
+
+		getVariantBuilder(block)
+			.forAllStates {
+				val facing = it.getValue(CrusherBlock.FACING)
+				val enabled = it.getValue(CrusherBlock.ENABLED)
+
+				val yRot = when (facing) {
+					Direction.NORTH -> 0
+					Direction.EAST -> 90
+					Direction.SOUTH -> 180
+					Direction.WEST -> 270
+					else -> 0
+				}
+
+				val model = if (enabled) modelOn else modelOff
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.rotationY(yRot)
+					.build()
+			}
+
+		simpleBlockItem(block, modelOff)
 	}
 
 	private fun enderPorcupine() {
