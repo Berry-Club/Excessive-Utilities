@@ -20,12 +20,12 @@ class EnderPorcupineBER(
 		packedLight: Int,
 		packedOverlay: Int
 	) {
-		val target = blockEntity.getLinkedPosition()
+		val offset = blockEntity.getCurrentOffset()
 		val linesConsumer = bufferSource.getBuffer(AaronRenderTypes.LINES_THROUGH_WALL_RENDER_TYPE)
 
-		val x = target.x.toFloat()
-		val y = target.y.toFloat()
-		val z = target.z.toFloat()
+		val x = offset.x.toFloat()
+		val y = offset.y.toFloat()
+		val z = offset.z.toFloat()
 
 		WandRenderer.renderCubeWireframe(
 			poseStack,
