@@ -195,7 +195,7 @@ object ClientEvents {
 				if (tintIndex == 1) {
 					stack.getOrDefault(ModDataComponents.COLOR, DyeColor.WHITE).textureDiffuseColor
 				} else {
-					0xFFFFFF
+					0xFFFFFFFF.toInt()
 				}
 			},
 			ModItems.PAINTBRUSH.get()
