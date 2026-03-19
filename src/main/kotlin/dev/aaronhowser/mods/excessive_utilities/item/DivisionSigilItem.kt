@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDirectionName
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
@@ -9,12 +10,14 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -22,8 +25,10 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.LightLayer
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 
 class DivisionSigilItem(properties: Properties) : Item(properties) {
 
@@ -122,6 +127,10 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			level: ServerLevel,
 			enchantingTablePos: BlockPos
 		): ResultWithMessage {
+			if (!level.getBlockState(enchantingTablePos).isBlock(Blocks.ENCHANTING_TABLE)) {
+				return ResultWithMessage(false)
+			}
+
 			val messages = mutableListOf<Component>()
 
 			if (!level.getBiome(enchantingTablePos).isHolder(Tags.Biomes.IS_OVERWORLD)) {
@@ -193,6 +202,9 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			level: ServerLevel,
 			catalystPos: BlockPos
 		): ResultWithMessage {
+			if (!level.getBlockState(catalystPos).isBlock(Blocks.BEACON)) {
+				return ResultWithMessage(false)
+			}
 
 			val messages = mutableListOf<Component>()
 
@@ -298,6 +310,62 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			}
 
 			return ResultWithMessage(true, messages)
+		}
+
+		fun handleEntityDeath(event: LivingDeathEvent) {
+			if (event.isCanceled) return
+			val entity = event.entity
+			if (entity.isClientSide) return
+
+			if (entity is Mob) {
+				activateSigils(entity)
+			}
+
+		}
+
+		private fun activateSigils(entity: Mob): Boolean {
+			val level = entity.level() as? ServerLevel ?: return false
+			val entityPos = entity.blockPosition()
+
+			val radius = 10
+
+			val area = BlockPos.betweenClosed(
+				entityPos.offset(-radius, -radius, -radius),
+				entityPos.offset(radius, radius, radius)
+			)
+
+			val enchantingTablePos = area
+				.firstOrNull { checkPos ->
+					isActivationReady(level, checkPos).isReady
+				}
+				?: return false
+
+			val aabb = AABB(enchantingTablePos).inflate(radius * 5.0)
+			val players = level.getEntitiesOfClass(Player::class.java, aabb)
+
+			val divisionSigils = mutableListOf<ItemStack>()
+
+			for (player in players) {
+				val allStacks = player.inventory.items + player.inventory.offhand
+				val minChargeSigil = allStacks
+					.asSequence()
+					.filter { it.isItem(ModItems.DIVISION_SIGIL) }
+					.filter { it.getOrDefault(ModDataComponents.REMAINING_USES, 0) >= 0 }
+					.sortedBy { it.getOrDefault(ModDataComponents.REMAINING_USES, 0) }
+					.firstOrNull()
+
+				if (minChargeSigil != null) {
+					divisionSigils += minChargeSigil
+				}
+			}
+
+			if (divisionSigils.isEmpty()) return false
+
+			for (sigil in divisionSigils) {
+				sigil.set(ModDataComponents.REMAINING_USES, USES_AFTER_ACTIVATION)
+			}
+
+			return true
 		}
 	}
 
