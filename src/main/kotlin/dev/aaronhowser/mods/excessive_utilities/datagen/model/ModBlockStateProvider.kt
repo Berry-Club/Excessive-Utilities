@@ -2625,83 +2625,40 @@ class ModBlockStateProvider(
 	}
 
 	private fun generators() {
-		models()
-			.withExistingParent("generator_base", mcLoc("block/block"))
-			.texture("bottom", modLoc("block/machine_base/bottom"))
-			.texture("top", modLoc("block/machine_base/top"))
-			.texture("side", modLoc("block/machine_base/side"))
-			.texture("particle", modLoc("block/machine_base/side"))
-			.renderType(RenderType.cutout().name)
-
-			.element {
-				from(0f, 0f, 0f)
-				to(16f, 16f, 16f)
-				allFaces { dir, fb ->
-					fb.uvs(0f, 0f, 16f, 16f)
-					fb.cullface(dir)
-					fb.tintindex(0)
-
-					when (dir) {
-						Direction.DOWN -> fb.texture("#bottom")
-						Direction.UP -> fb.texture("#top")
-						else -> fb.texture("#side")
-					}
-				}
-			}
-
-			.element {
-				from(0f, 0f, 0f)
-				to(16f, 16f, 16f)
-
-				face(Direction.UP) {
-					uvs(0f, 0f, 16f, 16f)
-					cullface(Direction.UP)
-					texture("#top_overlay")
-					rotation(ModelBuilder.FaceRotation.UPSIDE_DOWN)
-				}
-
-				face(Direction.NORTH) {
-					uvs(0f, 0f, 16f, 16f)
-					cullface(Direction.NORTH)
-					texture("#front_overlay")
-				}
-
-			}
-
-		survivalGenerator()
-		makeGenerator(ModBlocks.FURNACE_GENERATOR.get())
-		makeGenerator(ModBlocks.MAGMATIC_GENERATOR.get())
-		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get())
-		makeGenerator(ModBlocks.FROSTY_GENERATOR.get(), frontOnOverlayName = "on_frosty")
-		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get())
-		makeGenerator(ModBlocks.PINK_GENERATOR.get(), topOverlayName = "pink")
-		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), topOverlayName = "death")
-		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), topOverlayName = "ender")
-		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), topOverlayName = "explosive")
-		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), topOverlayName = "culinary")
-		makeGenerator(ModBlocks.DISENCHANTMENT_GENERATOR.get(), topOverlayName = "disenchantment")
-		makeGenerator(ModBlocks.POTION_GENERATOR.get(), topOverlayName = "potion")
-		makeGenerator(ModBlocks.OVERCLOCKED_GENERATOR.get(), topOverlayName = "overclocked")
-		makeGenerator(ModBlocks.HEATED_REDSTONE_GENERATOR.get(), topOverlayName = "heated_redstone")
-		makeGenerator(ModBlocks.SLIMY_GENERATOR.get())
+		makeGenerator(ModBlocks.FURNACE_GENERATOR.get(), "furnace")
+		makeGenerator(ModBlocks.MAGMATIC_GENERATOR.get(), "magmatic")
+		makeGenerator(ModBlocks.NETHER_STAR_GENERATOR.get(), "nether_star")
+		makeGenerator(ModBlocks.FROSTY_GENERATOR.get(), "frosty")
+		makeGenerator(ModBlocks.HALITOSIS_GENERATOR.get(), "halitosis")
+		makeGenerator(ModBlocks.PINK_GENERATOR.get(), "pink")
+		makeGenerator(ModBlocks.DEATH_GENERATOR.get(), "death")
+		makeGenerator(ModBlocks.ENDER_GENERATOR.get(), "ender")
+		makeGenerator(ModBlocks.EXPLOSIVE_GENERATOR.get(), "explosive")
+		makeGenerator(ModBlocks.CULINARY_GENERATOR.get(), "culinary")
+		makeGenerator(ModBlocks.DISENCHANTMENT_GENERATOR.get(), "disenchantment")
+		makeGenerator(ModBlocks.POTION_GENERATOR.get(), "potion")
+		makeGenerator(ModBlocks.OVERCLOCKED_GENERATOR.get(), "overclocked")
+		makeGenerator(ModBlocks.HEATED_REDSTONE_GENERATOR.get(), "heated_redstone")
+		makeGenerator(ModBlocks.SLIMY_GENERATOR.get(), "slimy")
+		makeGenerator(ModBlocks.SURVIVAL_GENERATOR.get(), "survival")
 	}
 
 	private fun makeGenerator(
 		generatorBlock: GeneratorBlock,
-		topOverlayName: String = "nothing",
-		frontOnOverlayName: String = "on"
+		directory: String
 	) {
 		val name = name(generatorBlock)
 
+		val frontOff = modLoc("block/generator/$directory/front_off")
+		val frontOn = modLoc("block/generator/$directory/front_on")
+		val side = modLoc("block/machine_base/$directory/side")
+		val top = modLoc("block/machine_base/$directory/top")
+
 		val modelOff = models()
-			.withExistingParent(name + "_off", modLoc("generator_base"))
-			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
-			.texture("front_overlay", modLoc("block/generator/off"))
+			.cube(name + "_off", top, top, frontOff, side, side, side)
 
 		val modelOn = models()
-			.withExistingParent(name + "_on", modLoc("generator_base"))
-			.texture("top_overlay", modLoc("block/generator/top/$topOverlayName"))
-			.texture("front_overlay", modLoc("block/generator/$frontOnOverlayName"))
+			.cube(name + "_on", top, top, frontOn, side, side, side)
 
 		getVariantBuilder(generatorBlock)
 			.forAllStates {
@@ -2726,48 +2683,6 @@ class ModBlockStateProvider(
 			}
 
 		simpleBlockItem(generatorBlock, modelOff)
-	}
-
-	private fun survivalGenerator() {
-		val block = ModBlocks.SURVIVAL_GENERATOR.get()
-		val name = name(block)
-		val modelOff = models()
-			.withExistingParent(name + "_off", modLoc("generator_base"))
-			.texture("top_overlay", modLoc("block/generator/top/nothing"))
-			.texture("front_overlay", modLoc("block/generator/off"))
-			.texture("bottom", mcLoc("block/furnace_top"))
-			.texture("top", mcLoc("block/furnace_top"))
-			.texture("particle", mcLoc("block/furnace_top"))
-			.texture("side", mcLoc("block/furnace_side"))
-
-		val modelOn = models()
-			.withExistingParent(name + "_on", modLoc("block/${name}_off"))
-			.texture("top_overlay", modLoc("block/generator/top/nothing"))
-			.texture("front_overlay", modLoc("block/generator/on"))
-
-		getVariantBuilder(block)
-			.forAllStates {
-				val direction = it.getValue(GeneratorBlock.FACING)
-				val isLit = it.getValue(GeneratorBlock.LIT)
-
-				val yRotation = when (direction) {
-					Direction.NORTH -> 0
-					Direction.EAST -> 90
-					Direction.SOUTH -> 180
-					Direction.WEST -> 270
-					else -> 0
-				}
-
-				val modelFile = if (isLit) modelOn else modelOff
-
-				ConfiguredModel
-					.builder()
-					.modelFile(modelFile)
-					.rotationY(yRotation)
-					.build()
-			}
-
-		simpleBlockItem(block, modelOff)
 	}
 
 	private fun miniChest() {
