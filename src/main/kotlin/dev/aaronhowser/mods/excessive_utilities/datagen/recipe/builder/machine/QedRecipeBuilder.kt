@@ -1,6 +1,7 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -11,36 +12,48 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.ShapedRecipePattern
+import kotlin.collections.iterator
 
-class CrusherRecipeBuilder(
-	val ingredient: Ingredient,
-	val primaryOutput: ItemStack,
-	val secondaryOutput: ItemStack = ItemStack.EMPTY,
-	val secondaryChance: Float = 0f
+class QedRecipeBuilder(
+	val result: ItemStack,
+	val count: Int = 1,
+	val crystalTicks: Int = 20 * 5 * 3
 ) : RecipeBuilder {
 
 	private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()
+	private val keys: MutableMap<Char, Ingredient> = mutableMapOf()
+	private val rows: MutableList<String> = mutableListOf()
+
+	fun define(key: Char, ingredient: Ingredient): QedRecipeBuilder {
+		keys[key] = ingredient
+		return this
+	}
+
+	fun pattern(vararg rows: String): QedRecipeBuilder {
+		this.rows.addAll(rows)
+		return this
+	}
 
 	override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder {
 		criteria[name] = criterion
 		return this
 	}
 
-	override fun group(p0: String?): RecipeBuilder = error("Unsupported")
-	override fun getResult(): Item = primaryOutput.item
+	override fun group(p0: String?): RecipeBuilder {
+		error("Unsupported")
+	}
+
+	override fun getResult(): Item = result.item
 
 	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
 		val idString = StringBuilder()
 
 		idString
-			.append("crusher/")
+			.append("qed/")
 			.append(id.path)
 
-		val id =
-			ResourceLocation.fromNamespaceAndPath(
-				id.namespace,
-				idString.toString()
-			)
+		val id = ExcessiveUtilities.modResource(idString.toString())
 
 		val advancement = recipeOutput.advancement()
 			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -51,8 +64,9 @@ class CrusherRecipeBuilder(
 			advancement.addCriterion(criterion.key, criterion.value)
 		}
 
-		val recipe = CrusherRecipe(ingredient, primaryOutput, secondaryOutput, secondaryChance)
+		val pattern = ShapedRecipePattern.of(keys, rows)
 
+		val recipe = QedRecipe(pattern, result, crystalTicks)
 		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
 	}
 }

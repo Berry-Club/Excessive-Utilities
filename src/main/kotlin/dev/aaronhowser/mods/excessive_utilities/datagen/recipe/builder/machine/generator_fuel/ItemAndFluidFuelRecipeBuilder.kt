@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel
 
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.ItemAndFluidFuelRecipe
 import net.minecraft.advancements.AdvancementRequirements

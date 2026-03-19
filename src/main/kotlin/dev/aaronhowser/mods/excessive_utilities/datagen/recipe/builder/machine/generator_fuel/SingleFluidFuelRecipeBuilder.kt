@@ -1,7 +1,6 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.machine.WorldInteractionFluidRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleFluidFuelRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -11,14 +10,12 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.fluids.FluidStack
-import java.util.*
+import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 
-class WorldInteractionFluidRecipeBuilder(
-	val requiredOnBlock: BlockStateIngredient?,
-	val requiredAdjacentBlocks: List<BlockStateIngredient>,
-	val requiredBlockBehind: BlockStateIngredient?,
-	val output: FluidStack
+class SingleFluidFuelRecipeBuilder(
+	val fluidIngredient: SizedFluidIngredient,
+	val fePerTick: Int,
+	val duration: Int
 ) : RecipeBuilder {
 
 	override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = error("Unsupported")
@@ -27,7 +24,7 @@ class WorldInteractionFluidRecipeBuilder(
 
 	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
 		val path = StringBuilder()
-			.append("world_interaction_upgrade/fluid/")
+			.append("generator_fuel/magmatic/")
 			.append(id.path)
 			.toString()
 
@@ -38,17 +35,12 @@ class WorldInteractionFluidRecipeBuilder(
 			.rewards(AdvancementRewards.Builder.recipe(realId))
 			.requirements(AdvancementRequirements.Strategy.OR)
 
-		val recipe = WorldInteractionFluidRecipe(
-			Optional.ofNullable(requiredOnBlock),
-			requiredAdjacentBlocks,
-			Optional.ofNullable(requiredBlockBehind),
-			output
-		)
+		val recipe = SingleFluidFuelRecipe(fluidIngredient, fePerTick, duration)
 
 		recipeOutput.accept(
 			realId,
 			recipe,
-			advancement.build(realId.withPrefix("recipes/world_interaction_upgrade/fluid/"))
+			advancement.build(realId.withPrefix("recipes/generator_fuel/magmatic/"))
 		)
 	}
 

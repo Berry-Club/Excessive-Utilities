@@ -1,7 +1,6 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.machine.WorldInteractionItemRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -10,23 +9,25 @@ import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
-import java.util.*
+import net.minecraft.world.item.Items
+import net.minecraft.world.item.crafting.Ingredient
 
-class WorldInteractionItemRecipeBuilder(
-	val requiredOnBlock: BlockStateIngredient?,
-	val requiredAdjacentBlocks: List<BlockStateIngredient>,
-	val requiredBlockBehind: BlockStateIngredient?,
-	val output: ItemStack
+class SingleItemFuelRecipeBuilder(
+	val generatorType: SingleItemFuelRecipe.GeneratorType,
+	val ingredient: Ingredient,
+	val fePerTick: Int,
+	val duration: Int
 ) : RecipeBuilder {
 
 	override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = error("Unsupported")
 	override fun group(groupName: String?): RecipeBuilder = error("Unsupported")
-	override fun getResult(): Item = output.item
+	override fun getResult(): Item = Items.AIR
 
 	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
 		val path = StringBuilder()
-			.append("world_interaction_upgrade/item/")
+			.append("generator_fuel/")
+			.append(generatorType.id)
+			.append("/")
 			.append(id.path)
 			.toString()
 
@@ -37,17 +38,12 @@ class WorldInteractionItemRecipeBuilder(
 			.rewards(AdvancementRewards.Builder.recipe(realId))
 			.requirements(AdvancementRequirements.Strategy.OR)
 
-		val recipe = WorldInteractionItemRecipe(
-			Optional.ofNullable(requiredOnBlock),
-			requiredAdjacentBlocks,
-			Optional.ofNullable(requiredBlockBehind),
-			output
-		)
+		val recipe = SingleItemFuelRecipe(generatorType, ingredient, fePerTick, duration)
 
 		recipeOutput.accept(
 			realId,
 			recipe,
-			advancement.build(realId.withPrefix("recipes/world_interaction_upgrade/item/"))
+			advancement.build(realId.withPrefix("recipes/generator_fuel/${generatorType.id}/"))
 		)
 	}
 

@@ -1,6 +1,7 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleFluidFuelRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.WorldInteractionFluidRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -10,12 +11,14 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
+import net.neoforged.neoforge.fluids.FluidStack
+import java.util.*
 
-class SingleFluidFuelRecipeBuilder(
-	val fluidIngredient: SizedFluidIngredient,
-	val fePerTick: Int,
-	val duration: Int
+class WorldInteractionFluidRecipeBuilder(
+	val requiredOnBlock: BlockStateIngredient?,
+	val requiredAdjacentBlocks: List<BlockStateIngredient>,
+	val requiredBlockBehind: BlockStateIngredient?,
+	val output: FluidStack
 ) : RecipeBuilder {
 
 	override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = error("Unsupported")
@@ -24,7 +27,7 @@ class SingleFluidFuelRecipeBuilder(
 
 	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
 		val path = StringBuilder()
-			.append("generator_fuel/magmatic/")
+			.append("world_interaction_upgrade/fluid/")
 			.append(id.path)
 			.toString()
 
@@ -35,12 +38,17 @@ class SingleFluidFuelRecipeBuilder(
 			.rewards(AdvancementRewards.Builder.recipe(realId))
 			.requirements(AdvancementRequirements.Strategy.OR)
 
-		val recipe = SingleFluidFuelRecipe(fluidIngredient, fePerTick, duration)
+		val recipe = WorldInteractionFluidRecipe(
+			Optional.ofNullable(requiredOnBlock),
+			requiredAdjacentBlocks,
+			Optional.ofNullable(requiredBlockBehind),
+			output
+		)
 
 		recipeOutput.accept(
 			realId,
 			recipe,
-			advancement.build(realId.withPrefix("recipes/generator_fuel/magmatic/"))
+			advancement.build(realId.withPrefix("recipes/world_interaction_upgrade/fluid/"))
 		)
 	}
 

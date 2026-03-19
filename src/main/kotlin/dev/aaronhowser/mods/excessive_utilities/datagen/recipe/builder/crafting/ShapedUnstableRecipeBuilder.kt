@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
+import kotlin.collections.iterator
 
 class ShapedUnstableRecipeBuilder(
 	val output: ItemStack
@@ -60,7 +61,7 @@ class ShapedUnstableRecipeBuilder(
 			.append("unstable_ingot/")
 			.append(id.path)
 
-		val id = ExcessiveUtilities.modResource(idString.toString())
+		val id = ExcessiveUtilities.Companion.modResource(idString.toString())
 
 		val advancement = recipeOutput.advancement()
 			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))

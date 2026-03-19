@@ -1,7 +1,6 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine
 
-import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.recipe.machine.ResonatorRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -12,11 +11,16 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import kotlin.collections.iterator
 
-class ResonatorRecipeBuilder(
-	val ingredient: Ingredient,
+class EnchanterRecipeBuilder(
+	val leftIngredient: Ingredient,
+	val leftCount: Int,
+	val rightIngredient: Ingredient,
+	val rightCount: Int,
+	val fePerTick: Int,
+	val ticks: Int,
 	val result: ItemStack,
-	val gpCost: Double
 ) : RecipeBuilder {
 
 	private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()
@@ -30,18 +34,20 @@ class ResonatorRecipeBuilder(
 		error("Unsupported")
 	}
 
-	override fun getResult(): Item {
-		return result.item
-	}
+	override fun getResult(): Item = result.item
 
 	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
 		val idString = StringBuilder()
 
 		idString
-			.append("resonator/")
+			.append("enchanter/")
 			.append(id.path)
 
-		val id = ExcessiveUtilities.modResource(idString.toString())
+		val id =
+			ResourceLocation.fromNamespaceAndPath(
+				id.namespace,
+				idString.toString()
+			)
 
 		val advancement = recipeOutput.advancement()
 			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -52,7 +58,7 @@ class ResonatorRecipeBuilder(
 			advancement.addCriterion(criterion.key, criterion.value)
 		}
 
-		val recipe = ResonatorRecipe(ingredient, result, gpCost)
+		val recipe = EnchanterRecipe(leftIngredient, leftCount, rightIngredient, rightCount, fePerTick, ticks, result)
 
 		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
 	}

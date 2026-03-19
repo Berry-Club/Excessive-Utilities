@@ -1,6 +1,7 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
+package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.ResonatorRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
@@ -11,15 +12,12 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import kotlin.collections.iterator
 
-class EnchanterRecipeBuilder(
-	val leftIngredient: Ingredient,
-	val leftCount: Int,
-	val rightIngredient: Ingredient,
-	val rightCount: Int,
-	val fePerTick: Int,
-	val ticks: Int,
+class ResonatorRecipeBuilder(
+	val ingredient: Ingredient,
 	val result: ItemStack,
+	val gpCost: Double
 ) : RecipeBuilder {
 
 	private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()
@@ -33,20 +31,18 @@ class EnchanterRecipeBuilder(
 		error("Unsupported")
 	}
 
-	override fun getResult(): Item = result.item
+	override fun getResult(): Item {
+		return result.item
+	}
 
 	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
 		val idString = StringBuilder()
 
 		idString
-			.append("enchanter/")
+			.append("resonator/")
 			.append(id.path)
 
-		val id =
-			ResourceLocation.fromNamespaceAndPath(
-				id.namespace,
-				idString.toString()
-			)
+		val id = ExcessiveUtilities.modResource(idString.toString())
 
 		val advancement = recipeOutput.advancement()
 			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
@@ -57,7 +53,7 @@ class EnchanterRecipeBuilder(
 			advancement.addCriterion(criterion.key, criterion.value)
 		}
 
-		val recipe = EnchanterRecipe(leftIngredient, leftCount, rightIngredient, rightCount, fePerTick, ticks, result)
+		val recipe = ResonatorRecipe(ingredient, result, gpCost)
 
 		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
 	}
