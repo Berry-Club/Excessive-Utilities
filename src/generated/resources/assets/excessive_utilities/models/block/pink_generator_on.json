@@ -1,7 +1,11 @@
 {
-  "parent": "excessive_utilities:block/generator_base",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "front_overlay": "excessive_utilities:block/generator/on",
-    "top_overlay": "excessive_utilities:block/generator/top/pink"
+    "down": "excessive_utilities:block/generator/pink/top",
+    "east": "excessive_utilities:block/generator/pink/side",
+    "north": "excessive_utilities:block/generator/pink/front_on",
+    "south": "excessive_utilities:block/generator/pink/side",
+    "up": "excessive_utilities:block/generator/pink/top",
+    "west": "excessive_utilities:block/generator/pink/side"
   }
 }

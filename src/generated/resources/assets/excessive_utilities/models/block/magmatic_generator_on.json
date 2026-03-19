@@ -1,7 +1,11 @@
 {
-  "parent": "excessive_utilities:block/generator_base",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "front_overlay": "excessive_utilities:block/generator/on",
-    "top_overlay": "excessive_utilities:block/generator/top/nothing"
+    "down": "excessive_utilities:block/generator/magmatic/top",
+    "east": "excessive_utilities:block/generator/magmatic/side",
+    "north": "excessive_utilities:block/generator/magmatic/front_on",
+    "south": "excessive_utilities:block/generator/magmatic/side",
+    "up": "excessive_utilities:block/generator/magmatic/top",
+    "west": "excessive_utilities:block/generator/magmatic/side"
   }
 }

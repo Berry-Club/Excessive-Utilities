@@ -28,12 +28,12 @@ object ModDataGen {
 		val existingFileHelper: ExistingFileHelper = event.existingFileHelper
 		val lookupProvider: CompletableFuture<HolderLookup.Provider> = event.lookupProvider
 
-//		val datapackRegistrySets = generator.addProvider(
-//			event.includeServer(),
-//			ModDatapackBuiltinEntriesProvider(output, lookupProvider)
-//		)
-//
-//		val lookupWithDatapack = datapackRegistrySets.registryProvider
+		val datapackRegistrySets = generator.addProvider(
+			event.includeServer(),
+			ModDatapackBuiltinEntriesProvider(output, lookupProvider)
+		)
+
+		val lookupWithDatapack = datapackRegistrySets.registryProvider
 
 		generator.addProvider(
 			event.includeClient(),
@@ -44,89 +44,89 @@ object ModDataGen {
 			ModBlockStateProvider(output, existingFileHelper)
 		)
 
+		generator.addProvider(
+			event.includeServer(),
+			ModRecipeProvider(output, lookupProvider)
+		)
+
+		generator.addProvider(
+			event.includeServer(),
+			ModDataMapProvider(output, lookupProvider)
+		)
+
+		generator.addProvider(
+			event.includeServer(),
+			ModLootTableProvider(output, lookupProvider)
+		)
+
+		generator.addProvider(
+			event.includeServer(),
+			ModGlobalLootModifierProvider(output, lookupProvider)
+		)
+
+//		generator.addProvider(
+//			event.includeClient(),
+//			ModSoundDefinitionsProvider(output, existingFileHelper)
+//		)
+
+		val blockTagProvider = generator.addProvider(
+			event.includeServer(),
+			ModBlockTagsProvider(output, lookupProvider, existingFileHelper)
+		)
+		generator.addProvider(
+			event.includeServer(),
+			ModItemTagsProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
+		)
 //		generator.addProvider(
 //			event.includeServer(),
-//			ModRecipeProvider(output, lookupProvider)
+//			ModFluidTagsProvider(output, lookupProvider, existingFileHelper)
+//		)
+		generator.addProvider(
+			event.includeServer(),
+			ModEntityTypeTagsProvider(output, lookupProvider, existingFileHelper)
+		)
+		generator.addProvider(
+			event.includeServer(),
+			ModDamageTypeTagsProvider(output, lookupWithDatapack, existingFileHelper)
+		)
+		generator.addProvider(
+			event.includeServer(),
+			ModEnchantmentTagsProvider(output, lookupWithDatapack, existingFileHelper)
+		)
+		generator.addProvider(
+			event.includeServer(),
+			ModBiomeTagsProvider(output, lookupProvider, existingFileHelper)
+		)
+
+//		generator.addProvider(
+//			event.includeServer(),
+//			ModCurioProvider(output, existingFileHelper, lookupProvider)
+//		)
+
+		val languageProvider = ModLanguageProvider(output)
+
+//		generator.addProvider(
+//			event.includeClient(),
+//			NeoBookProvider.of(
+//				event, lookupProvider, ModModonomiconProvider(languageProvider::add)
+//			)
+//		)
+
+		generator.addProvider(event.includeClient(), languageProvider)
+
+//		generator.addProvider(
+//			event.includeClient(),
+//			ModParticleDescriptionProvider(output, existingFileHelper)
 //		)
 //
 //		generator.addProvider(
-//			event.includeServer(),
-//			ModDataMapProvider(output, lookupProvider)
+//			event.includeClient(),
+//			ModPatchouliBookProvider(
+//				generator,
+//				"guide",
+//				lookupProvider
+//			)
 //		)
-//
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModLootTableProvider(output, lookupProvider)
-//		)
-//
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModGlobalLootModifierProvider(output, lookupProvider)
-//		)
-//
-////		generator.addProvider(
-////			event.includeClient(),
-////			ModSoundDefinitionsProvider(output, existingFileHelper)
-////		)
-//
-//		val blockTagProvider = generator.addProvider(
-//			event.includeServer(),
-//			ModBlockTagsProvider(output, lookupProvider, existingFileHelper)
-//		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModItemTagsProvider(output, lookupProvider, blockTagProvider.contentsGetter(), existingFileHelper)
-//		)
-////		generator.addProvider(
-////			event.includeServer(),
-////			ModFluidTagsProvider(output, lookupProvider, existingFileHelper)
-////		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModEntityTypeTagsProvider(output, lookupProvider, existingFileHelper)
-//		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModDamageTypeTagsProvider(output, lookupWithDatapack, existingFileHelper)
-//		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModEnchantmentTagsProvider(output, lookupWithDatapack, existingFileHelper)
-//		)
-//		generator.addProvider(
-//			event.includeServer(),
-//			ModBiomeTagsProvider(output, lookupProvider, existingFileHelper)
-//		)
-//
-////		generator.addProvider(
-////			event.includeServer(),
-////			ModCurioProvider(output, existingFileHelper, lookupProvider)
-////		)
-//
-//		val languageProvider = ModLanguageProvider(output)
-//
-////		generator.addProvider(
-////			event.includeClient(),
-////			NeoBookProvider.of(
-////				event, lookupProvider, ModModonomiconProvider(languageProvider::add)
-////			)
-////		)
-//
-//		generator.addProvider(event.includeClient(), languageProvider)
-//
-////		generator.addProvider(
-////			event.includeClient(),
-////			ModParticleDescriptionProvider(output, existingFileHelper)
-////		)
-////
-////		generator.addProvider(
-////			event.includeClient(),
-////			ModPatchouliBookProvider(
-////				generator,
-////				"guide",
-////				lookupProvider
-////			)
-////		)
 
 	}
 

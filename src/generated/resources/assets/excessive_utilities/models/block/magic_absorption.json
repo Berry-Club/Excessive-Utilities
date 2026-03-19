@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_bottom_top",
-  "textures": {
-    "bottom": "excessive_utilities:block/terraformer/top",
-    "side": "excessive_utilities:block/terraformer/magic_absorption",
-    "top": "excessive_utilities:block/terraformer/top"
-  }
-}

@@ -4,22 +4,59 @@
     {
       "faces": {
         "down": {
-          "texture": "#bottom"
+          "cullface": "down",
+          "texture": "#bottom",
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ]
         },
         "east": {
-          "texture": "#side"
+          "texture": "#side",
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            16.0
+          ]
         },
         "north": {
-          "texture": "#front"
+          "texture": "#front",
+          "uv": [
+            8.0,
+            8.0,
+            16.0,
+            16.0
+          ]
         },
         "south": {
-          "texture": "#side"
+          "texture": "#side",
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            16.0
+          ]
         },
         "up": {
-          "texture": "#top"
+          "texture": "#top",
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ]
         },
         "west": {
-          "texture": "#side"
+          "texture": "#side",
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            16.0
+          ]
         }
       },
       "from": [
@@ -35,10 +72,7 @@
     }
   ],
   "textures": {
-    "bottom": "excessive_utilities:block/mini_chest/bottom",
-    "front": "excessive_utilities:block/mini_chest/front",
-    "particle": "excessive_utilities:block/mini_chest/side",
-    "side": "excessive_utilities:block/mini_chest/side",
-    "top": "excessive_utilities:block/mini_chest/top"
+    "particle": "excessive_utilities:block/mini_chest",
+    "texture": "excessive_utilities:block/mini_chest"
   }
 }

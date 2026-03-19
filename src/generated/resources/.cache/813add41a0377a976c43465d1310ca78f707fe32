@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-17T22:07:49.9698822	Tags for minecraft:item mod id excessive_utilities
+// 1.21.1	2026-03-18T23:30:54.0556127	Tags for minecraft:item mod id excessive_utilities
 391f936c09d7f7b43694f899344222849a8d62a1 data/c/tags/item/brick_blocks.json
 5124cada2ba7e5783038acde07858db18ecdb114 data/c/tags/item/cobblestones/normal.json
 1c83000a2817348e18f4bc04d17b3eabe7695e1f data/c/tags/item/dyes/magenta.json
@@ -17,14 +17,14 @@ a749e7c3b15f980e082d3c05c67248efdbc00102 data/c/tags/item/storage_blocks/lapis.j
 a9fc732d820e0cda4d35fb56727c9620bc0898a4 data/c/tags/item/tools/mining_tool.json
 8c925b28136aff6893e4907b1f7428f696ef7ab4 data/c/tags/item/tools/ranged_weapon.json
 9c3429a45d5ce3db5f9a44f11488a69deee3106c data/c/tags/item/tools/shear.json
-060bba5f6ee4d3a8ad7fe6cd87fe82167ba9c5e3 data/c/tags/item/tools/wrench.json
+21cd49a7a2ed3b31ff0e0bd4db3fa53f9df27513 data/c/tags/item/tools/wrench.json
 50a922b6b7c90503a7e47bffb505e8a6444b87e5 data/excessive_utilities/tags/item/corpse_parts.json
 89758bebcdbbe44f410b4e115e3e8c46ddc965f7 data/excessive_utilities/tags/item/double_anvil_enchantments.json
 162cbf1536f6b358a1ab57ce18b4a40dd1639cca data/excessive_utilities/tags/item/filters.json
-22a8f3e473d7ecc774df7103fc48068858cb5506 data/excessive_utilities/tags/item/interact_with_flat_transfer_nodes.json
+c04c2914bec0af10a6e97b90da89c35b1d237a91 data/excessive_utilities/tags/item/interact_with_flat_transfer_nodes.json
 4033aa8830f23f8653730d8eaf916ba65df9e571 data/excessive_utilities/tags/item/magical_boomerang_enchantable.json
 0b9e9aa824d55d3aef9708141da26fb0c1a03384 data/excessive_utilities/tags/item/not_yet_implemented.json
-ee6e37bc56b0e6231916adfbefe9b8bfe043324a data/excessive_utilities/tags/item/render_ender_porcupine_while_holding.json
+602a4325b586bb67054ab4219eff064f9b4bbb3e data/excessive_utilities/tags/item/render_ender_porcupine_while_holding.json
 7f2a080bad2ea7ea204a920cc04518e56b629820 data/excessive_utilities/tags/item/render_gp_while_holding.json
 1cb57e8fb624526a9458fd3cc5a30d149f469bae data/excessive_utilities/tags/item/retrieval_node_upgrades.json
 a4fcf166f6bbc92de938e9ff282c5b11b045b4c6 data/excessive_utilities/tags/item/speed_upgrades.json

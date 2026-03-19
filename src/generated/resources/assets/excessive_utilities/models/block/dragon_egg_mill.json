@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "bottom": "excessive_utilities:block/mill/base",
+    "bottom": "excessive_utilities:block/stoneburnt",
     "side": "excessive_utilities:block/mill/dragon_egg/side",
     "top": "excessive_utilities:block/mill/dragon_egg/top"
   }

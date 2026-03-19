@@ -1,7 +1,11 @@
 {
-  "parent": "excessive_utilities:block/generator_base",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "front_overlay": "excessive_utilities:block/generator/off",
-    "top_overlay": "excessive_utilities:block/generator/top/heated_redstone"
+    "down": "excessive_utilities:block/generator/heated_redstone/top",
+    "east": "excessive_utilities:block/generator/heated_redstone/side",
+    "north": "excessive_utilities:block/generator/heated_redstone/front",
+    "south": "excessive_utilities:block/generator/heated_redstone/side",
+    "up": "excessive_utilities:block/generator/heated_redstone/top",
+    "west": "excessive_utilities:block/generator/heated_redstone/side"
   }
 }

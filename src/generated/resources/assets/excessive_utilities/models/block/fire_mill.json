@@ -178,8 +178,8 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "base": "excessive_utilities:block/mill/base",
-    "fan": "excessive_utilities:block/mill/fan_spinning",
+    "base": "excessive_utilities:block/stoneburnt",
+    "fan": "excessive_utilities:block/mill/fan",
     "particle": "excessive_utilities:block/mill/fire",
     "side": "excessive_utilities:block/mill/fire"
   }

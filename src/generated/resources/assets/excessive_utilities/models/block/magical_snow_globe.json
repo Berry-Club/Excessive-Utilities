@@ -4,71 +4,92 @@
     {
       "faces": {
         "down": {
-          "cullface": "down",
-          "texture": "#bottom",
+          "texture": "minecraft:texture",
           "uv": [
-            3.0,
-            3.0,
-            13.0,
-            13.0
+            8.0,
+            0.0,
+            16.0,
+            8.0
           ]
         },
         "east": {
-          "cullface": "east",
-          "texture": "#side"
+          "texture": "minecraft:texture",
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            16.0
+          ]
         },
         "north": {
-          "cullface": "north",
-          "texture": "#side"
+          "texture": "minecraft:texture",
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            16.0
+          ]
         },
         "south": {
-          "cullface": "south",
-          "texture": "#side"
+          "texture": "minecraft:texture",
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            16.0
+          ]
         },
         "up": {
-          "cullface": "up",
-          "texture": "#top"
+          "texture": "minecraft:texture",
+          "uv": [
+            0.0,
+            0.0,
+            8.0,
+            8.0
+          ]
         },
         "west": {
-          "cullface": "west",
-          "texture": "#side"
+          "texture": "minecraft:texture",
+          "uv": [
+            0.0,
+            8.0,
+            8.0,
+            16.0
+          ]
         }
       },
       "from": [
-        2,
+        4,
         0,
-        2
+        4
       ],
       "to": [
-        14,
         12,
-        14
+        8,
+        12
       ]
     },
     {
       "faces": {
         "up": {
-          "cullface": "up",
           "texture": "#bottom"
         }
       },
       "from": [
-        2,
-        0.01,
-        2
+        4,
+        0,
+        4
       ],
       "to": [
-        14,
-        0.01,
-        14
+        12,
+        0,
+        12
       ]
     }
   ],
   "render_type": "minecraft:translucent",
   "textures": {
-    "bottom": "excessive_utilities:block/magical_snow_globe/bottom",
-    "particle": "excessive_utilities:block/magical_snow_globe/side",
-    "side": "excessive_utilities:block/magical_snow_globe/side",
-    "top": "excessive_utilities:block/magical_snow_globe/top"
+    "particle": "excessive_utilities:block/magical_snow_globe",
+    "texture": "excessive_utilities:block/magical_snow_globe"
   }
 }

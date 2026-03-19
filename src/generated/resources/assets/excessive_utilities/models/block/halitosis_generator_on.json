@@ -1,7 +1,11 @@
 {
-  "parent": "excessive_utilities:block/generator_base",
+  "parent": "minecraft:block/cube",
   "textures": {
-    "front_overlay": "excessive_utilities:block/generator/on",
-    "top_overlay": "excessive_utilities:block/generator/top/nothing"
+    "down": "excessive_utilities:block/generator/halitosis/top",
+    "east": "excessive_utilities:block/generator/halitosis/side",
+    "north": "excessive_utilities:block/generator/halitosis/front_on",
+    "south": "excessive_utilities:block/generator/halitosis/side",
+    "up": "excessive_utilities:block/generator/halitosis/top",
+    "west": "excessive_utilities:block/generator/halitosis/side"
   }
 }

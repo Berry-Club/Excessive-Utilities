@@ -60,10 +60,10 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "bottom": "excessive_utilities:block/machine_base/bottom",
+    "bottom": "excessive_utilities:block/machine_block/bottom",
     "overlay": "excessive_utilities:block/crusher/off",
-    "particle": "excessive_utilities:block/machine_base/side",
-    "side": "excessive_utilities:block/machine_base/side",
-    "top": "excessive_utilities:block/machine_base/top"
+    "particle": "excessive_utilities:block/machine_block/side",
+    "side": "excessive_utilities:block/machine_block/side",
+    "top": "excessive_utilities:block/machine_block/top"
   }
 }

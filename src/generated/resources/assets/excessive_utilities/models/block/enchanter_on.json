@@ -1,6 +1,0 @@
-{
-  "parent": "excessive_utilities:block/enchanter_off",
-  "textures": {
-    "overlay": "excessive_utilities:block/enchanter/face_on"
-  }
-}
