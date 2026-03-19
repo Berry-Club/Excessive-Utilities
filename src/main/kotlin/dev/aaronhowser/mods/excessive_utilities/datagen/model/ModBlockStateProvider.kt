@@ -2969,8 +2969,8 @@ class ModBlockStateProvider(
 	private fun singleTextureBlocks() {
 		val blocks = listOf(
 			ModBlocks.ANGEL_BLOCK.get(),
-			ModBlocks.ENDER_CORE.get(),
-			ModBlocks.BLOCK_OF_BEDROCKIUM.get(),
+//			ModBlocks.ENDER_CORE.get(),
+//			ModBlocks.BLOCK_OF_BEDROCKIUM.get(),
 			ModBlocks.CREATIVE_HARVEST.get(),
 			ModBlocks.CREATIVE_ENERGY_SOURCE.get(),
 			ModBlocks.DEEP_DARK_PORTAL.get(),
@@ -2982,7 +2982,7 @@ class ModBlockStateProvider(
 			ModBlocks.QUANTUM_QUARRY.get(),
 			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.get(),
 			ModBlocks.MAGICAL_WOOD.get(),
-			ModBlocks.LAST_MILLENNIUM_PORTAL.get()
+//			ModBlocks.LAST_MILLENNIUM_PORTAL.get()
 		)
 
 		for (block in blocks) {
