@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.defaultBlockState
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDirectionName
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
@@ -9,6 +10,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
@@ -340,7 +342,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				}
 				?: return false
 
-			val aabb = AABB(enchantingTablePos).inflate(radius * 5.0)
+			val aabb = AABB(enchantingTablePos).inflate(20.0)
 			val players = level.getEntitiesOfClass(Player::class.java, aabb)
 
 			val divisionSigils = mutableListOf<ItemStack>()
@@ -363,6 +365,18 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 			for (sigil in divisionSigils) {
 				sigil.set(ModDataComponents.REMAINING_USES, USES_AFTER_ACTIVATION)
+			}
+
+			for (dx in -7..7) for (dz in -7..7) {
+				val checkPos = enchantingTablePos.offset(dx, -1, dz)
+				val checkState = level.getBlockState(checkPos)
+
+				if (checkState.isBlock(BlockTags.DIRT)) {
+					level.setBlockAndUpdate(
+						checkPos,
+						ModBlocks.CURSED_EARTH.defaultBlockState()
+					)
+				}
 			}
 
 			return true
