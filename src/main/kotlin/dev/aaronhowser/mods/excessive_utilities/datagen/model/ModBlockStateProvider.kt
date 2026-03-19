@@ -50,25 +50,25 @@ class ModBlockStateProvider(
 //		magnumTorch()
 //		trashCans()
 //		trashChest()
-		gpPanels()
+//		gpPanels()
 		dragonEggMill()
 		creativeMill()
 		waterMill()
 		windMill()
-		manualMill()
+//		manualMill()
 		fireMill()
 		lavaMill()
 		creativeChest()
-		conveyorBelt()
-		tradingPost()
+//		conveyorBelt()
+//		tradingPost()
 		coloredBlocks()
 		lapisCaelesti()
-		qed()
-		enderFluxCrystal()
+//		qed()
+//		enderFluxCrystal()
 		furnace()
 		magicalSnowGlobe()
-		wirelessFeBattery()
-		wirelessFeTransmitter()
+//		wirelessFeBattery()
+//		wirelessFeTransmitter()
 		redstoneLantern()
 		redstoneClock()
 		spikes()
@@ -264,10 +264,10 @@ class ModBlockStateProvider(
 		val model = models()
 			.withExistingParent(name + "_off", mcLoc("block/block"))
 			.texture("top_overlay", modLoc("block/enchanter/top"))
-			.texture("top", modLoc("block/machine_base/top"))
+			.texture("top", modLoc("block/machine_block/top"))
 			.texture("side", modLoc("block/enchanter/side"))
-			.texture("front", modLoc("block/machine_base/side"))
-			.texture("bottom", modLoc("block/machine_base/bottom"))
+			.texture("front", modLoc("block/machine_block/side"))
+			.texture("bottom", modLoc("block/machine_block/bottom"))
 			.texture("overlay", modLoc("block/enchanter/face_off"))
 			.texture("particle", modLoc("block/enchanter/top"))
 			.renderType(RenderType.cutout().name)
@@ -340,11 +340,11 @@ class ModBlockStateProvider(
 
 		val modelOff = models()
 			.withExistingParent(name + "_off", mcLoc("block/block"))
-			.texture("side", modLoc("block/machine_base/side"))
-			.texture("top", modLoc("block/machine_base/top"))
-			.texture("bottom", modLoc("block/machine_base/bottom"))
+			.texture("side", modLoc("block/machine_block/side"))
+			.texture("top", modLoc("block/machine_block/top"))
+			.texture("bottom", modLoc("block/machine_block/bottom"))
 			.texture("overlay", modLoc("block/crusher/off"))
-			.texture("particle", modLoc("block/machine_base/side"))
+			.texture("particle", modLoc("block/machine_block/side"))
 			.renderType(RenderType.cutout().name)
 
 			.element {
@@ -1126,45 +1126,35 @@ class ModBlockStateProvider(
 	private fun magicalSnowGlobe() {
 		val block = ModBlocks.MAGICAL_SNOW_GLOBE.get()
 
-		val top = modLoc("block/magical_snow_globe/top")
-		val bottom = modLoc("block/magical_snow_globe/bottom")
-		val side = modLoc("block/magical_snow_globe/side")
+		val texture = modLoc("block/magical_snow_globe")
 
 		val model = models()
 			.withExistingParent(name(block), mcLoc("block/block"))
-			.texture("top", top)
-			.texture("bottom", bottom)
-			.texture("side", side)
-			.texture("particle", side)
+			.texture("texture", texture)
+			.texture("particle", texture)
 			.renderType(RenderType.translucent().name)
 
 			.element {
-				from(2f, 0f, 2f)
-				to(14f, 12f, 14f)
+				from(4f, 0f, 4f)
+				to(12f, 8f, 12f)
 
 				allFaces { dir, fb ->
-					val texture = when (dir) {
-						Direction.UP -> "#top"
-						Direction.DOWN -> "#bottom"
-						else -> "#side"
-					}
+					fb.texture("texture")
 
-					fb.texture(texture)
-					fb.cullface(dir)
-
-					if (dir == Direction.DOWN) {
-						fb.uvs(3f, 3f, 13f, 13f)
+					when (dir) {
+						Direction.UP -> fb.uvs(0f, 0f, 8f, 8f)
+						Direction.DOWN -> fb.uvs(8f, 0f, 16f, 8f)
+						else -> fb.uvs(0f, 8f, 8f, 16f)
 					}
 				}
 			}
 
 			.element {
-				from(2f, 0.01f, 2f)
-				to(14f, 0.01f, 14f)
+				from(4f, 0f, 4f)
+				to(12f, 0f, 12f)
 
 				face(Direction.UP) {
 					texture("#bottom")
-					cullface(Direction.UP)
 				}
 			}
 
@@ -1480,8 +1470,8 @@ class ModBlockStateProvider(
 		val block = ModBlocks.WIND_MILL.get()
 
 		val top = modLoc("block/mill/wind")
-		val base = modLoc("block/mill/base")
-		val fan = modLoc("block/mill/fan_spinning")
+		val base = modLoc("block/stoneburnt")
+		val fan = modLoc("block/mill/fan")
 
 		val model = models()
 			.withExistingParent(name(block), mcLoc("block/block"))
@@ -1563,43 +1553,10 @@ class ModBlockStateProvider(
 		val block = ModBlocks.WATER_MILL.get()
 
 		val top = modLoc("block/mill/water")
-		val fan = modLoc("block/mill/fan_spinning_small")
-		val base = modLoc("block/mill/base")
+		val side = modLoc("block/mill/mill_fan")
 
 		val model = models()
-			.withExistingParent(name(block), mcLoc("block/block"))
-			.texture("top", top)
-			.texture("base", base)
-			.texture("fan", fan)
-			.texture("particle", top)
-			.renderType(RenderType.cutout().name)
-
-			.element {
-				from(0f, 0f, 0f)
-				to(16f, 16f, 16f)
-
-				allFaces { dir, fb ->
-					val texture = when (dir) {
-						Direction.UP -> "#top"
-						else -> "#base"
-					}
-
-					fb.texture(texture)
-					fb.cullface(dir)
-				}
-			}
-
-			.element {
-				from(0f, 0f, 0f)
-				to(16f, 16f, 16f)
-
-				for (dir in Direction.Plane.HORIZONTAL) {
-					face(dir) {
-						texture("#fan")
-						cullface(dir)
-					}
-				}
-			}
+			.cubeTop(name(block), side, top)
 
 		simpleBlockWithItem(block, model)
 	}
@@ -1608,7 +1565,7 @@ class ModBlockStateProvider(
 		val block = ModBlocks.LAVA_MILL.get()
 
 		val top = modLoc("block/mill/lava")
-		val base = modLoc("block/mill/base")
+		val base = modLoc("block/stoneburnt")
 
 		val model = models()
 			.cubeBottomTop(name(block), base, base, top)
@@ -1622,8 +1579,8 @@ class ModBlockStateProvider(
 		val model = models()
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("side", modLoc("block/mill/fire"))
-			.texture("base", modLoc("block/mill/base"))
-			.texture("fan", modLoc("block/mill/fan_spinning"))
+			.texture("base", modLoc("block/stoneburnt"))
+			.texture("fan", modLoc("block/mill/fan"))
 			.texture("particle", modLoc("block/mill/fire"))
 			.renderType(RenderType.cutout().name)
 
@@ -1715,7 +1672,7 @@ class ModBlockStateProvider(
 
 		val side = modLoc("block/mill/dragon_egg/side")
 		val top = modLoc("block/mill/dragon_egg/top")
-		val bottom = modLoc("block/mill/base")
+		val bottom = modLoc("block/stoneburnt")
 
 		val model = models()
 			.cubeBottomTop(name(block), side, bottom, top)
@@ -1730,7 +1687,7 @@ class ModBlockStateProvider(
 		)
 
 		val side = modLoc("block/mill/panel/side")
-		val base = modLoc("block/mill/base")
+		val base = modLoc("block/stoneburnt")
 
 		for ((type, block) in blocks) {
 			val top = modLoc("block/mill/panel/$type")
@@ -2541,8 +2498,8 @@ class ModBlockStateProvider(
 	private fun machineBlock() {
 		val block = ModBlocks.MACHINE_BLOCK.get()
 
-		val side = modLoc("block/machine_base/side")
-		val top = modLoc("block/machine_base/top")
+		val side = modLoc("block/machine_block/side")
+		val top = modLoc("block/machine_block/top")
 
 		val model = models()
 			.cubeTop(name(block), side, top)
