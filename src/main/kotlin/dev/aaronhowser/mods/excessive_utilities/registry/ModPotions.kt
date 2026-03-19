@@ -3,7 +3,11 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.effect.MobEffectInstance
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
+import net.minecraft.world.item.alchemy.Potions
+import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
@@ -48,6 +52,23 @@ object ModPotions {
 		effect: () -> MobEffectInstance
 	): DeferredHolder<Potion, Potion> {
 		return POTION_REGISTRY.register(holderName, Supplier { Potion(potionName, effect()) })
+	}
+
+	fun registerRecipes(event: RegisterBrewingRecipesEvent) {
+		val builder = event.builder
+
+		builder.addMix(Potions.AWKWARD, Items.ROTTEN_FLESH, PURGING)
+		builder.addMix(Potions.AWKWARD, Items.BEETROOT, OILY)
+		builder.addMix(OILY, Items.REDSTONE, LONG_OILY)
+		builder.addMix(OILY, Items.LAVA_BUCKET, GREEK_FIRE)
+		builder.addMix(Potions.AWKWARD, Items.OBSIDIAN, GRAVITY)
+		builder.addMix(GRAVITY, Items.REDSTONE, LONG_GRAVITY)
+		builder.addMix(Potions.AWKWARD, Items.ROSE_BUSH, LOVE)
+		builder.addMix(Potions.AWKWARD, Items.POPPY, LOVE)
+		builder.addMix(Potions.AWKWARD, Items.RED_TULIP, LOVE)
+		builder.addMix(Potions.AWKWARD, Items.JACK_O_LANTERN, RELAPSE)
+		builder.addMix(Potions.STRONG_HEALING, Items.ENCHANTED_GOLDEN_APPLE, SECOND_CHANCE)
+
 	}
 
 }

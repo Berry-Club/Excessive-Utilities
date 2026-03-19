@@ -21,6 +21,7 @@ import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
+import dev.aaronhowser.mods.excessive_utilities.registry.ModPotions
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.entity.item.ItemEntity
@@ -35,6 +36,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.AnvilUpdateEvent
+import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
@@ -389,6 +391,11 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onMobEffectRemove(event: MobEffectEvent.Remove) {
 		ModMobEffects.handleRelapse(event)
+	}
+
+	@SubscribeEvent
+	fun onRegisterBrewingRecipes(event: RegisterBrewingRecipesEvent) {
+		ModPotions.registerRecipes(event)
 	}
 
 }
