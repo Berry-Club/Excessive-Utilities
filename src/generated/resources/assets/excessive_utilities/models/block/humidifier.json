@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "excessive_utilities:block/terraformer/base",
+    "side": "excessive_utilities:block/terraformer/humidifier",
+    "top": "excessive_utilities:block/terraformer/top"
+  }
+}

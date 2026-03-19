@@ -79,6 +79,32 @@ class ModBlockStateProvider(
 		crusher()
 		enchanter()
 		playerChest()
+		terraformerBlocks()
+	}
+
+	private fun terraformerBlocks() {
+		terraformerBlock(ModBlocks.TERRAFORMER.get(), "controller")
+		terraformerBlock(ModBlocks.COOLER.get(), "cooler")
+		terraformerBlock(ModBlocks.DEHOSTILIFIER.get(), "dehostilifier")
+		terraformerBlock(ModBlocks.DEHUMIDIFIER.get(), "dehumidifier")
+		terraformerBlock(ModBlocks.HEATER.get(), "heater")
+		terraformerBlock(ModBlocks.HUMIDIFIER.get(), "humidifier")
+		terraformerBlock(ModBlocks.MAGIC_ABSORPTION.get(), "magic_absorption")
+		terraformerBlock(ModBlocks.MAGIC_INFUSER.get(), "magic_infuser")
+	}
+
+	private fun terraformerBlock(
+		block: Block,
+		sideName: String
+	) {
+		val bottom = modLoc("block/terraformer/base")
+		val side = modLoc("block/terraformer/$sideName")
+		val top = modLoc("block/terraformer/top")
+
+		val model = models()
+			.cubeBottomTop(name(block), side, bottom, top)
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun enchanter() {
