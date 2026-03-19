@@ -15,39 +15,39 @@ object ModPotions {
 		DeferredRegister.create(Registries.POTION, ExcessiveUtilities.MOD_ID)
 
 	val GRAVITY: DeferredHolder<Potion, Potion> =
-		register("gravity", MobEffectInstance(ModMobEffects.GRAVITY, 20 * 60))
+		register("gravity", { MobEffectInstance(ModMobEffects.GRAVITY, 20 * 60) })
 	val LONG_GRAVITY: DeferredHolder<Potion, Potion> =
-		register("long_gravity", "long_gravity", MobEffectInstance(ModMobEffects.GRAVITY, 20 * 60 * 8))
+		register("long_gravity", "gravity") { MobEffectInstance(ModMobEffects.GRAVITY, 20 * 60 * 8) }
 	val OILY: DeferredHolder<Potion, Potion> =
-		register("oily", MobEffectInstance(ModMobEffects.OILY, 20 * 60))
+		register("oily") { MobEffectInstance(ModMobEffects.OILY, 20 * 60) }
 	val LONG_OILY: DeferredHolder<Potion, Potion> =
-		register("long_oily", "long_oily", MobEffectInstance(ModMobEffects.OILY, 20 * 60 * 8))
+		register("long_oily", "oily") { MobEffectInstance(ModMobEffects.OILY, 20 * 60 * 8) }
 	val GREEK_FIRE: DeferredHolder<Potion, Potion> =
-		register("greek_fire", MobEffectInstance(ModMobEffects.GREEK_FIRE, 20 * 60 * 2))
+		register("greek_fire") { MobEffectInstance(ModMobEffects.GREEK_FIRE, 20 * 60 * 2) }
 	val LOVE: DeferredHolder<Potion, Potion> =
-		register("love", MobEffectInstance(ModMobEffects.LOVE, 20 * 10))
+		register("love") { MobEffectInstance(ModMobEffects.LOVE, 20 * 10) }
 	val RELAPSE: DeferredHolder<Potion, Potion> =
-		register("relapse", MobEffectInstance(ModMobEffects.RELAPSE, 20 * 60 * 8))
+		register("relapse") { MobEffectInstance(ModMobEffects.RELAPSE, 20 * 60 * 8) }
 	val SECOND_CHANCE: DeferredHolder<Potion, Potion> =
-		register("second_chance", MobEffectInstance(ModMobEffects.SECOND_CHANCE, 20 * 60 * 2))
+		register("second_chance") { MobEffectInstance(ModMobEffects.SECOND_CHANCE, 20 * 60 * 2) }
 	val DOOM: DeferredHolder<Potion, Potion> =
-		register("doom", MobEffectInstance(ModMobEffects.DOOM, 20 * 60))
+		register("doom") { MobEffectInstance(ModMobEffects.DOOM, 20 * 60) }
 	val PURGING: DeferredHolder<Potion, Potion> =
-		register("purging", MobEffectInstance(ModMobEffects.PURGING))
+		register("purging") { MobEffectInstance(ModMobEffects.PURGING) }
 
 	private fun register(
 		holderName: String,
-		vararg effects: MobEffectInstance
+		effect: () -> MobEffectInstance
 	): DeferredHolder<Potion, Potion> {
-		return POTION_REGISTRY.register(holderName, Supplier { Potion(*effects) })
+		return POTION_REGISTRY.register(holderName, Supplier { Potion(effect()) })
 	}
 
 	private fun register(
 		holderName: String,
 		potionName: String,
-		vararg effects: MobEffectInstance
+		effect: () -> MobEffectInstance
 	): DeferredHolder<Potion, Potion> {
-		return POTION_REGISTRY.register(holderName, Supplier { Potion(potionName, *effects) })
+		return POTION_REGISTRY.register(holderName, Supplier { Potion(potionName, effect()) })
 	}
 
 }

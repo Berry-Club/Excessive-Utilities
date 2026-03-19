@@ -7,7 +7,7 @@ import net.minecraft.world.entity.player.Player
 
 class PurgingEffect : InstantenousMobEffect(
 	MobEffectCategory.HARMFUL,
-	0x000000
+	0xEA689F
 ) {
 
 	//TODO: Puke particles

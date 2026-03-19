@@ -33,7 +33,7 @@ object ModMobEffects : AaronMobEffectsRegistry() {
 	val PURGING: DeferredHolder<MobEffect, PurgingEffect> =
 		register("purging", ::PurgingEffect)
 	val RELAPSE: DeferredHolder<MobEffect, out MobEffect> =
-		registerSimple("relapse", MobEffectCategory.HARMFUL, 0x00000)
+		registerSimple("relapse", MobEffectCategory.HARMFUL, 0x814FF7)
 
 	fun handleRelapse(event: MobEffectEvent.Remove) {
 		if (event.isCanceled) return
