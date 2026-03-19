@@ -13,7 +13,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 
 class SecondChanceEffect : MobEffect(
 	MobEffectCategory.BENEFICIAL,
-	0xF1AAFF
+	0x92FAF0
 ) {
 
 	override fun shouldApplyEffectTickThisTick(duration: Int, amplifier: Int): Boolean {
