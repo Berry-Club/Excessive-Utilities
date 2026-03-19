@@ -19,8 +19,6 @@ class UnstableIngotRecipe(
 ) : ShapedRecipe("", CraftingBookCategory.MISC, pattern, output, false) {
 
 	override fun matches(input: CraftingInput, level: Level): Boolean {
-		if (!super.matches(input, level)) return false
-
 		for (inputStack in input.items()) {
 			if (!inputStack.isItem(ModItems.UNSTABLE_INGOT)) continue
 
@@ -29,11 +27,10 @@ class UnstableIngotRecipe(
 			}
 		}
 
-		return true
+		return super.matches(input, level)
 	}
 
 	override fun isSpecial(): Boolean = true
-	override fun getType(): RecipeType<*> = ModRecipeTypes.UNSTABLE_INGOT.get()
 	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.UNSTABLE_INGOT.get()
 
 	class Serializer : RecipeSerializer<UnstableIngotRecipe> {

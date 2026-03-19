@@ -25,8 +25,6 @@ object ModRecipeTypes {
 		registerRecipeType("qed")
 	val CRUSHER: DeferredHolder<RecipeType<*>, RecipeType<CrusherRecipe>> =
 		registerRecipeType("crusher")
-	val UNSTABLE_INGOT: DeferredHolder<RecipeType<*>, RecipeType<UnstableIngotRecipe>> =
-		registerRecipeType("unstable_ingot")
 
 	val WORLD_INTERACTION_ITEM: DeferredHolder<RecipeType<*>, RecipeType<WorldInteractionItemRecipe>> =
 		registerRecipeType("world_interaction_item")
