@@ -2971,8 +2971,6 @@ class ModBlockStateProvider(
 			ModBlocks.ANGEL_BLOCK.get(),
 			ModBlocks.ENDER_CORE.get(),
 			ModBlocks.BLOCK_OF_BEDROCKIUM.get(),
-			ModBlocks.BEDROCK_BRICKS.get(),
-			ModBlocks.BEDROCK_COBBLESTONE.get(),
 			ModBlocks.CREATIVE_HARVEST.get(),
 			ModBlocks.CREATIVE_ENERGY_SOURCE.get(),
 			ModBlocks.DEEP_DARK_PORTAL.get(),

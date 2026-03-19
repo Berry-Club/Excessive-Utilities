@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-18T21:14:27.3183589	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-03-18T21:32:10.2480674	Tags for minecraft:block mod id excessive_utilities
 5124cada2ba7e5783038acde07858db18ecdb114 data/c/tags/block/cobblestones/normal.json
 cf8f2990468b42d8236e60250ebcf0bb1c8d5735 data/c/tags/block/dyed.json
 ca63a282b7eb47d59ef3ca3f57dc7b0149caa9ab data/c/tags/block/dyed/black.json
@@ -55,7 +55,7 @@ fdf0229f5dd8b82a9a07d37302c8eab1ed4ebeab data/excessive_utilities/tags/block/val
 8126d8bca8572cc70eb7efba0151b0979b238c50 data/minecraft/tags/block/dirt.json
 28956a9b91902468d65653ca633de74c5d8660a7 data/minecraft/tags/block/logs.json
 b0bb8145892fd3de83e9137fb710b8eef0f9b5ba data/minecraft/tags/block/mineable/axe.json
-9b45cb8c07063966918cec1945552dbeaffc65d9 data/minecraft/tags/block/mineable/pickaxe.json
+52864d13ac69c0d5ee29acba4324beabb23c6b61 data/minecraft/tags/block/mineable/pickaxe.json
 6cdeead22a48835ec6de4882fdf5ec8208b2975e data/minecraft/tags/block/mineable/shovel.json
 907aa9090ecd0e4d386fd92c93c7dead3f3a6e78 data/minecraft/tags/block/planks.json
 9216dfcd3861799057ae9663f055e03287c910ec data/minecraft/tags/block/soul_fire_base_blocks.json

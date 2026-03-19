@@ -378,18 +378,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicCopiedBlock("gravel_road", Blocks.GRAVEL)
 	val CHANDELIER: DeferredBlock<ChandelierBlock> =
 		registerBlock("chandelier", ::ChandelierBlock)
-	val BEDROCK_BRICKS =
-		basicBlock("bedrock_bricks")
-	val BEDROCK_COBBLESTONE =
-		basicBlock("bedrock_cobblestone")
-	val BEDROCK_SLABS =
-		basicBlock("bedrock_slabs")
-	val BLUE_QUARTZ =
-		basicBlock("blue_quartz")
 	val STONEBURNT: DeferredBlock<Block> =
 		basicStoneBlock("stoneburnt")
-	val TRUCHET: DeferredBlock<Block> =
-		basicStoneBlock("truchet")
 	val QUARTZBURNT: DeferredBlock<Block> =
 		basicCopiedBlock("quartzburnt", Blocks.QUARTZ_BLOCK)
 	val RAINBOW_STONE: DeferredBlock<Block> =

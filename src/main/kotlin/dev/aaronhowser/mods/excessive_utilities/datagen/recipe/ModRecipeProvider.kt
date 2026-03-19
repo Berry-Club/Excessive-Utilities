@@ -1417,17 +1417,6 @@ class ModRecipeProvider(
 		).save(recipeOutput)
 
 		shapelessRecipe(
-			ModBlocks.TRUCHET,
-			4,
-			listOf(
-				ModBlocks.POLISHED_STONE.asIngredient(),
-				ModBlocks.POLISHED_STONE.asIngredient(),
-				ModBlocks.BORDER_STONE.asIngredient(),
-				ModBlocks.BORDER_STONE.asIngredient(),
-			)
-		).save(recipeOutput)
-
-		shapelessRecipe(
 			ModItems.RESONATING_REDSTONE_CRYSTAL,
 			listOf(
 				ModItems.ENDER_SHARD.asIngredient(),
