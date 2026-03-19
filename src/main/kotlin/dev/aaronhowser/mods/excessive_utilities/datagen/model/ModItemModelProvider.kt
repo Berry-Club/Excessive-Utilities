@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.override
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.transform
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.transforms
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.MagicalBoomerangItem
@@ -10,6 +12,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemDisplayContext
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider
 import net.neoforged.neoforge.client.model.generators.ModelFile
@@ -114,6 +117,31 @@ class ModItemModelProvider(
 		val baseModel =
 			withExistingParent("compound_bow", mcLoc("item/generated"))
 				.texture("layer0", modLoc("item/compound_bow/base"))
+				.transforms {
+					transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
+						rotation(-80f, 260f, -40f)
+						translation(-1f, -2f, 2.5f)
+						scale(0.9f)
+					}
+
+					transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND) {
+						rotation(-80f, -280f, 40f)
+						translation(-1f, -2f, 2.5f)
+						scale(0.9f)
+					}
+
+					transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
+						rotation(0f, -90f, 25f)
+						translation(1.13f, 3.2f, 1.13f)
+						scale(0.68f)
+					}
+
+					transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND) {
+						rotation(0f, 90f, -25f)
+						translation(1.13f, 3.2f, 1.13f)
+						scale(0.68f)
+					}
+				}
 
 		val pull0Model =
 			withExistingParent("compound_bow_pull_0", modLoc("item/compound_bow"))
