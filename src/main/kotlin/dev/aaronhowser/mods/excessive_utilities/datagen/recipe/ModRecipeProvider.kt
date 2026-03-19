@@ -65,6 +65,7 @@ class ModRecipeProvider(
 		buildQedRecipes(recipeOutput)
 		buildWorldInteractionRecipes(recipeOutput)
 		buildCrusherRecipes(recipeOutput)
+		buildUnstableRecipes(recipeOutput)
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -1818,16 +1819,6 @@ class ModRecipeProvider(
 			)
 		).save(recipeOutput, modLoc("watering_can_repair"))
 
-		shapedRecipe(
-			ModItems.MOON_STONE,
-			9,
-			"LLL,LIL,LLL",
-			mapOf(
-				'L' to ModItems.LUNAR_REACTIVE_DUST.asIngredient(),
-				'I' to ModItems.UNSTABLE_INGOT.asIngredient()
-			)
-		).save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
-
 		fun packed(
 			packed: ItemLike,
 			unpacked: ItemLike
@@ -2328,6 +2319,19 @@ class ModRecipeProvider(
 		carpet(Items.BLUE_CARPET, Items.BLUE_DYE, "blue_carpet")
 		carpet(Items.MAGENTA_CARPET, Items.MAGENTA_DYE, "magenta_carpet")
 		carpet(Items.PINK_CARPET, Items.PINK_DYE, "pink_carpet")
+	}
+
+	private fun buildUnstableRecipes(recipeOutput: RecipeOutput) {
+
+		UnstableIngotRecipeBuilder(ModItems.MOON_STONE.withCount(9))
+			.pattern(
+				"LLL",
+				"LIL",
+				"LLL"
+			)
+			.define('L', ModItems.LUNAR_REACTIVE_DUST.asIngredient())
+			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
+			.save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
 
 	}
 

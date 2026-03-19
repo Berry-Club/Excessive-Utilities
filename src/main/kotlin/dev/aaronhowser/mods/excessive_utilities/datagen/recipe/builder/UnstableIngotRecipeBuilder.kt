@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.recipe.UnstableIngotRecipe
 import net.minecraft.advancements.AdvancementRequirements
@@ -13,10 +14,13 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapedRecipePattern
+import net.minecraft.world.level.ItemLike
 
 class UnstableIngotRecipeBuilder(
 	val output: ItemStack
 ) : RecipeBuilder {
+
+	constructor(output: ItemLike) : this(output.getDefaultInstance())
 
 	private val rows = mutableListOf<String>()
 	private val key = mutableMapOf<Char, Ingredient>()
