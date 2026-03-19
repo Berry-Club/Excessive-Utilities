@@ -97,7 +97,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 		private class ResultWithMessage(
 			val isReady: Boolean,
-			vararg val messages: Component
+			val messages: List<Component> = emptyList()
 		)
 
 		private fun checkActivationReady(
@@ -120,73 +120,54 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 		private fun isActivationReady(
 			level: ServerLevel,
-			catalystPos: BlockPos
+			enchantingTablePos: BlockPos
 		): ResultWithMessage {
-			val state = level.getBlockState(catalystPos)
+			val messages = mutableListOf<Component>()
 
-			if (!state.isBlock(Blocks.ENCHANTING_TABLE)) return ResultWithMessage(false)
-
-			if (!level.getBiome(catalystPos).isHolder(Tags.Biomes.IS_OVERWORLD)) {
-				return ResultWithMessage(
-					false,
-					Component.literal("You can only activate the Division Sigil in the Overworld!")
-				)
+			if (!level.getBiome(enchantingTablePos).isHolder(Tags.Biomes.IS_OVERWORLD)) {
+				messages += Component.literal("You can only activate the Division Sigil in the Overworld!")
 			}
 
-			if (!level.canSeeSky(catalystPos)) {
-				return ResultWithMessage(
-					false,
-					Component.literal("The Enchanting Table must be able to see the sky.")
-				)
+			if (!level.canSeeSky(enchantingTablePos)) {
+				messages += Component.literal("The Enchanting Table must be able to see the sky.")
 			}
 
 			for (dx in -1..1) for (dz in -1..1) {
 				if (dx == 0 && dz == 0) continue
 
-				val checkPos = catalystPos.offset(dx, 0, dz)
+				val checkPos = enchantingTablePos.offset(dx, 0, dz)
 				val checkState = level.getBlockState(checkPos)
 
 				if (!checkState.isBlock(Blocks.REDSTONE_WIRE)) {
-					return ResultWithMessage(
-						false,
-						Component.literal("You must have Redstone surrounding the Enchanting Table."),
-						Component.literal("It's missing at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
-					)
+					messages += Component.literal("You must have Redstone surrounding the Enchanting Table.")
+					messages += Component.literal("It's missing at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
 				}
 			}
 
 			for (dx in -5..5) for (dz in -5..5) {
-				val checkPos = catalystPos.offset(dx, -1, dz)
+				val checkPos = enchantingTablePos.offset(dx, -1, dz)
 				val checkState = level.getBlockState(checkPos)
 
 				if (!checkState.isBlock(BlockTags.DIRT)) {
-					return ResultWithMessage(
-						false,
-						Component.literal("You must have a 5x5 layer of Dirt under the Enchanting Table."),
-						Component.literal("It's missing at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
-					)
+					messages += Component.literal("You must have a 5x5 layer of Dirt under the Enchanting Table.")
+					messages += Component.literal("It's missing at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
 				}
 			}
 
 			if (level.dayTime !in 17500..18500) {
-				return ResultWithMessage(
-					false,
-					Component.literal("You can only activate the Division Sigil at midnight.")
-				)
+				messages += Component.literal("You can only activate the Division Sigil at midnight.")
 			}
 
-			if (level.getBrightness(LightLayer.BLOCK, catalystPos.above()) > 7) {
-				return ResultWithMessage(
-					false,
-					Component.literal("The Enchanting Table must be in darkness.")
-				)
+			if (level.getBrightness(LightLayer.BLOCK, enchantingTablePos.above()) > 7) {
+				messages += Component.literal("The Enchanting Table must be in darkness.")
 			}
 
-			return ResultWithMessage(
-				true,
-				Component.literal("The Division Sigil is ready to be activated!"),
-				Component.literal("Kill a mob nearby the Enchanting Table.")
-			)
+			if (messages.isEmpty()) {
+				messages += Component.literal("The Division Sigil is ready to be activated!")
+				messages += Component.literal("Kill a mob nearby the Enchanting Table.")
+			}
+
+			return ResultWithMessage(true, messages)
 		}
 
 		private fun checkInversionReady(
@@ -211,11 +192,10 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			catalystPos: BlockPos
 		): ResultWithMessage {
 
+			val messages = mutableListOf<Component>()
+
 			if (!level.getBiome(catalystPos).isHolder(Tags.Biomes.IS_END)) {
-				return ResultWithMessage(
-					false,
-					Component.literal("You can only invert the Division Sigil in the End!")
-				)
+				messages += Component.literal("You can only invert the Division Sigil in the End!")
 			}
 
 			val directions = Direction.Plane.HORIZONTAL
@@ -227,11 +207,8 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, null)
 				@Suppress("FoldInitializerAndIfToElvis", "RedundantSuppression")
 				if (itemHandler == null) {
-					return ResultWithMessage(
-						false,
-						Component.literal("You must have Chests 5 blocks from the Beacon in each direction."),
-						Component.literal("One is missing to the ${dir.getDirectionName()}.")
-					)
+					messages += Component.literal("You must have Chests 5 blocks from the Beacon in each direction.")
+					messages += Component.literal("One is missing to the ${dir.getDirectionName()}.")
 				}
 			}
 
@@ -256,17 +233,11 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 					val checkState = level.getBlockState(checkPos)
 
 					if (char == 'R' && !checkState.isBlock(Blocks.REDSTONE_WIRE)) {
-						return ResultWithMessage(
-							false,
-							Component.literal("You are missing a Redstone at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
-						)
+						messages += Component.literal("You are missing a Redstone at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
 					}
 
 					if (char == 'S' && !checkState.isBlock(Blocks.TRIPWIRE)) {
-						return ResultWithMessage(
-							false,
-							Component.literal("You are missing a String at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
-						)
+						messages += Component.literal("You are missing a String at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
 					}
 				}
 			}
@@ -308,18 +279,16 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 				val amountNeeded = 12
 				if (count < amountNeeded) {
-					return ResultWithMessage(
-						false,
-						Component.literal("You need at least $amountNeeded items from the tag #${tag.location()} in the Chest to the ${dir.getDirectionName()}, but you only have $count.")
-					)
+					messages += Component.literal("You need at least $amountNeeded items from the tag #${tag.location()} in the Chest to the ${dir.getDirectionName()}, but you only have $count.")
 				}
 			}
 
-			return ResultWithMessage(
-				true,
-				Component.literal("The Division Sigil is ready to be inverted!"),
-				Component.literal("Kill an Iron Golem near the Beacon to begin the ritual.")
-			)
+			if (messages.isEmpty()) {
+				messages += Component.literal("The Division Sigil is ready to be inverted!")
+				messages += Component.literal("Kill an Iron Golem near the Beacon to begin the ritual.")
+			}
+
+			return ResultWithMessage(true, messages)
 		}
 	}
 
