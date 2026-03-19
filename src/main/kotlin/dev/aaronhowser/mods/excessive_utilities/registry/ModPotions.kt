@@ -6,7 +6,6 @@ import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.Potion
 import net.minecraft.world.item.alchemy.Potions
-import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -40,10 +39,12 @@ object ModPotions {
 		register("purging") { MobEffectInstance(ModMobEffects.PURGING) }
 
 	private fun register(
-		holderName: String,
+		name: String,
 		effect: () -> MobEffectInstance
 	): DeferredHolder<Potion, Potion> {
-		return POTION_REGISTRY.register(holderName, Supplier { Potion(effect()) })
+		return POTION_REGISTRY.register(name, Supplier {
+			Potion(ExcessiveUtilities.MOD_ID + "." + name, effect())
+		})
 	}
 
 	private fun register(
@@ -51,7 +52,9 @@ object ModPotions {
 		potionName: String,
 		effect: () -> MobEffectInstance
 	): DeferredHolder<Potion, Potion> {
-		return POTION_REGISTRY.register(holderName, Supplier { Potion(potionName, effect()) })
+		return POTION_REGISTRY.register(holderName, Supplier {
+			Potion(ExcessiveUtilities.MOD_ID + "." + potionName, effect())
+		})
 	}
 
 	fun registerRecipes(event: RegisterBrewingRecipesEvent) {

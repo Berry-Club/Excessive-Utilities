@@ -1,6 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.language
 
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import dev.aaronhowser.mods.excessive_utilities.registry.ModPotions
+import net.minecraft.world.item.alchemy.Potion
+import net.neoforged.neoforge.registries.DeferredHolder
 
 object ModItemLang {
 
@@ -112,6 +116,27 @@ object ModItemLang {
 			add(OPINIUM_CORE_AMAZING, "Opinium Core (Amazing)")
 			add(OPINIUM_CORE_INSPIRING, "Opinium Core (Inspiring)")
 			add(OPINIUM_CORE_PERFECTED, "Opinium Core (Perfected)")
+
+			fun potion(
+				potionName: String,
+				potion: DeferredHolder<Potion, Potion>
+			) {
+				val effectName = ExcessiveUtilities.MOD_ID + "." + potion.unwrapKey().get().location().path
+
+				add("item.minecraft.tipped_arrow.effect.$effectName", "Arrow of $potionName")
+				add("item.minecraft.potion.effect.$effectName", "Potion of $potionName")
+				add("item.minecraft.splash_potion.effect.$effectName", "Splash Potion of $potionName")
+				add("item.minecraft.lingering_potion.effect.$effectName", "Lingering Potion of $potionName")
+			}
+
+			potion("Gravity", ModPotions.GRAVITY)
+			potion("Oily", ModPotions.OILY)
+			potion("Greek Fire", ModPotions.GREEK_FIRE)
+			potion("Love", ModPotions.LOVE)
+			potion("Relapse", ModPotions.RELAPSE)
+			potion("Second Chance", ModPotions.SECOND_CHANCE)
+			potion("Doom", ModPotions.DOOM)
+			potion("Purging", ModPotions.PURGING)
 		}
 	}
 

@@ -8,6 +8,12 @@ object ModEffectLang {
 		provider.apply {
 			addEffect(ModMobEffects.DOOM, "Doom")
 			addEffect(ModMobEffects.GRAVITY, "Gravity")
+			addEffect(ModMobEffects.OILY, "Oily")
+			addEffect(ModMobEffects.GREEK_FIRE, "Greek Fire")
+			addEffect(ModMobEffects.LOVE, "Love")
+			addEffect(ModMobEffects.SECOND_CHANCE, "Second Chance")
+			addEffect(ModMobEffects.PURGING, "Purging")
+			addEffect(ModMobEffects.RELAPSE, "Relapse")
 		}
 	}
 
