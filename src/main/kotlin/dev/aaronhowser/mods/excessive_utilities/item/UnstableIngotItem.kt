@@ -131,14 +131,6 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 				val localPlayer = event.entity ?: return
 				val menu = localPlayer.containerMenu
 
-				val menuName = try {
-					BuiltInRegistries.MENU.getKey(menu.type)
-				} catch (e: UnsupportedOperationException) {
-					null
-				}
-
-//				if (menuName == null || "craft" !in menuName.path) return
-
 				var isInCraftingOutputSlot = false
 				var isInAnySlot = false
 
