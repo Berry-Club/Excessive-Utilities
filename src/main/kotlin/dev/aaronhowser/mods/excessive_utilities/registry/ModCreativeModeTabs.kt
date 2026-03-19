@@ -31,7 +31,7 @@ object ModCreativeModeTabs {
 				val blockItems = mutableListOf<BlockItem>()
 
 				for (deferred in ModItems.ITEM_REGISTRY.entries) {
-//					if (deferred.isHolder(ModItemTagsProvider.NOT_YET_IMPLEMENTED)) continue
+					if (deferred.isHolder(ModItemTagsProvider.NOT_YET_IMPLEMENTED)) continue
 
 					val item = deferred.get()
 					if (item is BlockItem) {
