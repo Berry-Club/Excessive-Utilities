@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
@@ -15,6 +16,7 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
+import net.neoforged.neoforge.common.Tags
 
 class DivisionSigilItem(properties: Properties) : Item(properties) {
 
@@ -26,6 +28,11 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 		val pos = context.clickedPos
 		val stack = context.itemInHand
+
+		// If inverted already, don't do anything
+		if (stack.getOrDefault(ModDataComponents.REMAINING_USES, 0) < 0) {
+			return InteractionResult.SUCCESS
+		}
 
 		if (activate(level, player, pos, stack)) {
 			return InteractionResult.SUCCESS
@@ -66,6 +73,9 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
+		const val USES_AFTER_ACTIVATION = 256
+		const val USES_AFTER_INVERSION = -1
+
 		val DEFAULT_PROPERTIES: () -> Properties =
 			{
 				Properties()
@@ -83,8 +93,8 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			val state = level.getBlockState(pos)
 
 			if (!state.isBlock(Blocks.ENCHANTING_TABLE)) return false
-			if (level.dimension() != Level.OVERWORLD) {
-				player.tell(Component.literal("You can only activate the Division Sigil in the Overworld..."))
+			if (!level.getBiome(pos).isHolder(Tags.Biomes.IS_OVERWORLD)) {
+				player.tell(Component.literal("You can only activate the Division Sigil in the Overworld!"))
 				return false
 			}
 
