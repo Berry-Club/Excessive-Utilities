@@ -232,15 +232,15 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			}
 
 			val stringRedstonePositions = """
-				RSSSSSSSS
-				RSRRRRRRR
-				RSRSSSSSR
-				RSRSRRRSR
-				RSRSBSRSR
-				RSRRRSRSR
-				RSSSSSRSR
-				RRRRRRRSR
-				SSSSSSSSR
+				◼◻◻◻◻◻◻◻◻
+				◼◻◼◼◼◼◼◼◼
+				◼◻◼◻◻◻◻◻◼
+				◼◻◼◻◼◼◼◻◼
+				◼◻◼◻B◻◼◻◼
+				◼◻◼◼◼◻◼◻◼
+				◼◻◻◻◻◻◼◻◼
+				◼◼◼◼◼◼◼◻◼
+				◻◻◻◻◻◻◻◻◼
 			""".trimIndent()
 				.lines()
 
@@ -251,11 +251,11 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 					val checkPos = catalystPos.north(north).west(west)
 					val checkState = level.getBlockState(checkPos)
 
-					if (char == 'R' && !checkState.isBlock(Blocks.REDSTONE_WIRE)) {
+					if (char == '◼' && !checkState.isBlock(Blocks.REDSTONE_WIRE)) {
 						messages += Component.literal("You are missing a Redstone at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
 					}
 
-					if (char == 'S' && !checkState.isBlock(Blocks.TRIPWIRE)) {
+					if (char == '◻' && !checkState.isBlock(Blocks.TRIPWIRE)) {
 						messages += Component.literal("You are missing a String at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
 					}
 
