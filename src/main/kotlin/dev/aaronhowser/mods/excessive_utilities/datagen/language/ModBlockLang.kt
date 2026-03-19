@@ -108,6 +108,8 @@ object ModBlockLang {
 			addBlock(ModBlocks.SLIMY_GENERATOR, "Slimy Generator")
 			addBlock(ModBlocks.DEATH_GENERATOR, "Death Generator")
 			addBlock(ModBlocks.RAINBOW_GENERATOR, "Rainbow Generator!")
+			addBlock(ModBlocks.RAINBOW_GENERATOR_TOP_SLAB, "Rainbow Generator Top")
+			addBlock(ModBlocks.RAINBOW_GENERATOR_BOTTOM_SLAB, "Rainbow Generator Bottom")
 			addBlock(ModBlocks.MANUAL_MILL, "Manual Mill")
 			addBlock(ModBlocks.WATER_MILL, "Water Mill")
 			addBlock(ModBlocks.WIND_MILL, "Wind Mill")

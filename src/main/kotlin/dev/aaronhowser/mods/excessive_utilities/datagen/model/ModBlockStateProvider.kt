@@ -83,6 +83,64 @@ class ModBlockStateProvider(
 //		terraformerBlocks()
 //		antenna()
 //		mechanicalBlocks()
+		rainbowSlabs()
+	}
+
+	private fun rainbowSlabs() {
+		val center = modLoc("block/rainbow_generator_slab/center")
+		val topSide = modLoc("block/rainbow_generator_slab/top")
+		val bottomSide = modLoc("block/rainbow_generator_slab/bottom")
+		val actual = modLoc("block/rainbow_generator")
+
+		val topBlock = ModBlocks.RAINBOW_GENERATOR_TOP_SLAB.get()
+		val bottomBlock = ModBlocks.RAINBOW_GENERATOR_BOTTOM_SLAB.get()
+
+		val topModel = models()
+			.withExistingParent(name(topBlock), mcLoc("block/block"))
+			.texture("center", center)
+			.texture("side", topSide)
+			.texture("top", actual)
+			.texture("bottom", bottomSide)
+			.texture("particle", actual)
+			.element {
+				from(0f, 8f, 0f)
+				to(16f, 16f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+				}
+			}
+
+		val bottomModel = models()
+			.withExistingParent(name(bottomBlock), mcLoc("block/block"))
+			.texture("center", center)
+			.texture("side", bottomSide)
+			.texture("top", actual)
+			.texture("bottom", topSide)
+			.texture("particle", actual)
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 8f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						Direction.DOWN -> "#bottom"
+						else -> "#side"
+					}
+
+					fb.texture(texture)
+				}
+			}
+
+		simpleBlockWithItem(topBlock, topModel)
+		simpleBlockWithItem(bottomBlock, bottomModel)
 	}
 
 	private fun mechanicalBlocks() {

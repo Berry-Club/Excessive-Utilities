@@ -295,12 +295,10 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("death_generator") { GeneratorBlock { ModBlockEntityTypes.DEATH_GENERATOR.get() } }
 	val RAINBOW_GENERATOR: DeferredBlock<GeneratorBlock> =
 		registerBlock("rainbow_generator") { GeneratorBlock { ModBlockEntityTypes.RAINBOW_GENERATOR.get() } }
-
-	// TODO
-	val RAINBOW_GENERATOR_TOP_SLAB =
-		basicBlock("rainbow_generator_top_slab")
-	val RAINBOW_GENERATOR_BOTTOM_SLAB =
-		basicBlock("rainbow_generator_bottom_slab")
+	val RAINBOW_GENERATOR_TOP_SLAB: DeferredBlock<RainbowGeneratorSlabBlock> =
+		registerBlock("rainbow_generator_top_slab") { RainbowGeneratorSlabBlock(isTop = true) }
+	val RAINBOW_GENERATOR_BOTTOM_SLAB: DeferredBlock<RainbowGeneratorSlabBlock> =
+		registerBlock("rainbow_generator_bottom_slab") { RainbowGeneratorSlabBlock(isTop = false) }
 
 	// GP Generators
 
