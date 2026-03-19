@@ -113,16 +113,6 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				return true
 			}
 
-			if (level.dayTime !in 17500..18500) {
-				player.tell(Component.literal("You can only activate the Division Sigil at midnight."))
-				return true
-			}
-
-			if (level.getBrightness(LightLayer.BLOCK, pos) > 0) {
-				player.tell(Component.literal("The Enchanting Table must be in complete darkness."))
-				return true
-			}
-
 			for (dx in -1..1) for (dz in -1..1) {
 				if (dx == 0 && dz == 0) continue
 
@@ -145,6 +135,16 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 					player.tell(Component.literal("It's missing at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}."))
 					return true
 				}
+			}
+
+			if (level.dayTime !in 17500..18500) {
+				player.tell(Component.literal("You can only activate the Division Sigil at midnight."))
+				return true
+			}
+
+			if (level.getBrightness(LightLayer.BLOCK, pos.above()) > 7) {
+				player.tell(Component.literal("The Enchanting Table must be in darkness."))
+				return true
 			}
 
 			player.tell(Component.literal("The Division Sigil is ready to be activated!"))
@@ -247,7 +247,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			}
 
 			player.tell(Component.literal("The Division Sigil is ready to be inverted!"))
-			player.tell(Component.literal("Kill an Iron Golem near the Beacon."))
+			player.tell(Component.literal("Kill an Iron Golem near the Beacon to begin the ritual."))
 
 			return true
 		}
