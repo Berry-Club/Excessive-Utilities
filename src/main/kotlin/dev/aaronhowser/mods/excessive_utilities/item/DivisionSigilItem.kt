@@ -227,20 +227,39 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, null) ?: return false
 
-				val matchedItems = mutableSetOf<Item>()
-
-				for (slot in 0 until itemHandler.slots) {
-					val stack = itemHandler.getStackInSlot(slot)
-					if (!stack.isItem(tag)) continue
-
-					matchedItems.add(stack.item)
-				}
-
 				val amountNeeded = 12
-				if (matchedItems.size < amountNeeded) {
-					player.tell(Component.literal("You need at least $amountNeeded different items of the tag #${tag.location}, but you only have ${matchedItems.size} in the chest to the ${dir.getDirectionName()}."))
-					return true
+
+				// Special handling because potions are all the same Item class
+				if (tag == ModItemTagsProvider.DESCENDANTS_OF_WATER) {
+					var totalCount = 0
+
+					for (slot in 0 until itemHandler.slots) {
+						val stack = itemHandler.getStackInSlot(slot)
+						if (!stack.isItem(tag)) continue
+
+						totalCount += stack.count
+					}
+
+					if (totalCount < amountNeeded) {
+						player.tell(Component.literal("You need at least $amountNeeded items of the tag #${tag.location}, but you only have $totalCount in the chest to the ${dir.getDirectionName()}."))
+						return true
+					}
+				} else {
+					val matchedItems = mutableSetOf<Item>()
+
+					for (slot in 0 until itemHandler.slots) {
+						val stack = itemHandler.getStackInSlot(slot)
+						if (!stack.isItem(tag)) continue
+
+						matchedItems.add(stack.item)
+					}
+
+					if (matchedItems.size < amountNeeded) {
+						player.tell(Component.literal("You need at least $amountNeeded different items of the tag #${tag.location}, but you only have ${matchedItems.size} in the chest to the ${dir.getDirectionName()}."))
+						return true
+					}
 				}
+
 			}
 
 			player.tell(Component.literal("The Division Sigil is ready to be inverted!"))
