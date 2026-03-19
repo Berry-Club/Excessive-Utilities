@@ -79,32 +79,29 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 		tooltipComponents: MutableList<Component>,
 		tooltipFlag: TooltipFlag
 	) {
-		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
-
-		val component = if (remainingUses < 0) {
-			Component.literal("Infinite Uses")
-		} else {
-			Component.literal("$remainingUses Uses Remaining")
+		if (isInverted(stack)) {
+			tooltipComponents += Component.literal("Infinite uses")
+			return
 		}
 
-		tooltipComponents.add(component)
+		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
+
+		tooltipComponents += Component.literal("$remainingUses Uses Remaining")
 	}
 
 	override fun isBarVisible(stack: ItemStack): Boolean {
-		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
-		return remainingUses >= 0
+		return !isInverted(stack)
 	}
 
 	override fun getBarWidth(stack: ItemStack): Int {
-		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
-		if (remainingUses < 0) return 13
+		if (isInverted(stack)) return 13
 
+		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
 		return (remainingUses * 13) / USES_AFTER_ACTIVATION
 	}
 
 	companion object {
 		const val USES_AFTER_ACTIVATION = 256
-		const val USES_AFTER_INVERSION = -1
 
 		val DEFAULT_PROPERTIES: () -> Properties =
 			{
@@ -113,6 +110,10 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 					.fireResistant()
 					.component(ModDataComponents.REMAINING_USES, 0)
 			}
+
+		fun isInverted(stack: ItemStack): Boolean {
+			return !stack.has(ModDataComponents.COUNTDOWN)
+		}
 
 		private class ResultWithMessage(
 			val isReady: Boolean,

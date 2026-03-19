@@ -34,6 +34,10 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 
 		val countdown = stack.get(ModDataComponents.COUNTDOWN) ?: return
 
+		if (isCheesed(stack)) {
+			return
+		}
+
 		var shouldExplode = countdown <= 0
 
 		if (entity is Player) {
@@ -127,19 +131,28 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 				val localPlayer = event.entity ?: return
 				val menu = localPlayer.containerMenu
 
+				val menuName = try {
+					BuiltInRegistries.MENU.getKey(menu.type)
+				} catch (e: UnsupportedOperationException) {
+					null
+				}
+
+//				if (menuName == null || "craft" !in menuName.path) return
+
 				var isInCraftingOutputSlot = false
+				var isInAnySlot = false
 
 				for (slot in menu.slots) {
 					val isResultContainer = slot.container is ResultContainer
-					if (!isResultContainer) continue
 
 					if (slot.item === stack) {
-						isInCraftingOutputSlot = true
+						if (isResultContainer) isInCraftingOutputSlot = true
+						isInAnySlot = true
 						break
 					}
 				}
 
-				if (isInCraftingOutputSlot) return
+				if (!isInAnySlot || isInCraftingOutputSlot) return
 
 				event.toolTip.add(Component.literal("Naughty naughty!"))
 				event.toolTip.add(Component.literal("You have to craft the item YOURSELF for it to work!"))
