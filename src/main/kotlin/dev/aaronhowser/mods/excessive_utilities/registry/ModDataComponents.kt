@@ -12,6 +12,7 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Unit
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.DyeColor
@@ -71,5 +72,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		register("angel_ring_type", AngelRingItem.Type.CODEC, AngelRingItem.Type.STREAM_CODEC)
 	val REMAINING_USES: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("remaining_uses")
+	val CRAFTED_IN_MENU: DeferredHolder<DataComponentType<*>, DataComponentType<ResourceLocation>> =
+		register("crafted_in_menu", ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC)
 
 }
