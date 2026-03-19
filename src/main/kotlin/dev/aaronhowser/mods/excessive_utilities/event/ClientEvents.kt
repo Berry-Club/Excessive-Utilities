@@ -187,6 +187,7 @@ object ClientEvents {
 				ModBlocks.getColoredQuartz(color).get(),
 				ModBlocks.getColoredSoulSand(color).get(),
 				ModBlocks.getColoredGlowstone(color).get(),
+				ModBlocks.getLapisCaelestis(color).get()
 			)
 		}
 
@@ -248,7 +249,8 @@ object ClientEvents {
 				ModBlocks.getColoredObsidian(color).get(),
 				ModBlocks.getColoredQuartz(color).get(),
 				ModBlocks.getColoredSoulSand(color).get(),
-				ModBlocks.getColoredGlowstone(color).get()
+				ModBlocks.getColoredGlowstone(color).get(),
+				ModBlocks.getLapisCaelestis(color).get()
 			)
 		}
 	}
