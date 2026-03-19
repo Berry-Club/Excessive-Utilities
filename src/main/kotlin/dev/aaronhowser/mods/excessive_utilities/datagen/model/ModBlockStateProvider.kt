@@ -31,7 +31,7 @@ class ModBlockStateProvider(
 	override fun registerStatesAndModels() {
 		singleTextureBlocks()
 		singleTextureCutout()
-		blackoutCurtain()
+//		blackoutCurtain()
 		athenaBlocks()
 		slightlyLargerChest()
 		miniChest()
@@ -2772,30 +2772,40 @@ class ModBlockStateProvider(
 
 	private fun miniChest() {
 		val block = ModBlocks.MINI_CHEST.get()
-		val name = name(block)
 
-		val front = modLoc("block/mini_chest/front")
-		val side = modLoc("block/mini_chest/side")
-		val top = modLoc("block/mini_chest/top")
-		val bottom = modLoc("block/mini_chest/bottom")
+		val name = name(block)
+		val texture = modLoc("block/mini_chest")
 
 		val model = models()
 			.withExistingParent(name, mcLoc("block/block"))
-			.texture("front", front)
-			.texture("side", side)
-			.texture("top", top)
-			.texture("bottom", bottom)
-			.texture("particle", side)
+			.texture("texture", texture)
+			.texture("particle", texture)
 
 			.element {
 				from(5f, 0f, 5f)
 				to(11f, 6f, 11f)
 				allFaces { dir, fb ->
 					when (dir) {
-						Direction.NORTH -> fb.texture("#front")
-						Direction.UP -> fb.texture("#top")
-						Direction.DOWN -> fb.texture("#bottom")
-						else -> fb.texture("#side")
+						Direction.NORTH -> {
+							fb.texture("#front")
+							fb.uvs(8f, 8f, 16f, 16f)
+						}
+
+						Direction.UP -> {
+							fb.texture("#top")
+							fb.uvs(0f, 0f, 8f, 8f)
+						}
+
+						Direction.DOWN -> {
+							fb.texture("#bottom")
+							fb.uvs(8f, 0f, 16f, 8f)
+							fb.cullface(Direction.DOWN)
+						}
+
+						else -> {
+							fb.texture("#side")
+							fb.uvs(0f, 8f, 8f, 16f)
+						}
 					}
 				}
 			}
@@ -2979,9 +2989,9 @@ class ModBlockStateProvider(
 			ModBlocks.SOUND_MUFFLER.get(),
 			ModBlocks.RAINBOW_GENERATOR.get(),
 			ModBlocks.SANDY_GLASS.get(),
-			ModBlocks.QUANTUM_QUARRY.get(),
-			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.get(),
-			ModBlocks.MAGICAL_WOOD.get(),
+//			ModBlocks.QUANTUM_QUARRY.get(),
+//			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.get(),
+//			ModBlocks.MAGICAL_WOOD.get(),
 //			ModBlocks.LAST_MILLENNIUM_PORTAL.get()
 		)
 
@@ -2993,7 +3003,7 @@ class ModBlockStateProvider(
 	private fun singleTextureCutout() {
 		val blocks = listOf(
 			ModBlocks.RESTURBED_MOB_SPAWNER.get(),
-			ModBlocks.SQUARE_GLASS.get()
+//			ModBlocks.SQUARE_GLASS.get()
 		)
 
 		for (block in blocks) {
