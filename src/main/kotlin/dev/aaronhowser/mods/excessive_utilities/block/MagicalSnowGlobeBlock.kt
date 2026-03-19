@@ -33,7 +33,7 @@ class MagicalSnowGlobeBlock : Block(Properties.ofFullCopy(Blocks.OAK_PLANKS)), E
 	}
 
 	companion object {
-		val SHAPE: VoxelShape = box(2.0, 0.0, 2.0, 14.0, 12.0, 14.0)
+		val SHAPE: VoxelShape = box(4.0, 0.0, 4.0, 12.0, 8.0, 12.0)
 	}
 
 }

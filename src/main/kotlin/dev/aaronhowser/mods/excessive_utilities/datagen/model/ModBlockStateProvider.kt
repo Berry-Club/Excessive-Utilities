@@ -1196,7 +1196,7 @@ class ModBlockStateProvider(
 				to(12f, 8f, 12f)
 
 				allFaces { dir, fb ->
-					fb.texture("texture")
+					fb.texture("#texture")
 
 					when (dir) {
 						Direction.UP -> fb.uvs(0f, 0f, 8f, 8f)
@@ -1207,11 +1207,12 @@ class ModBlockStateProvider(
 			}
 
 			.element {
-				from(4f, 0f, 4f)
-				to(12f, 0f, 12f)
+				from(4f, 0.1f, 4f)
+				to(12f, 0.1f, 12f)
 
 				face(Direction.UP) {
-					texture("#bottom")
+					texture("#texture")
+					uvs(8f, 0f, 16f, 8f)
 				}
 			}
 

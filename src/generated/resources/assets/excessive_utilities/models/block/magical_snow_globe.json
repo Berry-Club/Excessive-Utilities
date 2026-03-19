@@ -4,7 +4,7 @@
     {
       "faces": {
         "down": {
-          "texture": "minecraft:texture",
+          "texture": "#texture",
           "uv": [
             8.0,
             0.0,
@@ -13,7 +13,7 @@
           ]
         },
         "east": {
-          "texture": "minecraft:texture",
+          "texture": "#texture",
           "uv": [
             0.0,
             8.0,
@@ -22,7 +22,7 @@
           ]
         },
         "north": {
-          "texture": "minecraft:texture",
+          "texture": "#texture",
           "uv": [
             0.0,
             8.0,
@@ -31,7 +31,7 @@
           ]
         },
         "south": {
-          "texture": "minecraft:texture",
+          "texture": "#texture",
           "uv": [
             0.0,
             8.0,
@@ -40,7 +40,7 @@
           ]
         },
         "up": {
-          "texture": "minecraft:texture",
+          "texture": "#texture",
           "uv": [
             0.0,
             0.0,
@@ -49,7 +49,7 @@
           ]
         },
         "west": {
-          "texture": "minecraft:texture",
+          "texture": "#texture",
           "uv": [
             0.0,
             8.0,
@@ -72,17 +72,23 @@
     {
       "faces": {
         "up": {
-          "texture": "#bottom"
+          "texture": "#texture",
+          "uv": [
+            8.0,
+            0.0,
+            16.0,
+            8.0
+          ]
         }
       },
       "from": [
         4,
-        0,
+        0.1,
         4
       ],
       "to": [
         12,
-        0,
+        0.1,
         12
       ]
     }

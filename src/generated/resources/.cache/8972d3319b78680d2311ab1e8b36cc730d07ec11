@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-19T00:53:41.7623366	Block States: excessive_utilities
+// 1.21.1	2026-03-19T00:59:43.44479	Block States: excessive_utilities
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 d855682b0e42132174eddcab175a4dffdca01cd1 assets/excessive_utilities/blockstates/block_of_demon_metal.json
 d74cac1e1f5f6236b40c3ff0375fde4a719487db assets/excessive_utilities/blockstates/block_of_enchanted_metal.json
@@ -563,7 +563,7 @@ c07e488378107b18fe4dc961ebaed2fa2bf7630a assets/excessive_utilities/models/block
 5f82d07d4a27d71dd7fc7757532d73d075d3d302 assets/excessive_utilities/models/block/lapis_caelestis_yellow.json
 7cd5512f39a30015c300e7d518889b444f26ddb5 assets/excessive_utilities/models/block/lava_mill.json
 8571f59f8aa986fa0b09d557d7e60512e05238f1 assets/excessive_utilities/models/block/machine_block.json
-cd8f7a63957254c662cc785b17917d8d69627e18 assets/excessive_utilities/models/block/magical_snow_globe.json
+d05dec27dc53f4e623a700b399e8df37a50e1c76 assets/excessive_utilities/models/block/magical_snow_globe.json
 6818caca1c08adaa037de984bb81896fbe63fcd8 assets/excessive_utilities/models/block/magmatic_generator_off.json
 fbb6a0d606afd265f434d93adc11d0ddbc62ec86 assets/excessive_utilities/models/block/magmatic_generator_on.json
 bfd4ea4d6b49d08e5ae2c42ec19649dc7e642326 assets/excessive_utilities/models/block/mini_chest.json
