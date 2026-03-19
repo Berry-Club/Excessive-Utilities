@@ -141,6 +141,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				if (!checkState.isBlock(Blocks.REDSTONE_WIRE)) {
 					messages += Component.literal("You must have Redstone surrounding the Enchanting Table.")
 					messages += Component.literal("It's missing at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
+					return ResultWithMessage(false, messages)
 				}
 			}
 
@@ -151,6 +152,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				if (!checkState.isBlock(BlockTags.DIRT)) {
 					messages += Component.literal("You must have a 5x5 layer of Dirt under the Enchanting Table.")
 					messages += Component.literal("It's missing at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
+					return ResultWithMessage(false, messages)
 				}
 			}
 
@@ -207,9 +209,12 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, null)
 				@Suppress("FoldInitializerAndIfToElvis", "RedundantSuppression")
 				if (itemHandler == null) {
-					messages += Component.literal("You must have Chests 5 blocks from the Beacon in each direction.")
-					messages += Component.literal("One is missing to the ${dir.getDirectionName()}.")
+					messages += Component.literal("Yuo must have a Chest 5 blocks to the ${dir.getDirectionName()}.")
 				}
+			}
+
+			if (messages.isNotEmpty()) {
+				return ResultWithMessage(false, messages)
 			}
 
 			val stringRedstonePositions = """
@@ -238,6 +243,10 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 					if (char == 'S' && !checkState.isBlock(Blocks.TRIPWIRE)) {
 						messages += Component.literal("You are missing a String at ${checkPos.x}, ${checkPos.y}, ${checkPos.z}.")
+					}
+
+					if (messages.isNotEmpty()) {
+						return ResultWithMessage(false, messages)
 					}
 				}
 			}
