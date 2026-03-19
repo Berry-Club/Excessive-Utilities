@@ -1,0 +1,22 @@
+{
+  "type": "excessive_utilities:unstable_ingot",
+  "pattern": {
+    "key": {
+      "I": {
+        "item": "excessive_utilities:unstable_ingot"
+      },
+      "L": {
+        "item": "excessive_utilities:colored_bricks_purple"
+      }
+    },
+    "pattern": [
+      "LLL",
+      "LIL",
+      "LLL"
+    ]
+  },
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:lapis_caelestis_purple"
+  }
+}

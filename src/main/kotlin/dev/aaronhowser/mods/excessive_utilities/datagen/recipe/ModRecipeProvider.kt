@@ -2313,13 +2313,13 @@ class ModRecipeProvider(
 			val bricks = ModBlocks.getColoredBricks(color)
 			val lapisCaelestis = ModBlocks.getLapisCaelestis(color)
 
-			UnstableIngotRecipeBuilder(bricks.toStack(4))
+			UnstableIngotRecipeBuilder(lapisCaelestis.toStack(4))
 				.pattern(
 					"LLL",
 					"LIL",
 					"LLL"
 				)
-				.define('L', lapisCaelestis.asIngredient())
+				.define('L', bricks.asIngredient())
 				.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
 				.save(recipeOutput)
 		}
