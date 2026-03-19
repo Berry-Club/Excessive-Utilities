@@ -444,19 +444,59 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Compressed Blocks
 
-	val COMPRESSED_COBBLESTONES: List<DeferredBlock<Block>> =
-		getCompressedBlockList("cobblestone", Blocks.COBBLESTONE)
-	val COMPRESSED_DIRTS: List<DeferredBlock<Block>> =
-		getCompressedBlockList("dirt", Blocks.DIRT)
-	val COMPRESSED_SANDS: List<DeferredBlock<Block>> =
-		getCompressedBlockList("sand", Blocks.SAND)
-	val COMPRESSED_GRAVELS: List<DeferredBlock<Block>> =
-		getCompressedBlockList("gravel", Blocks.GRAVEL)
+	val COMPRESSED_COBBLESTONE_1 = compressedBlock("cobblestone", 1, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_2 = compressedBlock("cobblestone", 2, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_3 = compressedBlock("cobblestone", 3, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_4 = compressedBlock("cobblestone", 4, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_5 = compressedBlock("cobblestone", 5, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_6 = compressedBlock("cobblestone", 6, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_7 = compressedBlock("cobblestone", 7, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_8 = compressedBlock("cobblestone", 8, Blocks.COBBLESTONE)
+	val COMPRESSED_COBBLESTONE_9 = compressedBlock("cobblestone", 9, Blocks.COBBLESTONE)
 
-	fun getCompressedCobblestone(level: Int): DeferredBlock<out Block> = COMPRESSED_COBBLESTONES[level - 1]
-	fun getCompressedDirt(level: Int): DeferredBlock<out Block> = COMPRESSED_DIRTS[level - 1]
-	fun getCompressedSand(level: Int): DeferredBlock<out Block> = COMPRESSED_SANDS[level - 1]
-	fun getCompressedGravel(level: Int): DeferredBlock<out Block> = COMPRESSED_GRAVELS[level - 1]
+	val COMPRESSED_DIRT_1 = compressedBlock("dirt", 1, Blocks.DIRT)
+	val COMPRESSED_DIRT_2 = compressedBlock("dirt", 2, Blocks.DIRT)
+	val COMPRESSED_DIRT_3 = compressedBlock("dirt", 3, Blocks.DIRT)
+	val COMPRESSED_DIRT_4 = compressedBlock("dirt", 4, Blocks.DIRT)
+	val COMPRESSED_DIRT_5 = compressedBlock("dirt", 5, Blocks.DIRT)
+	val COMPRESSED_DIRT_6 = compressedBlock("dirt", 6, Blocks.DIRT)
+	val COMPRESSED_DIRT_7 = compressedBlock("dirt", 7, Blocks.DIRT)
+	val COMPRESSED_DIRT_8 = compressedBlock("dirt", 8, Blocks.DIRT)
+	val COMPRESSED_DIRT_9 = compressedBlock("dirt", 9, Blocks.DIRT)
+
+	val COMPRESSED_GRAVEL_1 = compressedBlock("gravel", 1, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_2 = compressedBlock("gravel", 2, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_3 = compressedBlock("gravel", 3, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_4 = compressedBlock("gravel", 4, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_5 = compressedBlock("gravel", 5, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_6 = compressedBlock("gravel", 6, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_7 = compressedBlock("gravel", 7, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_8 = compressedBlock("gravel", 8, Blocks.GRAVEL)
+	val COMPRESSED_GRAVEL_9 = compressedBlock("gravel", 9, Blocks.GRAVEL)
+
+	val COMPRESSED_SAND_1 = compressedBlock("sand", 1, Blocks.SAND)
+	val COMPRESSED_SAND_2 = compressedBlock("sand", 2, Blocks.SAND)
+	val COMPRESSED_SAND_3 = compressedBlock("sand", 3, Blocks.SAND)
+	val COMPRESSED_SAND_4 = compressedBlock("sand", 4, Blocks.SAND)
+	val COMPRESSED_SAND_5 = compressedBlock("sand", 5, Blocks.SAND)
+	val COMPRESSED_SAND_6 = compressedBlock("sand", 6, Blocks.SAND)
+	val COMPRESSED_SAND_7 = compressedBlock("sand", 7, Blocks.SAND)
+	val COMPRESSED_SAND_8 = compressedBlock("sand", 8, Blocks.SAND)
+	val COMPRESSED_SAND_9 = compressedBlock("sand", 9, Blocks.SAND)
+
+	private fun compressedBlock(baseName: String, level: Int, baseBlock: Block): DeferredBlock<Block> {
+		val baseDestroyTime = baseBlock.defaultDestroyTime()
+		val baseExplosionResistance = baseBlock.explosionResistance
+
+		val properties = BlockBehaviour.Properties
+			.ofFullCopy(baseBlock)
+			.destroyTime(baseDestroyTime * (level + 1))
+			.explosionResistance(baseExplosionResistance * (level + 1))
+
+		val name = "compressed_${baseName}_${level}"
+
+		return registerBlock(name) { Block(properties) }
+	}
 
 	private fun getCompressedBlockList(name: String, blockToCopy: Block): List<DeferredBlock<Block>> {
 		return List(9) { i ->
