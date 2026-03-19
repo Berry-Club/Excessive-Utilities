@@ -37,6 +37,7 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
@@ -396,6 +397,11 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onRegisterBrewingRecipes(event: RegisterBrewingRecipesEvent) {
 		ModPotions.registerRecipes(event)
+	}
+
+	@SubscribeEvent
+	fun onEntityDeath(event: LivingDeathEvent) {
+		DivisionSigilItem.handleEntityDeath(event)
 	}
 
 }
