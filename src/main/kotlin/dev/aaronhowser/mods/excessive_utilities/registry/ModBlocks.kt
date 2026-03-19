@@ -444,16 +444,21 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Compressed Blocks
 
-	val COMPRESSED_COBBLESTONES: List<DeferredBlock<Block>> =
+	val COMPRESSED_COBBLESTONES: List<DeferredBlock<CompressedBlock>> =
 		compressedBlocks("cobblestone", Blocks.COBBLESTONE)
-	val COMPRESSED_DIRTS: List<DeferredBlock<Block>> =
+	val COMPRESSED_DIRTS: List<DeferredBlock<CompressedBlock>> =
 		compressedBlocks("dirt", Blocks.DIRT)
-	val COMPRESSED_SANDS: List<DeferredBlock<Block>> =
+	val COMPRESSED_SANDS: List<DeferredBlock<CompressedBlock>> =
 		compressedBlocks("sand", Blocks.SAND)
-	val COMPRESSED_GRAVELS: List<DeferredBlock<Block>> =
+	val COMPRESSED_GRAVELS: List<DeferredBlock<CompressedBlock>> =
 		compressedBlocks("gravel", Blocks.GRAVEL)
 
-	private fun compressedBlocks(baseName: String, baseBlock: Block): List<DeferredBlock<Block>> {
+	fun getCompressedCobblestone(level: Int): DeferredBlock<out CompressedBlock> = COMPRESSED_COBBLESTONES[level - 1]
+	fun getCompressedDirt(level: Int): DeferredBlock<out CompressedBlock> = COMPRESSED_DIRTS[level - 1]
+	fun getCompressedSand(level: Int): DeferredBlock<out CompressedBlock> = COMPRESSED_SANDS[level - 1]
+	fun getCompressedGravel(level: Int): DeferredBlock<out CompressedBlock> = COMPRESSED_GRAVELS[level - 1]
+
+	private fun compressedBlocks(baseName: String, baseBlock: Block): List<DeferredBlock<CompressedBlock>> {
 		return List(9) { i ->
 			val level = i + 1
 
@@ -467,7 +472,7 @@ object ModBlocks : AaronBlockRegistry() {
 
 			val name = "compressed_${baseName}_${level}"
 
-			registerBlock(name) { Block(properties) }
+			registerBlock(name) { CompressedBlock(level, properties) }
 		}
 	}
 
