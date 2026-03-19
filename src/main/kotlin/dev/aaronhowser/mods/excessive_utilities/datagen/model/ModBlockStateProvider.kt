@@ -32,7 +32,7 @@ class ModBlockStateProvider(
 		singleTextureBlocks()
 		singleTextureCutout()
 //		blackoutCurtain()
-		athenaBlocks()
+//		athenaBlocks()
 		slightlyLargerChest()
 		miniChest()
 		generators()
@@ -2541,12 +2541,11 @@ class ModBlockStateProvider(
 	private fun machineBlock() {
 		val block = ModBlocks.MACHINE_BLOCK.get()
 
-		val side = modLoc("block/machine_block/side")
-		val top = modLoc("block/machine_block/top")
-		val bottom = modLoc("block/machine_block/bottom")
+		val side = modLoc("block/machine_base/side")
+		val top = modLoc("block/machine_base/top")
 
 		val model = models()
-			.orientableWithBottom(name(block), side, side, bottom, top)
+			.cubeTop(name(block), side, top)
 
 		simpleBlockWithItem(block, model)
 	}
@@ -2651,8 +2650,8 @@ class ModBlockStateProvider(
 
 		val frontOff = modLoc("block/generator/$directory/front_off")
 		val frontOn = modLoc("block/generator/$directory/front_on")
-		val side = modLoc("block/machine_base/$directory/side")
-		val top = modLoc("block/machine_base/$directory/top")
+		val side = modLoc("block/generator/$directory/side")
+		val top = modLoc("block/generator/$directory/top")
 
 		val modelOff = models()
 			.cube(name + "_off", top, top, frontOff, side, side, side)
