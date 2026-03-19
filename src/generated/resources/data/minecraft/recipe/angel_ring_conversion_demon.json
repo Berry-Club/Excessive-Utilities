@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:leathers"
+    },
+    "R": {
+      "item": "excessive_utilities:angel_ring"
+    }
+  },
+  "pattern": [
+    "CR",
+    "C "
+  ],
+  "result": {
+    "components": {
+      "excessive_utilities:angel_ring_type": "demon"
+    },
+    "count": 1,
+    "id": "excessive_utilities:angel_ring"
+  }
+}
