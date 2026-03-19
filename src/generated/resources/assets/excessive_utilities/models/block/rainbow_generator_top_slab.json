@@ -35,8 +35,7 @@
     }
   ],
   "textures": {
-    "bottom": "excessive_utilities:block/rainbow_generator_slab/bottom",
-    "center": "excessive_utilities:block/rainbow_generator_slab/center",
+    "bottom": "excessive_utilities:block/rainbow_generator_slab/center",
     "particle": "excessive_utilities:block/rainbow_generator",
     "side": "excessive_utilities:block/rainbow_generator_slab/top",
     "top": "excessive_utilities:block/rainbow_generator"

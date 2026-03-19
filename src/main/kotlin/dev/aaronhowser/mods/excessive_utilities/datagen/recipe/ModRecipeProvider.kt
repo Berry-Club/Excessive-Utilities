@@ -68,6 +68,47 @@ class ModRecipeProvider(
 		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
 
 		shapedRecipe(
+			ModBlocks.RAINBOW_GENERATOR_TOP_SLAB,
+			"123,456,789",
+			mapOf(
+				'1' to ModBlocks.CULINARY_GENERATOR.asIngredient(),
+				'2' to ModBlocks.DEATH_GENERATOR.asIngredient(),
+				'3' to ModBlocks.HALITOSIS_GENERATOR.asIngredient(),
+				'4' to ModBlocks.DISENCHANTMENT_GENERATOR.asIngredient(),
+				'5' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'6' to ModBlocks.ENDER_GENERATOR.asIngredient(),
+				'7' to ModBlocks.FURNACE_GENERATOR.asIngredient(),
+				'8' to ModBlocks.FROSTY_GENERATOR.asIngredient(),
+				'9' to ModBlocks.MAGMATIC_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.RAINBOW_GENERATOR_BOTTOM_SLAB,
+			"123,456,789",
+			mapOf(
+				'1' to ModBlocks.NETHER_STAR_GENERATOR.asIngredient(),
+				'2' to ModBlocks.OVERCLOCKED_GENERATOR.asIngredient(),
+				'3' to ModBlocks.PINK_GENERATOR.asIngredient(),
+				'4' to ModBlocks.POTION_GENERATOR.asIngredient(),
+				'5' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
+				'6' to ModBlocks.HEATED_REDSTONE_GENERATOR.asIngredient(),
+				'7' to ModBlocks.SLIMY_GENERATOR.asIngredient(),
+				'8' to ModBlocks.SURVIVAL_GENERATOR.asIngredient(),
+				'9' to ModBlocks.EXPLOSIVE_GENERATOR.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.RAINBOW_GENERATOR,
+			"T,B",
+			mapOf(
+				'T' to ModBlocks.RAINBOW_GENERATOR_TOP_SLAB.asIngredient(),
+				'B' to ModBlocks.RAINBOW_GENERATOR_BOTTOM_SLAB.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
 			ModBlocks.ENDER_INFUSED_OBSIDIAN.toStack(4),
 			" O ,OEO, O ",
 			mapOf(

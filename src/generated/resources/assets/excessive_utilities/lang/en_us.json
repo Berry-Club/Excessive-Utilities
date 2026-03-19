@@ -380,6 +380,8 @@
   "block.excessive_utilities.quantum_quarry_actuator": "Quantum Quarry Actuator",
   "block.excessive_utilities.quartzburnt": "Quartzburnt",
   "block.excessive_utilities.rainbow_generator": "Rainbow Generator!",
+  "block.excessive_utilities.rainbow_generator_bottom_slab": "Rainbow Generator Bottom",
+  "block.excessive_utilities.rainbow_generator_top_slab": "Rainbow Generator Top",
   "block.excessive_utilities.rainbow_stone": "Rainbow Stone",
   "block.excessive_utilities.red_orchid": "Red Orchid",
   "block.excessive_utilities.redstone_clock": "Redstone Clock",

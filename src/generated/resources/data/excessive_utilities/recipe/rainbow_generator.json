@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "excessive_utilities:rainbow_generator_bottom_slab"
+    },
+    "T": {
+      "item": "excessive_utilities:rainbow_generator_top_slab"
+    }
+  },
+  "pattern": [
+    "T",
+    "B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:rainbow_generator"
+  }
+}

@@ -97,10 +97,9 @@ class ModBlockStateProvider(
 
 		val topModel = models()
 			.withExistingParent(name(topBlock), mcLoc("block/block"))
-			.texture("center", center)
 			.texture("side", topSide)
 			.texture("top", actual)
-			.texture("bottom", bottomSide)
+			.texture("bottom", center)
 			.texture("particle", actual)
 			.element {
 				from(0f, 8f, 0f)
@@ -121,7 +120,6 @@ class ModBlockStateProvider(
 			.withExistingParent(name(bottomBlock), mcLoc("block/block"))
 			.texture("center", center)
 			.texture("side", bottomSide)
-			.texture("top", actual)
 			.texture("bottom", topSide)
 			.texture("particle", actual)
 			.element {
@@ -131,7 +129,7 @@ class ModBlockStateProvider(
 				allFaces { dir, fb ->
 					val texture = when (dir) {
 						Direction.UP -> "#top"
-						Direction.DOWN -> "#bottom"
+						Direction.DOWN -> "#center"
 						else -> "#side"
 					}
 

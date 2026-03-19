@@ -4,7 +4,7 @@
     {
       "faces": {
         "down": {
-          "texture": "#bottom"
+          "texture": "#center"
         },
         "east": {
           "texture": "#side"
@@ -38,7 +38,6 @@
     "bottom": "excessive_utilities:block/rainbow_generator_slab/top",
     "center": "excessive_utilities:block/rainbow_generator_slab/center",
     "particle": "excessive_utilities:block/rainbow_generator",
-    "side": "excessive_utilities:block/rainbow_generator_slab/bottom",
-    "top": "excessive_utilities:block/rainbow_generator"
+    "side": "excessive_utilities:block/rainbow_generator_slab/bottom"
   }
 }
