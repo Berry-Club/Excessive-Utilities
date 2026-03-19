@@ -1,0 +1,19 @@
+{
+  "type": "excessive_utilities:unstable_ingot",
+  "pattern": {
+    "key": {
+      "I": {
+        "item": "excessive_utilities:unstable_ingot"
+      }
+    },
+    "pattern": [
+      "III",
+      "III",
+      "III"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:block_of_unstable_ingot"
+  }
+}

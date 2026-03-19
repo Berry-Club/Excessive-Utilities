@@ -423,42 +423,6 @@ class ModRecipeProvider(
 			)
 		).save(recipeOutput)
 
-		fun angelRing(type: AngelRingItem.Type, base: Ingredient) {
-			shapedRecipe(
-				type.getStack(),
-				"GIG,ISI,BIH",
-				mapOf(
-					'G' to base,
-					'I' to Tags.Items.INGOTS_GOLD.asIngredient(),
-					'S' to ModItems.RING_OF_THE_FLYING_SQUID.asIngredient(),
-					'B' to ModItems.GOLDEN_LASSO.withComponent(
-						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.BAT.builtInRegistryHolder()
-					).asIngredient(),
-					'H' to ModItems.CURSED_LASSO.withComponent(
-						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.GHAST.builtInRegistryHolder()
-					).asIngredient()
-				)
-			).save(recipeOutput, "angel_ring_${type.id}")
-
-			shapedRecipe(
-				type.getStack(),
-				"CR,C ",
-				mapOf(
-					'C' to base,
-					'R' to ModItems.ANGEL_RING.asIngredient()
-				)
-			).save(recipeOutput, "angel_ring_conversion_${type.id}")
-		}
-
-		angelRing(AngelRingItem.Type.INVISIBLE, Tags.Items.GLASS_BLOCKS.asIngredient())
-		angelRing(AngelRingItem.Type.FEATHER, Tags.Items.FEATHERS.asIngredient())
-		angelRing(AngelRingItem.Type.BUTTERFLY, Tags.Items.DYES_PINK.asIngredient())
-		angelRing(AngelRingItem.Type.DEMON, Tags.Items.LEATHERS.asIngredient())
-		angelRing(AngelRingItem.Type.GOLD, Tags.Items.NUGGETS_GOLD.asIngredient())
-		angelRing(AngelRingItem.Type.BAT, ItemTags.COALS.asIngredient())
-
 		shapedRecipe(
 			ModItems.POWER_MANAGER,
 			" R,SS,SS",
@@ -916,14 +880,6 @@ class ModRecipeProvider(
 				'S' to Blocks.SLIME_BLOCK.asIngredient(),
 				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
 				'M' to ModBlocks.FURNACE_GENERATOR.asIngredient()
-			)
-		).save(recipeOutput)
-
-		shapedRecipe(
-			ModBlocks.DEEP_DARK_PORTAL,
-			"CCC,C C,CCC",
-			mapOf(
-				'C' to ModBlocks.getCompressedCobblestone(1).asIngredient()
 			)
 		).save(recipeOutput)
 
@@ -2332,6 +2288,83 @@ class ModRecipeProvider(
 			.define('L', ModItems.LUNAR_REACTIVE_DUST.asIngredient())
 			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
 			.save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
+
+		UnstableIngotRecipeBuilder(ModBlocks.BLOCK_OF_UNSTABLE_INGOT)
+			.pattern(
+				"III",
+				"III",
+				"III"
+			)
+			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
+			.save(recipeOutput, modLoc("block_of_unstable_ingot_from_unstable_ingots"))
+
+		UnstableIngotRecipeBuilder(ModBlocks.DEEP_DARK_PORTAL)
+			.pattern(
+				"4I4",
+				"I5I",
+				"4I4"
+			)
+			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
+			.define('4', ModBlocks.getCompressedCobblestone(4).asIngredient())
+			.define('5', ModBlocks.getCompressedCobblestone(5).asIngredient())
+			.save(recipeOutput)
+
+		for (color in DyeColor.entries) {
+			val bricks = ModBlocks.getColoredBricks(color)
+			val lapisCaelestis = ModBlocks.getLapisCaelestis(color)
+
+			UnstableIngotRecipeBuilder(bricks.toStack(4))
+				.pattern(
+					"LLL",
+					"LIL",
+					"LLL"
+				)
+				.define('L', lapisCaelestis.asIngredient())
+				.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
+				.save(recipeOutput)
+		}
+
+		fun angelRing(type: AngelRingItem.Type, base: Ingredient) {
+			UnstableIngotRecipeBuilder(type.getStack())
+				.pattern(
+					"GIG",
+					"ISI",
+					"BUH"
+				)
+				.define('G', base)
+				.define('I', Tags.Items.INGOTS_GOLD.asIngredient())
+				.define('S', ModItems.RING_OF_THE_FLYING_SQUID.asIngredient())
+				.define(
+					'B', ModItems.GOLDEN_LASSO.withComponent(
+						ModDataComponents.ENTITY_TYPE.get(),
+						EntityType.BAT.builtInRegistryHolder()
+					).asIngredient()
+				)
+				.define(
+					'H', ModItems.CURSED_LASSO.withComponent(
+						ModDataComponents.ENTITY_TYPE.get(),
+						EntityType.GHAST.builtInRegistryHolder()
+					).asIngredient()
+				)
+				.define('U', ModItems.UNSTABLE_INGOT.asIngredient())
+				.save(recipeOutput, "angel_ring_${type.id}")
+
+			shapedRecipe(
+				type.getStack(),
+				"CR,C ",
+				mapOf(
+					'C' to base,
+					'R' to ModItems.ANGEL_RING.asIngredient()
+				)
+			).save(recipeOutput, "angel_ring_conversion_${type.id}")
+		}
+
+		angelRing(AngelRingItem.Type.INVISIBLE, Tags.Items.GLASS_BLOCKS.asIngredient())
+		angelRing(AngelRingItem.Type.FEATHER, Tags.Items.FEATHERS.asIngredient())
+		angelRing(AngelRingItem.Type.BUTTERFLY, Tags.Items.DYES_PINK.asIngredient())
+		angelRing(AngelRingItem.Type.DEMON, Tags.Items.LEATHERS.asIngredient())
+		angelRing(AngelRingItem.Type.GOLD, Tags.Items.NUGGETS_GOLD.asIngredient())
+		angelRing(AngelRingItem.Type.BAT, ItemTags.COALS.asIngredient())
 
 	}
 
