@@ -37,19 +37,19 @@ class ModBlockStateProvider(
 		miniChest()
 		generators()
 		machineBlock()
-		enderQuarry()
-		enderMarker()
-		enderQuarryUpgrades()
-		filingCabinets()
-		moonStoneOre()
+//		enderQuarry()
+//		enderMarker()
+//		enderQuarryUpgrades()
+//		filingCabinets()
+//		moonStoneOre()
 		resonator()
-		quantumQuarryActuator()
-		peacefulTable()
+//		quantumQuarryActuator()
+//		peacefulTable()
 		cursedEarth()
-		chandelier()
-		magnumTorch()
-		trashCans()
-		trashChest()
+//		chandelier()
+//		magnumTorch()
+//		trashCans()
+//		trashChest()
 		gpPanels()
 		dragonEggMill()
 		creativeMill()
@@ -2648,7 +2648,7 @@ class ModBlockStateProvider(
 	) {
 		val name = name(generatorBlock)
 
-		val frontOff = modLoc("block/generator/$directory/front_off")
+		val frontOff = modLoc("block/generator/$directory/front")
 		val frontOn = modLoc("block/generator/$directory/front_on")
 		val side = modLoc("block/generator/$directory/side")
 		val top = modLoc("block/generator/$directory/top")
@@ -2681,7 +2681,7 @@ class ModBlockStateProvider(
 					.build()
 			}
 
-		simpleBlockItem(generatorBlock, modelOff)
+		simpleBlockItem(generatorBlock, modelOn)
 	}
 
 	private fun miniChest() {
