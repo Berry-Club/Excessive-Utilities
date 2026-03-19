@@ -81,6 +81,25 @@ class ModBlockStateProvider(
 		playerChest()
 		terraformerBlocks()
 		antenna()
+		mechanicalBlocks()
+	}
+
+	private fun mechanicalBlocks() {
+		mechanicalBlock(ModBlocks.MECHANICAL_USER.get(), "user")
+		mechanicalBlock(ModBlocks.MECHANICAL_MINER.get(), "miner")
+		mechanicalBlock(ModBlocks.SCANNER.get(), "scanner")
+	}
+
+	//TODO: Orientation
+	private fun mechanicalBlock(block: Block, textureName: String) {
+		val side = modLoc("block/mechanical/side")
+		val back = modLoc("block/mechanical/back")
+		val texture = modLoc("block/mechanical/$textureName")
+
+		val model = models()
+			.cubeBottomTop(name(block), side, back, texture)
+
+		simpleBlockWithItem(block, model)
 	}
 
 	private fun antenna() {

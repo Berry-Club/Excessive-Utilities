@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_bottom_top",
+  "textures": {
+    "bottom": "excessive_utilities:block/mechanical/back",
+    "side": "excessive_utilities:block/mechanical/side",
+    "top": "excessive_utilities:block/mechanical/miner"
+  }
+}
