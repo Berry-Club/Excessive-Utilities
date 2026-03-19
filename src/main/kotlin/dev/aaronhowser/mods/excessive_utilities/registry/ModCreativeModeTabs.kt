@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
@@ -70,10 +69,7 @@ object ModCreativeModeTabs {
 
 					if (item == ModItems.ANGEL_RING.get()) {
 						for (type in AngelRingItem.Type.entries) {
-							val stack = ModItems.ANGEL_RING
-								.withComponent(ModDataComponents.ANGEL_RING_TYPE.get(), type)
-
-							output.accept(stack)
+							output.accept(type.getStack())
 						}
 
 						continue

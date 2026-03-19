@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleFluidFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.generator_fuel.SingleItemFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
@@ -420,23 +421,32 @@ class ModRecipeProvider(
 			)
 		).save(recipeOutput)
 
-		shapedRecipe(
-			ModItems.ANGEL_RING,
-			"GIG,ISI,BIH",
-			mapOf(
-				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
-				'I' to Tags.Items.INGOTS_GOLD.asIngredient(),
-				'S' to ModItems.RING_OF_THE_FLYING_SQUID.asIngredient(),
-				'B' to ModItems.GOLDEN_LASSO.withComponent(
-					ModDataComponents.ENTITY_TYPE.get(),
-					EntityType.BAT.builtInRegistryHolder()
-				).asIngredient(),
-				'H' to ModItems.CURSED_LASSO.withComponent(
-					ModDataComponents.ENTITY_TYPE.get(),
-					EntityType.GHAST.builtInRegistryHolder()
-				).asIngredient()
-			)
-		).save(recipeOutput)
+		fun angelRing(type: AngelRingItem.Type, base: Ingredient) {
+			shapedRecipe(
+				type.getStack(),
+				"GIG,ISI,BIH",
+				mapOf(
+					'G' to base,
+					'I' to Tags.Items.INGOTS_GOLD.asIngredient(),
+					'S' to ModItems.RING_OF_THE_FLYING_SQUID.asIngredient(),
+					'B' to ModItems.GOLDEN_LASSO.withComponent(
+						ModDataComponents.ENTITY_TYPE.get(),
+						EntityType.BAT.builtInRegistryHolder()
+					).asIngredient(),
+					'H' to ModItems.CURSED_LASSO.withComponent(
+						ModDataComponents.ENTITY_TYPE.get(),
+						EntityType.GHAST.builtInRegistryHolder()
+					).asIngredient()
+				)
+			).save(recipeOutput, "angel_ring_${type.id}")
+		}
+
+		angelRing(AngelRingItem.Type.INVISIBLE, Tags.Items.GLASS_BLOCKS.asIngredient())
+		angelRing(AngelRingItem.Type.FEATHER, Tags.Items.FEATHERS.asIngredient())
+		angelRing(AngelRingItem.Type.BUTTERFLY, Tags.Items.DYES_PINK.asIngredient())
+		angelRing(AngelRingItem.Type.DEMON, Tags.Items.LEATHERS.asIngredient())
+		angelRing(AngelRingItem.Type.GOLD, Tags.Items.NUGGETS_GOLD.asIngredient())
+		angelRing(AngelRingItem.Type.BAT, ItemTags.COALS.asIngredient())
 
 		shapedRecipe(
 			ModItems.POWER_MANAGER,

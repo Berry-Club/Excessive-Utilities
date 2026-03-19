@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "excessive_utilities:angel_ring"
+        "recipe": "minecraft:angel_ring_feather"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "excessive_utilities:angel_ring"
+      "minecraft:angel_ring_feather"
     ]
   }
 }

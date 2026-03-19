@@ -1,11 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import com.mojang.serialization.Codec
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.codec.ByteBufCodecs
@@ -146,6 +148,8 @@ class AngelRingItem(properties: Properties) : Item(properties) {
 
 		val langKey = "tooltip.excessive_utilities.angel_ring.type.$id"
 		override fun getSerializedName(): String = id
+
+		fun getStack(): ItemStack = ModItems.ANGEL_RING.withComponent(ModDataComponents.ANGEL_RING_TYPE.get(), this)
 
 		companion object {
 			val CODEC: Codec<Type> = StringRepresentable.fromValues { entries.toTypedArray() }
