@@ -25,12 +25,12 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
 	override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
 		if (level is ServerLevel) {
-			level.scheduleTick(pos, this, 1)
+			level.scheduleTick(pos, this, ServerConfig.CONFIG.cursedEarthPeriod.get())
 		}
 	}
 
 	override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-		level.scheduleTick(pos, this, 1)
+		level.scheduleTick(pos, this, ServerConfig.CONFIG.cursedEarthPeriod.get())
 
 		handleFire(level, pos, random)
 		spawnMonster(level, pos, random)
