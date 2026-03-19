@@ -2,9 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronMobEffectsRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.effect.DoomEffect
-import dev.aaronhowser.mods.excessive_utilities.effect.GravityEffect
-import dev.aaronhowser.mods.excessive_utilities.effect.OilyEffect
+import dev.aaronhowser.mods.excessive_utilities.effect.*
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.effect.MobEffect
 import net.neoforged.neoforge.registries.DeferredHolder
@@ -23,5 +21,10 @@ object ModMobEffects : AaronMobEffectsRegistry() {
 		register("doom", ::DoomEffect)
 	val OILY: DeferredHolder<MobEffect, OilyEffect> =
 		register("oily", ::OilyEffect)
+	val GREEK_FIRE: DeferredHolder<MobEffect, GreekFireEffect> =
+		register("greek_fire", ::GreekFireEffect)
+	val LOVE: DeferredHolder<MobEffect, LoveEffect> =
+		register("love", ::LoveEffect)
+
 
 }
