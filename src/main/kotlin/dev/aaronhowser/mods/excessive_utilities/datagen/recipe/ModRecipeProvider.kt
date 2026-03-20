@@ -5,17 +5,12 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withCount
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.*
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting.ShapedDivisionRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting.ShapedUnstableRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.CrusherRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.EnchanterRecipeBuilder
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.*
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel.ItemAndFluidFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel.SingleFluidFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel.SingleItemFuelRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.QedRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.ResonatorRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.WorldInteractionFluidRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.WorldInteractionItemRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import dev.aaronhowser.mods.excessive_utilities.item.UnstableIngotItem
@@ -1115,29 +1110,6 @@ class ModRecipeProvider(
 			mapOf(
 				'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
 				'C' to ModBlocks.FILING_CABINET.asIngredient()
-			)
-		).save(recipeOutput)
-
-		shapedRecipe(
-			ModItems.UNSTABLE_INGOT.withComponent(
-				ModDataComponents.COUNTDOWN.get(),
-				UnstableIngotItem.MAX_COUNTDOWN
-			),
-			"I,S,D",
-			mapOf(
-				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-				'S' to ModItems.DIVISION_SIGIL.asIngredient(),
-				'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
-			)
-		).save(recipeOutput)
-
-		shapedRecipe(
-			ModItems.SEMI_UNSTABLE_NUGGET,
-			"N,S,D",
-			mapOf(
-				'N' to Tags.Items.NUGGETS_GOLD.asIngredient(),
-				'S' to ModItems.DIVISION_SIGIL.asIngredient(),
-				'D' to Tags.Items.GEMS_DIAMOND.asIngredient()
 			)
 		).save(recipeOutput)
 
@@ -2429,6 +2401,33 @@ class ModRecipeProvider(
 			)
 			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
 			.define('E', Items.ENDER_EYE.asIngredient())
+			.save(recipeOutput)
+
+		ShapedDivisionRecipeBuilder(
+			ModItems.UNSTABLE_INGOT.withComponent(
+				ModDataComponents.COUNTDOWN.get(),
+				UnstableIngotItem.MAX_COUNTDOWN
+			)
+		)
+			.pattern(
+				"I",
+				"S",
+				"D"
+			)
+			.define('I', Tags.Items.INGOTS_IRON.asIngredient())
+			.define('S', ModItems.DIVISION_SIGIL.asIngredient())
+			.define('D', Tags.Items.GEMS_DIAMOND.asIngredient())
+			.save(recipeOutput)
+
+		ShapedDivisionRecipeBuilder(ModItems.SEMI_UNSTABLE_NUGGET)
+			.pattern(
+				"N",
+				"S",
+				"D"
+			)
+			.define('N', Tags.Items.NUGGETS_IRON.asIngredient())
+			.define('S', ModItems.DIVISION_SIGIL.asIngredient())
+			.define('D', Tags.Items.GEMS_DIAMOND.asIngredient())
 			.save(recipeOutput)
 
 	}

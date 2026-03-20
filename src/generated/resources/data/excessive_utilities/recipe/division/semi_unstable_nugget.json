@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:shaped_division",
+  "pattern": {
+    "key": {
+      "D": {
+        "tag": "c:gems/diamond"
+      },
+      "N": {
+        "tag": "c:nuggets/iron"
+      },
+      "S": {
+        "item": "excessive_utilities:division_sigil"
+      }
+    },
+    "pattern": [
+      "N",
+      "S",
+      "D"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:semi_unstable_nugget"
+  }
+}
