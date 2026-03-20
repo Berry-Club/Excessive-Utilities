@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-20T10:17:03.9623165	Block States: excessive_utilities
+// 1.21.1	2026-03-20T10:21:50.8570293	Block States: excessive_utilities
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 d855682b0e42132174eddcab175a4dffdca01cd1 assets/excessive_utilities/blockstates/block_of_demon_metal.json
 d74cac1e1f5f6236b40c3ff0375fde4a719487db assets/excessive_utilities/blockstates/block_of_enchanted_metal.json
@@ -566,7 +566,7 @@ c60a4939cc9f7e81f39e5befae3798479b29e231 assets/excessive_utilities/models/block
 d05dec27dc53f4e623a700b399e8df37a50e1c76 assets/excessive_utilities/models/block/magical_snow_globe.json
 0297e9b7d164836458b3d1e20ca8e9226ac31581 assets/excessive_utilities/models/block/magmatic_generator_off.json
 f631b8a716b85b0d31a53be816277e743965e450 assets/excessive_utilities/models/block/magmatic_generator_on.json
-bfd4ea4d6b49d08e5ae2c42ec19649dc7e642326 assets/excessive_utilities/models/block/mini_chest.json
+1d409a7a3c38d642827437da576330eacb269cca assets/excessive_utilities/models/block/mini_chest.json
 b54e4663f8178b8ce142feb8f189ef8f1e6845b1 assets/excessive_utilities/models/block/nether_star_generator_off.json
 14ce67c553c898bc0003cb02ffeaf53a10624ae1 assets/excessive_utilities/models/block/nether_star_generator_on.json
 0bfaae831864ea671693a3319b0cd5c112a62783 assets/excessive_utilities/models/block/overclocked_generator_off.json

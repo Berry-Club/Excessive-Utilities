@@ -2718,23 +2718,23 @@ class ModBlockStateProvider(
 				allFaces { dir, fb ->
 					when (dir) {
 						Direction.NORTH -> {
-							fb.texture("#front")
+							fb.texture("#texture")
 							fb.uvs(8f, 8f, 16f, 16f)
 						}
 
 						Direction.UP -> {
-							fb.texture("#top")
+							fb.texture("#texture")
 							fb.uvs(0f, 0f, 8f, 8f)
 						}
 
 						Direction.DOWN -> {
-							fb.texture("#bottom")
+							fb.texture("#texture")
 							fb.uvs(8f, 0f, 16f, 8f)
 							fb.cullface(Direction.DOWN)
 						}
 
 						else -> {
-							fb.texture("#side")
+							fb.texture("#texture")
 							fb.uvs(0f, 8f, 8f, 16f)
 						}
 					}
