@@ -1,0 +1,32 @@
+---
+title: Speed Upgrades
+id: excessive_utilities:speed_upgrades
+related_items: [excessive_utilities:speed_upgrade, excessive_utilities:speed_upgrade_magical, excessive_utilities:speed_upgrade_ultimate]
+type: item
+---
+
+**Speed Upgrades** can be placed into certain machines to make them faster. Each Upgrade in the stack makes the machine run an additional time each tick.
+
+Each tier of Upgrades can be stacked higher than the last:
+- **Speed Upgrade**: up to 4
+- **Speed Upgrade (Magical)**: up to 16
+- **Speed Upgrade (Ultimate)**: up to 64
+
+Speed Upgrades cost [Grid Power]($players/grid_power) to function. The amount of GP required depends on the stack size.
+
+The default function is:
+
+```
+stackSize * (122 + 4 * stackSize) / 126.0
+```
+
+So a full stack of each tier would require:
+- 4 Speed Upgrades: 4.38 GP
+- 16 Speed Upgrades (Magical): 23.62 GP
+- 64 Speed Upgrades (Ultimate): 192 GP
+
+## Configuration
+
+The server config has a `speedUpgradeGpCostMultiplier` option that multiplies the GP cost of Speed Upgrades. Setting it to 0 will make them free to use.
+
+Additionally, you can modify the formula itself with KubeJS.

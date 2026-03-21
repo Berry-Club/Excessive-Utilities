@@ -177,7 +177,7 @@ object ModItems : AaronItemRegistry() {
 			Item.Properties().fireResistant()
 		)
 
-	// Transfer Node Upgrades
+	// Upgrades
 
 	val SPEED_UPGRADE: DeferredItem<SpeedUpgradeItem> =
 		register("speed_upgrade", ::SpeedUpgradeItem, SpeedUpgradeItem.BASIC_PROPERTIES)
