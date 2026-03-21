@@ -1,0 +1,17 @@
+{
+	"id": "excessive-utilities",
+	"modid": "excessive_utilities",
+	"owners": ["aaronhowser1"],
+	"platforms": {
+		"curseforge": "excessive-utilities",
+		"modrinth": "excessive-utilities"
+	},
+	"licenses": {
+		"project": {
+			"id": "MIT"
+		}
+	},
+	"versions": {
+		"1.21.1": "main"
+	}
+}
