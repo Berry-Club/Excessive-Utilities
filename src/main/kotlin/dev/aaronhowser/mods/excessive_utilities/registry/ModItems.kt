@@ -63,6 +63,20 @@ object ModItems : AaronItemRegistry() {
 
 	// Tools
 
+	val WOODEN_SICKLE: DeferredItem<SickleItem> =
+		register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.WOOD) }
+	val STONE_SICKLE: DeferredItem<SickleItem> =
+		register("stone_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.STONE) }
+	val IRON_SICKLE: DeferredItem<SickleItem> =
+		register("iron_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
+	//	val COPPER_SICKLE: DeferredItem<SickleItem> =
+//		register("copper_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
+	val GOLDEN_SICKLE: DeferredItem<SickleItem> =
+		register("golden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.GOLD) }
+	val DIAMOND_SICKLE: DeferredItem<SickleItem> =
+		register("diamond_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.DIAMOND) }
+	val NETHERITE_SICKLE: DeferredItem<SickleItem> =
+		register("netherite_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.NETHERITE) }
 	val DESTRUCTION_PICKAXE: DeferredItem<DestructionPickaxeItem> =
 		register("destruction_pickaxe", ::DestructionPickaxeItem, DestructionPickaxeItem.DEFAULT_PROPERTIES)
 	val EROSION_SHOVEL: DeferredItem<ErosionShovelItem> =
@@ -91,20 +105,6 @@ object ModItems : AaronItemRegistry() {
 		register("golden_lasso", { EntityLassoItem(canHoldHostileMobs = false, it) }, PROPERTIES_SINGLE_STACK)
 	val CURSED_LASSO: DeferredItem<EntityLassoItem> =
 		register("cursed_lasso", { EntityLassoItem(canHoldHostileMobs = true, it) }, PROPERTIES_SINGLE_STACK)
-	val WOODEN_SICKLE: DeferredItem<SickleItem> =
-		register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.WOOD) }
-	val STONE_SICKLE: DeferredItem<SickleItem> =
-		register("stone_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.STONE) }
-	val IRON_SICKLE: DeferredItem<SickleItem> =
-		register("iron_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
-//	val COPPER_SICKLE: DeferredItem<SickleItem> =
-//		register("copper_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
-	val GOLDEN_SICKLE: DeferredItem<SickleItem> =
-		register("golden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.GOLD) }
-	val DIAMOND_SICKLE: DeferredItem<SickleItem> =
-		register("diamond_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.DIAMOND) }
-	val NETHERITE_SICKLE: DeferredItem<SickleItem> =
-		register("netherite_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.NETHERITE) }
 	val BUILDERS_WAND: DeferredItem<BuildersWandItem> =
 		register("builders_wand", ::BuildersWandItem) { BuildersWandItem.propertiesWithVolume(9) }
 	val CREATIVE_BUILDERS_WAND: DeferredItem<BuildersWandItem> =
