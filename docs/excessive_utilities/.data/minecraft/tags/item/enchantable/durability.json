@@ -1,0 +1,13 @@
+{
+  "remove": [
+    "excessive_utilities:destruction_pickaxe",
+    "excessive_utilities:erosion_shovel",
+    "excessive_utilities:healing_axe",
+    "excessive_utilities:etheric_sword",
+    "excessive_utilities:reversing_hoe",
+    "excessive_utilities:precision_shears"
+  ],
+  "values": [
+    "#c:sickles"
+  ]
+}

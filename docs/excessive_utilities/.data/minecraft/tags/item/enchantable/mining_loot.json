@@ -1,0 +1,8 @@
+{
+  "remove": [
+    "excessive_utilities:trowel",
+    "excessive_utilities:erosion_shovel",
+    "excessive_utilities:destruction_pickaxe"
+  ],
+  "values": []
+}

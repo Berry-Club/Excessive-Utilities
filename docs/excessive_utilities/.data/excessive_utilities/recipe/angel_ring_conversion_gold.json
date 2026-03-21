@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:nuggets/gold"
+    },
+    "R": {
+      "item": "excessive_utilities:angel_ring"
+    }
+  },
+  "pattern": [
+    "CR",
+    "C "
+  ],
+  "result": {
+    "components": {
+      "excessive_utilities:angel_ring_type": "gold"
+    },
+    "count": 1,
+    "id": "excessive_utilities:angel_ring"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "tag": "c:ores/iron"
+  },
+  "primary_output": {
+    "count": 2,
+    "id": "minecraft:raw_iron"
+  },
+  "secondary_chance": 0.1,
+  "secondary_output": {
+    "count": 1,
+    "id": "minecraft:raw_gold"
+  }
+}

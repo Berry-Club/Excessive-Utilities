@@ -1,0 +1,10 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "tag": "c:gravels"
+  },
+  "primary_output": {
+    "count": 1,
+    "id": "minecraft:sand"
+  }
+}
