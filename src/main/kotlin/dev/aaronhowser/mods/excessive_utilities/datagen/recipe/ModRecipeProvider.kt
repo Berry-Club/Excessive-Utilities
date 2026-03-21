@@ -2397,6 +2397,16 @@ class ModRecipeProvider(
 			.define('O', Tags.Items.OBSIDIANS_NORMAL.asIngredient())
 			.save(recipeOutput)
 
+		unstable(ModItems.DESTRUCTION_PICKAXE)
+			.pattern(
+				"III",
+				" O ",
+				" O "
+			)
+			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
+			.define('O', Tags.Items.OBSIDIANS_NORMAL.asIngredient())
+			.save(recipeOutput)
+
 		unstable(ModItems.PRECISION_SHEARS)
 			.pattern(
 				"AI",
