@@ -1,5 +1,0 @@
-newmtl bottom
-map_Kd excessive_utilities:block/spike/diamond_spike_base
-
-newmtl side
-map_Kd excessive_utilities:block/spike/diamond_spike_side

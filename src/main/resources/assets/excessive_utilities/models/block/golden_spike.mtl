@@ -1,5 +1,5 @@
-newmtl bottom
-map_Kd excessive_utilities:block/spike/golden_spike_base
+newmtl base
+map_Kd excessive_utilities:block/spikes/golden_base
 
 newmtl side
-map_Kd excessive_utilities:block/spike/golden_spike_side
+map_Kd excessive_utilities:block/spikes/golden_side

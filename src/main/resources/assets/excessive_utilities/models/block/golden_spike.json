@@ -3,7 +3,7 @@
   "flip_v": true,
   "loader": "neoforge:obj",
   "model": "excessive_utilities:models/block/spike.obj",
-  "mtl_override": "excessive_utilities:models/block/golden_spike.mtl",
+  "mtl_override": "excessive_utilities:models/block/golden_spikes.mtl",
   "render_type": "minecraft:solid",
   "shade_quads": true
 }
