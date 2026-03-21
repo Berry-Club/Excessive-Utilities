@@ -6,18 +6,15 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.defaultBlockState
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.scheduler.SchedulerExtensions.scheduleTaskInTicks
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.util.Mth
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
@@ -53,11 +50,8 @@ class DropOfEvilItem(properties: Properties) : Item(properties) {
 			val blockEntity = level.getBlockEntity(pos)
 			if (blockEntity !is SpawnerBlockEntity) return
 
-			val customData = blockEntity.saveWithoutMetadata(level.registryAccess())
-			val stack = ModBlocks.RESTURBED_MOB_SPAWNER.withComponent(
-				DataComponents.BLOCK_ENTITY_DATA,
-				CustomData.of(customData)
-			)
+			val stack = ModBlocks.RESTURBED_MOB_SPAWNER.toStack()
+			blockEntity.saveToItem(stack, level.registryAccess())
 
 			level.removeBlock(pos, false)
 
