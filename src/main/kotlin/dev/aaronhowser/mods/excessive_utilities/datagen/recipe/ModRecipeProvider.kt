@@ -77,6 +77,15 @@ class ModRecipeProvider(
 		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
 
 		shapedRecipe(
+			ModItems.GOLDEN_LASSO,
+			"GSG,S S,GSG",
+			mapOf(
+				'G' to Tags.Items.NUGGETS_GOLD.asIngredient(),
+				'S' to Tags.Items.STRINGS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
 			ModBlocks.RAINBOW_GENERATOR_TOP_SLAB,
 			"123,456,789",
 			mapOf(
