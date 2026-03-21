@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.DamageGlassCutterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedDivisionRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedUnstableRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.*
@@ -29,6 +30,8 @@ object ModRecipeSerializers {
 		registerRecipeSerializer("shaped_unstable", ShapedUnstableRecipe::Serializer)
 	val SHAPED_DIVISION: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
 		registerRecipeSerializer("shaped_division", ShapedDivisionRecipe::Serializer)
+	val DAMAGE_GLASS_CUTTER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
+		registerRecipeSerializer("damage_glass_cutter", DamageGlassCutterRecipe::Serializer)
 
 	val WORLD_INTERACTION_ITEM: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
 		registerRecipeSerializer("world_interaction_item", WorldInteractionItemRecipe::Serializer)
