@@ -1,0 +1,9 @@
+{
+  "automatic_culling": false,
+  "flip_v": true,
+  "loader": "neoforge:obj",
+  "model": "extrautils2:models/block/spike.obj",
+  "mtl_override": "extrautils2:models/block/diamond_spikes.mtl",
+  "render_type": "minecraft:solid",
+  "shade_quads": true
+}

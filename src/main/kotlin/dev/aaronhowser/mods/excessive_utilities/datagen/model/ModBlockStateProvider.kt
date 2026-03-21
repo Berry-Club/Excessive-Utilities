@@ -1009,7 +1009,6 @@ class ModBlockStateProvider(
 			val model = models().getExistingFile(modLoc("block/$name"))
 			simpleBlock(spike, model)
 
-			//FIXME: They're upside down in hand
 			itemModels()
 				.withExistingParent(name, modLoc("block/$name"))
 				.transforms {
@@ -1026,15 +1025,15 @@ class ModBlockStateProvider(
 					}
 
 					transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
-						rotation(0f, -45f, 170f)
-						translation(0f, 1.5f, -2.75f)
-						scale(0.375f, 0.375f, 0.375f)
+						rotation(0f, -90f, 25f)
+						translation(1.13f, 3.2f, 1.13f)
+						scale(0.5f, 0.5f, 0.5f)
 					}
 
 					transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND) {
-						rotation(0f, 45f, -170f)
-						translation(0f, 1.5f, -2.75f)
-						scale(0.375f, 0.375f, 0.375f)
+						rotation(0f, 90f, -25f)
+						translation(1.13f, 3.2f, 1.13f)
+						scale(0.5f, 0.5f, 0.5f)
 					}
 
 					transform(ItemDisplayContext.GUI) {
@@ -1053,7 +1052,6 @@ class ModBlockStateProvider(
 						translation(0f, 0f, 0f)
 						scale(0.5f, 0.5f, 0.5f)
 					}
-
 				}
 
 		}

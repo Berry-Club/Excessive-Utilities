@@ -1,0 +1,5 @@
+newmtl base
+map_Kd excessive_utilities:block/spike/diamond_base
+
+newmtl side
+map_Kd excessive_utilities:block/spike/diamond_side
