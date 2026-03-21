@@ -621,6 +621,7 @@
   "item.minecraft.tipped_arrow.effect.excessive_utilities.second_chance": "Arrow of Second Chance",
   "itemGroup.excessive_utilities": "Excessive Utilities",
   "message.excessive_utilities.doom_effect_time": "The Spectre of Death will arrive in %d seconds.",
+  "message.excessive_utilities.eat_magical_apple": "You feel your luck changing.",
   "tooltip.excessive_utilities.angel_ring.type.bat": "Bat",
   "tooltip.excessive_utilities.angel_ring.type.butterfly": "Butterfly",
   "tooltip.excessive_utilities.angel_ring.type.demon": "Demon",
