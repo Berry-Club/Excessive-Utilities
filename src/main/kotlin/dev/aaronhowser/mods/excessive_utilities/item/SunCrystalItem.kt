@@ -22,6 +22,7 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 
 		val newCharge = charge + 1
 		stack.set(ModDataComponents.CHARGE, newCharge)
+		entity.item = stack.copy()
 
 		return false
 	}
@@ -69,7 +70,7 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 
 			val percent = charge.toFloat() / MAX_CHARGE.toFloat()
 
-			val startA = 0x1E
+			val startA = 0x3E
 			val endA = 0xFF
 
 			val a = (startA + ((endA - startA) * percent)).toInt()
