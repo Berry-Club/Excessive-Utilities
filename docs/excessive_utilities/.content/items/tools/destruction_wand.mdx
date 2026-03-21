@@ -1,0 +1,22 @@
+---
+title: Destruction Wand
+id: excessive_utilities:destruction_wand
+related_items: [excessive_utilities:destruction_wand, excessive_utilities:creative_destruction_wand]
+type: item
+---
+
+The **Destruction Wand**, when held in either hand, will allow you to break multiple blocks at once. It will use the item in your main hand to do so, so it's best used in the offhand with an actual tool in your main hand.
+
+It will only break blocks of the same type as the one you're looking at. It will also only search along the same face you're looking at, unless you're sneaking.
+
+While holding the Destruction Wand, it will render a wireframe of all the other blocks that will be broken.
+
+It can break up to 9 blocks at once, so a 3x3 centered on the block you're looking at. Do note that it actually just looks for the nearest blocks, rather than a strict 3x3.
+
+There is also a **Creative Destruction Wand** that does the same, but has no recipe and can break up to 49 blocks instead.
+
+## Configuration
+
+The max amount of blocks broken is set via the item's `excessive_utilities:amount_blocks` Data Component, rather than a config option.
+
+For example, `/give @s excessive_utilities:destruction_wand[excessive_utilities:amount_blocks=9999]` would give you a Destruction Wand that can break up to 9999 blocks at once.
