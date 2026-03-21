@@ -46,8 +46,8 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 				stack,
 				ModDataComponents.ENERGY.get(),
 				ServerConfig.CONFIG.heatingCoilMaxEnergy.get(),
-				10_000,
-				10_000
+				100_000,
+				0
 			)
 		}
 
