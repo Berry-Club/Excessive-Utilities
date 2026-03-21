@@ -106,7 +106,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				Properties()
 					.stacksTo(1)
 					.fireResistant()
-					.component(ModDataComponents.REMAINING_USES, 0)
+					.component(ModDataComponents.REMAINING_USES, USES_AFTER_ACTIVATION)
 			}
 
 		fun isInverted(stack: ItemStack): Boolean {
