@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "excessive_utilities:item/ring_of_the_flying_squid"
+  }
+}

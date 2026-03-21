@@ -1,0 +1,6 @@
+{
+  "parent": "excessive_utilities:item/golden_lasso",
+  "textures": {
+    "layer1": "excessive_utilities:item/lasso/golden_internal"
+  }
+}

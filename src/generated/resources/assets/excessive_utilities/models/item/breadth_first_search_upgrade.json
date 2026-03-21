@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "excessive_utilities:item/breadth_first_search_upgrade"
+  }
+}

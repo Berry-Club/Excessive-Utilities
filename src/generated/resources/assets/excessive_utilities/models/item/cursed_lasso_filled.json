@@ -1,0 +1,6 @@
+{
+  "parent": "excessive_utilities:item/cursed_lasso",
+  "textures": {
+    "layer1": "excessive_utilities:item/lasso/cursed_internal"
+  }
+}

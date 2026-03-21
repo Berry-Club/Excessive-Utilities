@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "excessive_utilities:item/paintbrush/base",
+    "layer1": "excessive_utilities:item/paintbrush/brush"
+  }
+}

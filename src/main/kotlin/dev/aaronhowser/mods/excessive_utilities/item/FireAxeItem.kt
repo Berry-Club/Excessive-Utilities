@@ -27,7 +27,7 @@ class FireAxeItem(properties: Properties) : AxeItem(OpiniumTier, properties) {
 	): Boolean {
 		if (level is ServerLevel && state.isBlock(ModBlockTagsProvider.FIRE_AXE_MINEABLE)) {
 			val blockWalker = BlockWalker.Builder(level)
-				.searchOffsets(WalkType.ALL_CARDINAL)
+				.walkType(WalkType.ALL_CARDINAL)
 				.startPos(pos)
 				.filter { l, p, s -> s.isBlock(ModBlockTagsProvider.FIRE_AXE_MINEABLE) }
 				.maxTotalBlocks(10000)
