@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "excessive_utilities:drop_of_evil"
+    },
+    "I": {
+      "item": "excessive_utilities:evil_infused_iron_ingot"
+    },
+    "U": {
+      "item": "excessive_utilities:speed_upgrade_magical"
+    }
+  },
+  "pattern": [
+    "EIE",
+    "IUI",
+    "EIE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:speed_upgrade_ultimate"
+  }
+}

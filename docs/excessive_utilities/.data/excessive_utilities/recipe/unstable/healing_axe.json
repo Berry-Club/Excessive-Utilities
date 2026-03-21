@@ -1,0 +1,22 @@
+{
+  "type": "excessive_utilities:shaped_unstable",
+  "pattern": {
+    "key": {
+      "I": {
+        "item": "excessive_utilities:unstable_ingot"
+      },
+      "O": {
+        "tag": "c:obsidians/normal"
+      }
+    },
+    "pattern": [
+      "II",
+      "IO",
+      " O"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:healing_axe"
+  }
+}

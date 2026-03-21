@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "excessive_utilities:demon_ingot"
+    },
+    "K": {
+      "item": "excessive_utilities:klein_bottle"
+    },
+    "R": {
+      "item": "excessive_utilities:reinforced_large_drum"
+    }
+  },
+  "pattern": [
+    "DKD",
+    "DRD",
+    "DKD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:demonically_gargantuan_drum"
+  }
+}

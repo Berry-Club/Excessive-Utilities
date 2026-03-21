@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "I": {
+      "item": "excessive_utilities:iron_drum"
+    },
+    "P": {
+      "item": "minecraft:light_weighted_pressure_plate"
+    }
+  },
+  "pattern": [
+    "DPD",
+    "DID",
+    "DPD"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:reinforced_large_drum"
+  }
+}

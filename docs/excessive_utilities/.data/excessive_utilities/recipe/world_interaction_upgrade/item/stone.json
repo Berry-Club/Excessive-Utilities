@@ -1,0 +1,12 @@
+{
+  "type": "excessive_utilities:world_interaction_item",
+  "adjacent": [
+    "minecraft:lava"
+  ],
+  "behind": "minecraft:water",
+  "on": "c:stones",
+  "output": {
+    "count": 1,
+    "id": "minecraft:stone"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "item": "minecraft:yellow_carpet"
+  },
+  "primary_output": {
+    "count": 3,
+    "id": "minecraft:string"
+  },
+  "secondary_chance": 0.1,
+  "secondary_output": {
+    "count": 1,
+    "id": "minecraft:yellow_dye"
+  }
+}

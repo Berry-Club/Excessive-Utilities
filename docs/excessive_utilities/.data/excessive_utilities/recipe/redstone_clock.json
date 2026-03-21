@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "tag": "c:stones"
+    },
+    "T": {
+      "item": "minecraft:redstone_torch"
+    }
+  },
+  "pattern": [
+    "SRS",
+    "RTR",
+    "SRS"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:redstone_clock"
+  }
+}

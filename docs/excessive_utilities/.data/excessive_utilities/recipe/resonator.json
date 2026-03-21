@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:storage_blocks/coal"
+    },
+    "D": {
+      "tag": "c:dusts/redstone"
+    },
+    "I": {
+      "tag": "c:ingots/iron"
+    },
+    "R": {
+      "item": "excessive_utilities:resonating_redstone_crystal"
+    }
+  },
+  "pattern": [
+    "DCD",
+    "IRI",
+    "III"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:resonator"
+  }
+}

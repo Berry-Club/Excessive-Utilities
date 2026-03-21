@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:creative_drum"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:creative_drum"
+  }
+}

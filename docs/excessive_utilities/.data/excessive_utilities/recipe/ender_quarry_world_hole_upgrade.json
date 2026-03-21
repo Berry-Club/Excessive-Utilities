@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "excessive_utilities:ender_quarry_upgrade_base"
+    },
+    "Q": {
+      "item": "minecraft:quartz_block"
+    },
+    "T": {
+      "item": "excessive_utilities:trash_can"
+    }
+  },
+  "pattern": [
+    " T ",
+    "QBQ"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_quarry_world_hole_upgrade"
+  }
+}

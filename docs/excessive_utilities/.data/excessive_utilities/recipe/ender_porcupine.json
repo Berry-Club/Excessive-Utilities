@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:ender_pearls"
+    },
+    "M": {
+      "item": "excessive_utilities:power_manager"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    "SES",
+    "EME",
+    "SES"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_porcupine"
+  }
+}

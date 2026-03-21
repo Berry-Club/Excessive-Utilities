@@ -1,0 +1,21 @@
+{
+  "values": [
+    "excessive_utilities:colored_stone_white",
+    "excessive_utilities:colored_stone_orange",
+    "excessive_utilities:colored_stone_magenta",
+    "excessive_utilities:colored_stone_light_blue",
+    "excessive_utilities:colored_stone_yellow",
+    "excessive_utilities:colored_stone_lime",
+    "excessive_utilities:colored_stone_pink",
+    "excessive_utilities:colored_stone_gray",
+    "excessive_utilities:colored_stone_light_gray",
+    "excessive_utilities:colored_stone_cyan",
+    "excessive_utilities:colored_stone_purple",
+    "excessive_utilities:colored_stone_blue",
+    "excessive_utilities:colored_stone_brown",
+    "excessive_utilities:colored_stone_green",
+    "excessive_utilities:colored_stone_red",
+    "excessive_utilities:colored_stone_black",
+    "#c:stones"
+  ]
+}

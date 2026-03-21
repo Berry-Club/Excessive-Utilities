@@ -1,0 +1,16 @@
+{
+  "values": [
+    "#c:stones",
+    "#c:glass_blocks",
+    "#minecraft:terracotta",
+    "#minecraft:coals",
+    "#c:ingots/iron",
+    "#c:ingots/gold",
+    "#c:foods/cooked_fish",
+    "#c:foods/cooked_meat",
+    "#c:bricks/normal",
+    "#c:bricks/nether",
+    "#c:foods/bread",
+    "minecraft:green_dye"
+  ]
+}

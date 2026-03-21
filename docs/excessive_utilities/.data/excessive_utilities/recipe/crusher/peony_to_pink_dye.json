@@ -1,0 +1,10 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "item": "minecraft:peony"
+  },
+  "primary_output": {
+    "count": 4,
+    "id": "minecraft:pink_dye"
+  }
+}

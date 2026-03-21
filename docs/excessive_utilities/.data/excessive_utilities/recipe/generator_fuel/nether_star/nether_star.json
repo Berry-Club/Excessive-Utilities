@@ -1,0 +1,9 @@
+{
+  "type": "excessive_utilities:single_item_fuel",
+  "duration": 2400,
+  "fe_per_tick": 4000,
+  "generator_type": "nether_star",
+  "ingredient": {
+    "item": "minecraft:nether_star"
+  }
+}

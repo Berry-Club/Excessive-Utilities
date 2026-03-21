@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "tag": "c:foods/cooked_meat"
+    },
+    "M": {
+      "item": "excessive_utilities:machine_block"
+    },
+    "P": {
+      "tag": "c:crops"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PFP",
+    "RMR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:culinary_generator"
+  }
+}

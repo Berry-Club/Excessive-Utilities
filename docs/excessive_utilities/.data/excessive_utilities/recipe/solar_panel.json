@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "tag": "c:gems/lapis"
+    },
+    "P": {
+      "item": "excessive_utilities:polished_stone"
+    },
+    "R": {
+      "item": "excessive_utilities:resonating_redstone_crystal"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "PRP"
+  ],
+  "result": {
+    "count": 3,
+    "id": "excessive_utilities:solar_panel"
+  }
+}

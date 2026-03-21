@@ -1,0 +1,10 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "item": "minecraft:beetroot"
+  },
+  "primary_output": {
+    "count": 2,
+    "id": "minecraft:red_dye"
+  }
+}

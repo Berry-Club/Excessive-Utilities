@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    },
+    "T": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    "RSR",
+    "STS",
+    "RSR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:item_filter"
+  }
+}

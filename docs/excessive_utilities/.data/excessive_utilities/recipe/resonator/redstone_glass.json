@@ -1,0 +1,11 @@
+{
+  "type": "excessive_utilities:resonator",
+  "gp_cost": 1.0,
+  "ingredient": {
+    "item": "excessive_utilities:thickened_glass"
+  },
+  "output": {
+    "count": 1,
+    "id": "excessive_utilities:redstone_glass"
+  }
+}

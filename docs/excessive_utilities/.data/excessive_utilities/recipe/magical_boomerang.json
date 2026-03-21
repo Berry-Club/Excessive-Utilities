@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "excessive_utilities:magical_wood"
+    }
+  },
+  "pattern": [
+    " M ",
+    "M M"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:magical_boomerang"
+  }
+}

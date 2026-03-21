@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:apple"
+    },
+    "W": {
+      "item": "excessive_utilities:magical_wood"
+    }
+  },
+  "pattern": [
+    "AAA",
+    "AWA",
+    "AAA"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:magical_apple"
+  }
+}

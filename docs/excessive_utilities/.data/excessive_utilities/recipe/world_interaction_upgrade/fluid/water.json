@@ -1,0 +1,12 @@
+{
+  "type": "excessive_utilities:world_interaction_fluid",
+  "adjacent": [
+    "minecraft:water",
+    "minecraft:water"
+  ],
+  "on": "minecraft:water",
+  "output": {
+    "amount": 1,
+    "id": "minecraft:water"
+  }
+}

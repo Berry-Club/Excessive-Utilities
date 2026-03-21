@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:magical_wood"
+    },
+    {
+      "tag": "minecraft:anvil"
+    },
+    {
+      "tag": "minecraft:anvil"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:magic_absorption"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "c:bricks"
+    },
+    "M": {
+      "item": "excessive_utilities:machine_block"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "BMB",
+    "BBB"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:furnace"
+  }
+}

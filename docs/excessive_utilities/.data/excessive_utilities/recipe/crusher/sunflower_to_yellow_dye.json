@@ -1,0 +1,10 @@
+{
+  "type": "excessive_utilities:crusher",
+  "ingredient": {
+    "item": "minecraft:sunflower"
+  },
+  "primary_output": {
+    "count": 4,
+    "id": "minecraft:yellow_dye"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "values": [
+    "excessive_utilities:terraformer",
+    "excessive_utilities:climograph_base_unit",
+    "excessive_utilities:antenna",
+    "excessive_utilities:cooler",
+    "excessive_utilities:dehostilifier",
+    "excessive_utilities:dehumidifier",
+    "excessive_utilities:heater",
+    "excessive_utilities:humidifier",
+    "excessive_utilities:magic_absorption",
+    "excessive_utilities:magic_infuser",
+    "excessive_utilities:redstone_glass",
+    "excessive_utilities:deep_dark_portal",
+    "excessive_utilities:last_millennium_portal",
+    "excessive_utilities:trading_post",
+    "excessive_utilities:indexer",
+    "excessive_utilities:transfer_filter",
+    "excessive_utilities:transfer_pipe_filter"
+  ]
+}

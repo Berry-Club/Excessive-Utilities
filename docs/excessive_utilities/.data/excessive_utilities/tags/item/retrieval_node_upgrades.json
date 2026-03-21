@@ -1,0 +1,11 @@
+{
+  "values": [
+    "excessive_utilities:stack_upgrade",
+    "excessive_utilities:creative_upgrade",
+    "excessive_utilities:breadth_first_search_upgrade",
+    "excessive_utilities:depth_first_search_upgrade",
+    "excessive_utilities:pseudo_round_robin_upgrade",
+    "excessive_utilities:ender_receiver",
+    "#excessive_utilities:speed_upgrades"
+  ]
+}

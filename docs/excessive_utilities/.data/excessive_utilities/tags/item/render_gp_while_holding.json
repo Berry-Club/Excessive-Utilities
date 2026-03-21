@@ -1,0 +1,22 @@
+{
+  "values": [
+    "excessive_utilities:power_manager",
+    "excessive_utilities:resonating_redstone_crystal",
+    "excessive_utilities:ring_of_the_flying_squid",
+    "excessive_utilities:angel_ring",
+    "excessive_utilities:chicken_wing_ring",
+    "excessive_utilities:red_coal",
+    "excessive_utilities:manual_mill",
+    "excessive_utilities:water_mill",
+    "excessive_utilities:wind_mill",
+    "excessive_utilities:fire_mill",
+    "excessive_utilities:lava_mill",
+    "excessive_utilities:solar_panel",
+    "excessive_utilities:lunar_panel",
+    "excessive_utilities:dragon_egg_mill",
+    "excessive_utilities:creative_mill",
+    "excessive_utilities:resonator",
+    "excessive_utilities:wireless_fe_transmitter",
+    "#excessive_utilities:speed_upgrades"
+  ]
+}

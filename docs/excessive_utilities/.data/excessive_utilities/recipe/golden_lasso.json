@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:nuggets/gold"
+    },
+    "S": {
+      "tag": "c:strings"
+    }
+  },
+  "pattern": [
+    "GSG",
+    "S S",
+    "GSG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:golden_lasso"
+  }
+}

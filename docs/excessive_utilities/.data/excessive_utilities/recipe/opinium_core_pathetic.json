@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "tag": "c:storage_blocks/iron"
+    },
+    "R": {
+      "item": "excessive_utilities:red_coal"
+    }
+  },
+  "pattern": [
+    " R ",
+    "RIR",
+    " R "
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:opinium_core"
+  }
+}

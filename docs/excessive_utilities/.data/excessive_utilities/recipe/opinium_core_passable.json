@@ -1,0 +1,65 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:gold_block"
+    },
+    "B": {
+      "item": "minecraft:diamond_block"
+    },
+    "O": {
+      "type": "neoforge:components",
+      "components": {
+        "excessive_utilities:opinium_core_contents": {
+          "center": {
+            "count": 1,
+            "id": "minecraft:gold_block"
+          },
+          "name": {
+            "translate": "item.excessive_utilities.opinium_core.mediocre"
+          },
+          "outer": {
+            "count": 1,
+            "id": "minecraft:iron_block"
+          }
+        },
+        "minecraft:attribute_modifiers": {
+          "modifiers": []
+        },
+        "minecraft:enchantments": {
+          "levels": {}
+        },
+        "minecraft:lore": [],
+        "minecraft:max_stack_size": 64,
+        "minecraft:rarity": "common",
+        "minecraft:repair_cost": 0
+      },
+      "items": "excessive_utilities:opinium_core"
+    }
+  },
+  "pattern": [
+    " O ",
+    "ABA",
+    " O "
+  ],
+  "result": {
+    "components": {
+      "excessive_utilities:opinium_core_contents": {
+        "center": {
+          "count": 1,
+          "id": "minecraft:diamond_block"
+        },
+        "name": {
+          "translate": "item.excessive_utilities.opinium_core.passable"
+        },
+        "outer": {
+          "count": 1,
+          "id": "minecraft:gold_block"
+        }
+      }
+    },
+    "count": 1,
+    "id": "excessive_utilities:opinium_core"
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:nether_star"
+    },
+    "B": {
+      "item": "minecraft:iron_ingot"
+    },
+    "O": {
+      "type": "neoforge:components",
+      "components": {
+        "excessive_utilities:opinium_core_contents": {
+          "center": {
+            "count": 1,
+            "id": "minecraft:nether_star"
+          },
+          "name": {
+            "translate": "item.excessive_utilities.opinium_core.inspiring"
+          },
+          "outer": {
+            "count": 1,
+            "id": "minecraft:elytra"
+          }
+        },
+        "minecraft:attribute_modifiers": {
+          "modifiers": []
+        },
+        "minecraft:enchantments": {
+          "levels": {}
+        },
+        "minecraft:lore": [],
+        "minecraft:max_stack_size": 64,
+        "minecraft:rarity": "common",
+        "minecraft:repair_cost": 0
+      },
+      "items": "excessive_utilities:opinium_core"
+    }
+  },
+  "pattern": [
+    " O ",
+    "ABA",
+    " O "
+  ],
+  "result": {
+    "components": {
+      "excessive_utilities:opinium_core_contents": {
+        "center": {
+          "count": 1,
+          "id": "minecraft:iron_ingot"
+        },
+        "name": {
+          "translate": "item.excessive_utilities.opinium_core.perfected"
+        },
+        "outer": {
+          "count": 1,
+          "id": "minecraft:nether_star"
+        }
+      }
+    },
+    "count": 1,
+    "id": "excessive_utilities:opinium_core"
+  }
+}

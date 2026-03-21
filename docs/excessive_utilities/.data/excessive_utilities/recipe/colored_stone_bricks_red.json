@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:dyes/red"
+    },
+    "I": {
+      "tag": "minecraft:stone_bricks"
+    },
+    "P": {
+      "item": "excessive_utilities:paintbrush"
+    }
+  },
+  "pattern": [
+    "III",
+    "IDI",
+    "IPI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:colored_stone_bricks_red"
+  }
+}

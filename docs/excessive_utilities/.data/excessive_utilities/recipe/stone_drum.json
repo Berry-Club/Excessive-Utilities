@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bowl"
+    },
+    "C": {
+      "item": "minecraft:cobblestone_slab"
+    },
+    "S": {
+      "tag": "c:cobblestones/normal"
+    }
+  },
+  "pattern": [
+    "CSC",
+    "CBC",
+    "CSC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:stone_drum"
+  }
+}

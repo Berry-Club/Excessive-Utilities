@@ -1,0 +1,17 @@
+{
+  "values": [
+    "#minecraft:dirt",
+    "#minecraft:sand",
+    "#c:gravels",
+    "#c:ores/gold",
+    "#c:ores/iron",
+    "#c:ores/coal",
+    "#c:ores/lapis",
+    "#c:obsidians/normal",
+    "#c:ores/diamond",
+    "#c:ores/redstone",
+    "#c:ores/emerald",
+    "minecraft:grass_block",
+    "minecraft:clay"
+  ]
+}

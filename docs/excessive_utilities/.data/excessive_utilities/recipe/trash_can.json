@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:cobblestones/normal"
+    },
+    "H": {
+      "tag": "c:chests/wooden"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "SSS",
+    "CHC",
+    "CCC"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:trash_can"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "minecraft:logs"
+    },
+    "I": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:wooden_sword"
+    }
+  },
+  "pattern": [
+    " S ",
+    "SIS",
+    "IBI"
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:wooden_spike"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "type": "excessive_utilities:resonator",
+  "gp_cost": 8.0,
+  "ingredient": {
+    "item": "excessive_utilities:polished_stone"
+  },
+  "output": {
+    "count": 1,
+    "id": "excessive_utilities:stoneburnt"
+  }
+}

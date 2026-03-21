@@ -1,0 +1,28 @@
+{
+  "type": "excessive_utilities:shaped_division",
+  "pattern": {
+    "key": {
+      "D": {
+        "tag": "c:gems/diamond"
+      },
+      "I": {
+        "tag": "c:ingots/iron"
+      },
+      "S": {
+        "item": "excessive_utilities:division_sigil"
+      }
+    },
+    "pattern": [
+      "I",
+      "S",
+      "D"
+    ]
+  },
+  "result": {
+    "components": {
+      "excessive_utilities:countdown": 200
+    },
+    "count": 1,
+    "id": "excessive_utilities:unstable_ingot"
+  }
+}

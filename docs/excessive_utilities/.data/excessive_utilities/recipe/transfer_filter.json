@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "excessive_utilities:item_filter"
+    },
+    "P": {
+      "item": "excessive_utilities:transfer_pipe"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "RFR",
+    "SPS"
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:transfer_filter"
+  }
+}

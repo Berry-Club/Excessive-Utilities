@@ -1,0 +1,42 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": {
+      "item": "excessive_utilities:nether_star_generator"
+    },
+    "2": {
+      "item": "excessive_utilities:overclocked_generator"
+    },
+    "3": {
+      "item": "excessive_utilities:pink_generator"
+    },
+    "4": {
+      "item": "excessive_utilities:potion_generator"
+    },
+    "5": {
+      "item": "excessive_utilities:resonating_redstone_crystal"
+    },
+    "6": {
+      "item": "excessive_utilities:heated_redstone_generator"
+    },
+    "7": {
+      "item": "excessive_utilities:slimy_generator"
+    },
+    "8": {
+      "item": "excessive_utilities:survival_generator"
+    },
+    "9": {
+      "item": "excessive_utilities:explosive_generator"
+    }
+  },
+  "pattern": [
+    "123",
+    "456",
+    "789"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:rainbow_generator_bottom_slab"
+  }
+}

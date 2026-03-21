@@ -1,0 +1,11 @@
+{
+  "type": "excessive_utilities:resonator",
+  "gp_cost": 8.0,
+  "ingredient": {
+    "item": "minecraft:quartz_block"
+  },
+  "output": {
+    "count": 1,
+    "id": "excessive_utilities:quartzburnt"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:upgrade_base"
+    },
+    {
+      "item": "minecraft:golden_pickaxe"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:world_interaction_upgrade"
+  }
+}

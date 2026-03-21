@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "tag": "c:gems/diamond"
+    },
+    "S": {
+      "tag": "c:rods/wooden"
+    }
+  },
+  "pattern": [
+    " MM",
+    "  M",
+    "SMM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:diamond_sickle"
+  }
+}

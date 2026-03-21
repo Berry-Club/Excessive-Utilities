@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:transfer_pipe"
+    },
+    {
+      "item": "excessive_utilities:item_filter"
+    },
+    {
+      "tag": "c:dusts/redstone"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:transfer_pipe_filter"
+  }
+}

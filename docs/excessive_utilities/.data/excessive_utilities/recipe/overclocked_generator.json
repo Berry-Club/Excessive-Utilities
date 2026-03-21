@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "F": {
+      "item": "excessive_utilities:furnace_generator"
+    },
+    "G": {
+      "tag": "c:storage_blocks/gold"
+    },
+    "L": {
+      "tag": "c:gems/lapis"
+    },
+    "R": {
+      "tag": "c:dusts/redstone"
+    }
+  },
+  "pattern": [
+    "LLL",
+    "LGL",
+    "RFR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:overclocked_generator"
+  }
+}

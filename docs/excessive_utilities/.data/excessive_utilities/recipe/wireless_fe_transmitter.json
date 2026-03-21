@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "R": {
+      "item": "excessive_utilities:resonating_redstone_crystal"
+    },
+    "S": {
+      "item": "excessive_utilities:stoneburnt"
+    }
+  },
+  "pattern": [
+    "R",
+    "S"
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:wireless_fe_transmitter"
+  }
+}

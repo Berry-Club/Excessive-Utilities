@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "tag": "minecraft:anvil"
+    },
+    "N": {
+      "item": "excessive_utilities:fluid_transfer_node"
+    }
+  },
+  "pattern": [
+    "A",
+    " ",
+    "N"
+  ],
+  "result": {
+    "count": 8,
+    "id": "excessive_utilities:flat_transfer_node_fluids"
+  }
+}
