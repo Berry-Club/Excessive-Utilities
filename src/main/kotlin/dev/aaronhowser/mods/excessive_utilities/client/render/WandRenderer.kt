@@ -68,7 +68,7 @@ object WandRenderer {
 		val blockItem = targetState.block.asItem()
 		if (blockItem == Items.AIR) return false
 
-		val amountInInventory = player.inventory.countItem(blockItem)
+		val amountInInventory = if (player.hasInfiniteMaterials()) 9999 else player.inventory.countItem(blockItem)
 
 		val maxAmount = wandStack.getOrDefault(ModDataComponents.AMOUNT_BLOCKS, 0)
 		val amountCanPlace = minOf(maxAmount, amountInInventory)
