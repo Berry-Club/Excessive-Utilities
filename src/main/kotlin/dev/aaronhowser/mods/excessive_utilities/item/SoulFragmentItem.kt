@@ -40,7 +40,7 @@ class SoulFragmentItem(properties: Properties) : Item(properties) {
 		val player = AaronClientUtil.localPlayer ?: return
 		val netSoulFragments = player.getData(ModAttachmentTypes.SOUL_DEBT).netSoulFragments
 
-		if (netSoulFragments < 0) {
+		if (netSoulFragments <= 0) {
 			tooltipComponents.add(
 				ModMenuLang.SOUL_DEBT
 					.toComponent(-netSoulFragments)
