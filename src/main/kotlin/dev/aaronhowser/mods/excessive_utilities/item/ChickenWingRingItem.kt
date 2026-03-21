@@ -92,7 +92,7 @@ class ChickenWingRingItem(properties: Properties) : Item(properties) {
 				return existing
 			}
 
-			val new = object : GridPowerContribution.HeldItem(ringStack.copy(), player) {
+			val new = object : GridPowerContribution.HeldItem(ringStack, player) {
 				override fun isStillValid(): Boolean {
 					if (!player.isAlive || player.isRemoved) return false
 
