@@ -2,11 +2,11 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withCount
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting.ShapedDivisionRecipeBuilder
-import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting.ShapedUnstableRecipeBuilder
+import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting.SpecialShapedRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.*
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel.ItemAndFluidFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel.SingleFluidFuelRecipeBuilder
@@ -17,6 +17,8 @@ import dev.aaronhowser.mods.excessive_utilities.item.UnstableIngotItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedDivisionRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedUnstableRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.ItemAndFluidFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -2258,7 +2260,16 @@ class ModRecipeProvider(
 
 	private fun buildUnstableRecipes(recipeOutput: RecipeOutput) {
 
-		ShapedUnstableRecipeBuilder(ModItems.MOON_STONE.withCount(9))
+		fun unstable(output: ItemStack): SpecialShapedRecipeBuilder {
+			return SpecialShapedRecipeBuilder(output)
+				.type("unstable", ::ShapedUnstableRecipe)
+		}
+
+		fun unstable(output: ItemLike): SpecialShapedRecipeBuilder {
+			return unstable(output.asItem().defaultInstance)
+		}
+
+		unstable(ModItems.MOON_STONE.withCount(9))
 			.pattern(
 				"LLL",
 				"LIL",
@@ -2268,7 +2279,7 @@ class ModRecipeProvider(
 			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
 			.save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
 
-		ShapedUnstableRecipeBuilder(ModBlocks.BLOCK_OF_UNSTABLE_INGOT)
+		unstable(ModBlocks.BLOCK_OF_UNSTABLE_INGOT)
 			.pattern(
 				"III",
 				"III",
@@ -2277,7 +2288,7 @@ class ModRecipeProvider(
 			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
 			.save(recipeOutput, modLoc("block_of_unstable_ingot_from_unstable_ingots"))
 
-		ShapedUnstableRecipeBuilder(ModBlocks.DEEP_DARK_PORTAL)
+		unstable(ModBlocks.DEEP_DARK_PORTAL)
 			.pattern(
 				"4I4",
 				"I5I",
@@ -2292,7 +2303,7 @@ class ModRecipeProvider(
 			val bricks = ModBlocks.getColoredBricks(color)
 			val lapisCaelestis = ModBlocks.getLapisCaelestis(color)
 
-			ShapedUnstableRecipeBuilder(lapisCaelestis.toStack(4))
+			unstable(lapisCaelestis.toStack(4))
 				.pattern(
 					"LLL",
 					"LIL",
@@ -2304,7 +2315,7 @@ class ModRecipeProvider(
 		}
 
 		fun angelRing(type: AngelRingItem.Type, base: Ingredient) {
-			ShapedUnstableRecipeBuilder(type.getStack())
+			unstable(type.getStack())
 				.pattern(
 					"GIG",
 					"ISI",
@@ -2345,7 +2356,7 @@ class ModRecipeProvider(
 		angelRing(AngelRingItem.Type.GOLD, Tags.Items.NUGGETS_GOLD.asIngredient())
 		angelRing(AngelRingItem.Type.BAT, ItemTags.COALS.asIngredient())
 
-		ShapedUnstableRecipeBuilder(ModItems.HEALING_AXE)
+		unstable(ModItems.HEALING_AXE)
 			.pattern(
 				"II",
 				"IO",
@@ -2355,7 +2366,7 @@ class ModRecipeProvider(
 			.define('O', Tags.Items.OBSIDIANS_NORMAL.asIngredient())
 			.save(recipeOutput)
 
-		ShapedUnstableRecipeBuilder(ModItems.REVERSING_HOE)
+		unstable(ModItems.REVERSING_HOE)
 			.pattern(
 				"II",
 				"O ",
@@ -2365,7 +2376,7 @@ class ModRecipeProvider(
 			.define('O', Tags.Items.OBSIDIANS_NORMAL.asIngredient())
 			.save(recipeOutput)
 
-		ShapedUnstableRecipeBuilder(ModItems.ETHERIC_SWORD)
+		unstable(ModItems.ETHERIC_SWORD)
 			.pattern(
 				"I",
 				"I",
@@ -2375,7 +2386,7 @@ class ModRecipeProvider(
 			.define('O', Tags.Items.OBSIDIANS_NORMAL.asIngredient())
 			.save(recipeOutput)
 
-		ShapedUnstableRecipeBuilder(ModItems.EROSION_SHOVEL)
+		unstable(ModItems.EROSION_SHOVEL)
 			.pattern(
 				"I",
 				"O",
@@ -2385,7 +2396,7 @@ class ModRecipeProvider(
 			.define('O', Tags.Items.OBSIDIANS_NORMAL.asIngredient())
 			.save(recipeOutput)
 
-		ShapedUnstableRecipeBuilder(ModItems.PRECISION_SHEARS)
+		unstable(ModItems.PRECISION_SHEARS)
 			.pattern(
 				"AI",
 				"IA"
@@ -2394,7 +2405,7 @@ class ModRecipeProvider(
 			.define('A', ModBlocks.ANGEL_BLOCK.asIngredient())
 			.save(recipeOutput)
 
-		ShapedUnstableRecipeBuilder(ModItems.SONAR_GOGGLES)
+		unstable(ModItems.SONAR_GOGGLES)
 			.pattern(
 				"III",
 				"EIE"
@@ -2403,7 +2414,12 @@ class ModRecipeProvider(
 			.define('E', Items.ENDER_EYE.asIngredient())
 			.save(recipeOutput)
 
-		ShapedDivisionRecipeBuilder(
+		fun division(output: ItemStack): SpecialShapedRecipeBuilder {
+			return SpecialShapedRecipeBuilder(output)
+				.type("division", ::ShapedDivisionRecipe)
+		}
+
+		division(
 			ModItems.UNSTABLE_INGOT.withComponent(
 				ModDataComponents.COUNTDOWN.get(),
 				UnstableIngotItem.MAX_COUNTDOWN
@@ -2419,7 +2435,7 @@ class ModRecipeProvider(
 			.define('D', Tags.Items.GEMS_DIAMOND.asIngredient())
 			.save(recipeOutput)
 
-		ShapedDivisionRecipeBuilder(ModItems.SEMI_UNSTABLE_NUGGET)
+		division(ModItems.SEMI_UNSTABLE_NUGGET.getDefaultInstance())
 			.pattern(
 				"N",
 				"S",
