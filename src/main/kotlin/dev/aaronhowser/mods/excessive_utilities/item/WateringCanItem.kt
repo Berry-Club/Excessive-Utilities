@@ -200,7 +200,10 @@ class WateringCanItem(
 
 		val heldWater = stack.get(ModDataComponents.TANK)?.amount ?: 0
 
-		tooltipComponents += Component.literal("Water: $heldWater / $MAX_WATER")
+		val heldFormat = "%,d".format(heldWater)
+		val maxFormat = "%,d".format(MAX_WATER)
+
+		tooltipComponents += Component.literal("Water: $heldFormat / $maxFormat")
 	}
 
 	companion object {
