@@ -16,6 +16,9 @@ object ModMenuLang {
 	const val FLUID_FILTER_INVERTED = "tooltip.excessive_utilities.fluid_filter.inverted"
 	const val FLUID_FILTER_TAGS = "tooltip.excessive_utilities.fluid_filter.tags"
 	const val FLUID_FILTER_IGNORE_ALL_COMPONENTS = "tooltip.excessive_utilities.fluid_filter.ignore_all_components"
+	const val UNSTABLE_INGOT_CHEESED_1 = "tooltip.excessive_utilities.unstable_ingot.cheesed_1"
+	const val UNSTABLE_INGOT_CHEESED_2 = "tooltip.excessive_utilities.unstable_ingot.cheesed_2"
+	const val UNSTABLE_INGOT_CHEESED_3 = "tooltip.excessive_utilities.unstable_ingot.cheesed_3"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -38,6 +41,10 @@ object ModMenuLang {
 			add(AngelRingItem.Type.DEMON.langKey, "Demon")
 			add(AngelRingItem.Type.GOLD.langKey, "Gold")
 			add(AngelRingItem.Type.BAT.langKey, "Bat")
+
+			add(UNSTABLE_INGOT_CHEESED_1, "Naughty naughty!")
+			add(UNSTABLE_INGOT_CHEESED_2, "Unstable Ingots must be crafted manually, by you.")
+			add(UNSTABLE_INGOT_CHEESED_3, "If this one WAS crafted manually, try using a vanilla Crafting Table instead.")
 		}
 	}
 

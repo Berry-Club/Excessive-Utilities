@@ -3,8 +3,10 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
@@ -146,10 +148,9 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 
 				if (!isInAnySlot || isInCraftingOutputSlot) return
 
-				event.toolTip.add(Component.literal("Naughty naughty!"))
-				event.toolTip.add(Component.literal("You have to craft the item YOURSELF for it to work!"))
-				event.toolTip.add(Component.literal("This stack is unusable for that reason."))
-				event.toolTip.add(Component.literal("If you DID craft this item yourself, try again in a vanilla Crafting Table."))
+				event.toolTip += ModMenuLang.UNSTABLE_INGOT_CHEESED_1.toComponent().withStyle(ChatFormatting.RED)
+				event.toolTip += ModMenuLang.UNSTABLE_INGOT_CHEESED_2.toComponent().withStyle(ChatFormatting.RED)
+				event.toolTip += ModMenuLang.UNSTABLE_INGOT_CHEESED_3.toComponent().withStyle(ChatFormatting.RED)
 			}
 		}
 	}

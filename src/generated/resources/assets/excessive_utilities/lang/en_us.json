@@ -638,5 +638,8 @@
   "tooltip.excessive_utilities.soul_health_modifier": "Current Health Modifier: %s",
   "tooltip.excessive_utilities.soul_of_a_forgotten_deity": "Soul of a Forgotten Deity",
   "tooltip.excessive_utilities.soul_surplus": "Soul Surplus: %d",
+  "tooltip.excessive_utilities.unstable_ingot.cheesed_1": "Naughty naughty!",
+  "tooltip.excessive_utilities.unstable_ingot.cheesed_2": "Unstable Ingots must be crafted manually, by you.",
+  "tooltip.excessive_utilities.unstable_ingot.cheesed_3": "If this one WAS crafted manually, try using a vanilla Crafting Table instead.",
   "tooltip.geneticsresequenced.fe": "%1$s/%2$s FE"
 }
