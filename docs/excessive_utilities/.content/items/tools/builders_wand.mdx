@@ -1,0 +1,22 @@
+---
+title: Builder's Wand
+id: excessive_utilities:builders_wand
+related_items: [excessive_utilities:builders_wand, excessive_utilities:creative_builders_wand]
+type: item
+---
+
+The **Builder's Wand** allows you to place multiple blocks at once.
+
+Using it on a block will place more of that block on the block you clicked on, including to adjacent blocks. Naturally, this will use them up from your inventory.
+
+While holding the Builder's Wand, it will render a wireframe at all the locations that blocks will be placed.
+
+It can place up to 9 blocks at once, based on the blocks closest to the one you're looking at.
+
+There is also a **Creative Builder's Wand** that does the same, but has no recipe and can break up to 49 blocks instead.
+
+## Configuration
+
+The max amount of blocks broken is set via the item's `excessive_utilities:amount_blocks` Data Component, rather than a config option.
+
+For example, `/give @s excessive_utilities:builders_wand[excessive_utilities:amount_blocks=9999]` would give you a Builder's Wand that can place up to 9999 blocks at once.
