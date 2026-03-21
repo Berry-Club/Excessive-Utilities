@@ -301,6 +301,7 @@ object CommonEvents {
 		DestructionPickaxeItem.handleDropEvent(event)
 		ErosionShovelItem.handleDropEvent(event)
 		GlassCutterItem.handleDropEvent(event)
+		TrowelItem.handleDropEvent(event)
 	}
 
 	@SubscribeEvent

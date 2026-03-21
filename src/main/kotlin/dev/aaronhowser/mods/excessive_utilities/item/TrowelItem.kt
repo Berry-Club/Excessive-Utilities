@@ -1,35 +1,62 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
-import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
-import net.minecraft.world.item.ItemStack
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.core.registries.Registries
+import net.minecraft.tags.BlockTags
+import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.ShovelItem
 import net.minecraft.world.item.Tiers
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
-import net.minecraft.world.item.enchantment.ItemEnchantments
+import net.minecraft.world.level.storage.loot.LootParams
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams
+import net.neoforged.neoforge.event.level.BlockDropsEvent
 
 class TrowelItem(properties: Properties) : ShovelItem(Tiers.IRON, properties) {
-
-	override fun getEnchantmentLevel(stack: ItemStack, enchantment: Holder<Enchantment>): Int {
-		if (enchantment.isHolder(Enchantments.SILK_TOUCH)) {
-			return maxOf(1, super.getEnchantmentLevel(stack, enchantment))
-		}
-
-		return super.getEnchantmentLevel(stack, enchantment)
-	}
-
-	override fun getAllEnchantments(stack: ItemStack, lookup: HolderLookup.RegistryLookup<Enchantment>): ItemEnchantments {
-		val enchants = ItemEnchantments.Mutable(super.getAllEnchantments(stack, lookup))
-		enchants.upgrade(lookup.getOrThrow(Enchantments.SILK_TOUCH), 1)
-		return enchants.toImmutable()
-	}
 
 	companion object {
 		val DEFAULT_PROPERTIES: Properties =
 			Properties()
 				.attributes(createAttributes(Tiers.IRON, 1f, -2f))
+
+		fun handleDropEvent(event: BlockDropsEvent) {
+			if (event.isCanceled) return
+
+			val tool = event.tool
+			if (!tool.isItem(ModItems.TROWEL)) return
+
+			val minedBlock = event.state
+			if (!minedBlock.isBlock(BlockTags.MINEABLE_WITH_SHOVEL)) return
+
+			val pos = event.pos.center
+			val level = event.level
+
+			val fakeTool = Items.NETHERITE_SHOVEL.defaultInstance
+			val enchantments = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+
+			fakeTool.enchant(
+				enchantments.getHolderOrThrow(Enchantments.SILK_TOUCH),
+				1
+			)
+
+			val lootParams = LootParams.Builder(level)
+				.withParameter(LootContextParams.ORIGIN, pos)
+				.withParameter(LootContextParams.TOOL, fakeTool)
+				.withParameter(LootContextParams.BLOCK_STATE, minedBlock)
+				.withOptionalParameter(LootContextParams.THIS_ENTITY, event.breaker)
+				.withOptionalParameter(LootContextParams.BLOCK_ENTITY, event.blockEntity)
+
+			val drops = minedBlock.getDrops(lootParams)
+
+			event.drops.clear()
+
+			for (drop in drops) {
+				val itemEntity = ItemEntity(level, pos.x, pos.y, pos.z, drop)
+				event.drops.add(itemEntity)
+			}
+		}
 	}
 
 }

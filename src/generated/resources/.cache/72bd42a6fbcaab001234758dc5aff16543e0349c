@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-18T23:30:54.0590203	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-03-21T03:01:50.490589	Tags for minecraft:block mod id excessive_utilities
 5124cada2ba7e5783038acde07858db18ecdb114 data/c/tags/block/cobblestones/normal.json
 cf8f2990468b42d8236e60250ebcf0bb1c8d5735 data/c/tags/block/dyed.json
 ca63a282b7eb47d59ef3ca3f57dc7b0149caa9ab data/c/tags/block/dyed/black.json
@@ -19,6 +19,7 @@ f275557af451d4c88d83c5d6f75ffc096403b780 data/c/tags/block/dyed/purple.json
 f1ff9b1536b478b9724f259b6ff2bce4edf0a997 data/c/tags/block/dyed/yellow.json
 9fd87e39153b6701c625917478d409d8ef8951eb data/c/tags/block/glass_blocks.json
 2bef9f868fc60a1a3de29857c00073febf29cd62 data/c/tags/block/mineable/sickle.json
+38ec7c332fa63679890bb46cab7814d70dd06b72 data/c/tags/block/mineable/trowel.json
 0a8a572e94e3b6c5ce9ec90b310143da0dd09602 data/c/tags/block/obsidians/normal.json
 fd4f1876335cd2c01a9ca026938ede746cff35d8 data/c/tags/block/stones.json
 85feac18a82e7c3edd812d9769196f4558d94660 data/c/tags/block/storage_blocks/coal.json

@@ -325,6 +325,9 @@ class ModBlockTagsProvider(
 				Tags.Blocks.GLASS_PANES
 			)
 
+		tag(TROWEL_MINEABLE)
+			.addTag(BlockTags.MINEABLE_WITH_SHOVEL)
+
 		tag(BlockTags.LOGS)
 			.add(ModBlocks.MAGICAL_WOOD)
 
@@ -516,6 +519,7 @@ class ModBlockTagsProvider(
 
 		val SICKLE_MINEABLE = common("mineable/sickle")
 		val GLASS_CUTTER_MINEABLE = create("mineable/glass_cutter")
+		val TROWEL_MINEABLE = common("mineable/trowel")
 		val FIRE_AXE_MINEABLE = create("mineable/fire_axe")
 
 		val DESTRUCTION_PICKAXE_TARGET = create("destruction_pickaxe_target")
