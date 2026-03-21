@@ -5,15 +5,22 @@ related_items: [excessive_utilities:magical_boomerang]
 type: item
 ---
 
-The **Fire Axe** is an Axe that can be used to break entire trees at once, and has infinite durability.
+The **Magical Boomerang** is a throwable item that can be used to attack enemies and pick up items at a distance.
 
-When a Log is mined, it searches for up to 10,000 connected Logs, up to 100 blocks away, and breaks them all at once.
+When thrown, the Boomerang will fly in a straight line until it hits an entity or block, or after a certain distance. It will then return to the player, moving through any blocks in the way.
 
-Additionally, any enchantments placed on the Fire Axe via an Anvil will be doubled. Efficiency IV becomes Efficiency VIII, etc.
+If the Boomerang hits an entity, it will deal 4 damage (2 hearts) of damage.
+
+## Enchantments
+
+- [Bladerang](@excessive_utilities:bladerang)
+- [Boomereaperang](@excessive_utilities:boomereaperang)
+- [Burnerang](@excessive_utilities:burnerang)
+- [Kaboomerang](@excessive_utilities:kaboomerang)
+- [Zoomerang](@excessive_utilities:zoomerang)
 
 ## Configuration
 
-What blocks it can mine is defined by the block tag `#excessive_utilities:mineable/fire_axe`. By default, this includes:
-- `#minecraft:logs`
+The radius that the Boomerang will pick up dropped items, as well as the radius that the Boomereaperang enchantment will break Grass, can both be configured.
 
 <PrefabObtaining/>
