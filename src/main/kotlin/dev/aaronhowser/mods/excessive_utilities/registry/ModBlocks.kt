@@ -26,10 +26,6 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("blackout_curtain", ::BlackoutCurtainBlock)
 	val CONVEYOR_BELT: DeferredBlock<ConveyorBeltBlock> =
 		registerBlock("conveyor_belt", ::ConveyorBeltBlock)
-	val CURSED_EARTH: DeferredBlock<CursedEarthBlock> =
-		registerBlock("cursed_earth", ::CursedEarthBlock)
-	val ENDER_COLLECTOR =
-		basicBlock("ender_collector")
 	val MAGICAL_WOOD: DeferredBlock<MagicalWoodBlock> =
 		registerBlock("magical_wood", ::MagicalWoodBlock)
 	val ENDER_CORE: DeferredBlock<EnderCoreBlock> =
@@ -42,8 +38,19 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("deep_dark_portal")
 	val LAST_MILLENNIUM_PORTAL =
 		basicBlock("last_millennium_portal")
+	val MOON_STORE_ORE: DeferredBlock<MoonStoreOreBlock> =
+		registerBlock("moon_store_ore") { MoonStoreOreBlock(Blocks.IRON_ORE) }
+	val DEEPSLATE_MOON_STONE_ORE: DeferredBlock<MoonStoreOreBlock> =
+		registerBlock("deepslate_moon_stone_ore") { MoonStoreOreBlock(Blocks.DEEPSLATE_IRON_ORE) }
+
+	// Misc block entities
+
 	val SOUND_MUFFLER: DeferredBlock<SoundMufflerBlock> =
 		registerBlock("sound_muffler", ::SoundMufflerBlock)
+	val CURSED_EARTH: DeferredBlock<CursedEarthBlock> =
+		registerBlock("cursed_earth", ::CursedEarthBlock)
+	val ENDER_COLLECTOR =
+		basicBlock("ender_collector")
 	val TRADING_POST =
 		basicBlock("trading_post")
 	val CREATIVE_HARVEST: DeferredBlock<CreativeHarvestBlock> =
@@ -54,12 +61,6 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlockWithoutItem("magical_snow_globe", ::MagicalSnowGlobeBlock)
 	val RESTURBED_MOB_SPAWNER: DeferredBlock<ResturbedMobSpawnerBlock> =
 		registerBlock("resturbed_mob_spawner", ::ResturbedMobSpawnerBlock)
-	val SCANNER =
-		basicBlock("scanner")
-	val MOON_STORE_ORE: DeferredBlock<MoonStoreOreBlock> =
-		registerBlock("moon_store_ore") { MoonStoreOreBlock(Blocks.IRON_ORE) }
-	val DEEPSLATE_MOON_STONE_ORE: DeferredBlock<MoonStoreOreBlock> =
-		registerBlock("deepslate_moon_stone_ore") { MoonStoreOreBlock(Blocks.DEEPSLATE_IRON_ORE) }
 
 	// Crops
 
@@ -78,6 +79,8 @@ object ModBlocks : AaronBlockRegistry() {
 		basicBlock("mechanical_user")
 	val REDSTONE_CLOCK: DeferredBlock<RedstoneClockBlock> =
 		registerBlock("redstone_clock", ::RedstoneClockBlock)
+	val SCANNER =
+		basicBlock("scanner")
 
 	// Other FE Stuff
 
