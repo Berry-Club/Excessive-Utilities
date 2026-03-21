@@ -136,33 +136,6 @@ class WateringCanItem(
 		drainWater(livingEntity, stack)
 	}
 
-	private fun spawnParticles(level: ServerLevel, pos: BlockPos) {
-		if (level.isEmptyBlock(pos)) return
-
-		val isSolidAbove = level.getBlockState(pos.above()).isCollisionShapeFullBlock(level, pos.above())
-		if (isSolidAbove) return
-
-		val isSolid = level.getBlockState(pos).isCollisionShapeFullBlock(level, pos)
-
-		var y = pos.y + 0.1
-		if (isSolid) y += 1
-
-		val particleCount = 3
-
-		for (i in 0 until particleCount) {
-			val x = pos.x + level.random.nextDouble()
-			val z = pos.z + level.random.nextDouble()
-
-			level.sendParticles(
-				ParticleTypes.SPLASH,
-				x, y, z,
-				1,
-				0.0, 0.0, 0.0,
-				0.0
-			)
-		}
-	}
-
 	private fun drainWater(player: Player, stack: ItemStack) {
 		if (player.hasInfiniteMaterials()) return
 		val heldWater = stack.get(ModDataComponents.TANK) ?: return
@@ -218,16 +191,6 @@ class WateringCanItem(
 	companion object {
 		const val MAX_WATER = 10_000
 
-		val IS_BROKEN_PREDICATE = ExcessiveUtilities.modResource("is_broken")
-		fun isBroken(
-			stack: ItemStack,
-			localLevel: Level?,
-			holdingEntity: LivingEntity?,
-			int: Int
-		): Float {
-			return if (stack.has(ModDataComponents.IS_BROKEN)) 1f else 0f
-		}
-
 		val DEFAULT_PROPERTIES: () -> Properties = {
 			Properties()
 				.stacksTo(1)
@@ -238,6 +201,43 @@ class WateringCanItem(
 			Properties()
 				.stacksTo(1)
 				.component(ModDataComponents.TANK, SimpleFluidContent.EMPTY)
+		}
+
+		val IS_BROKEN_PREDICATE = ExcessiveUtilities.modResource("is_broken")
+		fun isBroken(
+			stack: ItemStack,
+			localLevel: Level?,
+			holdingEntity: LivingEntity?,
+			int: Int
+		): Float {
+			return if (stack.has(ModDataComponents.IS_BROKEN)) 1f else 0f
+		}
+
+		private fun spawnParticles(level: ServerLevel, pos: BlockPos) {
+			if (level.isEmptyBlock(pos)) return
+
+			val isSolidAbove = level.getBlockState(pos.above()).isCollisionShapeFullBlock(level, pos.above())
+			if (isSolidAbove) return
+
+			val isSolid = level.getBlockState(pos).isCollisionShapeFullBlock(level, pos)
+
+			var y = pos.y + 0.1
+			if (isSolid) y += 1
+
+			val particleCount = 3
+
+			for (i in 0 until particleCount) {
+				val x = pos.x + level.random.nextDouble()
+				val z = pos.z + level.random.nextDouble()
+
+				level.sendParticles(
+					ParticleTypes.SPLASH,
+					x, y, z,
+					1,
+					0.0, 0.0, 0.0,
+					0.0
+				)
+			}
 		}
 	}
 
