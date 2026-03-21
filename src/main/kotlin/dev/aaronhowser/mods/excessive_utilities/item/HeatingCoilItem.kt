@@ -34,7 +34,12 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 	override fun getDamage(stack: ItemStack): Int = getMaxDamage(stack) - stack.getOrDefault(ModDataComponents.ENERGY, 0)
 
 	companion object {
-		val DEFAULT_PROPERTIES: () -> Properties = { Properties().component(ModDataComponents.ENERGY, 0) }
+		val DEFAULT_PROPERTIES: () -> Properties =
+			{
+				Properties()
+					.stacksTo(1)
+					.component(ModDataComponents.ENERGY, 0)
+			}
 
 		fun getEnergyCapability(stack: ItemStack, unusedContext: Any?): IEnergyStorage {
 			return ComponentEnergyStorage(
@@ -63,20 +68,12 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 
 			val percent = energy.toFloat() / maxEnergy.toFloat()
 
-			val emptyColor = 0x1E1E1E
-			val fullColor = 0xD51E1E
-
-			val startR = (emptyColor shr 16) and 0xFF
-			val startG = (emptyColor shr 8) and 0xFF
-			val startB = emptyColor and 0xFF
-
-			val endR = (fullColor shr 16) and 0xFF
-			val endG = (fullColor shr 8) and 0xFF
-			val endB = fullColor and 0xFF
+			val startR = 0x1E
+			val endR = 0xD5
 
 			val r = (startR + ((endR - startR) * percent)).toInt()
-			val g = (startG + ((endG - startG) * percent)).toInt()
-			val b = (startB + ((endB - startB) * percent)).toInt()
+			val g = 0x1E
+			val b = 0x1E
 
 			return (0xFF shl 24) or (r shl 16) or (g shl 8) or b
 		}
