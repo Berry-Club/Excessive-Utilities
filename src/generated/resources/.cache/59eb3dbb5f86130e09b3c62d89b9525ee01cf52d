@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-21T09:30:30.1902256	Loot Tables
+// 1.21.1	2026-03-21T10:11:37.646737	Loot Tables
 d31df4f9b468081e14a6755a2facd5cb7bded7d3 data/excessive_utilities/loot_table/blocks/advanced_filing_cabinet.json
 b055a9a7538aafe8d17289edbaab51c7759d0a94 data/excessive_utilities/loot_table/blocks/angel_block.json
 ac31ab7f157f056f8d68ab88ed82665e96def45d data/excessive_utilities/loot_table/blocks/antenna.json
@@ -392,7 +392,7 @@ d13b1ccb98ae860635c959fa385ff36711aacee5 data/excessive_utilities/loot_table/blo
 7275bd855da6061c0bb2fd06505e90e8abc40ab4 data/excessive_utilities/loot_table/blocks/reinforced_dark_glass.json
 a64abbe1ad038ef5171f7b7abd8d3f033d25074e data/excessive_utilities/loot_table/blocks/reinforced_large_drum.json
 3c866f05acdfbad9517d7b870dcace49f89fc8ec data/excessive_utilities/loot_table/blocks/resonator.json
-23c7b6e248e1373419cbae7ad5916e5c2aff860c data/excessive_utilities/loot_table/blocks/resturbed_mob_spawner.json
+bbca54896ef2f2558defda785d4b9f527f74aceb data/excessive_utilities/loot_table/blocks/resturbed_mob_spawner.json
 c7a30a6e72d0b1e74f6502eca8c413aa8fa207e1 data/excessive_utilities/loot_table/blocks/sandy_glass.json
 f6e3bd37fbea3d81f7f3824b07f1bf71ef6750c7 data/excessive_utilities/loot_table/blocks/scanner.json
 41ae40b79196d2815db4d8228d710c9ed4f5a03a data/excessive_utilities/loot_table/blocks/slightly_larger_chest.json

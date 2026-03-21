@@ -3,14 +3,18 @@
   "pools": [
     {
       "bonus_rolls": 0.0,
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
-        }
-      ],
       "entries": [
         {
           "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "minecraft:block_entity_data"
+              ],
+              "source": "block_entity"
+            }
+          ],
           "name": "excessive_utilities:resturbed_mob_spawner"
         }
       ],

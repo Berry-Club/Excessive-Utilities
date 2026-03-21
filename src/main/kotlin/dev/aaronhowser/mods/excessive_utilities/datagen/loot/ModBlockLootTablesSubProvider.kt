@@ -8,6 +8,7 @@ import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
@@ -54,7 +55,8 @@ class ModBlockLootTablesSubProvider(
 			ModBlocks.MAGICAL_SNOW_GLOBE.get(),
 			*drums.toTypedArray(),
 			ModBlocks.ENDER_LILY.get(),
-			ModBlocks.RED_ORCHID.get()
+			ModBlocks.RED_ORCHID.get(),
+			ModBlocks.RESTURBED_MOB_SPAWNER.get()
 		)
 
 		val dropSelfBlocks = knownBlocks - noDropSelfBlocks
@@ -99,6 +101,24 @@ class ModBlockLootTablesSubProvider(
 		)
 
 		add(ModBlocks.CURSED_EARTH.get()) { block -> createSingleItemTableWithSilkTouch(block, Blocks.DIRT) }
+
+		add(
+			ModBlocks.RESTURBED_MOB_SPAWNER.get(),
+			LootTable.lootTable()
+				.withPool(
+					LootPool.lootPool()
+						.setRolls(ConstantValue.exactly(1f))
+						.add(
+							LootItem.lootTableItem(ModBlocks.RESTURBED_MOB_SPAWNER.asItem())
+								.apply(
+									CopyComponentsFunction.copyComponents(
+										CopyComponentsFunction.Source.BLOCK_ENTITY
+									)
+										.include(DataComponents.BLOCK_ENTITY_DATA)
+								)
+						)
+				)
+		)
 
 		add(
 			ModBlocks.MAGICAL_SNOW_GLOBE.get(),
