@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-21T03:30:13.1635471	Recipes
+// 1.21.1	2026-03-21T04:55:53.782606	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 5544a3880f9cc21b24f3bbd7a0e3125679de74dc data/excessive_utilities/advancement/recipes/crusher/allium_to_magenta_dye.json
 03553dc68b381cde601be45b74fc8784e96887ab data/excessive_utilities/advancement/recipes/crusher/azure_bluet_to_light_gray_dye.json
@@ -934,7 +934,7 @@ d2ccf23265ba61768c047425556cbadf89be3789 data/excessive_utilities/recipe/resonat
 95367db3d4744929a7017072f6b4fb13c2ad1e4d data/excessive_utilities/recipe/resonator/quartzburnt.json
 96d484920620f7b580df803d7c10e8b279c53d64 data/excessive_utilities/recipe/resonator/rainbow_stone.json
 705fa67b19225273b4bdcece78c16b519c4ffec9 data/excessive_utilities/recipe/resonator/redstone_glass.json
-1f4a2671cb35b8e862672124e03592757c4fdd81 data/excessive_utilities/recipe/resonator/red_coal.json
+f1234e37fd815dbdb3488426e77da234575083e6 data/excessive_utilities/recipe/resonator/red_coal.json
 20cead625fb80a6769e1c56355ad75734c5bd9cb data/excessive_utilities/recipe/resonator/stoneburnt.json
 f63793fdcf670bdf98be4a92c5ea266b69352134 data/excessive_utilities/recipe/resonator/upgrade_base.json
 18eae41e3abe3f05ff3709cda347a3b07326e86d data/excessive_utilities/recipe/ring_of_the_flying_squid.json

@@ -1718,7 +1718,7 @@ class ModRecipeProvider(
 		ResonatorRecipeBuilder(
 			ItemTags.COALS.asIngredient(),
 			ModItems.RED_COAL.toStack(),
-			16.0
+			8.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(

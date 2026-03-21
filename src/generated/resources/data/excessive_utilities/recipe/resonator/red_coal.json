@@ -1,6 +1,6 @@
 {
   "type": "excessive_utilities:resonator",
-  "gp_cost": 16.0,
+  "gp_cost": 8.0,
   "ingredient": {
     "tag": "minecraft:coals"
   },
