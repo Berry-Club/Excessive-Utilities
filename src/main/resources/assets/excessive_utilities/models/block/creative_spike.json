@@ -5,5 +5,8 @@
   "model": "excessive_utilities:models/block/spike.obj",
   "mtl_override": "excessive_utilities:models/block/creative_spike.mtl",
   "render_type": "minecraft:solid",
-  "shade_quads": true
+  "shade_quads": true,
+	"textures": {
+		"particle": "excessive_utilities:block/spike/creative_base"
+	}
 }
