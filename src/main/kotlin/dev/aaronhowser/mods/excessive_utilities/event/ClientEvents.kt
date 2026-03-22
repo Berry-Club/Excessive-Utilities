@@ -183,6 +183,16 @@ object ClientEvents {
 			},
 			ModItems.PAINTBRUSH.get()
 		)
+
+		event.register(
+			DrumBlockEntity::getColor,
+			ModBlocks.STONE_DRUM.get(),
+			ModBlocks.IRON_DRUM.get(),
+			ModBlocks.REINFORCED_LARGE_DRUM.get(),
+			ModBlocks.DEMONICALLY_GARGANTUAN_DRUM.get(),
+			ModBlocks.BEDROCKIUM_DRUM.get(),
+			ModBlocks.CREATIVE_DRUM.get()
+		)
 	}
 
 	@SubscribeEvent

@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -94,6 +95,15 @@ class DrumBlockEntity(
 			val fluid = blockEntity.tank.fluid
 			if (fluid.isEmpty) return 0xFFFFFFFF.toInt()
 			return IClientFluidTypeExtensions.of(fluid.fluid).getTintColor(fluid)
+		}
+
+		fun getColor(
+			itemStack: ItemStack,
+			tintIndex: Int
+		): Int {
+			val content = itemStack.get(ModDataComponents.TANK) ?: return 0xFFFFFFFF.toInt()
+			if (content.isEmpty) return 0xFFFFFFFF.toInt()
+			return IClientFluidTypeExtensions.of(content.fluid).getTintColor(content.copy())
 		}
 	}
 
