@@ -61,7 +61,7 @@ class TrashCanBlockEntity(
 		return blockState.block.name
 	}
 
-	//TODO: Menu for the regular Trash Can
+	//TODO: Make a new menu that has a slot for the Filter
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
 		return if (isChest) {
 			ChestMenu.threeRows(containerId, playerInventory)
