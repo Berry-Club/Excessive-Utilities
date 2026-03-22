@@ -1,0 +1,9 @@
+{
+  "loader": "neoforge:obj",
+  "model": "excessive_utilities:models/block/drum/large.obj",
+  "mtl_override": "excessive_utilities:models/block/demonically_gargantuan_drum.mtl",
+  "automatic_culling": false,
+  "shade_quads": true,
+  "flip_v": true,
+  "render_type": "cutout"
+}
