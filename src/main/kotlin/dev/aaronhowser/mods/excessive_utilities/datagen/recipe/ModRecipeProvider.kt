@@ -72,6 +72,7 @@ class ModRecipeProvider(
 		buildWorldInteractionRecipes(recipeOutput)
 		buildCrusherRecipes(recipeOutput)
 		buildUnstableRecipes(recipeOutput)
+		buildCompressedBlockRecipes(recipeOutput)
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
@@ -2468,6 +2469,39 @@ class ModRecipeProvider(
 			.define('C', ModItems.GLASS_CUTTER.asIngredient())
 			.save(recipeOutput)
 
+	}
+
+	private fun buildCompressedBlockRecipes(recipeOutput: RecipeOutput) {
+		val types = mapOf(
+			"cobblestone" to ModBlocks.COMPRESSED_COBBLESTONES,
+			"dirt" to ModBlocks.COMPRESSED_DIRTS,
+			"sand" to ModBlocks.COMPRESSED_SANDS,
+			"gravel" to ModBlocks.COMPRESSED_GRAVELS,
+		)
+
+		for ((name, list) in types) {
+
+			for (i in list.indices) {
+				val level = i + 1
+				val nextLevel = level + 1
+				if (nextLevel > list.size) break
+
+				val current = list[i].get()
+				val next = list[i + 1].get()
+
+				shapedRecipe(
+					next,
+					"CCC,CCC,CCC",
+					mapOf('C' to current.asIngredient())
+				).save(recipeOutput, modLoc("compressed_${name}/${level}_to_${nextLevel}"))
+
+				shapelessRecipe(
+					current,
+					9,
+					listOf(next.asIngredient())
+				).save(recipeOutput, modLoc("compressed_${name}/${nextLevel}_to_${level}"))
+			}
+		}
 	}
 
 }
