@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.misc.ARGB
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
@@ -100,7 +101,8 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 			val green = Mth.lerp(percentToExplosion, 255f, 0f).toInt()
 			val blue = Mth.lerp(percentToExplosion, 255f, 0f).toInt()
 
-			return (alpha shl 24) or (red shl 16) or (green shl 8) or blue
+			val argb = ARGB(alpha, red, green, blue)
+			return argb.toInt()
 		}
 
 		fun isCheesed(stack: ItemStack): Boolean {

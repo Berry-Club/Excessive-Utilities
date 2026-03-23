@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.misc.ARGB
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.item.ItemEntity
@@ -78,7 +79,8 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 			val g = 0xFF
 			val b = 0xFF
 
-			return (a shl 24) or (r shl 16) or (g shl 8) or b
+			val argb = ARGB(a, r, g, b)
+			return argb.toInt()
 		}
 	}
 
