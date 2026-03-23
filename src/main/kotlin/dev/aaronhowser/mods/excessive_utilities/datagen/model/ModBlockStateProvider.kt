@@ -22,6 +22,7 @@ import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
+import net.neoforged.neoforge.registries.DeferredBlock
 
 class ModBlockStateProvider(
 	output: PackOutput,
@@ -85,6 +86,59 @@ class ModBlockStateProvider(
 		antenna()
 		mechanicalBlocks()
 		rainbowSlabs()
+		compressedBlocks()
+	}
+
+	private fun compressedBlocks() {
+
+		val types = mapOf(
+			"cobblestone" to ModBlocks.COMPRESSED_COBBLESTONES,
+			"dirt" to ModBlocks.COMPRESSED_DIRTS,
+			"sand" to ModBlocks.COMPRESSED_SANDS,
+			"gravel" to ModBlocks.COMPRESSED_GRAVELS,
+		)
+
+		for ((original, list) in types) {
+			val originalBlockTexture = mcLoc("block/${original}")
+
+			for ((i, b) in list.withIndex()) {
+				val block = b.get()
+				val name = name(block)
+
+				val level = i + 1
+//				val overlay = modLoc("block/compressed/$level")
+
+				val model = models()
+					.withExistingParent(name, mcLoc("block/block"))
+					.texture("texture", originalBlockTexture)
+					.texture("particle", originalBlockTexture)
+//					.texture("overlay", overlay)
+					.renderType(RenderType.translucent().name)
+
+					.element {
+						from(0f, 0f, 0f)
+						to(16f, 16f, 16f)
+
+						allFaces { dir, fb ->
+							fb.texture("#texture")
+							fb.cullface(dir)
+						}
+					}
+
+//					.element {
+//						from(0f, 0f, 0f)
+//						to(16f, 16f, 16f)
+//
+//						allFaces { dir, fb ->
+//							fb.texture("#overlay")
+//							fb.cullface(dir)
+//						}
+//					}
+
+				simpleBlockWithItem(block, model)
+			}
+		}
+
 	}
 
 	private fun rainbowSlabs() {
