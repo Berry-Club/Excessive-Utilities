@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -21,7 +22,8 @@ class CompressedBlock(
 	) {
 		val amount = 9.0.pow(compressionLevel.toDouble()).toLong()
 		val formatted = "%,d".format(Locale.US, amount)
-		tooltipComponents.add(Component.literal(formatted))
+
+		tooltipComponents += Component.literal(formatted).withStyle(ChatFormatting.GRAY)
 	}
 
 }
