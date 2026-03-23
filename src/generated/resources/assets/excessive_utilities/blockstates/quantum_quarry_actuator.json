@@ -1,0 +1,30 @@
+{
+  "variants": {
+    "facing=down": {
+      "model": "excessive_utilities:block/quantum_quarry_actuator",
+      "x": 180
+    },
+    "facing=east": {
+      "model": "excessive_utilities:block/quantum_quarry_actuator",
+      "x": 90,
+      "y": 90
+    },
+    "facing=north": {
+      "model": "excessive_utilities:block/quantum_quarry_actuator",
+      "x": 90
+    },
+    "facing=south": {
+      "model": "excessive_utilities:block/quantum_quarry_actuator",
+      "x": 90,
+      "y": 180
+    },
+    "facing=up": {
+      "model": "excessive_utilities:block/quantum_quarry_actuator"
+    },
+    "facing=west": {
+      "model": "excessive_utilities:block/quantum_quarry_actuator",
+      "x": 90,
+      "y": 270
+    }
+  }
+}

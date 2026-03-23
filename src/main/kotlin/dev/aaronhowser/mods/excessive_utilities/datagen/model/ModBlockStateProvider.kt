@@ -31,60 +31,60 @@ class ModBlockStateProvider(
 	override fun registerStatesAndModels() {
 		singleTextureBlocks()
 		singleTextureCutout()
-//		blackoutCurtain()
-//		athenaBlocks()
+		blackoutCurtain()
+		athenaBlocks()
 		slightlyLargerChest()
 		miniChest()
-		generators()
+//		generators()
 		machineBlock()
-//		enderQuarry()
-//		enderMarker()
-//		enderQuarryUpgrades()
-//		filingCabinets()
-//		moonStoneOre()
+		enderQuarry()
+		enderMarker()
+		enderQuarryUpgrades()
+		filingCabinets()
+		moonStoneOre()
 		resonator()
-//		quantumQuarryActuator()
-//		peacefulTable()
+		quantumQuarryActuator()
+		peacefulTable()
 		cursedEarth()
-//		chandelier()
-//		magnumTorch()
-//		trashCans()
-//		trashChest()
-//		gpPanels()
+		chandelier()
+		magnumTorch()
+		trashCans()
+		trashChest()
+		gpPanels()
 		dragonEggMill()
 		creativeMill()
 		waterMill()
 		windMill()
-//		manualMill()
+		manualMill()
 		fireMill()
 		lavaMill()
 		creativeChest()
-//		conveyorBelt()
-//		tradingPost()
+		conveyorBelt()
+		tradingPost()
 		coloredBlocks()
 		lapisCaelesti()
-//		qed()
-//		enderFluxCrystal()
+		qed()
+		enderFluxCrystal()
 		furnace()
 		magicalSnowGlobe()
-//		wirelessFeBattery()
-//		wirelessFeTransmitter()
+		wirelessFeBattery()
+		wirelessFeTransmitter()
 		redstoneLantern()
 		redstoneClock()
 		spikes()
 		drums()
-//		transferPipes()
-//		transferNodes()
+		transferPipes()
+		transferNodes()
 		enderLily()
 		redOrchid()
 		enderPorcupine()
 		crusher()
-//		enchanter()
-//		playerChest()
-//		terraformerBlocks()
-//		antenna()
-//		mechanicalBlocks()
-		rainbowSlabs()
+		enchanter()
+		playerChest()
+		terraformerBlocks()
+		antenna()
+		mechanicalBlocks()
+//		rainbowSlabs()
 	}
 
 	private fun rainbowSlabs() {
@@ -1589,8 +1589,8 @@ class ModBlockStateProvider(
 		val block = ModBlocks.WIND_MILL.get()
 
 		val top = modLoc("block/mill/wind")
-		val base = modLoc("block/stoneburnt")
-		val fan = modLoc("block/mill/fan")
+		val base = modLoc("block/mill/base")
+		val fan = modLoc("block/mill/fan_spinning")
 
 		val model = models()
 			.withExistingParent(name(block), mcLoc("block/block"))
@@ -1672,10 +1672,43 @@ class ModBlockStateProvider(
 		val block = ModBlocks.WATER_MILL.get()
 
 		val top = modLoc("block/mill/water")
-		val side = modLoc("block/mill/mill_fan")
+		val fan = modLoc("block/mill/fan_spinning_small")
+		val base = modLoc("block/mill/base")
 
 		val model = models()
-			.cubeTop(name(block), side, top)
+			.withExistingParent(name(block), mcLoc("block/block"))
+			.texture("top", top)
+			.texture("base", base)
+			.texture("fan", fan)
+			.texture("particle", top)
+			.renderType(RenderType.cutout().name)
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
+
+				allFaces { dir, fb ->
+					val texture = when (dir) {
+						Direction.UP -> "#top"
+						else -> "#base"
+					}
+
+					fb.texture(texture)
+					fb.cullface(dir)
+				}
+			}
+
+			.element {
+				from(0f, 0f, 0f)
+				to(16f, 16f, 16f)
+
+				for (face in Direction.Plane.HORIZONTAL) {
+					face(face) {
+						texture("#fan")
+						cullface(face)
+					}
+				}
+			}
 
 		simpleBlockWithItem(block, model)
 	}
@@ -1684,7 +1717,7 @@ class ModBlockStateProvider(
 		val block = ModBlocks.LAVA_MILL.get()
 
 		val top = modLoc("block/mill/lava")
-		val base = modLoc("block/stoneburnt")
+		val base = modLoc("block/mill/base")
 
 		val model = models()
 			.cubeBottomTop(name(block), base, base, top)
@@ -1698,8 +1731,8 @@ class ModBlockStateProvider(
 		val model = models()
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("side", modLoc("block/mill/fire"))
-			.texture("base", modLoc("block/stoneburnt"))
-			.texture("fan", modLoc("block/mill/fan"))
+			.texture("base", modLoc("block/mill/base"))
+			.texture("fan", modLoc("block/mill/fan_spinning"))
 			.texture("particle", modLoc("block/mill/fire"))
 			.renderType(RenderType.cutout().name)
 
@@ -1791,7 +1824,7 @@ class ModBlockStateProvider(
 
 		val side = modLoc("block/mill/dragon_egg/side")
 		val top = modLoc("block/mill/dragon_egg/top")
-		val bottom = modLoc("block/stoneburnt")
+		val bottom = modLoc("block/mill/base")
 
 		val model = models()
 			.cubeBottomTop(name(block), side, bottom, top)
@@ -1806,7 +1839,7 @@ class ModBlockStateProvider(
 		)
 
 		val side = modLoc("block/mill/panel/side")
-		val base = modLoc("block/stoneburnt")
+		val base = modLoc("block/mill/base")
 
 		for ((type, block) in blocks) {
 			val top = modLoc("block/mill/panel/$type")
@@ -2972,8 +3005,8 @@ class ModBlockStateProvider(
 	private fun singleTextureBlocks() {
 		val blocks = listOf(
 			ModBlocks.ANGEL_BLOCK.get(),
-//			ModBlocks.ENDER_CORE.get(),
-//			ModBlocks.BLOCK_OF_BEDROCKIUM.get(),
+			ModBlocks.ENDER_CORE.get(),
+			ModBlocks.BLOCK_OF_BEDROCKIUM.get(),
 			ModBlocks.CREATIVE_HARVEST.get(),
 			ModBlocks.CREATIVE_ENERGY_SOURCE.get(),
 			ModBlocks.DEEP_DARK_PORTAL.get(),
@@ -2982,10 +3015,10 @@ class ModBlockStateProvider(
 			ModBlocks.SOUND_MUFFLER.get(),
 			ModBlocks.RAINBOW_GENERATOR.get(),
 			ModBlocks.SANDY_GLASS.get(),
-//			ModBlocks.QUANTUM_QUARRY.get(),
-//			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.get(),
-//			ModBlocks.MAGICAL_WOOD.get(),
-//			ModBlocks.LAST_MILLENNIUM_PORTAL.get()
+			ModBlocks.QUANTUM_QUARRY.get(),
+			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.get(),
+			ModBlocks.MAGICAL_WOOD.get(),
+			ModBlocks.LAST_MILLENNIUM_PORTAL.get()
 		)
 
 		for (block in blocks) {

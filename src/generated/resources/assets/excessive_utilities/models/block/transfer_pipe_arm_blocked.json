@@ -1,0 +1,6 @@
+{
+  "parent": "excessive_utilities:block/transfer_pipe_arm",
+  "textures": {
+    "pipe": "excessive_utilities:block/transfer_pipe/blocked"
+  }
+}

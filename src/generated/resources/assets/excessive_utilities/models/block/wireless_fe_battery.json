@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/cube_top",
+  "textures": {
+    "particle": "excessive_utilities:block/wireless_fe_battery/side",
+    "side": "excessive_utilities:block/wireless_fe_battery/side",
+    "top": "excessive_utilities:block/wireless_fe_battery/top"
+  }
+}

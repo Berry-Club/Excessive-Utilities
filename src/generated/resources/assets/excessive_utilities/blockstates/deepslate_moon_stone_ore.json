@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "visible=false": {
+      "model": "excessive_utilities:block/deepslate_moon_stone_ore_day"
+    },
+    "visible=true": {
+      "model": "excessive_utilities:block/deepslate_moon_stone_ore_night"
+    }
+  }
+}

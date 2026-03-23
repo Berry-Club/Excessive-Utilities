@@ -1,0 +1,9 @@
+{
+  "parent": "excessive_utilities:block/transfer_node_template",
+  "textures": {
+    "back": "excessive_utilities:block/transfer_node/back",
+    "node": "excessive_utilities:block/transfer_node/retrieval/item",
+    "particle": "excessive_utilities:block/transfer_node/retrieval/item",
+    "pipe": "excessive_utilities:block/transfer_pipe/pipe"
+  }
+}
