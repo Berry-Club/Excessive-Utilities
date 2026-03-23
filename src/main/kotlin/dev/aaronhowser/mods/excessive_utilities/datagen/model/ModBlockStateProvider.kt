@@ -104,14 +104,14 @@ class ModBlockStateProvider(
 				val block = b.get()
 				val name = name(block)
 
-//				val level = i + 1
-//				val overlay = modLoc("block/compressed/$level")
+				val level = i + 1
+				val overlay = modLoc("block/compressed/$level")
 
 				val model = models()
 					.withExistingParent(name, mcLoc("block/block"))
 					.texture("texture", originalBlockTexture)
 					.texture("particle", originalBlockTexture)
-//					.texture("overlay", overlay)
+					.texture("overlay", overlay)
 					.renderType(RenderType.translucent().name)
 
 					.element {
@@ -124,15 +124,15 @@ class ModBlockStateProvider(
 						}
 					}
 
-//					.element {
-//						from(0f, 0f, 0f)
-//						to(16f, 16f, 16f)
-//
-//						allFaces { dir, fb ->
-//							fb.texture("#overlay")
-//							fb.cullface(dir)
-//						}
-//					}
+					.element {
+						from(0f, 0f, 0f)
+						to(16f, 16f, 16f)
+
+						allFaces { dir, fb ->
+							fb.texture("#overlay")
+							fb.cullface(dir)
+						}
+					}
 
 				simpleBlockWithItem(block, model)
 			}
