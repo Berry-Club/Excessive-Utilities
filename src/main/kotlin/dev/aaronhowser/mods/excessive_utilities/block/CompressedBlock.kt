@@ -14,16 +14,16 @@ class CompressedBlock(
 	properties: Properties
 ) : Block(properties) {
 
+	val amount: Long = 9.0.pow(compressionLevel.toDouble()).toLong()
+	private val formattedString = "%,d".format(Locale.US, amount)
+
 	override fun appendHoverText(
 		stack: ItemStack,
 		context: Item.TooltipContext,
 		tooltipComponents: MutableList<Component>,
 		tooltipFlag: TooltipFlag
 	) {
-		val amount = 9.0.pow(compressionLevel.toDouble()).toLong()
-		val formatted = "%,d".format(Locale.US, amount)
-
-		tooltipComponents += Component.literal(formatted).withStyle(ChatFormatting.GRAY)
+		tooltipComponents += Component.literal(formattedString).withStyle(ChatFormatting.GRAY)
 	}
 
 }
