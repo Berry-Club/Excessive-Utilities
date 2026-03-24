@@ -32,7 +32,7 @@ class SingleItemGeneratorScreen(
 	}
 
 	companion object {
-		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/single_item_generator.png"), 176, 172)
+		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/single_item_generator.png"), 176, 178)
 	}
 
 }

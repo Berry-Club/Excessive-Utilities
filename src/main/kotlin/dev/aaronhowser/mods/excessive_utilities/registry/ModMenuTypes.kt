@@ -4,8 +4,8 @@ import dev.aaronhowser.mods.aaron.registry.AaronMenuTypesRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterScreen
-import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu.EnderPorcupineMenu
-import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu.EnderPorcupineScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu.FluidFilterMenu

@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu
+package dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine
 
 import dev.aaronhowser.mods.aaron.menu.BaseScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
@@ -305,7 +305,7 @@ class EnderPorcupineScreen(
 	}
 
 	companion object {
-		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/ender_porcupine.png"), 155, 178)
+		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/ender_porcupine.png"), 156, 178)
 
 		val UP = WidgetSprites(
 			ExcessiveUtilities.modResource("button_up"),

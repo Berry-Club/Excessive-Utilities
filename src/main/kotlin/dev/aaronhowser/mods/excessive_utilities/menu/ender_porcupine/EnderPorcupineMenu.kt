@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine_menu
+package dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderPorcupineBlockEntity

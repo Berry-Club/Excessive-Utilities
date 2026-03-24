@@ -15,7 +15,7 @@ class QedScreen(
 	override val background: ScreenBackground = BACKGROUND
 
 	companion object {
-		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/qed.png"), 176, 166)
+		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/qed.png"), 176, 180)
 	}
 
 }
