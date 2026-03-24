@@ -191,7 +191,7 @@ object ModBlockLang {
 				addBlock(ModBlocks.getColoredGlowstone(color), "Colored Glowstone ($englishName)")
 			}
 
-			for (i in 1..9) {
+			for (i in 1..ModBlocks.COMPRESSED_COBBLESTONES.size) {
 				val amount = when (i) {
 					1 -> "Single"
 					2 -> "Double"
@@ -202,7 +202,14 @@ object ModBlockLang {
 					7 -> "Septuple"
 					8 -> "Octuple"
 					9 -> "Nonuple"
-					else -> "$i×"
+					10 -> "Decuple"
+					11 -> "Undecuple"
+					12 -> "Duodecuple"
+					13 -> "Tredecuple"
+					14 -> "Quattuordecuple"
+					15 -> "Quindecuple"
+					16 -> "Sexdecuple"
+					else -> "$i"
 				}
 
 				val cobble = ModBlocks.getCompressedCobblestone(i)
