@@ -3,7 +3,8 @@
   "textures": {
     "down": "excessive_utilities:block/indexer/front",
     "east": "excessive_utilities:block/indexer/side",
-    "north": "excessive_utilities:block/indexer/side",
+    "north": "excessive_utilities:block/indexer/front",
+    "particle": "excessive_utilities:block/indexer/side",
     "south": "excessive_utilities:block/indexer/side",
     "up": "excessive_utilities:block/indexer/side",
     "west": "excessive_utilities:block/indexer/side"

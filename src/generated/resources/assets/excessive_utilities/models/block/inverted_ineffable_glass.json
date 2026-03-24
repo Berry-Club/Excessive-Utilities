@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "all": "excessive_utilities:block/inverted_ineffable_glass/particle"
+  }
+}

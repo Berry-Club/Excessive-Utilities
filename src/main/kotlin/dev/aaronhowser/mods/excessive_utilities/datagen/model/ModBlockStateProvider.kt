@@ -97,7 +97,8 @@ class ModBlockStateProvider(
 		val side = modLoc("block/indexer/side")
 
 		val model = models()
-			.cube(name(block), front, side, side, side, side, side)
+			.cube(name(block), front, side, front, side, side, side)
+			.texture("particle", side)
 
 		simpleBlockWithItem(block, model)
 	}
@@ -3068,7 +3069,7 @@ class ModBlockStateProvider(
 	private fun singleTextureCutout() {
 		val blocks = listOf(
 			ModBlocks.RESTURBED_MOB_SPAWNER.get(),
-//			ModBlocks.SQUARE_GLASS.get()
+			ModBlocks.SQUARE_GLASS.get()
 		)
 
 		for (block in blocks) {
@@ -3098,11 +3099,13 @@ class ModBlockStateProvider(
 			ModBlocks.FROSTED_STONE.get(),
 			ModBlocks.EMINENCE_STONE.get(),
 			ModBlocks.RAINBOW_STONE.get(),
-			ModBlocks.DIAGONAL_WOOD.get()
+			ModBlocks.DIAGONAL_WOOD.get(),
+			ModBlocks.EDGED_STONE_BRICKS.get()
 		)
 
 		val translucent = listOf(
 			ModBlocks.INEFFABLE_GLASS.get(),
+			ModBlocks.INVERTED_INEFFABLE_GLASS.get(),
 			ModBlocks.DARK_INEFFABLE_GLASS.get(),
 			ModBlocks.ETHEREAL_GLASS.get(),
 			ModBlocks.INVERTED_ETHEREAL_GLASS.get(),
@@ -3117,7 +3120,8 @@ class ModBlockStateProvider(
 			ModBlocks.CARVED_GLASS.get(),
 			ModBlocks.GOLDEN_EDGED_GLASS.get(),
 			ModBlocks.GLOWING_GLASS.get(),
-			ModBlocks.BLOCK_OF_UNSTABLE_INGOT.get()
+			ModBlocks.BLOCK_OF_UNSTABLE_INGOT.get(),
+			ModBlocks.PATTERNED_GLASS.get(),
 		)
 
 		for (block in blocks) {
