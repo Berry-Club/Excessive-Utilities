@@ -1,15 +1,15 @@
 {
 	"variants": {
 		"": {
-			"model": "excessive_utilities:block/ethereal_stone"
+			"model": "excessive_utilities:block/ethereal_glass"
 		}
 	},
 	"athena:loader": "athena:ctm",
 	"ctm_textures": {
-		"center": "excessive_utilities:block/ethereal_stone/center",
-		"empty": "excessive_utilities:block/ethereal_stone/empty",
-		"horizontal": "excessive_utilities:block/ethereal_stone/horizontal",
-		"particle": "excessive_utilities:block/ethereal_stone/particle",
-		"vertical": "excessive_utilities:block/ethereal_stone/vertical"
+		"center": "excessive_utilities:block/ethereal_glass/center",
+		"empty": "excessive_utilities:block/ethereal_glass/empty",
+		"horizontal": "excessive_utilities:block/ethereal_glass/horizontal",
+		"particle": "excessive_utilities:block/ethereal_glass/particle",
+		"vertical": "excessive_utilities:block/ethereal_glass/vertical"
 	}
 }
