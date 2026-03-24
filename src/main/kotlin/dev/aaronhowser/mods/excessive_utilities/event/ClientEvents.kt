@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.entity.player.PlayerRenderer
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.item.DyeColor
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -159,6 +160,14 @@ object ClientEvents {
 			ModBlocks.BEDROCKIUM_DRUM.get(),
 			ModBlocks.CREATIVE_DRUM.get()
 		)
+
+
+		for (color in DyeColor.entries) {
+			event.register(
+				{ stack, tintIndex -> color.textureDiffuseColor },
+				ModBlocks.getLapisCaelestis(color).get()
+			)
+		}
 	}
 
 	@SubscribeEvent
@@ -173,6 +182,13 @@ object ClientEvents {
 			ModBlocks.BEDROCKIUM_DRUM.get(),
 			ModBlocks.CREATIVE_DRUM.get()
 		)
+
+		for (color in DyeColor.entries) {
+			event.register(
+				{ state, level, pos, tintIndex -> color.textureDiffuseColor },
+				ModBlocks.getLapisCaelestis(color).get()
+			)
+		}
 
 	}
 
