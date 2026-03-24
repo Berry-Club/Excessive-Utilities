@@ -35,7 +35,7 @@ class KeepPaintbrushRecipe(
 	}
 
 	override fun isSpecial(): Boolean = true
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.DAMAGE_GLASS_CUTTER.get()
+	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.KEEP_PAINTBRUSH.get()
 
 	class Serializer : RecipeSerializer<KeepPaintbrushRecipe> {
 		override fun codec(): MapCodec<KeepPaintbrushRecipe> = CODEC

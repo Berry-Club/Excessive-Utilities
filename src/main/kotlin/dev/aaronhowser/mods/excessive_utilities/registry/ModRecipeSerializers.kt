@@ -33,7 +33,7 @@ object ModRecipeSerializers {
 		registerRecipeSerializer("shaped_division", ShapedDivisionRecipe::Serializer)
 	val DAMAGE_GLASS_CUTTER: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
 		registerRecipeSerializer("damage_glass_cutter", DamageGlassCutterRecipe::Serializer)
-	val KEEP_PAINT_BRUSH: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
+	val KEEP_PAINTBRUSH: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
 		registerRecipeSerializer("keep_paintbrush", KeepPaintbrushRecipe::Serializer)
 
 	val WORLD_INTERACTION_ITEM: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =

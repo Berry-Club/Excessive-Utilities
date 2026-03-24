@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:keep_paintbrush",
+  "pattern": {
+    "key": {
+      "D": {
+        "tag": "c:dyes/white"
+      },
+      "I": {
+        "tag": "c:glowstones"
+      },
+      "P": {
+        "item": "excessive_utilities:paintbrush"
+      }
+    },
+    "pattern": [
+      "III",
+      "IDI",
+      "IPI"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:colored_glowstone_white"
+  }
+}

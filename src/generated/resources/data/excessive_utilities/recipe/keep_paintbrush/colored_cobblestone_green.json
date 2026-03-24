@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:keep_paintbrush",
+  "pattern": {
+    "key": {
+      "D": {
+        "tag": "c:dyes/green"
+      },
+      "I": {
+        "tag": "c:cobblestones/normal"
+      },
+      "P": {
+        "item": "excessive_utilities:paintbrush"
+      }
+    },
+    "pattern": [
+      "III",
+      "IDI",
+      "IPI"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:colored_cobblestone_green"
+  }
+}

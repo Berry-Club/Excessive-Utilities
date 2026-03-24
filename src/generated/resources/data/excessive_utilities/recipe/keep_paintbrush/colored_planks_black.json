@@ -1,0 +1,25 @@
+{
+  "type": "excessive_utilities:keep_paintbrush",
+  "pattern": {
+    "key": {
+      "D": {
+        "tag": "c:dyes/black"
+      },
+      "I": {
+        "tag": "minecraft:planks"
+      },
+      "P": {
+        "item": "excessive_utilities:paintbrush"
+      }
+    },
+    "pattern": [
+      "III",
+      "IDI",
+      "IPI"
+    ]
+  },
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:colored_planks_black"
+  }
+}

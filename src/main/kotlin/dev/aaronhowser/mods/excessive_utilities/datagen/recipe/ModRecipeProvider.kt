@@ -19,6 +19,7 @@ import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeP
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.DamageGlassCutterRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.KeepPaintbrushRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedDivisionRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedUnstableRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.ItemAndFluidFuelRecipe
@@ -1547,15 +1548,17 @@ class ModRecipeProvider(
 				output: DeferredBlock<*>,
 				ingredient: Ingredient,
 			) {
-				shapedRecipe(
-					output.asItem(),
-					"III,IDI,IPI",
-					mapOf(
-						'I' to ingredient,
-						'D' to tag.asIngredient(),
-						'P' to ModItems.PAINTBRUSH.asIngredient()
+				SpecialShapedRecipeBuilder(output.asItem())
+					.type("keep_paintbrush", ::KeepPaintbrushRecipe)
+					.pattern(
+						"III",
+						"IDI",
+						"IPI"
 					)
-				).save(recipeOutput)
+					.define('I', ingredient)
+					.define('D', tag.asIngredient())
+					.define('P', ModItems.PAINTBRUSH.asIngredient())
+					.save(recipeOutput)
 			}
 
 			makeColoredRecipe(ModBlocks.getColoredStone(color), Tags.Items.STONES.asIngredient())
