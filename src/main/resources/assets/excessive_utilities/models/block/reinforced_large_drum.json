@@ -1,6 +1,6 @@
 {
   "loader": "neoforge:obj",
-  "model": "excessive_utilities:models/block/drum_small.obj",
+  "model": "excessive_utilities:models/block/drum_large.obj",
   "mtl_override": "excessive_utilities:models/block/reinforced_large_drum.mtl",
   "automatic_culling": false,
   "shade_quads": true,
