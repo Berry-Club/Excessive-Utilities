@@ -49,7 +49,6 @@ object ClientEvents {
 			ModBlocks.GLASS_BRICKS.get(),
 			ModBlocks.CARVED_GLASS.get(),
 			ModBlocks.GOLDEN_EDGED_GLASS.get(),
-			ModBlocks.GLOWING_GLASS.get(),
 			ModBlocks.BLOCK_OF_UNSTABLE_INGOT.get(),
 			ModBlocks.PATTERNED_GLASS.get(),
 		)
@@ -65,7 +64,8 @@ object ClientEvents {
 			ModBlocks.ETHEREAL_GLASS.get(),
 			ModBlocks.INVERTED_ETHEREAL_GLASS.get(),
 			ModBlocks.OBSIDIAN_GLASS.get(),
-			ModBlocks.REINFORCED_DARK_GLASS.get()
+			ModBlocks.REINFORCED_DARK_GLASS.get(),
+			ModBlocks.GLOWING_GLASS.get()
 		)
 
 		for (block in translucent) {
