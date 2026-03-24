@@ -149,26 +149,6 @@ object ClientEvents {
 			ModItems.UNSTABLE_INGOT
 		)
 
-		for (color in DyeColor.entries) {
-			event.register(
-				{ stack, tintIndex -> color.textureDiffuseColor },
-				ModBlocks.getColoredStone(color).get(),
-				ModBlocks.getColoredCobblestone(color).get(),
-				ModBlocks.getColoredStoneBricks(color).get(),
-				ModBlocks.getColoredBricks(color).get(),
-				ModBlocks.getColoredPlanks(color).get(),
-				ModBlocks.getColoredCoalBlock(color).get(),
-				ModBlocks.getColoredRedstoneBlock(color).get(),
-				ModBlocks.getColoredRedstoneLamp(color).get(),
-				ModBlocks.getColoredLapisBlock(color).get(),
-				ModBlocks.getColoredObsidian(color).get(),
-				ModBlocks.getColoredQuartz(color).get(),
-				ModBlocks.getColoredSoulSand(color).get(),
-				ModBlocks.getColoredGlowstone(color).get(),
-				ModBlocks.getLapisCaelestis(color).get()
-			)
-		}
-
 		event.register(
 			{ stack, tintIndex ->
 				if (tintIndex == 1) {
@@ -196,26 +176,6 @@ object ClientEvents {
 
 	@SubscribeEvent
 	fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
-
-		for (color in DyeColor.entries) {
-			event.register(
-				{ state, level, pos, tintIndex -> color.textureDiffuseColor },
-				ModBlocks.getColoredStone(color).get(),
-				ModBlocks.getColoredCobblestone(color).get(),
-				ModBlocks.getColoredStoneBricks(color).get(),
-				ModBlocks.getColoredBricks(color).get(),
-				ModBlocks.getColoredPlanks(color).get(),
-				ModBlocks.getColoredCoalBlock(color).get(),
-				ModBlocks.getColoredRedstoneBlock(color).get(),
-				ModBlocks.getColoredRedstoneLamp(color).get(),
-				ModBlocks.getColoredLapisBlock(color).get(),
-				ModBlocks.getColoredObsidian(color).get(),
-				ModBlocks.getColoredQuartz(color).get(),
-				ModBlocks.getColoredSoulSand(color).get(),
-				ModBlocks.getColoredGlowstone(color).get(),
-				ModBlocks.getLapisCaelestis(color).get()
-			)
-		}
 
 		event.register(
 			DrumBlockEntity::getColor,
