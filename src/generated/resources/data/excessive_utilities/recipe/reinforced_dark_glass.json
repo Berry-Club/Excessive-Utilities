@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "minecraft:tinted_glass"
+    },
+    "O": {
+      "tag": "c:obsidians/normal"
+    }
+  },
+  "pattern": [
+    "GOG",
+    "O O",
+    "GOG"
+  ],
+  "result": {
+    "count": 4,
+    "id": "excessive_utilities:reinforced_dark_glass"
+  }
+}

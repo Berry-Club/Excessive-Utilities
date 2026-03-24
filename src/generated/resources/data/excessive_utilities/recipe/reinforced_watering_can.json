@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:bowl"
+    },
+    "I": {
+      "item": "excessive_utilities:bedrockium_ingot"
+    },
+    "S": {
+      "item": "excessive_utilities:soul_fragment"
+    }
+  },
+  "pattern": [
+    "IS ",
+    "IBI",
+    " I "
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:reinforced_watering_can"
+  }
+}

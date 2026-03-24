@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "excessive_utilities:gravel_bricks"
+    },
+    "S": {
+      "item": "minecraft:stone_brick_slab"
+    }
+  },
+  "pattern": [
+    "SGS",
+    "GGG",
+    "SGS"
+  ],
+  "result": {
+    "count": 8,
+    "id": "excessive_utilities:gravel_road"
+  }
+}

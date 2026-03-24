@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:ender_pearls"
+    },
+    "I": {
+      "item": "excessive_utilities:ender_infused_obsidian"
+    },
+    "O": {
+      "tag": "c:obsidians/normal"
+    }
+  },
+  "pattern": [
+    "EIE",
+    " I ",
+    "OOO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_collector"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:ingots/gold"
+    },
+    "R": {
+      "tag": "c:storage_blocks/redstone"
+    },
+    "S": {
+      "tag": "excessive_utilities:speed_upgrades"
+    }
+  },
+  "pattern": [
+    "SRR",
+    "SGS",
+    "GRR"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:depth_first_search_upgrade"
+  }
+}

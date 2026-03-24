@@ -13,6 +13,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.g
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.generator_fuel.SingleItemFuelRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
+import dev.aaronhowser.mods.excessive_utilities.item.SunCrystalItem
 import dev.aaronhowser.mods.excessive_utilities.item.UnstableIngotItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
@@ -77,6 +78,222 @@ class ModRecipeProvider(
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
 		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
+
+		shapedRecipe(
+			ModBlocks.SWIRLING_GLASS.toStack(5),
+			" G ,GGG, G ",
+			mapOf(
+				'G' to ModBlocks.THICKENED_GLASS.asIngredient()
+			)
+		)
+
+		shapedRecipe(
+			ModItems.PAINTBRUSH,
+			"S  , T ,  T",
+			mapOf(
+				'S' to Tags.Items.STRINGS.asIngredient(),
+				'T' to Tags.Items.RODS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.WATERING_CAN,
+			"IM ,IBI, I ",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'M' to Items.BONE_MEAL.asIngredient(),
+				'B' to Items.BOWL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.REINFORCED_WATERING_CAN,
+			"IS ,IBI, I ",
+			mapOf(
+				'I' to ModItems.BEDROCKIUM_INGOT.asIngredient(),
+				'S' to ModItems.SOUL_FRAGMENT.asIngredient(),
+				'B' to Items.BOWL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.PORTABLE_SCANNER,
+			"III,ERI,III",
+			mapOf(
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'E' to Items.ENDER_EYE.asIngredient(),
+				'R' to Tags.Items.DUSTS_REDSTONE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.DEPTH_FIRST_SEARCH_UPGRADE,
+			"SRR,SGS,GRR",
+			mapOf(
+				'S' to ModItemTagsProvider.SPEED_UPGRADES.asIngredient(),
+				'R' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
+				'G' to Tags.Items.INGOTS_GOLD.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.BREADTH_FIRST_SEARCH_UPGRADE,
+			"RRR,SDS,RRR",
+			mapOf(
+				'S' to ModItemTagsProvider.SPEED_UPGRADES.asIngredient(),
+				'R' to Tags.Items.STORAGE_BLOCKS_REDSTONE.asIngredient(),
+				'D' to ModItems.DEPTH_FIRST_SEARCH_UPGRADE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.BLACKOUT_CURTAIN.toStack(12),
+			"WW,WW,WW",
+			mapOf(
+				'W' to ItemTags.WOOL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_CORE.toStack(),
+			"WEW,EIE,WEW",
+			mapOf(
+				'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
+				'E' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient(),
+				'I' to Items.ENDER_EYE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_COLLECTOR,
+			"EIE, I ,OOO",
+			mapOf(
+				'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
+				'I' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient(),
+				'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_THERMIC_PUMP,
+			"ODO,LEW,OPO",
+			mapOf(
+				'O' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient(),
+				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
+				'L' to Items.LAVA_BUCKET.asIngredient(),
+				'W' to Items.WATER_BUCKET.asIngredient(),
+				'E' to Items.ENDER_EYE.asIngredient(),
+				'P' to Items.IRON_PICKAXE.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.QED,
+			"ICI,EDE,EEE",
+			mapOf(
+				'I' to Items.ENDER_EYE.asIngredient(),
+				'C' to Tags.Items.PLAYER_WORKSTATIONS_CRAFTING_TABLES.asIngredient(),
+				'E' to ModBlocks.ENDER_INFUSED_OBSIDIAN.asIngredient(),
+				'D' to ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.EDGED_STONE_BRICKS.toStack(9),
+			"SBS,BBB,SBS",
+			mapOf(
+				'S' to Tags.Items.STONES.asIngredient(),
+				'B' to Items.STONE_BRICKS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.ENDER_SAND_ALLOY.toStack(4),
+			"ES,SE",
+			mapOf(
+				'E' to Items.END_STONE.asIngredient(),
+				'S' to Tags.Items.SANDSTONE_BLOCKS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.FROSTED_STONE.toStack(5),
+			" I ,ISI, I ",
+			mapOf(
+				'I' to Items.ICE.asIngredient(),
+				'S' to Tags.Items.STONES.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.GLASS_BRICKS.toStack(4),
+			"GG,GG",
+			mapOf(
+				'G' to ModBlocks.THICKENED_GLASS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.GRAVEL_BRICKS,
+			"GG,GG",
+			mapOf(
+				'G' to Tags.Items.GRAVELS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.GRAVEL_ROAD.toStack(8),
+			"SGS,GGG,SGS",
+			mapOf(
+				'S' to Items.STONE_BRICK_SLAB.asIngredient(),
+				'G' to ModBlocks.GRAVEL_BRICKS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.DIAGONAL_WOOD.toStack(5),
+			"SP,PS",
+			mapOf(
+				'S' to ItemTags.WOODEN_STAIRS.asIngredient(),
+				'P' to ItemTags.PLANKS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.GOLDEN_EDGED_GLASS,
+			"NNN,NGN,NNN",
+			mapOf(
+				'N' to Tags.Items.NUGGETS_GOLD.asIngredient(),
+				'G' to Tags.Items.GLASS_BLOCKS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.HEART_GLASS.toStack(6),
+			"GPG,GGG, G ",
+			mapOf(
+				'G' to ModBlocks.THICKENED_GLASS.asIngredient(),
+				'P' to Tags.Items.DYES_PINK.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.OBSIDIAN_GLASS.toStack(4),
+			"GOG,O O,GOG",
+			mapOf(
+				'G' to ModBlocks.THICKENED_GLASS.asIngredient(),
+				'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModBlocks.REINFORCED_DARK_GLASS.toStack(4),
+			"GOG,O O,GOG",
+			mapOf(
+				'G' to Blocks.TINTED_GLASS.asIngredient(),
+				'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient()
+			)
+		).save(recipeOutput)
 
 		shapedRecipe(
 			ModItems.GOLDEN_LASSO,
@@ -1090,7 +1307,12 @@ class ModRecipeProvider(
 			mapOf(
 				'E' to ModItems.EVIL_INFUSED_IRON_INGOT.asIngredient(),
 				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
-				'C' to ModItems.SUN_CRYSTAL.asIngredient(),
+				'C' to ModItems.SUN_CRYSTAL
+					.withComponent(
+						ModDataComponents.CHARGE.get(),
+						SunCrystalItem.MAX_CHARGE
+					)
+					.asIngredient(),
 				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
 			)
 		).save(recipeOutput)
@@ -1353,6 +1575,34 @@ class ModRecipeProvider(
 	}
 
 	private fun buildShapelessRecipes(recipeOutput: RecipeOutput) {
+		shapelessRecipe(
+			ModBlocks.SQUARE_GLASS,
+			listOf(
+				ModBlocks.THICKENED_GLASS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapelessRecipe(
+			ModBlocks.CARVED_GLASS,
+			listOf(
+				ModBlocks.THICKENED_GLASS.asIngredient(),
+				Tags.Items.GUNPOWDERS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapelessRecipe(
+			ModBlocks.EMINENCE_STONE,
+			4,
+			listOf(
+				Tags.Items.DYES_MAGENTA.asIngredient(),
+				Tags.Items.DYES_PURPLE.asIngredient(),
+				Tags.Items.STONES.asIngredient(),
+				Tags.Items.STONES.asIngredient(),
+				Tags.Items.STONES.asIngredient(),
+				Tags.Items.STONES.asIngredient(),
+			)
+		).save(recipeOutput)
+
 		shapelessRecipe(
 			ModBlocks.SOUND_MUFFLER,
 			listOf(
@@ -2491,7 +2741,6 @@ class ModRecipeProvider(
 		)
 
 		for ((name, list) in types) {
-
 			for (i in list.indices) {
 				val level = i + 1
 				val nextLevel = level + 1
@@ -2513,6 +2762,54 @@ class ModRecipeProvider(
 				).save(recipeOutput, modLoc("compressed_${name}/${nextLevel}_to_${level}"))
 			}
 		}
+
+		shapedRecipe(
+			ModBlocks.getCompressedCobblestone(1),
+			"CCC,CCC,CCC",
+			mapOf('C' to Tags.Items.COBBLESTONES_NORMAL.asIngredient())
+		).save(recipeOutput, modLoc("compressed_cobblestone/from_cobblestone"))
+
+		shapelessRecipe(
+			Items.COBBLESTONE,
+			9,
+			listOf(ModBlocks.getCompressedCobblestone(1).asIngredient())
+		).save(recipeOutput, modLoc("compressed_cobblestone/to_cobblestone"))
+
+		shapedRecipe(
+			ModBlocks.getCompressedGravel(1),
+			"CCC,CCC,CCC",
+			mapOf('C' to Tags.Items.GRAVELS.asIngredient())
+		).save(recipeOutput, modLoc("compressed_gravel/from_gravel"))
+
+		shapelessRecipe(
+			Items.GRAVEL,
+			9,
+			listOf(ModBlocks.getCompressedGravel(1).asIngredient())
+		).save(recipeOutput, modLoc("compressed_gravel/to_gravel"))
+
+		shapedRecipe(
+			ModBlocks.getCompressedDirt(1),
+			"CCC,CCC,CCC",
+			mapOf('C' to ItemTags.DIRT.asIngredient())
+		).save(recipeOutput, modLoc("compressed_dirt/from_dirt"))
+
+		shapelessRecipe(
+			Items.DIRT,
+			9,
+			listOf(ModBlocks.getCompressedDirt(1).asIngredient())
+		).save(recipeOutput, modLoc("compressed_dirt/to_dirt"))
+
+		shapedRecipe(
+			ModBlocks.getCompressedSand(1),
+			"CCC,CCC,CCC",
+			mapOf('C' to ItemTags.SAND.asIngredient())
+		).save(recipeOutput, modLoc("compressed_sand/from_sand"))
+
+		shapelessRecipe(
+			Items.SAND,
+			9,
+			listOf(ModBlocks.getCompressedSand(1).asIngredient())
+		).save(recipeOutput, modLoc("compressed_sand/to_sand"))
 	}
 
 }

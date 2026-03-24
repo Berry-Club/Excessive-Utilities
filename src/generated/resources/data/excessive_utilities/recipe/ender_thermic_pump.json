@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "tag": "c:gems/diamond"
+    },
+    "E": {
+      "item": "minecraft:ender_eye"
+    },
+    "L": {
+      "item": "minecraft:lava_bucket"
+    },
+    "O": {
+      "item": "excessive_utilities:ender_infused_obsidian"
+    },
+    "P": {
+      "item": "minecraft:iron_pickaxe"
+    },
+    "W": {
+      "item": "minecraft:water_bucket"
+    }
+  },
+  "pattern": [
+    "ODO",
+    "LEW",
+    "OPO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:ender_thermic_pump"
+  }
+}

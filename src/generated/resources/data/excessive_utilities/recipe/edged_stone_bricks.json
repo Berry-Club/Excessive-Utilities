@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:stone_bricks"
+    },
+    "S": {
+      "tag": "c:stones"
+    }
+  },
+  "pattern": [
+    "SBS",
+    "BBB",
+    "SBS"
+  ],
+  "result": {
+    "count": 9,
+    "id": "excessive_utilities:edged_stone_bricks"
+  }
+}

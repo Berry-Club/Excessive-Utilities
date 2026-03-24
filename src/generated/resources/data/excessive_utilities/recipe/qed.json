@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "tag": "c:player_workstations/crafting_tables"
+    },
+    "D": {
+      "item": "excessive_utilities:diamond_etched_computational_matrix"
+    },
+    "E": {
+      "item": "excessive_utilities:ender_infused_obsidian"
+    },
+    "I": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "pattern": [
+    "ICI",
+    "EDE",
+    "EEE"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:qed"
+  }
+}
