@@ -359,6 +359,7 @@ class ModBlockTagsProvider(
 			val soulSand = ModBlocks.getColoredSoulSand(color).get()
 			val glowstone = ModBlocks.getColoredGlowstone(color).get()
 			val redstoneLamp = ModBlocks.getColoredRedstoneLamp(color).get()
+			val lapisCaelestis = ModBlocks.getLapisCaelestis(color).get()
 
 			tag(tagName)
 				.add(
@@ -374,7 +375,8 @@ class ModBlockTagsProvider(
 					quartz,
 					soulSand,
 					glowstone,
-					redstoneLamp
+					redstoneLamp,
+					lapisCaelestis
 				)
 
 			tag(PAINTBRUSH_STONES).add(stone)
@@ -390,6 +392,7 @@ class ModBlockTagsProvider(
 			tag(PAINTBRUSH_REDSTONE_BLOCKS).add(redstone)
 			tag(PAINTBRUSH_REDSTONE_LAMPS).add(redstoneLamp)
 			tag(PAINTBRUSH_SOUL_SANDS).add(soulSand)
+			tag(PAINTBRUSH_LAPIS_CAELESTI).add(lapisCaelestis)
 		}
 
 		tag(PAINTBRUSH_STONES)
@@ -454,6 +457,7 @@ class ModBlockTagsProvider(
 			.add(*ModBlocks.COLORED_OBSIDIANS.values.toTypedArray())
 			.add(*ModBlocks.COLORED_QUARTZES.values.toTypedArray())
 			.add(*ModBlocks.COLORED_SOUL_SANDS.values.toTypedArray())
+			.add(*ModBlocks.LAPIS_CAELESTI.values.toTypedArray())
 
 		tag(Tags.Blocks.STONES)
 			.add(*ModBlocks.COLORED_STONES.values.toTypedArray())
@@ -561,6 +565,7 @@ class ModBlockTagsProvider(
 		val PAINTBRUSH_REDSTONE_BLOCKS = create("paintbrush_redstone_blocks")
 		val PAINTBRUSH_REDSTONE_LAMPS = create("paintbrush_redstone_lamps")
 		val PAINTBRUSH_SOUL_SANDS = create("paintbrush_soul_sands")
+		val PAINTBRUSH_LAPIS_CAELESTI = create("paintbrush_lapis_caelesti")
 
 	}
 

@@ -184,6 +184,12 @@ class PaintbrushItem(properties: Properties) : Item(properties) {
 				return true
 			}
 
+			if (blockState.isBlock(ModBlockTagsProvider.PAINTBRUSH_LAPIS_CAELESTI)) {
+				val newState = ModBlocks.getLapisCaelestis(color).defaultBlockState()
+				level.setBlockAndUpdate(pos, newState)
+				return true
+			}
+
 			return false
 		}
 	}
