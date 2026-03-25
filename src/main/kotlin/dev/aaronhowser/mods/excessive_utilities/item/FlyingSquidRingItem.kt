@@ -13,8 +13,10 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
+import top.theillusivec4.curios.api.SlotContext
+import top.theillusivec4.curios.api.type.capability.ICurioItem
 
-class FlyingSquidRingItem(properties: Properties) : Item(properties) {
+class FlyingSquidRingItem(properties: Properties) : Item(properties), ICurioItem {
 
 	override fun shouldCauseReequipAnimation(
 		oldStack: ItemStack,
@@ -31,12 +33,33 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 		slotId: Int,
 		isSelected: Boolean
 	) {
+		tick(entity, stack)
+	}
 
-		if (entity is ServerPlayer) {
-			addGpConsumer(entity, stack)
+	override fun curioTick(slotContext: SlotContext, stack: ItemStack) {
+		tick(slotContext.entity(), stack)
+	}
+
+	companion object {
+		val DEFAULT_PROPERTIES: () -> Properties = {
+			Properties()
+				.stacksTo(1)
+				.component(ModDataComponents.CHARGE.get(), 0)
 		}
 
-		if (entity is Player && canPlayerUse(entity)) {
+		private fun tick(entity: Entity, stack: ItemStack) {
+			if (entity is ServerPlayer) {
+				addGpConsumer(entity, stack)
+			}
+
+			if (entity is Player && canPlayerUse(entity)) {
+				flyUp(entity, stack)
+			} else {
+				recharge(stack)
+			}
+		}
+
+		private fun flyUp(entity: Player, stack: ItemStack) {
 			val charge = stack.getOrDefault(ModDataComponents.CHARGE.get(), 0)
 			if (charge <= 0) return
 
@@ -50,7 +73,9 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 
 			entity.deltaMovement = Vec3(movement.x, newDy, movement.z)
 			entity.resetFallDistance()
-		} else {
+		}
+
+		private fun recharge(stack: ItemStack) {
 			val maxCharge = ServerConfig.CONFIG.flyingSquidRingDurationTicks.get()
 			val currentCharge = stack.getOrDefault(ModDataComponents.CHARGE.get(), 0)
 			if (currentCharge >= maxCharge) return
@@ -60,15 +85,6 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties) {
 
 			val newCharge = (currentCharge + chargePerTick).toInt().coerceAtMost(maxCharge)
 			stack.set(ModDataComponents.CHARGE.get(), newCharge)
-		}
-
-	}
-
-	companion object {
-		val DEFAULT_PROPERTIES: () -> Properties = {
-			Properties()
-				.stacksTo(1)
-				.component(ModDataComponents.CHARGE.get(), 0)
 		}
 
 		private fun canPlayerUse(player: Player): Boolean {
