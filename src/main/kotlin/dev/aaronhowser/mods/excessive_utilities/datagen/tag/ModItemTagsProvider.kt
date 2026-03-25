@@ -349,11 +349,19 @@ class ModItemTagsProvider(
 			.addTags(
 				Tags.Items.MUSIC_DISCS
 			)
+
+		tag(RING_CURIO)
+			.add(
+				ModItems.ANGEL_RING,
+				ModItems.CHICKEN_WING_RING,
+				ModItems.RING_OF_THE_FLYING_SQUID
+			)
 	}
 
 	companion object {
 		private fun create(id: String): TagKey<Item> = ItemTags.create(ExcessiveUtilities.modResource(id))
 		private fun common(id: String): TagKey<Item> = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", id))
+		private fun curio(id: String): TagKey<Item> = ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", id))
 
 		val TRANSFER_NODE_UPGRADES = create("transfer_node_upgrades")
 		val RETRIEVAL_NODE_UPGRADES = create("retrieval_node_upgrades")
@@ -383,6 +391,8 @@ class ModItemTagsProvider(
 		val GIFTS_OF_EARTH = create("gifts_of_earth")
 		val DESCENDANTS_OF_WATER = create("descendants_of_water")
 		val SPICES_OF_AIR = create("spices_of_air")
+
+		val RING_CURIO = curio("ring")
 	}
 
 }
