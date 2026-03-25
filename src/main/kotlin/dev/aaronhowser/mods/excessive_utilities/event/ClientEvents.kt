@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.AngelWingRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
+import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.ManualMillBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.*
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.FlatTransferNodeEntityRenderer
@@ -201,10 +202,8 @@ object ClientEvents {
 
 	@SubscribeEvent
 	fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
-		event.registerItem(
-			OpiniumCoreBEWLR.ClientItemExtensions,
-			ModItems.OPINIUM_CORE.get()
-		)
+		event.registerItem(OpiniumCoreBEWLR.ClientItemExtensions, ModItems.OPINIUM_CORE.get())
+		event.registerItem(ManualMillBEWLR.ClientItemExtensions, ModBlocks.MANUAL_MILL.asItem())
 	}
 
 	@SubscribeEvent
