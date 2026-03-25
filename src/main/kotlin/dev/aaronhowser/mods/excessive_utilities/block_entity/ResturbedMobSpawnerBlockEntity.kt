@@ -1,15 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.datafixers.util.Either
+import dev.aaronhowser.mods.aaron.block_entity.SyncingBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponents
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientGamePacketListener
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.Entity
@@ -26,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState
 class ResturbedMobSpawnerBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.RESTURBED_MOB_SPAWNER.get(), pos, blockState), Spawner {
+) : SyncingBlockEntity(ModBlockEntityTypes.RESTURBED_MOB_SPAWNER.get(), pos, blockState), Spawner {
 
 	val spawner: BaseSpawner =
 		object : BaseSpawner() {
@@ -95,8 +93,6 @@ class ResturbedMobSpawnerBlockEntity(
 		spawner.load(level, blockPos, tag)
 	}
 
-	// Syncs with client
-	override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 	override fun getUpdateTag(pRegistries: HolderLookup.Provider): CompoundTag {
 		val tag = saveCustomOnly(pRegistries)
 		tag.remove("SpawnPotentials")

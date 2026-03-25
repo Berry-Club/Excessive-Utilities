@@ -35,7 +35,6 @@ class EnderPorcupineBER(
 		val y = offset.y.toFloat()
 		val z = offset.z.toFloat()
 
-
 		val targetColor = ClientConfig.CONFIG.enderPorcupineCurrentTargetColor.get()
 
 		val targetArgb = ARGB.fromInt(targetColor)

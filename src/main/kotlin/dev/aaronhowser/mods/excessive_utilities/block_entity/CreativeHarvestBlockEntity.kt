@@ -1,22 +1,21 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
+import dev.aaronhowser.mods.aaron.block_entity.SyncingBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
-import net.minecraft.network.protocol.Packet
-import net.minecraft.network.protocol.game.ClientGamePacketListener
-import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
 class CreativeHarvestBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.CREATIVE_HARVEST.get(), pos, blockState) {
+) : SyncingBlockEntity(ModBlockEntityTypes.CREATIVE_HARVEST.get(), pos, blockState) {
+
+	override val syncImmediately: Boolean = true
 
 	var mimicBlockState: BlockState = Blocks.STONE.defaultBlockState()
 		set(value) {
@@ -38,10 +37,6 @@ class CreativeHarvestBlockEntity(
 		val readBLockState = NbtUtils.readBlockState(registries.lookupOrThrow(Registries.BLOCK), blockStateTag)
 		mimicBlockState = readBLockState
 	}
-
-	// Syncs with client
-	override fun getUpdateTag(pRegistries: HolderLookup.Provider): CompoundTag = saveWithoutMetadata(pRegistries)
-	override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 
 	companion object {
 		const val MIMIC_BLOCK_NBT = "MimicBlock"

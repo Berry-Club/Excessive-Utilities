@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
+import dev.aaronhowser.mods.aaron.block_entity.SyncingBlockEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.excessive_utilities.block.EnderCollectorBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -9,7 +10,6 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -19,7 +19,9 @@ import net.neoforged.neoforge.items.ItemHandlerHelper
 class EnderCollectorBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.ENDER_COLLECTOR.get(), pos, blockState) {
+) : SyncingBlockEntity(ModBlockEntityTypes.ENDER_COLLECTOR.get(), pos, blockState) {
+
+	override val syncImmediately: Boolean = true
 
 	var radius: Double = 0.5
 		private set(value) {
