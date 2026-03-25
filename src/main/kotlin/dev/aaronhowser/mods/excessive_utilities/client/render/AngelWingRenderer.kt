@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.math.Axis
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
-import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import net.minecraft.client.model.EntityModel
 import net.minecraft.client.model.HumanoidModel
@@ -18,6 +17,7 @@ import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.client.ICurioRenderer
 import kotlin.math.cos
 
+// TODO: GET NEW TEXTURES!!!!!! DO NOT SHIP WITH THESE!!!!!!!!
 class AngelWingRenderer : ICurioRenderer {
 
 	override fun <T : LivingEntity, M : EntityModel<T?>> render(
