@@ -10,14 +10,12 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreB
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.*
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.FlatTransferNodeEntityRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.MagicalBoomerangEntityRenderer
-import dev.aaronhowser.mods.excessive_utilities.client.render.layer.AngelRingWingsLayer
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.ClientKeyHandler
 import dev.aaronhowser.mods.excessive_utilities.item.*
 import dev.aaronhowser.mods.excessive_utilities.registry.*
 import net.minecraft.client.renderer.ItemBlockRenderTypes
 import net.minecraft.client.renderer.RenderType
-import net.minecraft.client.renderer.entity.player.PlayerRenderer
 import net.minecraft.client.renderer.item.ItemProperties
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.DyeColor
@@ -129,19 +127,6 @@ object ClientEvents {
 		) { stack, level, entity, seed ->
 			if (entity != null && entity.isUsingItem && entity.getUseItem() == stack) 1.0f else 0.0f
 		}
-	}
-
-	@SubscribeEvent
-	fun addEntityRenderLayers(event: EntityRenderersEvent.AddLayers) {
-
-		for (skin in event.skins) {
-			val renderer = event.getSkin(skin) as? PlayerRenderer
-			if (renderer != null) {
-				val layer = AngelRingWingsLayer(renderer)
-				renderer.addLayer(layer)
-			}
-		}
-
 	}
 
 	@SubscribeEvent
