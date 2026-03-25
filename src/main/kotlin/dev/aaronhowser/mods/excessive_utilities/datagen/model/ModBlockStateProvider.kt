@@ -217,7 +217,18 @@ class ModBlockStateProvider(
 			.texture("antenna_top", antennaTopOn)
 			.texture("side", sideOn)
 
-		simpleBlockWithItem(block, modelOn)
+		getVariantBuilder(block)
+			.forAllStates {
+				val enabled = it.getValue(EnderCollectorBlock.ENABLED)
+				val model = if (enabled) modelOn else modelOff
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.build()
+			}
+
+		simpleBlockItem(block, modelOn)
 	}
 
 	private fun indexer() {

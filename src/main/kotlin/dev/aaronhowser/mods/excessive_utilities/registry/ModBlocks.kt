@@ -51,8 +51,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("magnum_torch", ::MagnumTorchBlock)
 	val CURSED_EARTH: DeferredBlock<CursedEarthBlock> =
 		registerBlock("cursed_earth", ::CursedEarthBlock)
-	val ENDER_COLLECTOR =
-		basicBlock("ender_collector")
+	val ENDER_COLLECTOR: DeferredBlock<EnderCollectorBlock> =
+		registerBlock("ender_collector", ::EnderCollectorBlock)
 	val TRADING_POST =
 		basicBlock("trading_post")
 	val ENDER_PORCUPINE: DeferredBlock<EnderPorcupineBlock> =

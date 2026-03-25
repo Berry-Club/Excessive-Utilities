@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "enabled=false": {
+      "model": "excessive_utilities:block/ender_collector_off"
+    },
+    "enabled=true": {
       "model": "excessive_utilities:block/ender_collector_on"
     }
   }
