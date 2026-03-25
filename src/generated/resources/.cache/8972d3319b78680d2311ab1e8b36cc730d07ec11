@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-25T11:41:47.4221602	Block States: excessive_utilities
+// 1.21.1	2026-03-25T11:43:48.0922553	Block States: excessive_utilities
 8fb96ad4646ce4b9716e8d3e8a34229fdc507e4c assets/excessive_utilities/blockstates/advanced_filing_cabinet.json
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 65a90e7e3954ee4e5c32067e0f932018b74e4f59 assets/excessive_utilities/blockstates/antenna.json
@@ -303,7 +303,7 @@ b3a00472f3446de9cf4246958ef6e8df37ae9449 assets/excessive_utilities/blockstates/
 c312356ea69821421d641ec0734fbcbd22cfb40a assets/excessive_utilities/blockstates/disenchantment_generator.json
 9f6105b73e6a49d0ceba7a6ed4da77d6cd8ca6f4 assets/excessive_utilities/blockstates/dragon_egg_mill.json
 ed222b623a7c2de85792e975bda51c038812cb47 assets/excessive_utilities/blockstates/enchanter.json
-24b55e553583d7d7a813db9a5cabf467e27e6a08 assets/excessive_utilities/blockstates/ender_collector.json
+800a99dd0a1f0303c1bb07f615441da3daccfee4 assets/excessive_utilities/blockstates/ender_collector.json
 98cfe7793b88fc8595b46c479e11f394c0921428 assets/excessive_utilities/blockstates/ender_core.json
 1496920d7aac4cfad810bb602d4031a6d76cd874 assets/excessive_utilities/blockstates/ender_flux_crystal.json
 868f8c3f994eb4515354af351100fe71bd51a9bc assets/excessive_utilities/blockstates/ender_generator.json

@@ -219,8 +219,8 @@ class ModBlockStateProvider(
 
 		getVariantBuilder(block)
 			.forAllStates {
-				val enabled = it.getValue(EnderCollectorBlock.ENABLED)
-				val model = if (enabled) modelEnabled else modelDisabled
+				val enabled = it.getValue(EnderCollectorBlock.POWERED)
+				val model = if (enabled) modelDisabled else modelEnabled
 
 				ConfiguredModel
 					.builder()

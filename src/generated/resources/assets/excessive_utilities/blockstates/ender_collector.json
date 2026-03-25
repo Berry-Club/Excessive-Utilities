@@ -1,10 +1,10 @@
 {
   "variants": {
-    "enabled=false": {
-      "model": "excessive_utilities:block/ender_collector_disabled"
-    },
-    "enabled=true": {
+    "powered=false": {
       "model": "excessive_utilities:block/ender_collector"
+    },
+    "powered=true": {
+      "model": "excessive_utilities:block/ender_collector_disabled"
     }
   }
 }
