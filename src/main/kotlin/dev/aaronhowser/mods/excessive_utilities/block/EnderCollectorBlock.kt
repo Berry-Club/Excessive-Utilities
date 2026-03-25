@@ -1,9 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderCollectorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
@@ -19,6 +23,7 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
@@ -75,6 +80,24 @@ class EnderCollectorBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Ent
 			ModBlockEntityTypes.ENDER_COLLECTOR.get(),
 			EnderCollectorBlockEntity::tick
 		)
+	}
+
+	override fun useWithoutItem(
+		state: BlockState,
+		level: Level,
+		pos: BlockPos,
+		player: Player,
+		hitResult: BlockHitResult
+	): InteractionResult {
+		if (level.isServerSide) {
+			val blockEntity = level.getBlockEntity(pos)
+			if (blockEntity is EnderCollectorBlockEntity) {
+				blockEntity.cycleRadius(reverse = player.isSecondaryUseActive)
+				player.tell(blockEntity.radius.toString())
+			}
+		}
+
+		return InteractionResult.SUCCESS
 	}
 
 	companion object {
