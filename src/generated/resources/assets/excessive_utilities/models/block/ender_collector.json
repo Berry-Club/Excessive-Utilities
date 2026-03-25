@@ -169,19 +169,19 @@
           "texture": "#antenna_top"
         },
         "east": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         },
         "north": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         },
         "south": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         },
         "up": {
           "texture": "#antenna_top"
         },
         "west": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         }
       },
       "from": [
@@ -201,19 +201,19 @@
           "texture": "#antenna_top"
         },
         "east": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         },
         "north": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         },
         "south": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         },
         "up": {
           "texture": "#antenna_top"
         },
         "west": {
-          "texture": "#antenna_top"
+          "texture": "#side"
         }
       },
       "from": [

@@ -198,8 +198,12 @@ class ModBlockStateProvider(
 				from(6f, 10f, 1f)
 				to(10f, 14f, 15f)
 
-				allFaces { _, fb ->
-					fb.texture("#antenna_top")
+				allFaces { dir, fb ->
+					if (dir.axis == Direction.Axis.Y) {
+						fb.texture("#antenna_top")
+					} else {
+						fb.texture("#side")
+					}
 				}
 			}
 
@@ -207,8 +211,12 @@ class ModBlockStateProvider(
 				from(1f, 10f, 6f)
 				to(15f, 14f, 10f)
 
-				allFaces { _, fb ->
-					fb.texture("#antenna_top")
+				allFaces { dir, fb ->
+					if (dir.axis == Direction.Axis.Y) {
+						fb.texture("#antenna_top")
+					} else {
+						fb.texture("#side")
+					}
 				}
 			}
 
