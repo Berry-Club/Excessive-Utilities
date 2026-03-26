@@ -192,23 +192,23 @@ object ModBlockLang {
 			}
 
 			for (i in 1..ModBlocks.COMPRESSED_COBBLESTONES.size) {
-				val amount = when (i) {
-					1 -> "Single"
-					2 -> "Double"
-					3 -> "Triple"
-					4 -> "Quadruple"
-					5 -> "Quintuple"
-					6 -> "Sextuple"
-					7 -> "Septuple"
-					8 -> "Octuple"
-					9 -> "Nonuple"
-					10 -> "Decuple"
-					11 -> "Undecuple"
-					12 -> "Duodecuple"
-					13 -> "Tredecuple"
-					14 -> "Quattuordecuple"
-					15 -> "Quindecuple"
-					16 -> "Sexdecuple"
+				val amountString = when (i) {
+					1 -> ""
+					2 -> "Double "
+					3 -> "Triple "
+					4 -> "Quadruple "
+					5 -> "Quintuple "
+					6 -> "Sextuple "
+					7 -> "Septuple "
+					8 -> "Octuple "
+					9 -> "Nonuple "
+					10 -> "Decuple "
+					11 -> "Undecuple "
+					12 -> "Duodecuple "
+					13 -> "Tredecuple "
+					14 -> "Quattuordecuple "
+					15 -> "Quindecuple "
+					16 -> "Sexdecuple "
 					else -> "$i"
 				}
 
@@ -218,11 +218,11 @@ object ModBlockLang {
 				val gravel = ModBlocks.getCompressedGravel(i)
 				val sand = ModBlocks.getCompressedSand(i)
 
-				addBlock(cobble, "$amount Compressed Cobblestone")
-				addBlock(cobbledDeepslate, "$amount Compressed Cobbled Deepslate")
-				addBlock(dirt, "$amount Compressed Dirt")
-				addBlock(gravel, "$amount Compressed Gravel")
-				addBlock(sand, "$amount Compressed Sand")
+				addBlock(cobble, amountString + "Compressed Cobblestone")
+				addBlock(cobbledDeepslate, amountString + "Compressed Cobbled Deepslate")
+				addBlock(dirt, amountString + "Compressed Dirt")
+				addBlock(gravel, amountString + "Compressed Gravel")
+				addBlock(sand, amountString + "Compressed Sand")
 			}
 		}
 	}
