@@ -19,7 +19,7 @@ class FluidTransferNodeScreen(
 		get() = 22
 
 	companion object {
-		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/fluid_transfer_node.png"), 176, 166)
+		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/fluid_transfer_node.png"), 176, 190)
 	}
 
 }

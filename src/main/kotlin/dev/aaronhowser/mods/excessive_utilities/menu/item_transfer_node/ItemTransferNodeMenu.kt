@@ -43,12 +43,12 @@ class ItemTransferNodeMenu(
 	}
 
 	override fun addSlots() {
-		val filterSlot = FilteredSlot(filterContainer, 0, 8, 58) { it.isItem(ModItemTagsProvider.FILTERS) }
+		val filterSlot = FilteredSlot(filterContainer, 0, 153, 5) { it.isItem(ModItemTagsProvider.FILTERS) }
 		this.addSlot(filterSlot)
 
 		for (i in 0 until TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE) {
 			val x = 35 + i * 18
-			val y = 58
+			val y = 68
 
 			val slot = FilteredSlot(upgradesContainer, i, x, y) {
 				it.isItem(ModItemTagsProvider.TRANSFER_NODE_UPGRADES) || it.isItem(ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES)
