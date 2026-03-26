@@ -15,13 +15,12 @@ class EUFurnaceScreen(
 ) : BaseScreen<EUFurnaceMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val inventoryLabelOffsetY: Int = 4
 
 	private lateinit var energyBar: EnergyBar
 
 	override fun baseInit() {
 		super.baseInit()
-
-		inventoryLabelY += 4
 
 		energyBar = EnergyBar(
 			x = leftPos + 7,

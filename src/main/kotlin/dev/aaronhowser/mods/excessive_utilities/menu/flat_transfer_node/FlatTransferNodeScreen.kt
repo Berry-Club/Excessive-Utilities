@@ -14,10 +14,8 @@ class FlatTransferNodeScreen(
 
 	override val background: ScreenBackground = if (menu.isItemNode()) ITEM_BACKGROUND else FLUID_BACKGROUND
 
-	override fun baseInit() {
-		titleLabelY -= 1
-		inventoryLabelY -= 1
-	}
+	override val titleLabelOffsetY: Int = -1
+	override val inventoryLabelOffsetY: Int = -1
 
 	companion object {
 		val FLUID_BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/fluid_flat_transfer_node.png"), 176, 166)

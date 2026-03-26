@@ -25,8 +25,6 @@ class FluidFilterScreen(
 	override fun baseInit() {
 		super.baseInit()
 
-		inventoryLabelY = 16
-
 		val buttonWidth = 120
 
 		invertButton = ChangingTextButton(

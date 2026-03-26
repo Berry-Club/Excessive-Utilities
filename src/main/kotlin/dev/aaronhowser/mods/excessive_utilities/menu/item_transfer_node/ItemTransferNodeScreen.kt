@@ -14,12 +14,7 @@ class ItemTransferNodeScreen(
 ) : BaseScreen<ItemTransferNodeMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-
-	override fun baseInit() {
-		super.baseInit()
-
-		inventoryLabelY += 8
-	}
+	override val inventoryLabelOffsetY: Int = 8
 
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/item_transfer_node.png"), 176, 173)
