@@ -44,6 +44,7 @@ class EnchanterMenu(
 	fun getMaxEnergy(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_ENERGY_DATA_INDEX)
 	fun getCurrentEnergy(): Int = enchanterContainerData.get(EnchanterBlockEntity.CURRENT_ENERGY_DATA_INDEX)
 	fun getProgress(): Int = enchanterContainerData.get(EnchanterBlockEntity.PROGRESS_DATA_INDEX)
+	fun getMaxProgress(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_PROGRESS_DATA_INDEX)
 
 	override fun addSlots() {
 		val leftInputSlot = Slot(enchanterContainer, EnchanterBlockEntity.LEFT_INPUT_SLOT, 56, 42)

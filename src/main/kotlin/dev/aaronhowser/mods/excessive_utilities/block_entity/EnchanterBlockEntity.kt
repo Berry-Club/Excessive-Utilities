@@ -84,6 +84,13 @@ class EnchanterBlockEntity(
 			setChanged()
 		}
 
+	private var maxProgress: Int = 0
+		set(value) {
+			if (field == value) return
+			field = value
+			setChanged()
+		}
+
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
 
@@ -183,6 +190,7 @@ class EnchanterBlockEntity(
 		if (recipe.id != recipeCache?.id) {
 			recipeCache = recipe
 			progress = 0
+			maxProgress = recipe.value.ticks
 		}
 
 		return recipe
@@ -197,6 +205,7 @@ class EnchanterBlockEntity(
 					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
 					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
 					PROGRESS_DATA_INDEX -> progress
+					MAX_PROGRESS_DATA_INDEX -> maxProgress
 					else -> -1
 				}
 			}
@@ -230,6 +239,7 @@ class EnchanterBlockEntity(
 
 	companion object {
 		const val PROGRESS_NBT = "Progress"
+		const val MAX_PROGRESS_NBT = "MaxProgress"
 		const val ENERGY_NBT = "Energy"
 
 		const val CONTAINER_SIZE = 4
@@ -238,9 +248,10 @@ class EnchanterBlockEntity(
 		const val OUTPUT_SLOT = 2
 		const val UPGRADE_SLOT = 3
 
-		const val CONTAINER_DATA_SIZE = 3
+		const val CONTAINER_DATA_SIZE = 4
 		const val CURRENT_ENERGY_DATA_INDEX = 0
 		const val MAX_ENERGY_DATA_INDEX = 1
 		const val PROGRESS_DATA_INDEX = 2
+		const val MAX_PROGRESS_DATA_INDEX = 3
 	}
 }
