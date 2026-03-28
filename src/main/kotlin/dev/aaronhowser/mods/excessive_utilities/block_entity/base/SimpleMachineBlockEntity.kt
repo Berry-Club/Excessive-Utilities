@@ -35,6 +35,9 @@ import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.wrapper.InvWrapper
 import net.neoforged.neoforge.items.wrapper.RangedWrapper
 
+// I thought the Crusher was also single input single output but it isn't
+// so all the time I spent making this abstract was pointless
+// Keeping it though because it's good.
 abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
