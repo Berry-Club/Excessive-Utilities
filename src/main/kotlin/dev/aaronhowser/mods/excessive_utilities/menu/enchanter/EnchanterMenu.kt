@@ -11,6 +11,8 @@ import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.ContainerData
+import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
@@ -19,6 +21,7 @@ class EnchanterMenu(
 	containerId: Int,
 	playerInventory: Inventory,
 	val enchanterContainer: Container,
+	val enchanterContainerData: ContainerData
 ) : MenuWithInventory(ModMenuTypes.ENCHANTER.get(), containerId, playerInventory) {
 
 	constructor(containerId: Int, playerInventory: Inventory) :
@@ -26,14 +29,21 @@ class EnchanterMenu(
 				containerId,
 				playerInventory,
 				SimpleContainer(EnchanterBlockEntity.CONTAINER_SIZE),
+				SimpleContainerData(EnchanterBlockEntity.CONTAINER_DATA_SIZE)
 			)
 
 	init {
 		checkContainerSize(enchanterContainer, EnchanterBlockEntity.CONTAINER_SIZE)
+		checkContainerDataCount(enchanterContainerData, EnchanterBlockEntity.CONTAINER_DATA_SIZE)
 
 		addSlots()
+		addDataSlots(enchanterContainerData)
 		addPlayerInventorySlots(90)
 	}
+
+	fun getMaxEnergy(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_ENERGY_DATA_INDEX)
+	fun getCurrentEnergy(): Int = enchanterContainerData.get(EnchanterBlockEntity.CURRENT_ENERGY_DATA_INDEX)
+	fun getProgress(): Int = enchanterContainerData.get(EnchanterBlockEntity.PROGRESS_DATA_INDEX)
 
 	override fun addSlots() {
 		val leftInputSlot = Slot(enchanterContainer, EnchanterBlockEntity.LEFT_INPUT_SLOT, 56, 42)

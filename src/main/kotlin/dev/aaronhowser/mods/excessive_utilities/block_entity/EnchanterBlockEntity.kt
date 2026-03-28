@@ -26,6 +26,7 @@ import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.block.state.BlockState
@@ -187,11 +188,28 @@ class EnchanterBlockEntity(
 		return recipe
 	}
 
+	private val containerData: ContainerData =
+		object : ContainerData {
+			override fun getCount(): Int = CONTAINER_DATA_SIZE
+
+			override fun get(index: Int): Int {
+				return when (index) {
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
+					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
+					PROGRESS_DATA_INDEX -> progress
+					else -> -1
+				}
+			}
+
+			override fun set(index: Int, value: Int) {
+				// Cannot set from container data
+			}
+		}
 
 	override fun getDisplayName(): Component = blockState.block.name
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
-		return EnchanterMenu(containerId, playerInventory, container)
+		return EnchanterMenu(containerId, playerInventory, container, containerData)
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -220,6 +238,9 @@ class EnchanterBlockEntity(
 		const val OUTPUT_SLOT = 2
 		const val UPGRADE_SLOT = 3
 
-		const val CONTAINER_DATA_SIZE = 0
+		const val CONTAINER_DATA_SIZE = 3
+		const val CURRENT_ENERGY_DATA_INDEX = 0
+		const val MAX_ENERGY_DATA_INDEX = 1
+		const val PROGRESS_DATA_INDEX = 2
 	}
 }
