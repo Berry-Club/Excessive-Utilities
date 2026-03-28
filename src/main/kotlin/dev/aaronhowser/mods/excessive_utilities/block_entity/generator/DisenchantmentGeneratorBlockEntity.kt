@@ -25,7 +25,7 @@ class DisenchantmentGeneratorBlockEntity(
 	override fun isValidInput(itemStack: ItemStack): Boolean {
 		if (itemStack.isEmpty) return false
 		val level = level ?: return false
-		return getPowerFromEnchantment(level, itemStack) > 0
+		return getPowerFromStack(level, itemStack) > 0
 	}
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
@@ -34,7 +34,7 @@ class DisenchantmentGeneratorBlockEntity(
 		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (inputStack.isEmpty) return false
 
-		val totalPower = getPowerFromEnchantment(level, inputStack)
+		val totalPower = getPowerFromStack(level, inputStack)
 		if (totalPower <= 0) return false
 
 		fePerTick = 40
@@ -47,8 +47,9 @@ class DisenchantmentGeneratorBlockEntity(
 	}
 
 	companion object {
-		fun getPowerFromEnchantment(level: Level, itemStack: ItemStack): Int {
-			val enchantments = itemStack.getAllEnchantments(level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT))
+		fun getPowerFromStack(level: Level, itemStack: ItemStack): Int {
+			val lookup = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+			val enchantments = itemStack.getAllEnchantments(lookup)
 
 			var totalPower = 0
 
