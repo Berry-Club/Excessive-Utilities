@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.Encha
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.QedJeiCategory
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.ResonatorJeiCategory
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.*
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.OpiniumCoreSubtypeInterpreter
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
@@ -16,6 +17,7 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.It
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.MagmaticFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes
@@ -23,6 +25,7 @@ import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
+import mezz.jei.api.registration.ISubtypeRegistration
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -97,6 +100,10 @@ class ModJeiPlugin : IModPlugin {
 
 		val disenchantmentRecipes = DisenchantmentFuelJeiCategory.getAllRecipes(level, registration)
 		registration.addRecipes(DISENCHANTMENT_FUELS, disenchantmentRecipes)
+	}
+
+	override fun registerItemSubtypes(registration: ISubtypeRegistration) {
+		registration.registerSubtypeInterpreter(ModItems.OPINIUM_CORE.get(), OpiniumCoreSubtypeInterpreter())
 	}
 
 	companion object {
