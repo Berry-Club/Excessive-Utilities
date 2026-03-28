@@ -18,7 +18,7 @@ class SingleFluidGeneratorMenu(
 	playerInventory: Inventory,
 	val generatorContainer: Container,
 	val generatorContainerData: ContainerData
-) : MenuWithInventory(ModMenuTypes.SINGLE_ITEM_GENERATOR.get(), containerId, playerInventory) {
+) : MenuWithInventory(ModMenuTypes.SINGLE_FLUID_GENERATOR.get(), containerId, playerInventory) {
 
 	constructor(containerId: Int, playerInventory: Inventory) :
 			this(
