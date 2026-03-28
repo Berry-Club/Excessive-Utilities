@@ -29,7 +29,7 @@ class DynamicItemFuelJeiCategory(
 	recipeType,
 	generatorBlock.name,
 	guiHelper.createDrawableItemLike(generatorBlock),
-	120,
+	130,
 	40
 ) {
 
@@ -90,6 +90,8 @@ class DynamicItemFuelJeiCategory(
 			)
 		}
 
+		// Because this uses configs, it'll be outdated if you don't reload after changing the config
+		// I could make the config only apply after a reload but that's stupid
 		fun registerRecipes(level: Level, registration: IRecipeRegistration) {
 			val ingredientManager = registration.jeiHelpers.ingredientManager
 
