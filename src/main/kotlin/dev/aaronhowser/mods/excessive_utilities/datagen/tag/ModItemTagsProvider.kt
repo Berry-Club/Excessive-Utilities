@@ -298,7 +298,9 @@ class ModItemTagsProvider(
 				ModBlocks.TRANSFER_FILTER.asItem(),
 				ModBlocks.TRANSFER_PIPE_FILTER.asItem(),
 				ModBlocks.ENDER_THERMIC_PUMP.asItem(),
-				ModBlocks.PLAYER_CHEST.asItem()
+				ModBlocks.PLAYER_CHEST.asItem(),
+				ModBlocks.ENERGY_TRANSFER_NODE.asItem(),
+				ModBlocks.ENERGY_RETRIEVAL_NODE.asItem()
 			)
 			.add(
 				ModItems.BREADTH_FIRST_SEARCH_UPGRADE,
