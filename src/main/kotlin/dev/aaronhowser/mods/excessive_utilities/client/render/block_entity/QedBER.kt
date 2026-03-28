@@ -11,6 +11,7 @@ import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.world.phys.AABB
 
 class QedBER(
 	val context: BlockEntityRendererProvider.Context
@@ -55,9 +56,9 @@ class QedBER(
 
 	}
 
-	//FIXME: This isn't even being called
-	override fun shouldRenderOffScreen(blockEntity: QedBlockEntity): Boolean {
-		return true
+	override fun getRenderBoundingBox(blockEntity: QedBlockEntity): AABB {
+		val radius = ServerConfig.CONFIG.qedRadius.get().toDouble()
+		return AABB(blockEntity.blockPos).inflate(radius)
 	}
 
 }
