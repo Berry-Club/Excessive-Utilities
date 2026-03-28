@@ -166,7 +166,7 @@ class QedBlockEntity(
 			override fun get(index: Int): Int {
 				return when (index) {
 					CURRENT_PROGRESS_DATA_INDEX -> progress
-					MAX_PROGRESS_DATA_INDEX -> 1
+					MAX_PROGRESS_DATA_INDEX -> maxProgress
 					AMOUNT_NEARBY_CRYSTALS_DATA_INDEX -> amountNearbyCrystals
 					else -> 0
 				}
