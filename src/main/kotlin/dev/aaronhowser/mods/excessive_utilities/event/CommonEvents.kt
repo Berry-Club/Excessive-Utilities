@@ -19,10 +19,7 @@ import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.*
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
-import dev.aaronhowser.mods.excessive_utilities.registry.ModPotions
+import dev.aaronhowser.mods.excessive_utilities.registry.*
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.entity.item.ItemEntity
@@ -44,6 +41,7 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent
 import net.neoforged.neoforge.event.entity.living.MobSpawnEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
+import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent
 import net.neoforged.neoforge.event.level.BlockDropsEvent
 import net.neoforged.neoforge.event.level.BlockEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
@@ -414,6 +412,16 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onStartTracking(event: PlayerEvent.StartTracking) {
 		AngelRingItem.handleTrackingEvent(event)
+	}
+
+	@SubscribeEvent
+	fun onRegisterFuels(event: FurnaceFuelBurnTimeEvent) {
+		for (block in ModBlocks.COLORED_COAL_BLOCKS.values) {
+			if (event.itemStack.isItem(block.asItem())) {
+				event.burnTime = 16000
+				return
+			}
+		}
 	}
 
 }
