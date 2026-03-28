@@ -55,6 +55,7 @@ class QedBER(
 
 	}
 
+	//FIXME: This isn't even being called
 	override fun shouldRenderOffScreen(blockEntity: QedBlockEntity): Boolean {
 		return true
 	}
