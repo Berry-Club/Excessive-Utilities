@@ -7,10 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.Crush
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.EnchanterJeiCategory
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.QedJeiCategory
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.ResonatorJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.CulinaryFuelJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.ItemAndFluidFuelJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.MagmaticFuelJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.SingleItemFuelJeiCategory
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
@@ -57,7 +54,7 @@ class ModJeiPlugin : IModPlugin {
 		registration.addRecipeCategories(CrusherJeiCategory(CRUSHER, guiHelper))
 
 		SingleItemFuelJeiCategory.registerCategory(registration)
-		ItemAndFluidFuelJeiCategory.registerCategory(registration)
+		ItemAndFluidFuelJeiCategory.registerCategories(registration)
 		registration.addRecipeCategories(MagmaticFuelJeiCategory(MAGMATIC_FUELS, guiHelper))
 		registration.addRecipeCategories(CulinaryFuelJeiCategory(CULINARY_FUELS, guiHelper))
 	}
@@ -100,6 +97,8 @@ class ModJeiPlugin : IModPlugin {
 		val MAGMATIC_FUELS: RecipeType<RecipeHolder<MagmaticFuelRecipe>> = makeRecipeType("generator_fuel/magmatic")
 		val CULINARY_FUELS: RecipeType<CulinaryFuelJeiCategory.Recipe> =
 			makeRecipeType("generator_fuel/culinary", CulinaryFuelJeiCategory.Recipe::class.java)
+		val FURNACE_GENERATOR_FUELS: RecipeType<BasicFurnaceGeneratorFuelJeiCategory.Recipe> =
+			makeRecipeType("generator_fuel/furnace", BasicFurnaceGeneratorFuelJeiCategory.Recipe::class.java)
 
 		val SINGLE_ITEM_FUELS: Map<SingleItemFuelRecipe.GeneratorType, RecipeType<RecipeHolder<SingleItemFuelRecipe>>> =
 			buildMap {

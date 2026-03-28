@@ -81,7 +81,7 @@ class ItemAndFluidFuelJeiCategory(
 	override fun getRegistryName(recipe: RecipeHolder<ItemAndFluidFuelRecipe>): ResourceLocation = recipe.id()
 
 	companion object {
-		fun registerCategory(registration: IRecipeCategoryRegistration) {
+		fun registerCategories(registration: IRecipeCategoryRegistration) {
 			for ((generatorType, recipeType) in ModJeiPlugin.ITEM_AND_FLUID_FUELS) {
 				registration.addRecipeCategories(
 					ItemAndFluidFuelJeiCategory(

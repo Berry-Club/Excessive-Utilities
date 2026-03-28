@@ -1,25 +1,28 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel
 
-import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.CulinaryGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.runtime.IIngredientManager
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeType
+import mezz.jei.api.recipe.RecipeType as JeiRecipeType
 
-class CulinaryFuelJeiCategory(
-	recipeType: RecipeType<Recipe>,
+class BasicFurnaceGeneratorFuelJeiCategory(
+	block: GeneratorBlock,
+	recipeType: JeiRecipeType<Recipe>,
 	guiHelper: IGuiHelper
-) : AbstractRecipeCategory<CulinaryFuelJeiCategory.Recipe>(
+) : AbstractRecipeCategory<BasicFurnaceGeneratorFuelJeiCategory.Recipe>(
 	recipeType,
-	ModBlocks.CULINARY_GENERATOR.get().name,
-	guiHelper.createDrawableItemLike(ModBlocks.CULINARY_GENERATOR),
+	block.name,
+	guiHelper.createDrawableItemLike(block),
 	120,
 	40
 ) {
@@ -31,10 +34,9 @@ class CulinaryFuelJeiCategory(
 		for (stack in recipe.stacks) {
 			itemInputSlot.addItemStack(stack)
 		}
-
 	}
 
-	override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: Recipe, focuses: IFocusGroup) {
+	override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: CulinaryFuelJeiCategory.Recipe, focuses: IFocusGroup) {
 		val fePerTick = recipe.fePerTick
 		val duration = recipe.duration
 		val totalFe = recipe.feTotal
@@ -60,15 +62,23 @@ class CulinaryFuelJeiCategory(
 	}
 
 	companion object {
-		fun getAllRecipes(ingredientManager: IIngredientManager): List<Recipe> {
+		fun registerCategories(registration: IRecipeCategoryRegistration) {
+			registration.addRecipeCategories(
+				BasicFurnaceGeneratorFuelJeiCategory(
+					ModBlocks.FURNACE_GENERATOR.get(),
+					ModJeiPlugin.FURNACE_GENERATOR_FUELS,
+					registration.jeiHelpers.guiHelper
+				)
+			)
+		}
+
+		fun getStackFuels(ingredientManager: IIngredientManager): Map<Int, List<ItemStack>> {
 			return ingredientManager.allItemStacks
 				.asSequence()
-
-				.mapNotNull { itemStack ->
-					val values = CulinaryGeneratorBlockEntity.getFeValues(itemStack)
-
-					if (values.first > 0 && values.second > 0) {
-						values to itemStack
+				.mapNotNull { stack ->
+					val burnTime = stack.getBurnTime(RecipeType.SMELTING)
+					if (burnTime > 0) {
+						burnTime to stack
 					} else {
 						null
 					}
@@ -77,15 +87,7 @@ class CulinaryFuelJeiCategory(
 					keySelector = { it.first },
 					valueTransform = { it.second }
 				)
-				.map { (values, stacks) ->
-					Recipe(
-						stacks,
-						values.first,
-						values.second
-					)
-				}
-				.sortedByDescending(Recipe::feTotal)
-				.toList()
+				.toMap()
 		}
 	}
 
