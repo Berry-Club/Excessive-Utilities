@@ -109,7 +109,9 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 
 	abstract val litProperty: Property<Boolean>
 	abstract fun isValidInput(stack: ItemStack): Boolean
-	abstract fun getRecipe(level: Level): RecipeHolder<T>?
+	protected abstract fun getRecipe(level: Level): RecipeHolder<T>?
+	protected abstract fun getFePerTick(recipe: RecipeHolder<T>): Int
+	protected abstract fun getRecipeDuration(recipe: RecipeHolder<T>): Int
 
 	protected var progress = 0
 		set(value) {
@@ -189,9 +191,6 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 			energyStorage.extractEnergy(feRequired, false)
 		}
 	}
-
-	protected abstract fun getFePerTick(recipe: RecipeHolder<T>): Int
-	protected abstract fun getRecipeDuration(recipe: RecipeHolder<T>): Int
 
 	protected fun updateBlockState(level: ServerLevel) {
 		val wasLit = blockState.getValue(litProperty)
