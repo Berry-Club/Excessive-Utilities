@@ -13,12 +13,10 @@ class SingleSlotScreen(
 ) : BaseScreen<SingleSlotMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val inventoryLabelOffsetY: Int = -1
 
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/single_slot.png"), 176, 166)
-
-		val FLAT_ITEM_BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/item_flat_transfer_node.png"), 176, 166)
-		val FLAT_FLUID_BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/fluid_flat_transfer_node.png"), 176, 166)
 	}
 
 }
