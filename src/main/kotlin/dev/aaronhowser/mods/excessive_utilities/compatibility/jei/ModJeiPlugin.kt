@@ -12,6 +12,7 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.ResonatorRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleFluidFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.IModPlugin
@@ -83,6 +84,14 @@ class ModJeiPlugin : IModPlugin {
 			buildMap {
 				for (type in SingleItemFuelRecipe.GeneratorType.entries) {
 					val name = "single_item_fuel/${type.id}"
+					set(type, makeRecipeType(name))
+				}
+			}
+
+		val SINGLE_FLUID_FUELS: Map<SingleFluidFuelRecipe.GeneratorType, RecipeType<RecipeHolder<SingleFluidFuelRecipe>>> =
+			buildMap {
+				for (type in SingleFluidFuelRecipe.GeneratorType.entries) {
+					val name = "single_fluid_fuel/${type.id}"
 					set(type, makeRecipeType(name))
 				}
 			}
