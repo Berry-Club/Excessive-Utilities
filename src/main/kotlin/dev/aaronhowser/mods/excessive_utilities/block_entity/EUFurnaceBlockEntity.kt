@@ -31,7 +31,7 @@ class EUFurnaceBlockEntity(
 	}
 
 	override fun getFePerTick(recipe: RecipeHolder<SmeltingRecipe>): Int {
-		return ServerConfig.CONFIG.furnaceGeneratorFePerTick.get()
+		return ServerConfig.CONFIG.furnaceFePerTick.get()
 	}
 
 	override fun getRecipeDuration(recipe: RecipeHolder<SmeltingRecipe>): Int {
