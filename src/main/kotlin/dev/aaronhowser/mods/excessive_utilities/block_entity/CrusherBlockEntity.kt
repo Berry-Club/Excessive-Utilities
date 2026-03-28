@@ -202,8 +202,8 @@ class CrusherBlockEntity(
 
 	override fun getDisplayName(): Component = blockState.block.name
 
-	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
-		return EnchanterMenu(containerId, playerInventory, container)
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
+		return null
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
