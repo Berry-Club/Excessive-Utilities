@@ -3291,6 +3291,7 @@ class ModBlockStateProvider(
 			ModBlocks.GLOWING_GLASS.get(),
 			ModBlocks.BLOCK_OF_UNSTABLE_INGOT.get(),
 			ModBlocks.PATTERNED_GLASS.get(),
+			ModBlocks.REDSTONE_GLASS.get()
 		)
 
 		for (block in blocks) {
