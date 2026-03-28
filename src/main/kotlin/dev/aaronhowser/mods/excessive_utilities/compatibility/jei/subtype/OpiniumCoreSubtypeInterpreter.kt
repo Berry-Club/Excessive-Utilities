@@ -13,4 +13,5 @@ class OpiniumCoreSubtypeInterpreter : ISubtypeInterpreter<ItemStack> {
 
 	@Deprecated("Deprecated in Java")
 	override fun getLegacyStringSubtypeInfo(ingredient: ItemStack, context: UidContext): String = ""
+
 }
