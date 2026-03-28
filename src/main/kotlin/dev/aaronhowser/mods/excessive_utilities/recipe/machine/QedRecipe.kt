@@ -31,12 +31,11 @@ class QedRecipe(
 			return recipeManager.getAllRecipesFor(ModRecipeTypes.QED.get())
 		}
 
-		fun getRecipe(level: Level, input: CraftingInput): QedRecipe? {
+		fun getRecipe(level: Level, input: CraftingInput): RecipeHolder<QedRecipe>? {
 			return getAllRecipes(level.recipeManager)
 				.firstOrNull { recipeHolder ->
 					recipeHolder.value.matches(input, level)
 				}
-				?.value
 		}
 	}
 

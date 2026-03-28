@@ -23,6 +23,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.CraftingInput
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -50,28 +51,40 @@ class QedBlockEntity(
 
 	private var amountNearbyCrystals = 0
 	private var progress = 0
+		set(value) {
+			if (field != value) {
+				field = value
+				setChanged()
+			}
+		}
+
+	private var maxProgress = 0
 
 	private fun serverTick(level: ServerLevel) {
 		if (level.gameTime % 60 == 0L) {
 			updateNearbyCrystals(level)
 		}
 
-		val recipe = getRecipe(level) ?: return
+		val recipe = getRecipe(level)?.value
+
+		if (recipe == null) {
+			progress = 0
+			maxProgress = 0
+			return
+		}
+
+		maxProgress = recipe.crystalTicks
 		progress += amountNearbyCrystals
 
-		while (progress >= recipe.crystalTicks) {
-			val input = CraftingInput.of(
-				3,
-				3,
-				container.items.subList(0, 9)
-			)
+		while (progress >= maxProgress) {
+			val input = getRecipeInput()
 
 			if (!recipe.matches(input, level)) {
 				progress = 0
 				return
 			}
 
-			progress -= recipe.crystalTicks
+			progress -= maxProgress
 
 			val output = recipe.assemble(input, level.registryAccess())
 			val currentOutput = container.getItem(OUTPUT_SLOT)
@@ -88,20 +101,27 @@ class QedBlockEntity(
 		}
 	}
 
-	private fun getRecipe(level: ServerLevel): QedRecipe? {
-		val recipeInput = CraftingInput.of(3, 3, container.items.subList(0, 9))
-		val recipe = QedRecipe.getRecipe(level, recipeInput) ?: return null
+	private var recipeCache: RecipeHolder<QedRecipe>? = null
+	private fun getRecipe(level: ServerLevel): RecipeHolder<QedRecipe>? {
+		val input = getRecipeInput()
 
-		val currentOutput = container.getItem(OUTPUT_SLOT)
-		if (currentOutput.isEmpty) return recipe
+		val cache = recipeCache
+		if (cache != null) {
+			if (cache.value.matches(input, level)) {
+				return cache
+			} else {
+				recipeCache = null
+			}
+		}
 
-		val newOutput = recipe.assemble(recipeInput, level.registryAccess())
-		if (!ItemStack.isSameItemSameComponents(newOutput, currentOutput)) return null
+		val recipe = QedRecipe.getRecipe(level, input) ?: return null
 
-		val newCount = currentOutput.count + newOutput.count
-		if (newCount > newOutput.maxStackSize) return null
-
+		recipeCache = recipe
 		return recipe
+	}
+
+	private fun getRecipeInput(): CraftingInput {
+		return CraftingInput.of(3, 3, container.items.subList(0, 9))
 	}
 
 	fun updateNearbyCrystals(level: ServerLevel) {
