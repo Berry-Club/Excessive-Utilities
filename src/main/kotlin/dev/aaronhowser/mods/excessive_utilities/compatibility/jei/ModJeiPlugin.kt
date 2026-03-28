@@ -7,10 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.Crush
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.EnchanterJeiCategory
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.QedJeiCategory
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.ResonatorJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.DynamicItemFuelJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.ItemAndFluidFuelJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.MagmaticFuelJeiCategory
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.SingleItemFuelJeiCategory
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
@@ -48,6 +45,7 @@ class ModJeiPlugin : IModPlugin {
 		registration.addRecipeCatalyst(ModBlocks.CULINARY_GENERATOR, CULINARY_FUELS)
 		registration.addRecipeCatalyst(ModBlocks.FURNACE_GENERATOR, FURNACE_FUELS)
 		registration.addRecipeCatalyst(ModBlocks.SURVIVALIST_GENERATOR, SURVIVALIST_FUELS)
+		registration.addRecipeCatalyst(ModBlocks.OVERCLOCKED_GENERATOR, OVERCLOCKED_FUELS)
 	}
 
 	override fun registerCategories(registration: IRecipeCategoryRegistration) {
@@ -62,6 +60,7 @@ class ModJeiPlugin : IModPlugin {
 		ItemAndFluidFuelJeiCategory.registerCategories(registration)
 		DynamicItemFuelJeiCategory.registerCategories(registration)
 		registration.addRecipeCategories(MagmaticFuelJeiCategory(MAGMATIC_FUELS, guiHelper))
+		registration.addRecipeCategories(OverclockedFuelJeiCategory(OVERCLOCKED_FUELS, guiHelper))
 	}
 
 	override fun registerRecipes(registration: IRecipeRegistration) {
@@ -84,6 +83,7 @@ class ModJeiPlugin : IModPlugin {
 		SingleItemFuelJeiCategory.registerRecipes(level, registration)
 		ItemAndFluidFuelJeiCategory.registerRecipes(level, registration)
 		DynamicItemFuelJeiCategory.registerRecipes(level, registration)
+		OverclockedFuelJeiCategory.registerRecipes(level, registration)
 
 		val magmaticRecipes = MagmaticFuelRecipe.getAllRecipes(level.recipeManager)
 		registration.addRecipes(MAGMATIC_FUELS, magmaticRecipes)
@@ -104,6 +104,8 @@ class ModJeiPlugin : IModPlugin {
 			dynamicItemFuel("furnace")
 		val SURVIVALIST_FUELS: RecipeType<DynamicItemFuelJeiCategory.Recipe> =
 			dynamicItemFuel("survivalist")
+		val OVERCLOCKED_FUELS: RecipeType<OverclockedFuelJeiCategory.Recipe> =
+			makeRecipeType("generator_fuel/overclocked", OverclockedFuelJeiCategory.Recipe::class.java)
 
 		val SINGLE_ITEM_FUELS: Map<SingleItemFuelRecipe.GeneratorType, RecipeType<RecipeHolder<SingleItemFuelRecipe>>> =
 			buildMap {
