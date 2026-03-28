@@ -12,6 +12,7 @@ import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
+import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
@@ -40,6 +41,30 @@ class SingleItemFuelJeiCategory(
 
 	override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: RecipeHolder<SingleItemFuelRecipe>, focuses: IFocusGroup) {
 		val recipe = recipe.value
+
+		val fePerTick = recipe.fePerTick
+		val duration = recipe.duration
+		val totalFe = fePerTick * duration
+
+		val perTickString = "%,d".format(fePerTick)
+		val durationString = "%,d".format(duration)
+		val totalFeString = "%,d".format(totalFe)
+
+		builder.addText(
+			Component.literal("$perTickString FE/tick"),
+			200, 12
+		).setPosition(32, 1).setColor(0xFF808080.toInt())
+
+		builder.addText(
+			Component.literal("$durationString ticks"),
+			200, 12
+		).setPosition(32, 16).setColor(0xFF808080.toInt())
+
+		builder.addText(
+			Component.literal("$totalFeString FE total"),
+			200, 12
+		).setPosition(32, 31).setColor(0xFF808080.toInt())
+
 	}
 
 	override fun getRegistryName(recipe: RecipeHolder<SingleItemFuelRecipe>): ResourceLocation = recipe.id()
