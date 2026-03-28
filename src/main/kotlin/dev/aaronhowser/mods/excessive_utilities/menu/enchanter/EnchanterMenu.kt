@@ -38,7 +38,7 @@ class EnchanterMenu(
 
 		addSlots()
 		addDataSlots(enchanterContainerData)
-		addPlayerInventorySlots(90)
+		addPlayerInventorySlots(98)
 	}
 
 	fun getMaxEnergy(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_ENERGY_DATA_INDEX)
@@ -47,12 +47,12 @@ class EnchanterMenu(
 	fun getMaxProgress(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_PROGRESS_DATA_INDEX)
 
 	override fun addSlots() {
-		val leftInputSlot = Slot(enchanterContainer, EnchanterBlockEntity.LEFT_INPUT_SLOT, 56, 42)
-		val rightOutputSlot = Slot(enchanterContainer, EnchanterBlockEntity.RIGHT_INPUT_SLOT, 80, 42)
+		val leftInputSlot = Slot(enchanterContainer, EnchanterBlockEntity.LEFT_INPUT_SLOT, 49, 41)
+		val rightOutputSlot = Slot(enchanterContainer, EnchanterBlockEntity.RIGHT_INPUT_SLOT, 73, 41)
 
-		val outputSlot = OutputSlot(enchanterContainer, EnchanterBlockEntity.OUTPUT_SLOT, 127, 42)
+		val outputSlot = OutputSlot(enchanterContainer, EnchanterBlockEntity.OUTPUT_SLOT, 127, 41)
 
-		val upgradeSlot = FilteredSlot(enchanterContainer, EnchanterBlockEntity.UPGRADE_SLOT, 26, 54) {
+		val upgradeSlot = FilteredSlot(enchanterContainer, EnchanterBlockEntity.UPGRADE_SLOT, 153, 5) {
 			it.isItem(ModItemTagsProvider.SPEED_UPGRADES)
 		}
 

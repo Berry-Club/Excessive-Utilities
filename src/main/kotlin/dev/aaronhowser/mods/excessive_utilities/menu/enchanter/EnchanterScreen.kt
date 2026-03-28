@@ -42,6 +42,7 @@ class EnchanterScreen(
 		)
 
 		addRenderableWidget(energyBar)
+		addRenderableWidget(progressArrow)
 	}
 
 	companion object {

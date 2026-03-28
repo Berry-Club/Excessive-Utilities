@@ -33,8 +33,8 @@ class ProgressArrow(
 			0, 0,
 			this.x,
 			this.y,
-			this.width,
-			Mth.floor(this.height * percentDoneFunction()),
+			Mth.ceil(this.width * percentDoneFunction()),
+			this.height,
 		)
 
 		if (isHovered) renderTooltip(pGuiGraphics, pMouseX, pMouseY)
