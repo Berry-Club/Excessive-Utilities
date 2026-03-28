@@ -5,10 +5,8 @@ import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.misc.RGBA
 import dev.aaronhowser.mods.excessive_utilities.block_entity.QedBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.client.render.RenderUtil
-import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.RenderType
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer

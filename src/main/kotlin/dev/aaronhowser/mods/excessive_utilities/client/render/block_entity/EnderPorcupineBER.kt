@@ -7,7 +7,6 @@ import dev.aaronhowser.mods.aaron.misc.ARGB
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.client.render.RenderUtil
-import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.client.renderer.MultiBufferSource

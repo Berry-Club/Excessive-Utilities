@@ -14,8 +14,6 @@ import dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu.FluidFilt
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu.FluidFilterScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeScreen
-import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineMenu
-import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator.ItemFluidGeneratorMenu
@@ -26,6 +24,8 @@ import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.single_fluid_generator.SingleFluidGeneratorMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.single_fluid_generator.SingleFluidGeneratorScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.SingleItemGeneratorMenu
