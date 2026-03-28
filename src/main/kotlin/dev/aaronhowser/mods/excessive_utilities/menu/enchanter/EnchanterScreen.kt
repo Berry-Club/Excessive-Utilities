@@ -36,6 +36,7 @@ class EnchanterScreen(
 			x = leftPos + 83,
 			y = topPos + 43,
 			font = font,
+			texture = PROGRESS_ARROW_TEXTURE,
 			percentDoneFunction = { menu.getProgress().toFloat() / menu.getMaxProgress() },
 			shouldRenderProgress = { menu.getProgress() > 0 }
 		)
@@ -45,6 +46,7 @@ class EnchanterScreen(
 
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/enchanter.png"), 176, 180)
+		val PROGRESS_ARROW_TEXTURE = ExcessiveUtilities.modResource("enchanter_arrow_right")
 	}
 
 }

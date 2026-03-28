@@ -6,19 +6,21 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 
 class ProgressArrow(
 	x: Int,
 	y: Int,
 	val font: Font,
+	val texture: ResourceLocation = TEXTURE,
 	val percentDoneFunction: () -> Float,
 	val shouldRenderProgress: () -> Boolean,
 	val onClickFunction: (Double, Double, Int) -> Unit = { _, _, _ -> }
 ) : AbstractWidget(
 	x, y,
-	RIGHT_WIDTH,
-	RIGHT_HEIGHT,
+	WIDTH,
+	HEIGHT,
 	Component.empty()
 ) {
 
@@ -26,7 +28,7 @@ class ProgressArrow(
 		if (!shouldRenderProgress()) return
 
 		pGuiGraphics.blitSprite(
-			TEXTURE,
+			texture,
 			TEXTURE_SIZE, TEXTURE_SIZE,
 			0, 0,
 			this.x,
@@ -65,8 +67,8 @@ class ProgressArrow(
 		const val TEXTURE_SIZE = 32
 
 		val TEXTURE = ExcessiveUtilities.modResource("arrow_right")
-		const val RIGHT_WIDTH = 24
-		const val RIGHT_HEIGHT = 17
+		const val WIDTH = 24
+		const val HEIGHT = 17
 	}
 
 }
