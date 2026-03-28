@@ -14,12 +14,12 @@ class SingleItemGeneratorScreen(
 ) : BaseScreen<SingleItemGeneratorMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val inventoryLabelOffsetY: Int
+		get() = 10
 
 	private lateinit var energyBar: EnergyBar
 
 	override fun baseInit() {
-		super.baseInit()
-
 		energyBar = EnergyBar(
 			x = leftPos + 114,
 			y = topPos + 18,
