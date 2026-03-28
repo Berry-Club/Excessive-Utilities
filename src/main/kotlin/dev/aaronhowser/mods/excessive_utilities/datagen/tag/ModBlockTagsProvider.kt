@@ -220,7 +220,8 @@ class ModBlockTagsProvider(
 				ModBlocks.SLIGHTLY_LARGER_CHEST,
 				ModBlocks.MINI_CHEST,
 				ModBlocks.MAGICAL_PLANKS,
-				ModBlocks.DIAGONAL_WOOD
+				ModBlocks.DIAGONAL_WOOD,
+				ModBlocks.MAGICAL_SNOW_GLOBE
 			)
 			.add(*ModBlocks.COLORED_PLANKS.map { it.value }.toTypedArray())
 
