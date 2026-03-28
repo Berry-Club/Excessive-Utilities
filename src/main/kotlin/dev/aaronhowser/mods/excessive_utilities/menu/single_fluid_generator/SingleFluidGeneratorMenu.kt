@@ -34,7 +34,7 @@ class SingleFluidGeneratorMenu(
 
 		addSlots()
 		addDataSlots(generatorContainerData)
-		addPlayerInventorySlots(90)
+		addPlayerInventorySlots(96)
 	}
 
 	fun getMaxEnergy(): Int = generatorContainerData.get(GeneratorBlockEntity.MAX_ENERGY_DATA_INDEX)
@@ -42,11 +42,9 @@ class SingleFluidGeneratorMenu(
 	fun getBurnTimeRemaining(): Int = generatorContainerData.get(GeneratorBlockEntity.BURN_TIME_REMAINING_DATA_INDEX)
 
 	override fun addSlots() {
-		val upgradeSlot = Slot(generatorContainer, GeneratorContainer.UPGRADE_SLOT, 8, 42)
-		val inputSlots = Slot(generatorContainer, GeneratorContainer.INPUT_SLOT, 69, 42)
+		val upgradeSlot = Slot(generatorContainer, GeneratorContainer.UPGRADE_SLOT, 153, 5)
 
 		this.addSlot(upgradeSlot)
-		this.addSlot(inputSlots)
 	}
 
 	override fun quickMoveStack(player: Player, index: Int): ItemStack {
