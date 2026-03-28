@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.client.render.block_entity
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.excessive_utilities.block_entity.QedBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.client.render.RenderUtil
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -36,7 +37,7 @@ class QedBER(
 		val maxY = radius + 1
 		val maxZ = radius + 1
 
-		WandRenderer.renderCubeWireframe(
+		RenderUtil.box(
 			poseStack,
 			linesConsumer,
 			minX, minY, minZ,

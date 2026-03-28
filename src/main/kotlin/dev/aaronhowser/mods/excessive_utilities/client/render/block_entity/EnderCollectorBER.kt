@@ -5,7 +5,7 @@ import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.client.render.AaronRenderTypes
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getPovResult
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderCollectorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
+import dev.aaronhowser.mods.excessive_utilities.client.render.RenderUtil
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
@@ -39,7 +39,7 @@ class EnderCollectorBER(
 		val maxY = radius + 1
 		val maxZ = radius + 1
 
-		WandRenderer.renderCubeWireframe(
+		RenderUtil.box(
 			poseStack,
 			linesConsumer,
 			minX, minY, minZ,

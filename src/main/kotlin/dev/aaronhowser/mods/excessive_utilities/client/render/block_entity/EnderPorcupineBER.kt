@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.client.render.AaronRenderTypes
 import dev.aaronhowser.mods.aaron.misc.ARGB
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderPorcupineBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.client.render.RenderUtil
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -45,7 +46,7 @@ class EnderPorcupineBER(
 		val targetG = tgInt / 255f
 		val targetB = tbInt / 255f
 
-		WandRenderer.renderCubeWireframe(
+		RenderUtil.box(
 			poseStack,
 			linesConsumer,
 			x, y, z,
@@ -66,7 +67,7 @@ class EnderPorcupineBER(
 		val fullG = fgInt / 255f
 		val fullB = fbInt / 255f
 
-		WandRenderer.renderCubeWireframe(
+		RenderUtil.box(
 			poseStack,
 			linesConsumer,
 			minOffset.x.toFloat(), minOffset.y.toFloat(), minOffset.z.toFloat(),
