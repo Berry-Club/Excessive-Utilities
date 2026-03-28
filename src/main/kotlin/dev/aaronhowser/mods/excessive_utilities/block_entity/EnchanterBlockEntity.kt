@@ -85,11 +85,6 @@ class EnchanterBlockEntity(
 		}
 
 	private var maxProgress: Int = 0
-		set(value) {
-			if (field == value) return
-			field = value
-			setChanged()
-		}
 
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
@@ -239,7 +234,6 @@ class EnchanterBlockEntity(
 
 	companion object {
 		const val PROGRESS_NBT = "Progress"
-		const val MAX_PROGRESS_NBT = "MaxProgress"
 		const val ENERGY_NBT = "Energy"
 
 		const val CONTAINER_SIZE = 4
