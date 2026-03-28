@@ -16,6 +16,14 @@
     "excessive_utilities:trading_post",
     "excessive_utilities:indexer",
     "excessive_utilities:transfer_filter",
-    "excessive_utilities:transfer_pipe_filter"
+    "excessive_utilities:transfer_pipe_filter",
+    "excessive_utilities:ender_thermic_pump",
+    "excessive_utilities:player_chest",
+    "excessive_utilities:breadth_first_search_upgrade",
+    "excessive_utilities:depth_first_search_upgrade",
+    "excessive_utilities:pseudo_round_robin_upgrade",
+    "excessive_utilities:ender_transmitter",
+    "excessive_utilities:ender_receiver",
+    "excessive_utilities:precision_shears"
   ]
 }

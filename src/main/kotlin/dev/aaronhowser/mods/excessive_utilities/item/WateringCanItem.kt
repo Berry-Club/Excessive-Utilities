@@ -196,6 +196,11 @@ class WateringCanItem(
 		tooltipComponents: MutableList<Component>,
 		tooltipFlag: TooltipFlag
 	) {
+		if (stack.has(ModDataComponents.IS_BROKEN)) {
+			tooltipComponents += Component.literal("Broken")
+			return
+		}
+
 		if (!usesWater()) return
 
 		val heldWater = stack.get(ModDataComponents.TANK)?.amount ?: 0

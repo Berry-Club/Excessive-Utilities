@@ -296,7 +296,17 @@ class ModItemTagsProvider(
 				ModBlocks.TRADING_POST.asItem(),
 				ModBlocks.INDEXER.asItem(),
 				ModBlocks.TRANSFER_FILTER.asItem(),
-				ModBlocks.TRANSFER_PIPE_FILTER.asItem()
+				ModBlocks.TRANSFER_PIPE_FILTER.asItem(),
+				ModBlocks.ENDER_THERMIC_PUMP.asItem(),
+				ModBlocks.PLAYER_CHEST.asItem()
+			)
+			.add(
+				ModItems.BREADTH_FIRST_SEARCH_UPGRADE,
+				ModItems.DEPTH_FIRST_SEARCH_UPGRADE,
+				ModItems.PSEUDO_ROUND_ROBIN_UPGRADE,
+				ModItems.ENDER_TRANSMITTER,
+				ModItems.ENDER_RECEIVER,
+				ModItems.PRECISION_SHEARS
 			)
 
 		tag(RENDER_ENDER_PORCUPINE_WHILE_HOLDING)
