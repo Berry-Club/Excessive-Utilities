@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.EnchanterJeiCategory
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.ResonatorJeiCategory
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
@@ -38,6 +39,10 @@ class ModJeiPlugin : IModPlugin {
 		registration.addRecipeCategories(
 			EnchanterJeiCategory(ENCHANTER, guiHelper)
 		)
+
+		registration.addRecipeCategories(
+			ResonatorJeiCategory(RESONATOR, guiHelper)
+		)
 	}
 
 	override fun registerRecipes(registration: IRecipeRegistration) {
@@ -48,15 +53,15 @@ class ModJeiPlugin : IModPlugin {
 			.map(RecipeHolder<EnchanterRecipe>::value)
 		registration.addRecipes(ENCHANTER, enchanterRecipes)
 
-		val crusherRecipes = CrusherRecipe
-			.getAllRecipes(level.recipeManager)
-			.map(RecipeHolder<CrusherRecipe>::value)
-		registration.addRecipes(CRUSHER, crusherRecipes)
-
-		val qedRecipes = QedRecipe
-			.getAllRecipes(level.recipeManager)
-			.map(RecipeHolder<QedRecipe>::value)
-		registration.addRecipes(QED, qedRecipes)
+//		val crusherRecipes = CrusherRecipe
+//			.getAllRecipes(level.recipeManager)
+//			.map(RecipeHolder<CrusherRecipe>::value)
+//		registration.addRecipes(CRUSHER, crusherRecipes)
+//
+//		val qedRecipes = QedRecipe
+//			.getAllRecipes(level.recipeManager)
+//			.map(RecipeHolder<QedRecipe>::value)
+//		registration.addRecipes(QED, qedRecipes)
 
 		val resonatorRecipes = ResonatorRecipe
 			.getAllRecipes(level.recipeManager)
