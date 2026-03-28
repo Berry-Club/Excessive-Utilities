@@ -672,6 +672,9 @@
   "itemGroup.excessive_utilities": "Excessive Utilities",
   "message.excessive_utilities.doom_effect_time": "The Spectre of Death will arrive in %d seconds.",
   "message.excessive_utilities.eat_magical_apple": "You feel your luck changing.",
+  "message.excessive_utilities.fe_per_tick": "%s FE/t",
+  "message.excessive_utilities.set_creative_harvest": "Set mimic block to %s",
+  "message.excessive_utilities.ticks": "%s ticks",
   "tooltip.excessive_utilities.angel_ring.type.bat": "Bat",
   "tooltip.excessive_utilities.angel_ring.type.butterfly": "Butterfly",
   "tooltip.excessive_utilities.angel_ring.type.demon": "Demon",
@@ -681,6 +684,8 @@
   "tooltip.excessive_utilities.fluid_filter.ignore_all_components": "Ignore All Components",
   "tooltip.excessive_utilities.fluid_filter.inverted": "Inverted",
   "tooltip.excessive_utilities.fluid_filter.tags": "Use Tags",
+  "tooltip.excessive_utilities.gp": "%s GP",
+  "tooltip.excessive_utilities.gp_cost": "GP Cost: %s",
   "tooltip.excessive_utilities.item_filter.ignore_all_components": "Ignore All Components",
   "tooltip.excessive_utilities.item_filter.ignore_damage": "Ignore Damage",
   "tooltip.excessive_utilities.item_filter.inverted": "Inverted",
@@ -692,5 +697,6 @@
   "tooltip.excessive_utilities.unstable_ingot.cheesed_1": "Naughty naughty!",
   "tooltip.excessive_utilities.unstable_ingot.cheesed_2": "Unstable Ingots must be crafted manually, by you.",
   "tooltip.excessive_utilities.unstable_ingot.cheesed_3": "If this one WAS crafted manually, try using a vanilla Crafting Table instead.",
-  "tooltip.geneticsresequenced.fe": "%1$s/%2$s FE"
+  "tooltip.geneticsresequenced.fe": "%s FE",
+  "tooltip.geneticsresequenced.fe_with_capacity": "%1$s/%2$s FE"
 }

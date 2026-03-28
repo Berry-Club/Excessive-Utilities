@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel
 
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.DisenchantmentGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -10,7 +12,6 @@ import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.core.registries.Registries
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
@@ -37,10 +38,10 @@ class DisenchantmentFuelJeiCategory(
 
 	override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: Recipe, focuses: IFocusGroup) {
 		val totalFe = recipe.totalFe
-		val totalFeString = "%,d".format(totalFe)
+		val formattedFe = "%,d".format(totalFe)
 
 		builder.addText(
-			Component.literal("$totalFeString FE"),
+			ModMenuLang.FE.toComponent(formattedFe),
 			200, 12
 		).setPosition(32, 5).setColor(0xFF808080.toInt())
 	}

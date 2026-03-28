@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.gene
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.DynamicItemFuelJeiCategory.Companion.getStackFuels
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -37,10 +39,10 @@ class OverclockedFuelJeiCategory(
 
 	override fun createRecipeExtras(builder: IRecipeExtrasBuilder, recipe: Recipe, focuses: IFocusGroup) {
 		val totalFe = recipe.totalFe
-		val totalFeString = "%,d".format(totalFe)
+		val formattedFeTotal = "%,d".format(totalFe)
 
 		builder.addText(
-			Component.literal("$totalFeString FE total"),
+			ModMenuLang.FE.toComponent(formattedFeTotal),
 			200, 12
 		).setPosition(32, 5).setColor(0xFF808080.toInt())
 	}

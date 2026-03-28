@@ -49,7 +49,7 @@ class EnergyBar(
 		val currentAmountString = String.format("%,d", currentGetter.asInt)
 		val maxAmountString = String.format("%,d", maxGetter.asInt)
 
-		val component = ModMenuLang.FE.toComponent(currentAmountString, maxAmountString)
+		val component = ModMenuLang.FE_WITH_CAPACITY.toComponent(currentAmountString, maxAmountString)
 
 		pGuiGraphics.renderComponentTooltip(
 			font,

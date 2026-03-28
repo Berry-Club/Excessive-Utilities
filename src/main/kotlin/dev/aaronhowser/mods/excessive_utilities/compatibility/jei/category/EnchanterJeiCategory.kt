@@ -1,5 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -8,7 +11,6 @@ import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.RecipeHolder
 
@@ -50,13 +52,16 @@ class EnchanterJeiCategory(
 
 		builder.addRecipeArrow().setPosition(55, 9)
 
+		val formattedFePerTick = "%,d".format(recipe.fePerTick)
+		val formattedTicks = "%,d".format(recipe.ticks)
+
 		builder.addText(
-			Component.literal("${recipe.fePerTick} FE/t"),
+			ModMenuLang.FE_PER_TICK.toComponent(formattedFePerTick),
 			80, 12
 		).setPosition(9, 32).setColor(0xFF808080.toInt())
 
 		builder.addText(
-			Component.literal("${recipe.ticks} ticks"),
+			ModMenuLang.TICKS.toComponent(formattedTicks),
 			80, 12
 		).setPosition(65, 32).setColor(0xFF808080.toInt())
 	}

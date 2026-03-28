@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel
 
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.PotionGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -47,12 +49,12 @@ class PotionFuelJeiCategory(
 		}
 
 		val totalFe = recipe.totalFe
-		val totalFeString = "%,d".format(totalFe)
+		val formattedFeTotal = "%,d".format(totalFe)
 
 		val totalFeY = if (steps > 0) 17 else 12
 
 		builder.addText(
-			Component.literal("$totalFeString FE"),
+			ModMenuLang.FE.toComponent(formattedFeTotal),
 			200, 12
 		).setPosition(32, totalFeY).setColor(0xFF808080.toInt())
 	}

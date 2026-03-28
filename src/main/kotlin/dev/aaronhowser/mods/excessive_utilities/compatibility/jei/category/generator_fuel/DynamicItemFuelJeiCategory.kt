@@ -4,6 +4,8 @@ import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.CulinaryGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -13,7 +15,6 @@ import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.runtime.IIngredientManager
-import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
@@ -47,22 +48,22 @@ class DynamicItemFuelJeiCategory(
 		val duration = recipe.duration
 		val totalFe = recipe.feTotal
 
-		val perTickString = "%,d".format(fePerTick)
-		val durationString = "%,d".format(duration)
-		val totalFeString = "%,d".format(totalFe)
+		val formattedFePerTick = "%,d".format(fePerTick)
+		val formattedDuration = "%,d".format(duration)
+		val formattedTotal = "%,d".format(totalFe)
 
 		builder.addText(
-			Component.literal("$perTickString FE/tick"),
+			ModMenuLang.FE_PER_TICK.toComponent(formattedFePerTick),
 			200, 12
 		).setPosition(32, 1).setColor(0xFF808080.toInt())
 
 		builder.addText(
-			Component.literal("$durationString ticks"),
+			ModMenuLang.TICKS.toComponent(formattedDuration),
 			200, 12
 		).setPosition(32, 16).setColor(0xFF808080.toInt())
 
 		builder.addText(
-			Component.literal("$totalFeString FE total"),
+			ModMenuLang.FE.toComponent(formattedTotal),
 			200, 12
 		).setPosition(32, 31).setColor(0xFF808080.toInt())
 	}

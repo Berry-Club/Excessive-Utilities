@@ -2,6 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.gene
 
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
@@ -46,22 +48,22 @@ class SingleItemFuelJeiCategory(
 		val duration = recipe.duration
 		val totalFe = fePerTick * duration
 
-		val perTickString = "%,d".format(fePerTick)
-		val durationString = "%,d".format(duration)
-		val totalFeString = "%,d".format(totalFe)
+		val formattedFePerTick = "%,d".format(fePerTick)
+		val formattedDuration = "%,d".format(duration)
+		val formattedFeTotal = "%,d".format(totalFe)
 
 		builder.addText(
-			Component.literal("$perTickString FE/tick"),
+			ModMenuLang.FE_PER_TICK.toComponent(formattedFePerTick),
 			200, 12
 		).setPosition(32, 1).setColor(0xFF808080.toInt())
 
 		builder.addText(
-			Component.literal("$durationString ticks"),
+			ModMenuLang.TICKS.toComponent(formattedDuration),
 			200, 12
 		).setPosition(32, 16).setColor(0xFF808080.toInt())
 
 		builder.addText(
-			Component.literal("$totalFeString FE total"),
+			ModMenuLang.FE.toComponent(formattedFeTotal),
 			200, 12
 		).setPosition(32, 31).setColor(0xFF808080.toInt())
 

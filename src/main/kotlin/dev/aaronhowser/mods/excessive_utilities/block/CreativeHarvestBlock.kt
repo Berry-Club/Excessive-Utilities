@@ -3,9 +3,10 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.block_entity.CreativeHarvestBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import net.minecraft.core.BlockPos
-import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.ItemInteractionResult
@@ -47,7 +48,8 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 
 			if (be is CreativeHarvestBlockEntity) {
 				be.mimicBlockState = item.block.defaultBlockState()
-				player.tell(Component.literal("Set mimic block to ").append(stackInHand.hoverName))
+				val component = ModMessageLang.SET_CREATIVE_HARVEST.toComponent(stackInHand.hoverName)
+				player.tell(component)
 				return ItemInteractionResult.SUCCESS
 			}
 		}

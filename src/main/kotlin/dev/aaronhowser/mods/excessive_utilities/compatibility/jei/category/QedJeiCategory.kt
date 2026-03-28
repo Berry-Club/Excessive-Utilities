@@ -1,5 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -70,8 +73,10 @@ class QedJeiCategory(
 
 		builder.addRecipeArrow().setPosition(58, 18)
 
+		val formattedTicks = "%,d".format(recipe.crystalTicks)
+
 		builder.addText(
-			Component.literal("${recipe.crystalTicks} ticks"),
+			ModMenuLang.TICKS.toComponent(formattedTicks),
 			100, 12
 		).setPosition(58, 4).setColor(0xFF808080.toInt())
 	}
