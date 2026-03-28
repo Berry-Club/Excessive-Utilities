@@ -28,17 +28,17 @@ class QedMenu(
 		checkContainerSize(qedContainer, QedBlockEntity.CONTAINER_SIZE)
 
 		addSlots()
-		addPlayerInventorySlots(84)
+		addPlayerInventorySlots(98)
 	}
 
 	override fun addSlots() {
-		val outputSlot = OutputSlot(qedContainer, QedBlockEntity.OUTPUT_SLOT, 124, 35)
+		val outputSlot = OutputSlot(qedContainer, QedBlockEntity.OUTPUT_SLOT, 124, 41)
 		addSlot(outputSlot)
 
 		for (i in 0 until 3) for (j in 0 until 3) {
 			val index = j * 3 + i
 			val x = 30 + i * 18
-			val y = 17 + j * 18
+			val y = 23 + j * 18
 			val slot = Slot(qedContainer, index, x, y)
 			addSlot(slot)
 		}
