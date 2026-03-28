@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei
 
+import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
@@ -12,8 +13,10 @@ import mezz.jei.api.constants.RecipeTypes
 import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
+import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeHolder
 
 @JeiPlugin
 class ModJeiPlugin : IModPlugin {
@@ -34,6 +37,30 @@ class ModJeiPlugin : IModPlugin {
 		registration.addRecipeCategories(
 			EnchanterJeiCategory(ENCHANTER, guiHelper)
 		)
+	}
+
+	override fun registerRecipes(registration: IRecipeRegistration) {
+		val level = AaronClientUtil.localLevel ?: return
+
+		val enchanterRecipes = EnchanterRecipe
+			.getAllRecipes(level.recipeManager)
+			.map(RecipeHolder<EnchanterRecipe>::value)
+		registration.addRecipes(ENCHANTER, enchanterRecipes)
+
+		val crusherRecipes = CrusherRecipe
+			.getAllRecipes(level.recipeManager)
+			.map(RecipeHolder<CrusherRecipe>::value)
+		registration.addRecipes(CRUSHER, crusherRecipes)
+
+		val qedRecipes = QedRecipe
+			.getAllRecipes(level.recipeManager)
+			.map(RecipeHolder<QedRecipe>::value)
+		registration.addRecipes(QED, qedRecipes)
+
+		val resonatorRecipes = ResonatorRecipe
+			.getAllRecipes(level.recipeManager)
+			.map(RecipeHolder<ResonatorRecipe>::value)
+		registration.addRecipes(RESONATOR, resonatorRecipes)
 	}
 
 	companion object {
