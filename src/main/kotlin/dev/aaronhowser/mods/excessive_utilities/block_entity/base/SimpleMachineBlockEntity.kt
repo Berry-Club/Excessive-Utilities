@@ -129,7 +129,12 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
-		stepCraft(level)
+
+		val amountSpeedUpgrades = container.getItem(UPGRADE_SLOT).count
+		for (i in 0..amountSpeedUpgrades) {
+			stepCraft(level)
+		}
+
 		updateBlockState(level)
 	}
 
@@ -155,8 +160,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		val recipeDuration = getRecipeDuration(recipe)
 		maxProgress = recipeDuration
 
-		val amountSpeedUpgrades = container.getItem(UPGRADE_SLOT).count
-		progress += amountSpeedUpgrades + 1
+		progress++
 
 		while (progress >= recipeDuration) {
 			progress -= recipeDuration
