@@ -24,6 +24,9 @@ class EnchanterRecipe(
 	private val result: ItemStack
 ) : Recipe<EnchanterRecipe.Input> {
 
+	val output: ItemStack
+		get() = result.copy()
+
 	override fun matches(input: Input, level: Level): Boolean {
 		val left = input.left
 		val right = input.right
