@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
+//TODO: Render the fluid
 class ItemFluidGeneratorScreen(
 	menu: ItemFluidGeneratorMenu,
 	playerInventory: Inventory,
