@@ -104,7 +104,7 @@ class ModJeiPlugin : IModPlugin {
 	}
 
 	override fun registerItemSubtypes(registration: ISubtypeRegistration) {
-		registration.registerSubtypeInterpreter(ModItems.OPINIUM_CORE.get(), OpiniumCoreSubtypeInterpreter())
+		registration.registerSubtypeInterpreter(ModItems.OPINIUM_CORE.get(), OpiniumCoreSubtypeInterpreter)
 	}
 
 	companion object {

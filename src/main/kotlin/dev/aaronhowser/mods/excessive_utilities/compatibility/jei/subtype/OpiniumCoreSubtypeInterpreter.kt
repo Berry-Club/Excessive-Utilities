@@ -5,13 +5,16 @@ import mezz.jei.api.ingredients.subtypes.ISubtypeInterpreter
 import mezz.jei.api.ingredients.subtypes.UidContext
 import net.minecraft.world.item.ItemStack
 
-class OpiniumCoreSubtypeInterpreter : ISubtypeInterpreter<ItemStack> {
+object OpiniumCoreSubtypeInterpreter : ISubtypeInterpreter<ItemStack> {
 
 	override fun getSubtypeData(ingredient: ItemStack, context: UidContext): Any? {
 		return ingredient.get(ModDataComponents.OPINIUM_CORE_CONTENTS)
 	}
 
 	@Deprecated("Deprecated in Java")
-	override fun getLegacyStringSubtypeInfo(ingredient: ItemStack, context: UidContext): String = ""
+	override fun getLegacyStringSubtypeInfo(ingredient: ItemStack, context: UidContext): String {
+		val contents = ingredient.get(ModDataComponents.OPINIUM_CORE_CONTENTS) ?: return ""
+		return contents.toString()
+	}
 
 }
