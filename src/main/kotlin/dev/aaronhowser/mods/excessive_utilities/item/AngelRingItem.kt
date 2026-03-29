@@ -58,6 +58,10 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 		}
 	}
 
+	override fun canEquipFromUse(slotContext: SlotContext?, stack: ItemStack?): Boolean {
+		return true
+	}
+
 	override fun appendHoverText(
 		stack: ItemStack,
 		context: TooltipContext,
