@@ -75,11 +75,77 @@ class ModRecipeProvider(
 		buildCrusherRecipes(recipeOutput)
 		buildUnstableRecipes(recipeOutput)
 		buildCompressedBlockRecipes(recipeOutput)
+		buildOpiniumRecipes(recipeOutput)
+	}
+
+	private fun buildOpiniumRecipes(recipeOutput: RecipeOutput) {
+		val cores = OpiniumCoreContentsComponent.getDefaultTiers()
+
+		for ((i, core) in cores.withIndex()) {
+			val tierName = core.name.string.split(".").last()
+			val recipeName = "opinium_core/$tierName"
+
+			if (i == 0) {
+				shapedRecipe(
+					ModItems.OPINIUM_CORE,
+					" R ,RIR, R ",
+					mapOf(
+						'R' to ModItems.RED_COAL.asIngredient(),
+						'I' to Tags.Items.STORAGE_BLOCKS_IRON.asIngredient()
+					)
+				).save(recipeOutput, modLoc(recipeName))
+
+				continue
+			}
+
+			val inputCoreStack = cores[i - 1].getStack()
+			val outputCoreStack = core.getStack()
+
+			val (inner, outer) = core
+
+			shapedRecipe(
+				outputCoreStack,
+				" O ,ABA, O ",
+				mapOf(
+					'O' to inputCoreStack.asIngredient(),
+					'A' to outer.asIngredient(),
+					'B' to inner.asIngredient()
+				)
+			).save(recipeOutput, modLoc(recipeName))
+		}
+
+		val perfectOpiniumCore = cores.last().getStack()
+
+		shapedRecipe(
+			ModItems.KIKOKU,
+			"O,O,S",
+			mapOf(
+				'O' to perfectOpiniumCore.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.COMPOUND_BOW,
+			" OS,I S, OS",
+			mapOf(
+				'O' to perfectOpiniumCore.asIngredient(),
+				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
+				'S' to Tags.Items.STRINGS.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
+			ModItems.FIRE_AXE,
+			"OO,OS, S",
+			mapOf(
+				'O' to perfectOpiniumCore.asIngredient(),
+				'S' to Tags.Items.RODS_WOODEN.asIngredient()
+			)
+		).save(recipeOutput)
 	}
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
-		val perfectOpiniumCore = OpiniumCoreContentsComponent.getDefaultTiers().last().getStack()
-
 		shapedRecipe(
 			ModBlocks.SWIRLING_GLASS.toStack(5),
 			" G ,GGG, G ",
@@ -1245,15 +1311,6 @@ class ModRecipeProvider(
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModItems.KIKOKU,
-			"O,O,S",
-			mapOf(
-				'O' to perfectOpiniumCore.asIngredient(),
-				'S' to Tags.Items.RODS_WOODEN.asIngredient()
-			)
-		).save(recipeOutput)
-
-		shapedRecipe(
 			ModItems.FLAT_TRANSFER_NODE_ITEMS,
 			8,
 			"A, ,N",
@@ -1270,25 +1327,6 @@ class ModRecipeProvider(
 			mapOf(
 				'A' to ItemTags.ANVIL.asIngredient(),
 				'N' to ModBlocks.FLUID_TRANSFER_NODE.asIngredient()
-			)
-		).save(recipeOutput)
-
-		shapedRecipe(
-			ModItems.COMPOUND_BOW,
-			" OS,I S, OS",
-			mapOf(
-				'O' to perfectOpiniumCore.asIngredient(),
-				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
-				'S' to Tags.Items.STRINGS.asIngredient()
-			)
-		).save(recipeOutput)
-
-		shapedRecipe(
-			ModItems.FIRE_AXE,
-			"OO,OS, S",
-			mapOf(
-				'O' to perfectOpiniumCore.asIngredient(),
-				'S' to Tags.Items.RODS_WOODEN.asIngredient()
 			)
 		).save(recipeOutput)
 
@@ -2121,40 +2159,6 @@ class ModRecipeProvider(
 				ModItems.SEMI_UNSTABLE_NUGGET.asIngredient(),
 			)
 		).save(recipeOutput, modLoc("mobius_ingot_from_semi_unstable_nuggets"))
-
-		val cores = OpiniumCoreContentsComponent.getDefaultTiers()
-		for ((i, core) in cores.withIndex()) {
-			val tierName = core.name.string.split(".").last()
-			val recipeName = "opinium_core_$tierName"
-
-			if (i == 0) {
-				shapedRecipe(
-					ModItems.OPINIUM_CORE,
-					" R ,RIR, R ",
-					mapOf(
-						'R' to ModItems.RED_COAL.asIngredient(),
-						'I' to Tags.Items.STORAGE_BLOCKS_IRON.asIngredient()
-					)
-				).save(recipeOutput, modLoc(recipeName))
-
-				continue
-			}
-
-			val inputCoreStack = cores[i - 1].getStack()
-			val outputCoreStack = core.getStack()
-
-			val (inner, outer) = core
-
-			shapedRecipe(
-				outputCoreStack,
-				" O ,ABA, O ",
-				mapOf(
-					'O' to inputCoreStack.asIngredient(),
-					'A' to outer.asIngredient(),
-					'B' to inner.asIngredient()
-				)
-			).save(recipeOutput, modLoc(recipeName))
-		}
 
 	}
 
