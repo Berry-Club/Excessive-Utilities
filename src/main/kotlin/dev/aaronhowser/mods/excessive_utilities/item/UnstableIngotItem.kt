@@ -85,7 +85,8 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 		val countdown = stack.get(ModDataComponents.COUNTDOWN)
 		if (countdown != null) {
 			val seconds = countdown / 20f
-			tooltipComponents.add(Component.literal("Time until explosion: %.1f seconds".format(seconds)))
+			val formattedSeconds = "%.1f".format(seconds)
+			tooltipComponents += ModMenuLang.SECONDS_UNTIL_EXPLOSION.toComponent(formattedSeconds).withStyle(ChatFormatting.RED)
 		}
 	}
 

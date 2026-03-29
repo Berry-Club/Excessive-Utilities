@@ -5,6 +5,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getPovResult
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
@@ -12,7 +14,6 @@ import net.minecraft.ChatFormatting
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import java.text.DecimalFormat
 
@@ -36,7 +37,7 @@ object GridPowerGuiRenderer {
 		val usage = format.format(ClientGridPower.usage)
 		val capacity = format.format(ClientGridPower.capacity)
 
-		val component = Component.literal("$usage / $capacity GP")
+		val component = ModMenuLang.GP_WITH_CAPACITY.toComponent(usage, capacity)
 		if (ClientGridPower.isOverloaded) {
 			component.withStyle(ChatFormatting.RED)
 		}

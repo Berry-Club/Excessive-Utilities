@@ -3,6 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.base
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import net.minecraft.core.BlockPos
@@ -33,7 +35,8 @@ abstract class GpDrainBlockEntity(
 			override fun getDisplayName(): Component = blockState.block.name
 			override fun getDisplayText(): Component {
 				val amount = getAmount()
-				return Component.literal("$amount at ${worldPosition.x}, ${worldPosition.y}, ${worldPosition.z}")
+				val formattedAmount = "%.2f".format(amount)
+				return ModMenuLang.GP_AT_POS.toComponent(formattedAmount, pos.x, pos.y, pos.z)
 			}
 		}
 

@@ -2,6 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -65,7 +67,7 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 				override fun getDisplayStack(): ItemStack = stackCopy
 				override fun getDisplayName(): Component = stackCopy.displayName
 				override fun getDisplayText(): Component {
-					return Component.literal("$requirement at ${furnace.blockPos.x} ${furnace.blockPos.y} ${furnace.blockPos.z}")
+					return ModMenuLang.GP_AT_POS.toComponent(requirement, furnace.blockPos.x, furnace.blockPos.y, furnace.blockPos.z)
 				}
 			}
 

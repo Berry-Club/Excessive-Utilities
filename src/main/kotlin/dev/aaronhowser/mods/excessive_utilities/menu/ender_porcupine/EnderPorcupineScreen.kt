@@ -4,6 +4,8 @@ import dev.aaronhowser.mods.aaron.menu.BaseScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.ImageButton
@@ -207,7 +209,7 @@ class EnderPorcupineScreen(
 
 		guiGraphics.drawString(
 			font,
-			Component.literal("Current Offset: ($currentOffsetX, $currentOffsetY, $currentOffsetZ)"),
+			ModMenuLang.CURRENT_OFFSET.toComponent(currentOffsetX, currentOffsetY, currentOffsetZ),
 			8,
 			24,
 			4210752,
@@ -224,7 +226,7 @@ class EnderPorcupineScreen(
 
 		guiGraphics.drawString(
 			font,
-			Component.literal("Minimum Offset: ($minX, $minY, $minZ)"),
+			ModMenuLang.MIN_OFFSET.toComponent(minX, minY, minZ),
 			8,
 			40,
 			4210752,
@@ -266,7 +268,7 @@ class EnderPorcupineScreen(
 
 		guiGraphics.drawString(
 			font,
-			Component.literal("Maximum Offset: ($maxX, $maxY, $maxZ)"),
+			ModMenuLang.MAX_OFFSET.toComponent(maxX, maxY, maxZ),
 			8,
 			108,
 			4210752,

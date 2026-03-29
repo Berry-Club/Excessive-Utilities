@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects.SECOND_CHANCE
 import net.minecraft.network.chat.Component
 import net.minecraft.sounds.SoundEvents
@@ -51,7 +53,7 @@ class SecondChanceEffect : MobEffect(
 					1f
 				)
 
-			entity.tell(Component.literal("Your second chance has been used up!"))
+			entity.tell(ModMessageLang.SECOND_CHANCE_USED.toComponent())
 		}
 	}
 

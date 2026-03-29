@@ -5,10 +5,11 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.giveOrDropStack
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.component.DataComponents
-import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
@@ -33,7 +34,7 @@ class EthericSwordItem(properties: Properties) : SwordItem(UnstableTier, propert
 				player.giveOrDropStack(ModItems.SOUL_FRAGMENT.getDefaultInstance())
 				return InteractionResultHolder.success(stack)
 			} else {
-				player.tell(Component.literal("You don't have enough health to remove any more Soul Fragments!"))
+				player.tell(ModMessageLang.NO_REMOVE_SOUL_FRAGMENT.toComponent())
 				return InteractionResultHolder.fail(stack)
 			}
 		}

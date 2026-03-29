@@ -8,6 +8,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.setUnit
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.EnderLilyBlock
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
@@ -197,7 +199,7 @@ class WateringCanItem(
 		tooltipFlag: TooltipFlag
 	) {
 		if (stack.has(ModDataComponents.IS_BROKEN)) {
-			tooltipComponents += Component.literal("Broken")
+			tooltipComponents += ModMenuLang.BROKEN.toComponent()
 			return
 		}
 
@@ -208,7 +210,7 @@ class WateringCanItem(
 		val heldFormat = "%,d".format(heldWater)
 		val maxFormat = "%,d".format(MAX_WATER)
 
-		tooltipComponents += Component.literal("Water: $heldFormat / $maxFormat")
+		tooltipComponents += ModMenuLang.HELD_WATER.toComponent(heldFormat, maxFormat)
 	}
 
 	companion object {

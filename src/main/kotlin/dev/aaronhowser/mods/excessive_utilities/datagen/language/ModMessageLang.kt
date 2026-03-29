@@ -1,13 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.language
 
-import net.minecraft.world.item.ItemStack
-
 object ModMessageLang {
 
 	const val DOOM_EFFECT_TIME = "message.excessive_utilities.doom_effect_time"
 	const val EAT_MAGICAL_APPLE = "message.excessive_utilities.eat_magical_apple"
 	const val DOOM_DEATH = "death.attack.eu_doom"
 	const val SET_CREATIVE_HARVEST = "message.excessive_utilities.set_creative_harvest"
+	const val NO_REMOVE_SOUL_FRAGMENT = "message.excessive_utilities.no_remove_soul_fragment"
+	const val SECOND_CHANCE_USED = "message.excessive_utilities.second_chance_used"
 
 	const val DIVISION_OVERWORLD_ONLY = "message.excessive_utilities.division.overworld_only"
 	const val DIVISION_SEE_SKY = "message.excessive_utilities.division.see_sky"
@@ -34,6 +34,8 @@ object ModMessageLang {
 			add(EAT_MAGICAL_APPLE, "You feel your luck changing.")
 			add(DOOM_DEATH, "%s met their doom.")
 			add(SET_CREATIVE_HARVEST, "Set mimic block to %s")
+			add(NO_REMOVE_SOUL_FRAGMENT, "You don't have enough health to remove any more Soul Fragments!")
+			add(SECOND_CHANCE_USED, "Your second chance has been used up!")
 
 			add(DIVISION_OVERWORLD_ONLY, "You can only activate the Division Sigil in the Overworld!")
 			add(DIVISION_SEE_SKY, "The Enchanting Table must be able to see the sky.")

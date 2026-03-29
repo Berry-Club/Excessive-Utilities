@@ -2,6 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.ARGB
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
@@ -44,7 +46,11 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 	) {
 		val energy = stack.getOrDefault(ModDataComponents.ENERGY, 0)
 		val maxEnergy = ServerConfig.CONFIG.heatingCoilMaxEnergy.get()
-		tooltipComponents += Component.literal("Energy: $energy / $maxEnergy FE")
+
+		val formattedEnergy = "%,d".format(energy)
+		val formattedMaxEnergy = "%,d".format(maxEnergy)
+
+		tooltipComponents += ModMenuLang.FE_WITH_CAPACITY.toComponent(formattedEnergy, formattedMaxEnergy)
 	}
 
 	companion object {

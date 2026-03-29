@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.ARGB
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.item.ItemEntity
@@ -51,7 +53,7 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 	) {
 		val charge = stack.getOrDefault(ModDataComponents.CHARGE, 0)
 		val percent = (charge / MAX_CHARGE.toFloat() * 100).toInt()
-		tooltipComponents.add(Component.literal("Solar power: $percent%"))
+		tooltipComponents += ModMenuLang.SOLAR_POWER.toComponent(percent)
 	}
 
 	companion object {

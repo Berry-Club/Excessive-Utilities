@@ -11,7 +11,6 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeRegistration
-import net.minecraft.network.chat.Component
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
@@ -43,7 +42,7 @@ class PotionFuelJeiCategory(
 
 		if (steps > 0) {
 			builder.addText(
-				Component.literal("$steps Brewing Steps"),
+				ModMenuLang.BREWING_STEPS.toComponent(steps),
 				200, 12
 			).setPosition(32, 5).setColor(0xFF808080.toInt())
 		}
