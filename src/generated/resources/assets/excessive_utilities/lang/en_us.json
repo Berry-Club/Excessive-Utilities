@@ -710,7 +710,7 @@
   "tooltip.excessive_utilities.gp": "%s GP",
   "tooltip.excessive_utilities.gp_at_pos": "%s at (%d, %d, %d)",
   "tooltip.excessive_utilities.gp_cost": "GP Cost: %s",
-  "tooltip.excessive_utilities.gp_with_capacity": "%1$s/%2$s GP",
+  "tooltip.excessive_utilities.gp_with_capacity": "%1$s / %2$s GP",
   "tooltip.excessive_utilities.held_water": "Water: %s/%s",
   "tooltip.excessive_utilities.infinite_uses": "Infinite Uses",
   "tooltip.excessive_utilities.item_filter.ignore_all_components": "Ignore All Components",
@@ -729,5 +729,5 @@
   "tooltip.excessive_utilities.unstable_ingot.cheesed_2": "Unstable Ingots must be crafted manually, by you.",
   "tooltip.excessive_utilities.unstable_ingot.cheesed_3": "If this one WAS crafted manually, try using a vanilla Crafting Table instead.",
   "tooltip.geneticsresequenced.fe": "%s FE",
-  "tooltip.geneticsresequenced.fe_with_capacity": "%1$s/%2$s FE"
+  "tooltip.geneticsresequenced.fe_with_capacity": "%1$s / %2$s FE"
 }
