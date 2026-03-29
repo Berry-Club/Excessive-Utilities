@@ -3277,7 +3277,8 @@ class ModBlockStateProvider(
 			ModBlocks.ETHEREAL_GLASS.get(),
 			ModBlocks.INVERTED_ETHEREAL_GLASS.get(),
 			ModBlocks.OBSIDIAN_GLASS.get(),
-			ModBlocks.REINFORCED_DARK_GLASS.get()
+			ModBlocks.REINFORCED_DARK_GLASS.get(),
+			ModBlocks.GLOWING_GLASS.get()
 		)
 
 		val cutout = listOf(
@@ -3288,7 +3289,6 @@ class ModBlockStateProvider(
 			ModBlocks.GLASS_BRICKS.get(),
 			ModBlocks.CARVED_GLASS.get(),
 			ModBlocks.GOLDEN_EDGED_GLASS.get(),
-			ModBlocks.GLOWING_GLASS.get(),
 			ModBlocks.BLOCK_OF_UNSTABLE_INGOT.get(),
 			ModBlocks.PATTERNED_GLASS.get(),
 			ModBlocks.REDSTONE_GLASS.get()

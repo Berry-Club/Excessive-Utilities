@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-28T14:23:29.4052167	Recipes
+// 1.21.1	2026-03-29T17:42:42.9156737	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 5544a3880f9cc21b24f3bbd7a0e3125679de74dc data/excessive_utilities/advancement/recipes/crusher/allium_to_magenta_dye.json
 03553dc68b381cde601be45b74fc8784e96887ab data/excessive_utilities/advancement/recipes/crusher/azure_bluet_to_light_gray_dye.json
@@ -1307,7 +1307,7 @@ ecc5bec09ea2f17596129288827eee143b79dbf3 data/excessive_utilities/recipe/opinium
 7ffef414a4bf04b3bb9fe2e528b2a710ffa5efbb data/excessive_utilities/recipe/opinium_core_decent.json
 180d8645084e4411acac5aaaf928ff219fb0a593 data/excessive_utilities/recipe/opinium_core_good.json
 0125da080af351791dccdfe1aae40b802c9e3edf data/excessive_utilities/recipe/opinium_core_inspiring.json
-d79677ce29e81d4afaa098034c136ea5651737e0 data/excessive_utilities/recipe/opinium_core_mediocre.json
+899470d6c9c9506e32335eab83a322677cd92360 data/excessive_utilities/recipe/opinium_core_mediocre.json
 236eca2fc00d103d44449c87ecbbbdea344146e3 data/excessive_utilities/recipe/opinium_core_passable.json
 4f99dcc088502d777d93aa3ca796bb326be08e77 data/excessive_utilities/recipe/opinium_core_pathetic.json
 6b73a466a863738aca4bf3252b71467a769832cd data/excessive_utilities/recipe/opinium_core_perfected.json

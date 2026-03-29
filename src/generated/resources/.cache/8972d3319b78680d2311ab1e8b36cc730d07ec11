@@ -1,4 +1,4 @@
-// 1.21.1	2026-03-28T12:54:08.7189426	Block States: excessive_utilities
+// 1.21.1	2026-03-29T17:42:42.8925508	Block States: excessive_utilities
 8fb96ad4646ce4b9716e8d3e8a34229fdc507e4c assets/excessive_utilities/blockstates/advanced_filing_cabinet.json
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 65a90e7e3954ee4e5c32067e0f932018b74e4f59 assets/excessive_utilities/blockstates/antenna.json
@@ -824,7 +824,7 @@ ea5d96b55054314c24711ebe0db78d4349de10fb assets/excessive_utilities/models/block
 e7de1d1862553d2b89fc78215967f2e584bb26e5 assets/excessive_utilities/models/block/furnace_off.json
 31fb8ae8fd62d133cacf230a00b5fda57a6c67dc assets/excessive_utilities/models/block/furnace_on.json
 e15a08fa23dbcd11e34ec238c72eb84037f062dd assets/excessive_utilities/models/block/glass_bricks.json
-1650e2e27104c584976623adbc66d44421764ac6 assets/excessive_utilities/models/block/glowing_glass.json
+258482ef483b7f78751b335a328c7a4d50e837d0 assets/excessive_utilities/models/block/glowing_glass.json
 e64a8681d32f21257dec8af0b782d868751aeca9 assets/excessive_utilities/models/block/golden_edged_glass.json
 5cbfd3498ff344b319a453cdf9c207b06f6e3e48 assets/excessive_utilities/models/block/gravel_bricks.json
 62621f02c5acb26d343a6fcd4a62f3a999077196 assets/excessive_utilities/models/block/gravel_road.json
