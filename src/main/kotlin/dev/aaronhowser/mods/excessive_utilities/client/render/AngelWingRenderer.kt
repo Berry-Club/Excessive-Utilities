@@ -50,7 +50,7 @@ class AngelWingRenderer : ICurioRenderer {
 
 		poseStack.withPose {
 			parentModel.body.translateAndRotate(poseStack)
-			poseStack.translate(0.0, 0.2, 0.0)
+			poseStack.translate(0.0, 0.2, 0.15)
 			poseStack.mulPose(Axis.YP.rotationDegrees(90f))
 
 			poseStack.withPose {
