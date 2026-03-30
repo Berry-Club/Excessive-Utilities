@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
+import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
@@ -11,7 +12,6 @@ import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.world.item.crafting.RecipeHolder
-import java.text.DecimalFormat
 
 class ResonatorJeiCategory(
 	recipeType: RecipeType<RecipeHolder<ResonatorRecipe>>,
@@ -44,7 +44,7 @@ class ResonatorJeiCategory(
 
 		builder.addRecipeArrow().setPosition(32, 9)
 
-		val formattedGpCost = DecimalFormat("#,##0.##").format(recipe.gpCost)
+		val formattedGpCost = ClientGridPower.format(recipe.gpCost)
 
 		builder.addText(
 			ModMenuLang.GP.toComponent(formattedGpCost),

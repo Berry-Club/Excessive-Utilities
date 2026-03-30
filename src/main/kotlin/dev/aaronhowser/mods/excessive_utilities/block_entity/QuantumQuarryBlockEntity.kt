@@ -136,8 +136,6 @@ class QuantumQuarryBlockEntity(
 	private var feProgress = 0.0
 
 	private fun progressMine(miningDimensionLevel: ServerLevel) {
-		if (miningDimensionLevel.hasNeighborSignal(blockPos)) return
-
 		val fePerBlock = ServerConfig.CONFIG.quantumQuarryFePerBlock.get()
 		if (energyStorage.energyStored < fePerBlock) return
 
@@ -189,16 +187,8 @@ class QuantumQuarryBlockEntity(
 			.withParameter(LootContextParams.ORIGIN, target.center)
 			.withParameter(LootContextParams.TOOL, tool)
 			.withParameter(LootContextParams.BLOCK_STATE, targetState)
-
-		val player = fakePlayer?.get()
-		if (player != null) {
-			lootParams.withParameter(LootContextParams.THIS_ENTITY, player)
-		}
-
-		val be = miningDimensionLevel.getBlockEntity(target)
-		if (be != null) {
-			lootParams.withParameter(LootContextParams.BLOCK_ENTITY, be)
-		}
+			.withOptionalParameter(LootContextParams.THIS_ENTITY, fakePlayer?.get())
+			.withOptionalParameter(LootContextParams.BLOCK_ENTITY, miningDimensionLevel.getBlockEntity(target))
 
 		return targetState.getDrops(lootParams)
 	}
@@ -320,7 +310,7 @@ class QuantumQuarryBlockEntity(
 					TARGET_Y_DATA_INDEX -> targetBlockPos?.y ?: 0
 					TARGET_Z_DATA_INDEX -> targetBlockPos?.z ?: 0
 					PROGRESS_PERCENT_DATA_INDEX -> Mth.floor(progressThroughBlock * 100)
-					AMOUNT_BLOCKS_BROKEN_DATA_INDEX -> amountBlocksBroken.toInt()
+					AMOUNT_BLOCKS_BROKEN_DATA_INDEX -> amountBlocksBroken
 
 					BIOME_ID_DATA_INDEX -> {
 						val level = level

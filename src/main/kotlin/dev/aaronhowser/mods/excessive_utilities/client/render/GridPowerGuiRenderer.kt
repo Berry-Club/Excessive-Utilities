@@ -15,7 +15,6 @@ import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.resources.ResourceLocation
-import java.text.DecimalFormat
 
 object GridPowerGuiRenderer {
 
@@ -33,9 +32,8 @@ object GridPowerGuiRenderer {
 			if (!isTag) return
 		}
 
-		val format = DecimalFormat("#,##0.##")
-		val usage = format.format(ClientGridPower.usage)
-		val capacity = format.format(ClientGridPower.capacity)
+		val usage = ClientGridPower.format(ClientGridPower.usage)
+		val capacity = ClientGridPower.format(ClientGridPower.capacity)
 
 		val component = ModMenuLang.GP_WITH_CAPACITY.toComponent(usage, capacity)
 		if (ClientGridPower.isOverloaded) {

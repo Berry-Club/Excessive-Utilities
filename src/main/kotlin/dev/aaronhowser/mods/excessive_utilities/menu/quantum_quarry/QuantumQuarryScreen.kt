@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
+import java.text.DecimalFormat
 import kotlin.jvm.optionals.getOrNull
 
 class QuantumQuarryScreen(
@@ -96,7 +97,7 @@ class QuantumQuarryScreen(
 		val amountMined = menu.getAmountBlocksBroken()
 		val progress = menu.getProgress()
 
-		val minedString = "%,.2f".format(amountMined + progress)
+		val minedString = DecimalFormat("#,##0,##").format(amountMined + progress)
 
 		guiGraphics.drawString(
 			font,
