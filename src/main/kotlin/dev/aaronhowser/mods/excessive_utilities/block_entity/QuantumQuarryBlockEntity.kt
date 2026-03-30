@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
@@ -31,6 +32,7 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -141,6 +143,15 @@ class QuantumQuarryBlockEntity(
 
 		val blocksPerTick = ServerConfig.CONFIG.quantumQuarryBlocksPerTick.get()
 		progressThroughBlock += blocksPerTick
+
+		val enchantedBook = getEnchantedBook()
+		if (enchantedBook.isNotEmpty()) {
+			val enchantmentLookup = miningDimensionLevel.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+			val efficiency = enchantedBook.getEnchantmentLevel(enchantmentLookup.getHolderOrThrow(Enchantments.EFFICIENCY))
+			if (efficiency > 0) {
+				progressThroughBlock *= 1.0 + (efficiency * 0.25)
+			}
+		}
 
 		while (progressThroughBlock >= 1.0) {
 			progressThroughBlock -= 1.0
