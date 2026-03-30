@@ -20,7 +20,7 @@ class QuantumQuarryMenu(
 	playerInventory: Inventory,
 	val upgradesContainer: Container,
 	val quarryContainerData: ContainerData
-) : MenuWithInventory(ModMenuTypes.SIMPLE_MACHINE.get(), containerId, playerInventory) {
+) : MenuWithInventory(ModMenuTypes.QUANTUM_QUARRY.get(), containerId, playerInventory) {
 
 	constructor(containerId: Int, playerInventory: Inventory) :
 			this(

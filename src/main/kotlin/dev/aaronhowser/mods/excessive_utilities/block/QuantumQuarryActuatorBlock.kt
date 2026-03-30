@@ -2,10 +2,14 @@ package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.QuantumQuarryActuatorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.QuantumQuarryBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.world.InteractionResult
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
@@ -16,6 +20,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.phys.BlockHitResult
 
 class QuantumQuarryActuatorBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)), EntityBlock {
 
@@ -80,6 +85,23 @@ class QuantumQuarryActuatorBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN))
 		} else {
 			Blocks.AIR.defaultBlockState()
 		}
+	}
+
+	override fun useWithoutItem(
+		state: BlockState,
+		level: Level,
+		pos: BlockPos,
+		player: Player,
+		hitResult: BlockHitResult
+	): InteractionResult {
+		val quarryDirection = state.getValue(FACING).opposite
+		val quarryPos = pos.relative(quarryDirection)
+		val blockEntity = level.getBlockEntity(quarryPos)
+		if (blockEntity is QuantumQuarryBlockEntity) {
+			player.openMenu(blockEntity)
+		}
+
+		return InteractionResult.sidedSuccess(level.isClientSide)
 	}
 
 	companion object {

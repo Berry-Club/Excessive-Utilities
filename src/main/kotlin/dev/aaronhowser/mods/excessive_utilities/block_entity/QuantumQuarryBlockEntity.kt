@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
+import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -19,9 +20,14 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.Container
+import net.minecraft.world.MenuProvider
+import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
+import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
@@ -44,7 +50,7 @@ import java.util.*
 class QuantumQuarryBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state), ContainerContainer {
+) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state), ContainerContainer, MenuProvider {
 
 	private val energyStorage = EnergyStorage(1_000_000)
 	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
@@ -376,6 +382,12 @@ class QuantumQuarryBlockEntity(
 		}
 
 		amountBlocksBroken = tag.getLong(AMOUNT_BLOCKS_BROKEN_NBT).toUInt()
+	}
+
+	override fun getDisplayName(): Component = blockState.block.name
+
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
+		return QuantumQuarryMenu(containerId, playerInventory, upgradesContainer, containerData)
 	}
 
 	companion object {

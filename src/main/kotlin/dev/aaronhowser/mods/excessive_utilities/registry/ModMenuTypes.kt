@@ -22,6 +22,8 @@ import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTran
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineMenu
@@ -76,6 +78,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("ender_porcupine", ::EnderPorcupineMenu)
 	val ENCHANTER: DeferredHolder<MenuType<*>, MenuType<EnchanterMenu>> =
 		register("enchanter", ::EnchanterMenu)
+	val QUANTUM_QUARRY: DeferredHolder<MenuType<*>, MenuType<QuantumQuarryMenu>> =
+		register("quantum_quarry", ::QuantumQuarryMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
@@ -93,6 +97,7 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		event.register(FLUID_FILTER.get(), ::FluidFilterScreen)
 		event.register(ENDER_PORCUPINE.get(), ::EnderPorcupineScreen)
 		event.register(ENCHANTER.get(), ::EnchanterScreen)
+		event.register(QUANTUM_QUARRY.get(), ::QuantumQuarryScreen)
 	}
 
 }
