@@ -31,18 +31,6 @@ class ItemFilterScreen(
 
 		val buttonWidth = 120
 
-//		invertButton = ChangingTextButton(
-//			x = leftPos - buttonWidth,
-//			y = topPos + 5,
-//			width = buttonWidth,
-//			height = 20,
-//			messageGetter = { ItemFilterFlagsComponent.Flag.INVERTED.getMessage(menu.isInverted()) },
-//			onPress = {
-//				val packet = ClientClickedMenuButton(ItemFilterMenu.TOGGLE_INVERTED_BUTTON_ID)
-//				packet.messageServer()
-//			}
-//		)
-
 		invertButton = ToggleSpriteButton(
 			x = leftPos + 5,
 			y = topPos + 20,
@@ -61,12 +49,18 @@ class ItemFilterScreen(
 			}
 		)
 
-		useTagsButton = ChangingTextButton(
-			x = leftPos - buttonWidth,
-			y = topPos + 5 + 20 + 5,
-			width = buttonWidth,
+		useTagsButton = ToggleSpriteButton(
+			x = leftPos + 5,
+			y = topPos + 70,
+			width = 20,
 			height = 20,
-			messageGetter = { ItemFilterFlagsComponent.Flag.USE_TAGS.getMessage(menu.useTags()	) },
+			font = font,
+			sprites = Pair(USE_TAGS_ON, USE_TAGS_OFF),
+			messages = Pair(
+				Component.literal("Use Tags: ON"),
+				Component.literal("Use Tags: OFF")
+			),
+			isOnGetter = { menu.useTags() },
 			onPress = {
 				val packet = ClientClickedMenuButton(ItemFilterMenu.TOGGLE_USE_TAGS_BUTTON_ID)
 				packet.messageServer()
@@ -129,6 +123,16 @@ class ItemFilterScreen(
 
 		val IGNORE_DAMAGE_ON = ScreenSprite(
 			ExcessiveUtilities.modResource("filter/ignore_damage_on"),
+			16, 16
+		)
+
+		val USE_TAGS_OFF = ScreenSprite(
+			ExcessiveUtilities.modResource("filter/use_tags_off"),
+			16, 16
+		)
+
+		val USE_TAGS_ON = ScreenSprite(
+			ExcessiveUtilities.modResource("filter/use_tags_on"),
 			16, 16
 		)
 	}
