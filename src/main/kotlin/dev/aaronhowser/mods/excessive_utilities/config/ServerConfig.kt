@@ -424,151 +424,153 @@ class ServerConfig(
 	}
 
 	private fun general() {
-		chandelierRadius = builder
-			.comment("The radius in blocks that a Chandelier prevents monster spawns.")
-			.defineInRange("chandelierRadius", 16, 1, Int.MAX_VALUE)
+		builder.section("general") {
+			chandelierRadius = builder
+				.comment("The radius in blocks that a Chandelier prevents monster spawns.")
+				.defineInRange("chandelierRadius", 16, 1, Int.MAX_VALUE)
 
-		magnumTorchRadius = builder
-			.comment("The radius in blocks that a Magnum Torch prevents monster spawns.")
-			.defineInRange("magnumTorchRadius", 64, 1, Int.MAX_VALUE)
+			magnumTorchRadius = builder
+				.comment("The radius in blocks that a Magnum Torch prevents monster spawns.")
+				.defineInRange("magnumTorchRadius", 64, 1, Int.MAX_VALUE)
 
-		conveyorBeltSpeed = builder
-			.comment("The speed in blocks per tick that Conveyor Belts will move entities.")
-			.defineInRange("conveyorBeltSpeed", 0.1, 0.0, Double.MAX_VALUE)
+			conveyorBeltSpeed = builder
+				.comment("The speed in blocks per tick that Conveyor Belts will move entities.")
+				.defineInRange("conveyorBeltSpeed", 0.1, 0.0, Double.MAX_VALUE)
 
-		funnyEnderLilyTeleporting = builder
-			.comment("Whether Ender Lilies should teleport away when they get wet.")
-			.define("funnyEnderLilyTeleporting", true)
+			funnyEnderLilyTeleporting = builder
+				.comment("Whether Ender Lilies should teleport away when they get wet.")
+				.define("funnyEnderLilyTeleporting", true)
 
-		enderPorcupineMarchTime = builder
-			.comment("The number of ticks that the Ender Porcupine will wait at each position before moving to the next one")
-			.defineInRange("enderPorcupineMarchTime", 20, 1, Int.MAX_VALUE)
+			enderPorcupineMarchTime = builder
+				.comment("The number of ticks that the Ender Porcupine will wait at each position before moving to the next one")
+				.defineInRange("enderPorcupineMarchTime", 20, 1, Int.MAX_VALUE)
 
-		builder.section("healing_axe") {
-			healingAxeChancePerTick = builder
-				.comment("The chance per tick that the Healing Axe will feed you a bit.")
-				.defineInRange("healingAxeChancePerTick", 1.0 / 100, 0.0, 1.0)
+			builder.section("healing_axe") {
+				healingAxeChancePerTick = builder
+					.comment("The chance per tick that the Healing Axe will feed you a bit.")
+					.defineInRange("healingAxeChancePerTick", 1.0 / 100, 0.0, 1.0)
 
-			healingAxeFoodAmount = builder
-				.comment("The amount of hunger points that the Healing Axe will restore when it feeds you.")
-				.defineInRange("healingAxeFoodAmount", 1, 0, Int.MAX_VALUE)
+				healingAxeFoodAmount = builder
+					.comment("The amount of hunger points that the Healing Axe will restore when it feeds you.")
+					.defineInRange("healingAxeFoodAmount", 1, 0, Int.MAX_VALUE)
 
-			healingAxeSaturationAmount = builder
-				.comment("The amount of saturation points that the Healing Axe will restore when it feeds you.")
-				.defineInRange("healingAxeSaturationAmount", 0.2, 0.0, Double.MAX_VALUE)
+				healingAxeSaturationAmount = builder
+					.comment("The amount of saturation points that the Healing Axe will restore when it feeds you.")
+					.defineInRange("healingAxeSaturationAmount", 0.2, 0.0, Double.MAX_VALUE)
 
-			healingAxeHealthTransferAmount = builder
-				.comment("The amount of health that the Healing Axe will transfer between you and the entity you hit.")
-				.defineInRange("healingAxeHealthTransferAmount", 4.0, 0.0, Double.MAX_VALUE)
-		}
+				healingAxeHealthTransferAmount = builder
+					.comment("The amount of health that the Healing Axe will transfer between you and the entity you hit.")
+					.defineInRange("healingAxeHealthTransferAmount", 4.0, 0.0, Double.MAX_VALUE)
+			}
 
-		builder.section("filing_cabinets") {
-			basicFilingCabinetCapacity = builder
-				.comment("The maximum number of items that a Basic Filing Cabinet can hold.")
-				.defineInRange("basicFilingCabinetCapacity", 270, 1, Int.MAX_VALUE)
+			builder.section("filing_cabinets") {
+				basicFilingCabinetCapacity = builder
+					.comment("The maximum number of items that a Basic Filing Cabinet can hold.")
+					.defineInRange("basicFilingCabinetCapacity", 270, 1, Int.MAX_VALUE)
 
-			advancedFilingCabinetCapacity = builder
-				.comment("The maximum number of items that an Advanced Filing Cabinet can hold.")
-				.defineInRange("advancedFilingCabinetCapacity", 540, 1, Int.MAX_VALUE)
-		}
+				advancedFilingCabinetCapacity = builder
+					.comment("The maximum number of items that an Advanced Filing Cabinet can hold.")
+					.defineInRange("advancedFilingCabinetCapacity", 540, 1, Int.MAX_VALUE)
+			}
 
-		builder.section("flat_transfer_nodes") {
-			flatItemTransferNodeSpeed = builder
-				.comment("The number of items per tick that Flat Item Transfer Nodes will transfer.")
-				.defineInRange("flatItemTransferNodeSpeed", 64 / (20 * 2), 1, Int.MAX_VALUE)
+			builder.section("flat_transfer_nodes") {
+				flatItemTransferNodeSpeed = builder
+					.comment("The number of items per tick that Flat Item Transfer Nodes will transfer.")
+					.defineInRange("flatItemTransferNodeSpeed", 64 / (20 * 2), 1, Int.MAX_VALUE)
 
-			flatFluidTransferNodeSpeed = builder
-				.comment("The amount of fluid in millibuckets per tick that Flat Fluid Transfer Nodes will transfer.")
-				.defineInRange("flatFluidTransferNodeSpeed", 1000 / 20, 1, Int.MAX_VALUE)
-		}
+				flatFluidTransferNodeSpeed = builder
+					.comment("The amount of fluid in millibuckets per tick that Flat Fluid Transfer Nodes will transfer.")
+					.defineInRange("flatFluidTransferNodeSpeed", 1000 / 20, 1, Int.MAX_VALUE)
+			}
 
-		builder.section("peaceful_table") {
-			peacefulTableOnlyInPeaceful = builder
-				.comment("Whether the Peaceful Table should only work when the difficulty is set to Peaceful.")
-				.define("peacefulTableOnlyInPeaceful", true)
+			builder.section("peaceful_table") {
+				peacefulTableOnlyInPeaceful = builder
+					.comment("Whether the Peaceful Table should only work when the difficulty is set to Peaceful.")
+					.define("peacefulTableOnlyInPeaceful", true)
 
-			peacefulTableChancePerTick = builder
-				.comment("The chance per tick that the Peaceful Table will try to generate a drop.")
-				.defineInRange("peacefulTableChancePerTick", 1.0 / 20 / 30, 0.0, 1.0)
-		}
+				peacefulTableChancePerTick = builder
+					.comment("The chance per tick that the Peaceful Table will try to generate a drop.")
+					.defineInRange("peacefulTableChancePerTick", 1.0 / 20 / 30, 0.0, 1.0)
+			}
 
-		builder.section("cursed_earth") {
-			cursedEarthPeriod = builder
-				.comment("The number of ticks between each time that Cursed Earth blocks will do work.")
-				.defineInRange("cursedEarthPeriod", 8, 1, Int.MAX_VALUE)
+			builder.section("cursed_earth") {
+				cursedEarthPeriod = builder
+					.comment("The number of ticks between each time that Cursed Earth blocks will do work.")
+					.defineInRange("cursedEarthPeriod", 8, 1, Int.MAX_VALUE)
 
-			cursedEarthChance = builder
-				.comment("The chance per tick that a Cursed Earth block will try to spawn a mob.")
-				.defineInRange("cursedEarthChance", 1.0 / 40, 0.0, 1.0)
+				cursedEarthChance = builder
+					.comment("The chance per tick that a Cursed Earth block will try to spawn a mob.")
+					.defineInRange("cursedEarthChance", 1.0 / 40, 0.0, 1.0)
 
-			cursedEarthMaxSpawnedMobs = builder
-				.comment("The maximum number of mobs around a Cursed Earth before it stops trying to spawn more.")
-				.defineInRange("cursedEarthMaxSpawnedMobs", 10, 1, Int.MAX_VALUE)
+				cursedEarthMaxSpawnedMobs = builder
+					.comment("The maximum number of mobs around a Cursed Earth before it stops trying to spawn more.")
+					.defineInRange("cursedEarthMaxSpawnedMobs", 10, 1, Int.MAX_VALUE)
 
-			cursedEarthCheckRadius = builder
-				.comment("The radius in blocks around a Cursed Earth block that it checks for nearby mobs before trying to spawn more.")
-				.defineInRange("cursedEarthCheckRadius", 8.0, 0.0, Double.MAX_VALUE)
-		}
+				cursedEarthCheckRadius = builder
+					.comment("The radius in blocks around a Cursed Earth block that it checks for nearby mobs before trying to spawn more.")
+					.defineInRange("cursedEarthCheckRadius", 8.0, 0.0, Double.MAX_VALUE)
+			}
 
-		builder.section("heating_coil") {
-			heatingCoilBurnTime = builder
-				.comment("The number of ticks a Heating Coil will burn in a Furnace.")
-				.defineInRange("heatingCoilBurnTime", 20, 1, Int.MAX_VALUE)
+			builder.section("heating_coil") {
+				heatingCoilBurnTime = builder
+					.comment("The number of ticks a Heating Coil will burn in a Furnace.")
+					.defineInRange("heatingCoilBurnTime", 20, 1, Int.MAX_VALUE)
 
-			heatingCoilBurnCost = builder
-				.comment("How much FE will be spent when a Heating Coil is used as Furnace fuel.")
-				.defineInRange("heatingCoilBurnCost", 50, 1, Int.MAX_VALUE)
+				heatingCoilBurnCost = builder
+					.comment("How much FE will be spent when a Heating Coil is used as Furnace fuel.")
+					.defineInRange("heatingCoilBurnCost", 50, 1, Int.MAX_VALUE)
 
-			heatingCoilMaxEnergy = builder
-				.comment("The maximum amount of FE a Heating Coil can store.")
-				.defineInRange("heatingCoilMaxEnergy", 1_500_000, 1, Int.MAX_VALUE)
-		}
+				heatingCoilMaxEnergy = builder
+					.comment("The maximum amount of FE a Heating Coil can store.")
+					.defineInRange("heatingCoilMaxEnergy", 1_500_000, 1, Int.MAX_VALUE)
+			}
 
-		builder.section("drums") {
-			stoneDrumCapacity = builder
-				.comment("The fluid capacity of Stone Drums in millibuckets.")
-				.defineInRange("stoneDrumCapacity", 16_000, 1, Int.MAX_VALUE)
+			builder.section("drums") {
+				stoneDrumCapacity = builder
+					.comment("The fluid capacity of Stone Drums in millibuckets.")
+					.defineInRange("stoneDrumCapacity", 16_000, 1, Int.MAX_VALUE)
 
-			ironDrumCapacity = builder
-				.comment("The fluid capacity of Iron Drums in millibuckets.")
-				.defineInRange("ironDrumCapacity", 256_000, 1, Int.MAX_VALUE)
+				ironDrumCapacity = builder
+					.comment("The fluid capacity of Iron Drums in millibuckets.")
+					.defineInRange("ironDrumCapacity", 256_000, 1, Int.MAX_VALUE)
 
-			reinforcedLargeDrumCapacity = builder
-				.comment("The fluid capacity of Reinforced Large Drums in millibuckets.")
-				.defineInRange("reinforcedLargeDrumCapacity", 4_096_000, 1, Int.MAX_VALUE)
+				reinforcedLargeDrumCapacity = builder
+					.comment("The fluid capacity of Reinforced Large Drums in millibuckets.")
+					.defineInRange("reinforcedLargeDrumCapacity", 4_096_000, 1, Int.MAX_VALUE)
 
-			demonicallyGargantuanDrumCapacity = builder
-				.comment("The fluid capacity of Demonically Gargantuan Drums in millibuckets.")
-				.defineInRange("demonicallyGargantuanDrumCapacity", 65_536_000, 1, Int.MAX_VALUE)
+				demonicallyGargantuanDrumCapacity = builder
+					.comment("The fluid capacity of Demonically Gargantuan Drums in millibuckets.")
+					.defineInRange("demonicallyGargantuanDrumCapacity", 65_536_000, 1, Int.MAX_VALUE)
 
-			bedrockDrumCapacity = builder
-				.comment("The fluid capacity of Bedrock Drums in millibuckets.")
-				.defineInRange("bedrockDrumCapacity", 1_048_576_000, 1, Int.MAX_VALUE)
-		}
+				bedrockDrumCapacity = builder
+					.comment("The fluid capacity of Bedrock Drums in millibuckets.")
+					.defineInRange("bedrockDrumCapacity", 1_048_576_000, 1, Int.MAX_VALUE)
+			}
 
-		builder.section("boomerang") {
-			boomerangItemPickupRadius = builder
-				.comment("The radius in blocks around the Boomerang that it will pick up items.")
-				.defineInRange("boomerangItemPickupRadius", 4.0, 0.0, Double.MAX_VALUE)
+			builder.section("boomerang") {
+				boomerangItemPickupRadius = builder
+					.comment("The radius in blocks around the Boomerang that it will pick up items.")
+					.defineInRange("boomerangItemPickupRadius", 4.0, 0.0, Double.MAX_VALUE)
 
-			boomereaperangRadius = builder
-				.comment("The radius in blocks around the Boomerang that it will break plants if it has the Boomereaperang enchantment.")
-				.defineInRange("boomereaperangRadius", 4.0, 0.0, Double.MAX_VALUE)
-		}
+				boomereaperangRadius = builder
+					.comment("The radius in blocks around the Boomerang that it will break plants if it has the Boomereaperang enchantment.")
+					.defineInRange("boomereaperangRadius", 4.0, 0.0, Double.MAX_VALUE)
+			}
 
-		builder.section("soul_fragments") {
-			healthPerSoulFragment = builder
-				.comment("The amount of health that each Soul Fragment is worth.")
-				.defineInRange("healthPerSoulFragment", 2.0, 0.0, Double.MAX_VALUE)
+			builder.section("soul_fragments") {
+				healthPerSoulFragment = builder
+					.comment("The amount of health that each Soul Fragment is worth.")
+					.defineInRange("healthPerSoulFragment", 2.0, 0.0, Double.MAX_VALUE)
 
-			soulFragmentResetOnDeath = builder
-				.comment(
-					"What should happen to your Soul Debt/Surplus when you die.",
-					"KEEP: You keep all of your Soul Debt/Surplus",
-					"RESET: You reset to having 0 Soul Debt/Surplus",
-					"REMOVE_NEGATIVE: You keep Soul Surplus, but reset Soul Debt to 0"
-				)
-				.defineEnum("soulFragmentResetOnDeath", SoulDebt.OnDeathConfig.KEEP)
+				soulFragmentResetOnDeath = builder
+					.comment(
+						"What should happen to your Soul Debt/Surplus when you die.",
+						"KEEP: You keep all of your Soul Debt/Surplus",
+						"RESET: You reset to having 0 Soul Debt/Surplus",
+						"REMOVE_NEGATIVE: You keep Soul Surplus, but reset Soul Debt to 0"
+					)
+					.defineEnum("soulFragmentResetOnDeath", SoulDebt.OnDeathConfig.KEEP)
+			}
 		}
 	}
 

@@ -543,6 +543,7 @@
   "excessive_utilities.configuration.furnaceGeneratorBurnTimeMultiplier": "Furnace Generator Burn Time Multiplier",
   "excessive_utilities.configuration.furnaceGeneratorFePerTick": "Furnace Generator FE/tick",
   "excessive_utilities.configuration.furnaceTicksPerRecipe": "Furnace Ticks per Recipe",
+  "excessive_utilities.configuration.general": "General",
   "excessive_utilities.configuration.generatorParticleDensity": "Generator Particle Density",
   "excessive_utilities.configuration.gp_generation": "GP Generation",
   "excessive_utilities.configuration.gp_usage": "GP Usage",

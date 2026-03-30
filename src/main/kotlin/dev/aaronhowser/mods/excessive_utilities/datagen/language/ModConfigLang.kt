@@ -4,6 +4,7 @@ object ModConfigLang {
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
+			add("excessive_utilities.configuration.general", "General")
 			add("excessive_utilities.configuration.rainbowGeneratorFePerTick", "Rainbow Generator FE/tick")
 			add("excessive_utilities.configuration.chicken_wing_ring", "Chicken Wing Ring")
 			add("excessive_utilities.configuration.healingAxeSaturationAmount", "Healing Axe Saturation Amount")
