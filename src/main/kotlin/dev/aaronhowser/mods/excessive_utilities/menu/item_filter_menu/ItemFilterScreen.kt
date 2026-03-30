@@ -1,12 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu
 
 import dev.aaronhowser.mods.aaron.menu.BaseScreen
-import dev.aaronhowser.mods.aaron.menu.components.ChangingTextButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenSprite
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.item.component.ItemFilterFlagsComponent
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ToggleSpriteButton
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
@@ -85,12 +83,18 @@ class ItemFilterScreen(
 			}
 		)
 
-		ignoreAllComponentsButton = ChangingTextButton(
-			x = leftPos - buttonWidth,
-			y = topPos + 5 + (20 + 5) * 3,
-			width = buttonWidth,
+		ignoreAllComponentsButton = ToggleSpriteButton(
+			x = leftPos + 5,
+			y = topPos + 110,
+			width = 20,
 			height = 20,
-			messageGetter = { ItemFilterFlagsComponent.Flag.IGNORE_ALL_COMPONENTS.getMessage(menu.ignoreAllComponents()) },
+			font = font,
+			sprites = Pair(IGNORE_ALL_COMPONENTS_ON, IGNORE_ALL_COMPONENTS_OFF),
+			messages = Pair(
+				Component.literal("Ignore All Components: ON"),
+				Component.literal("Ignore All Components: OFF")
+			),
+			isOnGetter = { menu.ignoreAllComponents() },
 			onPress = {
 				val packet = ClientClickedMenuButton(ItemFilterMenu.TOGGLE_IGNORE_ALL_COMPONENTS_BUTTON_ID)
 				packet.messageServer()
@@ -116,6 +120,16 @@ class ItemFilterScreen(
 			16, 16
 		)
 
+		val USE_TAGS_OFF = ScreenSprite(
+			ExcessiveUtilities.modResource("filter/use_tags_off"),
+			16, 16
+		)
+
+		val USE_TAGS_ON = ScreenSprite(
+			ExcessiveUtilities.modResource("filter/use_tags_on"),
+			16, 16
+		)
+
 		val IGNORE_DAMAGE_OFF = ScreenSprite(
 			ExcessiveUtilities.modResource("filter/ignore_damage_off"),
 			16, 16
@@ -126,13 +140,13 @@ class ItemFilterScreen(
 			16, 16
 		)
 
-		val USE_TAGS_OFF = ScreenSprite(
-			ExcessiveUtilities.modResource("filter/use_tags_off"),
+		val IGNORE_ALL_COMPONENTS_OFF = ScreenSprite(
+			ExcessiveUtilities.modResource("filter/ignore_all_components_off"),
 			16, 16
 		)
 
-		val USE_TAGS_ON = ScreenSprite(
-			ExcessiveUtilities.modResource("filter/use_tags_on"),
+		val IGNORE_ALL_COMPONENTS_ON = ScreenSprite(
+			ExcessiveUtilities.modResource("filter/ignore_all_components_on"),
 			16, 16
 		)
 	}
