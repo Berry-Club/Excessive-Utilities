@@ -192,8 +192,7 @@ class QuantumQuarryBlockEntity(
 			}
 		}
 
-		val enchantmentLookup = miningDimensionLevel.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
-		val enchantments = getEnchantedBook().getAllEnchantments(enchantmentLookup)
+		val enchantments = getEnchantedBook().getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
 		tool.set(DataComponents.ENCHANTMENTS, enchantments)
 
 		val lootParams = LootParams.Builder(miningDimensionLevel)
