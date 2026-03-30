@@ -7,7 +7,9 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
@@ -60,7 +62,22 @@ class QuantumQuarryBlockEntity(
 
 	private val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
 	private val bufferItemHandler: ExtractOnlyInvWrapper = ExtractOnlyInvWrapper(bufferContainer)
-	private val upgradesContainer = ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE)
+	private val upgradesContainer: ImprovedSimpleContainer =
+		object : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
+			override fun setItem(index: Int, stack: ItemStack) {
+				super.setItem(index, stack)
+
+				if (index == BIOME_FILTER_SLOT_INDEX && stack.isNotEmpty()) {
+					val level = level
+					if (level is ServerLevel) {
+						val miningDimLevel = level.server.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL)
+						if (miningDimLevel != null) {
+							targetNewChunk(miningDimLevel)
+						}
+					}
+				}
+			}
+		}
 
 	override fun getContainers(): List<Container> = listOf(bufferContainer, upgradesContainer)
 
@@ -355,6 +372,14 @@ class QuantumQuarryBlockEntity(
 
 		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 
+		val bufferTag = CompoundTag()
+		bufferTag.saveItems(bufferContainer, registries)
+		tag.put(BUFFER_CONTAINER_NBT, bufferTag)
+
+		val upgradesTag = CompoundTag()
+		upgradesTag.saveItems(upgradesContainer, registries)
+		tag.put(UPGRADE_CONTAINER_NBT, upgradesTag)
+
 		val chunkPos = targetChunk
 		if (chunkPos != null) {
 			tag.putLong(TARGET_CHUNK_POS_NBT, chunkPos.toLong())
@@ -372,6 +397,12 @@ class QuantumQuarryBlockEntity(
 		super.loadAdditional(tag, registries)
 
 		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+
+		val bufferTag = tag.getCompound(BUFFER_CONTAINER_NBT)
+		bufferTag.loadItems(bufferContainer, registries)
+
+		val upgradesTag = tag.getCompound(UPGRADE_CONTAINER_NBT)
+		upgradesTag.loadItems(upgradesContainer, registries)
 
 		if (tag.contains(TARGET_CHUNK_POS_NBT)) {
 			val chunkPosLong = tag.getLong(TARGET_CHUNK_POS_NBT)
@@ -396,6 +427,8 @@ class QuantumQuarryBlockEntity(
 		const val TARGET_CHUNK_POS_NBT = "TargetChunkPos"
 		const val TARGET_BLOCK_POS_NBT = "TargetBlockPos"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
+		const val BUFFER_CONTAINER_NBT = "Buffer"
+		const val UPGRADE_CONTAINER_NBT = "Upgrades"
 		const val AMOUNT_BLOCKS_BROKEN_NBT = "AmountBlocksBroken"
 
 		const val UPGRADE_CONTAINER_SIZE = 3
