@@ -1,12 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.item.component.ItemFilterComponent
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
-import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.ChatFormatting
 import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
@@ -47,18 +45,20 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 		tooltipComponents: MutableList<Component>,
 		tooltipFlag: TooltipFlag
 	) {
-		val flagComponent = getFilterComponent(stack)
-		for (flag in flagComponent.flags) {
+		val filterComponent = getFilterComponent(stack)
+		for (flag in filterComponent.flags) {
 			val component = flag.getMessage(true).withStyle(ChatFormatting.BLUE)
 			tooltipComponents.add(component)
 		}
+
+		val filterStacks = filterComponent.getItems()
 
 		for (y in 0 until 4) {
 			val stacks = mutableListOf<ItemStack>()
 
 			for (x in 0 until 4) {
 				val slot = y * 4 + x
-				val ghostStack = getStack(stack, slot)
+				val ghostStack = filterStacks.getOrNull(slot) ?: continue
 
 				if (ghostStack.isNotEmpty()) {
 					stacks.add(ghostStack)
@@ -92,11 +92,6 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 			filterStack.set(ModDataComponents.ITEM_FILTER, newComponent)
 		}
 
-		fun getStack(filterStack: ItemStack, slot: Int): ItemStack {
-			val component = getFilterComponent(filterStack)
-			return component.getItem(slot)
-		}
-
 		fun setStack(filterStack: ItemStack, slot: Int, stackToPlace: ItemStack): Boolean {
 			if (slot !in 0 until ItemFilterComponent.CONTAINER_SIZE) return false
 
@@ -117,8 +112,6 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 		}
 
 		fun passesFilter(filterStack: ItemStack, checkedStack: ItemStack): Boolean {
-			if (!filterStack.isItem(ModItems.ITEM_FILTER)) return false
-
 			val filterComponent = getFilterComponent(filterStack)
 			return filterComponent.passesFilter(checkedStack)
 		}
