@@ -17,6 +17,7 @@ import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import java.util.*
@@ -55,9 +56,21 @@ data class ItemFilterComponent(
 		return copy(itemContents = ItemContainerContents.fromItems(newItems))
 	}
 
+	private val cache: MutableMap<CacheKey, Boolean> = mutableMapOf()
+
 	fun passesFilter(checkedStack: ItemStack): Boolean {
 		if (checkedStack.isEmpty) return isInverted
 
+		val cacheKey = CacheKey(checkedStack)
+		val cachedResult = cache[cacheKey]
+		if (cachedResult != null) return cachedResult
+
+		val result = checkPassesFilter(checkedStack)
+		cache[cacheKey] = result
+		return result
+	}
+
+	private fun checkPassesFilter(checkedStack: ItemStack): Boolean {
 		for (slot in 0 until itemContents.slots) {
 			val stackInFilter = itemContents.getStackInSlot(slot)
 			if (stackInFilter.isEmpty) continue
@@ -99,7 +112,6 @@ data class ItemFilterComponent(
 		// so return false (or true if inverted)
 
 		return isInverted
-
 	}
 
 	companion object {
@@ -142,6 +154,10 @@ data class ItemFilterComponent(
 
 			return leftMap == rightMap
 		}
+	}
+
+	data class CacheKey(val item: Item, val componentHash: Int) {
+		constructor(stack: ItemStack) : this(stack.item, stack.componentsPatch.hashCode())
 	}
 
 	enum class Flag(
