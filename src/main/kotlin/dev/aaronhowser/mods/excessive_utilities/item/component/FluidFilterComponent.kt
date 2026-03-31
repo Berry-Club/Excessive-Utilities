@@ -17,6 +17,7 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
+import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.FluidUtil
 
@@ -55,9 +56,21 @@ data class FluidFilterComponent(
 		return copy(itemContents = ItemContainerContents.fromItems(newList))
 	}
 
+	private val cache: MutableMap<CacheKey, Boolean> = mutableMapOf()
+
 	fun passesFilter(checkedStack: FluidStack): Boolean {
 		if (checkedStack.isEmpty) return isInverted
 
+		val cacheKey = CacheKey(checkedStack)
+		val cachedResult = cache[cacheKey]
+		if (cachedResult != null) return cachedResult
+
+		val result = checkPassesFilter(checkedStack)
+		cache[cacheKey] = result
+		return result
+	}
+
+	private fun checkPassesFilter(checkedStack: FluidStack): Boolean {
 		for (slot in 0 until itemContents.slots) {
 			val stackInFilter = itemContents.getStackInSlot(slot)
 			if (stackInFilter.isEmpty) continue
@@ -111,6 +124,10 @@ data class FluidFilterComponent(
 				Flag.STREAM_CODEC.apply(ByteBufCodecs.list()), FluidFilterComponent::flags,
 				::FluidFilterComponent
 			)
+	}
+
+	data class CacheKey(val item: Fluid, val componentHash: Int) {
+		constructor(stack: FluidStack) : this(stack.fluid, stack.componentsPatch.hashCode())
 	}
 
 	enum class Flag(
