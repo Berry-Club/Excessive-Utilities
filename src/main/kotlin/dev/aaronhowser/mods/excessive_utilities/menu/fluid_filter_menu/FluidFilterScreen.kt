@@ -1,11 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu
 
 import dev.aaronhowser.mods.aaron.menu.BaseScreen
-import dev.aaronhowser.mods.aaron.menu.components.ChangingTextButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.item.component.FluidFilterFlagsComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
+import dev.aaronhowser.mods.excessive_utilities.menu.components.ToggleSpriteButton
+import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterScreen
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
@@ -27,38 +29,67 @@ class FluidFilterScreen(
 	override fun baseInit() {
 		super.baseInit()
 
-		val buttonWidth = 120
+		val buttonY = topPos + 110
+		val middleX = leftPos + background.width / 2
 
-		invertButton = ChangingTextButton(
-			x = leftPos - buttonWidth,
-			y = topPos + 5,
-			width = buttonWidth,
+		val buttonWidth = 20
+		val buttonSpacing = 10
+
+		var buttonX = middleX - buttonSpacing - buttonWidth - buttonSpacing
+
+		invertButton = ToggleSpriteButton(
+			x = buttonX,
+			y = buttonY,
+			width = 20,
 			height = 20,
-			messageGetter = { FluidFilterFlagsComponent.Flag.INVERTED.getMessage(menu.isInverted()) },
+			font = font,
+			sprites = Pair(ItemFilterScreen.INVERT_ON, ItemFilterScreen.INVERT_OFF),
+			messages = Pair(
+				ModMenuLang.INVERTED_ON.toComponent(),
+				ModMenuLang.INVERTED_OFF.toComponent()
+			),
+			isOnGetter = { menu.isInverted() },
 			onPress = {
 				val packet = ClientClickedMenuButton(FluidFilterMenu.TOGGLE_INVERTED_BUTTON_ID)
 				packet.messageServer()
 			}
 		)
 
-		useTagsButton = ChangingTextButton(
-			x = leftPos - buttonWidth,
-			y = topPos + 5 + 20 + 5,
-			width = buttonWidth,
+
+		buttonX += buttonWidth + buttonSpacing
+
+		useTagsButton = ToggleSpriteButton(
+			x = buttonX,
+			y = buttonY,
+			width = 20,
 			height = 20,
-			messageGetter = { FluidFilterFlagsComponent.Flag.USE_TAGS.getMessage(menu.useTags()) },
+			font = font,
+			sprites = Pair(ItemFilterScreen.USE_TAGS_ON, ItemFilterScreen.USE_TAGS_OFF),
+			messages = Pair(
+				ModMenuLang.USE_TAGS_ON.toComponent(),
+				ModMenuLang.USE_TAGS_OFF.toComponent()
+			),
+			isOnGetter = { menu.useTags() },
 			onPress = {
 				val packet = ClientClickedMenuButton(FluidFilterMenu.TOGGLE_USE_TAGS_BUTTON_ID)
 				packet.messageServer()
 			}
 		)
 
-		ignoreAllComponentsButton = ChangingTextButton(
-			x = leftPos - buttonWidth,
-			y = topPos + 5 + (20 + 5) * 2,
-			width = buttonWidth,
+		buttonX += buttonWidth + buttonSpacing
+
+		ignoreAllComponentsButton = ToggleSpriteButton(
+			x = buttonX,
+			y = buttonY,
+			width = 20,
 			height = 20,
-			messageGetter = { FluidFilterFlagsComponent.Flag.IGNORE_ALL_COMPONENTS.getMessage(menu.ignoreAllComponents()) },
+			font = font,
+			sprites = Pair(ItemFilterScreen.IGNORE_ALL_COMPONENTS_ON, ItemFilterScreen.IGNORE_ALL_COMPONENTS_OFF),
+			messages = Pair(
+				ModMenuLang.IGNORE_ALL_COMPONENTS_ON.toComponent(),
+				ModMenuLang.IGNORE_ALL_COMPONENTS_OFF.toComponent()
+			),
+			isOnGetter = { menu.ignoreAllComponents() },
 			onPress = {
 				val packet = ClientClickedMenuButton(FluidFilterMenu.TOGGLE_IGNORE_ALL_COMPONENTS_BUTTON_ID)
 				packet.messageServer()
