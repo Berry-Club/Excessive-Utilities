@@ -5,6 +5,8 @@ import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenSprite
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ToggleSpriteButton
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
@@ -43,8 +45,8 @@ class ItemFilterScreen(
 			font = font,
 			sprites = Pair(INVERT_ON, INVERT_OFF),
 			messages = Pair(
-				Component.literal("Inverted: ON"),
-				Component.literal("Inverted: OFF")
+				ModMenuLang.INVERTED_ON.toComponent(),
+				ModMenuLang.INVERTED_OFF.toComponent()
 			),
 			isOnGetter = { menu.isInverted() },
 			onPress = {
@@ -63,8 +65,8 @@ class ItemFilterScreen(
 			font = font,
 			sprites = Pair(USE_TAGS_ON, USE_TAGS_OFF),
 			messages = Pair(
-				Component.literal("Use Tags: ON"),
-				Component.literal("Use Tags: OFF")
+				ModMenuLang.USE_TAGS_ON.toComponent(),
+				ModMenuLang.USE_TAGS_OFF.toComponent()
 			),
 			isOnGetter = { menu.useTags() },
 			onPress = {
@@ -83,8 +85,8 @@ class ItemFilterScreen(
 			font = font,
 			sprites = Pair(IGNORE_DAMAGE_ON, IGNORE_DAMAGE_OFF),
 			messages = Pair(
-				Component.literal("Ignore Damage: ON"),
-				Component.literal("Ignore Damage: OFF")
+				ModMenuLang.IGNORE_DAMAGE_ON.toComponent(),
+				ModMenuLang.IGNORE_DAMAGE_OFF.toComponent()
 			),
 			isOnGetter = { menu.ignoreDamage() },
 			onPress = {
@@ -103,8 +105,8 @@ class ItemFilterScreen(
 			font = font,
 			sprites = Pair(IGNORE_ALL_COMPONENTS_ON, IGNORE_ALL_COMPONENTS_OFF),
 			messages = Pair(
-				Component.literal("Ignore All Components: ON"),
-				Component.literal("Ignore All Components: OFF")
+				ModMenuLang.IGNORE_ALL_COMPONENTS_ON.toComponent(),
+				ModMenuLang.IGNORE_ALL_COMPONENTS_OFF.toComponent()
 			),
 			isOnGetter = { menu.ignoreAllComponents() },
 			onPress = {
