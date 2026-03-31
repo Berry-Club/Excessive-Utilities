@@ -258,10 +258,6 @@ unifiedPublishing {
 			}
 
 			optional {
-				curseforge = modrinth = "patchouli"
-			}
-
-			optional {
 				curseforge = modrinth = "oracle-index"
 			}
 		}
