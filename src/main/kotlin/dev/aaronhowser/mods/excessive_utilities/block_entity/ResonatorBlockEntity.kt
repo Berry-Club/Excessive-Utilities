@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorMenu
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.ResonatorRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -34,15 +35,21 @@ class ResonatorBlockEntity(
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState), ContainerContainer, MenuProvider {
 
+	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	override fun getContainers(): List<Container> = listOf(container)
+
 	override fun getGpUsage(): Double {
 		val level = level ?: return 0.0
 		val recipe = getRecipe(level) ?: return 0.0
 
-		return recipe.gpCost
+		val amountSpeedUpgrades = getSpeedUpgrades()
+
+		return recipe.gpCost + SpeedUpgradeItem.getGpCost(amountSpeedUpgrades)
 	}
 
-	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
-	override fun getContainers(): List<Container> = listOf(container)
+	private fun getSpeedUpgrades(): Int {
+		return container.getItem(UPGRADE_SLOT).count
+	}
 
 	private val itemHandler: IItemHandlerModifiable =
 		object : InvWrapper(container) {
@@ -98,11 +105,11 @@ class ResonatorBlockEntity(
 
 		if (isOverloaded()) return
 
-		progress++
+		progress += 1 + getSpeedUpgrades()
 
-		if (progress >= CRAFT_TIME) {
+		while (progress >= CRAFT_TIME) {
 			craftItem(level, recipe)
-			progress = 0
+			progress -= CRAFT_TIME
 		}
 	}
 
