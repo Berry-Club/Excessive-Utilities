@@ -99,7 +99,7 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 		}
 
 		fun getFlagComponent(filterStack: ItemStack): FluidFilterFlagsComponent {
-			return filterStack.getOrDefault(ModDataComponents.FLUID_FILTER_FLAGS, FluidFilterFlagsComponent())
+			return filterStack.get(ModDataComponents.FLUID_FILTER_FLAGS) ?: FluidFilterFlagsComponent()
 		}
 
 		fun getGhostStack(filterStack: ItemStack, slot: Int): ItemStack {

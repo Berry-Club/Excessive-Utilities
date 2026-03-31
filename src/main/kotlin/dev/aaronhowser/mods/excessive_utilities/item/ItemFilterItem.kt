@@ -83,7 +83,7 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 
 	companion object {
 		fun getFilterComponent(filterStack: ItemStack): ItemFilterComponent {
-			return filterStack.getOrDefault(ModDataComponents.ITEM_FILTER, ItemFilterComponent())
+			return filterStack.get(ModDataComponents.ITEM_FILTER) ?: ItemFilterComponent()
 		}
 
 		fun setFlags(filterStack: ItemStack, flags: List<ItemFilterComponent.Flag>) {
