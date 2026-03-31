@@ -18,7 +18,6 @@ import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.Level
 
 class ItemFilterItem(properties: Properties) : Item(properties) {
@@ -59,7 +58,7 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 
 			for (x in 0 until 4) {
 				val slot = y * 4 + x
-				val ghostStack = getGhostStack(stack, slot)
+				val ghostStack = getStack(stack, slot)
 
 				if (ghostStack.isNotEmpty()) {
 					stacks.add(ghostStack)
@@ -83,33 +82,29 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
+		fun getFilterComponent(filterStack: ItemStack): ItemFilterComponent {
+			return filterStack.getOrDefault(ModDataComponents.ITEM_FILTER, ItemFilterComponent())
+		}
+
 		fun setFlags(filterStack: ItemStack, flags: List<ItemFilterComponent.Flag>) {
 			val currentComponent = getFilterComponent(filterStack)
 			val newComponent = currentComponent.withFlags(flags)
 			filterStack.set(ModDataComponents.ITEM_FILTER, newComponent)
 		}
 
-		fun getFilterComponent(filterStack: ItemStack): ItemFilterComponent {
-			return filterStack.getOrDefault(ModDataComponents.ITEM_FILTER, ItemFilterComponent())
-		}
-
-		fun getGhostStack(filterStack: ItemStack, slot: Int): ItemStack {
+		fun getStack(filterStack: ItemStack, slot: Int): ItemStack {
 			val component = getFilterComponent(filterStack)
 			return component.getItem(slot)
 		}
 
-		fun placeGhostInSlot(filterStack: ItemStack, slot: Int, stackToPlace: ItemStack) {
-			if (!filterStack.isItem(ModItems.ITEM_FILTER)) return
-			if (slot !in 0 until ItemFilterComponent.CONTAINER_SIZE) return
+		fun setStack(filterStack: ItemStack, slot: Int, stackToPlace: ItemStack): Boolean {
+			if (slot !in 0 until ItemFilterComponent.CONTAINER_SIZE) return false
 
 			val currentComponent = getFilterComponent(filterStack)
-			val filterItems = currentComponent.getItems()
-			filterItems[slot] = stackToPlace.copyWithCount(1)
+			val newComponent = currentComponent.getWithSetItem(slot, stackToPlace) ?: return false
 
-			val newContents = ItemContainerContents.fromItems(filterItems)
-
-			val newComponent = currentComponent.withItems(newContents)
 			filterStack.set(ModDataComponents.ITEM_FILTER, newComponent)
+			return true
 		}
 
 		fun getFilterItems(filterStack: ItemStack): NonNullList<ItemStack> {

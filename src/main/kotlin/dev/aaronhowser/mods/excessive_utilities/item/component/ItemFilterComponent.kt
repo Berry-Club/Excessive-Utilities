@@ -47,6 +47,14 @@ data class ItemFilterComponent(
 		return getItems()[index]
 	}
 
+	fun getWithSetItem(index: Int, itemStack: ItemStack): ItemFilterComponent? {
+		if (index !in 0 until CONTAINER_SIZE) return null
+
+		val newItems = getItems()
+		newItems[index] = itemStack
+		return copy(itemContents = ItemContainerContents.fromItems(newItems))
+	}
+
 	fun passesFilter(checkedStack: ItemStack): Boolean {
 		if (checkedStack.isEmpty) return isInverted
 

@@ -32,14 +32,15 @@ class ItemFilterMenu(
 			override fun onContentsChanged(slot: Int) {
 				val stackThere = getStackInSlot(slot)
 				val filterStack = getFilterStack()
-				ItemFilterItem.placeGhostInSlot(filterStack, slot, stackThere)
+				ItemFilterItem.setStack(filterStack, slot, stackThere)
 			}
 		}
 
 	init {
 		val filterStack = getFilterStack()
-		for (i in 0 until ItemFilterComponent.CONTAINER_SIZE) {
-			val ghostStack = ItemFilterItem.getGhostStack(filterStack, i)
+		val container = ItemFilterItem.getFilterItems(filterStack)
+		for (i in 0 until container.size) {
+			val ghostStack = container[i]
 			filterItems.setStackInSlot(i, ghostStack)
 		}
 
