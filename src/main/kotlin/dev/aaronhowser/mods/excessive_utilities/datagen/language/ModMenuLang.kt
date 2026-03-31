@@ -11,13 +11,6 @@ object ModMenuLang {
 	const val FE_WITH_CAPACITY = "tooltip.geneticsresequenced.fe_with_capacity"
 	const val FE_PER_TICK = "message.excessive_utilities.fe_per_tick"
 	const val FE = "tooltip.geneticsresequenced.fe"
-	const val ITEM_FILTER_INVERTED = "tooltip.excessive_utilities.item_filter.inverted"
-	const val ITEM_FILTER_TAGS = "tooltip.excessive_utilities.item_filter.tags"
-	const val ITEM_FILTER_IGNORE_DAMAGE = "tooltip.excessive_utilities.item_filter.ignore_damage"
-	const val ITEM_FILTER_IGNORE_ALL_COMPONENTS = "tooltip.excessive_utilities.item_filter.ignore_all_components"
-	const val FLUID_FILTER_INVERTED = "tooltip.excessive_utilities.fluid_filter.inverted"
-	const val FLUID_FILTER_TAGS = "tooltip.excessive_utilities.fluid_filter.tags"
-	const val FLUID_FILTER_IGNORE_ALL_COMPONENTS = "tooltip.excessive_utilities.fluid_filter.ignore_all_components"
 	const val UNSTABLE_INGOT_CHEESED_1 = "tooltip.excessive_utilities.unstable_ingot.cheesed_1"
 	const val UNSTABLE_INGOT_CHEESED_2 = "tooltip.excessive_utilities.unstable_ingot.cheesed_2"
 	const val UNSTABLE_INGOT_CHEESED_3 = "tooltip.excessive_utilities.unstable_ingot.cheesed_3"
@@ -36,6 +29,14 @@ object ModMenuLang {
 	const val GP_AT_POS = "tooltip.excessive_utilities.gp_at_pos"
 	const val BREWING_STEPS = "message.excessive_utilities.brewing_steps"
 	const val SECONDS_UNTIL_EXPLOSION = "message.excessive_utilities.seconds_until_explosion"
+	const val INVERTED_ON = "tooltip.excessive_utilities.item_filter.inverted_on"
+	const val INVERTED_OFF = "tooltip.excessive_utilities.item_filter.inverted_off"
+	const val USE_TAGS_ON = "tooltip.excessive_utilities.item_filter.use_tags_on"
+	const val USE_TAGS_OFF = "tooltip.excessive_utilities.item_filter.use_tags_off"
+	const val IGNORE_DAMAGE_ON = "tooltip.excessive_utilities.item_filter.ignore_damage_on"
+	const val IGNORE_DAMAGE_OFF = "tooltip.excessive_utilities.item_filter.ignore_damage_off"
+	const val IGNORE_ALL_COMPONENTS_ON = "tooltip.excessive_utilities.item_filter.ignore_all_components_on"
+	const val IGNORE_ALL_COMPONENTS_OFF = "tooltip.excessive_utilities.item_filter.ignore_all_components_off"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -44,13 +45,6 @@ object ModMenuLang {
 			add(SOUL_SURPLUS, "Soul Surplus: %d")
 			add(SOUL_HEALTH_MODIFIER, "Current Health Modifier: %s")
 			add(FE_WITH_CAPACITY, "%1\$s / %2\$s FE")
-			add(ITEM_FILTER_INVERTED, "Inverted")
-			add(ITEM_FILTER_TAGS, "Use Tags")
-			add(ITEM_FILTER_IGNORE_DAMAGE, "Ignore Damage")
-			add(ITEM_FILTER_IGNORE_ALL_COMPONENTS, "Ignore All Components")
-			add(FLUID_FILTER_INVERTED, "Inverted")
-			add(FLUID_FILTER_TAGS, "Use Tags")
-			add(FLUID_FILTER_IGNORE_ALL_COMPONENTS, "Ignore All Components")
 			add(FE_PER_TICK, "%s FE/t")
 			add(TICKS, "%s ticks")
 			add(FE, "%s FE")
@@ -68,6 +62,14 @@ object ModMenuLang {
 			add(GP_AT_POS, "%s at (%d, %d, %d)")
 			add(BREWING_STEPS, "%d Brewing Steps")
 			add(SECONDS_UNTIL_EXPLOSION, "Seconds Until Explosion: %s")
+			add(INVERTED_ON, "Inverted: ON")
+			add(INVERTED_OFF, "Inverted: OFF")
+			add(USE_TAGS_ON, "Use Tags: ON")
+			add(USE_TAGS_OFF, "Use Tags: OFF")
+			add(IGNORE_DAMAGE_ON, "Ignore Damage: ON")
+			add(IGNORE_DAMAGE_OFF, "Ignore Damage: OFF")
+			add(IGNORE_ALL_COMPONENTS_ON, "Ignore All Components: ON")
+			add(IGNORE_ALL_COMPONENTS_OFF, "Ignore All Components: OFF")
 
 			add(AngelRingItem.Type.INVISIBLE.langKey, "Invisible")
 			add(AngelRingItem.Type.FEATHER.langKey, "Feather")

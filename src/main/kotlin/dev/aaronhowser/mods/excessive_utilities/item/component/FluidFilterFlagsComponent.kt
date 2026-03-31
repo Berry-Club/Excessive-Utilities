@@ -34,11 +34,12 @@ data class FluidFilterFlagsComponent(
 
 	enum class Flag(
 		private val id: String,
-		private val message: String
+		private val messageOn: String,
+		private val messageOf: String
 	) : StringRepresentable {
-		INVERTED("inverted", ModMenuLang.FLUID_FILTER_INVERTED),
-		USE_TAGS("use_tags", ModMenuLang.FLUID_FILTER_TAGS),
-		IGNORE_ALL_COMPONENTS("ignore_all_components", ModMenuLang.FLUID_FILTER_IGNORE_ALL_COMPONENTS),
+		INVERTED("inverted", ModMenuLang.INVERTED_ON, ModMenuLang.INVERTED_OFF),
+		USE_TAGS("use_tags", ModMenuLang.USE_TAGS_ON, ModMenuLang.USE_TAGS_OFF),
+		IGNORE_ALL_COMPONENTS("ignore_all_components", ModMenuLang.IGNORE_ALL_COMPONENTS_ON, ModMenuLang.IGNORE_ALL_COMPONENTS_OFF),
 		;
 
 		val bit: Int = 1 shl ordinal
@@ -46,12 +47,8 @@ data class FluidFilterFlagsComponent(
 		override fun getSerializedName(): String = id
 
 		fun getMessage(isOn: Boolean): MutableComponent {
-			val component = Component.translatable(message)
-			if (!isOn) {
-				component.withStyle(ChatFormatting.STRIKETHROUGH)
-			}
-
-			return component
+			val message = if (isOn) messageOn else messageOf
+			return Component.translatable(message).withStyle(ChatFormatting.GRAY)
 		}
 
 		companion object {
