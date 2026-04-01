@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.block_entity.CreativeHarvestBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
@@ -41,13 +42,18 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		hitResult: BlockHitResult
 	): ItemInteractionResult {
 		val stackInHand = player.getItemInHand(hand)
-		val item = stackInHand.item
 
-		if (item is BlockItem && !item.block.defaultBlockState().isBlock(ModBlockTagsProvider.CREATIVE_HARVEST_BLACKLIST)) {
+		val item = stackInHand.item
+		val state = (item as? BlockItem)?.block?.defaultBlockState()
+
+		if (level.isServerSide
+			&& state != null
+			&& !state.isBlock(ModBlockTagsProvider.CREATIVE_HARVEST_BLACKLIST)
+		) {
 			val be = level.getBlockEntity(pos)
 
 			if (be is CreativeHarvestBlockEntity) {
-				be.mimicBlockState = item.block.defaultBlockState()
+				be.mimicBlockState = state
 				val component = ModMessageLang.SET_CREATIVE_HARVEST.toComponent(stackInHand.hoverName)
 				player.tell(component)
 				return ItemInteractionResult.SUCCESS
