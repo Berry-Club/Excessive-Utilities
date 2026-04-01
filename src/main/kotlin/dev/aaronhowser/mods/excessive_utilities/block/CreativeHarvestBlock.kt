@@ -38,7 +38,7 @@ class CreativeHarvestBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityB
 		val stackInHand = player.getItemInHand(hand)
 		val be = level.getBlockEntity(pos)
 
-		if (level.isServerSide && be is CreativeHarvestBlockEntity) {
+		if (be is CreativeHarvestBlockEntity) {
 			val success = be.setMimic(stackInHand)
 			return if (success) {
 				ItemInteractionResult.SUCCESS
