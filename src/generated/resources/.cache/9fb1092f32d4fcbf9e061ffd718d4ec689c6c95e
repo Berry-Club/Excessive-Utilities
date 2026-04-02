@@ -1,4 +1,4 @@
-// 1.21.1	2026-04-02T00:54:00.6929208	Recipes
+// 1.21.1	2026-04-02T00:58:27.6336477	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 5544a3880f9cc21b24f3bbd7a0e3125679de74dc data/excessive_utilities/advancement/recipes/crusher/allium_to_magenta_dye.json
 03553dc68b381cde601be45b74fc8784e96887ab data/excessive_utilities/advancement/recipes/crusher/azure_bluet_to_light_gray_dye.json
@@ -1358,7 +1358,7 @@ aece857c6cdcad1458d434e372166bd30e5dc993 data/excessive_utilities/recipe/sandy_g
 b409c0a831bb8af5141212f66a81b2f1e94c549e data/excessive_utilities/recipe/scanner.json
 eb49facceccf2b61e0f8e39975101c29b68f01f2 data/excessive_utilities/recipe/slightly_larger_chest.json
 05c059c73dbcd962db2ab59c26f2047fc8ba3898 data/excessive_utilities/recipe/slimy_generator.json
-4d2bf944218b5926fb95ce0433e2db7b0db5a98e data/excessive_utilities/recipe/snow_globe/quantum_quarry.json
+49121818b566609e28b5f76ba4cc1ad044e0a3a4 data/excessive_utilities/recipe/snow_globe/quantum_quarry.json
 f0bb8328642546038a79f64b595f9e472e8648b1 data/excessive_utilities/recipe/solar_panel.json
 8ba896a2233894b453932348e7aaa33288bb3f95 data/excessive_utilities/recipe/sound_muffler.json
 7f4aace00180717f57e48ffe9701d8e0d7f42833 data/excessive_utilities/recipe/speed_upgrade.json

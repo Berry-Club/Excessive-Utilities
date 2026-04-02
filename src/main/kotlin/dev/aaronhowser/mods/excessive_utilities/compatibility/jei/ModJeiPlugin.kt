@@ -17,6 +17,7 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.DamageGlassCutte
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.KeepPaintbrushRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedDivisionRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedUnstableRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.SnowGlobeRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
@@ -115,6 +116,7 @@ class ModJeiPlugin : IModPlugin {
 		craftingCategory.addExtension(ShapedDivisionRecipe::class.java, ShapedRecipeExtension())
 		craftingCategory.addExtension(ShapedUnstableRecipe::class.java, ShapedRecipeExtension())
 		craftingCategory.addExtension(DamageGlassCutterRecipe::class.java, ShapedRecipeExtension())
+		craftingCategory.addExtension(SnowGlobeRecipe::class.java, ShapedRecipeExtension())
 	}
 
 	//FIXME: For some reason I can't see higher-tier Opinium Core recipes?

@@ -15,13 +15,10 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import dev.aaronhowser.mods.excessive_utilities.item.SunCrystalItem
 import dev.aaronhowser.mods.excessive_utilities.item.UnstableIngotItem
+import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.DamageGlassCutterRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.KeepPaintbrushRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedDivisionRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedUnstableRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.SnowGlobeRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.ItemAndFluidFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -1223,25 +1220,17 @@ class ModRecipeProvider(
 			)
 		).save(recipeOutput)
 
-//		shapedRecipe(
-//			ModBlocks.QUANTUM_QUARRY,
-//			"ESE,SGS,ESE",
-//			mapOf(
-//				'E' to Tags.Items.END_STONES.asIngredient(),
-//				'S' to ModBlocks.STONEBURNT.asIngredient(),
-//				'G' to ModBlocks.MACHINE_BLOCK.asIngredient(
-//					ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS.get(),
-//					MagicalSnowGlobeProgressComponent.DEFAULT_COMPLETED
-//				)
-//			)
-//		).save(recipeOutput)
-
 		SpecialShapedRecipeBuilder(ModBlocks.QUANTUM_QUARRY)
 			.type("snow_globe", ::SnowGlobeRecipe)
 			.pattern("ESE", "SGS", "ESE")
 			.define('E', Tags.Items.END_STONES.asIngredient())
 			.define('S', ModBlocks.STONEBURNT.asIngredient())
-			.define('G', ModBlocks.MAGICAL_SNOW_GLOBE.asIngredient())
+			.define(
+				'G', ModBlocks.MAGICAL_SNOW_GLOBE.asIngredient(
+					ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS.get(),
+					MagicalSnowGlobeProgressComponent.DEFAULT_COMPLETED
+				)
+			)
 			.save(recipeOutput)
 
 		shapedRecipe(

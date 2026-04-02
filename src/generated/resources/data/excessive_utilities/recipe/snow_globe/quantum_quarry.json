@@ -6,7 +6,27 @@
         "tag": "c:end_stones"
       },
       "G": {
-        "item": "excessive_utilities:magical_snow_globe"
+        "type": "neoforge:components",
+        "components": {
+          "excessive_utilities:magical_snow_globe_progress": {
+            "amount_required": 7,
+            "biomes": {
+              "c:is_magical": true,
+              "c:is_plains": true,
+              "c:is_sandy": true,
+              "c:is_snowy": true,
+              "c:is_swamp": true,
+              "minecraft:is_end": true,
+              "minecraft:is_forest": true,
+              "minecraft:is_hill": true,
+              "minecraft:is_jungle": true,
+              "minecraft:is_mountain": true,
+              "minecraft:is_nether": true,
+              "minecraft:is_ocean": true
+            }
+          }
+        },
+        "items": "excessive_utilities:magical_snow_globe"
       },
       "S": {
         "item": "excessive_utilities:stoneburnt"
