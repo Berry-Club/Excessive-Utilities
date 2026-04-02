@@ -19,13 +19,11 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.minecraft.world.level.block.RedstoneLampBlock
-import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
 import net.neoforged.neoforge.common.data.ExistingFileHelper
-import org.joml.Vector3f
 
 class ModBlockStateProvider(
 	output: PackOutput,
@@ -1457,63 +1455,20 @@ class ModBlockStateProvider(
 				else -> 24f
 			}
 
-			val uMin = pixelX / 32f
-			val vMin = pixelY / 32f
-			val uMax = (pixelX + width) / 32f
-			val vMax = (pixelY + height) / 32f
+			val u1 = pixelX / 2f
+			val u2 = (pixelX + width) / 2f
+			val v1 = pixelY / 2f
+			val v2 = (pixelY + height) / 2f
 
-			val xMin = (16f - width) / 2f
-			val xMax = (16f + width) / 2f
-			val yMin = (16f - height) / 2f
-			val yMax = (16f + height) / 2f
+			model.element {
+				from(8 - width / 2, 15.1f, 8 - height / 2f)
+				to(8 + width / 2, 15.1f, 8 + height / 2f)
 
-			fun addFace(dir: Direction, from: Vector3f, to: Vector3f) {
-				model.element {
-					from(from.x, from.y, from.z)
-					to(to.x, to.y, to.z)
-
-					face(dir) {
-						texture("#numbers")
-						uvs(uMin, vMin, uMax, vMax)
-					}
+				face(Direction.UP) {
+					texture("#numbers")
+					uvs(u1, v1, u2, v2)
 				}
 			}
-
-			addFace(
-				Direction.SOUTH,
-				Vector3f(xMin, yMin, 15.99f),
-				Vector3f(xMax, yMax, 16f)
-			)
-
-			addFace(
-				Direction.NORTH,
-				Vector3f(xMin, yMin, 0f),
-				Vector3f(xMax, yMax, 0.01f)
-			)
-
-			addFace(
-				Direction.EAST,
-				Vector3f(15.99f, yMin, xMin),
-				Vector3f(16f, yMax, xMax)
-			)
-
-			addFace(
-				Direction.WEST,
-				Vector3f(0f, yMin, xMin),
-				Vector3f(0.01f, yMax, xMax)
-			)
-
-			addFace(
-				Direction.UP,
-				Vector3f(xMin, 15.99f, yMin),
-				Vector3f(xMax, 16f, yMax)
-			)
-
-			addFace(
-				Direction.DOWN,
-				Vector3f(xMin, 0f, yMin),
-				Vector3f(xMax, 0.01f, yMax)
-			)
 
 			models += model
 		}
