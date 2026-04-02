@@ -30,7 +30,8 @@ class CreativeHarvestBER(
 
 		val itemRenderer = Minecraft.getInstance().itemRenderer
 
-		for (dir in Direction.Plane.HORIZONTAL) {
+		val directions = blockEntity.visibleDirections
+		for (dir in directions) {
 			poseStack.withPose {
 
 				val flattening = 0.0001

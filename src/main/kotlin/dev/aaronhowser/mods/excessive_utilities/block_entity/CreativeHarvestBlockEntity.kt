@@ -6,12 +6,14 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 
@@ -27,6 +29,25 @@ class CreativeHarvestBlockEntity(
 
 	var mimicBlockState: BlockState = Blocks.STONE.defaultBlockState()
 		private set
+
+	var visibleDirections: List<Direction> = Direction.Plane.HORIZONTAL.toList()
+		private set
+
+	fun updateVisibleDirections(level: LevelAccessor) {
+		val newVisibleDirections = mutableListOf<Direction>()
+
+		for (dir in Direction.Plane.HORIZONTAL) {
+			val posThere = blockPos.relative(dir)
+			val stateThere = level.getBlockState(posThere)
+			val blocksView = stateThere.isFaceSturdy(level, posThere, dir.opposite)
+
+			if (!blocksView) {
+				newVisibleDirections.add(dir)
+			}
+		}
+
+		visibleDirections = newVisibleDirections
+	}
 
 	fun setMimic(stack: ItemStack): Boolean {
 		val item = stack.item
