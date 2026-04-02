@@ -1,9 +1,0 @@
-{
-  "type": "excessive_utilities:single_item_fuel",
-  "duration": 400,
-  "fe_per_tick": 20,
-  "generator_type": "death",
-  "ingredient": {
-    "item": "minecraft:rotten_flesh"
-  }
-}
