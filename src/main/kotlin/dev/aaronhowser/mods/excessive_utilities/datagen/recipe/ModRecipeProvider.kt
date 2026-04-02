@@ -28,7 +28,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentPredicate
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -87,12 +86,7 @@ class ModRecipeProvider(
 		val opiniumCore = ModItems.OPINIUM_CORE.get()
 
 		fun ingredient(component: OpiniumCoreContentsComponent): Ingredient {
-			val predicate = DataComponentPredicate
-				.builder()
-				.expect(ModDataComponents.OPINIUM_CORE_CONTENTS.get(), component)
-				.build()
-
-			return opiniumCore.asIngredient(predicate)
+			return opiniumCore.asIngredient(ModDataComponents.OPINIUM_CORE_CONTENTS.get(), component)
 		}
 
 		for ((i, core) in cores.withIndex()) {
@@ -716,13 +710,8 @@ class ModRecipeProvider(
 				'F' to Tags.Items.FEATHERS.asIngredient(),
 				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
 				'L' to ModItems.GOLDEN_LASSO.asIngredient(
-					DataComponentPredicate
-						.builder()
-						.expect(
-							ModDataComponents.ENTITY_TYPE.get(),
-							EntityType.CHICKEN.builtInRegistryHolder()
-						)
-						.build()
+					ModDataComponents.ENTITY_TYPE.get(),
+					EntityType.CHICKEN.builtInRegistryHolder()
 				),
 				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
 			)
@@ -735,13 +724,8 @@ class ModRecipeProvider(
 				'I' to Items.INK_SAC.asIngredient(),
 				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
 				'L' to ModItems.GOLDEN_LASSO.asIngredient(
-					DataComponentPredicate
-						.builder()
-						.expect(
-							ModDataComponents.ENTITY_TYPE.get(),
-							EntityType.SQUID.builtInRegistryHolder()
-						)
-						.build()
+					ModDataComponents.ENTITY_TYPE.get(),
+					EntityType.SQUID.builtInRegistryHolder()
 				),
 				'C' to ModItems.CHICKEN_WING_RING.asIngredient(),
 				'E' to Tags.Items.ENDER_PEARLS.asIngredient()
@@ -1245,12 +1229,10 @@ class ModRecipeProvider(
 			mapOf(
 				'E' to Tags.Items.END_STONES.asIngredient(),
 				'S' to ModBlocks.STONEBURNT.asIngredient(),
-				'G' to ModBlocks.MAGICAL_SNOW_GLOBE
-					.withComponent(
-						ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS.get(),
-						MagicalSnowGlobeProgressComponent.DEFAULT_COMPLETED
-					)
-					.asIngredient()
+				'G' to ModBlocks.MACHINE_BLOCK.asIngredient(
+					ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS.get(),
+					MagicalSnowGlobeProgressComponent.DEFAULT_COMPLETED
+				)
 			)
 		).save(recipeOutput)
 
@@ -1372,11 +1354,10 @@ class ModRecipeProvider(
 				'E' to ModItems.EVIL_INFUSED_IRON_INGOT.asIngredient(),
 				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
 				'C' to ModItems.SUN_CRYSTAL
-					.withComponent(
+					.asIngredient(
 						ModDataComponents.CHARGE.get(),
 						SunCrystalItem.MAX_CHARGE
-					)
-					.asIngredient(),
+					),
 				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
 			)
 		).save(recipeOutput)
@@ -1512,11 +1493,7 @@ class ModRecipeProvider(
 			}
 
 			val component = stack.get(DataComponents.ENCHANTMENTS)!!
-			val predicate = DataComponentPredicate.builder()
-				.expect(DataComponents.ENCHANTMENTS, component)
-				.build()
-
-			return item.asIngredient(predicate)
+			return item.asIngredient(DataComponents.ENCHANTMENTS, component)
 		}
 
 		shapedRecipe(
@@ -2071,8 +2048,10 @@ class ModRecipeProvider(
 			ModItems.WATERING_CAN,
 			listOf(
 				ModItems.WATERING_CAN
-					.withComponent(ModDataComponents.IS_BROKEN.get(), Unit.INSTANCE)
-					.asIngredient()
+					.asIngredient(
+						ModDataComponents.IS_BROKEN.get(),
+						Unit.INSTANCE
+					)
 			)
 		).save(recipeOutput, modLoc("watering_can_repair"))
 
@@ -2624,16 +2603,16 @@ class ModRecipeProvider(
 				.define('I', Tags.Items.INGOTS_GOLD.asIngredient())
 				.define('S', ModItems.RING_OF_THE_FLYING_SQUID.asIngredient())
 				.define(
-					'B', ModItems.GOLDEN_LASSO.withComponent(
+					'B', ModItems.GOLDEN_LASSO.asIngredient(
 						ModDataComponents.ENTITY_TYPE.get(),
 						EntityType.BAT.builtInRegistryHolder()
-					).asIngredient()
+					)
 				)
 				.define(
-					'H', ModItems.CURSED_LASSO.withComponent(
+					'H', ModItems.CURSED_LASSO.asIngredient(
 						ModDataComponents.ENTITY_TYPE.get(),
 						EntityType.GHAST.builtInRegistryHolder()
-					).asIngredient()
+					)
 				)
 				.define('U', ModItems.UNSTABLE_INGOT.asIngredient())
 				.save(recipeOutput, ExcessiveUtilities.modResource("angel_ring_${type.id}"))

@@ -12,6 +12,7 @@ Initial release! Expect bugs, please report them at [the issue tracker](https://
 	- Updated model
 	- It makes a sound when it cycles
 - New textures for the Generators and colored blocks
+- Updated many recipes to use data component predicates
 
 ### Fixed
 
