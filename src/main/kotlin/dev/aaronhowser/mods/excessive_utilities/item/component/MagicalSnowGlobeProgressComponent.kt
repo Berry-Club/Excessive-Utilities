@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item.component
 
 import com.mojang.serialization.Codec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import io.netty.buffer.ByteBuf
@@ -14,16 +15,20 @@ import net.minecraft.world.level.biome.Biome
 import net.neoforged.neoforge.common.Tags
 
 data class MagicalSnowGlobeProgressComponent(
-	val requirements: HashMap<TagKey<Biome>, Boolean>
+	val biomes: HashMap<TagKey<Biome>, Boolean>,
+	val amountRequired: Int
 ) {
 
-	constructor(map: Map<TagKey<Biome>, Boolean>) : this(HashMap(map))
+	constructor(
+		map: Map<TagKey<Biome>, Boolean>,
+		amountRequired: Int
+	) : this(HashMap(map), amountRequired)
 
 	fun getWithComplete(biome: Holder<Biome>): MagicalSnowGlobeProgressComponent? {
-		val newMap = HashMap(requirements)
+		val newMap = HashMap(biomes)
 		var found = false
 
-		for ((biomeTag, alreadyFound) in requirements) {
+		for ((biomeTag, alreadyFound) in biomes) {
 			if (alreadyFound) continue
 
 			if (biome.isHolder(biomeTag)) {
@@ -32,26 +37,31 @@ data class MagicalSnowGlobeProgressComponent(
 			}
 		}
 
-		return if (found) MagicalSnowGlobeProgressComponent(newMap) else null
+		return if (found) MagicalSnowGlobeProgressComponent(newMap, amountRequired) else null
 	}
 
 	companion object {
 		val CODEC: Codec<MagicalSnowGlobeProgressComponent> =
-			Codec.unboundedMap(
-				TagKey.codec(Registries.BIOME),
-				Codec.BOOL
-			)
-				.xmap(
-					::MagicalSnowGlobeProgressComponent,
-					MagicalSnowGlobeProgressComponent::requirements
-				)
+			RecordCodecBuilder.create { instance ->
+				instance.group(
+					Codec.unboundedMap(
+						TagKey.codec(Registries.BIOME),
+						Codec.BOOL
+					).fieldOf("biomes").forGetter { it.biomes },
+					Codec.INT.fieldOf("amount_required").forGetter { it.amountRequired }
+				).apply(instance, ::MagicalSnowGlobeProgressComponent)
+			}
 
-		val STREAM_CODEC: StreamCodec<ByteBuf?, MagicalSnowGlobeProgressComponent> =
-			ByteBufCodecs.map(
-				::HashMap,
-				AaronExtraStreamCodecs.tagKeyStreamCodec(Registries.BIOME),
-				ByteBufCodecs.BOOL
-			).map(::MagicalSnowGlobeProgressComponent, MagicalSnowGlobeProgressComponent::requirements)
+		val STREAM_CODEC: StreamCodec<ByteBuf, MagicalSnowGlobeProgressComponent> =
+			StreamCodec.composite(
+				ByteBufCodecs.map(
+					::HashMap,
+					AaronExtraStreamCodecs.tagKeyStreamCodec(Registries.BIOME),
+					ByteBufCodecs.BOOL
+				), MagicalSnowGlobeProgressComponent::biomes,
+				ByteBufCodecs.INT, MagicalSnowGlobeProgressComponent::amountRequired,
+				::MagicalSnowGlobeProgressComponent
+			)
 
 		val DEFAULT: MagicalSnowGlobeProgressComponent =
 			MagicalSnowGlobeProgressComponent(
@@ -68,14 +78,14 @@ data class MagicalSnowGlobeProgressComponent(
 					Tags.Biomes.IS_SWAMP to false,
 					BiomeTags.IS_END to false,
 					BiomeTags.IS_NETHER to false,
-				)
+				),
+				7
 			)
 
 		val DEFAULT_COMPLETED: MagicalSnowGlobeProgressComponent =
-			DEFAULT.requirements
-				.keys
-				.associateWith { true }
-				.let(::MagicalSnowGlobeProgressComponent)
+			MagicalSnowGlobeProgressComponent(
+				DEFAULT.biomes.keys.associateWith { true },
+				7
+			)
 	}
-
 }

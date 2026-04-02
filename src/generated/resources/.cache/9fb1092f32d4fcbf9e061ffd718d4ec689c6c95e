@@ -1,4 +1,4 @@
-// 1.21.1	2026-04-02T00:33:56.2132435	Recipes
+// 1.21.1	2026-04-02T00:47:38.7329539	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 5544a3880f9cc21b24f3bbd7a0e3125679de74dc data/excessive_utilities/advancement/recipes/crusher/allium_to_magenta_dye.json
 03553dc68b381cde601be45b74fc8784e96887ab data/excessive_utilities/advancement/recipes/crusher/azure_bluet_to_light_gray_dye.json
@@ -1331,7 +1331,7 @@ abfc37f63a73ac64d271e37e55bbdfa70a4fb618 data/excessive_utilities/recipe/qed/ene
 31f3afa254e1163de898bd5fe1e8c35fa8a86bb9 data/excessive_utilities/recipe/qed/fluid_retrieval_node.json
 ef7b285f305d8fb6ec981ef6f5aeb44d8b4f2d8f data/excessive_utilities/recipe/qed/item_retrieval_node.json
 130861405ea3cec621a6c9cc6585347154f23aee data/excessive_utilities/recipe/qed/magnum_torch.json
-63b5f40b3d4e8aeb4e7455bf85ba4a16b77b7edb data/excessive_utilities/recipe/quantum_quarry.json
+57f675270ed9f717767ec8b85b304bbb73bd8ba3 data/excessive_utilities/recipe/quantum_quarry.json
 04f53d24c2af309fa33b036d801cc498a4fc339e data/excessive_utilities/recipe/quantum_quarry_actuator.json
 f0fd21a699cc39c295d7aa9e2cde48092adb7d17 data/excessive_utilities/recipe/rainbow_generator.json
 d947179f597e516811e387299d5cd4cbcb3d9098 data/excessive_utilities/recipe/rainbow_generator_bottom_slab.json

@@ -45,7 +45,7 @@ class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MA
 	) {
 		val progress = stack.get(ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS) ?: return
 
-		for ((biomeTag, found) in progress.requirements) {
+		for ((biomeTag, found) in progress.biomes) {
 			val component = Component.literal(" - ${biomeTag.location}: ${if (found) "Found" else "Not Found"}")
 			tooltipComponents.add(component)
 		}
