@@ -7,6 +7,7 @@ Initial release! Expect bugs, please report them at [the issue tracker](https://
 ### Changed
 
 - The Creative Harvest now displays what it's mimicking (#5)
+- The Redstone Lantern is no longer a variable-strength light source like I thought it was supposed to be, now it emits a variable-strength redstone signal (#7)
 
 ### Fixed
 
