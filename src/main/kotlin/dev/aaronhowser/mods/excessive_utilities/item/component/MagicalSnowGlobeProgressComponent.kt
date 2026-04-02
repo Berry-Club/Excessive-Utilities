@@ -24,6 +24,8 @@ data class MagicalSnowGlobeProgressComponent(
 		amountRequired: Int
 	) : this(HashMap(map), amountRequired)
 
+	val isComplete: Boolean = biomes.values.count { it } >= amountRequired
+
 	fun getWithComplete(biome: Holder<Biome>): MagicalSnowGlobeProgressComponent? {
 		val newMap = HashMap(biomes)
 		var found = false

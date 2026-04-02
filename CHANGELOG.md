@@ -21,3 +21,4 @@ Initial release! Expect bugs, please report them at [the issue tracker](https://
 
 - Bedrockium Drum localized (#5)
 - Ender Collector wasn't saving to NBT, and therefore also wasn't syncing its radius to client
+- Fixed Quantum Quarry recipe requiring a Machine Block instead of a Magical Snow Globe

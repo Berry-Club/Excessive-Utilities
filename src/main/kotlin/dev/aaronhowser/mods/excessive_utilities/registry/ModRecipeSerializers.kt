@@ -1,10 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.DamageGlassCutterRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.KeepPaintbrushRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedDivisionRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedUnstableRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.ItemAndFluidFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.MagmaticFuelRecipe
@@ -35,6 +32,8 @@ object ModRecipeSerializers {
 		registerRecipeSerializer("damage_glass_cutter", DamageGlassCutterRecipe::Serializer)
 	val KEEP_PAINTBRUSH: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
 		registerRecipeSerializer("keep_paintbrush", KeepPaintbrushRecipe::Serializer)
+	val SNOW_GLOBE: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
+		registerRecipeSerializer("snow_globe", SnowGlobeRecipe::Serializer)
 
 	val WORLD_INTERACTION_ITEM: DeferredHolder<RecipeSerializer<*>, RecipeSerializer<*>> =
 		registerRecipeSerializer("world_interaction_item", WorldInteractionItemRecipe::Serializer)
