@@ -1403,23 +1403,53 @@ class ModBlockStateProvider(
 		val base = modLoc("block/redstone_lantern/base")
 		val numbers = modLoc("block/redstone_lantern/numbers")
 
-		val model = models()
-			.withExistingParent(name(block), mcLoc("block/block"))
-			.texture("base", base)
-			.texture("numbers", numbers)
+		val name = name(block)
+		val models = mutableListOf<BlockModelBuilder>()
 
-			.element {
-				from(0f, 0f, 0f)
-				to(16f, 16f, 16f)
+		for (i in RedstoneLanternBlock.POWER.possibleValues) {
+			val model = models()
+				.withExistingParent(name + "_" + i, mcLoc("block/block"))
+				.texture("base", base)
+				.texture("numbers", numbers)
+				.particle(base)
+				.renderType(RenderType.cutout().name)
 
-				allFaces { dir, fb ->
-					fb.texture("#base")
-					fb.cullface(dir)
-					fb.uvs(1f, 1f, 15f, 15f)
+				.element {
+					from(1.01f, 1.01f, 1.01f)
+					to(14.99f, 14.99f, 14.99f)
+
+					emissivity(15, 0)
+
+					allFaces { dir, fb ->
+						fb.texture("#base")
+						fb.uvs(15f, i.toFloat(), 16f, i + 1f)
+					}
 				}
+
+				.element {
+					from(1f, 1f, 1f)
+					to(15f, 15f, 15f)
+
+					allFaces { dir, fb ->
+						fb.texture("#base")
+					}
+				}
+
+			models += model
+		}
+
+		getVariantBuilder(block)
+			.forAllStates {
+				val power = it.getValue(RedstoneLanternBlock.POWER)
+				val model = models[power]
+
+				ConfiguredModel
+					.builder()
+					.modelFile(model)
+					.build()
 			}
 
-		simpleBlockWithItem(block, model)
+		simpleBlockItem(block, models.last())
 	}
 
 	private fun wirelessFeTransmitter() {

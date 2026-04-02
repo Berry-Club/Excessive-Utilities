@@ -1,0 +1,114 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#base",
+          "uv": [
+            15.0,
+            12.0,
+            16.0,
+            13.0
+          ]
+        },
+        "east": {
+          "texture": "#base",
+          "uv": [
+            15.0,
+            12.0,
+            16.0,
+            13.0
+          ]
+        },
+        "north": {
+          "texture": "#base",
+          "uv": [
+            15.0,
+            12.0,
+            16.0,
+            13.0
+          ]
+        },
+        "south": {
+          "texture": "#base",
+          "uv": [
+            15.0,
+            12.0,
+            16.0,
+            13.0
+          ]
+        },
+        "up": {
+          "texture": "#base",
+          "uv": [
+            15.0,
+            12.0,
+            16.0,
+            13.0
+          ]
+        },
+        "west": {
+          "texture": "#base",
+          "uv": [
+            15.0,
+            12.0,
+            16.0,
+            13.0
+          ]
+        }
+      },
+      "from": [
+        1.01,
+        1.01,
+        1.01
+      ],
+      "neoforge_data": {
+        "block_light": 15
+      },
+      "to": [
+        14.99,
+        14.99,
+        14.99
+      ]
+    },
+    {
+      "faces": {
+        "down": {
+          "texture": "#base"
+        },
+        "east": {
+          "texture": "#base"
+        },
+        "north": {
+          "texture": "#base"
+        },
+        "south": {
+          "texture": "#base"
+        },
+        "up": {
+          "texture": "#base"
+        },
+        "west": {
+          "texture": "#base"
+        }
+      },
+      "from": [
+        1,
+        1,
+        1
+      ],
+      "to": [
+        15,
+        15,
+        15
+      ]
+    }
+  ],
+  "render_type": "minecraft:cutout",
+  "textures": {
+    "base": "excessive_utilities:block/redstone_lantern/base",
+    "numbers": "excessive_utilities:block/redstone_lantern/numbers",
+    "particle": "excessive_utilities:block/redstone_lantern/base"
+  }
+}
