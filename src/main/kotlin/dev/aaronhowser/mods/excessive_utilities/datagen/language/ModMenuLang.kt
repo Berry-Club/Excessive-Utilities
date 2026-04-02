@@ -1,6 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.language
 
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
+import net.minecraft.tags.BiomeTags
+import net.minecraft.tags.TagKey
+import net.minecraft.world.level.biome.Biome
+import net.neoforged.neoforge.common.Tags
 
 object ModMenuLang {
 
@@ -37,6 +41,9 @@ object ModMenuLang {
 	const val IGNORE_DAMAGE_OFF = "tooltip.excessive_utilities.item_filter.ignore_damage_off"
 	const val IGNORE_ALL_COMPONENTS_ON = "tooltip.excessive_utilities.item_filter.ignore_all_components_on"
 	const val IGNORE_ALL_COMPONENTS_OFF = "tooltip.excessive_utilities.item_filter.ignore_all_components_off"
+
+	const val SNOW_GLOBE_TOOLTIP = "tooltip.excessive_utilities.magical_snow_globe"
+	const val SNOW_GLOBE_INSTRUCTIONS = "tooltip.excessive_utilities.magical_snow_globe_instructions"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -81,7 +88,25 @@ object ModMenuLang {
 			add(UNSTABLE_INGOT_CHEESED_1, "Naughty naughty!")
 			add(UNSTABLE_INGOT_CHEESED_2, "Unstable Ingots must be crafted manually, by you.")
 			add(UNSTABLE_INGOT_CHEESED_3, "If this one WAS crafted manually, try using a vanilla Crafting Table instead.")
+
+			add(biomeTagLangKey(BiomeTags.IS_FOREST), "Forest")
+			add(biomeTagLangKey(BiomeTags.IS_HILL), "Hills")
+			add(biomeTagLangKey(BiomeTags.IS_JUNGLE), "Jungle")
+			add(biomeTagLangKey(Tags.Biomes.IS_MAGICAL), "Magical")
+			add(biomeTagLangKey(BiomeTags.IS_MOUNTAIN), "Mountain")
+			add(biomeTagLangKey(BiomeTags.IS_OCEAN), "Ocean")
+			add(biomeTagLangKey(Tags.Biomes.IS_PLAINS), "Plains")
+			add(biomeTagLangKey(Tags.Biomes.IS_SANDY), "Sandy")
+			add(biomeTagLangKey(Tags.Biomes.IS_SNOWY), "Snowy")
+			add(biomeTagLangKey(Tags.Biomes.IS_SWAMP), "Swamp")
+			add(biomeTagLangKey(BiomeTags.IS_END), "End")
+			add(biomeTagLangKey(BiomeTags.IS_NETHER), "Nether")
 		}
+	}
+
+	fun biomeTagLangKey(tag: TagKey<Biome>): String {
+		val location = tag.location
+		return "biome.${location.namespace}.${location.path}"
 	}
 
 }
