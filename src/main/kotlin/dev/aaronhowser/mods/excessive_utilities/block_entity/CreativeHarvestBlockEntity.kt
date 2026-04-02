@@ -84,6 +84,15 @@ class CreativeHarvestBlockEntity(
 		mimicStack = ItemStack.parseOptional(registries, stackTag)
 	}
 
+	override fun onLoad() {
+		super.onLoad()
+
+		val level = level
+		if (level != null) {
+			updateVisibleDirections(level)
+		}
+	}
+
 	companion object {
 		const val MIMIC_STACK_NBT = "MimicStack"
 		const val MIMIC_BLOCK_NBT = "MimicBlock"
