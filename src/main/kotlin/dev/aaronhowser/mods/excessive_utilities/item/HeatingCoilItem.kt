@@ -84,7 +84,11 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 			if (tintIndex != 1) return 0xFFFFFFFF.toInt()
 
 			val energy = stack.getOrDefault(ModDataComponents.ENERGY, 0)
-			val maxEnergy = ServerConfig.CONFIG.heatingCoilMaxEnergy.get()
+			val maxEnergy = try {
+				ServerConfig.CONFIG.heatingCoilMaxEnergy.get()
+			} catch (e: IllegalStateException) {
+				1_500_000
+			}
 
 			val percent = energy.toFloat() / maxEnergy.toFloat()
 
