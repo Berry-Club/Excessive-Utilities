@@ -44,7 +44,17 @@ abstract class GeneratorBlockEntity(
 	var ownerUuid: UUID? = null
 
 	protected open val energyStorage = EnergyStorage(1_000_000)
-	open fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
+	protected open val publicEnergyCapability: IEnergyStorage =
+		object : IEnergyStorage {
+			override fun receiveEnergy(amount: Int, simulate: Boolean): Int = 0
+			override fun extractEnergy(amount: Int, simulate: Boolean): Int = energyStorage.extractEnergy(amount, simulate)
+			override fun getEnergyStored(): Int = energyStorage.energyStored
+			override fun getMaxEnergyStored(): Int = energyStorage.maxEnergyStored
+			override fun canReceive(): Boolean = false
+			override fun canExtract(): Boolean = energyStorage.canExtract()
+		}
+
+	open fun getEnergyCapability(direction: Direction?): IEnergyStorage = publicEnergyCapability
 
 	protected open val container: GeneratorContainer =
 		object : GeneratorContainer(this@GeneratorBlockEntity, amountInputs = 1) {
