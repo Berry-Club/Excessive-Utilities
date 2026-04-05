@@ -29,6 +29,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandlerModifiable
@@ -112,6 +113,7 @@ abstract class GeneratorBlockEntity(
 
 	protected open fun serverTick(level: ServerLevel) {
 		addToNetwork(level)
+		pushOutEnergy(level)
 
 		val speed = container.getSpeed()
 		var success = false
@@ -122,6 +124,28 @@ abstract class GeneratorBlockEntity(
 		if (success) {
 			lastGeneratedEnergyOnTick = level.gameTime
 			effectOnSuccess(level)
+		}
+	}
+
+	protected fun pushOutEnergy(level: ServerLevel) {
+		for (dir in Direction.entries) {
+			val energyCap = level.getCapability(
+				Capabilities.EnergyStorage.BLOCK,
+				blockPos.relative(dir),
+				dir.opposite
+			) ?: continue
+
+			if (!energyCap.canReceive()) continue
+
+			val energyToPush = energyStorage.energyStored
+			if (energyToPush <= 0) continue
+
+			val pushed = energyCap.receiveEnergy(energyToPush, false)
+			if (pushed > 0) {
+				energyStorage.extractEnergy(pushed, false)
+				setChanged()
+				if (pushed >= energyToPush) break
+			}
 		}
 	}
 

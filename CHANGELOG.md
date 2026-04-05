@@ -15,6 +15,7 @@
 - The Magnum Torch now gives off light (#4)
 - Fixed the color of the Nether Star Generator's particles from white to "bistre"
 - Generators can no longer accept energy from outside sources
+- Generators now push energy into adjacent blocks
 
 ### Fixed
 
