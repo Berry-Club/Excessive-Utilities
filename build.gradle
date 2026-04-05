@@ -239,6 +239,7 @@ unifiedPublishing {
 		displayName = "Excessive Utilities ${project.minecraft_version} ${project.version}"
 		gameVersions = [project.minecraft_version]
 		gameLoaders = ["neoforge"]
+		releaseType = "beta"
 
 		changelog = "https://github.com/Berry-Club/Excessive-Utilities/blob/master/CHANGELOG.md#" + project.mod_version.toString().replace(".", "")
 
