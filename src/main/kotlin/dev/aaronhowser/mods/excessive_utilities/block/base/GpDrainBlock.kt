@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base
 
+import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
-import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ContainerContainer
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionResult

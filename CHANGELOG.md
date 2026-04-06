@@ -1,3 +1,9 @@
+# 1.1.1
+
+### Changed
+
+- Made Aaron's max version not explicit
+
 # 1.1.0
 
 ### Added
