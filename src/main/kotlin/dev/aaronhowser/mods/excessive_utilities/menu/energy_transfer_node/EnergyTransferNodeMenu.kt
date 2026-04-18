@@ -34,13 +34,13 @@ class EnergyTransferNodeMenu(
 		checkContainerSize(upgradesContainer, TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE)
 
 		addSlots()
-		addPlayerInventorySlots(91)
+		addPlayerInventorySlots(108)
 	}
 
 	override fun addSlots() {
 		for (i in 0 until TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE) {
 			val x = 35 + i * 18
-			val y = 58
+			val y = 68
 
 			val slot = FilteredSlot(upgradesContainer, i, x, y) {
 				it.isItem(ModItemTagsProvider.TRANSFER_NODE_UPGRADES) || it.isItem(ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES)

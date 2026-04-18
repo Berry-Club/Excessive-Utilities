@@ -7,7 +7,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
 //TODO: Render the ping XYZ
-//TODO: Render the fluid in the buffer
+//TODO: Render the energy in the buffer
 class EnergyTransferNodeScreen(
 	menu: EnergyTransferNodeMenu,
 	playerInventory: Inventory,
@@ -15,7 +15,7 @@ class EnergyTransferNodeScreen(
 ) : BaseScreen<EnergyTransferNodeMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-	override val inventoryLabelOffsetY: Int = 8
+	override val inventoryLabelOffsetY: Int = 22
 
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/energy_transfer_node.png"), 176, 190)
