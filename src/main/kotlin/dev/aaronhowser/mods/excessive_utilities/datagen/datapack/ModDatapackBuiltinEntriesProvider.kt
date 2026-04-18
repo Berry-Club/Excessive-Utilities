@@ -22,7 +22,8 @@ class ModDatapackBuiltinEntriesProvider(
 		val BUILDER: RegistrySetBuilder = RegistrySetBuilder()
 			.add(Registries.DAMAGE_TYPE, ModDamageTypeProvider::bootstrap)
 			.add(Registries.ENCHANTMENT, ModEnchantmentProvider::bootstrap)
-			.add(Registries.LEVEL_STEM, ModDimensionProvider::bootstrap)
+			.add(Registries.LEVEL_STEM, ModDimensionProvider::bootstrapLevelStem)
+			.add(Registries.DIMENSION_TYPE, ModDimensionProvider::bootstrapType)
 	}
 
 }

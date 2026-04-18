@@ -18,8 +18,6 @@
     "excessive_utilities:transfer_pipe_filter",
     "excessive_utilities:ender_thermic_pump",
     "excessive_utilities:player_chest",
-    "excessive_utilities:energy_transfer_node",
-    "excessive_utilities:energy_retrieval_node",
     "excessive_utilities:breadth_first_search_upgrade",
     "excessive_utilities:depth_first_search_upgrade",
     "excessive_utilities:pseudo_round_robin_upgrade",
