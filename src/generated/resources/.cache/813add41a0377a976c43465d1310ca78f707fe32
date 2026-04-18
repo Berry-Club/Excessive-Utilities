@@ -1,4 +1,4 @@
-// 1.21.1	2026-04-18T10:19:53.3989131	Tags for minecraft:item mod id excessive_utilities
+// 1.21.1	2026-04-18T13:17:21.7590824	Tags for minecraft:item mod id excessive_utilities
 77b841070f3cac5152768155828616a4432538ec data/curios/tags/item/athena_compatible.json
 6cd106da1b41cff4178e301675293cd4b4781548 data/curios/tags/item/ring.json
 391f936c09d7f7b43694f899344222849a8d62a1 data/c/tags/item/brick_blocks.json
@@ -28,7 +28,7 @@ a9fc732d820e0cda4d35fb56727c9620bc0898a4 data/c/tags/item/tools/mining_tool.json
 4348c5765eafbffd2e2e0f7fdf3203060aa9fd1a data/excessive_utilities/tags/item/gifts_of_earth.json
 c04c2914bec0af10a6e97b90da89c35b1d237a91 data/excessive_utilities/tags/item/interact_with_flat_transfer_nodes.json
 4033aa8830f23f8653730d8eaf916ba65df9e571 data/excessive_utilities/tags/item/magical_boomerang_enchantable.json
-e2b2e709fb91eda55f71f8df50a92abf3ab65b9b data/excessive_utilities/tags/item/not_yet_implemented.json
+66fc949c5da54c810975d1aa03da8567a953b273 data/excessive_utilities/tags/item/not_yet_implemented.json
 602a4325b586bb67054ab4219eff064f9b4bbb3e data/excessive_utilities/tags/item/render_ender_porcupine_while_holding.json
 7f2a080bad2ea7ea204a920cc04518e56b629820 data/excessive_utilities/tags/item/render_gp_while_holding.json
 1cb57e8fb624526a9458fd3cc5a30d149f469bae data/excessive_utilities/tags/item/retrieval_node_upgrades.json
