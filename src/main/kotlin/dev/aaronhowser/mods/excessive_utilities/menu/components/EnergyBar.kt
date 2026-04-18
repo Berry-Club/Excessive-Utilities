@@ -16,33 +16,53 @@ class EnergyBar(
 	y: Int,
 	val maxGetter: IntSupplier,
 	val currentGetter: IntSupplier,
-	val font: Font
+	val font: Font,
+	val isSmall: Boolean = false
 ) : AbstractWidget(
 	x, y,
-	WIDTH,
-	HEIGHT,
+	if (isSmall) WIDTH_SMALL else WIDTH_BIG,
+	if (isSmall) HEIGHT_SMALL else HEIGHT_BIG,
 	Component.empty()
 ) {
 
-	override fun renderWidget(pGuiGraphics: GuiGraphics, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
+	override fun renderWidget(
+		guiGraphics: GuiGraphics,
+		mouseX: Int,
+		mouseY: Int,
+		partialTick: Float
+	) {
 		val percentFull = currentGetter.asInt.toFloat() / maxGetter.asInt.toFloat()
 
 		val energyTotalHeight = this.height
 		val energyCurrentHeight = Mth.ceil(energyTotalHeight.toDouble() * percentFull)
 
-		pGuiGraphics.blitSprite(
-			TEXTURE,
-			WIDTH,
-			HEIGHT,
-			0,
-			energyTotalHeight - energyCurrentHeight,
-			x,
-			y + energyTotalHeight - energyCurrentHeight,
-			WIDTH,
-			energyCurrentHeight
-		)
+		if (isSmall) {
+			guiGraphics.blitSprite(
+				TEXTURE,
+				WIDTH_SMALL,
+				HEIGHT_SMALL,
+				0,
+				energyTotalHeight - energyCurrentHeight,
+				x,
+				y + energyTotalHeight - energyCurrentHeight,
+				WIDTH_SMALL,
+				energyCurrentHeight
+			)
+		} else {
+			guiGraphics.blitSprite(
+				TEXTURE,
+				WIDTH_BIG,
+				HEIGHT_BIG,
+				0,
+				energyTotalHeight - energyCurrentHeight,
+				x,
+				y + energyTotalHeight - energyCurrentHeight,
+				WIDTH_BIG,
+				energyCurrentHeight
+			)
+		}
 
-		if (isHovered) renderTooltip(pGuiGraphics, pMouseX, pMouseY)
+		if (isHovered) renderTooltip(guiGraphics, mouseX, mouseY)
 	}
 
 	private fun renderTooltip(pGuiGraphics: GuiGraphics, pMouseX: Int, pMouseY: Int) {
@@ -66,9 +86,10 @@ class EnergyBar(
 	companion object {
 		val TEXTURE = ExcessiveUtilities.modResource("energy")
 
-		const val WIDTH = 18
-		const val HEIGHT = 57
-		const val TEXTURE_SIZE = 64
+		const val WIDTH_BIG = 18
+		const val HEIGHT_BIG = 57
+		const val WIDTH_SMALL = 18
+		const val HEIGHT_SMALL = 33
 	}
 
 }
