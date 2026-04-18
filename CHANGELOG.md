@@ -3,6 +3,7 @@
 ### Added
 
 - Demon Ingots etc now have a JEI info page about how to craft them
+- Energy Transfer/Retrieval Nodes
 
 ### Changed
 
