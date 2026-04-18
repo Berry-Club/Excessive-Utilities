@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.LastMillenniumHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -32,19 +33,33 @@ class LastMillenniumPortalBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)
 	}
 
 	override fun getPortalDestination(level: ServerLevel, entity: Entity, pos: BlockPos): DimensionTransition {
-		val targetLevel = LastMillenniumHandler.getLastMillenniumLevel(level)
-		val chunkPos = LastMillenniumHandler.get(level).getChunk(entity)
+		return if (level.dimension() == ModDimensionProvider.MILLENNIUM_LEVEL_KEY) {
+			getDestinationFromLastMillennium(level, entity)
+		} else {
+			getDestinationInLastMillennium(level, entity)
+		}
+	}
 
-		val post = DimensionTransition.PLACE_PORTAL_TICKET
-		return DimensionTransition(
-			targetLevel,
-			chunkPos.getMiddleBlockPosition(64).bottomCenter,
-			Vec3.ZERO,
-			0f,
-			0f,
-			false,
-			post
-		)
+	companion object {
+		private fun getDestinationFromLastMillennium(level: ServerLevel, entity: Entity): DimensionTransition {
+
+		}
+
+		private fun getDestinationInLastMillennium(level: ServerLevel, entity: Entity): DimensionTransition {
+			val targetLevel = LastMillenniumHandler.getLastMillenniumLevel(level)
+			val chunkPos = LastMillenniumHandler.get(level).getChunk(entity)
+
+			val post = DimensionTransition.PLACE_PORTAL_TICKET
+			return DimensionTransition(
+				targetLevel,
+				chunkPos.getMiddleBlockPosition(64).bottomCenter,
+				Vec3.ZERO,
+				0f,
+				0f,
+				false,
+				post
+			)
+		}
 	}
 
 }
