@@ -153,6 +153,16 @@ class ModRecipeProvider(
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
 		shapedRecipe(
+			ModBlocks.LAST_MILLENNIUM_PORTAL,
+			"QSQ,SCS,QSQ",
+			mapOf(
+				'Q' to ModBlocks.QUARTZBURNT.asIngredient(),
+				'S' to ModBlocks.EMINENCE_STONE.asIngredient(),
+				'C' to Items.CLOCK.asIngredient()
+			)
+		)
+
+		shapedRecipe(
 			ModBlocks.SWIRLING_GLASS.toStack(5),
 			" G ,GGG, G ",
 			mapOf(
