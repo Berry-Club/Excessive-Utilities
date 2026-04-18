@@ -47,6 +47,8 @@ object ModMenuLang {
 	const val SNOW_GLOBE_READY = "tooltip.excessive_utilities.magical_snow_globe_ready"
 	const val ATHENA_COMPATIBLE = "tooltip.excessive_utilities.athena_compatible"
 
+	const val DEMON_CRAFTING = "container.excessive_utilities.demon_crafting"
+
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
 			add(SOUL_OF_A_FORGOTTEN_DEITY, "Soul of a Forgotten Deity")
@@ -110,6 +112,8 @@ object ModMenuLang {
 			add(SNOW_GLOBE_READY, "The Snow Globe has gathered enough information about our world.")
 
 			add(ATHENA_COMPATIBLE, "Install Athena for connected textures!")
+
+			add(DEMON_CRAFTING, "Get by throwing the Golden form into Lava while in the Nether!")
 		}
 	}
 

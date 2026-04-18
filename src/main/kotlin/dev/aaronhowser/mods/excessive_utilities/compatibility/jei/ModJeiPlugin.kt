@@ -107,6 +107,8 @@ class ModJeiPlugin : IModPlugin {
 
 		val disenchantmentRecipes = DisenchantmentFuelJeiCategory.getAllRecipes(level, registration)
 		registration.addRecipes(DISENCHANTMENT_FUELS, disenchantmentRecipes)
+
+		JeiInfoRecipes.addRecipes(registration)
 	}
 
 	override fun registerVanillaCategoryExtensions(registration: IVanillaCategoryExtensionRegistration) {

@@ -1,5 +1,9 @@
 # 1.2.0
 
+### Added
+
+- Demon Ingots etc now have a JEI info page about how to craft them
+
 ### Changed
 
 - Division Sigils can now be found in chests
