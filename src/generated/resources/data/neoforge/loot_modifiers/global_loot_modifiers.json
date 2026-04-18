@@ -3,7 +3,12 @@
     "excessive_utilities:resonating_crystal_from_redstone_ore",
     "excessive_utilities:drop_of_evil_from_wither_skeleton",
     "excessive_utilities:soul_fragment",
-    "excessive_utilities:soul_fragment_kikoku_bonus"
+    "excessive_utilities:soul_fragment_kikoku_bonus",
+    "excessive_utilities:division_sigil_stronghold_crossing",
+    "excessive_utilities:division_sigil_stronghold_corridor",
+    "excessive_utilities:division_sigil_mineshaft",
+    "excessive_utilities:division_sigil_dungeon",
+    "excessive_utilities:division_sigil_desert_temple"
   ],
   "replace": false
 }

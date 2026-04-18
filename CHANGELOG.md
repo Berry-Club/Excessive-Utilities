@@ -1,3 +1,9 @@
+# 1.2.0
+
+### Changed
+
+- Division Sigils can now be found in chests
+
 # 1.1.1
 
 ### Changed
