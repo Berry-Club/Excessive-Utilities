@@ -21,8 +21,8 @@ class EnergyTransferNodeScreen(
 
 	override fun baseInit() {
 		energyBar = EnergyBar(
-			x = leftPos + 7,
-			y = topPos + 21,
+			x = leftPos + 79,
+			y = topPos + 24,
 			maxGetter = { menu.getMaxEnergy() },
 			currentGetter = { menu.getStoredEnergy() },
 			font = font,

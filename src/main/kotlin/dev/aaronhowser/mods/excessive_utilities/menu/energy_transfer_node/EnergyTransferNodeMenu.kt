@@ -35,6 +35,7 @@ class EnergyTransferNodeMenu(
 
 		addSlots()
 		addPlayerInventorySlots(108)
+		addDataSlots(containerData)
 	}
 
 	override fun addSlots() {
