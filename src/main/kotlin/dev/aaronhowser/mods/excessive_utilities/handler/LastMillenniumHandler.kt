@@ -1,8 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.handler
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
@@ -50,12 +52,18 @@ class LastMillenniumHandler : SavedData() {
 	}
 
 	private fun placeStructureIfNeeded(tlmLevel: ServerLevel, chunkPos: ChunkPos) {
+		val minPos = chunkPos.worldPosition.atY(63)
+		val portalPos = minPos.offset(8, 0, 8)
+
+		val blockState = tlmLevel.getBlockState(portalPos)
+		if (blockState.isBlock(ModBlocks.LAST_MILLENNIUM_PORTAL)) return
+
 		val structure = tlmLevel.structureManager.get(STRUCTURE).get()
 
 		structure.placeInWorld(
 			tlmLevel,
+			minPos,
 			BlockPos.ZERO,
-			chunkPos.getMiddleBlockPosition(63),
 			StructurePlaceSettings(),
 			tlmLevel.random,
 			Block.UPDATE_ALL_IMMEDIATE
