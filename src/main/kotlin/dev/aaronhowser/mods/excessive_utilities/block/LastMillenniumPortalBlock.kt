@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -20,7 +21,10 @@ import net.minecraft.world.level.portal.DimensionTransition
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 
-class LastMillenniumPortalBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+class LastMillenniumPortalBlock : Block(
+	Properties
+		.ofFullCopy(Blocks.IRON_BLOCK)
+), EntityBlock {
 
 	override fun useWithoutItem(
 		state: BlockState,
@@ -41,6 +45,19 @@ class LastMillenniumPortalBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)
 		}
 
 		return InteractionResult.SUCCESS
+	}
+
+	override fun getDestroyProgress(
+		state: BlockState,
+		player: Player,
+		level: BlockGetter,
+		pos: BlockPos
+	): Float {
+		if (level is Level && level.dimension() == ModDimensionProvider.MILLENNIUM_LEVEL_KEY) {
+			return 0f
+		}
+
+		return super.getDestroyProgress(state, player, level, pos)
 	}
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
