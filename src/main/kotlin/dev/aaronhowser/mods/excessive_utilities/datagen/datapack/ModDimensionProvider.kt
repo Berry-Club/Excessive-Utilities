@@ -9,14 +9,17 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.valueproviders.ConstantInt
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
 import net.minecraft.world.level.dimension.DimensionType
 import net.minecraft.world.level.dimension.LevelStem
+import net.minecraft.world.level.levelgen.FlatLevelSource
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
 import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
-import java.util.OptionalLong
+import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings
+import java.util.*
 
 object ModDimensionProvider {
 
@@ -95,6 +98,25 @@ object ModDimensionProvider {
 			LevelStem(
 				overworldDimensionType,
 				chunkGenerator
+			)
+		)
+
+		val biomeLookup = context.lookup(Registries.BIOME)
+		val structureLookup = context.lookup(Registries.STRUCTURE_SET)
+		val placedFeatureLookup = context.lookup(Registries.PLACED_FEATURE)
+
+		context.register(
+			MILLENNIUM_STEM_KEY,
+			LevelStem(
+				dimensionTypeLookup.getOrThrow(MILLENNIUM_DIM_TYPE_KEY),
+				FlatLevelSource(
+					FlatLevelGeneratorSettings.getDefault(biomeLookup, structureLookup, placedFeatureLookup)
+						.withBiomeAndLayers(
+							listOf(),
+							Optional.empty(),
+							biomeLookup.get(Biomes.PLAINS).get()
+						)
+				)
 			)
 		)
 	}
