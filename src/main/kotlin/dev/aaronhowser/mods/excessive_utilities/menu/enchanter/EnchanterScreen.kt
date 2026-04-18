@@ -22,8 +22,6 @@ class EnchanterScreen(
 	private lateinit var progressArrow: ProgressArrow
 
 	override fun baseInit() {
-		super.baseInit()
-
 		energyBar = EnergyBar(
 			x = leftPos + 7,
 			y = topPos + 21,

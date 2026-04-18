@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.ItemTransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.EnergyTransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -27,7 +27,7 @@ class EnergyTransferNodeMenu(
 				containerId,
 				playerInventory,
 				SimpleContainer(TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE),
-				SimpleContainerData(ItemTransferNodeBlockEntity.CONTAINER_DATA_SIZE)
+				SimpleContainerData(EnergyTransferNodeBlockEntity.CONTAINER_DATA_SIZE)
 			)
 
 	init {
@@ -50,9 +50,11 @@ class EnergyTransferNodeMenu(
 		}
 	}
 
-	fun getPingX(): Int = containerData.get(ItemTransferNodeBlockEntity.X_DATA_INDEX)
-	fun getPingY(): Int = containerData.get(ItemTransferNodeBlockEntity.Y_DATA_INDEX)
-	fun getPingZ(): Int = containerData.get(ItemTransferNodeBlockEntity.Z_DATA_INDEX)
+	fun getPingX(): Int = containerData.get(EnergyTransferNodeBlockEntity.X_DATA_INDEX)
+	fun getPingY(): Int = containerData.get(EnergyTransferNodeBlockEntity.Y_DATA_INDEX)
+	fun getPingZ(): Int = containerData.get(EnergyTransferNodeBlockEntity.Z_DATA_INDEX)
+	fun getStoredEnergy(): Int = containerData.get(EnergyTransferNodeBlockEntity.STORED_ENERGY_DATA_INDEX)
+	fun getMaxEnergy(): Int = containerData.get(EnergyTransferNodeBlockEntity.MAX_ENERGY_DATA_INDEX)
 
 	override fun quickMoveStack(player: Player, index: Int): ItemStack {
 		return ItemStack.EMPTY

@@ -170,6 +170,7 @@ class EnergyTransferNodeBlockEntity(
 					Y_DATA_INDEX -> placedOnPos.y
 					Z_DATA_INDEX -> placedOnPos.z
 					STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.energyStored
+					MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.maxEnergyStored
 					else -> 0
 				}
 			}
@@ -199,11 +200,12 @@ class EnergyTransferNodeBlockEntity(
 	companion object {
 		const val BUFFER_ENERGY_NBT = "BufferEnergy"
 
-		const val CONTAINER_DATA_SIZE = 4
+		const val CONTAINER_DATA_SIZE = 5
 		const val X_DATA_INDEX = 0
 		const val Y_DATA_INDEX = 1
 		const val Z_DATA_INDEX = 2
 		const val STORED_ENERGY_DATA_INDEX = 3
+		const val MAX_ENERGY_DATA_INDEX = 4
 	}
 
 }
