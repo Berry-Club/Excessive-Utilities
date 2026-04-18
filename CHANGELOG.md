@@ -2,11 +2,11 @@
 
 ### Added
 
-- Demon Ingots etc now have a JEI info page about how to craft them
 - Energy Transfer/Retrieval Nodes
 
 ### Changed
 
+- Demon Ingots etc now have a JEI info page about how to craft them
 - Division Sigils can now be found in chests
 
 # 1.1.1

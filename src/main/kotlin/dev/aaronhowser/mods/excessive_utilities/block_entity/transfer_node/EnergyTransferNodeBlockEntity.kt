@@ -1,12 +1,18 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.HolderLookup
+import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.EnergyStorage
@@ -154,7 +160,50 @@ class EnergyTransferNodeBlockEntity(
 		return if (hasStackUpgrade()) 192_000 else 3_000
 	}
 
+	private val containerData: ContainerData =
+		object : ContainerData {
+			override fun getCount(): Int = CONTAINER_DATA_SIZE
+
+			override fun get(index: Int): Int {
+				return when (index) {
+					X_DATA_INDEX -> placedOnPos.x
+					Y_DATA_INDEX -> placedOnPos.y
+					Z_DATA_INDEX -> placedOnPos.z
+					STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.energyStored
+					else -> 0
+				}
+			}
+
+			override fun set(index: Int, value: Int) {
+				// No set
+			}
+
+		}
+
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
-		TODO("Not yet implemented")
+		return EnergyTransferNodeMenu(containerId, playerInventory, upgradeContainer, containerData)
 	}
+
+	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.saveAdditional(tag, registries)
+
+		tag.saveEnergy(BUFFER_ENERGY_NBT, bufferEnergyStorage, registries)
+	}
+
+	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
+		super.loadAdditional(tag, registries)
+
+		tag.loadEnergy(BUFFER_ENERGY_NBT, bufferEnergyStorage, registries)
+	}
+
+	companion object {
+		const val BUFFER_ENERGY_NBT = "BufferEnergy"
+
+		const val CONTAINER_DATA_SIZE = 4
+		const val X_DATA_INDEX = 0
+		const val Y_DATA_INDEX = 1
+		const val Z_DATA_INDEX = 2
+		const val STORED_ENERGY_DATA_INDEX = 3
+	}
+
 }
