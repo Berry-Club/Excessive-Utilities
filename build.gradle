@@ -259,7 +259,8 @@ unifiedPublishing {
 			}
 
 			optional {
-				curseforge = modrinth = "athena"
+				curseforge = "athena"
+				modrinth = "athena-ctm"
 			}
 
 			optional {
