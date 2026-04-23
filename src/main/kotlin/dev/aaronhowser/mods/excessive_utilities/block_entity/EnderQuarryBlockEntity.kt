@@ -77,7 +77,12 @@ class EnderQuarryBlockEntity(
 	}
 
 	var boundaryType: BoundaryType? = null
-		private set
+		private set(value) {
+			if (field == value) return
+
+			field = value
+			setChanged()
+		}
 
 	/**
 	 * The exclusive minimum position of the mining area.
@@ -389,16 +394,14 @@ class EnderQuarryBlockEntity(
 			val posThere = worldPosition.relative(dir)
 			val stateThere = level.getBlockState(posThere)
 
-			if (stateThere.isBlock(BlockTags.FENCES) && trySetBoundariesFromFences(level, posThere)) {
-				boundaryType = BoundaryType.FENCE
-				setChanged()
-				return
+			if (stateThere.isBlock(BlockTags.FENCES)) {
+				val success = trySetBoundariesFromFences(level, posThere)
+				if (success) return
 			}
 
-			if (stateThere.isBlock(ModBlocks.ENDER_MARKER) && trySetBoundariesFromMarkers(level, posThere)) {
-				boundaryType = BoundaryType.MARKER
-				setChanged()
-				return
+			if (stateThere.isBlock(ModBlocks.ENDER_MARKER)) {
+				val success = trySetBoundariesFromMarkers(level, posThere)
+				if (success) return
 			}
 		}
 
@@ -432,7 +435,6 @@ class EnderQuarryBlockEntity(
 				}
 
 			return adjacentFences == 2
-
 		}
 
 		val dirToProperty = mapOf(
@@ -509,6 +511,9 @@ class EnderQuarryBlockEntity(
 
 		targetPos = min.offset(1, 0, 1)
 		advanceTargetPos(level)
+
+		boundaryType = BoundaryType.FENCE
+
 		return true
 	}
 
@@ -557,6 +562,10 @@ class EnderQuarryBlockEntity(
 		maxBoundary = max
 
 		targetPos = min.offset(1, 0, 1)
+
+		advanceTargetPos(level)
+		boundaryType = BoundaryType.MARKER
+
 		return true
 	}
 
