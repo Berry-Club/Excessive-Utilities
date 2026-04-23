@@ -210,6 +210,8 @@ class EnderQuarryBlockEntity(
 	}
 
 	private fun actuallyMineBlock(level: ServerLevel, target: BlockPos) {
+		if (!canMineBlock(level, target)) return
+
 		val drops = gatherDrops(level, target)
 		for (drop in drops) {
 			bufferContainer.addItem(drop)
@@ -272,7 +274,7 @@ class EnderQuarryBlockEntity(
 	/**
 	 * @return true if the Quarry should try to mine the block, false if it should skip it and move on to the next one
 	 */
-	private fun canQuarryMineBlock(level: ServerLevel, target: BlockPos): Boolean {
+	private fun canMineBlock(level: ServerLevel, target: BlockPos): Boolean {
 		val skipCobble = !getUpgrades().contains(EnderQuarryUpgradeType.WORLD_HOLE)
 		val state = level.getBlockState(target)
 
@@ -317,7 +319,7 @@ class EnderQuarryBlockEntity(
 		var nextPos = getNextPos(currentTarget)
 
 		while (nextPos != null) {
-			if (canQuarryMineBlock(level, nextPos)) {
+			if (canMineBlock(level, nextPos)) {
 				targetPos = nextPos
 				return
 			}
