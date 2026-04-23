@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.handler
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toBlockPos
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toChunkPos
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
@@ -102,7 +104,7 @@ class LastMillenniumHandler : SavedData() {
 			ResourceLocation.parse(fromDimString)
 		)
 
-		val fromPos = BlockPos.of(fromPosLong)
+		val fromPos = fromPosLong.toBlockPos()
 
 		val targetLevel = level.server.getLevel(fromDimKey) ?: return
 
@@ -172,7 +174,7 @@ class LastMillenniumHandler : SavedData() {
 
 				val uuid = coordinateTag.getUUID(PLAYER_NBT)
 				val chunkLong = coordinateTag.getLong(CHUNK_NBT)
-				val chunkPos = ChunkPos(chunkLong)
+				val chunkPos = chunkLong.toChunkPos()
 
 				data.playerChunks[uuid] = chunkPos
 			}
