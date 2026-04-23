@@ -1596,7 +1596,7 @@ class ModRecipeProvider(
 				output: DeferredBlock<*>,
 				ingredient: Ingredient,
 			) {
-				SpecialShapedRecipeBuilder(output.asItem())
+				SpecialShapedRecipeBuilder(output.toStack(7))
 					.type("keep_paintbrush", ::KeepPaintbrushRecipe)
 					.pattern(
 						"III",

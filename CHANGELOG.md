@@ -1,3 +1,9 @@
+# 1.3.0
+
+### Fixed
+
+- Colored block recipes now output 7 instead of 1, to match the amount in the input
+
 # 1.2.1
 
 ### Fixed
