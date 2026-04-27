@@ -34,7 +34,7 @@ class EntityLassoItem(
 		if (player.isClientSide
 			|| stack.has(ModDataComponents.ENTITY_DATA)
 			|| interactionTarget.isEntity(ModEntityTypeTagsProvider.LASSO_BLACKLIST)
-			|| (canHoldHostileMobs == interactionTarget is Enemy)
+			|| (canHoldHostileMobs != interactionTarget is Enemy)
 		) {
 			return InteractionResult.PASS
 		}

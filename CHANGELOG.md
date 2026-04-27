@@ -4,6 +4,7 @@
 
 - Colored block recipes now output 7 instead of 1, to match the amount in the input (#9)
 - Fixed the Ender Quarry placing a Dirt block where it starts (#10)
+- Fixed the Cursed Lasso and Golden Lasso effectively being swapped in functionality (#12)
 
 ### Changed
 
