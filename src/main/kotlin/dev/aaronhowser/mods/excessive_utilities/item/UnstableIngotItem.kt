@@ -10,8 +10,10 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ResultContainer
 import net.minecraft.world.item.Item
@@ -32,43 +34,34 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 	) {
 		if (level.isClientSide) return
 
-		val isStable = !stack.has(ModDataComponents.COUNTDOWN)
-		if (isStable) return
-
 		val countdown = stack.get(ModDataComponents.COUNTDOWN) ?: return
+		if (entity !is Player) return
 
-		if (isCheesed(stack)) {
-			return
+		val currentMenuId = getCurrentMenuId(entity)
+
+		if (!stack.has(ModDataComponents.CRAFTED_IN_MENU) && currentMenuId == VANILLA_CRAFTING_MENU_ID) {
+			stack.set(ModDataComponents.CRAFTED_IN_MENU, currentMenuId)
 		}
 
-		var shouldExplode = countdown <= 0
+		val requiredMenu = stack.get(ModDataComponents.CRAFTED_IN_MENU) ?: return
 
-		if (entity is Player) {
-			val currentMenu = try {
-				entity.containerMenu.type
-			} catch (e: UnsupportedOperationException) {
-				null
-			}
-
-			val currentMenuId = if (currentMenu != null) BuiltInRegistries.MENU.getKey(currentMenu) else null
-
-			val oldMenu = stack.get(ModDataComponents.CRAFTED_IN_MENU)
-			if (currentMenuId != oldMenu) {
-				shouldExplode = true
-			}
-		}
-
-		val requiredMenu = stack.get(ModDataComponents.CRAFTED_IN_MENU)
-		if (requiredMenu == null) {
-			shouldExplode = false
-		}
-
+		val shouldExplode = countdown <= 0 || currentMenuId != requiredMenu
 		if (shouldExplode) {
-			//TODO: Explode
-			stack.count = 0
+			explode(level, entity, stack)
 		} else {
 			stack.set(ModDataComponents.COUNTDOWN, countdown - 1)
 		}
+	}
+
+	override fun onEntityItemUpdate(stack: ItemStack, entity: ItemEntity): Boolean {
+		val level = entity.level()
+		if (level.isClientSide) return false
+		if (!stack.has(ModDataComponents.COUNTDOWN)) return false
+		if (!stack.has(ModDataComponents.CRAFTED_IN_MENU)) return false
+
+		explode(level, entity, stack)
+		entity.discard()
+		return true
 	}
 
 	override fun getName(stack: ItemStack): Component {
@@ -92,10 +85,32 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 
 	companion object {
 		const val MAX_COUNTDOWN = 20 * 10
+		const val EXPLOSION_RADIUS = 2.0f
+
+		val VANILLA_CRAFTING_MENU_ID: ResourceLocation = ResourceLocation.withDefaultNamespace("crafting")
+
+		private fun getCurrentMenuId(player: Player): ResourceLocation? {
+			val menuType = try {
+				player.containerMenu.type
+			} catch (e: UnsupportedOperationException) {
+				return null
+			}
+			return BuiltInRegistries.MENU.getKey(menuType)
+		}
+
+		private fun explode(level: Level, entity: Entity, stack: ItemStack) {
+			stack.count = 0
+			level.explode(
+				entity,
+				entity.x, entity.y, entity.z,
+				EXPLOSION_RADIUS,
+				Level.ExplosionInteraction.MOB
+			)
+		}
 
 		fun getColor(stack: ItemStack, tintIndex: Int): Int {
 			val countdown = stack.get(ModDataComponents.COUNTDOWN) ?: return 0xFFFFFFFF.toInt()
-			val percentToExplosion = (1f - countdown) / MAX_COUNTDOWN
+			val percentToExplosion = ((MAX_COUNTDOWN - countdown).toFloat() / MAX_COUNTDOWN).coerceIn(0f, 1f)
 
 			val alpha = 255
 			val red = 255
