@@ -5,12 +5,11 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.Gene
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
-import net.minecraft.world.level.Level
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.block.state.BlockState
 import kotlin.math.min
 import kotlin.math.sqrt
@@ -24,8 +23,7 @@ class DisenchantmentGeneratorBlockEntity(
 
 	override fun isValidInput(itemStack: ItemStack): Boolean {
 		if (itemStack.isEmpty) return false
-		val level = level ?: return false
-		return getPowerFromStack(level, itemStack) > 0
+		return getPowerFromStack(itemStack) > 0
 	}
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
@@ -34,7 +32,7 @@ class DisenchantmentGeneratorBlockEntity(
 		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (inputStack.isEmpty) return false
 
-		val totalPower = getPowerFromStack(level, inputStack)
+		val totalPower = getPowerFromStack(inputStack)
 		if (totalPower <= 0) return false
 
 		fePerTick = 40
@@ -47,9 +45,8 @@ class DisenchantmentGeneratorBlockEntity(
 	}
 
 	companion object {
-		fun getPowerFromStack(level: Level, itemStack: ItemStack): Int {
-			val lookup = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
-			val enchantments = itemStack.getAllEnchantments(lookup)
+		fun getPowerFromStack(itemStack: ItemStack): Int {
+			val enchantments = EnchantmentHelper.getEnchantmentsForCrafting(itemStack)
 
 			var totalPower = 0
 
