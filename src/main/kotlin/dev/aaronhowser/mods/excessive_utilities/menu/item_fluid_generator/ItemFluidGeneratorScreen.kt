@@ -4,10 +4,11 @@ import dev.aaronhowser.mods.aaron.menu.BaseScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
+import dev.aaronhowser.mods.excessive_utilities.menu.components.FluidBar
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
+import net.neoforged.neoforge.fluids.FluidStack
 
-//TODO: Render the fluid
 class ItemFluidGeneratorScreen(
 	menu: ItemFluidGeneratorMenu,
 	playerInventory: Inventory,
@@ -19,6 +20,7 @@ class ItemFluidGeneratorScreen(
 		get() = 10
 
 	private lateinit var energyBar: EnergyBar
+	private lateinit var fluidBar: FluidBar
 
 	override fun baseInit() {
 		super.baseInit()
@@ -31,7 +33,16 @@ class ItemFluidGeneratorScreen(
 			font = font
 		)
 
+		fluidBar = FluidBar(
+			x = leftPos + 44,
+			y = topPos + 18,
+			capacityGetter = { menu.blockEntity?.tank?.capacity ?: 0 },
+			fluidGetter = { menu.blockEntity?.tank?.fluid ?: FluidStack.EMPTY },
+			font = font
+		)
+
 		addRenderableWidget(energyBar)
+		addRenderableWidget(fluidBar)
 	}
 
 	companion object {

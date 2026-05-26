@@ -3,7 +3,9 @@ package dev.aaronhowser.mods.excessive_utilities.menu.single_fluid_generator
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorContainer
+import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
+import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
@@ -17,16 +19,9 @@ class SingleFluidGeneratorMenu(
 	containerId: Int,
 	playerInventory: Inventory,
 	val generatorContainer: Container,
-	val generatorContainerData: ContainerData
+	val generatorContainerData: ContainerData,
+	val blockEntity: MagmaticGeneratorBlockEntity?
 ) : MenuWithInventory(ModMenuTypes.SINGLE_FLUID_GENERATOR.get(), containerId, playerInventory) {
-
-	constructor(containerId: Int, playerInventory: Inventory) :
-			this(
-				containerId,
-				playerInventory,
-				SimpleContainer(CONTAINER_SIZE),
-				SimpleContainerData(GeneratorBlockEntity.DEFAULT_GENERATOR_CONTAINER_DATA_SIZE)
-			)
 
 	init {
 		checkContainerSize(generatorContainer, CONTAINER_SIZE)
@@ -57,5 +52,22 @@ class SingleFluidGeneratorMenu(
 
 	companion object {
 		const val CONTAINER_SIZE = 2
+
+		fun fromNetwork(
+			containerId: Int,
+			playerInventory: Inventory,
+			data: RegistryFriendlyByteBuf
+		): SingleFluidGeneratorMenu {
+			val pos = data.readBlockPos()
+			val be = playerInventory.player.level().getBlockEntity(pos) as? MagmaticGeneratorBlockEntity
+
+			return SingleFluidGeneratorMenu(
+				containerId,
+				playerInventory,
+				SimpleContainer(CONTAINER_SIZE),
+				SimpleContainerData(GeneratorBlockEntity.DEFAULT_GENERATOR_CONTAINER_DATA_SIZE),
+				be
+			)
+		}
 	}
 }

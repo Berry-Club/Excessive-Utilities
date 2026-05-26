@@ -63,9 +63,9 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 	val SINGLE_ITEM_GENERATOR: DeferredHolder<MenuType<*>, MenuType<SingleItemGeneratorMenu>> =
 		register("single_item_generator", ::SingleItemGeneratorMenu)
 	val SINGLE_FLUID_GENERATOR: DeferredHolder<MenuType<*>, MenuType<SingleFluidGeneratorMenu>> =
-		register("single_fluid_generator", ::SingleFluidGeneratorMenu)
+		register("single_fluid_generator") { IMenuTypeExtension.create(SingleFluidGeneratorMenu::fromNetwork) }
 	val ITEM_FLUID_GENERATOR: DeferredHolder<MenuType<*>, MenuType<ItemFluidGeneratorMenu>> =
-		register("item_fluid_generator", ::ItemFluidGeneratorMenu)
+		register("item_fluid_generator") { IMenuTypeExtension.create(ItemFluidGeneratorMenu::fromNetwork) }
 	val QED: DeferredHolder<MenuType<*>, MenuType<QedMenu>> =
 		register("qed", ::QedMenu)
 	val SIMPLE_MACHINE: DeferredHolder<MenuType<*>, MenuType<SimpleMachineMenu>> =

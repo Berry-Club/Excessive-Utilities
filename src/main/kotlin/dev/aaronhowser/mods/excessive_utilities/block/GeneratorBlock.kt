@@ -4,6 +4,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.aaron.block.SimpleContainerBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFluidInputDataDrivenGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.RainbowGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import net.minecraft.core.BlockPos
@@ -115,6 +117,9 @@ class GeneratorBlock(
 				if (anyInactive) player.tell(noComponent)
 			}
 
+			return InteractionResult.sidedSuccess(level.isClientSide)
+		} else if (blockEntity is MagmaticGeneratorBlockEntity || blockEntity is ItemAndFluidInputDataDrivenGeneratorBlockEntity) {
+			player.openMenu(blockEntity as MenuProvider) { it.writeBlockPos(pos) }
 			return InteractionResult.sidedSuccess(level.isClientSide)
 		} else if (blockEntity is MenuProvider) {
 			player.openMenu(blockEntity)
