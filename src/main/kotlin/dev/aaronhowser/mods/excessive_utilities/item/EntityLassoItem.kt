@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -149,11 +150,7 @@ class EntityLassoItem(
 			return
 		}
 
-		tooltipComponents += customName
-			.copy()
-			.append(" (")
-			.append(typeName)
-			.append(")")
+		tooltipComponents += ModMenuLang.LASSO_ENTITY_WITH_NAME.toComponent(customName, typeName)
 	}
 
 	companion object {

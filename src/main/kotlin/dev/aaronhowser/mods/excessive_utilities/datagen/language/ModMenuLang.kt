@@ -46,11 +46,13 @@ object ModMenuLang {
 	const val SNOW_GLOBE_INSTRUCTIONS = "tooltip.excessive_utilities.magical_snow_globe_instructions"
 	const val SNOW_GLOBE_READY = "tooltip.excessive_utilities.magical_snow_globe_ready"
 	const val ATHENA_COMPATIBLE = "tooltip.excessive_utilities.athena_compatible"
+	const val LASSO_ENTITY_WITH_NAME = "tooltip.excessive_utilities.lasso.entity_with_name"
 
 	const val DEMON_CRAFTING = "container.excessive_utilities.demon_crafting"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
+			add(LASSO_ENTITY_WITH_NAME, "%s (%s)")
 			add(SOUL_OF_A_FORGOTTEN_DEITY, "Soul of a Forgotten Deity")
 			add(SOUL_DEBT, "Soul Debt: %d")
 			add(SOUL_SURPLUS, "Soul Surplus: %d")

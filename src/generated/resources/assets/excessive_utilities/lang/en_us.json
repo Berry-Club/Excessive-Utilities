@@ -791,6 +791,7 @@
   "tooltip.excessive_utilities.item_filter.inverted_on": "Inverted: ON",
   "tooltip.excessive_utilities.item_filter.use_tags_off": "Use Tags: OFF",
   "tooltip.excessive_utilities.item_filter.use_tags_on": "Use Tags: ON",
+  "tooltip.excessive_utilities.lasso.entity_with_name": "%s (%s)",
   "tooltip.excessive_utilities.magical_snow_globe_1": "An entire world contained within a small glass globe.",
   "tooltip.excessive_utilities.magical_snow_globe_2": "Perhaps our universe is not so different?",
   "tooltip.excessive_utilities.magical_snow_globe_instructions": "To activate this globe, take it to any %d of the following biome types:",
