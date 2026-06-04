@@ -5,6 +5,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.EntityTypeTagsProvider
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -21,6 +22,7 @@ class ModEntityTypeTagsProvider(
 			.add(
 				EntityType.PLAYER
 			)
+			.addOptional(ResourceLocation.fromNamespaceAndPath("doggytalents", "dog"))
 
 		tag(BOOMERANG_PICKUP)
 			.add(
@@ -37,7 +39,8 @@ class ModEntityTypeTagsProvider(
 	}
 
 	companion object {
-		private fun create(id: String): TagKey<EntityType<*>> = TagKey.create(Registries.ENTITY_TYPE, ExcessiveUtilities.modResource(id))
+		private fun create(id: String): TagKey<EntityType<*>> =
+			TagKey.create(Registries.ENTITY_TYPE, ExcessiveUtilities.modResource(id))
 
 		val LASSO_BLACKLIST = create("lasso_blacklist")
 		val BOOMERANG_PICKUP = create("boomerang_pickup")
