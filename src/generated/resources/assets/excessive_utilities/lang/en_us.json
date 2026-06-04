@@ -759,6 +759,7 @@
   "message.excessive_utilities.inversion.missing_string": "You are missing a String at %d, %d, %d.",
   "message.excessive_utilities.inversion.ready_one": "The Division Sigil is ready to be inverted!",
   "message.excessive_utilities.inversion.ready_two": "Kill an Iron Golem near the Beacon to begin the ritual.",
+  "message.excessive_utilities.lasso_fail_ownership": "You can't pick up this entity because it belongs to someone else.",
   "message.excessive_utilities.no_remove_soul_fragment": "You don't have enough health to remove any more Soul Fragments!",
   "message.excessive_utilities.second_chance_used": "Your second chance has been used up!",
   "message.excessive_utilities.seconds_until_explosion": "Seconds Until Explosion: %s",

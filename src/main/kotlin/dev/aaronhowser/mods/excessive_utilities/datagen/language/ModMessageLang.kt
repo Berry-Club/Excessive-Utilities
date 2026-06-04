@@ -28,6 +28,8 @@ object ModMessageLang {
 	const val INVERSION_READY_ONE = "message.excessive_utilities.inversion.ready_one"
 	const val INVERSION_READY_TWO = "message.excessive_utilities.inversion.ready_two"
 
+	const val LASSO_FAIL_OWNERSHIP = "message.excessive_utilities.lasso_fail_ownership"
+
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
 			add(DOOM_EFFECT_TIME, "The Spectre of Death will arrive in %d seconds.")
@@ -55,6 +57,8 @@ object ModMessageLang {
 			add(INVERSION_MISSING_ITEMS, "You need at least %d items from the tag #%s in the Chest to the %s, but you only have %d.")
 			add(INVERSION_READY_ONE, "The Division Sigil is ready to be inverted!")
 			add(INVERSION_READY_TWO, "Kill an Iron Golem near the Beacon to begin the ritual.")
+
+			add(LASSO_FAIL_OWNERSHIP, "You can't pick up this entity because it belongs to someone else.")
 		}
 	}
 

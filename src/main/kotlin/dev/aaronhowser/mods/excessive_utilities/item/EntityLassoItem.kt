@@ -3,7 +3,10 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getMinimalTag
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.registries.Registries
@@ -12,6 +15,7 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.OwnableEntity
 import net.minecraft.world.entity.monster.Enemy
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -37,6 +41,14 @@ class EntityLassoItem(
 			|| (canHoldHostileMobs != interactionTarget is Enemy)
 		) {
 			return InteractionResult.PASS
+		}
+
+		if (interactionTarget is OwnableEntity) {
+			val owner = interactionTarget.owner
+			if (owner != null && owner != player) {
+				player.tell(ModMessageLang.LASSO_FAIL_OWNERSHIP.toComponent())
+				return InteractionResult.FAIL
+			}
 		}
 
 		if (canHoldHostileMobs) {

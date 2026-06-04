@@ -1,3 +1,9 @@
+# 1.4.0
+
+### Changed
+
+- The Golden and Cursed Lassos can no longer pick up mobs that are owned by other players
+
 # 1.3.1
 
 ### Fixed
