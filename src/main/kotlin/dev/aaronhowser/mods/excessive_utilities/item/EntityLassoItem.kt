@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getMinimalTag
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
@@ -35,18 +35,32 @@ class EntityLassoItem(
 		interactionTarget: LivingEntity,
 		usedHand: InteractionHand
 	): InteractionResult {
-		if (player.isClientSide
-			|| stack.has(ModDataComponents.ENTITY_DATA)
-			|| interactionTarget.isEntity(ModEntityTypeTagsProvider.LASSO_BLACKLIST)
-			|| (canHoldHostileMobs != interactionTarget is Enemy)
+		if (player.isClientSide || stack.has(ModDataComponents.ENTITY_DATA)
 		) {
 			return InteractionResult.PASS
+		}
+
+		if (interactionTarget.isEntity(ModEntityTypeTagsProvider.LASSO_BLACKLIST)) {
+			player.status(ModMessageLang.LASSO_FAIL_BLACKLIST.toComponent())
+			return InteractionResult.FAIL
+		}
+
+		if (canHoldHostileMobs) {
+			if (interactionTarget !is Enemy) {
+				player.status(ModMessageLang.LASSO_FAIL_HOSTILE_ONLY.toComponent())
+				return InteractionResult.FAIL
+			}
+		} else {
+			if (interactionTarget is Enemy) {
+				player.status(ModMessageLang.LASSO_FAIL_PASSIVE_ONLY.toComponent())
+				return InteractionResult.FAIL
+			}
 		}
 
 		if (interactionTarget is OwnableEntity) {
 			val owner = interactionTarget.owner
 			if (owner != null && owner != player) {
-				player.tell(ModMessageLang.LASSO_FAIL_OWNERSHIP.toComponent())
+				player.status(ModMessageLang.LASSO_FAIL_OWNERSHIP.toComponent())
 				return InteractionResult.FAIL
 			}
 		}

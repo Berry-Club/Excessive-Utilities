@@ -29,6 +29,9 @@ object ModMessageLang {
 	const val INVERSION_READY_TWO = "message.excessive_utilities.inversion.ready_two"
 
 	const val LASSO_FAIL_OWNERSHIP = "message.excessive_utilities.lasso_fail_ownership"
+	const val LASSO_FAIL_PASSIVE_ONLY = "message.excessive_utilities.lasso_fail_passive_only"
+	const val LASSO_FAIL_HOSTILE_ONLY = "message.excessive_utilities.lasso_fail_hostile_only"
+	const val LASSO_FAIL_BLACKLIST = "message.excessive_utilities.lasso_fail_blacklist"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -59,6 +62,9 @@ object ModMessageLang {
 			add(INVERSION_READY_TWO, "Kill an Iron Golem near the Beacon to begin the ritual.")
 
 			add(LASSO_FAIL_OWNERSHIP, "You can't pick up this entity because it belongs to someone else.")
+			add(LASSO_FAIL_PASSIVE_ONLY, "This Lasso can only hold passive mobs.")
+			add(LASSO_FAIL_HOSTILE_ONLY, "This Lasso can only hold hostile mobs.")
+			add(LASSO_FAIL_BLACKLIST, "This entity can't be picked up with a Lasso.")
 		}
 	}
 
