@@ -49,8 +49,12 @@ data class MagicalSnowGlobeProgressComponent(
 					Codec.unboundedMap(
 						TagKey.codec(Registries.BIOME),
 						Codec.BOOL
-					).fieldOf("biomes").forGetter { it.biomes },
-					Codec.INT.fieldOf("amount_required").forGetter { it.amountRequired }
+					)
+						.fieldOf("biomes")
+						.forGetter(MagicalSnowGlobeProgressComponent::biomes),
+					Codec.INT
+						.fieldOf("amount_required")
+						.forGetter(MagicalSnowGlobeProgressComponent::amountRequired)
 				).apply(instance, ::MagicalSnowGlobeProgressComponent)
 			}
 
