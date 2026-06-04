@@ -3,12 +3,12 @@
 ### Fixed
 
 - Accepted a PR from Saereth that fixes the Enchantment Generator not working (#14, #18)
-- Accepted a PR from Saereth that gives Generators a FluidBar that shows how much fluid they have (#20, #21)
 
 ### Changed
 
 - Accepted a Japanese translation from taromaru6251!
 - Accepted a PR from Saereth that significantly improves the functionality of Unstable Ingot explosions (#19)
+- Accepted a PR from Saereth that gives Generators a FluidBar that shows how much fluid they have (#20, #21)
 - The Golden and Cursed Lassos can no longer pick up mobs that are owned by other players
 - The Lassos now tell you why they fail
 
