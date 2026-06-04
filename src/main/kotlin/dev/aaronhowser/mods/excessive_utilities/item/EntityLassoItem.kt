@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -134,7 +135,7 @@ class EntityLassoItem(
 		val entityData = stack.get(ModDataComponents.ENTITY_DATA)
 
 		if (entityData == null) {
-			tooltipComponents += typeName
+			tooltipComponents += typeName.copy().withStyle(ChatFormatting.GRAY)
 			return
 		}
 
@@ -150,7 +151,9 @@ class EntityLassoItem(
 			return
 		}
 
-		tooltipComponents += ModMenuLang.LASSO_ENTITY_WITH_NAME.toComponent(customName, typeName)
+		tooltipComponents += ModMenuLang.LASSO_ENTITY_WITH_NAME
+			.toComponent(customName, typeName)
+			.withStyle(ChatFormatting.GRAY)
 	}
 
 	companion object {
