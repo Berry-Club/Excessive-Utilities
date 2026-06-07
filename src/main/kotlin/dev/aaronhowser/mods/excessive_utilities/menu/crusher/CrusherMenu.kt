@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.menu.components.OutputSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.CrusherBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SimpleMachineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -61,8 +60,41 @@ class CrusherMenu(
 	fun getProgress(): Int = machineContainerData.get(CrusherBlockEntity.PROGRESS_DATA_INDEX)
 	fun getMaxProgress(): Int = machineContainerData.get(CrusherBlockEntity.MAX_PROGRESS_DATA_INDEX)
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
+
+	override fun quickMoveStack(player: Player, clickedSlotIndex: Int): ItemStack {
+		val clickedSlot = slots.getOrNull(clickedSlotIndex)
+		if (clickedSlot == null || !clickedSlot.hasItem()) return ItemStack.EMPTY
+
+		val clickedStack = clickedSlot.item
+		val originalStack = clickedStack.copy()
+
+		val totalSlotCount = slots.size
+		val playerInventoryStartIndex = totalSlotCount - 36
+		val playerInventoryEndIndex = totalSlotCount - 1
+		val machineSlotEndIndex = playerInventoryStartIndex - 1
+
+		val clickedSlotIsInMachine = clickedSlotIndex <= machineSlotEndIndex
+		val clickedSlotIsInPlayerInventory = clickedSlotIndex in playerInventoryStartIndex..playerInventoryEndIndex
+
+		val wasItemMoved = when {
+			clickedSlotIsInMachine -> moveItemStackTo(clickedStack, playerInventoryStartIndex, totalSlotCount, true)
+			clickedSlotIsInPlayerInventory -> moveItemStackTo(clickedStack, 0, playerInventoryStartIndex, false)
+			else -> false
+		}
+
+		if (!wasItemMoved) return ItemStack.EMPTY
+
+		if (clickedStack.isEmpty) {
+			clickedSlot.setByPlayer(ItemStack.EMPTY)
+		} else {
+			clickedSlot.setChanged()
+		}
+
+		val stackCountChanged = clickedStack.count != originalStack.count
+		if (!stackCountChanged) return ItemStack.EMPTY
+
+		clickedSlot.onTake(player, clickedStack)
+		return originalStack
 	}
 
 	override fun stillValid(player: Player): Boolean {
