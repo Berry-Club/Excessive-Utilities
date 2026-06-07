@@ -1,3 +1,11 @@
+# 1.5.0
+
+### Changed
+
+- Crusher recipes now have more options:
+	- `ticks` for how many ticks the recipe takes (default 200)
+	- `fe_per_tick` for how much FE the recipe consumes per tick (default 20)
+
 # 1.4.0
 
 ### Fixed
@@ -35,13 +43,13 @@
 - The Ender Quarry can now mine block entities, picking up their contents (#10)
 - Added the following to the block tag `#excessive_utilities:ender_quarry_blacklist` (#10)
 	- Water
-    - Lava
-    - Grass Blocks
-    - Tall/Short Grass
-    - `#sand`
-    - `#logs`
-    - `#flowers`
-    - `#replaceable_by_trees`
+	- Lava
+	- Grass Blocks
+	- Tall/Short Grass
+	- `#sand`
+	- `#logs`
+	- `#flowers`
+	- `#replaceable_by_trees`
 - Added a failsafe for leaving The Last Millennium if you don't have the return data in your persistent data
 
 # 1.2.1

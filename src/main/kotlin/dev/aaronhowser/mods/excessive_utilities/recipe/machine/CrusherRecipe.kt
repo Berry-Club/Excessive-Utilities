@@ -18,6 +18,8 @@ class CrusherRecipe(
 	private val primaryOutput: ItemStack,
 	private val secondaryOutput: ItemStack,
 	val secondaryChance: Float,
+	val ticks: Int,
+	val fePerTick: Int
 ) : Recipe<SingleRecipeInput> {
 
 	fun getPrimaryOutput(): ItemStack = primaryOutput.copy()
@@ -66,7 +68,13 @@ class CrusherRecipe(
 							.forGetter(CrusherRecipe::secondaryOutput),
 						Codec.FLOAT
 							.optionalFieldOf("secondary_chance", 0.0f)
-							.forGetter(CrusherRecipe::secondaryChance)
+							.forGetter(CrusherRecipe::secondaryChance),
+						Codec.INT
+							.optionalFieldOf("ticks", 200)
+							.forGetter(CrusherRecipe::ticks),
+						Codec.INT
+							.optionalFieldOf("fe_per_tick", 20)
+							.forGetter(CrusherRecipe::fePerTick)
 					).apply(instance, ::CrusherRecipe)
 				}
 
@@ -76,6 +84,8 @@ class CrusherRecipe(
 					ItemStack.STREAM_CODEC, CrusherRecipe::primaryOutput,
 					ItemStack.OPTIONAL_STREAM_CODEC, CrusherRecipe::secondaryOutput,
 					ByteBufCodecs.FLOAT, CrusherRecipe::secondaryChance,
+					ByteBufCodecs.INT, CrusherRecipe::ticks,
+					ByteBufCodecs.INT, CrusherRecipe::fePerTick,
 					::CrusherRecipe
 				)
 		}

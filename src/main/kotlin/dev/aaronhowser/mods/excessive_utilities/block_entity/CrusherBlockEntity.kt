@@ -83,6 +83,8 @@ class CrusherBlockEntity(
 			setChanged()
 		}
 
+	private var maxProgress: Int = 0
+
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
 
@@ -93,10 +95,10 @@ class CrusherBlockEntity(
 			return
 		}
 
-		val fePerTick = 20 // TODO: Configurable
+		val fePerTick = recipe.fePerTick
 		val speedUpgrades = container.getItem(UPGRADE_SLOT).count
 
-		val maxProgress = 200 // TODO: Configurable
+		maxProgress = recipe.ticks
 
 		var success = false
 
@@ -207,7 +209,7 @@ class CrusherBlockEntity(
 
 	private val containerData: ContainerData =
 		object : ContainerData {
-			override fun getCount(): Int  = CONTAINER_DATA_SIZE
+			override fun getCount(): Int = CONTAINER_DATA_SIZE
 
 			override fun get(index: Int): Int {
 				return when (index) {
