@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronMenuTypesRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.menu.crusher.CrusherMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineMenu
@@ -80,6 +81,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("enchanter", ::EnchanterMenu)
 	val QUANTUM_QUARRY: DeferredHolder<MenuType<*>, MenuType<QuantumQuarryMenu>> =
 		register("quantum_quarry", ::QuantumQuarryMenu)
+	val CRUSHER: DeferredHolder<MenuType<*>, MenuType<CrusherMenu>> =
+		register("crusher", ::CrusherMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
