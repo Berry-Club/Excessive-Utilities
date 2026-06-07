@@ -13,11 +13,7 @@ import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.AngelR
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.DivisionCoreSubtypeInterpreter
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.LassoSubtypeInterpreter
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.OpiniumCoreSubtypeInterpreter
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.DamageGlassCutterRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.KeepPaintbrushRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedDivisionRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.ShapedUnstableRecipe
-import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.SnowGlobeRecipe
+import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe

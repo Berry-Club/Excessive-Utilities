@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ProgressArrow
-import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 

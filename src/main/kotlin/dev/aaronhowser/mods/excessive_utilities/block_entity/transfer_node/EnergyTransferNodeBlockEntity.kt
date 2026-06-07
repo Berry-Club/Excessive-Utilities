@@ -181,7 +181,7 @@ class EnergyTransferNodeBlockEntity(
 
 		}
 
-	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu? {
+	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
 		return EnergyTransferNodeMenu(containerId, playerInventory, upgradeContainer, containerData)
 	}
 
