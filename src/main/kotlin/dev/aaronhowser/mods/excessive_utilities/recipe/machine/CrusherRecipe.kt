@@ -34,6 +34,10 @@ class CrusherRecipe(
 	override fun getType(): RecipeType<*> = ModRecipeTypes.CRUSHER.get()
 
 	companion object {
+		const val DEFAULT_SECONDARY_CHANCE = 0f
+		const val DEFAULT_TICKS = 200
+		const val DEFAULT_FE_PER_TICK = 20
+
 		fun getRecipe(
 			level: Level,
 			input: ItemStack
@@ -67,13 +71,13 @@ class CrusherRecipe(
 							.optionalFieldOf("secondary_output", ItemStack.EMPTY)
 							.forGetter(CrusherRecipe::secondaryOutput),
 						Codec.FLOAT
-							.optionalFieldOf("secondary_chance", 0.0f)
+							.optionalFieldOf("secondary_chance", DEFAULT_SECONDARY_CHANCE)
 							.forGetter(CrusherRecipe::secondaryChance),
 						Codec.INT
-							.optionalFieldOf("ticks", 200)
+							.optionalFieldOf("ticks", DEFAULT_TICKS)
 							.forGetter(CrusherRecipe::ticks),
 						Codec.INT
-							.optionalFieldOf("fe_per_tick", 20)
+							.optionalFieldOf("fe_per_tick", DEFAULT_FE_PER_TICK)
 							.forGetter(CrusherRecipe::fePerTick)
 					).apply(instance, ::CrusherRecipe)
 				}

@@ -10,10 +10,10 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
 class CrusherScreen(
-	menu: SimpleMachineMenu,
+	menu: CrusherMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<SimpleMachineMenu>(menu, playerInventory, title) {
+) : BaseScreen<CrusherMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = 12

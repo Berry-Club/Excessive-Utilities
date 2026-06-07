@@ -16,7 +16,9 @@ class CrusherRecipeBuilder(
 	val ingredient: Ingredient,
 	val primaryOutput: ItemStack,
 	val secondaryOutput: ItemStack = ItemStack.EMPTY,
-	val secondaryChance: Float = 0f
+	val secondaryChance: Float = CrusherRecipe.DEFAULT_SECONDARY_CHANCE,
+	val ticks: Int = CrusherRecipe.DEFAULT_TICKS,
+	val fePerTick: Int = CrusherRecipe.DEFAULT_FE_PER_TICK
 ) : RecipeBuilder {
 
 	private val criteria: MutableMap<String, Criterion<*>> = mutableMapOf()
@@ -51,7 +53,7 @@ class CrusherRecipeBuilder(
 			advancement.addCriterion(criterion.key, criterion.value)
 		}
 
-		val recipe = CrusherRecipe(ingredient, primaryOutput, secondaryOutput, secondaryChance)
+		val recipe = CrusherRecipe(ingredient, primaryOutput, secondaryOutput, secondaryChance, ticks, fePerTick)
 
 		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
 	}

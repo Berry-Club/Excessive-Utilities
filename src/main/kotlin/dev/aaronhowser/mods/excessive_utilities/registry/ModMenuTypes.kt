@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronMenuTypesRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.crusher.CrusherMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.crusher.CrusherScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineMenu
@@ -101,6 +102,7 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		event.register(ENDER_PORCUPINE.get(), ::EnderPorcupineScreen)
 		event.register(ENCHANTER.get(), ::EnchanterScreen)
 		event.register(QUANTUM_QUARRY.get(), ::QuantumQuarryScreen)
+		event.register(CRUSHER.get(), ::CrusherScreen)
 	}
 
 }
