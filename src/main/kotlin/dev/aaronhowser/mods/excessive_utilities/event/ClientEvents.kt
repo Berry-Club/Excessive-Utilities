@@ -152,7 +152,7 @@ object ClientEvents {
 		event.register(PaintbrushItem::getItemColor, ModItems.PAINTBRUSH.get())
 
 		event.register(
-			DrumBlockEntity::getColor,
+			DrumBlockEntity::getItemStackColor,
 			ModBlocks.STONE_DRUM.get(),
 			ModBlocks.IRON_DRUM.get(),
 			ModBlocks.REINFORCED_LARGE_DRUM.get(),
@@ -174,7 +174,7 @@ object ClientEvents {
 	fun registerBlockColors(event: RegisterColorHandlersEvent.Block) {
 
 		event.register(
-			DrumBlockEntity::getColor,
+			DrumBlockEntity::getBlockColor,
 			ModBlocks.STONE_DRUM.get(),
 			ModBlocks.IRON_DRUM.get(),
 			ModBlocks.REINFORCED_LARGE_DRUM.get(),
