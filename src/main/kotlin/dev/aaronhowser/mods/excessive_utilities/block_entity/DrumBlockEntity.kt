@@ -78,7 +78,9 @@ class DrumBlockEntity(
 			tintIndex: Int
 		): Int {
 			if (tintIndex != 1 || level == null || pos == null) return 0xFFFFFFFF.toInt()
-			val blockEntity = level.getBlockEntity(pos) as? DrumBlockEntity ?: return 0xFFFFFFFF.toInt()
+
+			val blockEntity = level.getBlockEntity(pos)
+			if (blockEntity !is DrumBlockEntity) return 0xFFFFFFFF.toInt()
 
 			val fluid = blockEntity.tank.fluid
 			if (fluid.isEmpty) return 0xFFFFFFFF.toInt()
