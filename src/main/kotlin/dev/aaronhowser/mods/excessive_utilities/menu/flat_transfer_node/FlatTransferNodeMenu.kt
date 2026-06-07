@@ -35,10 +35,6 @@ class FlatTransferNodeMenu(
 		this.addSlot(filterSlot)
 	}
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return filterEntity.isAlive
 				&& filterContainer.stillValid(player)

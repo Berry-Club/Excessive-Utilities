@@ -54,10 +54,6 @@ class QedMenu(
 		}
 	}
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return qedContainer.stillValid(player)
 	}

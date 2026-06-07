@@ -57,10 +57,6 @@ class SimpleMachineMenu(
 	fun getProgress(): Int = machineContainerData.get(SimpleMachineBlockEntity.PROGRESS_DATA_INDEX)
 	fun getMaxProgress(): Int = machineContainerData.get(SimpleMachineBlockEntity.MAX_PROGRESS_DATA_INDEX)
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return machineContainer.stillValid(player)
 	}

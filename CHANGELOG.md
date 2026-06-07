@@ -1,5 +1,10 @@
 # 1.5.0
 
+### Fixed
+
+- Fixed menus not having shift-click functionality
+	- Please report any that are incorrect!
+
 ### Changed
 
 - Crusher recipes now have more options:

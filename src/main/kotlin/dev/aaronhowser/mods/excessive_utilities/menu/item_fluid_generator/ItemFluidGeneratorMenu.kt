@@ -44,10 +44,6 @@ class ItemFluidGeneratorMenu(
 		this.addSlot(inputSlots)
 	}
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return generatorContainer.stillValid(player)
 	}

@@ -57,10 +57,6 @@ class EnergyTransferNodeMenu(
 	fun getStoredEnergy(): Int = containerData.get(EnergyTransferNodeBlockEntity.STORED_ENERGY_DATA_INDEX)
 	fun getMaxEnergy(): Int = containerData.get(EnergyTransferNodeBlockEntity.MAX_ENERGY_DATA_INDEX)
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return upgradesContainer.stillValid(player)
 	}

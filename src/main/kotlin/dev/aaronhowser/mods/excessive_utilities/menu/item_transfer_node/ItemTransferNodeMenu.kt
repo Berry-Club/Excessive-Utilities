@@ -66,10 +66,6 @@ class ItemTransferNodeMenu(
 	fun getPingY(): Int = containerData.get(ItemTransferNodeBlockEntity.Y_DATA_INDEX)
 	fun getPingZ(): Int = containerData.get(ItemTransferNodeBlockEntity.Z_DATA_INDEX)
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return upgradesContainer.stillValid(player)
 	}

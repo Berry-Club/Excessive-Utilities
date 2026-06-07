@@ -33,10 +33,6 @@ class SingleSlotMenu(
 		this.addSlot(Slot(chestContainer, 0, 80, 34))
 	}
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return chestContainer.stillValid(player)
 	}

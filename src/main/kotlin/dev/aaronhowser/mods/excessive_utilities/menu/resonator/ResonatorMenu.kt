@@ -56,10 +56,6 @@ class ResonatorMenu(
 	fun getMaxProgress(): Int = resonatorContainerData.get(ResonatorBlockEntity.MAX_PROGRESS_DATA_INDEX)
 	fun getGpUsage(): Double = resonatorContainerData.get(ResonatorBlockEntity.GP_HUNDREDTHS_COST_DATA_INDEX) / 100.0
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return resonatorContainer.stillValid(player)
 	}

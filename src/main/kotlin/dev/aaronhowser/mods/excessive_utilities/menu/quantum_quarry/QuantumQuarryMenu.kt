@@ -65,10 +65,6 @@ class QuantumQuarryMenu(
 	fun getAmountBlocksBroken(): Int = quarryContainerData.get(QuantumQuarryBlockEntity.AMOUNT_BLOCKS_BROKEN_DATA_INDEX)
 	fun getBiomeId(): Int = quarryContainerData.get(QuantumQuarryBlockEntity.BIOME_ID_DATA_INDEX)
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return upgradesContainer.stillValid(player)
 	}

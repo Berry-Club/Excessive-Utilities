@@ -73,10 +73,6 @@ class ItemFilterMenu(
 		}
 	}
 
-	override fun quickMoveStack(player: Player, index: Int): ItemStack {
-		return ItemStack.EMPTY
-	}
-
 	override fun stillValid(player: Player): Boolean {
 		return getFilterStack().isItem(ModItems.ITEM_FILTER)
 	}
