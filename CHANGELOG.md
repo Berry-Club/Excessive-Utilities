@@ -5,6 +5,7 @@
 - Fixed menus not having shift-click functionality
 	- Please report any that are incorrect!
 - Fixed the Crusher not having a menu (#25)
+- Drums now properly display the color of their held fluid
 
 ### Changed
 
