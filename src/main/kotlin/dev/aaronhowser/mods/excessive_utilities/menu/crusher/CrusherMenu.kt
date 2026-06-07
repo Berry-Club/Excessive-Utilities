@@ -42,9 +42,9 @@ class CrusherMenu(
 	}
 
 	override fun addSlots() {
-		val inputSlot = Slot(machineContainer, CrusherBlockEntity.INPUT_SLOT, 62, 41)
-		val outputSlot = OutputSlot(machineContainer, CrusherBlockEntity.PRIMARY_OUTPUT_SLOT, 116, 41)
-		val secondaryOutputSlot = OutputSlot(machineContainer, CrusherBlockEntity.SECONDARY_OUTPUT_SLOT, 140, 41)
+		val inputSlot = Slot(machineContainer, CrusherBlockEntity.INPUT_SLOT, 47, 41)
+		val outputSlot = OutputSlot(machineContainer, CrusherBlockEntity.PRIMARY_OUTPUT_SLOT, 101, 41)
+		val secondaryOutputSlot = OutputSlot(machineContainer, CrusherBlockEntity.SECONDARY_OUTPUT_SLOT, 133, 41)
 
 		val upgradeSlot = FilteredSlot(machineContainer, CrusherBlockEntity.UPGRADE_SLOT, 153, 5) {
 			it.isItem(ModItemTagsProvider.SPEED_UPGRADES)
