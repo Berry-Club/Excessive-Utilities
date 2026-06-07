@@ -121,15 +121,15 @@ class DrumBlockEntity(
 				val contents = atlasTexture.contents()
 				val width = contents.width()
 				val height = contents.height()
-
 				val nativeImage = contents.originalImage
 
 				for (x in 0 until width) {
 					for (y in 0 until height) {
-						val rgba = nativeImage.getPixelRGBA(x, y)
-						val a = rgba ushr 24 and 0xFF
-						if (a > 10) {
-							add(rgba)
+						// Apparently getPixelRGBA actually returns ABGR??
+						val abgr = nativeImage.getPixelRGBA(x, y)
+						val alpha = abgr ushr 24 and 0xFF
+						if (alpha > 10) {
+							add(abgr)
 						}
 					}
 				}
@@ -143,26 +143,23 @@ class DrumBlockEntity(
 			var totalGreen = 0L
 			var totalBlue = 0L
 
-			for (rgba in pixels) {
-				val r = rgba ushr 16 and 0xFF
-				val g = rgba ushr 8 and 0xFF
-				val b = rgba and 0xFF
+			for (abgr in pixels) {
+				val blue  = abgr ushr 16 and 0xFF
+				val green = abgr ushr 8  and 0xFF
+				val red   = abgr         and 0xFF
 
-				totalRed += r
-				totalGreen += g
-				totalBlue += b
+				totalRed   += red
+				totalGreen += green
+				totalBlue  += blue
 			}
 
 			val count = pixels.size
-			val averageRed = (totalRed / count).toInt()
+			val averageRed   = (totalRed   / count).toInt()
 			val averageGreen = (totalGreen / count).toInt()
-			val averageBlue = (totalBlue / count).toInt()
+			val averageBlue  = (totalBlue  / count).toInt()
 
 			val argb = (0xFF shl 24) or (averageRed shl 16) or (averageGreen shl 8) or averageBlue
 			return argb
-
-//			val rgba = (averageRed shl 24) or (averageGreen shl 16) or (averageBlue shl 8) or 0xFF
-//			return rgba
 		}
 
 		fun getItemStackColor(
