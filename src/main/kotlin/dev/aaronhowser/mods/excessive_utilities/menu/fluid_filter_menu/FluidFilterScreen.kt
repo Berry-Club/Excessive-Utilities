@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.aaron.menu.BaseScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ToggleSpriteButton
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterScreen

@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.CulinaryGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder

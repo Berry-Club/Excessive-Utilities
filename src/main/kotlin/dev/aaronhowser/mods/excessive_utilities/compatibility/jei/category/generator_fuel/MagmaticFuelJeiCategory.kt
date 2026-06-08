@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.MagmaticFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks

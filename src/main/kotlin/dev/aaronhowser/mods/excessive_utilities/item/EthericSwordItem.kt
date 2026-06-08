@@ -5,7 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.giveOrDropStack
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems

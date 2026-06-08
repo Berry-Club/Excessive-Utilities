@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.components
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphics

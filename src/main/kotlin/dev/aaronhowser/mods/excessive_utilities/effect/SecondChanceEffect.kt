@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects.SECOND_CHANCE
 import net.minecraft.sounds.SoundEvents

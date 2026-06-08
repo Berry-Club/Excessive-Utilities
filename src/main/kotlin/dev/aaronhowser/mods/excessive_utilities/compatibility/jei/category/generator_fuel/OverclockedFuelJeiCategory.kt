@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.gene
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel.DynamicItemFuelJeiCategory.Companion.getStackFuels
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder

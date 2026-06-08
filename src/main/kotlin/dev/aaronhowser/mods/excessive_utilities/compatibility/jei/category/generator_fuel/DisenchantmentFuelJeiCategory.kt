@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.generator_fuel
 
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.DisenchantmentGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder

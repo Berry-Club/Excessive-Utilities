@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player

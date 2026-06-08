@@ -5,7 +5,7 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.network.RegistryFriendlyByteBuf

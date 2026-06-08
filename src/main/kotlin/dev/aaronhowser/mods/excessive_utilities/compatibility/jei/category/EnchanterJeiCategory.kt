@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -12,7 +12,6 @@ import mezz.jei.api.recipe.RecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
-import net.minecraft.network.chat.Style
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.crafting.RecipeHolder

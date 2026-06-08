@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProvider.Companion.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
