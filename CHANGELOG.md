@@ -13,6 +13,10 @@
 	- `ticks` for how many ticks the recipe takes (default 200)
 	- `fe_per_tick` for how much FE the recipe consumes per tick (default 20)
 - Enchanter recipes now use a SizedIngredient instead of an Ingredient and count
+- Enchanter recipes also now have a required amount of Enchanting Power from nearby bookshelves
+	- Bookshelves go in the same places they would for a vanilla Enchanting Table
+	- All default recipes require an enchanting power of 15
+		- Equivalent to 15 Bookshelves
 
 # 1.4.0
 

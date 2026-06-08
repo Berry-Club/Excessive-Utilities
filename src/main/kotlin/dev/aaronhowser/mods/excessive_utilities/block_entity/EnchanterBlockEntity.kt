@@ -117,18 +117,20 @@ class EnchanterBlockEntity(
 
 		var success = false
 
-		for (i in 0 until speedUpgrades + 1) {
-			if (energyStorage.energyStored < fePerTick) break
+		if (currentEnchantingPower >= recipe.enchantingPower) {
+			for (i in 0 until speedUpgrades + 1) {
+				if (energyStorage.energyStored < fePerTick) break
 
-			progress++
-			energyStorage.extractEnergy(fePerTick, false)
+				progress++
+				energyStorage.extractEnergy(fePerTick, false)
 
-			while (progress >= duration) {
-				craftRecipe(level, recipe)
-				progress -= duration
+				while (progress >= duration) {
+					craftRecipe(level, recipe)
+					progress -= duration
+				}
+
+				success = true
 			}
-
-			success = true
 		}
 
 		updateBlockState(isCrafting = success)
