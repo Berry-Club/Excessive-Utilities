@@ -146,8 +146,8 @@ class EnchanterBlockEntity(
 		val leftStack = container.getItem(LEFT_INPUT_SLOT)
 		val rightStack = container.getItem(RIGHT_INPUT_SLOT)
 
-		leftStack.shrink(recipe.leftCount)
-		rightStack.shrink(recipe.rightCount)
+		leftStack.shrink(recipe.leftIngredient.count())
+		rightStack.shrink(recipe.rightIngredient.count())
 
 		val outputStack = container.getItem(OUTPUT_SLOT)
 		val resultStack = recipe.getResultItem(level.registryAccess()).copy()

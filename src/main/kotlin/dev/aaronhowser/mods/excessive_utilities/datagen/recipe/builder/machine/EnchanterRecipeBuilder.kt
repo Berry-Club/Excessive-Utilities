@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 class EnchanterRecipeBuilder(
 	val leftIngredient: Ingredient,
@@ -19,6 +20,7 @@ class EnchanterRecipeBuilder(
 	val rightCount: Int,
 	val fePerTick: Int,
 	val ticks: Int,
+	val enchantingPower: Float,
 	val result: ItemStack,
 ) : RecipeBuilder {
 
@@ -57,7 +59,14 @@ class EnchanterRecipeBuilder(
 			advancement.addCriterion(criterion.key, criterion.value)
 		}
 
-		val recipe = EnchanterRecipe(leftIngredient, leftCount, rightIngredient, rightCount, fePerTick, ticks, result)
+		val recipe = EnchanterRecipe(
+			SizedIngredient(leftIngredient, leftCount),
+			SizedIngredient(rightIngredient, rightCount),
+			fePerTick,
+			ticks,
+			enchantingPower,
+			result
+		)
 
 		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
 	}

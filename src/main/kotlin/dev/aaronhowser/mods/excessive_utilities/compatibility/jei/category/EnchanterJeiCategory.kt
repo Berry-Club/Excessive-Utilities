@@ -31,12 +31,12 @@ class EnchanterJeiCategory(
 		val rightInputSlot = builder.addInputSlot(33, 9)
 		val outputSlot = builder.addOutputSlot(90, 9)
 
-		val inputs = recipe.leftIngredient.items.map { it.copyWithCount(recipe.leftCount) }
+		val inputs = recipe.leftIngredient.items.map { it.copyWithCount(recipe.leftIngredient.count()) }
 		leftInputSlot
 			.addItemStacks(inputs)
 			.setStandardSlotBackground()
 
-		val rightInputs = recipe.rightIngredient.items.map { it.copyWithCount(recipe.rightCount) }
+		val rightInputs = recipe.rightIngredient.items.map { it.copyWithCount(recipe.rightIngredient.count()) }
 		rightInputSlot
 			.addItemStacks(rightInputs)
 			.setStandardSlotBackground()

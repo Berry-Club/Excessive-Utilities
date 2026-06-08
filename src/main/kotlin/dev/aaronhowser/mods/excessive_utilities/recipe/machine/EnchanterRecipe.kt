@@ -12,15 +12,14 @@ import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs
+import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 class EnchanterRecipe(
-	val leftIngredient: Ingredient,
-	val leftCount: Int,
-	val rightIngredient: Ingredient,
-	val rightCount: Int,
+	val leftIngredient: SizedIngredient,
+	val rightIngredient: SizedIngredient,
 	val fePerTick: Int,
 	val ticks: Int,
+	val enchantingPower: Float,
 	private val result: ItemStack
 ) : Recipe<EnchanterRecipe.Input> {
 
@@ -31,10 +30,7 @@ class EnchanterRecipe(
 		val left = input.left
 		val right = input.right
 
-		return leftIngredient.test(left)
-				&& left.count >= leftCount
-				&& rightIngredient.test(right)
-				&& right.count >= rightCount
+		return leftIngredient.test(left) && rightIngredient.test(right)
 	}
 
 	override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack = result.copy()
@@ -45,6 +41,8 @@ class EnchanterRecipe(
 	override fun getType(): RecipeType<*> = ModRecipeTypes.ENCHANTER.get()
 
 	companion object {
+		const val DEFAULT_ENCHANTING_POWER = 15f
+
 		fun getRecipe(
 			level: Level,
 			leftInput: ItemStack,
@@ -82,24 +80,21 @@ class EnchanterRecipe(
 			val CODEC: MapCodec<EnchanterRecipe> =
 				RecordCodecBuilder.mapCodec { instance ->
 					instance.group(
-						Ingredient.CODEC_NONEMPTY
+						SizedIngredient.NESTED_CODEC
 							.fieldOf("left")
 							.forGetter(EnchanterRecipe::leftIngredient),
-						Codec.INT
-							.fieldOf("left_count")
-							.forGetter(EnchanterRecipe::leftCount),
-						Ingredient.CODEC_NONEMPTY
+						SizedIngredient.NESTED_CODEC
 							.fieldOf("right")
 							.forGetter(EnchanterRecipe::rightIngredient),
-						Codec.INT
-							.fieldOf("right_count")
-							.forGetter(EnchanterRecipe::rightCount),
 						Codec.INT
 							.fieldOf("fe_per_tick")
 							.forGetter(EnchanterRecipe::fePerTick),
 						Codec.INT
 							.fieldOf("ticks")
 							.forGetter(EnchanterRecipe::ticks),
+						Codec.FLOAT
+							.optionalFieldOf("enchanting_power", DEFAULT_ENCHANTING_POWER)
+							.forGetter(EnchanterRecipe::enchantingPower),
 						ItemStack.CODEC
 							.fieldOf("output")
 							.forGetter(EnchanterRecipe::result)
@@ -107,13 +102,12 @@ class EnchanterRecipe(
 				}
 
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, EnchanterRecipe> =
-				NeoForgeStreamCodecs.composite(
-					Ingredient.CONTENTS_STREAM_CODEC, EnchanterRecipe::leftIngredient,
-					ByteBufCodecs.VAR_INT, EnchanterRecipe::leftCount,
-					Ingredient.CONTENTS_STREAM_CODEC, EnchanterRecipe::rightIngredient,
-					ByteBufCodecs.VAR_INT, EnchanterRecipe::rightCount,
+				StreamCodec.composite(
+					SizedIngredient.STREAM_CODEC, EnchanterRecipe::leftIngredient,
+					SizedIngredient.STREAM_CODEC, EnchanterRecipe::rightIngredient,
 					ByteBufCodecs.VAR_INT, EnchanterRecipe::fePerTick,
 					ByteBufCodecs.VAR_INT, EnchanterRecipe::ticks,
+					ByteBufCodecs.FLOAT, EnchanterRecipe::enchantingPower,
 					ItemStack.STREAM_CODEC, EnchanterRecipe::result,
 					::EnchanterRecipe
 				)
