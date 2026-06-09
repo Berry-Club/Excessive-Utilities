@@ -5,7 +5,9 @@ import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
+import net.minecraft.world.level.biome.BiomeSources
 import net.minecraft.world.level.biome.Biomes
+import net.minecraft.world.level.biome.FixedBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
@@ -22,6 +24,8 @@ object ModLevelStemProvider {
 		rk("quantum_quarry")
 	val THE_LAST_MILLENNIUM: ResourceKey<LevelStem> =
 		rk("the_last_millennium")
+	val DEEP_DARK =
+		rk("deep_dark")
 
 	fun bootstrap(context: BootstrapContext<LevelStem>) {
 		val dimensionTypeLookup =
@@ -33,28 +37,21 @@ object ModLevelStemProvider {
 		val multiNoiseLookup =
 			context.lookup(Registries.MULTI_NOISE_BIOME_SOURCE_PARAMETER_LIST)
 
-		val overworldDimensionType =
-			dimensionTypeLookup.getOrThrow(BuiltinDimensionTypes.OVERWORLD)
-
-		val overworldNoiseSettings =
-			noiseSettingsLookup.getOrThrow(NoiseGeneratorSettings.OVERWORLD)
-
-		val overworldMultiNoiseParameters =
-			multiNoiseLookup.getOrThrow(MultiNoiseBiomeSourceParameterLists.OVERWORLD)
-
 		val overworldBiomeSource =
-			MultiNoiseBiomeSource.createFromPreset(overworldMultiNoiseParameters)
+			MultiNoiseBiomeSource.createFromPreset(
+				multiNoiseLookup.getOrThrow(MultiNoiseBiomeSourceParameterLists.OVERWORLD)
+			)
 
 		val chunkGenerator =
 			NoiseBasedChunkGenerator(
 				overworldBiomeSource,
-				overworldNoiseSettings
+				noiseSettingsLookup.getOrThrow(NoiseGeneratorSettings.OVERWORLD)
 			)
 
 		context.register(
 			QUANTUM_QUARRY,
 			LevelStem(
-				overworldDimensionType,
+				dimensionTypeLookup.getOrThrow(BuiltinDimensionTypes.OVERWORLD),
 				chunkGenerator
 			)
 		)
@@ -72,6 +69,17 @@ object ModLevelStemProvider {
 			LevelStem(
 				dimensionTypeLookup.getOrThrow(ModDimensionTypeProvider.THE_LAST_MILLENNIUM),
 				FlatLevelSource(tlmSettings)
+			)
+		)
+
+		context.register(
+			DEEP_DARK,
+			LevelStem(
+				dimensionTypeLookup.getOrThrow(ModDimensionTypeProvider.DEEP_DARK),
+				NoiseBasedChunkGenerator(
+					FixedBiomeSource(biomeLookup.getOrThrow(ModBiomeProvider.DEEP_DARK)),
+					noiseSettingsLookup.getOrThrow(NoiseGeneratorSettings.OVERWORLD)
+				)
 			)
 		)
 	}
