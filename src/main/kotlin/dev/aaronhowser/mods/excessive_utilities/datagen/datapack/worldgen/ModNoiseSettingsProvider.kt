@@ -17,6 +17,9 @@ object ModNoiseSettingsProvider {
 
 	fun bootstrap(context: BootstrapContext<NoiseGeneratorSettings>) {
 
+		val densityLookup = context.lookup(Registries.DENSITY_FUNCTION)
+		val deepDarkDensity = densityLookup.getOrThrow(ModDensityFunctionsProvider.DEEP_DARK).value()
+
 		context.register(
 			DEEP_DARK,
 			NoiseGeneratorSettings(
@@ -24,6 +27,7 @@ object ModNoiseSettingsProvider {
 				Blocks.STONE.defaultBlockState(),
 				Blocks.WATER.defaultBlockState(),
 				NoiseRouter(
+					deepDarkDensity,
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
@@ -37,8 +41,7 @@ object ModNoiseSettingsProvider {
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
+					DensityFunctions.zero()
 				),
 				SurfaceRuleData.overworld(),
 				listOf(),
@@ -49,7 +52,6 @@ object ModNoiseSettingsProvider {
 				false
 			)
 		)
-
 	}
 
 	private fun rk(path: String): ResourceKey<NoiseGeneratorSettings> {
