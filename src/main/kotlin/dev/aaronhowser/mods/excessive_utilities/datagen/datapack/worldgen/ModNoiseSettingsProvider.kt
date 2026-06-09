@@ -94,9 +94,7 @@ object ModNoiseSettingsProvider {
 
 		return SurfaceRules.sequence(
 			SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, cobble),
-			SurfaceRules.ifTrue(SurfaceRules.ON_CEILING, cobble),
 			SurfaceRules.ifTrue(isWorldBottom, bedrock),
-			SurfaceRules.ifTrue(isWorldTop, bedrock),
 			stone
 		)
 	}
