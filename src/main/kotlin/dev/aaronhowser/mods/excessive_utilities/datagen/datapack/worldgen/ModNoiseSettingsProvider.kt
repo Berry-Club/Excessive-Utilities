@@ -26,8 +26,17 @@ object ModNoiseSettingsProvider {
 			0,
 			64,
 			1.0,
-			-1.0
+			0.0
 		)
+
+		val topStone = DensityFunctions.yClampedGradient(
+			128,
+			256,
+			0.0,
+			1.0
+		)
+
+		val union = DensityFunctions.max(bottomStone, topStone)
 
 		context.register(
 			DEEP_DARK,
@@ -46,8 +55,8 @@ object ModNoiseSettingsProvider {
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
-					bottomStone,
-					bottomStone,
+					union,
+					union,
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero()
