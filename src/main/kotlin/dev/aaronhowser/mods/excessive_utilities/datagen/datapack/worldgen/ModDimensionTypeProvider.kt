@@ -59,7 +59,7 @@ object ModDimensionTypeProvider {
 				256,
 				256,
 				BlockTags.INFINIBURN_OVERWORLD,
-				BuiltinDimensionTypes.NETHER_EFFECTS,
+				BuiltinDimensionTypes.OVERWORLD_EFFECTS,
 				0f,
 				DimensionType.MonsterSettings(
 					false,

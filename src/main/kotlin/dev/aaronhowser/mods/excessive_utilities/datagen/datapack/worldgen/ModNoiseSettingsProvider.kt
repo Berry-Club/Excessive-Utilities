@@ -84,16 +84,17 @@ object ModNoiseSettingsProvider {
 				1
 			)
 		)
-		val isWorldTop = SurfaceRules.not(
-			SurfaceRules.yBlockCheck(
-				VerticalAnchor.belowTop(3),
-				1
-			)
-		)
+
+//		val isWorldTop =
+//			SurfaceRules.yBlockCheck(
+//				VerticalAnchor.belowTop(3),
+//				1
+//			)
 
 		return SurfaceRules.sequence(
 			SurfaceRules.ifTrue(isWorldBottom, bedrock),
-			SurfaceRules.ifTrue(isWorldTop, bedrock),
+//			SurfaceRules.ifTrue(isWorldTop, bedrock),
+			stone
 		)
 	}
 
