@@ -47,7 +47,7 @@ object ModDimensionTypeProvider {
 		context.register(
 			DEEP_DARK,
 			DimensionType(
-				OptionalLong.of(0L),
+				OptionalLong.of(18000L),
 				false,
 				true,
 				false,
@@ -59,7 +59,7 @@ object ModDimensionTypeProvider {
 				256,
 				256,
 				BlockTags.INFINIBURN_OVERWORLD,
-				BuiltinDimensionTypes.END_EFFECTS,
+				BuiltinDimensionTypes.NETHER_EFFECTS,
 				0f,
 				DimensionType.MonsterSettings(
 					false,

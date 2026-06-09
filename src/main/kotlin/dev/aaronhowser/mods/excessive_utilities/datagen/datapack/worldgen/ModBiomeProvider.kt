@@ -20,7 +20,7 @@ object ModBiomeProvider {
 			.downfall(0f)
 			.specialEffects(
 				BiomeSpecialEffects.Builder()
-					.fogColor(0)
+					.fogColor(0x010101)
 					.waterColor(4159204)
 					.waterFogColor(329011)
 					.skyColor(0)

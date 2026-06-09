@@ -3,63 +3,32 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.SurfaceRuleData
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.levelgen.DensityFunctions
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
-import net.minecraft.world.level.levelgen.NoiseRouter
-import net.minecraft.world.level.levelgen.NoiseSettings
-import net.minecraft.world.level.levelgen.SurfaceRules
-import net.minecraft.world.level.levelgen.VerticalAnchor
+import net.minecraft.world.level.levelgen.*
 
 object ModNoiseSettingsProvider {
+
+	const val FLOOR_TOP = 64
+	const val CEILING_BOTTOM = 128
+	const val BLEND_THICKNESS = 8
+
+	const val MIN_Y = 0
+	const val MAX_Y = 256
 
 	val DEEP_DARK = rk("deep_dark")
 
 	fun bootstrap(context: BootstrapContext<NoiseGeneratorSettings>) {
-		val bottomStone = DensityFunctions.yClampedGradient(
-			0,
-			64,
-			1.0,
-			0.0
-		)
-
-		val topStone = DensityFunctions.yClampedGradient(
-			128,
-			256,
-			0.0,
-			1.0
-		)
-
-		val union = DensityFunctions.max(bottomStone, topStone)
-
 		context.register(
 			DEEP_DARK,
 			NoiseGeneratorSettings(
-				NoiseSettings(0, 256, 1, 2),
+				NoiseSettings(MIN_Y, MAX_Y, 1, 1),
 				Blocks.STONE.defaultBlockState(),
 				Blocks.AIR.defaultBlockState(),
-				NoiseRouter(
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					union,
-					union,
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero()
-				),
+				buildNoiseRouter(),
 				deepDarkRules(),
 				listOf(),
-				63,
+				FLOOR_TOP,
 				false,
 				false,
 				true,
@@ -68,16 +37,63 @@ object ModNoiseSettingsProvider {
 		)
 	}
 
-	private fun deepDarkRules(): SurfaceRules.RuleSource {
-		val bottomLayer = SurfaceRules.yBlockCheck(VerticalAnchor.absolute(64), 0)
+	private fun buildNoiseRouter(): NoiseRouter {
+		val floorDensity = DensityFunctions.yClampedGradient(
+			MIN_Y,
+			FLOOR_TOP + BLEND_THICKNESS,
+			1.0,
+			-1.0
+		)
 
+		val ceilingDensity = DensityFunctions.yClampedGradient(
+			CEILING_BOTTOM - BLEND_THICKNESS,
+			MAX_Y,
+			-1.0,
+			1.0
+		)
+
+		val shape = DensityFunctions.max(floorDensity, ceilingDensity)
+
+		return NoiseRouter(
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			shape,
+			shape,
+			DensityFunctions.zero(),
+			DensityFunctions.zero(),
+			DensityFunctions.zero()
+		)
+	}
+
+	private fun deepDarkRules(): SurfaceRules.RuleSource {
+		val bedrock = SurfaceRules.state(Blocks.BEDROCK.defaultBlockState())
 		val stone = SurfaceRules.state(Blocks.STONE.defaultBlockState())
+		val cobble = SurfaceRules.state(Blocks.COBBLESTONE.defaultBlockState())
+
+		val isWorldBottom = SurfaceRules.not(
+			SurfaceRules.yBlockCheck(
+				VerticalAnchor.aboveBottom(3),
+				1
+			)
+		)
+		val isWorldTop = SurfaceRules.not(
+			SurfaceRules.yBlockCheck(
+				VerticalAnchor.belowTop(3),
+				1
+			)
+		)
 
 		return SurfaceRules.sequence(
-			SurfaceRules.ifTrue(
-				bottomLayer,
-				stone
-			),
+			SurfaceRules.ifTrue(isWorldBottom, bedrock),
+			SurfaceRules.ifTrue(isWorldTop, bedrock),
 		)
 	}
 

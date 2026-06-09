@@ -12,7 +12,7 @@
     "height": 256,
     "min_y": 0,
     "size_horizontal": 1,
-    "size_vertical": 2
+    "size_vertical": 1
   },
   "noise_router": {
     "barrier": 0.0,
@@ -25,13 +25,13 @@
         "type": "minecraft:y_clamped_gradient",
         "from_value": 1.0,
         "from_y": 0,
-        "to_value": 0.0,
-        "to_y": 64
+        "to_value": -1.0,
+        "to_y": 72
       },
       "argument2": {
         "type": "minecraft:y_clamped_gradient",
-        "from_value": 0.0,
-        "from_y": 128,
+        "from_value": -1.0,
+        "from_y": 120,
         "to_value": 1.0,
         "to_y": 256
       }
@@ -44,13 +44,13 @@
         "type": "minecraft:y_clamped_gradient",
         "from_value": 1.0,
         "from_y": 0,
-        "to_value": 0.0,
-        "to_y": 64
+        "to_value": -1.0,
+        "to_y": 72
       },
       "argument2": {
         "type": "minecraft:y_clamped_gradient",
-        "from_value": 0.0,
-        "from_y": 128,
+        "from_value": -1.0,
+        "from_y": 120,
         "to_value": 1.0,
         "to_y": 256
       }
@@ -64,7 +64,7 @@
     "vein_toggle": 0.0
   },
   "ore_veins_enabled": true,
-  "sea_level": 63,
+  "sea_level": 64,
   "spawn_target": [],
   "surface_rule": {
     "type": "minecraft:sequence",
@@ -72,17 +72,40 @@
       {
         "type": "minecraft:condition",
         "if_true": {
-          "type": "minecraft:y_above",
-          "add_stone_depth": false,
-          "anchor": {
-            "absolute": 64
-          },
-          "surface_depth_multiplier": 0
+          "type": "minecraft:not",
+          "invert": {
+            "type": "minecraft:y_above",
+            "add_stone_depth": false,
+            "anchor": {
+              "above_bottom": 3
+            },
+            "surface_depth_multiplier": 1
+          }
         },
         "then_run": {
           "type": "minecraft:block",
           "result_state": {
-            "Name": "minecraft:stone"
+            "Name": "minecraft:bedrock"
+          }
+        }
+      },
+      {
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:not",
+          "invert": {
+            "type": "minecraft:y_above",
+            "add_stone_depth": false,
+            "anchor": {
+              "below_top": 3
+            },
+            "surface_depth_multiplier": 1
+          }
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "minecraft:bedrock"
           }
         }
       }
