@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.worldgen
+package dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.Registries

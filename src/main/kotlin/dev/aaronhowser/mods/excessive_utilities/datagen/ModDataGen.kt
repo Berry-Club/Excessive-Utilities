@@ -10,9 +10,9 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvi
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.*
-import dev.aaronhowser.mods.excessive_utilities.datagen.worldgen.ModBiomeProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.worldgen.ModDimensionTypeProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.worldgen.ModLevelStemProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.ModBiomeProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.ModDimensionTypeProvider
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.ModLevelStemProvider
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.neoforged.bus.api.SubscribeEvent
