@@ -25,7 +25,7 @@ object ModNoiseSettingsProvider {
 			NoiseGeneratorSettings(
 				NoiseSettings(0, 256, 1, 2),
 				Blocks.STONE.defaultBlockState(),
-				Blocks.WATER.defaultBlockState(),
+				Blocks.AIR.defaultBlockState(),
 				NoiseRouter(
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
@@ -43,7 +43,7 @@ object ModNoiseSettingsProvider {
 					DensityFunctions.zero(),
 					DensityFunctions.zero()
 				),
-				SurfaceRuleData.overworld(),
+				SurfaceRuleData.end(),
 				listOf(),
 				63,
 				false,
