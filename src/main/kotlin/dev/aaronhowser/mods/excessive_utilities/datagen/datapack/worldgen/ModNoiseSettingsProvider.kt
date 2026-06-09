@@ -22,6 +22,24 @@ object ModNoiseSettingsProvider {
 		val densityLookup = context.lookup(Registries.DENSITY_FUNCTION)
 		val deepDarkDensity = densityLookup.getOrThrow(ModDensityFunctionsProvider.DEEP_DARK)
 
+		val bottomStone = DensityFunctions.add(
+			DensityFunctions.constant(1.0),
+			DensityFunctions.mul(
+				DensityFunctions.yClampedGradient(0, 64, -1.0, 1.0),
+				DensityFunctions.constant(1.0)
+			)
+		)
+
+		val topStone = DensityFunctions.add(
+			DensityFunctions.constant(1.0),
+			DensityFunctions.mul(
+				DensityFunctions.yClampedGradient(128, 256, -1.0, 1.0),
+				DensityFunctions.constant(1.0)
+			)
+		)
+
+		val union = DensityFunctions.max(bottomStone, topStone)
+
 		context.register(
 			DEEP_DARK,
 			NoiseGeneratorSettings(
@@ -39,8 +57,8 @@ object ModNoiseSettingsProvider {
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
-					DensityFunctions.zero(),
-					DensityFunctions.zero(),
+					union,
+					union,
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero()
