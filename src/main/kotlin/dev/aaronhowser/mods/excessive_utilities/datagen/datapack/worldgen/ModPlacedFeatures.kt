@@ -25,7 +25,7 @@ object ModPlacedFeatures {
 				listOf(
 					BiomeFilter.biome(),
 					InSquarePlacement.spread(),
-					RarityFilter.onAverageOnceEvery(5)
+					RarityFilter.onAverageOnceEvery(100)
 				)
 			)
 		)
