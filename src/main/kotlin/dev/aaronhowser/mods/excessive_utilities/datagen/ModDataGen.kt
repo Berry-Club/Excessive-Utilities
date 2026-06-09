@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvi
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.*
+import dev.aaronhowser.mods.excessive_utilities.datagen.worldgen.ModBiomeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.worldgen.ModDimensionTypeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.worldgen.ModLevelStemProvider
 import net.minecraft.core.RegistrySetBuilder
@@ -38,7 +39,9 @@ object ModDataGen {
 					.add(Registries.DAMAGE_TYPE, ModDamageTypeProvider::bootstrap)
 					.add(Registries.ENCHANTMENT, ModEnchantmentProvider::bootstrap)
 					.add(Registries.LEVEL_STEM, ModLevelStemProvider::bootstrap)
-					.add(Registries.DIMENSION_TYPE, ModDimensionTypeProvider::bootstrap),
+					.add(Registries.DIMENSION_TYPE, ModDimensionTypeProvider::bootstrap)
+					.add(Registries.BIOME, ModBiomeProvider::bootstrap)
+				,
 				setOf(ExcessiveUtilities.MOD_ID)
 			)
 		)
