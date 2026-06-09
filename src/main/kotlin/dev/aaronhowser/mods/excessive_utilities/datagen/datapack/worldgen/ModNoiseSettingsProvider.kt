@@ -22,23 +22,12 @@ object ModNoiseSettingsProvider {
 		val densityLookup = context.lookup(Registries.DENSITY_FUNCTION)
 		val deepDarkDensity = densityLookup.getOrThrow(ModDensityFunctionsProvider.DEEP_DARK)
 
-		val bottomStone = DensityFunctions.add(
-			DensityFunctions.constant(1.0),
-			DensityFunctions.mul(
-				DensityFunctions.yClampedGradient(0, 64, -1.0, 1.0),
-				DensityFunctions.constant(1.0)
-			)
+		val bottomStone = DensityFunctions.yClampedGradient(
+			0,
+			64,
+			1.0,
+			-1.0
 		)
-
-		val topStone = DensityFunctions.add(
-			DensityFunctions.constant(1.0),
-			DensityFunctions.mul(
-				DensityFunctions.yClampedGradient(128, 256, -1.0, 1.0),
-				DensityFunctions.constant(1.0)
-			)
-		)
-
-		val union = DensityFunctions.max(bottomStone, topStone)
 
 		context.register(
 			DEEP_DARK,
@@ -57,8 +46,8 @@ object ModNoiseSettingsProvider {
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
-					union,
-					union,
+					bottomStone,
+					bottomStone,
 					DensityFunctions.zero(),
 					DensityFunctions.zero(),
 					DensityFunctions.zero()
@@ -76,10 +65,8 @@ object ModNoiseSettingsProvider {
 
 	private fun deepDarkRules(): SurfaceRules.RuleSource {
 		val bottomLayer = SurfaceRules.yBlockCheck(VerticalAnchor.absolute(64), 0)
-		val topLayer = SurfaceRules.yBlockCheck(VerticalAnchor.absolute(64 + 64), 0)
 
 		val stone = SurfaceRules.state(Blocks.STONE.defaultBlockState())
-		val air = SurfaceRules.state(Blocks.AIR.defaultBlockState())
 
 		return SurfaceRules.sequence(
 			SurfaceRules.ifTrue(
