@@ -751,7 +751,6 @@
   "message.excessive_utilities.division.see_sky": "The Enchanting Table must be able to see the sky.",
   "message.excessive_utilities.doom_effect_time": "The Spectre of Death will arrive in %d seconds.",
   "message.excessive_utilities.eat_magical_apple": "You feel your luck changing.",
-  "message.excessive_utilities.enchantment_power": "%s Enchanting Power",
   "message.excessive_utilities.fe_per_tick": "%s FE/t",
   "message.excessive_utilities.inversion.end_only": "You can only invert the Division Sigil in the End!",
   "message.excessive_utilities.inversion.missing_chest": "Yuo must have a Chest 5 blocks to the %s.",

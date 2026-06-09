@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toBlockPos
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toChunkPos
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -17,6 +16,7 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.ChunkPos
+import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
 import net.minecraft.world.level.saveddata.SavedData
@@ -165,6 +165,9 @@ class LastMillenniumHandler : SavedData() {
 
 		val STRUCTURE = ExcessiveUtilities.modResource("the_last_millennium")
 
+		val LEVEL_KEY: ResourceKey<Level> =
+			ResourceKey.create(Registries.DIMENSION, ExcessiveUtilities.modResource("the_last_millennium"))
+
 		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): LastMillenniumHandler {
 			val data = LastMillenniumHandler()
 
@@ -194,7 +197,7 @@ class LastMillenniumHandler : SavedData() {
 		}
 
 		fun getLastMillenniumLevel(level: ServerLevel): ServerLevel {
-			return level.server.getLevel(ModDimensionProvider.MILLENNIUM_LEVEL_KEY)!!
+			return level.server.getLevel(LEVEL_KEY)!!
 		}
 	}
 }

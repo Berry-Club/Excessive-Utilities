@@ -13,7 +13,6 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.neoforged.neoforge.common.crafting.SizedIngredient
-import kotlin.time.toDuration
 
 class EnchanterRecipeBuilder(
 	private val result: ItemStack

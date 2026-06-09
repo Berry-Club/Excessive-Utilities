@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.excessive_utilities.block_entity.LastMillenniumPortalBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.LastMillenniumHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -38,7 +37,7 @@ class LastMillenniumPortalBlock : Block(
 		val handler = LastMillenniumHandler.get(level)
 		val blockEntity = level.getBlockEntity(pos) as? LastMillenniumPortalBlockEntity ?: return InteractionResult.PASS
 
-		if (level.dimension() == ModDimensionProvider.MILLENNIUM_LEVEL_KEY) {
+		if (level.dimension() == LastMillenniumHandler.LEVEL_KEY) {
 			handler.returnFromDimension(player)
 		} else {
 			handler.teleportIntoDimension(player, blockEntity.owner)
@@ -53,7 +52,7 @@ class LastMillenniumPortalBlock : Block(
 		level: BlockGetter,
 		pos: BlockPos
 	): Float {
-		if (level is Level && level.dimension() == ModDimensionProvider.MILLENNIUM_LEVEL_KEY) {
+		if (level is Level && level.dimension() == LastMillenniumHandler.LEVEL_KEY) {
 			return 0f
 		}
 

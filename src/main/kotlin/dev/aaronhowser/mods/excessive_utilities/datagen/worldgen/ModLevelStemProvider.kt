@@ -1,20 +1,14 @@
-package dev.aaronhowser.mods.excessive_utilities.datagen.datapack
+package dev.aaronhowser.mods.excessive_utilities.datagen.worldgen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.HolderSet
-import net.minecraft.core.Registry
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.tags.BlockTags
-import net.minecraft.util.valueproviders.ConstantInt
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.biome.MultiNoiseBiomeSource
 import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
 import net.minecraft.world.level.dimension.BuiltinDimensionTypes
-import net.minecraft.world.level.dimension.DimensionType
 import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.levelgen.FlatLevelSource
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
@@ -22,51 +16,14 @@ import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings
 import java.util.*
 
-object ModDimensionProvider {
+object ModLevelStemProvider {
 
-	val QUANTUM_QUARRY_LEVEL_STEM: ResourceKey<LevelStem> =
-		rk(Registries.LEVEL_STEM, "quantum_quarry")
-	val QUANTUM_QUARRY_LEVEL: ResourceKey<Level> =
-		rk(Registries.DIMENSION, "quantum_quarry")
+	val QUANTUM_QUARRY: ResourceKey<LevelStem> =
+		rk("quantum_quarry")
+	val THE_LAST_MILLENNIUM: ResourceKey<LevelStem> =
+		rk("the_last_millennium")
 
-	val MILLENNIUM_RL: ResourceLocation =
-		ExcessiveUtilities.modResource("the_last_millennium")
-	val MILLENNIUM_STEM_KEY: ResourceKey<LevelStem> =
-		rk(Registries.LEVEL_STEM, "the_last_millennium")
-	val MILLENNIUM_LEVEL_KEY: ResourceKey<Level> =
-		rk(Registries.DIMENSION, "the_last_millennium")
-	val MILLENNIUM_DIM_TYPE_KEY: ResourceKey<DimensionType> =
-		rk(Registries.DIMENSION_TYPE, "the_last_millennium")
-
-	fun bootstrapType(context: BootstrapContext<DimensionType>) {
-		context.register(
-			MILLENNIUM_DIM_TYPE_KEY,
-			DimensionType(
-				OptionalLong.of(18000L),
-				true,
-				false,
-				false,
-				false,
-				1.0,
-				true,
-				true,
-				-64,
-				384,
-				319,
-				BlockTags.INFINIBURN_OVERWORLD,
-				MILLENNIUM_RL,
-				1f,
-				DimensionType.MonsterSettings(
-					false,
-					false,
-					ConstantInt.of(0),
-					0
-				)
-			)
-		)
-	}
-
-	fun bootstrapLevelStem(context: BootstrapContext<LevelStem>) {
+	fun bootstrap(context: BootstrapContext<LevelStem>) {
 		val dimensionTypeLookup =
 			context.lookup(Registries.DIMENSION_TYPE)
 
@@ -95,7 +52,7 @@ object ModDimensionProvider {
 			)
 
 		context.register(
-			QUANTUM_QUARRY_LEVEL_STEM,
+			QUANTUM_QUARRY,
 			LevelStem(
 				overworldDimensionType,
 				chunkGenerator
@@ -111,16 +68,16 @@ object ModDimensionProvider {
 		)
 
 		context.register(
-			MILLENNIUM_STEM_KEY,
+			THE_LAST_MILLENNIUM,
 			LevelStem(
-				dimensionTypeLookup.getOrThrow(MILLENNIUM_DIM_TYPE_KEY),
+				dimensionTypeLookup.getOrThrow(ModDimensionTypeProvider.THE_LAST_MILLENNIUM),
 				FlatLevelSource(tlmSettings)
 			)
 		)
 	}
 
-	private fun <T> rk(registryKey: ResourceKey<out Registry<T>>, path: String): ResourceKey<T> {
-		return ResourceKey.create(registryKey, ExcessiveUtilities.modResource(path))
+	private fun rk(path: String): ResourceKey<LevelStem> {
+		return ResourceKey.create(Registries.LEVEL_STEM, ExcessiveUtilities.modResource(path))
 	}
 
 }

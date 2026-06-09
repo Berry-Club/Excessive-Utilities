@@ -11,8 +11,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDimensionProvider
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -25,6 +25,7 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.Container
@@ -71,7 +72,7 @@ class QuantumQuarryBlockEntity(
 				if (index == BIOME_FILTER_SLOT_INDEX && stack.isNotEmpty()) {
 					val level = level
 					if (level is ServerLevel) {
-						val miningDimLevel = level.server.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL)
+						val miningDimLevel = level.server.getLevel(LEVEL_KEY)
 						if (miningDimLevel != null) {
 							targetNewChunk(miningDimLevel)
 						}
@@ -354,7 +355,7 @@ class QuantumQuarryBlockEntity(
 						val level = level
 						val targetPos = targetBlockPos
 						if (targetPos != null && level is ServerLevel) {
-							val miningDimLevel = level.server.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL)
+							val miningDimLevel = level.server.getLevel(LEVEL_KEY)
 							if (miningDimLevel != null) {
 								val biome = miningDimLevel.getBiome(targetPos)
 								val registry = miningDimLevel.registryAccess().registryOrThrow(Registries.BIOME)
@@ -454,6 +455,9 @@ class QuantumQuarryBlockEntity(
 		const val AMOUNT_BLOCKS_BROKEN_DATA_INDEX = 5
 		const val BIOME_ID_DATA_INDEX = 6
 
+		val LEVEL_KEY: ResourceKey<Level> =
+			ResourceKey.create(Registries.DIMENSION, ExcessiveUtilities.modResource("quantum_quarry"))
+
 		fun tick(
 			level: Level,
 			blockPos: BlockPos,
@@ -462,7 +466,7 @@ class QuantumQuarryBlockEntity(
 		) {
 			if (level is ServerLevel) {
 				val miningDimensionLevel = level.server
-					.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL)
+					.getLevel(LEVEL_KEY)
 					?: return
 
 				blockEntity.serverTick(level, miningDimensionLevel)
@@ -471,7 +475,7 @@ class QuantumQuarryBlockEntity(
 
 		private fun setChunkForced(quarryLevel: Level?, chunkPos: ChunkPos?, forced: Boolean) {
 			if (quarryLevel !is ServerLevel || chunkPos == null) return
-			val miningLevel = quarryLevel.server.getLevel(ModDimensionProvider.QUANTUM_QUARRY_LEVEL) ?: return
+			val miningLevel = quarryLevel.server.getLevel(LEVEL_KEY) ?: return
 			miningLevel.setChunkForced(chunkPos.x, chunkPos.z, forced)
 		}
 	}
