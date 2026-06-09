@@ -85,7 +85,7 @@ object ModNoiseSettings {
 			)
 		)
 
-		val isWorldTop = SurfaceRules.not(
+		SurfaceRules.not(
 			SurfaceRules.yBlockCheck(
 				VerticalAnchor.belowTop(3),
 				1
