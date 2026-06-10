@@ -1,5 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.feature
 
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.ModDimensionTypes
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.ModNoiseSettings
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -15,7 +18,7 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 
 		val pos = origin.mutable()
 
-		while (pos.y < 120) {
+		while (pos.y < DeepDarkConstants.FLOOR_TOP) {
 			level.setBlock(pos, Blocks.DIAMOND_BLOCK.defaultBlockState(), Block.UPDATE_CLIENTS)
 			pos.move(Direction.UP)
 		}
