@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-09T15:01:19.4783241	Registries
+// 1.21.1	2026-06-10T04:32:41.2722274	Registries
 c7653945d8ab22823b09863f2c5e7d4c3874578e data/excessive_utilities/damage_type/doom.json
 731ab165ce06ce5739cea43fc212ae811ac43cff data/excessive_utilities/dimension/deep_dark.json
 877bd9be3bfb61b205649d191710f2500792461b data/excessive_utilities/dimension/quantum_quarry.json
@@ -13,5 +13,5 @@ c8ef7bcb647797043547cfea551242aa57ca5e58 data/excessive_utilities/enchantment/bl
 775b3f5520bbe45aa8c828009e040fb5566b76a3 data/excessive_utilities/neoforge/biome_modifier/deep_dark_pillar.json
 5dac2f2905d64827a4e536f1ff2ff62a433b6457 data/excessive_utilities/worldgen/biome/deep_dark.json
 814b983ccc4208058f521ebce24bd1d410fe0f96 data/excessive_utilities/worldgen/configured_feature/deep_dark_pillar.json
-1da73f434a03bd5750da76389335189a3fd8f33c data/excessive_utilities/worldgen/noise_settings/deep_dark.json
+b7a6d3d776470a9fbef899a3ca1e16f7ab24bebe data/excessive_utilities/worldgen/noise_settings/deep_dark.json
 2e52aad7dae166ab46ec60d32f3bcd2ffb9bcd25 data/excessive_utilities/worldgen/placed_feature/deep_dark_pillar.json

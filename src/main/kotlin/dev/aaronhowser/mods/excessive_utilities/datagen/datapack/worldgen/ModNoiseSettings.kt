@@ -13,16 +13,13 @@ object ModNoiseSettings {
 	const val CEILING_BOTTOM = 128
 	const val BLEND_THICKNESS = 8
 
-	const val MIN_Y = -64
-	const val MAX_Y = 319
-
 	val DEEP_DARK = rk("deep_dark")
 
 	fun bootstrap(context: BootstrapContext<NoiseGeneratorSettings>) {
 		context.register(
 			DEEP_DARK,
 			NoiseGeneratorSettings(
-				NoiseSettings(MIN_Y, MAX_Y, 1, 1),
+				NoiseSettings(ModDimensionTypes.DEEP_DARK_MIN_Y, ModDimensionTypes.DEEP_DARK_HEIGHT, 1, 1),
 				Blocks.STONE.defaultBlockState(),
 				Blocks.AIR.defaultBlockState(),
 				buildNoiseRouter(),
@@ -39,16 +36,16 @@ object ModNoiseSettings {
 
 	private fun buildNoiseRouter(): NoiseRouter {
 		val floorDensity = DensityFunctions.yClampedGradient(
-			MIN_Y,
+			ModDimensionTypes.DEEP_DARK_MIN_Y,
 			FLOOR_TOP + BLEND_THICKNESS,
 			1.0,
-			-1.0
+			0.0
 		)
 
 		val ceilingDensity = DensityFunctions.yClampedGradient(
 			CEILING_BOTTOM - BLEND_THICKNESS,
-			MAX_Y,
-			-1.0,
+			ModDimensionTypes.DEEP_DARK_MAX_Y,
+			0.0,
 			1.0
 		)
 

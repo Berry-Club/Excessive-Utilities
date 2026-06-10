@@ -55,8 +55,8 @@ object ModDimensionTypes {
 				1.0,
 				false,
 				true,
-				-64,
-				384,
+				DEEP_DARK_MIN_Y,
+				DEEP_DARK_HEIGHT,
 				319,
 				BlockTags.INFINIBURN_OVERWORLD,
 				BuiltinDimensionTypes.OVERWORLD_EFFECTS,
@@ -74,5 +74,10 @@ object ModDimensionTypes {
 	private fun rk(path: String): ResourceKey<DimensionType> {
 		return ResourceKey.create(Registries.DIMENSION_TYPE, ExcessiveUtilities.modResource(path))
 	}
+
+	const val DEEP_DARK_MIN_Y = -64
+	const val DEEP_DARK_MAX_Y = 320
+	const val DEEP_DARK_HEIGHT = DEEP_DARK_MAX_Y - DEEP_DARK_MIN_Y
+
 
 }
