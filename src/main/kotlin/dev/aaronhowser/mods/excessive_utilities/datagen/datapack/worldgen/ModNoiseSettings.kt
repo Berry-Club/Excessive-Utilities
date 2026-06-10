@@ -35,21 +35,39 @@ object ModNoiseSettings {
 	}
 
 	private fun buildNoiseRouter(): NoiseRouter {
-		val floorDensity = DensityFunctions.yClampedGradient(
+		val solidFloor = DensityFunctions.yClampedGradient(
 			ModDimensionTypes.DEEP_DARK_MIN_Y,
-			FLOOR_TOP + BLEND_THICKNESS,
+			FLOOR_TOP,
 			1.0,
 			0.0
 		)
 
-		val ceilingDensity = DensityFunctions.yClampedGradient(
-			CEILING_BOTTOM - BLEND_THICKNESS,
+		val noiseFloor = DensityFunctions.yClampedGradient(
+			FLOOR_TOP,
+			FLOOR_TOP + BLEND_THICKNESS,
+			1.0,
+			-1.0
+		)
+
+		val floor = DensityFunctions.max(solidFloor, noiseFloor)
+
+		val solidCeiling = DensityFunctions.yClampedGradient(
+			CEILING_BOTTOM,
 			ModDimensionTypes.DEEP_DARK_MAX_Y,
 			0.0,
 			1.0
 		)
 
-		val shape = DensityFunctions.max(floorDensity, ceilingDensity)
+		val noiseCeiling = DensityFunctions.yClampedGradient(
+			CEILING_BOTTOM - BLEND_THICKNESS,
+			CEILING_BOTTOM,
+			-1.0,
+			1.0
+		)
+
+		val ceiling = DensityFunctions.max(solidCeiling, noiseCeiling)
+
+		val shape = DensityFunctions.max(floor, ceiling)
 
 		return NoiseRouter(
 			DensityFunctions.zero(),

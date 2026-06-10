@@ -22,18 +22,38 @@
     "final_density": {
       "type": "minecraft:max",
       "argument1": {
-        "type": "minecraft:y_clamped_gradient",
-        "from_value": 1.0,
-        "from_y": -64,
-        "to_value": 0.0,
-        "to_y": 72
+        "type": "minecraft:max",
+        "argument1": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": 1.0,
+          "from_y": -64,
+          "to_value": 0.0,
+          "to_y": 64
+        },
+        "argument2": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": 1.0,
+          "from_y": 64,
+          "to_value": -1.0,
+          "to_y": 72
+        }
       },
       "argument2": {
-        "type": "minecraft:y_clamped_gradient",
-        "from_value": 0.0,
-        "from_y": 120,
-        "to_value": 1.0,
-        "to_y": 320
+        "type": "minecraft:max",
+        "argument1": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": 0.0,
+          "from_y": 128,
+          "to_value": 1.0,
+          "to_y": 320
+        },
+        "argument2": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": -1.0,
+          "from_y": 120,
+          "to_value": 1.0,
+          "to_y": 128
+        }
       }
     },
     "fluid_level_floodedness": 0.0,
@@ -41,18 +61,38 @@
     "initial_density_without_jaggedness": {
       "type": "minecraft:max",
       "argument1": {
-        "type": "minecraft:y_clamped_gradient",
-        "from_value": 1.0,
-        "from_y": -64,
-        "to_value": 0.0,
-        "to_y": 72
+        "type": "minecraft:max",
+        "argument1": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": 1.0,
+          "from_y": -64,
+          "to_value": 0.0,
+          "to_y": 64
+        },
+        "argument2": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": 1.0,
+          "from_y": 64,
+          "to_value": -1.0,
+          "to_y": 72
+        }
       },
       "argument2": {
-        "type": "minecraft:y_clamped_gradient",
-        "from_value": 0.0,
-        "from_y": 120,
-        "to_value": 1.0,
-        "to_y": 320
+        "type": "minecraft:max",
+        "argument1": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": 0.0,
+          "from_y": 128,
+          "to_value": 1.0,
+          "to_y": 320
+        },
+        "argument2": {
+          "type": "minecraft:y_clamped_gradient",
+          "from_value": -1.0,
+          "from_y": 120,
+          "to_value": 1.0,
+          "to_y": 128
+        }
       }
     },
     "lava": 0.0,
