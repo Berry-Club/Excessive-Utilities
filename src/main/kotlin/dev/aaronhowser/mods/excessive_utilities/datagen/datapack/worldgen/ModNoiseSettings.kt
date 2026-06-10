@@ -91,7 +91,7 @@ object ModNoiseSettings {
 	private fun deepDarkRules(): SurfaceRules.RuleSource {
 		val bedrock = SurfaceRules.state(Blocks.BEDROCK.defaultBlockState())
 		val stone = SurfaceRules.state(Blocks.STONE.defaultBlockState())
-		val cobble = SurfaceRules.state(Blocks.COBBLESTONE.defaultBlockState())
+		val cobblestone = SurfaceRules.state(Blocks.COBBLESTONE.defaultBlockState())
 
 		val isWorldBottom = SurfaceRules.not(
 			SurfaceRules.yBlockCheck(
@@ -100,16 +100,34 @@ object ModNoiseSettings {
 			)
 		)
 
-		SurfaceRules.not(
+		val isWorldTop = SurfaceRules.not(
 			SurfaceRules.yBlockCheck(
 				VerticalAnchor.belowTop(3),
 				1
 			)
 		)
 
+		val isInFloorBlendZone = SurfaceRules.yBlockCheck(
+			VerticalAnchor.absolute(FLOOR_TOP),
+			0
+		)
+
+		val isInCeilingBlendZone = SurfaceRules.not(
+			SurfaceRules.yBlockCheck(
+				VerticalAnchor.absolute(CEILING_BOTTOM),
+				0
+			)
+		)
+
 		return SurfaceRules.sequence(
-			SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, cobble),
-			SurfaceRules.ifTrue(isWorldBottom, bedrock),
+			SurfaceRules.ifTrue(
+				SurfaceRules.ON_FLOOR,
+				SurfaceRules.ifTrue(isInFloorBlendZone, cobblestone)
+			),
+			SurfaceRules.ifTrue(
+				SurfaceRules.ON_CEILING,
+				SurfaceRules.ifTrue(isInCeilingBlendZone, cobblestone)
+			),
 			stone
 		)
 	}

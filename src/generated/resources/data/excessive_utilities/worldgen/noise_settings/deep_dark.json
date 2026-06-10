@@ -119,29 +119,50 @@
           "surface_type": "floor"
         },
         "then_run": {
-          "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:cobblestone"
+          "type": "minecraft:condition",
+          "if_true": {
+            "type": "minecraft:y_above",
+            "add_stone_depth": false,
+            "anchor": {
+              "absolute": 64
+            },
+            "surface_depth_multiplier": 0
+          },
+          "then_run": {
+            "type": "minecraft:block",
+            "result_state": {
+              "Name": "minecraft:cobblestone"
+            }
           }
         }
       },
       {
         "type": "minecraft:condition",
         "if_true": {
-          "type": "minecraft:not",
-          "invert": {
-            "type": "minecraft:y_above",
-            "add_stone_depth": false,
-            "anchor": {
-              "above_bottom": 3
-            },
-            "surface_depth_multiplier": 1
-          }
+          "type": "minecraft:stone_depth",
+          "add_surface_depth": false,
+          "offset": 0,
+          "secondary_depth_range": 0,
+          "surface_type": "ceiling"
         },
         "then_run": {
-          "type": "minecraft:block",
-          "result_state": {
-            "Name": "minecraft:bedrock"
+          "type": "minecraft:condition",
+          "if_true": {
+            "type": "minecraft:not",
+            "invert": {
+              "type": "minecraft:y_above",
+              "add_stone_depth": false,
+              "anchor": {
+                "absolute": 128
+              },
+              "surface_depth_multiplier": 0
+            }
+          },
+          "then_run": {
+            "type": "minecraft:block",
+            "result_state": {
+              "Name": "minecraft:cobblestone"
+            }
           }
         }
       },
