@@ -35,8 +35,20 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 	}
 
 	override fun isBarVisible(stack: ItemStack): Boolean = true
-	override fun getMaxDamage(stack: ItemStack): Int = ServerConfig.CONFIG.heatingCoilMaxEnergy.get()
-	override fun getDamage(stack: ItemStack): Int = getMaxDamage(stack) - stack.getOrDefault(ModDataComponents.ENERGY, 0)
+
+	override fun getMaxDamage(stack: ItemStack): Int {
+		if (!ServerConfig.CONFIG_SPEC.isLoaded) {
+			return 1_500_000
+		}
+
+		return ServerConfig.CONFIG.heatingCoilMaxEnergy.get()
+	}
+	override fun getDamage(stack: ItemStack): Int {
+		val max = getMaxDamage(stack)
+		val held = stack.getOrDefault(ModDataComponents.ENERGY, 0)
+
+		return max - held
+	}
 
 	override fun appendHoverText(
 		stack: ItemStack,

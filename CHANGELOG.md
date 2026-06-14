@@ -1,5 +1,9 @@
 # 1.6.0
 
+### Fixed
+
+- Fixed a crash where the Heating Coil would read the config before it's loaded
+
 ### Changed
 
 - Overhauled Cursed Earth
