@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withoutComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
@@ -91,12 +92,10 @@ object ModCreativeModeTabs {
 					}
 
 					if (item == ModItems.DIVISION_SIGIL.get()) {
-						val empty = ModItems.DIVISION_SIGIL.withComponent(
-							ModDataComponents.REMAINING_USES.get(),
-							0
-						)
-						val inverted = ModItems.DIVISION_SIGIL.getDefaultInstance()
-						inverted.remove(ModDataComponents.REMAINING_USES)
+						val empty = ModItems.DIVISION_SIGIL
+							.withComponent(ModDataComponents.REMAINING_USES.get(), 0)
+						val inverted = ModItems.DIVISION_SIGIL
+							.withoutComponent(ModDataComponents.REMAINING_USES.get())
 
 						output.accept(item)
 						output.accept(empty)

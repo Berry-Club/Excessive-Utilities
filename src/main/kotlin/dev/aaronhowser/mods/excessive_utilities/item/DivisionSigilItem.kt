@@ -20,6 +20,7 @@ import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
+import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.player.Player
@@ -33,6 +34,7 @@ import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
+import net.neoforged.neoforge.items.IItemHandler
 
 class DivisionSigilItem(properties: Properties) : Item(properties) {
 
@@ -41,22 +43,13 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 		if (level.isClientSide) return InteractionResult.PASS
 
 		val player = context.player ?: return InteractionResult.SUCCESS
-
 		val pos = context.clickedPos
 		val stack = context.itemInHand
 
-		// If inverted already, don't do anything
-		if (isInverted(stack)) {
-			return InteractionResult.PASS
-		}
+		if (isInverted(stack)) return InteractionResult.PASS
 
-		if (checkActivationReady(player, pos)) {
-			return InteractionResult.SUCCESS
-		}
-
-		if (checkInversionReady(player, pos)) {
-			return InteractionResult.SUCCESS
-		}
+		if (tryActivate(player, pos)) return InteractionResult.SUCCESS
+		if (tryInvert(player, pos)) return InteractionResult.SUCCESS
 
 		return InteractionResult.PASS
 	}
@@ -85,7 +78,6 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 		}
 
 		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
-
 		tooltipComponents += ModMenuLang.REMAINING_USES.toComponent(remainingUses)
 	}
 
@@ -94,190 +86,264 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 	}
 
 	override fun getBarWidth(stack: ItemStack): Int {
-		if (isInverted(stack)) return 13
+		if (isInverted(stack)) return MAX_BAR_WIDTH
 
 		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
-		return (remainingUses * 13) / USES_AFTER_ACTIVATION
+		return (remainingUses * MAX_BAR_WIDTH) / USES_AFTER_ACTIVATION
 	}
 
 	companion object {
 		const val USES_AFTER_ACTIVATION = 256
+		private const val MAX_BAR_WIDTH = 13
+		private const val ACTIVATION_SEARCH_RADIUS = 10
+		private const val SIGIL_SEARCH_RADIUS = 20.0
+		private const val REQUIRED_UNIQUE_ITEM_COUNT = 12
+		private const val MIDNIGHT_DAY_TIME_MIN = 17_500
+		private const val MIDNIGHT_DAY_TIME_MAX = 18_500
+		private const val MAX_BLOCK_LIGHT_FOR_DARKNESS = 7
+		private const val CHEST_HORIZONTAL_OFFSET = 5
+		private const val REDSTONE_RING_RADIUS = 1
+		private const val DIRT_RADIUS = 5
 
-		val DEFAULT_PROPERTIES: () -> Properties =
-			{
-				Properties()
-					.stacksTo(1)
-					.fireResistant()
-					.component(ModDataComponents.REMAINING_USES, USES_AFTER_ACTIVATION)
-			}
+		fun defaultProperties(): Properties {
+			return Properties()
+				.stacksTo(1)
+				.fireResistant()
+				.component(ModDataComponents.REMAINING_USES, USES_AFTER_ACTIVATION)
+		}
 
 		fun isInverted(stack: ItemStack): Boolean {
 			return !stack.has(ModDataComponents.REMAINING_USES)
 		}
 
-		private class ResultWithMessage(
-			val isReady: Boolean,
-			val messages: List<Component> = emptyList()
-		)
-
-		private fun checkActivationReady(
-			player: Player,
-			pos: BlockPos
-		): Boolean {
+		private fun tryActivate(player: Player, pos: BlockPos): Boolean {
 			val level = player.level() as? ServerLevel ?: return false
-			val state = level.getBlockState(pos)
+			if (!level.getBlockState(pos).isBlock(Blocks.ENCHANTING_TABLE)) return false
 
-			if (!state.isBlock(Blocks.ENCHANTING_TABLE)) return false
-
-			val result = isActivationReady(level, pos)
-
-			for (component in result.messages) {
-				player.tell(component)
-			}
-
+			val result = getActivationResult(level, pos)
+			sendMessages(player, result.messages)
 			return result.isReady
 		}
 
-		private fun isActivationReady(
-			level: ServerLevel,
-			enchantingTablePos: BlockPos
-		): ResultWithMessage {
+		private fun tryInvert(player: Player, pos: BlockPos): Boolean {
+			val level = player.level() as? ServerLevel ?: return false
+			if (!level.getBlockState(pos).isBlock(Blocks.BEACON)) return false
+
+			val result = getInversionResult(level, pos)
+			sendMessages(player, result.messages)
+			return result.isReady
+		}
+
+		private fun sendMessages(player: Player, messages: List<Component>) {
+			for (message in messages) {
+				player.tell(message)
+			}
+		}
+
+		private fun getActivationResult(level: ServerLevel, enchantingTablePos: BlockPos): ActivationResult {
 			if (!level.getBlockState(enchantingTablePos).isBlock(Blocks.ENCHANTING_TABLE)) {
-				return ResultWithMessage(false)
+				return ActivationResult(false)
 			}
 
 			val messages = mutableListOf<Component>()
 
-			if (!level.getBiome(enchantingTablePos).isHolder(Tags.Biomes.IS_OVERWORLD)) {
-				messages += ModMessageLang.DIVISION_OVERWORLD_ONLY.toComponent()
-			}
+			checkActivationBiome(level, enchantingTablePos, messages)
+			checkActivationSkyAccess(level, enchantingTablePos, messages)
 
-			if (!level.canSeeSky(enchantingTablePos)) {
-				messages += ModMessageLang.DIVISION_SEE_SKY.toComponent()
-			}
+			val redstoneResult = checkActivationRedstoneRing(level, enchantingTablePos)
+			if (!redstoneResult.isReady) return ActivationResult(false, messages + redstoneResult.messages)
+			messages += redstoneResult.messages
 
-			for (dx in -1..1) for (dz in -1..1) {
-				if (dx == 0 && dz == 0) continue
+			val dirtResult = checkActivationDirtBase(level, enchantingTablePos)
+			if (!dirtResult.isReady) return ActivationResult(false, messages + dirtResult.messages)
+			messages += dirtResult.messages
 
-				val checkPos = enchantingTablePos.offset(dx, 0, dz)
-				val checkState = level.getBlockState(checkPos)
-
-				if (!checkState.isBlock(Blocks.REDSTONE_WIRE)) {
-					messages += ModMessageLang.DIVISION_REDSTONE.toComponent()
-					messages += ModMessageLang.DIVISION_REDSTONE_AT.toComponent(checkPos.x, checkPos.y, checkPos.z)
-					return ResultWithMessage(false, messages)
-				}
-			}
-
-			for (dx in -5..5) for (dz in -5..5) {
-				val checkPos = enchantingTablePos.offset(dx, -1, dz)
-				val checkState = level.getBlockState(checkPos)
-
-				if (!checkState.isBlock(BlockTags.DIRT)) {
-					messages += ModMessageLang.DIVISION_DIRT.toComponent()
-					messages += ModMessageLang.DIVISION_DIRT_AT.toComponent(checkPos.x, checkPos.y, checkPos.z)
-					return ResultWithMessage(false, messages)
-				}
-			}
-
-			if (level.dayTime !in 17500..18500) {
-				messages += ModMessageLang.DIVISION_MIDNIGHT.toComponent()
-			}
-
-			if (level.getBrightness(LightLayer.BLOCK, enchantingTablePos.above()) > 7) {
-				messages += ModMessageLang.DIVISION_DARKNESS.toComponent()
-			}
+			checkActivationTime(level, messages)
+			checkActivationDarkness(level, enchantingTablePos, messages)
 
 			if (messages.isEmpty()) {
 				messages += ModMessageLang.DIVISION_READY_ONE.toComponent()
 				messages += ModMessageLang.DIVISION_READY_TWO.toComponent()
 			}
 
-			return ResultWithMessage(true, messages)
+			return ActivationResult(true, messages)
 		}
 
-		private fun checkInversionReady(
-			player: Player,
-			pos: BlockPos
-		): Boolean {
-			val level = player.level() as? ServerLevel ?: return false
-			val state = level.getBlockState(pos)
+		private fun checkActivationBiome(
+			level: ServerLevel,
+			pos: BlockPos,
+			messages: MutableList<Component>
+		) {
+			if (!level.getBiome(pos).isHolder(Tags.Biomes.IS_OVERWORLD)) {
+				messages += ModMessageLang.DIVISION_OVERWORLD_ONLY.toComponent()
+			}
+		}
 
-			if (!state.isBlock(Blocks.BEACON)) return false
-			val result = isInversionReady(level, pos)
+		private fun checkActivationSkyAccess(
+			level: ServerLevel,
+			pos: BlockPos,
+			messages: MutableList<Component>
+		) {
+			if (!level.canSeeSky(pos)) {
+				messages += ModMessageLang.DIVISION_SEE_SKY.toComponent()
+			}
+		}
 
-			for (component in result.messages) {
-				player.tell(component)
+		private fun checkActivationRedstoneRing(
+			level: ServerLevel,
+			enchantingTablePos: BlockPos
+		): ActivationResult {
+			val messages = mutableListOf<Component>()
+
+			for (dx in -REDSTONE_RING_RADIUS..REDSTONE_RING_RADIUS) {
+				for (dz in -REDSTONE_RING_RADIUS..REDSTONE_RING_RADIUS) {
+					if (dx == 0 && dz == 0) continue
+
+					val checkPos = enchantingTablePos.offset(dx, 0, dz)
+					if (!level.getBlockState(checkPos).isBlock(Blocks.REDSTONE_WIRE)) {
+						messages += ModMessageLang.DIVISION_REDSTONE.toComponent()
+						messages += ModMessageLang.DIVISION_REDSTONE_AT.toComponent(checkPos.x, checkPos.y, checkPos.z)
+						return ActivationResult(false, messages)
+					}
+				}
 			}
 
-			return result.isReady
+			return ActivationResult(true, messages)
 		}
 
-		private fun isInversionReady(
+		private fun checkActivationDirtBase(
 			level: ServerLevel,
-			catalystPos: BlockPos
-		): ResultWithMessage {
+			enchantingTablePos: BlockPos
+		): ActivationResult {
+			val messages = mutableListOf<Component>()
+
+			for (dx in -DIRT_RADIUS..DIRT_RADIUS) {
+				for (dz in -DIRT_RADIUS..DIRT_RADIUS) {
+					val checkPos = enchantingTablePos.offset(dx, -1, dz)
+					if (!level.getBlockState(checkPos).isBlock(BlockTags.DIRT)) {
+						messages += ModMessageLang.DIVISION_DIRT.toComponent()
+						messages += ModMessageLang.DIVISION_DIRT_AT.toComponent(checkPos.x, checkPos.y, checkPos.z)
+						return ActivationResult(false, messages)
+					}
+				}
+			}
+
+			return ActivationResult(true, messages)
+		}
+
+		private fun checkActivationTime(level: ServerLevel, messages: MutableList<Component>) {
+			if (level.dayTime !in MIDNIGHT_DAY_TIME_MIN..MIDNIGHT_DAY_TIME_MAX) {
+				messages += ModMessageLang.DIVISION_MIDNIGHT.toComponent()
+			}
+		}
+
+		private fun checkActivationDarkness(
+			level: ServerLevel,
+			enchantingTablePos: BlockPos,
+			messages: MutableList<Component>
+		) {
+			if (level.getBrightness(LightLayer.BLOCK, enchantingTablePos.above()) > MAX_BLOCK_LIGHT_FOR_DARKNESS) {
+				messages += ModMessageLang.DIVISION_DARKNESS.toComponent()
+			}
+		}
+
+		private fun getInversionResult(level: ServerLevel, catalystPos: BlockPos): ActivationResult {
 			if (!level.getBlockState(catalystPos).isBlock(Blocks.BEACON)) {
-				return ResultWithMessage(false)
+				return ActivationResult(false)
 			}
 
 			val messages = mutableListOf<Component>()
 
-			if (!level.getBiome(catalystPos).isHolder(Tags.Biomes.IS_END)) {
+			checkInversionBiome(level, catalystPos, messages)
+
+			val chestResult = checkInversionChests(level, catalystPos)
+			if (!chestResult.isReady) return ActivationResult(false, messages + chestResult.messages)
+
+			val patternResult = checkInversionPattern(level, catalystPos)
+			if (!patternResult.isReady) return ActivationResult(false, messages + patternResult.messages)
+
+			checkInversionItemContents(level, catalystPos, messages)
+
+			if (messages.isEmpty()) {
+				messages += ModMessageLang.INVERSION_READY_ONE.toComponent()
+				messages += ModMessageLang.INVERSION_READY_TWO.toComponent()
+			}
+
+			return ActivationResult(true, messages)
+		}
+
+		private fun checkInversionBiome(
+			level: ServerLevel,
+			pos: BlockPos,
+			messages: MutableList<Component>
+		) {
+			if (!level.getBiome(pos).isHolder(Tags.Biomes.IS_END)) {
 				messages += ModMessageLang.INVERSION_END_ONLY.toComponent()
 			}
+		}
 
-			val directions = Direction.Plane.HORIZONTAL
+		private fun checkInversionChests(level: ServerLevel, catalystPos: BlockPos): ActivationResult {
+			val messages = mutableListOf<Component>()
 
-			for (dir in directions) {
-				val offset = dir.normal.multiply(5)
-				val checkPos = catalystPos.offset(offset)
-
+			for (direction in Direction.Plane.HORIZONTAL) {
+				val checkPos = catalystPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
 				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, null)
-				@Suppress("FoldInitializerAndIfToElvis", "RedundantSuppression")
 				if (itemHandler == null) {
-					messages += ModMessageLang.INVERSION_MISSING_CHEST.toComponent(dir.getDirectionName())
+					messages += ModMessageLang.INVERSION_MISSING_CHEST.toComponent(direction.getDirectionName())
 				}
 			}
 
-			if (messages.isNotEmpty()) {
-				return ResultWithMessage(false, messages)
-			}
+			return ActivationResult(messages.isEmpty(), messages)
+		}
 
-			val stringRedstonePositions = """
-				◼◻◻◻◻◻◻◻◻
-				◼◻◼◼◼◼◼◼◼
-				◼◻◼◻◻◻◻◻◼
-				◼◻◼◻◼◼◼◻◼
-				◼◻◼◻B◻◼◻◼
-				◼◻◼◼◼◻◼◻◼
-				◼◻◻◻◻◻◼◻◼
-				◼◼◼◼◼◼◼◻◼
-				◻◻◻◻◻◻◻◻◼
-			""".trimIndent()
-				.lines()
+		private fun checkInversionPattern(level: ServerLevel, catalystPos: BlockPos): ActivationResult {
+			// ◼ = redstone wire, ◻ = tripwire (string), B = beacon (center, skipped)
+			val patternRows = listOf(
+				"◼◻◻◻◻◻◻◻◻",
+				"◼◻◼◼◼◼◼◼◼",
+				"◼◻◼◻◻◻◻◻◼",
+				"◼◻◼◻◼◼◼◻◼",
+				"◼◻◼◻B◻◼◻◼",
+				"◼◻◼◼◼◻◼◻◼",
+				"◼◻◻◻◻◻◼◻◼",
+				"◼◼◼◼◼◼◼◻◼",
+				"◻◻◻◻◻◻◻◻◼",
+			)
 
-			for ((row, line) in stringRedstonePositions.withIndex()) {
-				val north = row - 4
-				for ((column, char) in line.withIndex()) {
-					val west = column - 4
-					val checkPos = catalystPos.north(north).west(west)
+			val centerRow = 4
+			val centerColumn = 4
+
+			for ((rowIndex, rowString) in patternRows.withIndex()) {
+				val northOffset = rowIndex - centerRow
+				for ((columnIndex, character) in rowString.withIndex()) {
+					val westOffset = columnIndex - centerColumn
+					val checkPos = catalystPos.north(northOffset).west(westOffset)
 					val checkState = level.getBlockState(checkPos)
 
-					if (char == '◼' && !checkState.isBlock(Blocks.REDSTONE_WIRE)) {
-						messages += ModMessageLang.INVERSION_MISSING_REDSTONE.toComponent(checkPos.x, checkPos.y, checkPos.z)
+					if (character == '◼' && !checkState.isBlock(Blocks.REDSTONE_WIRE)) {
+						return ActivationResult(
+							false,
+							listOf(ModMessageLang.INVERSION_MISSING_REDSTONE.toComponent(checkPos.x, checkPos.y, checkPos.z))
+						)
 					}
 
-					if (char == '◻' && !checkState.isBlock(Blocks.TRIPWIRE)) {
-						messages += ModMessageLang.INVERSION_MISSING_STRING.toComponent(checkPos.x, checkPos.y, checkPos.z)
-					}
-
-					if (messages.isNotEmpty()) {
-						return ResultWithMessage(false, messages)
+					if (character == '◻' && !checkState.isBlock(Blocks.TRIPWIRE)) {
+						return ActivationResult(
+							false,
+							listOf(ModMessageLang.INVERSION_MISSING_STRING.toComponent(checkPos.x, checkPos.y, checkPos.z))
+						)
 					}
 				}
 			}
 
+			return ActivationResult(true)
+		}
+
+		private fun checkInversionItemContents(
+			level: ServerLevel,
+			catalystPos: BlockPos,
+			messages: MutableList<Component>
+		) {
 			val contentRequirements = mapOf(
 				Direction.NORTH to ModItemTagsProvider.CHILDREN_OF_FIRE,
 				Direction.SOUTH to ModItemTagsProvider.GIFTS_OF_EARTH,
@@ -285,109 +351,139 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				Direction.WEST to ModItemTagsProvider.SPICES_OF_AIR,
 			)
 
-			for ((dir, tag) in contentRequirements) {
-				val offset = dir.normal.multiply(5)
-				val checkPos = catalystPos.offset(offset)
-
+			for ((direction, itemTag) in contentRequirements) {
+				val checkPos = catalystPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
 				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, null) ?: continue
 
-				var count = 0
-
-				// Special handling because potions are all the same Item class
-				if (tag == ModItemTagsProvider.DESCENDANTS_OF_WATER) {
-					for (slot in 0 until itemHandler.slots) {
-						val stack = itemHandler.getStackInSlot(slot)
-						if (stack.isItem(tag)) {
-							count += stack.count
-						}
-					}
+				val count = if (itemTag == ModItemTagsProvider.DESCENDANTS_OF_WATER) {
+					// Potions share the same Item class, so count stacks rather than unique items
+					countMatchingStacks(itemHandler, itemTag)
 				} else {
-					val uniqueItems = mutableSetOf<Item>()
-					for (slot in 0 until itemHandler.slots) {
-						val stack = itemHandler.getStackInSlot(slot)
-						if (stack.isItem(tag)) {
-							uniqueItems.add(stack.item)
-						}
-					}
-
-					count = uniqueItems.size
+					countUniqueMatchingItems(itemHandler, itemTag)
 				}
 
-				val amountNeeded = 12
-				if (count < amountNeeded) {
-					messages += ModMessageLang.INVERSION_MISSING_ITEMS.toComponent(amountNeeded, tag.location.toString(), dir.getDirectionName(), count)
+				if (count < REQUIRED_UNIQUE_ITEM_COUNT) {
+					messages += ModMessageLang.INVERSION_MISSING_ITEMS.toComponent(
+						REQUIRED_UNIQUE_ITEM_COUNT,
+						itemTag.location.toString(),
+						direction.getDirectionName(),
+						count
+					)
 				}
 			}
+		}
 
-			if (messages.isEmpty()) {
-				messages += ModMessageLang.INVERSION_READY_ONE.toComponent()
-				messages += ModMessageLang.INVERSION_READY_TWO.toComponent()
+		private fun countMatchingStacks(itemHandler: IItemHandler, itemTag: TagKey<Item>): Int {
+			var count = 0
+			for (slot in 0 until itemHandler.slots) {
+				val stack = itemHandler.getStackInSlot(slot)
+				if (stack.isItem(itemTag)) {
+					count += stack.count
+				}
 			}
+			return count
+		}
 
-			return ResultWithMessage(true, messages)
+		private fun countUniqueMatchingItems(itemHandler: IItemHandler, itemTag: TagKey<Item>): Int {
+			val uniqueItems = mutableSetOf<Item>()
+			for (slot in 0 until itemHandler.slots) {
+				val stack = itemHandler.getStackInSlot(slot)
+				if (stack.isItem(itemTag)) {
+					uniqueItems.add(stack.item)
+				}
+			}
+			return uniqueItems.size
 		}
 
 		fun handleEntityDeath(event: LivingDeathEvent) {
 			if (event.isCanceled) return
+
 			val entity = event.entity
 			if (entity.isClientSide) return
+			if (entity !is Mob) return
 
-			if (entity is Mob) {
-				activateSigils(entity)
-			}
-
+			activateSigilsNear(entity)
 		}
 
-		private fun activateSigils(entity: Mob): Boolean {
-			val level = entity.level() as? ServerLevel ?: return false
+		private fun activateSigilsNear(entity: Mob) {
+			val level = entity.level() as? ServerLevel ?: return
 			val entityPos = entity.blockPosition()
 
-			val radius = 10
+			val enchantingTablePos = findNearbyActivatableTable(level, entityPos) ?: return
+			val sigils = collectSigilsNearTable(level, enchantingTablePos)
 
-			val area = BlockPos.betweenClosed(
-				entityPos.offset(-radius, -radius, -radius),
-				entityPos.offset(radius, radius, radius)
+			if (sigils.isEmpty()) return
+
+			rechargeSigils(sigils)
+			tryPlaceCursedEarth(level, enchantingTablePos)
+		}
+
+		private fun findNearbyActivatableTable(level: ServerLevel, entityPos: BlockPos): BlockPos? {
+			val searchArea = BlockPos.betweenClosed(
+				entityPos.offset(-ACTIVATION_SEARCH_RADIUS, -ACTIVATION_SEARCH_RADIUS, -ACTIVATION_SEARCH_RADIUS),
+				entityPos.offset(ACTIVATION_SEARCH_RADIUS, ACTIVATION_SEARCH_RADIUS, ACTIVATION_SEARCH_RADIUS)
 			)
 
-			val enchantingTablePos = area
-				.firstOrNull { checkPos ->
-					isActivationReady(level, checkPos).isReady
-				}
-				?: return false
-
-			val aabb = AABB(enchantingTablePos).inflate(20.0)
-			val players = level.getEntitiesOfClass(Player::class.java, aabb)
-
-			val divisionSigils = mutableListOf<ItemStack>()
-
-			for (player in players) {
-				val allStacks = player.inventory.items + player.inventory.offhand
-				val minChargeSigil = allStacks
-					.asSequence()
-					.filter { it.isItem(ModItems.DIVISION_SIGIL) }
-					.filter { it.getOrDefault(ModDataComponents.REMAINING_USES, 0) >= 0 }
-					.sortedBy { it.getOrDefault(ModDataComponents.REMAINING_USES, 0) }
-					.firstOrNull()
-
-				if (minChargeSigil != null) {
-					divisionSigils += minChargeSigil
+			for (checkPos in searchArea) {
+				if (getActivationResult(level, checkPos).isReady) {
+					return checkPos.immutable()
 				}
 			}
 
-			if (divisionSigils.isEmpty()) return false
+			return null
+		}
 
-			for (sigil in divisionSigils) {
+		private fun collectSigilsNearTable(level: ServerLevel, enchantingTablePos: BlockPos): List<ItemStack> {
+			val searchBox = AABB(enchantingTablePos).inflate(SIGIL_SEARCH_RADIUS)
+			val nearbyPlayers = level.getEntitiesOfClass(Player::class.java, searchBox)
+
+			val sigils = mutableListOf<ItemStack>()
+
+			for (player in nearbyPlayers) {
+				val lowestChargeSigil = findLowestChargeSigil(player) ?: continue
+				sigils.add(lowestChargeSigil)
+			}
+
+			return sigils
+		}
+
+		private fun findLowestChargeSigil(player: Player): ItemStack? {
+			val allStacks = player.inventory.items + player.inventory.offhand
+
+			var lowestSigil: ItemStack? = null
+			var lowestCharges = Int.MAX_VALUE
+
+			for (stack in allStacks) {
+				if (!stack.isItem(ModItems.DIVISION_SIGIL)) continue
+
+				val charges = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
+				if (charges >= 0 && charges < lowestCharges) {
+					lowestCharges = charges
+					lowestSigil = stack
+				}
+			}
+
+			return lowestSigil
+		}
+
+		private fun rechargeSigils(sigils: List<ItemStack>) {
+			for (sigil in sigils) {
 				sigil.set(ModDataComponents.REMAINING_USES, USES_AFTER_ACTIVATION)
 			}
+		}
 
+		private fun tryPlaceCursedEarth(level: ServerLevel, enchantingTablePos: BlockPos) {
 			val posBelow = enchantingTablePos.below()
-			val stateBelow = level.getBlockState(posBelow)
-			if (stateBelow.isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)) {
+			if (level.getBlockState(posBelow).isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)) {
 				CursedEarthBlock.placeAndSpread(level, posBelow)
 			}
-
-			return true
 		}
+
 	}
+
+	private class ActivationResult(
+		val isReady: Boolean,
+		val messages: List<Component> = emptyList()
+	)
 
 }
