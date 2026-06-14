@@ -6,6 +6,7 @@
 
 ### Changed
 
+- Accepted a Simplified Chinese translation from KronosXup
 - Overhauled Cursed Earth
 	- Massive improvements to the code
 	- Lights with Soul Fire instead of Fire
