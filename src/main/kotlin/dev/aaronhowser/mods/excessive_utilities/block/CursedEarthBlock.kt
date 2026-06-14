@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.CursedEarthHandler
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.particles.ParticleTypes
@@ -308,6 +309,15 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
 		const val MAX_DECAY = 15
 		val DECAY: IntegerProperty = IntegerProperty.create("decay", 0, MAX_DECAY)
+
+		fun placeAndSpread(
+			level: ServerLevel,
+			pos: BlockPos
+		) {
+			val block = ModBlocks.CURSED_EARTH.get()
+			level.setBlockAndUpdate(pos, block.defaultBlockState())
+			level.scheduleTick(pos, block, 1)
+		}
 
 		private fun isFireNearby(level: Level, pos: BlockPos, random: RandomSource): Boolean {
 			val randomNearby = BlockPos.randomInCube(random, 10, pos, 4)
