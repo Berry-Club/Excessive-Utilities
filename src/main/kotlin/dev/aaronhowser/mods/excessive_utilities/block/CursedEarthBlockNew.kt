@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
@@ -48,6 +49,16 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
 	override fun isFireSource(state: BlockState, level: LevelReader, pos: BlockPos, direction: Direction): Boolean {
 		return direction == Direction.UP
+	}
+
+	override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
+		level.addParticle(
+			ParticleTypes.SMOKE,
+			pos.x + random.nextDouble(),
+			pos.y + 1.01,
+			pos.z + random.nextDouble(),
+			0.0, 0.0, 0.0
+		)
 	}
 
 	private fun actuallyTick(
