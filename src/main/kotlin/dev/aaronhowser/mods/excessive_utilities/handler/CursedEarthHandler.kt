@@ -1,9 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.handler
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.Mob
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 
 object CursedEarthHandler {
@@ -21,7 +23,21 @@ object CursedEarthHandler {
 		val speedAttribute = mob.getAttribute(Attributes.MOVEMENT_SPEED)
 
 		if (value) {
+			attackAttribute?.addPermanentModifier(
+				AttributeModifier(
+					ATTACK_ATTRIBUTE_MODIFIER,
+					ServerConfig.CONFIG.cursedEarthBonusStrength.get(),
+					AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+				)
+			)
 
+			speedAttribute?.addPermanentModifier(
+				AttributeModifier(
+					SPEED_ATTRIBUTE_MODIFIER,
+					ServerConfig.CONFIG.cursedEarthBonusSpeed.get(),
+					AttributeModifier.Operation.ADD_MULTIPLIED_BASE
+				)
+			)
 		} else {
 			attackAttribute?.removeModifier(ATTACK_ATTRIBUTE_MODIFIER)
 			speedAttribute?.removeModifier(SPEED_ATTRIBUTE_MODIFIER)

@@ -109,6 +109,8 @@ class ServerConfig(
 	lateinit var cursedEarthChance: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthMaxSpawnedMobs: ModConfigSpec.IntValue
 	lateinit var cursedEarthCheckRadius: ModConfigSpec.DoubleValue
+	lateinit var cursedEarthBonusStrength: ModConfigSpec.DoubleValue
+	lateinit var cursedEarthBonusSpeed: ModConfigSpec.DoubleValue
 
 	lateinit var qedRadius: ModConfigSpec.IntValue
 
@@ -509,6 +511,14 @@ class ServerConfig(
 				cursedEarthCheckRadius = builder
 					.comment("The radius in blocks around a Cursed Earth block that it checks for nearby mobs before trying to spawn more.")
 					.defineInRange("cursedEarthCheckRadius", 8.0, 0.0, Double.MAX_VALUE)
+
+				cursedEarthBonusStrength = builder
+					.comment("How many times more damage mobs spawned by Cursed Earth inflict.")
+					.defineInRange("cursedEarthBonusStrength", 1.5, 0.0, Double.MAX_VALUE)
+
+				cursedEarthBonusSpeed = builder
+					.comment("How many times faster mobs spawned by Cursed Earth move.")
+					.defineInRange("cursedEarthBonusSpeed", 0.2, 0.0, Double.MAX_VALUE)
 			}
 
 			builder.section("heating_coil") {
