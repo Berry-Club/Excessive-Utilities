@@ -71,15 +71,13 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 		random: RandomSource,
 		fastSpreading: Boolean
 	) {
-		val lightAbove = level.getRawBrightness(pos.above(), 0)
-		if (lightAbove >= 9) {
-			val handledFire = handleFire(level, pos, random)
-			if (handledFire) return
-		}
+		val handledFire = handleFire(level, pos, random)
+		if (handledFire) return
 
 		if (fastSpreading) {
 			doFastSpread(level, pos, random)
 		} else {
+			val lightAbove = level.getRawBrightness(pos.above(), 0)
 			if (lightAbove > MAX_BRIGHTNESS) return
 
 			val spread = doSlowSpread(level, pos, random)
