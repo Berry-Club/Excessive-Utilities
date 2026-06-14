@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.oneIn
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
@@ -31,15 +32,15 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
 	// Slow spreading and mob spawning
 	override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-		performTick(level, pos, state, random, fastSpreading = false)
+		actuallyTick(level, pos, state, random, fastSpreading = false)
 	}
 
 	// Manually called when initially created
 	override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-		performTick(level, pos, state, random, fastSpreading = true)
+		actuallyTick(level, pos, state, random, fastSpreading = true)
 	}
 
-	private fun performTick(
+	private fun actuallyTick(
 		level: ServerLevel,
 		pos: BlockPos,
 		state: BlockState,
@@ -51,6 +52,75 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 			val handledFire = handleFire(level, pos, random)
 			if (handledFire) return
 		}
+
+		if (fastSpreading) {
+			doFastSpread(level, pos, random)
+		}
+	}
+
+	private fun doFastSpread(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	) {
+		val candidates = BlockPos.betweenClosed(
+			pos.offset(-1, -2, -1),
+			pos.offset(1, 2, 1)
+		)
+	}
+
+	private fun trySpread(
+		level: ServerLevel,
+		fromPos: BlockPos,
+		targetPos: BlockPos,
+		random: RandomSource,
+		fastSpreading: Boolean
+	): Boolean {
+		if (!level.isLoaded(targetPos)) return false
+
+		val targetState = level.getBlockState(targetPos)
+		if (!targetState.isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)) return false
+
+		val posAbove = targetPos.above()
+		val stateAbove = level.getBlockState(posAbove)
+		if (stateAbove.getLightBlock(level, posAbove) > 2) return false
+
+		val decayForTarget = getDecayForPos(level, targetPos, random)
+		if (decayForTarget > MAX_DECAY) return false
+
+		level.setBlockAndUpdate(
+			targetPos,
+			defaultBlockState().setValue(DECAY, decayForTarget)
+		)
+
+		return true
+	}
+
+	// Decay starts at 0 and goes up the farther out.
+	// If it would be over max, then it shouldn't place it there at all
+	private fun getDecayForPos(
+		level: Level,
+		pos: BlockPos,
+		random: RandomSource
+	): Int {
+		val neighbors = BlockPos.betweenClosed(
+			pos.offset(-1, -1, -1),
+			pos.offset(1, 1, 1)
+		)
+
+		var lowestDecay = MAX_DECAY
+
+		for (neighbor in neighbors) {
+			val stateThere = level.getBlockState(neighbor)
+			if (!stateThere.isBlock(this)) continue
+
+			val decayThere = stateThere.getValue(DECAY)
+			if (decayThere < lowestDecay) {
+				lowestDecay = decayThere
+			}
+		}
+
+		return lowestDecay + 1 + random.nextInt(2)
 	}
 
 	private fun handleFire(
@@ -95,7 +165,8 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 	}
 
 	companion object {
-		val DECAY: IntegerProperty = IntegerProperty.create("decay", 0, 15)
+		const val MAX_DECAY = 15
+		val DECAY: IntegerProperty = IntegerProperty.create("decay", 0, MAX_DECAY)
 
 		private fun isFireNearby(level: Level, pos: BlockPos, random: RandomSource): Boolean {
 			val randomNearby = BlockPos.randomInCube(random, 10, pos, 4)
