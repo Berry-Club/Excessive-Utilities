@@ -164,9 +164,11 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			if (messages.isEmpty()) {
 				messages += ModMessageLang.DIVISION_READY_ONE.toComponent()
 				messages += ModMessageLang.DIVISION_READY_TWO.toComponent()
-			}
 
-			return ActivationResult(true, messages)
+				return ActivationResult(true, messages)
+			} else {
+				return ActivationResult(false, messages)
+			}
 		}
 
 		private fun checkActivationBiome(
