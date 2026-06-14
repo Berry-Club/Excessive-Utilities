@@ -77,12 +77,12 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 		if (fastSpreading) {
 			doFastSpread(level, pos, random)
 		} else {
+			if (lightAbove >= 4) return
+
 			val spread = doSlowSpread(level, pos, random)
 			if (spread) return
 
-			if (lightAbove < 9) {
-				trySpawnMonster(level, pos, random)
-			}
+			trySpawnMonster(level, pos, random)
 		}
 	}
 
