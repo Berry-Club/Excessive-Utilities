@@ -143,12 +143,18 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 	): Boolean {
 		if (!level.isLoaded(targetPos)) return false
 
-		val targetState = level.getBlockState(targetPos)
-		if (!targetState.isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)) return false
+		val isTargetValid = level
+			.getBlockState(targetPos)
+			.isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)
+
+		if (!isTargetValid) return false
 
 		val posAbove = targetPos.above()
-		val stateAbove = level.getBlockState(posAbove)
-		if (stateAbove.getLightBlock(level, posAbove) > 2) return false
+		val lightBlockingAbove = level
+			.getBlockState(posAbove)
+			.getLightBlock(level, posAbove)
+
+		if (lightBlockingAbove > 2) return false
 
 		val decayForTarget = getDecayForPos(level, targetPos, random)
 		if (decayForTarget > MAX_DECAY) return false
@@ -197,8 +203,9 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 		pos: BlockPos,
 		random: RandomSource
 	): Boolean {
-		val stateAbove = level.getBlockState(pos.above())
-		val isFireAbove = stateAbove.isBlock(BlockTags.FIRE)
+		val isFireAbove = level
+			.getBlockState(pos.above())
+			.isBlock(BlockTags.FIRE)
 
 		if (isFireAbove && random.oneIn(5)) {
 			level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState())
