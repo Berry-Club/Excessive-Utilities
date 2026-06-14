@@ -3,18 +3,22 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.oneIn
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.IntegerProperty
+import net.minecraft.world.phys.AABB
 
 class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
@@ -59,7 +63,25 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 		} else {
 			val spread = doSlowSpread(level, pos, random)
 			if (spread) return
+
+			if (lightAbove < 9) {
+				trySpawnMonster(level, pos, random)
+			}
 		}
+	}
+
+	private fun trySpawnMonster(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	) {
+		val searchArea = AABB(pos).inflate(ServerConfig.CONFIG.cursedEarthCheckRadius.get())
+		val nearbyMonsters = level.getEntitiesOfClass(LivingEntity::class.java, searchArea)
+			.asSequence()
+			.filter { it.type.category == MobCategory.MONSTER }
+			.count()
+
+		if (nearbyMonsters >= ServerConfig.CONFIG.cursedEarthMaxSpawnedMobs.get()) return
 	}
 
 	private fun doSlowSpread(
