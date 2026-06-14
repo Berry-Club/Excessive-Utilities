@@ -501,6 +501,7 @@ class ModBlockTagsProvider(
 
 		tag(BlockTags.SOUL_FIRE_BASE_BLOCKS)
 			.add(*ModBlocks.COLORED_SOUL_SANDS.values.toTypedArray())
+			.add(ModBlocks.CURSED_EARTH)
 
 		tag(BlockTags.WITHER_SUMMON_BASE_BLOCKS)
 			.add(*ModBlocks.COLORED_SOUL_SANDS.values.toTypedArray())

@@ -226,7 +226,7 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 			val posAbove = targetPos.above()
 			val stateAbove = level.getBlockState(posAbove)
 			if (stateAbove.isFlammable(level, posAbove, Direction.UP)) {
-				level.setBlockAndUpdate(posAbove, Blocks.FIRE.defaultBlockState())
+				level.setBlockAndUpdate(posAbove, Blocks.SOUL_FIRE.defaultBlockState())
 			} else {
 				level.setBlockAndUpdate(targetPos, Blocks.DIRT.defaultBlockState())
 			}
