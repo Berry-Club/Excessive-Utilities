@@ -514,11 +514,11 @@ class ServerConfig(
 
 				cursedEarthBonusStrength = builder
 					.comment("How many times more damage mobs spawned by Cursed Earth inflict.")
-					.defineInRange("cursedEarthBonusStrength", 1.5, 0.0, Double.MAX_VALUE)
+					.defineInRange("cursedEarthBonusStrength", 1.5, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)
 
 				cursedEarthBonusSpeed = builder
 					.comment("How many times faster mobs spawned by Cursed Earth move.")
-					.defineInRange("cursedEarthBonusSpeed", 0.2, 0.0, Double.MAX_VALUE)
+					.defineInRange("cursedEarthBonusSpeed", 0.2, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)
 			}
 
 			builder.section("heating_coil") {
