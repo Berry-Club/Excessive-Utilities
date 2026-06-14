@@ -2,7 +2,7 @@
 
 ### Fixed
 
-- Fixed a crash where the Heating Coil would read the config before it's loaded
+- Fixed a crash where the Heating Coil would read the config before it's loaded (#30)
 
 ### Changed
 
