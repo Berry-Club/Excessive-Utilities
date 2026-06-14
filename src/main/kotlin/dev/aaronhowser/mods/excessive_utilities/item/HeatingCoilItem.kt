@@ -43,6 +43,7 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 
 		return ServerConfig.CONFIG.heatingCoilMaxEnergy.get()
 	}
+
 	override fun getDamage(stack: ItemStack): Int {
 		val max = getMaxDamage(stack)
 		val held = stack.getOrDefault(ModDataComponents.ENERGY, 0)
