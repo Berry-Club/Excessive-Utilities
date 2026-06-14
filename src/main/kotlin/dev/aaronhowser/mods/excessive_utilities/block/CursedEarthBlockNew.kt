@@ -13,19 +13,16 @@ import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
-import net.minecraft.util.random.WeightedRandomList
-import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.entity.*
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
-import net.minecraft.world.level.NaturalSpawner
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.phys.AABB
+import net.neoforged.neoforge.event.EventHooks
 import kotlin.jvm.optionals.getOrNull
 
 class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
@@ -106,24 +103,59 @@ class CursedEarthBlockNew : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
 		if (nearbyMonsters >= ServerConfig.CONFIG.cursedEarthMaxSpawnedMobs.get()) return
 
-		val possibleMobs = level
-			.getBiome(pos)
-			.value()
-			.mobSettings
-			.getMobs(MobCategory.MONSTER)
-			.unwrap()
-			.filterNot { it.type.isEntity(ModEntityTypeTagsProvider.CURSED_EARTH_BLACKLIST) }
+		val type = getEntityType(level, pos, random) ?: return
+		val entity = type.create(level) as? Mob ?: return
 
-		if (possibleMobs.isEmpty()) return
+		val success = EventHooks.finalizeMobSpawn(
+			entity,
+			level,
+			level.getCurrentDifficultyAt(pos),
+			MobSpawnType.NATURAL,
+			null
+		)
 
-		val newWeightedList = WeightedRandomList.create(possibleMobs)
-		val randomType = newWeightedList
+		entity.setPos(pos.x + 0.5, pos.y + 1.1, pos.z + 0.5)
+
+		if (level.noCollision(entity)) {
+			level.addFreshEntity(entity)
+		}
+	}
+
+	// https://github.com/Tfarcenim/CursedEarth/blob/master/src/main/java/com/tfar/cursedearth/CursedEarthBlock.java#L136
+	private fun getEntityType(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	): EntityType<*>? {
+		val spawnOptions = level
+			.chunkSource
+			.generator
+			.getMobsAt(
+				level.getBiome(pos),
+				level.structureManager(),
+				MobCategory.MONSTER,
+				pos
+			)
+
+		val spawnData = spawnOptions
 			.getRandom(random)
 			.getOrNull()
-			?.type
-			?: return
+			?: return null
 
-		randomType.spawn(level, pos, MobSpawnType.SPAWNER)
+		val type = spawnData.type
+
+		if (type.isEntity(ModEntityTypeTagsProvider.CURSED_EARTH_BLACKLIST)) return null
+
+		val canSpawn = SpawnPlacements.checkSpawnRules(
+			type,
+			level,
+			MobSpawnType.NATURAL,
+			pos,
+			random
+		)
+
+		if (!canSpawn) return null
+		return type
 	}
 
 	private fun doSlowSpread(
