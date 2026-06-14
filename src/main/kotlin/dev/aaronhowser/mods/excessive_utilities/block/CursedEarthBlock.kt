@@ -1,112 +1,317 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.oneIn
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
-import net.minecraft.util.random.WeightedRandomList
-import net.minecraft.world.Difficulty
-import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.entity.MobSpawnType
+import net.minecraft.world.entity.*
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.IntegerProperty
 import net.minecraft.world.phys.AABB
+import net.neoforged.neoforge.event.EventHooks
 import kotlin.jvm.optionals.getOrNull
 
 class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
-	override fun onPlace(state: BlockState, level: Level, pos: BlockPos, oldState: BlockState, movedByPiston: Boolean) {
-		if (level is ServerLevel) {
-			level.scheduleTick(pos, this, ServerConfig.CONFIG.cursedEarthPeriod.get())
+	init {
+		registerDefaultState(
+			stateDefinition.any()
+				.setValue(DECAY, 0)
+		)
+	}
+
+	override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+		builder.add(DECAY)
+	}
+
+	override fun isRandomlyTicking(state: BlockState): Boolean = true
+
+	// Slow spreading and mob spawning
+	override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+		actuallyTick(level, pos, state, random, fastSpreading = false)
+	}
+
+	// Manually called when initially created
+	override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+		actuallyTick(level, pos, state, random, fastSpreading = true)
+	}
+
+	override fun isFireSource(state: BlockState, level: LevelReader, pos: BlockPos, direction: Direction): Boolean {
+		return direction == Direction.UP
+	}
+
+	override fun animateTick(state: BlockState, level: Level, pos: BlockPos, random: RandomSource) {
+		val lightAbove = level.getRawBrightness(pos.above(), 0)
+		if (lightAbove > MAX_BRIGHTNESS) return
+
+		level.addParticle(
+			ParticleTypes.SMOKE,
+			pos.x + random.nextDouble(),
+			pos.y + 1.01,
+			pos.z + random.nextDouble(),
+			0.0, 0.0, 0.0
+		)
+	}
+
+	private fun actuallyTick(
+		level: ServerLevel,
+		pos: BlockPos,
+		state: BlockState,
+		random: RandomSource,
+		fastSpreading: Boolean
+	) {
+		val handledFire = handleFire(level, pos, random)
+		if (handledFire) return
+
+		if (fastSpreading) {
+			doFastSpread(level, pos, random)
+		} else {
+			val lightAbove = level.getRawBrightness(pos.above(), 0)
+			if (lightAbove > MAX_BRIGHTNESS) return
+
+			val spread = doSlowSpread(level, pos, random)
+			if (spread) return
+
+			trySpawnMonster(level, pos, random)
 		}
 	}
 
-	override fun tick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
-		level.scheduleTick(pos, this, ServerConfig.CONFIG.cursedEarthPeriod.get())
+	private fun trySpawnMonster(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	) {
+		val searchArea = AABB(pos).inflate(ServerConfig.CONFIG.cursedEarthCheckRadius.get())
+		val nearbyMonsters = level.getEntitiesOfClass(LivingEntity::class.java, searchArea)
+			.asSequence()
+			.filter { it.type.category == MobCategory.MONSTER }
+			.count()
 
-		handleFire(level, pos, random)
-		spawnMonster(level, pos, random)
+		if (nearbyMonsters >= ServerConfig.CONFIG.cursedEarthMaxSpawnedMobs.get()) return
+
+		val mob = getMob(level, pos, random) ?: return
+		mob.setPos(pos.x + 0.5, pos.y + 1.1, pos.z + 0.5)
+		if (mob.checkSpawnObstruction(level)) {
+			level.addFreshEntity(mob)
+			mob.setData(ModAttachmentTypes.IS_CURSED, true)
+		}
+	}
+
+	// https://github.com/Tfarcenim/CursedEarth/blob/master/src/main/java/com/tfar/cursedearth/CursedEarthBlock.java#L136
+	private fun getMob(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	): Mob? {
+		val spawnOptions = level
+			.chunkSource
+			.generator
+			.getMobsAt(
+				level.getBiome(pos),
+				level.structureManager(),
+				MobCategory.MONSTER,
+				pos
+			)
+
+		val spawnData = spawnOptions
+			.getRandom(random)
+			.getOrNull()
+			?: return null
+
+		val type = spawnData.type
+
+		if (type.isEntity(ModEntityTypeTagsProvider.CURSED_EARTH_BLACKLIST)) return null
+
+		val canSpawn = SpawnPlacements.checkSpawnRules(
+			type,
+			level,
+			MobSpawnType.NATURAL,
+			pos,
+			random
+		)
+
+		if (!canSpawn) return null
+
+		val mob = type.create(level) as? Mob ?: return null
+
+		val success = EventHooks.finalizeMobSpawn(
+			mob,
+			level,
+			level.getCurrentDifficultyAt(pos),
+			MobSpawnType.NATURAL,
+			null
+		)
+
+		if (success == null) {
+			return null
+		}
+
+		return mob
+	}
+
+	private fun doSlowSpread(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	): Boolean {
+		val randomNearby = BlockPos.randomInCube(random, 4, pos, 2)
+
+		var spreadAny = false
+		for (candidate in randomNearby) {
+			val spreadSuccessful = trySpread(level, pos, candidate, random, fastSpreading = false)
+			if (spreadSuccessful) {
+				spreadAny = true
+			}
+		}
+
+		return spreadAny
+	}
+
+	private fun doFastSpread(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	) {
+		val candidates = BlockPos.betweenClosed(
+			pos.offset(-1, -2, -1),
+			pos.offset(1, 2, 1)
+		)
+
+		for (candidate in candidates) {
+			trySpread(level, pos, candidate, random, fastSpreading = true)
+		}
+	}
+
+	private fun trySpread(
+		level: ServerLevel,
+		fromPos: BlockPos,
+		targetPos: BlockPos,
+		random: RandomSource,
+		fastSpreading: Boolean
+	): Boolean {
+		if (!level.isLoaded(targetPos)) return false
+
+		val isTargetValid = level
+			.getBlockState(targetPos)
+			.isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)
+
+		if (!isTargetValid) return false
+
+		val posAbove = targetPos.above()
+		val lightBlockingAbove = level
+			.getBlockState(posAbove)
+			.getLightBlock(level, posAbove)
+
+		if (lightBlockingAbove > 2) return false
+
+		val decayForTarget = getDecayForPos(level, targetPos, random)
+		if (decayForTarget > MAX_DECAY) return false
+
+		level.setBlockAndUpdate(
+			targetPos,
+			defaultBlockState().setValue(DECAY, decayForTarget)
+		)
+
+		if (fastSpreading) {
+			level.scheduleTick(targetPos, this, random.nextRange(2, 10))
+		}
+
+		return true
+	}
+
+	// Decay starts at 0 and goes up the farther out.
+	// If it would be over max, then it shouldn't place it there at all
+	private fun getDecayForPos(
+		level: Level,
+		pos: BlockPos,
+		random: RandomSource
+	): Int {
+		val neighbors = BlockPos.betweenClosed(
+			pos.offset(-1, -1, -1),
+			pos.offset(1, 1, 1)
+		)
+
+		var lowestDecay = MAX_DECAY
+
+		for (neighbor in neighbors) {
+			val stateThere = level.getBlockState(neighbor)
+			if (!stateThere.isBlock(this)) continue
+
+			val decayThere = stateThere.getValue(DECAY)
+			if (decayThere < lowestDecay) {
+				lowestDecay = decayThere
+			}
+		}
+
+		return lowestDecay + 1 + random.nextInt(2)
+	}
+
+	private fun handleFire(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	): Boolean {
+		val isFireAbove = level
+			.getBlockState(pos.above())
+			.isBlock(BlockTags.FIRE)
+
+		if (isFireAbove && random.oneIn(5)) {
+			level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState())
+			return true
+		}
+
+		val isFireNearby = isFireAbove || isFireNearby(level, pos, random)
+		if (!isFireNearby) return false
+
+		burnNearbyCursedEarth(level, pos, random)
+		return true
+	}
+
+	private fun burnNearbyCursedEarth(
+		level: ServerLevel,
+		pos: BlockPos,
+		random: RandomSource
+	) {
+		val nearbyPositions = BlockPos.randomInCube(random, 40, pos, 4)
+
+		for (targetPos in nearbyPositions) {
+			val stateThere = level.getBlockState(targetPos)
+			if (!stateThere.isBlock(this)) continue
+
+			val posAbove = targetPos.above()
+			val stateAbove = level.getBlockState(posAbove)
+			if (stateAbove.isFlammable(level, posAbove, Direction.UP)) {
+				level.setBlockAndUpdate(posAbove, Blocks.SOUL_FIRE.defaultBlockState())
+			} else {
+				level.setBlockAndUpdate(targetPos, Blocks.DIRT.defaultBlockState())
+			}
+		}
 	}
 
 	companion object {
-		private fun handleFire(level: ServerLevel, pos: BlockPos, random: RandomSource) {
-			var fireNearby = false
-			val fireCheckArea = BlockPos.betweenClosed(
-				pos.offset(-3, 0, -3),
-				pos.offset(3, 2, 3)
-			)
+		const val MAX_BRIGHTNESS = 4
 
-			for (firePos in fireCheckArea) {
-				if (!level.isLoaded(firePos)) continue
+		const val MAX_DECAY = 15
+		val DECAY: IntegerProperty = IntegerProperty.create("decay", 0, MAX_DECAY)
 
-				val stateThere = level.getBlockState(firePos)
-				if (stateThere.isBlock(Blocks.FIRE)) {
-					fireNearby = true
-					break
-				}
-			}
-
-			if (!fireNearby) return
-
-			if (random.chance(0.1)) {
-				level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState())
-			}
-
-			val randomNearby = BlockPos.randomInCube(random, 10, pos, 5)
-			for (nearbyPos in randomNearby) {
-				if (!level.isLoaded(nearbyPos)) continue
-
-				val stateThere = level.getBlockState(nearbyPos)
-				if (!stateThere.`is`(ModBlocks.CURSED_EARTH)) continue
-
-				val posAboveThere = nearbyPos.above()
-				val stateAboveThere = level.getBlockState(posAboveThere)
-				if (stateAboveThere.canBeReplaced()) {
-					level.setBlockAndUpdate(posAboveThere, Blocks.FIRE.defaultBlockState())
-				}
-			}
-		}
-
-		private fun spawnMonster(level: ServerLevel, cursedEarthPos: BlockPos, random: RandomSource) {
-			if (level.difficulty == Difficulty.PEACEFUL) return
-			if (!random.chance(ServerConfig.CONFIG.cursedEarthChance.get())) return
-
-			val pos = cursedEarthPos.above()
-			val lightLevel = level.getMaxLocalRawBrightness(pos.above())
-			if (lightLevel > 5) return
-
-			val nearbyEntities = level.getEntitiesOfClass(
-				LivingEntity::class.java,
-				AABB(pos).inflate(ServerConfig.CONFIG.cursedEarthCheckRadius.get())
-			)
-			if (nearbyEntities.count() > ServerConfig.CONFIG.cursedEarthMaxSpawnedMobs.get()) return
-
-			val possibleMobs = level
-				.getBiome(pos)
-				.value()
-				.mobSettings
-				.getMobs(MobCategory.MONSTER)
-				.unwrap()
-				.filterNot { it.type.isEntity(ModEntityTypeTagsProvider.CURSED_EARTH_BLACKLIST) }
-
-			if (possibleMobs.isEmpty()) return
-
-			val newWeightedList = WeightedRandomList.create(possibleMobs)
-			val randomType = newWeightedList
-				.getRandom(random)
-				.getOrNull()
-				?.type
-				?: return
-
-			randomType.spawn(level, pos, MobSpawnType.SPAWNER)
+		private fun isFireNearby(level: Level, pos: BlockPos, random: RandomSource): Boolean {
+			val randomNearby = BlockPos.randomInCube(random, 10, pos, 4)
+			return randomNearby.any { level.getBlockState(it).isBlock(BlockTags.FIRE) }
 		}
 	}
 
