@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
@@ -14,21 +13,18 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
 import dev.aaronhowser.mods.excessive_utilities.effect.SecondChanceEffect
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
+import dev.aaronhowser.mods.excessive_utilities.handler.CursedEarthHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.*
 import dev.aaronhowser.mods.excessive_utilities.packet.ModPacketHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.*
-import net.minecraft.server.level.ServerLevel
-import net.minecraft.tags.FluidTags
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
-import net.minecraft.world.level.Level
-import net.minecraft.world.phys.Vec3
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -321,9 +317,12 @@ object CommonEvents {
 	@SubscribeEvent
 	fun afterEntityTick(event: EntityTickEvent.Post) {
 		val entity = event.entity
+
 		if (entity is ItemEntity) {
 			NetherLavaDunkConversion.tryConvert(entity)
 		}
+
+		CursedEarthHandler.spawnParticles(entity)
 	}
 
 	@SubscribeEvent
