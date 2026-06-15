@@ -86,23 +86,16 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 	}
 
 	override fun getBarWidth(stack: ItemStack): Int {
-		if (isInverted(stack)) return MAX_BAR_WIDTH
+		val maxWidth = 13
+		if (isInverted(stack)) return maxWidth
 
 		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
-		return (remainingUses * MAX_BAR_WIDTH) / USES_AFTER_ACTIVATION
+		return (remainingUses * maxWidth) / USES_AFTER_ACTIVATION
 	}
 
 	companion object {
 		const val USES_AFTER_ACTIVATION = 256
-		private const val MAX_BAR_WIDTH = 13
-		private const val ACTIVATION_SEARCH_RADIUS = 10
-		private const val SIGIL_SEARCH_RADIUS = 20.0
-		private const val REQUIRED_UNIQUE_ITEM_COUNT = 12
-		private const val MIDNIGHT_DAY_TIME_MIN = 17_500
-		private const val MIDNIGHT_DAY_TIME_MAX = 18_500
-		private const val MAX_BLOCK_LIGHT_FOR_DARKNESS = 7
 		private const val CHEST_HORIZONTAL_OFFSET = 5
-		private const val DIRT_RADIUS = 5
 
 		fun defaultProperties(): Properties {
 			return Properties()
@@ -235,15 +228,18 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			enchantingTablePos: BlockPos,
 			result: ActivationResult
 		) {
-			for (dx in -DIRT_RADIUS..DIRT_RADIUS) {
-				for (dz in -DIRT_RADIUS..DIRT_RADIUS) {
-					val checkPos = enchantingTablePos.offset(dx, -1, dz)
-					if (!level.getBlockState(checkPos).isBlock(BlockTags.DIRT)) {
-						result.failWithMessages(
-							ModMessageLang.DIVISION_DIRT.toComponent(),
-							ModMessageLang.DIVISION_DIRT_AT.toComponent(checkPos.x, checkPos.y, checkPos.z)
-						)
-					}
+			val dirtRadius = 5
+			val dirtArea = BlockPos.betweenClosed(
+				enchantingTablePos.offset(-dirtRadius, -1, -dirtRadius),
+				enchantingTablePos.offset(dirtRadius, -1, dirtRadius)
+			)
+
+			for (checkPos in dirtArea) {
+				if (!level.getBlockState(checkPos).isBlock(BlockTags.DIRT)) {
+					result.failWithMessages(
+						ModMessageLang.DIVISION_DIRT.toComponent(),
+						ModMessageLang.DIVISION_DIRT_AT.toComponent(checkPos.x, checkPos.y, checkPos.z)
+					)
 				}
 			}
 		}
@@ -252,7 +248,9 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			level: ServerLevel,
 			result: ActivationResult
 		) {
-			if (level.dayTime !in MIDNIGHT_DAY_TIME_MIN..MIDNIGHT_DAY_TIME_MAX) {
+			val minTime = 17_500
+			val maxTime = 18_500
+			if (level.dayTime !in minTime..maxTime) {
 				result.failWithMessages(ModMessageLang.DIVISION_MIDNIGHT.toComponent())
 			}
 		}
@@ -263,7 +261,8 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			result: ActivationResult
 		) {
 			val lightAbove = level.getBrightness(LightLayer.BLOCK, enchantingTablePos.above())
-			if (lightAbove > MAX_BLOCK_LIGHT_FOR_DARKNESS) {
+			val maxLight = 7
+			if (lightAbove > maxLight) {
 				result.failWithMessages(ModMessageLang.DIVISION_DARKNESS.toComponent())
 			}
 		}
@@ -412,10 +411,11 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 					countUniqueMatchingItems(itemHandler, itemTag)
 				}
 
-				if (count < REQUIRED_UNIQUE_ITEM_COUNT) {
+				val requiredUniqueCount = 12
+				if (count < requiredUniqueCount) {
 					result.failWithMessages(
 						ModMessageLang.INVERSION_MISSING_ITEMS.toComponent(
-							REQUIRED_UNIQUE_ITEM_COUNT,
+							requiredUniqueCount,
 							itemTag.location.toString(),
 							direction.getDirectionName(),
 							count
@@ -480,9 +480,11 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			level: ServerLevel,
 			entityPos: BlockPos
 		): BlockPos? {
+			val radius = 10
+
 			val searchArea = BlockPos.betweenClosed(
-				entityPos.offset(-ACTIVATION_SEARCH_RADIUS, -ACTIVATION_SEARCH_RADIUS, -ACTIVATION_SEARCH_RADIUS),
-				entityPos.offset(ACTIVATION_SEARCH_RADIUS, ACTIVATION_SEARCH_RADIUS, ACTIVATION_SEARCH_RADIUS)
+				entityPos.offset(-radius, -radius, -radius),
+				entityPos.offset(radius, radius, radius)
 			)
 
 			for (checkPos in searchArea) {
@@ -498,7 +500,8 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			level: ServerLevel,
 			enchantingTablePos: BlockPos
 		): List<ItemStack> {
-			val searchBox = AABB(enchantingTablePos).inflate(SIGIL_SEARCH_RADIUS)
+			val radius = 20.0
+			val searchBox = AABB(enchantingTablePos).inflate(radius)
 			val nearbyPlayers = level.getEntitiesOfClass(Player::class.java, searchBox)
 
 			val sigils = mutableListOf<ItemStack>()
