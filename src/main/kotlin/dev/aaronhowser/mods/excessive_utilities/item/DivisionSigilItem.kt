@@ -152,11 +152,11 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			level: ServerLevel,
 			enchantingTablePos: BlockPos
 		): ActivationResult {
-			if (!level.getBlockState(enchantingTablePos).isBlock(Blocks.ENCHANTING_TABLE)) {
-				return ActivationResult(false)
-			}
-
 			val result = ActivationResult(isReady = true)
+
+			if (!level.getBlockState(enchantingTablePos).isBlock(Blocks.ENCHANTING_TABLE)) {
+				return result
+			}
 
 			checkActivationBiome(level, enchantingTablePos, result)
 			checkActivationSkyAccess(level, enchantingTablePos, result)
@@ -270,63 +270,78 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 		private fun getInversionResult(
 			level: ServerLevel,
-			catalystPos: BlockPos
+			beaconPos: BlockPos
 		): ActivationResult {
-			if (!level.getBlockState(catalystPos).isBlock(Blocks.BEACON)) {
-				return ActivationResult(false)
+			val result = ActivationResult(isReady = false)
+
+			if (!level.getBlockState(beaconPos).isBlock(Blocks.BEACON)) {
+				return result
 			}
 
-			val messages = mutableListOf<Component>()
-
-			checkInversionBiome(level, catalystPos, messages)
-
-			val chestResult = checkInversionChests(level, catalystPos)
-			if (!chestResult.isReady) return ActivationResult(false, messages + chestResult.messages)
-
-			val patternResult = checkInversionPattern(level, catalystPos)
-			if (!patternResult.isReady) return ActivationResult(false, messages + patternResult.messages)
-
-			checkInversionItemContents(level, catalystPos, messages)
-
-			if (messages.isEmpty()) {
-				messages += ModMessageLang.INVERSION_READY_ONE.toComponent()
-				messages += ModMessageLang.INVERSION_READY_TWO.toComponent()
+			checkInversionBiome(level, beaconPos, result)
+			if (!result.isReady) {
+				return result
 			}
 
-			return ActivationResult(true, messages)
+			checkInversionChests(level, beaconPos, result)
+			if (!result.isReady) {
+				return result
+			}
+
+			checkInversionPattern(level, beaconPos, result)
+			if (!result.isReady) {
+				return result
+			}
+
+			checkInversionItemContents(level, beaconPos, result)
+			if (!result.isReady) {
+				return result
+			}
+
+			result.addMessages(
+				ModMessageLang.INVERSION_READY_ONE.toComponent(),
+				ModMessageLang.INVERSION_READY_TWO.toComponent()
+			)
+
+			return result
 		}
 
 		private fun checkInversionBiome(
 			level: ServerLevel,
-			pos: BlockPos,
-			messages: MutableList<Component>
+			beaconPos: BlockPos,
+			result: ActivationResult
 		) {
-			if (!level.getBiome(pos).isHolder(Tags.Biomes.IS_END)) {
-				messages += ModMessageLang.INVERSION_END_ONLY.toComponent()
+			if (!level.getBiome(beaconPos).isHolder(Tags.Biomes.IS_END)) {
+				result.failWithMessages(ModMessageLang.INVERSION_END_ONLY.toComponent())
 			}
 		}
 
 		private fun checkInversionChests(
 			level: ServerLevel,
-			catalystPos: BlockPos
-		): ActivationResult {
-			val messages = mutableListOf<Component>()
-
+			beaconPos: BlockPos,
+			result: ActivationResult
+		) {
 			for (direction in Direction.Plane.HORIZONTAL) {
-				val checkPos = catalystPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
-				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, null)
+				val checkPos = beaconPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
+				val itemHandler = level.getCapability(
+					Capabilities.ItemHandler.BLOCK,
+					checkPos,
+					direction.opposite
+				)
+
 				if (itemHandler == null) {
-					messages += ModMessageLang.INVERSION_MISSING_CHEST.toComponent(direction.getDirectionName())
+					result.failWithMessages(
+						ModMessageLang.INVERSION_MISSING_CHEST.toComponent(direction.getDirectionName())
+					)
 				}
 			}
-
-			return ActivationResult(messages.isEmpty(), messages)
 		}
 
 		private fun checkInversionPattern(
 			level: ServerLevel,
-			catalystPos: BlockPos
-		): ActivationResult {
+			beaconPos: BlockPos,
+			result: ActivationResult
+		) {
 			// ◼ = redstone wire, ◻ = tripwire (string), B = beacon (center, skipped)
 			val patternRows = listOf(
 				"◼◻◻◻◻◻◻◻◻",
@@ -347,32 +362,32 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				val northOffset = rowIndex - centerRow
 				for ((columnIndex, character) in rowString.withIndex()) {
 					val westOffset = columnIndex - centerColumn
-					val checkPos = catalystPos.north(northOffset).west(westOffset)
+					val checkPos = beaconPos.north(northOffset).west(westOffset)
 					val checkState = level.getBlockState(checkPos)
 
 					if (character == '◼' && !checkState.isBlock(Blocks.REDSTONE_WIRE)) {
-						return ActivationResult(
-							false,
-							listOf(ModMessageLang.INVERSION_MISSING_REDSTONE.toComponent(checkPos.x, checkPos.y, checkPos.z))
+						result.failWithMessages(
+							ModMessageLang.INVERSION_MISSING_REDSTONE.toComponent(checkPos.x, checkPos.y, checkPos.z)
 						)
+
+						return
 					}
 
 					if (character == '◻' && !checkState.isBlock(Blocks.TRIPWIRE)) {
-						return ActivationResult(
-							false,
-							listOf(ModMessageLang.INVERSION_MISSING_STRING.toComponent(checkPos.x, checkPos.y, checkPos.z))
+						result.failWithMessages(
+							ModMessageLang.INVERSION_MISSING_STRING.toComponent(checkPos.x, checkPos.y, checkPos.z)
 						)
+
+						return
 					}
 				}
 			}
-
-			return ActivationResult(true)
 		}
 
 		private fun checkInversionItemContents(
 			level: ServerLevel,
-			catalystPos: BlockPos,
-			messages: MutableList<Component>
+			beaconPos: BlockPos,
+			result: ActivationResult
 		) {
 			val contentRequirements = mapOf(
 				Direction.NORTH to ModItemTagsProvider.CHILDREN_OF_FIRE,
@@ -382,8 +397,13 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			)
 
 			for ((direction, itemTag) in contentRequirements) {
-				val checkPos = catalystPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
-				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, checkPos, null) ?: continue
+				val checkPos = beaconPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
+
+				val itemHandler = level.getCapability(
+					Capabilities.ItemHandler.BLOCK,
+					checkPos,
+					direction.opposite
+				) ?: continue
 
 				val count = if (itemTag == ModItemTagsProvider.DESCENDANTS_OF_WATER) {
 					// Potions share the same Item class, so count stacks rather than unique items
@@ -393,11 +413,13 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 				}
 
 				if (count < REQUIRED_UNIQUE_ITEM_COUNT) {
-					messages += ModMessageLang.INVERSION_MISSING_ITEMS.toComponent(
-						REQUIRED_UNIQUE_ITEM_COUNT,
-						itemTag.location.toString(),
-						direction.getDirectionName(),
-						count
+					result.failWithMessages(
+						ModMessageLang.INVERSION_MISSING_ITEMS.toComponent(
+							REQUIRED_UNIQUE_ITEM_COUNT,
+							itemTag.location.toString(),
+							direction.getDirectionName(),
+							count
+						)
 					)
 				}
 			}
