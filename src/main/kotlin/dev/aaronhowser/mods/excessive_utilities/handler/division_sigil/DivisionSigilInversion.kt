@@ -6,16 +6,21 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.item.DivisionSigilItem
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.TagKey
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.Tags
@@ -36,7 +41,53 @@ object DivisionSigilInversion {
 		if (killer !is Player) return
 	}
 
-	fun getInversionResult(
+	fun beginRitual(
+		killer: Player,
+		victim: LivingEntity
+	) {
+		val level = victim.level() as? ServerLevel ?: return
+
+		val sigil = findFirstUninvertedSigil(killer) ?: return
+		val beaconPos = findValidBeacon(level, victim.blockPosition()) ?: return
+
+		killer.tell("!!!!!!!!!!!")
+	}
+
+	private fun findFirstUninvertedSigil(player: Player): ItemStack? {
+		val allStacks = player.inventory.items + player.inventory.offhand
+
+		for (stack in allStacks) {
+			if (!stack.isItem(ModItems.DIVISION_SIGIL)) continue
+			if (!DivisionSigilItem.isInverted(stack)) {
+				return stack
+			}
+		}
+
+		return null
+	}
+
+	fun findValidBeacon(
+		level: ServerLevel,
+		entityPos: BlockPos
+	): BlockPos? {
+		val radius = 10
+
+		val searchArea = BlockPos.betweenClosed(
+			entityPos.offset(-radius, -radius, -radius),
+			entityPos.offset(radius, radius, radius)
+		)
+
+		for (checkPos in searchArea) {
+			val result = isValidSetup(level, checkPos)
+			if (result.isValid) {
+				return checkPos.immutable()
+			}
+		}
+
+		return null
+	}
+
+	fun isValidSetup(
 		level: ServerLevel,
 		beaconPos: BlockPos
 	): DivisionSigilActivation.ActivationResult {

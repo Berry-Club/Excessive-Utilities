@@ -109,7 +109,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 			val level = player.level() as? ServerLevel ?: return false
 			if (!level.getBlockState(pos).isBlock(Blocks.BEACON)) return false
 
-			val result = DivisionSigilInversion.getInversionResult(level, pos)
+			val result = DivisionSigilInversion.isValidSetup(level, pos)
 			sendMessages(player, result.messages)
 			return result.isValid
 		}

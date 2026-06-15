@@ -37,7 +37,10 @@ object DivisionSigilActivation {
 		activateSigil(killer, victim)
 	}
 
-	private fun activateSigil(killer: Player, victim: LivingEntity) {
+	private fun activateSigil(
+		killer: Player,
+		victim: LivingEntity
+	) {
 		val level = victim.level() as? ServerLevel ?: return
 
 		val sigil = findLowestChargeSigil(killer) ?: return
