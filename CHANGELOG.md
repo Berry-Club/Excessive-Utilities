@@ -12,6 +12,8 @@
 	- Lights with Soul Fire instead of Fire
 	- Mobs now spawn as Cursed
 		- Configurable boosts to damage and speed
+        - They also render as nearly fully dark
+        - Also added a command to set an entity to be Cursed or not
 - Mobs spawned by the Resturbed Mob Spawner also now spawn cursed
 - Massive refactors to the Division Sigil activation as well
 	- It only activates the Sigil of the person that killed the mob

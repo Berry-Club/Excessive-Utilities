@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SimpleMachineB
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFluidInputDataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.command.ModCommands
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
 import dev.aaronhowser.mods.excessive_utilities.effect.SecondChanceEffect
@@ -32,6 +33,7 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.AnvilUpdateEvent
+import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
 import net.neoforged.neoforge.event.entity.living.*
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
@@ -409,6 +411,11 @@ object CommonEvents {
 		if (spawner?.left()?.getOrNull() is ResturbedMobSpawnerBlockEntity) {
 			CursedEarthHandler.setCursed(event.entity, value = true)
 		}
+	}
+
+	@SubscribeEvent
+	fun onRegisterCommandsEvent(event: RegisterCommandsEvent) {
+		ModCommands.register(event.dispatcher, event.buildContext)
 	}
 
 }
