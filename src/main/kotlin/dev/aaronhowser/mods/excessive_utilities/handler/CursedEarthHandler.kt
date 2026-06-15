@@ -1,6 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.handler
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.randomX
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.randomY
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.randomZ
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
@@ -54,10 +57,11 @@ object CursedEarthHandler {
 		if (!isCursed(entity)) return
 
 		val random = entity.random
+		val bb = entity.boundingBox
 
-		val px = entity.x + random.nextDouble() * entity.bbWidth
-		val py = entity.y + random.nextDouble() * entity.bbHeight
-		val pz = entity.z + random.nextDouble() * entity.bbWidth
+		val px = bb.randomX(random)
+		val py = bb.randomY(random)
+		val pz = bb.randomZ(random)
 
 		level.addParticle(
 			ParticleTypes.SMOKE,
