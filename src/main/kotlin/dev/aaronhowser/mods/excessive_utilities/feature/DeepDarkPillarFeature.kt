@@ -1,8 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.feature
 
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.ModDimensionTypes
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.ModNoiseSettings
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
