@@ -3,9 +3,11 @@ package dev.aaronhowser.mods.excessive_utilities.command
 import com.mojang.brigadier.arguments.BoolArgumentType
 import com.mojang.brigadier.builder.ArgumentBuilder
 import dev.aaronhowser.mods.aaron.command.AaronCommandHelper
+import dev.aaronhowser.mods.excessive_utilities.handler.CursedEarthHandler
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.commands.arguments.EntityArgument
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.LivingEntity
 
 object SetCursedCommand : AaronCommandHelper {
 
@@ -56,7 +58,19 @@ object SetCursedCommand : AaronCommandHelper {
 		targets: Collection<Entity>,
 		value: Boolean
 	): Int {
-		return 1
+		var amountSet = 0
+
+		for (target in targets) {
+			if (target !is LivingEntity) continue
+
+			val isAlreadyCursed = CursedEarthHandler.isCursed(target)
+			if (isAlreadyCursed == value) continue
+
+			CursedEarthHandler.setCursed(target, value)
+			amountSet++
+		}
+
+		return amountSet
 	}
 
 }
