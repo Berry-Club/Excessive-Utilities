@@ -19,6 +19,8 @@ class InversionRitualActor(
 	fun getPlayer(): Player? = level.getPlayerByUUID(playerUuid)
 
 	override fun tick() {
+		if (level.gameTime % 20 != 0L) return
+
 		val player = getPlayer()
 
 		if (player == null) {
