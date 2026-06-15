@@ -15,7 +15,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
-import net.minecraft.world.entity.Mob
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.LightLayer
@@ -28,22 +28,21 @@ object DivisionSigilActivation {
 	fun handleEntityDeath(event: LivingDeathEvent) {
 		if (event.isCanceled) return
 
-		val entity = event.entity
-		if (entity.isClientSide) return
-		if (entity !is Mob) return
+		val victim = event.entity
+		if (victim.isClientSide) return
+		if (victim !is LivingEntity) return
 
 		val killer = event.source.entity
 		if (killer !is Player) return
 
-		activateSigil(killer, entity)
+		activateSigil(killer, victim)
 	}
 
-	private fun activateSigil(killer: Player, entity: Mob) {
-		val level = entity.level() as? ServerLevel ?: return
-		val entityPos = entity.blockPosition()
+	private fun activateSigil(killer: Player, victim: LivingEntity) {
+		val level = victim.level() as? ServerLevel ?: return
 
 		val sigil = findLowestChargeSigil(killer) ?: return
-		val enchantingTablePos = findValidEnchantingTable(level, entityPos) ?: return
+		val enchantingTablePos = findValidEnchantingTable(level, victim.blockPosition()) ?: return
 
 		sigil.set(ModDataComponents.REMAINING_USES, DivisionSigilItem.USES_AFTER_ACTIVATION)
 
