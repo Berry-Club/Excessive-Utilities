@@ -32,10 +32,11 @@ class ModEntityTypeTagsProvider(
 
 		tag(CURSED_EARTH_BLACKLIST)
 
-		tag(DIVISION_SIGIL_INVERSION_SACRIFICE)
-			.add(
-				EntityType.IRON_GOLEM
-			)
+		tag(INVERSION_RITUAL_SACRIFICE)
+			.add(EntityType.IRON_GOLEM)
+
+		tag(INVERSION_RITUAL_DESPAWN_ON_START)
+			.add(EntityType.ENDERMAN)
 	}
 
 	companion object {
@@ -45,7 +46,9 @@ class ModEntityTypeTagsProvider(
 		val LASSO_BLACKLIST = create("lasso_blacklist")
 		val BOOMERANG_PICKUP = create("boomerang_pickup")
 		val CURSED_EARTH_BLACKLIST = create("cursed_earth_blacklist")
-		val DIVISION_SIGIL_INVERSION_SACRIFICE = create("division_sigil_inversion_sacrifice")
+
+		val INVERSION_RITUAL_SACRIFICE = create("inversion_sigil_sacrifice")
+		val INVERSION_RITUAL_DESPAWN_ON_START = create("inversion_sigil_despawn_on_start")
 	}
 
 }

@@ -36,7 +36,7 @@ object DivisionSigilInversion {
 		if (event.isCanceled) return
 
 		val victim = event.entity
-		if (victim.isClientSide || !victim.isEntity(ModEntityTypeTagsProvider.DIVISION_SIGIL_INVERSION_SACRIFICE)) return
+		if (victim.isClientSide || !victim.isEntity(ModEntityTypeTagsProvider.INVERSION_RITUAL_SACRIFICE)) return
 
 		val killer = event.source.entity
 		if (killer !is Player) return
