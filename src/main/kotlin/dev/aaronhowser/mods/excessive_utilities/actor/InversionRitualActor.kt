@@ -38,7 +38,15 @@ class InversionRitualActor(
 	private val area: AABB = AABB(center).inflate(1024.0)
 	private var tick = 0
 
-	fun getPlayer(): Player? = level.getPlayerByUUID(playerUuid)
+	fun getPlayer(): Player? {
+		val level = this.level
+
+		return if (level is ServerLevel) {
+			level.server.playerList.getPlayer(playerUuid)
+		} else {
+			level.getPlayerByUUID(playerUuid)
+		}
+	}
 
 	override fun tick() {
 		if (tick == 0) firstTick()
