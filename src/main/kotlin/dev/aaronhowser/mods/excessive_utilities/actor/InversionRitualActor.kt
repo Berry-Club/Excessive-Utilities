@@ -38,7 +38,7 @@ class InversionRitualActor(
 			return
 		}
 
-		if (player.level() != level) {
+		if (player.level() != level || player.isDeadOrDying) {
 			player.tell(ModMessageLang.INVERSION_RITUAL_LEFT_END.toComponent())
 			remove()
 			return
