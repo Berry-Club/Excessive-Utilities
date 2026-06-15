@@ -49,23 +49,35 @@ class InversionRitualActor(
 		val player = getPlayer()
 
 		if (player == null) {
-			remove()
+			cancel()
 			return
 		}
 
 		if (player.level() != level || player.isDeadOrDying) {
 			player.tell(ModMessageLang.INVERSION_RITUAL_LEFT_END.toComponent())
-			remove()
+			cancel()
 			return
 		}
 
 		if (!area.contains(player.position())) {
 			player.tell(ModMessageLang.INVERSION_RITUAL_TOO_FAR.toComponent())
-			remove()
+			cancel()
 			return
 		}
 
 		spawnMonster(player)
+	}
+
+	private fun cancel() {
+		remove()
+
+		val entitiesToRemove = level
+			.getEntitiesOfClass(Mob::class.java, area)
+			.filter(CursedEarthHandler::isCursed)
+
+		for (entity in entitiesToRemove) {
+			entity.discard()
+		}
 	}
 
 	private fun spawnMonster(player: Player) {
