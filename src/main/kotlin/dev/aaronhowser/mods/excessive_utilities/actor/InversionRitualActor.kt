@@ -53,13 +53,10 @@ class InversionRitualActor(
 			return
 		}
 
-		if (player.level() != level || player.isDeadOrDying) {
-			player.tell(ModMessageLang.INVERSION_RITUAL_LEFT_END.toComponent())
-			cancel()
-			return
-		}
-
-		if (!area.contains(player.position())) {
+		if (player.level() != level
+			|| player.isDeadOrDying
+			|| !area.contains(player.position())
+		) {
 			player.tell(ModMessageLang.INVERSION_RITUAL_TOO_FAR.toComponent())
 			cancel()
 			return

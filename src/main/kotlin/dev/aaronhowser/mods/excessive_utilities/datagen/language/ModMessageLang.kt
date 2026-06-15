@@ -28,7 +28,6 @@ object ModMessageLang {
 	const val INVERSION_READY_ONE = "message.excessive_utilities.inversion.ready_one"
 	const val INVERSION_READY_TWO = "message.excessive_utilities.inversion.ready_two"
 
-	const val INVERSION_RITUAL_LEFT_END = "message.excessive_utilities.inversion.ritual.left_end"
 	const val INVERSION_RITUAL_TOO_FAR = "message.excessive_utilities.inversion.ritual.too_far"
 
 	const val LASSO_FAIL_OWNERSHIP = "message.excessive_utilities.lasso_fail_ownership"
@@ -63,6 +62,8 @@ object ModMessageLang {
 			add(INVERSION_MISSING_ITEMS, "You need at least %d items from the tag #%s in the Chest to the %s, but you only have %d.")
 			add(INVERSION_READY_ONE, "The Division Sigil is ready to be inverted!")
 			add(INVERSION_READY_TWO, "Kill an Iron Golem near the Beacon to begin the ritual.")
+
+			add(INVERSION_RITUAL_TOO_FAR, "You've left the Inversion Ritual area!")
 
 			add(LASSO_FAIL_OWNERSHIP, "You can't pick up this entity because it belongs to someone else.")
 			add(LASSO_FAIL_PASSIVE_ONLY, "This Lasso can only hold passive mobs.")
