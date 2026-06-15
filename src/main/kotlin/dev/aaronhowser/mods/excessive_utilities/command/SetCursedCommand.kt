@@ -31,21 +31,12 @@ object SetCursedCommand : AaronCommandHelper {
 					val value = BoolArgumentType.getBool(it, VALUE)
 					setCursed(source, targets, value)
 				}
-			}
 
-			thenArgument(TARGETS, EntityArgument.entities()) {
-				executes {
-					val source = it.source
-					val targets = EntityArgument.getEntities(it, TARGETS)
-					setCursed(source, targets, value = true)
-				}
-
-				thenArgument(VALUE, BoolArgumentType.bool()) {
+				thenArgument(TARGETS, EntityArgument.entities()) {
 					executes {
 						val source = it.source
 						val targets = EntityArgument.getEntities(it, TARGETS)
-						val value = BoolArgumentType.getBool(it, VALUE)
-						setCursed(source, targets, value)
+						setCursed(source, targets, value = true)
 					}
 				}
 			}
