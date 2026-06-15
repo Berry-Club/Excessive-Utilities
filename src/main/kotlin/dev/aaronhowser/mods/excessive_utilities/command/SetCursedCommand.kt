@@ -36,7 +36,8 @@ object SetCursedCommand : AaronCommandHelper {
 					executes {
 						val source = it.source
 						val targets = EntityArgument.getEntities(it, TARGETS)
-						setCursed(source, targets, value = true)
+						val value = BoolArgumentType.getBool(it, VALUE)
+						setCursed(source, targets, value)
 					}
 				}
 			}
