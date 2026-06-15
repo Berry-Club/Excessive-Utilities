@@ -16,10 +16,15 @@ class InversionRitualActor(
 	level: Level
 ) : LevelActor(level) {
 
+	constructor(player: Player, center: BlockPos) : this(player.uuid, center, player.level())
+
 	fun getPlayer(): Player? = level.getPlayerByUUID(playerUuid)
 
+	private var tick = 0
+
 	override fun tick() {
-		if (level.gameTime % 20 != 0L) return
+		tick++
+		if (tick % 20 != 0) return
 
 		val player = getPlayer()
 
@@ -40,6 +45,11 @@ class InversionRitualActor(
 			return
 		}
 
+		if (tick / 20 == 10) {
+			player.tell("It's been 10 seconds!")
+			remove()
+			return
+		}
 	}
 
 }

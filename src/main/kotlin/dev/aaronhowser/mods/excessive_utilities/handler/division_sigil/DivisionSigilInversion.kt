@@ -1,13 +1,14 @@
 package dev.aaronhowser.mods.excessive_utilities.handler.division_sigil
 
+import dev.aaronhowser.mods.aaron.actor.LevelActor.Companion.addLevelActor
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDirectionName
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
+import dev.aaronhowser.mods.excessive_utilities.actor.InversionRitualActor
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -39,6 +40,8 @@ object DivisionSigilInversion {
 
 		val killer = event.source.entity
 		if (killer !is Player) return
+
+		beginRitual(killer, victim)
 	}
 
 	fun beginRitual(
@@ -47,10 +50,14 @@ object DivisionSigilInversion {
 	) {
 		val level = victim.level() as? ServerLevel ?: return
 
-		val sigil = findFirstUninvertedSigil(killer) ?: return
+		val sigil = findFirstUninvertedSigil(killer)
+		val hasSigil = sigil != null
+		if (!hasSigil) return
+
 		val beaconPos = findValidBeacon(level, victim.blockPosition()) ?: return
 
-		killer.tell("!!!!!!!!!!!")
+		val actor = InversionRitualActor(killer, beaconPos)
+		level.addLevelActor(actor)
 	}
 
 	private fun findFirstUninvertedSigil(player: Player): ItemStack? {
