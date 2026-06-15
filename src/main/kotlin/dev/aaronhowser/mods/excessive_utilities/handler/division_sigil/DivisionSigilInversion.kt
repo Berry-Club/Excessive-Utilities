@@ -25,35 +25,35 @@ object DivisionSigilInversion {
 		level: ServerLevel,
 		beaconPos: BlockPos
 	): DivisionSigilActivation.ActivationResult {
-		val result = DivisionSigilActivation.ActivationResult(isReady = true)
+		val result = DivisionSigilActivation.ActivationResult(isValid = true)
 
 		if (!level.isLoaded(beaconPos)) {
-			result.isReady = false
+			result.isValid = false
 			return result
 		}
 
 		if (!level.getBlockState(beaconPos).isBlock(Blocks.BEACON)) {
-			result.isReady = false
+			result.isValid = false
 			return result
 		}
 
 		checkInversionBiome(level, beaconPos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 
 		checkInversionChests(level, beaconPos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 
 		checkInversionPattern(level, beaconPos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 
 		checkInversionItemContents(level, beaconPos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 

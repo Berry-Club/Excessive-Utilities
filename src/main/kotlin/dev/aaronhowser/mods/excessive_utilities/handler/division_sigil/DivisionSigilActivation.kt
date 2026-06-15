@@ -47,7 +47,8 @@ object DivisionSigilActivation {
 		sigil.set(ModDataComponents.REMAINING_USES, DivisionSigilItem.USES_AFTER_ACTIVATION)
 
 		val posBelow = enchantingTablePos.below()
-		if (level.getBlockState(posBelow).isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)) {
+		val stateBelow = level.getBlockState(posBelow)
+		if (stateBelow.isBlock(ModBlockTagsProvider.CURSED_EARTH_REPLACEABLE)) {
 			CursedEarthBlock.placeAndSpread(level, posBelow)
 		}
 	}
@@ -86,7 +87,7 @@ object DivisionSigilActivation {
 
 		for (checkPos in searchArea) {
 			val result = isValidSetup(level, checkPos)
-			if (result.isReady) {
+			if (result.isValid) {
 				return checkPos.immutable()
 			}
 		}
@@ -98,37 +99,37 @@ object DivisionSigilActivation {
 		level: ServerLevel,
 		enchantingTablePos: BlockPos
 	): ActivationResult {
-		val result = ActivationResult(isReady = true)
+		val result = ActivationResult(isValid = true)
 
 		if (!level.isLoaded(enchantingTablePos)) {
-			result.isReady = false
+			result.isValid = false
 			return result
 		}
 
 		if (!level.getBlockState(enchantingTablePos).isBlock(Blocks.ENCHANTING_TABLE)) {
-			result.isReady = false
+			result.isValid = false
 			return result
 		}
 
 		checkActivationBiome(level, enchantingTablePos, result)
 		checkActivationSkyAccess(level, enchantingTablePos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 
 		checkActivationRedstoneRing(level, enchantingTablePos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 
 		checkActivationDirtBase(level, enchantingTablePos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 
 		checkActivationTime(level, result)
 		checkActivationDarkness(level, enchantingTablePos, result)
-		if (!result.isReady) {
+		if (!result.isValid) {
 			return result
 		}
 
@@ -229,13 +230,13 @@ object DivisionSigilActivation {
 	//endregion
 
 	class ActivationResult(
-		var isReady: Boolean
+		var isValid: Boolean
 	) {
 		val messages: MutableList<Component> = mutableListOf()
 
 		fun failWithMessages(vararg message: Component) {
 			messages += message
-			isReady = false
+			isValid = false
 		}
 
 		fun addMessages(vararg message: Component) {

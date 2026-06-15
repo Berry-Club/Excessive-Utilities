@@ -99,7 +99,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 			val result = DivisionSigilActivation.isValidSetup(level, pos)
 			sendMessages(player, result.messages)
-			return result.isReady
+			return result.isValid
 		}
 
 		private fun checkInversionReady(
@@ -111,7 +111,7 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 
 			val result = DivisionSigilInversion.getInversionResult(level, pos)
 			sendMessages(player, result.messages)
-			return result.isReady
+			return result.isValid
 		}
 
 		private fun sendMessages(
