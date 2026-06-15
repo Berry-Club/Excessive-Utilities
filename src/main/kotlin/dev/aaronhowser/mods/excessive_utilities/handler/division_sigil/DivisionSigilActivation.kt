@@ -80,11 +80,12 @@ object DivisionSigilActivation {
 		level: ServerLevel,
 		entityPos: BlockPos
 	): BlockPos? {
-		val radius = 10
+		val hRad = 10
+		val vRad = 3
 
 		val searchArea = BlockPos.betweenClosed(
-			entityPos.offset(-radius, -radius, -radius),
-			entityPos.offset(radius, radius, radius)
+			entityPos.offset(-hRad, -vRad, -hRad),
+			entityPos.offset(hRad, vRad, hRad)
 		)
 
 		for (checkPos in searchArea) {
