@@ -99,9 +99,7 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 	) {
 		val searchArea = AABB(pos).inflate(ServerConfig.CONFIG.cursedEarthCheckRadius.get())
 		val nearbyMonsters = level.getEntitiesOfClass(LivingEntity::class.java, searchArea)
-			.asSequence()
-			.filter { it.type.category == MobCategory.MONSTER }
-			.count()
+			.count { it.type.category == MobCategory.MONSTER }
 
 		if (nearbyMonsters >= ServerConfig.CONFIG.cursedEarthMaxSpawnedMobs.get()) return
 
