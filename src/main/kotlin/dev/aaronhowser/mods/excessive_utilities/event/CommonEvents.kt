@@ -34,6 +34,7 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
+import net.neoforged.neoforge.event.AddReloadListenerEvent
 import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
@@ -420,6 +421,11 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onRegisterCommandsEvent(event: RegisterCommandsEvent) {
 		ModCommands.register(event.dispatcher, event.buildContext)
+	}
+
+	@SubscribeEvent
+	fun registerReloadListeners(event: AddReloadListenerEvent) {
+		event.addListener(InversionRitualEnemyWeight.ReloadListener())
 	}
 
 }

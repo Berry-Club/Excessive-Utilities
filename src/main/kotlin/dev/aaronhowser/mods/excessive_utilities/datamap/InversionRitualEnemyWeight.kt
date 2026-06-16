@@ -4,7 +4,10 @@ import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
+import net.minecraft.server.packs.resources.ResourceManager
+import net.minecraft.server.packs.resources.SimplePreparableReloadListener
 import net.minecraft.util.RandomSource
+import net.minecraft.util.profiling.ProfilerFiller
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.Mob
 import net.neoforged.neoforge.registries.datamaps.DataMapType
@@ -45,11 +48,14 @@ class InversionRitualEnemyWeight(
 
 		private var cachedWeights: Map<EntityType<out Mob>, Double>? = null
 		fun getWeightedTypes(): Map<EntityType<out Mob>, Double> {
-			val existingCache = cachedWeights
-			if (existingCache != null) {
-				return existingCache
+			if (cachedWeights == null) {
+				resetCache()
 			}
 
+			return cachedWeights ?: emptyMap()
+		}
+
+		fun resetCache() {
 			val weights = mutableMapOf<EntityType<out Mob>, Double>()
 
 			val registry = BuiltInRegistries.ENTITY_TYPE
@@ -63,7 +69,17 @@ class InversionRitualEnemyWeight(
 			}
 
 			cachedWeights = weights
-			return weights
+		}
+	}
+
+	@Suppress("WRONG_TYPE_FOR_JAVA_OVERRIDE")
+	class ReloadListener : SimplePreparableReloadListener<Any?>() {
+		override fun prepare(resourceManager: ResourceManager, profiler: ProfilerFiller): Any? {
+			return null
+		}
+
+		override fun apply(`object`: Any?, resourceManager: ResourceManager, profiler: ProfilerFiller) {
+			resetCache()
 		}
 	}
 
