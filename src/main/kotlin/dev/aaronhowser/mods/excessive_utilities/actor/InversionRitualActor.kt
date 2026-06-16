@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.actor
 import dev.aaronhowser.mods.aaron.actor.LevelActor
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -13,15 +14,13 @@ import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.world.entity.FlyingMob
-import net.minecraft.world.entity.Mob
-import net.minecraft.world.entity.MobSpawnType
-import net.minecraft.world.entity.NeutralMob
+import net.minecraft.world.entity.*
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.event.EventHooks
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import java.util.*
 import kotlin.math.max
 import kotlin.math.min
@@ -36,7 +35,9 @@ class InversionRitualActor(
 	constructor(player: Player, center: BlockPos) : this(player.uuid, center, player.level())
 
 	private val area: AABB = AABB(center).inflate(1024.0)
+
 	private var tick = 0
+	private var monstersKilled = 0
 
 	fun getPlayer(): Player? {
 		val level = this.level
@@ -200,14 +201,43 @@ class InversionRitualActor(
 		ExcessiveUtilities.LOGGER.info("InversionRitualActor discarded ${entitiesToRemove.size} entities")
 	}
 
+	private fun handleDeath(
+		victim: LivingEntity,
+		killer: Player
+	) {
+		if (killer != getPlayer()) return
+
+		monstersKilled++
+		killer.status("$monstersKilled/100")
+	}
+
 	companion object {
 		fun isRitualActive(
 			level: Level,
 			pos: BlockPos
 		): Boolean {
-			val inversionRituals = level.getLevelActors().filterIsInstance<InversionRitualActor>()
+			val inversionRituals = level
+				.getLevelActors()
+				.filterIsInstance<InversionRitualActor>()
+
 			val center = pos.center
 			return inversionRituals.any { it.area.contains(center) }
+		}
+
+		fun handleDeath(event: LivingDeathEvent) {
+			val victim = event.entity
+			val killer = event.source.entity as? Player ?: return
+
+			if (!CurseHandler.isCursed(victim)) return
+
+			val inversionRituals = victim
+				.level()
+				.getLevelActors()
+				.filterIsInstance<InversionRitualActor>()
+
+			for (ritual in inversionRituals) {
+				ritual.handleDeath(victim, killer)
+			}
 		}
 	}
 
