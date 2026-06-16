@@ -12,6 +12,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MachineWithBuffer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
@@ -57,7 +58,7 @@ import java.util.*
 class QuantumQuarryBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state), ContainerContainer, MenuProvider {
+) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state), ContainerContainer, MachineWithBuffer, MenuProvider {
 
 	private val energyStorage = EnergyStorage(1_000_000)
 	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
@@ -102,7 +103,7 @@ class QuantumQuarryBlockEntity(
 			initFakePlayer()
 		}
 
-		pushOutItems(quarryLevel)
+		pushOutItems(quarryLevel, bufferContainer, bufferItemHandler)
 		if (!bufferContainer.isEmpty) return
 
 		val hasSignal = actuatorPositions.any { pos -> quarryLevel.hasNeighborSignal(pos) }
@@ -125,9 +126,7 @@ class QuantumQuarryBlockEntity(
 		return true
 	}
 
-	private fun pushOutItems(level: ServerLevel) {
-		if (bufferContainer.isEmpty) return
-
+	override fun collectReceivingItemHandlers(level: ServerLevel): Collection<IItemHandler> {
 		val adjacentItemHandlers = mutableSetOf<IItemHandler>()
 
 		for (actuatorPos in actuatorPositions) {
@@ -140,21 +139,7 @@ class QuantumQuarryBlockEntity(
 			}
 		}
 
-		for (destinationHandler in adjacentItemHandlers) {
-			if (bufferContainer.isEmpty) break
-
-			for (slot in 0 until bufferItemHandler.slots) {
-				val stack = bufferItemHandler.getStackInSlot(slot)
-				if (stack.isEmpty) continue
-
-				val simRemainder = ItemHandlerHelper.insertItemStacked(destinationHandler, stack, true)
-				val amountAccepted = stack.count - simRemainder.count
-				if (amountAccepted > 0) {
-					val extracted = bufferItemHandler.extractItem(slot, amountAccepted, false)
-					ItemHandlerHelper.insertItemStacked(destinationHandler, extracted, false)
-				}
-			}
-		}
+		return adjacentItemHandlers
 	}
 
 	private var progressThroughBlock = 0.0

@@ -18,9 +18,9 @@
     - Lights on fire when exposed to sunlight (configurable)
 	- Mobs now spawn as Cursed
 		- Configurable boosts to damage and speed
-		- They also render as nearly fully dark
+		- They also render as near fully dark
 		- Also added a command to set an entity to be Cursed or not
-- Mobs spawned by the Resturbed Mob Spawner also now spawn cursed
+- Mobs spawned by the Resturbed Mob Spawner also now spawn Cursed
 - Transfer Nodes now cache their shape, since building it was very slow
 
 # 1.5.0

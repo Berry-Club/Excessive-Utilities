@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.ItemCatcher
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.EnderQuarryUpgradeType
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MachineWithBuffer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -39,7 +40,7 @@ import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.items.IItemHandler
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -49,7 +50,7 @@ import java.util.*
 class EnderQuarryBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : SyncingBlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state), ContainerContainer {
+) : SyncingBlockEntity(ModBlockEntityTypes.ENDER_QUARRY.get(), pos, state), ContainerContainer, MachineWithBuffer {
 
 	override val syncImmediately: Boolean = true
 
@@ -134,33 +135,21 @@ class EnderQuarryBlockEntity(
 			initFakePlayer()
 		}
 
-		pushOutItems(level)
+		pushOutItems(level, bufferContainer, bufferItemHandler)
 		if (!bufferContainer.isEmpty) return
 
 		progressMine(level)
 	}
 
-	private fun pushOutItems(level: ServerLevel) {
-		if (bufferContainer.isEmpty) return
-
-		val adjacentItemHandlers = Direction.entries
-			.mapNotNull { level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos.relative(it), it.opposite) }
-
-		for (destinationHandler in adjacentItemHandlers) {
-			if (bufferContainer.isEmpty) break
-
-			for (slot in 0 until bufferItemHandler.slots) {
-				val stack = bufferItemHandler.getStackInSlot(slot)
-				if (stack.isEmpty) continue
-
-				val simRemainder = ItemHandlerHelper.insertItemStacked(destinationHandler, stack, true)
-				val amountAccepted = stack.count - simRemainder.count
-				if (amountAccepted > 0) {
-					val extracted = bufferItemHandler.extractItem(slot, amountAccepted, false)
-					ItemHandlerHelper.insertItemStacked(destinationHandler, extracted, false)
-				}
+	override fun collectReceivingItemHandlers(level: ServerLevel): Collection<IItemHandler> {
+		return Direction.entries
+			.mapNotNull {
+				level.getCapability(
+					Capabilities.ItemHandler.BLOCK,
+					blockPos.relative(it),
+					it.opposite
+				)
 			}
-		}
 	}
 
 	private var progressThroughBlock = 0.0
