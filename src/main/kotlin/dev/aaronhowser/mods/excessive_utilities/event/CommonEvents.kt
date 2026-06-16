@@ -11,7 +11,9 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFl
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.command.ModCommands
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datamap.InversionRitualEnemyWeight
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
+import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
 import dev.aaronhowser.mods.excessive_utilities.effect.SecondChanceEffect
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
@@ -280,6 +282,8 @@ object CommonEvents {
 	@SubscribeEvent
 	fun registerDataMapTypes(event: RegisterDataMapTypesEvent) {
 		event.register(NetherLavaDunkConversion.DATA_MAP)
+		event.register(ReversingHoeConversion.DATA_MAP)
+		event.register(InversionRitualEnemyWeight.DATA_MAP)
 	}
 
 	@SubscribeEvent

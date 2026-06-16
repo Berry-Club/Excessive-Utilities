@@ -3,6 +3,7 @@
 ### Fixed
 
 - Fixed a crash where the Heating Coil would read the config before it's loaded (#30)
+- Fixed the Reversing Hoe's conversion datamap not being actually registeed
 
 ### Changed
 

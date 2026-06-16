@@ -40,9 +40,9 @@ class ReversingHoeItem(properties: Properties) : HoeItem(UnstableTier, propertie
 			}
 		}
 
-		val conversion = state.block.builtInRegistryHolder().getData(ReversingHoeConversion.DATA_MAP)
-		if (conversion != null) {
-			level.setBlockAndUpdate(pos, conversion.outputState)
+		val convertedState = ReversingHoeConversion.getResult(state)
+		if (convertedState != null) {
+			level.setBlockAndUpdate(pos, convertedState)
 			return InteractionResult.sidedSuccess(level.isClientSide)
 		}
 

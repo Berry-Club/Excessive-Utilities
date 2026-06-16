@@ -15,7 +15,7 @@ class ReversingHoeConversion(
 		val CODEC: Codec<ReversingHoeConversion> =
 			BlockState.CODEC.xmap(::ReversingHoeConversion, ReversingHoeConversion::outputState)
 
-		val DATA_MAP: DataMapType<Block?, ReversingHoeConversion> =
+		val DATA_MAP: DataMapType<Block, ReversingHoeConversion> =
 			DataMapType
 				.builder(
 					ExcessiveUtilities.modResource("reversing_hoe_conversion"),
@@ -24,6 +24,10 @@ class ReversingHoeConversion(
 				)
 				.synced(CODEC, true)
 				.build()
+
+		fun getResult(state: BlockState): BlockState? {
+			return state.block.builtInRegistryHolder().getData(DATA_MAP)?.outputState
+		}
 	}
 
 }
