@@ -3,20 +3,17 @@ package dev.aaronhowser.mods.excessive_utilities.actor
 import dev.aaronhowser.mods.aaron.actor.LevelActor
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.randomOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.datamap.InversionRitualEnemyWeight
 import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.Holder
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.util.RandomSource
-import net.minecraft.world.entity.EntityType
+import net.minecraft.world.entity.FlyingMob
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.MobSpawnType
 import net.minecraft.world.entity.NeutralMob
@@ -90,12 +87,12 @@ class InversionRitualActor(
 
 	private fun spawnMonster(player: Player) {
 		val serverLevel = level as? ServerLevel ?: return
-		val monsterType = getEntityTypeToSpawn(player.random) ?: return
+		val monsterType = InversionRitualEnemyWeight.getRandomType(player.random) ?: return
 		val mob = monsterType.create(serverLevel) ?: return
 
 		val spawnPos = findMobSpawnLocation(
 			player,
-			isFlyingMob = monsterType.isEntity(ModEntityTypeTagsProvider.INVERSION_RITUAL_HORDE_AIR_MOBS)
+			isFlyingMob = mob is FlyingMob
 		) ?: return
 
 		mob.moveTo(
@@ -201,19 +198,6 @@ class InversionRitualActor(
 		}
 
 		ExcessiveUtilities.LOGGER.info("InversionRitualActor discarded ${entitiesToRemove.size} entities")
-	}
-
-	private fun getEntityTypeToSpawn(random: RandomSource): EntityType<out Mob>? {
-		val landMobs = BuiltInRegistries.ENTITY_TYPE
-			.getTagOrEmpty(ModEntityTypeTagsProvider.INVERSION_RITUAL_HORDE_LAND_MOBS)
-
-		val airMobs = BuiltInRegistries.ENTITY_TYPE
-			.getTagOrEmpty(ModEntityTypeTagsProvider.INVERSION_RITUAL_HORDE_AIR_MOBS)
-
-		return (landMobs + airMobs)
-			.filterIsInstance<Holder<EntityType<out Mob>>>()
-			.randomOrNull(random)
-			?.value()
 	}
 
 	companion object {
