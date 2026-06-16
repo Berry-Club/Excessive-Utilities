@@ -9,25 +9,25 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.enchantment.Enchantment
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
-class DisnchantmentFuel(
+class DisenchantmentFuel(
 	val fePerTick: Int,
 	val burnTimePerLevel: Int
 ) {
 
 	companion object {
-		val CODEC: Codec<DisnchantmentFuel> =
+		val CODEC: Codec<DisenchantmentFuel> =
 			RecordCodecBuilder.create { instance ->
 				instance.group(
 					Codec.INT
 						.fieldOf("fe_per_tick")
-						.forGetter(DisnchantmentFuel::fePerTick),
+						.forGetter(DisenchantmentFuel::fePerTick),
 					Codec.INT
 						.fieldOf("burn_time_per_level")
-						.forGetter(DisnchantmentFuel::burnTimePerLevel)
-				).apply(instance, ::DisnchantmentFuel)
+						.forGetter(DisenchantmentFuel::burnTimePerLevel)
+				).apply(instance, ::DisenchantmentFuel)
 			}
 
-		val DATA_MAP_TYPE: DataMapType<Enchantment, DisnchantmentFuel> =
+		val DATA_MAP_TYPE: DataMapType<Enchantment, DisenchantmentFuel> =
 			DataMapType
 				.builder(
 					ExcessiveUtilities.modResource("disenchantment_generator_fuel"),
@@ -37,7 +37,7 @@ class DisnchantmentFuel(
 				.synced(CODEC, true)
 				.build()
 
-		fun getFuelData(stack: ItemStack, lookup: HolderLookup.RegistryLookup<Enchantment>): List<DisnchantmentFuel> {
+		fun getFuelData(stack: ItemStack, lookup: HolderLookup.RegistryLookup<Enchantment>): List<DisenchantmentFuel> {
 			val enchantments = stack.getAllEnchantments(lookup)
 			return enchantments.entrySet().mapNotNull { it.key.getData(DATA_MAP_TYPE) }
 		}
