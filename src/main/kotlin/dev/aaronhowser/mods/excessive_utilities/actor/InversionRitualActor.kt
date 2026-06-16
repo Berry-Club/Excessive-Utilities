@@ -7,6 +7,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datamap.InversionRitualEnemyWeight
@@ -35,6 +36,9 @@ class InversionRitualActor(
 	constructor(player: Player, center: BlockPos) : this(player.uuid, center, player.level())
 
 	private val area: AABB = AABB(center).inflate(1024.0)
+	private val period: Int = ServerConfig.CONFIG.inversionRitualPeriod.get()
+	private val spawnsPer: Int = ServerConfig.CONFIG.inversionRitualSpawnsPer.get()
+	private val requiredKills: Int = ServerConfig.CONFIG.inversionRitualKillsRequired.get()
 
 	private var tick = 0
 	private var monstersKilled = 0
@@ -53,7 +57,7 @@ class InversionRitualActor(
 		if (tick == 0) firstTick()
 		tick++
 
-		if (tick % 20 != 0) return
+		if (tick % period != 0) return
 
 		val player = getPlayer()
 
@@ -71,7 +75,9 @@ class InversionRitualActor(
 			return
 		}
 
-		spawnMonster(player)
+		for (i in 0 until spawnsPer) {
+			spawnMonster(player)
+		}
 	}
 
 	private fun cancel() {
@@ -208,7 +214,7 @@ class InversionRitualActor(
 		if (killer != getPlayer()) return
 
 		monstersKilled++
-		killer.status("$monstersKilled/100")
+		killer.status("$monstersKilled/$requiredKills")
 	}
 
 	companion object {

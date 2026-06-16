@@ -112,6 +112,10 @@ class ServerConfig(
 	lateinit var cursedEarthBonusStrength: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthBonusSpeed: ModConfigSpec.DoubleValue
 
+	lateinit var inversionRitualPeriod: ModConfigSpec.IntValue
+	lateinit var inversionRitualSpawnsPer: ModConfigSpec.IntValue
+	lateinit var inversionRitualKillsRequired: ModConfigSpec.IntValue
+
 	lateinit var qedRadius: ModConfigSpec.IntValue
 
 	lateinit var furnaceFePerTick: ModConfigSpec.IntValue
@@ -519,6 +523,20 @@ class ServerConfig(
 				cursedEarthBonusSpeed = builder
 					.comment("How many times faster mobs spawned by Cursed Earth move.")
 					.defineInRange("cursedEarthBonusSpeed", 0.2, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)
+			}
+
+			builder.section("inversion_ritual") {
+				inversionRitualPeriod = builder
+					.comment("The number of ticks between each time the Ritual tries to spawn a new wave of monsters.")
+					.defineInRange("inversionRitualPeriod", 20, 1, Int.MAX_VALUE)
+
+				inversionRitualSpawnsPer = builder
+					.comment("How many monsters are spawned in each wave.")
+					.defineInRange("inversionRitualSpawnsPer", 1, 1, Int.MAX_VALUE)
+
+				inversionRitualKillsRequired = builder
+					.comment("How many monsters must be killed to complete the Ritual.")
+					.defineInRange("inversionRitualKillsPer", 100, 1, Int.MAX_VALUE)
 			}
 
 			builder.section("heating_coil") {
