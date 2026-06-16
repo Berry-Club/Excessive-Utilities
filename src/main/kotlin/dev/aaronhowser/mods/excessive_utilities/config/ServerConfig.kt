@@ -105,6 +105,7 @@ class ServerConfig(
 	lateinit var boomerangItemPickupRadius: ModConfigSpec.DoubleValue
 	lateinit var boomereaperangRadius: ModConfigSpec.DoubleValue
 
+	lateinit var cursedEarthBurnInDay: ModConfigSpec.BooleanValue
 	lateinit var cursedEarthMaxSpawnedMobs: ModConfigSpec.IntValue
 	lateinit var cursedEarthCheckRadius: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthBonusStrength: ModConfigSpec.DoubleValue
@@ -498,6 +499,10 @@ class ServerConfig(
 			}
 
 			builder.section("cursed_earth") {
+				cursedEarthBurnInDay = builder
+					.comment("Should Cursed Earth burn when exposed to sunlight?")
+					.define("cursedEarthBurnInDay", true)
+
 				cursedEarthMaxSpawnedMobs = builder
 					.comment("The maximum number of mobs around a Cursed Earth before it stops trying to spawn more.")
 					.defineInRange("cursedEarthMaxSpawnedMobs", 10, 1, Int.MAX_VALUE)

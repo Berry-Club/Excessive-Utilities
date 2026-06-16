@@ -45,6 +45,14 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 
 	// Slow spreading and mob spawning
 	override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
+		if (ServerConfig.CONFIG.cursedEarthBurnInDay.get()
+			&& level.isDay
+			&& level.canSeeSky(pos.above())
+			&& level.getBlockState(pos.above()).canBeReplaced()
+		) {
+			level.setBlockAndUpdate(pos.above(), Blocks.SOUL_FIRE.defaultBlockState())
+		}
+
 		actuallyTick(level, pos, state, random, fastSpreading = false)
 	}
 

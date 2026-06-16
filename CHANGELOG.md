@@ -15,6 +15,7 @@
 - Overhauled Cursed Earth
 	- Massive improvements to the code
 	- Lights with Soul Fire instead of Fire
+    - Lights on fire when exposed to sunlight (configurable)
 	- Mobs now spawn as Cursed
 		- Configurable boosts to damage and speed
 		- They also render as nearly fully dark
