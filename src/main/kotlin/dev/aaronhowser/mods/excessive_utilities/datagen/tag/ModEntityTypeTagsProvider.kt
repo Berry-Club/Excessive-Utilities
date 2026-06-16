@@ -18,12 +18,6 @@ class ModEntityTypeTagsProvider(
 ) : EntityTypeTagsProvider(output, provider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
-		tag(LASSO_BLACKLIST)
-			.add(
-				EntityType.PLAYER
-			)
-			.addOptional(ResourceLocation.fromNamespaceAndPath("doggytalents", "dog"))
-
 		tag(BOOMERANG_PICKUP)
 			.add(
 				EntityType.ITEM,
@@ -55,7 +49,6 @@ class ModEntityTypeTagsProvider(
 		private fun create(id: String): TagKey<EntityType<*>> =
 			TagKey.create(Registries.ENTITY_TYPE, ExcessiveUtilities.modResource(id))
 
-		val LASSO_BLACKLIST = create("lasso_blacklist")
 		val BOOMERANG_PICKUP = create("boomerang_pickup")
 		val CURSED_EARTH_BLACKLIST = create("cursed_earth_blacklist")
 

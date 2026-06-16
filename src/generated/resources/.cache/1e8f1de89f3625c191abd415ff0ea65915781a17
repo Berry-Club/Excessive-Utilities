@@ -1,8 +1,7 @@
-// 1.21.1	2026-06-15T18:57:01.1201056	Tags for minecraft:entity_type mod id excessive_utilities
+// 1.21.1	2026-06-15T19:33:43.7425674	Tags for minecraft:entity_type mod id excessive_utilities
 c922a1dd9635b859b5ef273b97b42a7112d348c9 data/excessive_utilities/tags/entity_type/boomerang_pickup.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/excessive_utilities/tags/entity_type/cursed_earth_blacklist.json
 6f8bc3eb93347d4d15c38a3b7cfbd2b796ac201c data/excessive_utilities/tags/entity_type/inversion_ritual_despawn_on_start.json
 5bd4a93460d1b11374db58ba8722ea5c95017c90 data/excessive_utilities/tags/entity_type/inversion_ritual_horde_air_air_mobs.json
 97281507c1af90e603e893132f545c894ba6cc9a data/excessive_utilities/tags/entity_type/inversion_ritual_horde_land_mobs.json
 29671cfa11d074462c259806e9d60468451e3cdb data/excessive_utilities/tags/entity_type/inversion_ritual_sacrifice.json
-4e260b7f25acaf3686fa33c463e27a96e28f7fd1 data/excessive_utilities/tags/entity_type/lasso_blacklist.json

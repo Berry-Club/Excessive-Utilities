@@ -8,7 +8,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.Registries
@@ -27,6 +26,7 @@ import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
+import net.neoforged.neoforge.common.Tags
 
 class EntityLassoItem(
 	val canHoldHostileMobs: Boolean,
@@ -44,7 +44,7 @@ class EntityLassoItem(
 			return InteractionResult.PASS
 		}
 
-		if (interactionTarget.isEntity(ModEntityTypeTagsProvider.LASSO_BLACKLIST)) {
+		if (interactionTarget.isEntity(Tags.EntityTypes.CAPTURING_NOT_SUPPORTED)) {
 			player.status(ModMessageLang.LASSO_FAIL_BLACKLIST.toComponent())
 			return InteractionResult.FAIL
 		}

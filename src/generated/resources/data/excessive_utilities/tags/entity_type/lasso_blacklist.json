@@ -1,9 +1,0 @@
-{
-  "values": [
-    "minecraft:player",
-    {
-      "id": "doggytalents:dog",
-      "required": false
-    }
-  ]
-}
