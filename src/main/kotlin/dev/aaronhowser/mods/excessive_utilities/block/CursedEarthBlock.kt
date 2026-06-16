@@ -27,7 +27,6 @@ import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.event.EventHooks
 import kotlin.jvm.optionals.getOrNull
 
-//TODO: Make sure all configs actually work
 //TODO: Config for burning in sunlight
 class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 

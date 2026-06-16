@@ -105,8 +105,6 @@ class ServerConfig(
 	lateinit var boomerangItemPickupRadius: ModConfigSpec.DoubleValue
 	lateinit var boomereaperangRadius: ModConfigSpec.DoubleValue
 
-	lateinit var cursedEarthPeriod: ModConfigSpec.IntValue
-	lateinit var cursedEarthChance: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthMaxSpawnedMobs: ModConfigSpec.IntValue
 	lateinit var cursedEarthCheckRadius: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthBonusStrength: ModConfigSpec.DoubleValue
@@ -500,14 +498,6 @@ class ServerConfig(
 			}
 
 			builder.section("cursed_earth") {
-				cursedEarthPeriod = builder
-					.comment("The number of ticks between each time that Cursed Earth blocks will do work.")
-					.defineInRange("cursedEarthPeriod", 8, 1, Int.MAX_VALUE)
-
-				cursedEarthChance = builder
-					.comment("The chance per tick that a Cursed Earth block will try to spawn a mob.")
-					.defineInRange("cursedEarthChance", 1.0 / 40, 0.0, 1.0)
-
 				cursedEarthMaxSpawnedMobs = builder
 					.comment("The maximum number of mobs around a Cursed Earth before it stops trying to spawn more.")
 					.defineInRange("cursedEarthMaxSpawnedMobs", 10, 1, Int.MAX_VALUE)
