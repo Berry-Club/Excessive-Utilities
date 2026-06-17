@@ -35,7 +35,7 @@ import kotlin.math.roundToInt
 
 class InversionRitualActor(
 	val playerUuid: UUID,
-	private val center: BlockPos,
+	center: BlockPos,
 	level: Level
 ) : LevelActor(level) {
 
@@ -47,7 +47,6 @@ class InversionRitualActor(
 	private fun getSpawnsPer(): Int = ServerConfig.CONFIG.inversionRitualSpawnsPer.get()
 	private fun getRequiredKills(): Int = ServerConfig.CONFIG.inversionRitualKillsRequired.get()
 
-	private var tick = 0
 	private var monstersKilled = 0
 
 	fun getPlayer(): Player? {
@@ -61,10 +60,7 @@ class InversionRitualActor(
 	}
 
 	override fun tick() {
-		if (tick == 0) firstTick()
-		tick++
-
-		if (tick % period != 0) return
+		if (age % period != 0) return
 
 		val player = getPlayer()
 
@@ -85,6 +81,18 @@ class InversionRitualActor(
 		for (i in 0 until getSpawnsPer()) {
 			spawnMonster(player)
 		}
+	}
+
+	override fun setup() {
+		val entitiesToRemove = level
+			.getEntitiesOfClass(Mob::class.java, area)
+			.filter { it.isEntity(ModEntityTypeTagsProvider.INVERSION_RITUAL_DESPAWN_ON_START) }
+
+		for (entity in entitiesToRemove) {
+			entity.discard()
+		}
+
+		ExcessiveUtilities.LOGGER.info("InversionRitualActor discarded ${entitiesToRemove.size} entities")
 	}
 
 	private fun end(success: Boolean) {
@@ -207,18 +215,6 @@ class InversionRitualActor(
 		if (!area.contains(pos.center)) return false
 		if (!level.isLoaded(pos)) return false
 		return level.isEmptyBlock(pos) && level.isEmptyBlock(pos.above())
-	}
-
-	private fun firstTick() {
-		val entitiesToRemove = level
-			.getEntitiesOfClass(Mob::class.java, area)
-			.filter { it.isEntity(ModEntityTypeTagsProvider.INVERSION_RITUAL_DESPAWN_ON_START) }
-
-		for (entity in entitiesToRemove) {
-			entity.discard()
-		}
-
-		ExcessiveUtilities.LOGGER.info("InversionRitualActor discarded ${entitiesToRemove.size} entities")
 	}
 
 	private fun handleDeath(
