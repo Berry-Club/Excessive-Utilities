@@ -48,7 +48,7 @@ class InversionRitualEnemyWeight(
 
 		private var cachedWeights: Map<EntityType<out Mob>, Double>? = null
 		fun getWeightedTypes(): Map<EntityType<out Mob>, Double> {
-			if (cachedWeights == null) {
+			if (cachedWeights.isNullOrEmpty()) {
 				resetCache()
 			}
 
