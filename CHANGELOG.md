@@ -3,6 +3,8 @@
 ### Added
 
 - The Deep Dark dimension!
+	- Uses Deepslate instead of Stone
+	- Vanilla ores spawn more densely
 
 # 1.6.0
 

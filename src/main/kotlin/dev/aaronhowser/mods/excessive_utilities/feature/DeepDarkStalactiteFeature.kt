@@ -34,7 +34,7 @@ class DeepDarkStalactiteFeature : Feature<NoneFeatureConfiguration>(NoneFeatureC
 
 					if (!level.isEmptyBlock(mutablePos) && !level.getBlockState(mutablePos).canBeReplaced()) break
 
-					level.setBlock(mutablePos, Blocks.COBBLESTONE.defaultBlockState(), Block.UPDATE_CLIENTS)
+					level.setBlock(mutablePos, Blocks.COBBLED_DEEPSLATE.defaultBlockState(), Block.UPDATE_CLIENTS)
 					placed = true
 				}
 			}

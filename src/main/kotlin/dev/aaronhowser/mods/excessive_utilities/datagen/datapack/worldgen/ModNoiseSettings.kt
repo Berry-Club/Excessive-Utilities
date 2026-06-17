@@ -18,7 +18,7 @@ object ModNoiseSettings {
 			DEEP_DARK,
 			NoiseGeneratorSettings(
 				NoiseSettings(DeepDarkConstants.MIN_Y, DeepDarkConstants.HEIGHT, 1, 1),
-				Blocks.STONE.defaultBlockState(),
+				Blocks.DEEPSLATE.defaultBlockState(),
 				Blocks.AIR.defaultBlockState(),
 				buildNoiseRouter(context.lookup(Registries.NOISE)),
 				deepDarkRules(),
@@ -111,8 +111,8 @@ object ModNoiseSettings {
 
 	private fun deepDarkRules(): SurfaceRules.RuleSource {
 		val bedrock = SurfaceRules.state(Blocks.BEDROCK.defaultBlockState())
-		val stone = SurfaceRules.state(Blocks.STONE.defaultBlockState())
-		val cobblestone = SurfaceRules.state(Blocks.COBBLESTONE.defaultBlockState())
+		val deepslate = SurfaceRules.state(Blocks.DEEPSLATE.defaultBlockState())
+		val cobbledDeepslate = SurfaceRules.state(Blocks.COBBLED_DEEPSLATE.defaultBlockState())
 
 		val isWorldBottom = SurfaceRules.not(
 			SurfaceRules.yBlockCheck(
@@ -143,13 +143,13 @@ object ModNoiseSettings {
 		return SurfaceRules.sequence(
 			SurfaceRules.ifTrue(
 				SurfaceRules.ON_FLOOR,
-				SurfaceRules.ifTrue(isInFloorBlendZone, cobblestone)
+				SurfaceRules.ifTrue(isInFloorBlendZone, cobbledDeepslate)
 			),
 			SurfaceRules.ifTrue(
 				SurfaceRules.ON_CEILING,
-				SurfaceRules.ifTrue(isInCeilingBlendZone, cobblestone)
+				SurfaceRules.ifTrue(isInCeilingBlendZone, cobbledDeepslate)
 			),
-			stone
+			deepslate
 		)
 	}
 

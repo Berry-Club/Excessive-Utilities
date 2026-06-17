@@ -1,7 +1,10 @@
 {
   "aquifers_enabled": false,
   "default_block": {
-    "Name": "minecraft:stone"
+    "Name": "minecraft:deepslate",
+    "Properties": {
+      "axis": "y"
+    }
   },
   "default_fluid": {
     "Name": "minecraft:air"
@@ -235,7 +238,7 @@
           "then_run": {
             "type": "minecraft:block",
             "result_state": {
-              "Name": "minecraft:cobblestone"
+              "Name": "minecraft:cobbled_deepslate"
             }
           }
         }
@@ -265,7 +268,7 @@
           "then_run": {
             "type": "minecraft:block",
             "result_state": {
-              "Name": "minecraft:cobblestone"
+              "Name": "minecraft:cobbled_deepslate"
             }
           }
         }
@@ -273,7 +276,10 @@
       {
         "type": "minecraft:block",
         "result_state": {
-          "Name": "minecraft:stone"
+          "Name": "minecraft:deepslate",
+          "Properties": {
+            "axis": "y"
+          }
         }
       }
     ]

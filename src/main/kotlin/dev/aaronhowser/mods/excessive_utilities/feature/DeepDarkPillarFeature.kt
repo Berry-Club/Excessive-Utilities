@@ -71,7 +71,7 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 
 					mutablePos.set(x, y, z)
 					if (level.isEmptyBlock(mutablePos) || level.getBlockState(mutablePos).canBeReplaced()) {
-						level.setBlock(mutablePos, Blocks.COBBLESTONE.defaultBlockState(), Block.UPDATE_CLIENTS)
+						level.setBlock(mutablePos, Blocks.COBBLED_DEEPSLATE.defaultBlockState(), Block.UPDATE_CLIENTS)
 						placed = true
 					}
 				}
