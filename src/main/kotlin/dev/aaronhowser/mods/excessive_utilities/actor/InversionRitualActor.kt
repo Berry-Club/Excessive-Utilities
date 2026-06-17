@@ -37,8 +37,8 @@ class InversionRitualActor(
 
 	private val area: AABB = AABB(center).inflate(1024.0)
 	private val period: Int = ServerConfig.CONFIG.inversionRitualPeriod.get()
-	private val spawnsPer: Int = ServerConfig.CONFIG.inversionRitualSpawnsPer.get()
-	private val requiredKills: Int = ServerConfig.CONFIG.inversionRitualKillsRequired.get()
+	private val spawnsPer: Int get() = ServerConfig.CONFIG.inversionRitualSpawnsPer.get()
+	private val requiredKills: Int get() = ServerConfig.CONFIG.inversionRitualKillsRequired.get()
 
 	private var tick = 0
 	private var monstersKilled = 0
