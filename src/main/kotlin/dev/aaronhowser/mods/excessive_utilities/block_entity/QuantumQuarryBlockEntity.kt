@@ -38,6 +38,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -153,8 +154,9 @@ class QuantumQuarryBlockEntity(
 
 		val enchantedBook = getEnchantedBook()
 		if (enchantedBook.isNotEmpty()) {
+			val storedEnchants = EnchantmentHelper.getEnchantmentsForCrafting(enchantedBook)
 			val enchantmentLookup = miningDimensionLevel.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
-			val efficiencyLevel = enchantedBook.getEnchantmentLevel(enchantmentLookup.getHolderOrThrow(Enchantments.EFFICIENCY))
+			val efficiencyLevel = storedEnchants.getLevel(enchantmentLookup.getHolderOrThrow(Enchantments.EFFICIENCY))
 			if (efficiencyLevel > 0) {
 				progressThroughBlock *= 1.0 + (efficiencyLevel * 0.25)
 			}
