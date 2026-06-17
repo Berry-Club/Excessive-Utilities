@@ -92,6 +92,14 @@ class InversionRitualActor(
 			entity.discard()
 		}
 
+		for (player in getPlayersInArea()) {
+			player.playNotifySound(
+				SoundEvents.WITHER_SPAWN,
+				SoundSource.PLAYERS,
+				1f, 1f
+			)
+		}
+
 		ExcessiveUtilities.LOGGER.info("InversionRitualActor discarded ${entitiesToRemove.size} entities")
 	}
 
