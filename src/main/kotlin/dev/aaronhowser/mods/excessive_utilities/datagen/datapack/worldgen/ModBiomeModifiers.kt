@@ -13,6 +13,7 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 object ModBiomeModifiers {
 
 	val DEEP_DARK_PILLAR = rk("deep_dark_pillar")
+	val DEEP_DARK_STALACTITE = rk("deep_dark_stalactite")
 
 	fun bootstrap(context: BootstrapContext<BiomeModifier>) {
 		val placedFeatures = context.lookup(Registries.PLACED_FEATURE)
@@ -24,6 +25,15 @@ object ModBiomeModifiers {
 				HolderSet.direct(biomes.getOrThrow(ModBiomes.DEEP_DARK)),
 				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEEP_DARK_PILLAR)),
 				GenerationStep.Decoration.UNDERGROUND_STRUCTURES
+			)
+		)
+
+		context.register(
+			DEEP_DARK_STALACTITE,
+			BiomeModifiers.AddFeaturesBiomeModifier(
+				HolderSet.direct(biomes.getOrThrow(ModBiomes.DEEP_DARK)),
+				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEEP_DARK_STALACTITE)),
+				GenerationStep.Decoration.UNDERGROUND_DECORATION
 			)
 		)
 

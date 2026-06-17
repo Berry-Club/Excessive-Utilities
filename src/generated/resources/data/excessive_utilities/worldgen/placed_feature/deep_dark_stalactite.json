@@ -1,0 +1,24 @@
+{
+  "feature": "excessive_utilities:deep_dark_stalactite",
+  "placement": [
+    {
+      "type": "minecraft:biome"
+    },
+    {
+      "type": "minecraft:count",
+      "count": 1
+    },
+    {
+      "type": "minecraft:height_range",
+      "height": {
+        "type": "minecraft:uniform",
+        "max_inclusive": {
+          "absolute": 128
+        },
+        "min_inclusive": {
+          "absolute": 128
+        }
+      }
+    }
+  ]
+}

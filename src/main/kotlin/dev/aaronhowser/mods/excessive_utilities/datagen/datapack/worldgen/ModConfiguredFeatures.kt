@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 object ModConfiguredFeatures {
 
 	val DEEP_DARK_PILLAR = rk("deep_dark_pillar")
+	val DEEP_DARK_STALACTITE = rk("deep_dark_stalactite")
 
 	fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
 
@@ -18,6 +19,14 @@ object ModConfiguredFeatures {
 			DEEP_DARK_PILLAR,
 			ConfiguredFeature(
 				ModFeatures.DEEP_DARK_PILLAR.get(),
+				FeatureConfiguration.NONE
+			)
+		)
+
+		context.register(
+			DEEP_DARK_STALACTITE,
+			ConfiguredFeature(
+				ModFeatures.DEEP_DARK_STALACTITE.get(),
 				FeatureConfiguration.NONE
 			)
 		)
