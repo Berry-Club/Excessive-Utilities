@@ -37,7 +37,7 @@
             "from_value": 1.0,
             "from_y": 64,
             "to_value": -1.0,
-            "to_y": 72
+            "to_y": 76
           },
           "argument2": {
             "type": "minecraft:add",
@@ -128,7 +128,7 @@
             "from_value": 1.0,
             "from_y": 64,
             "to_value": -1.0,
-            "to_y": 72
+            "to_y": 76
           },
           "argument2": {
             "type": "minecraft:add",

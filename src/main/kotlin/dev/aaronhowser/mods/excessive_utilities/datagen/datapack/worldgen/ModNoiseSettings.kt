@@ -59,7 +59,7 @@ object ModNoiseSettings {
 
 		val noiseFloor = DensityFunctions.yClampedGradient(
 			DeepDarkConstants.FLOOR_TOP,
-			DeepDarkConstants.FLOOR_TOP + DeepDarkConstants.BLEND_THICKNESS,
+			DeepDarkConstants.FLOOR_TOP + DeepDarkConstants.BLEND_THICKNESS + 4,
 			1.0,
 			-1.0
 		)

@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-17T17:14:22.1009109	Registries
+// 1.21.1	2026-06-17T17:25:29.7339399	Registries
 c7653945d8ab22823b09863f2c5e7d4c3874578e data/excessive_utilities/damage_type/doom.json
 731ab165ce06ce5739cea43fc212ae811ac43cff data/excessive_utilities/dimension/deep_dark.json
 877bd9be3bfb61b205649d191710f2500792461b data/excessive_utilities/dimension/quantum_quarry.json
@@ -15,7 +15,7 @@ c8ef7bcb647797043547cfea551242aa57ca5e58 data/excessive_utilities/enchantment/bl
 2afa676dd9f1b1cd80e86ad88c9b71cb1c949524 data/excessive_utilities/worldgen/biome/deep_dark.json
 814b983ccc4208058f521ebce24bd1d410fe0f96 data/excessive_utilities/worldgen/configured_feature/deep_dark_pillar.json
 a285d8eab574288844371b9839ca911b00c3dba3 data/excessive_utilities/worldgen/configured_feature/deep_dark_stalactite.json
-60542e0bd53f771322aadac2b2db42d2331076f6 data/excessive_utilities/worldgen/noise_settings/deep_dark.json
+144be5aacfc795131dc70f15642a36f63a4433fc data/excessive_utilities/worldgen/noise_settings/deep_dark.json
 e05cb0a5127a52d385be5240a4bbe9ec588e8491 data/excessive_utilities/worldgen/placed_feature/deep_dark_lake_lava_surface.json
 68e5b815928a6c59c470358719807f203109ebfc data/excessive_utilities/worldgen/placed_feature/deep_dark_ore_coal_lower.json
 63096f0647b7f8150fcd7bc702f884abb71f6880 data/excessive_utilities/worldgen/placed_feature/deep_dark_ore_coal_upper.json
