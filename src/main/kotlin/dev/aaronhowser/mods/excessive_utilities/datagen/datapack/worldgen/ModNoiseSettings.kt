@@ -92,15 +92,13 @@ object ModNoiseSettings {
 		val isWorldBottom = SurfaceRules.not(
 			SurfaceRules.yBlockCheck(
 				VerticalAnchor.aboveBottom(3),
-				1
+				0
 			)
 		)
 
-		val isWorldTop = SurfaceRules.not(
-			SurfaceRules.yBlockCheck(
-				VerticalAnchor.belowTop(3),
-				1
-			)
+		val isWorldTop = SurfaceRules.yBlockCheck(
+			VerticalAnchor.belowTop(3),
+			0
 		)
 
 		val isInFloorBlendZone = SurfaceRules.yBlockCheck(
@@ -116,6 +114,8 @@ object ModNoiseSettings {
 		)
 
 		return SurfaceRules.sequence(
+			SurfaceRules.ifTrue(isWorldBottom, bedrock),
+			SurfaceRules.ifTrue(isWorldTop, bedrock),
 			SurfaceRules.ifTrue(
 				SurfaceRules.ON_FLOOR,
 				SurfaceRules.ifTrue(isInFloorBlendZone, cobblestone)

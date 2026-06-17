@@ -28,14 +28,14 @@
           "from_value": 1.0,
           "from_y": -64,
           "to_value": 0.0,
-          "to_y": 64
+          "to_y": 62
         },
         "argument2": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": 1.0,
-          "from_y": 64,
+          "from_y": 62,
           "to_value": -1.0,
-          "to_y": 72
+          "to_y": 70
         }
       },
       "argument2": {
@@ -43,16 +43,16 @@
         "argument1": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": 0.0,
-          "from_y": 128,
+          "from_y": 120,
           "to_value": 1.0,
           "to_y": 320
         },
         "argument2": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": -1.0,
-          "from_y": 120,
+          "from_y": 112,
           "to_value": 1.0,
-          "to_y": 128
+          "to_y": 120
         }
       }
     },
@@ -67,14 +67,14 @@
           "from_value": 1.0,
           "from_y": -64,
           "to_value": 0.0,
-          "to_y": 64
+          "to_y": 62
         },
         "argument2": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": 1.0,
-          "from_y": 64,
+          "from_y": 62,
           "to_value": -1.0,
-          "to_y": 72
+          "to_y": 70
         }
       },
       "argument2": {
@@ -82,16 +82,16 @@
         "argument1": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": 0.0,
-          "from_y": 128,
+          "from_y": 120,
           "to_value": 1.0,
           "to_y": 320
         },
         "argument2": {
           "type": "minecraft:y_clamped_gradient",
           "from_value": -1.0,
-          "from_y": 120,
+          "from_y": 112,
           "to_value": 1.0,
-          "to_y": 128
+          "to_y": 120
         }
       }
     },
@@ -104,11 +104,48 @@
     "vein_toggle": 0.0
   },
   "ore_veins_enabled": true,
-  "sea_level": 64,
+  "sea_level": 62,
   "spawn_target": [],
   "surface_rule": {
     "type": "minecraft:sequence",
     "sequence": [
+      {
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:not",
+          "invert": {
+            "type": "minecraft:y_above",
+            "add_stone_depth": false,
+            "anchor": {
+              "above_bottom": 3
+            },
+            "surface_depth_multiplier": 0
+          }
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "minecraft:bedrock"
+          }
+        }
+      },
+      {
+        "type": "minecraft:condition",
+        "if_true": {
+          "type": "minecraft:y_above",
+          "add_stone_depth": false,
+          "anchor": {
+            "below_top": 3
+          },
+          "surface_depth_multiplier": 0
+        },
+        "then_run": {
+          "type": "minecraft:block",
+          "result_state": {
+            "Name": "minecraft:bedrock"
+          }
+        }
+      },
       {
         "type": "minecraft:condition",
         "if_true": {
@@ -124,7 +161,7 @@
             "type": "minecraft:y_above",
             "add_stone_depth": false,
             "anchor": {
-              "absolute": 64
+              "absolute": 62
             },
             "surface_depth_multiplier": 0
           },
@@ -153,7 +190,7 @@
               "type": "minecraft:y_above",
               "add_stone_depth": false,
               "anchor": {
-                "absolute": 128
+                "absolute": 120
               },
               "surface_depth_multiplier": 0
             }
