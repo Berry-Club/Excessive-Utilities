@@ -7,7 +7,7 @@ object DeepDarkConstants {
 	const val HEIGHT = MAX_Y - MIN_Y
 
 	const val FLOOR_TOP = 62
-	const val CEILING_BOTTOM = 120
-	const val BLEND_THICKNESS = 8
+	const val CEILING_BOTTOM = 157
+	const val BLEND_THICKNESS = 16
 
 }

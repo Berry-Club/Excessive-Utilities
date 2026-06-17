@@ -20,8 +20,8 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 		val level = context.level()
 		val chunkX = floor(origin.x / 16.0).toInt()
 		val chunkZ = floor(origin.z / 16.0).toInt()
-		val regionX = chunkX shr 2
-		val regionZ = chunkZ shr 2
+		val regionX = Math.floorDiv(chunkX, REGION_CHUNKS)
+		val regionZ = Math.floorDiv(chunkZ, REGION_CHUNKS)
 		val chunkMinX = chunkX shl 4
 		val chunkMinZ = chunkZ shl 4
 		val chunkMaxX = chunkMinX + 15
@@ -33,8 +33,8 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 		for (candidateRegionX in (regionX - 1)..(regionX + 1)) {
 			for (candidateRegionZ in (regionZ - 1)..(regionZ + 1)) {
 				val regionRandom = RandomSource.create(level.seed + candidateRegionX * 65535L + candidateRegionZ)
-				val spireX = candidateRegionX * 64 + 8 + regionRandom.nextInt(48)
-				val spireZ = candidateRegionZ * 64 + 8 + regionRandom.nextInt(48)
+				val spireX = candidateRegionX * REGION_SIZE + REGION_MARGIN + regionRandom.nextInt(REGION_SIZE - REGION_MARGIN * 2)
+				val spireZ = candidateRegionZ * REGION_SIZE + REGION_MARGIN + regionRandom.nextInt(REGION_SIZE - REGION_MARGIN * 2)
 
 				if (spireX + PILLAR_RADIUS < chunkMinX || spireX - PILLAR_RADIUS > chunkMaxX) continue
 				if (spireZ + PILLAR_RADIUS < chunkMinZ || spireZ - PILLAR_RADIUS > chunkMaxZ) continue
@@ -73,11 +73,11 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 					val distanceToShell = min(y - DeepDarkConstants.FLOOR_TOP, DeepDarkConstants.CEILING_BOTTOM - y)
 					var threshold = spireDistance
 
-					if (distanceToShell < 9) {
-						threshold -= sqrt(9.0 - distanceToShell)
+					if (distanceToShell < FLARE_HEIGHT) {
+						threshold -= sqrt((FLARE_HEIGHT - distanceToShell).toDouble()) * 1.8
 					}
 
-					if (threshold <= 4 || threshold <= 5 && shouldPlaceOuterBlock(x, y, z, spireX, spireZ)) {
+					if (threshold <= CORE_RADIUS || threshold <= OUTER_RADIUS && shouldPlaceOuterBlock(x, y, z, spireX, spireZ)) {
 						mutablePos.set(x, y, z)
 						if (level.isEmptyBlock(mutablePos) || level.getBlockState(mutablePos).canBeReplaced()) {
 							level.setBlock(mutablePos, Blocks.COBBLESTONE.defaultBlockState(), Block.UPDATE_CLIENTS)
@@ -104,8 +104,14 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 	}
 
 	companion object {
-		private const val PILLAR_RADIUS = 16
+		private const val REGION_CHUNKS = 7
+		private const val REGION_SIZE = REGION_CHUNKS * 16
+		private const val REGION_MARGIN = 32
+		private const val PILLAR_RADIUS = 18
 		private const val PILLAR_RADIUS_SQUARED = PILLAR_RADIUS * PILLAR_RADIUS
+		private const val CORE_RADIUS = 10
+		private const val OUTER_RADIUS = 17
+		private const val FLARE_HEIGHT = 18
 	}
 
 }
