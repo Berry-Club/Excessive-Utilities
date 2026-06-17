@@ -16,11 +16,16 @@ import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionS
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.sounds.SoundEvent
+import net.minecraft.sounds.SoundEvents
+import net.minecraft.sounds.SoundSource
+import net.minecraft.util.Mth
 import net.minecraft.world.entity.*
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.phys.AABB
+import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.event.EventHooks
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import java.util.*
@@ -38,8 +43,9 @@ class InversionRitualActor(
 
 	private val area: AABB = AABB(center).inflate(1024.0)
 	private val period: Int = ServerConfig.CONFIG.inversionRitualPeriod.get()
-	private val spawnsPer: Int get() = ServerConfig.CONFIG.inversionRitualSpawnsPer.get()
-	private val requiredKills: Int get() = ServerConfig.CONFIG.inversionRitualKillsRequired.get()
+
+	private fun getSpawnsPer(): Int = ServerConfig.CONFIG.inversionRitualSpawnsPer.get()
+	private fun getRequiredKills(): Int = ServerConfig.CONFIG.inversionRitualKillsRequired.get()
 
 	private var tick = 0
 	private var monstersKilled = 0
@@ -76,7 +82,7 @@ class InversionRitualActor(
 			return
 		}
 
-		for (i in 0 until spawnsPer) {
+		for (i in 0 until getSpawnsPer()) {
 			spawnMonster(player)
 		}
 	}
@@ -93,9 +99,7 @@ class InversionRitualActor(
 		}
 
 		if (success) {
-			val players = level
-				.getEntitiesOfClass(Player::class.java, area)
-
+			val players = getPlayersInArea()
 			for (player in players) {
 				DivisionSigilInversion.invertSigil(player)
 			}
@@ -130,7 +134,7 @@ class InversionRitualActor(
 			null
 		)
 
-		mob.target = player
+		mob.target = getNearestPlayerInArea(mob.position()) ?: player
 		CurseHandler.setCursed(mob, value = true)
 
 		if (mob is NeutralMob) {
@@ -218,18 +222,46 @@ class InversionRitualActor(
 	}
 
 	private fun handleDeath(
-		victim: LivingEntity,
-		killer: Player
+		victim: LivingEntity
 	) {
-		if (killer != getPlayer()) return
+		if (!area.contains(victim.position())) return
 
 		monstersKilled++
 
-		killer.status("$monstersKilled/$requiredKills")
+		val requiredKills = getRequiredKills()
+		val percent = monstersKilled.toFloat() / requiredKills
+
+		val sound: SoundEvent
+		val pitch: Float
+
+		if (percent >= 1f) {
+			sound = SoundEvents.PLAYER_LEVELUP
+			pitch = 1f
+		} else {
+			sound = SoundEvents.EXPERIENCE_ORB_PICKUP
+			pitch = Mth.lerp(percent, 0.5f, 1.5f)
+		}
+
+		for (player in getPlayersInArea()) {
+			player.status("$monstersKilled/$requiredKills")
+			player.playNotifySound(
+				sound,
+				SoundSource.PLAYERS,
+				1f, pitch
+			)
+		}
 
 		if (monstersKilled >= requiredKills) {
 			end(success = true)
 		}
+	}
+
+	private fun getPlayersInArea(): List<Player> {
+		return level.getEntitiesOfClass(Player::class.java, area)
+	}
+
+	private fun getNearestPlayerInArea(position: Vec3): Player? {
+		return getPlayersInArea().minByOrNull { it.distanceToSqr(position) }
 	}
 
 	companion object {
@@ -249,8 +281,9 @@ class InversionRitualActor(
 			if (event.isCanceled) return
 
 			val victim = event.entity
-			val killer = event.source.entity as? Player ?: return
+			val killedByPlayer = event.source.entity is Player
 
+			if (!killedByPlayer) return
 			if (!CurseHandler.isCursed(victim)) return
 
 			val inversionRituals = victim
@@ -259,7 +292,7 @@ class InversionRitualActor(
 				.filterIsInstance<InversionRitualActor>()
 
 			for (ritual in inversionRituals) {
-				ritual.handleDeath(victim, killer)
+				ritual.handleDeath(victim)
 			}
 		}
 	}
