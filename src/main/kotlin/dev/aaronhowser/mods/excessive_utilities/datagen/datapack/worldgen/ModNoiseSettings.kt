@@ -1,11 +1,13 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import net.minecraft.core.HolderGetter
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.levelgen.*
+import net.minecraft.world.level.levelgen.synth.NormalNoise
 
 object ModNoiseSettings {
 
@@ -18,7 +20,7 @@ object ModNoiseSettings {
 				NoiseSettings(DeepDarkConstants.MIN_Y, DeepDarkConstants.HEIGHT, 1, 1),
 				Blocks.STONE.defaultBlockState(),
 				Blocks.AIR.defaultBlockState(),
-				buildNoiseRouter(),
+				buildNoiseRouter(context.lookup(Registries.NOISE)),
 				deepDarkRules(),
 				listOf(),
 				DeepDarkConstants.FLOOR_TOP,
@@ -30,7 +32,24 @@ object ModNoiseSettings {
 		)
 	}
 
-	private fun buildNoiseRouter(): NoiseRouter {
+	private fun buildNoiseRouter(noises: HolderGetter<NormalNoise.NoiseParameters>): NoiseRouter {
+		val surfaceNoise = DensityFunctions.noise(
+			noises.getOrThrow(Noises.SURFACE),
+			0.085,
+			0.0
+		)
+
+		val detailNoise = DensityFunctions.noise(
+			noises.getOrThrow(Noises.SURFACE_SECONDARY),
+			0.22,
+			0.0
+		)
+
+		val roughSurface = DensityFunctions.add(
+			DensityFunctions.mul(surfaceNoise, DensityFunctions.constant(0.85)),
+			DensityFunctions.mul(detailNoise, DensityFunctions.constant(0.35))
+		)
+
 		val solidFloor = DensityFunctions.yClampedGradient(
 			DeepDarkConstants.MIN_Y,
 			DeepDarkConstants.FLOOR_TOP,
@@ -45,7 +64,10 @@ object ModNoiseSettings {
 			-1.0
 		)
 
-		val floor = DensityFunctions.max(solidFloor, noiseFloor)
+		val floor = DensityFunctions.max(
+			solidFloor,
+			DensityFunctions.add(noiseFloor, roughSurface)
+		)
 
 		val solidCeiling = DensityFunctions.yClampedGradient(
 			DeepDarkConstants.CEILING_BOTTOM,
@@ -61,7 +83,10 @@ object ModNoiseSettings {
 			1.0
 		)
 
-		val ceiling = DensityFunctions.max(solidCeiling, noiseCeiling)
+		val ceiling = DensityFunctions.max(
+			solidCeiling,
+			DensityFunctions.add(noiseCeiling, roughSurface)
+		)
 
 		val shape = DensityFunctions.max(floor, ceiling)
 
