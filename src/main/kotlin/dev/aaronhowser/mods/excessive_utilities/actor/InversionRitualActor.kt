@@ -167,7 +167,9 @@ class InversionRitualActor(
 	}
 
 	private fun getCurrentMonsterCount(): Int {
-		return level.getEntitiesOfClass(LivingEntity::class.java, area).count(CurseHandler::isCursed)
+		return level
+			.getEntitiesOfClass(Mob::class.java, area)
+			.count(CurseHandler::isCursed)
 	}
 
 	private fun findMobSpawnLocation(
