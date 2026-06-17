@@ -110,7 +110,7 @@ object ModDataGen {
 		)
 		generator.addProvider(
 			event.includeServer(),
-			ModBiomeTagsProvider(output, lookupProvider, existingFileHelper)
+			ModBiomeTagsProvider(output, lookupWithDatapack, existingFileHelper)
 		)
 
 		generator.addProvider(
