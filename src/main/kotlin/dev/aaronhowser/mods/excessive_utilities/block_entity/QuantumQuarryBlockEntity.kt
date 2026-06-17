@@ -22,7 +22,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
@@ -37,8 +36,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
-import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -154,9 +153,8 @@ class QuantumQuarryBlockEntity(
 
 		val enchantedBook = getEnchantedBook()
 		if (enchantedBook.isNotEmpty()) {
-			val storedEnchants = enchantedBook.getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
 			val enchantmentLookup = miningDimensionLevel.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
-			val efficiencyLevel = storedEnchants.getLevel(enchantmentLookup.getHolderOrThrow(Enchantments.EFFICIENCY))
+			val efficiencyLevel = enchantedBook.getEnchantmentLevel(enchantmentLookup.getHolderOrThrow(Enchantments.EFFICIENCY))
 			if (efficiencyLevel > 0) {
 				progressThroughBlock *= 1.0 + (efficiencyLevel * 0.25)
 			}
@@ -202,8 +200,8 @@ class QuantumQuarryBlockEntity(
 			}
 		}
 
-		val enchantments = getEnchantedBook().getOrDefault(DataComponents.STORED_ENCHANTMENTS, ItemEnchantments.EMPTY)
-		tool.set(DataComponents.ENCHANTMENTS, enchantments)
+		val enchantments = EnchantmentHelper.getEnchantmentsForCrafting(getEnchantedBook())
+		EnchantmentHelper.setEnchantments(tool, enchantments)
 
 		val lootParams = LootParams.Builder(miningDimensionLevel)
 			.withParameter(LootContextParams.ORIGIN, target.center)
