@@ -83,10 +83,15 @@ class DeepDarkPortalBlock : Block(Properties.ofFullCopy(Blocks.STONE)) {
 		private fun prepareDestinationRoom(level: ServerLevel, portalPos: BlockPos, portalState: BlockState) {
 			val hRad = 3
 
+			val mutablePos = portalPos.mutable()
+			val x = portalPos.x
+			val y = portalPos.y
+			val z = portalPos.z
+
 			for (xOffset in -hRad..hRad) {
-				for (yOffset in 0..4) {
+				for (yOffset in 1..5) {
 					for (zOffset in -hRad..hRad) {
-						val targetPos = portalPos.offset(xOffset, yOffset, zOffset)
+						val targetPos = mutablePos.set(x + xOffset, y + yOffset, z + zOffset)
 						if (targetPos == portalPos) continue
 
 						level.setBlock(targetPos, Blocks.AIR.defaultBlockState(), UPDATE_ALL_IMMEDIATE)
