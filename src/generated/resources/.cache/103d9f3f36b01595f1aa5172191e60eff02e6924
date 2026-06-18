@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-17T21:26:23.225259	Registries
+// 1.21.1	2026-06-17T21:31:18.4922238	Registries
 c7653945d8ab22823b09863f2c5e7d4c3874578e data/excessive_utilities/damage_type/doom.json
 731ab165ce06ce5739cea43fc212ae811ac43cff data/excessive_utilities/dimension/deep_dark.json
 877bd9be3bfb61b205649d191710f2500792461b data/excessive_utilities/dimension/quantum_quarry.json
@@ -43,5 +43,5 @@ af1568be298c997c27b19bc8daa32344fd4f16f2 data/excessive_utilities/worldgen/place
 6a98abfb3b8c9db6c09284520ddcb208074b113c data/excessive_utilities/worldgen/placed_feature/deep_dark_pillar.json
 cc18585306eb0b1344fab12079cc030e724999b0 data/excessive_utilities/worldgen/placed_feature/deep_dark_sculk_vein.json
 a459794a5e607dc88c4bba579a531f85acc6f64b data/excessive_utilities/worldgen/placed_feature/deep_dark_stalactite.json
-b615cba133637332d98d92ddb73181e9fdf06581 data/excessive_utilities/worldgen/structure/ancient_city.json
+381513acdb3314717579f313f2b16d3211d73c29 data/excessive_utilities/worldgen/structure/ancient_city.json
 225a2e6a4d0bf226213103634b1aa4b0caa9b214 data/excessive_utilities/worldgen/structure_set/ancient_cities.json

@@ -63,6 +63,6 @@ object ModStructures {
 	}
 
 	private const val CITY_ANCHOR_Y_OFFSET = 24
-	private const val FLOOR_CLEARANCE = 4
+	private const val FLOOR_CLEARANCE = 6
 
 }
