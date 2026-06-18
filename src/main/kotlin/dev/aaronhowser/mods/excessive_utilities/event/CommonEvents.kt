@@ -21,6 +21,7 @@ import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
 import dev.aaronhowser.mods.excessive_utilities.effect.SecondChanceEffect
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.SoulRendHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilActivation
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilInversion
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
@@ -377,6 +378,7 @@ object CommonEvents {
 	@SubscribeEvent
 	fun onIncomingDamage(event: LivingIncomingDamageEvent) {
 		SecondChanceEffect.cancelDeath(event)
+		SoulRendHandler.handleIncomingDamage(event)
 	}
 
 	@SubscribeEvent

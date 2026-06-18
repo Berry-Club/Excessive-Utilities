@@ -4,11 +4,15 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttributes
 import net.minecraft.core.component.DataComponents
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.EquipmentSlotGroup
+import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.SwordItem.createAttributes
 import net.minecraft.world.item.component.Unbreakable
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 
 object SoulRendHandler {
 
@@ -29,6 +33,33 @@ object SoulRendHandler {
 						EquipmentSlotGroup.MAINHAND
 					)
 			)
+	}
+
+	private val SOUL_RENT_HEALTH: ResourceLocation = ExcessiveUtilities.modResource("soul_rent")
+
+	fun handleIncomingDamage(event: LivingIncomingDamageEvent) {
+		if (event.isCanceled) return
+
+		val victim = event.entity
+		if (victim.level().isClientSide) return
+
+		val attacker = event.source.entity as? LivingEntity ?: return
+		if (attacker == victim) return
+
+		val attackerSoulRending = attacker.getAttributeValue(ModAttributes.SOUL_RENDING)
+		if (attackerSoulRending <= 0.0) return
+
+		val victimMaxHealthAttribute = victim.getAttribute(Attributes.MAX_HEALTH) ?: return
+		val currentModifierAmount = victimMaxHealthAttribute.getModifier(SOUL_RENT_HEALTH)?.amount ?: 0.0
+
+		victimMaxHealthAttribute.addOrUpdateTransientModifier(
+			AttributeModifier(
+				SOUL_RENT_HEALTH,
+				currentModifierAmount - attackerSoulRending,
+				AttributeModifier.Operation.ADD_VALUE
+			)
+		)
+
 	}
 
 }
