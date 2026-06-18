@@ -14,6 +14,10 @@
 - Which Angel Ring wing you have is now a Data Attachment
 	- It was previously a packet that modified a static `Map<UUID, Type>` which is gross
 
+### Fixed
+
+- Lassos only try to pick up `Mob`s. Previously it would try to pick up any `LivingEntity`, including players
+
 # 1.6.0
 
 ### Fixed

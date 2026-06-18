@@ -17,6 +17,7 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.OwnableEntity
 import net.minecraft.world.entity.monster.Enemy
 import net.minecraft.world.entity.player.Player
@@ -39,7 +40,9 @@ class EntityLassoItem(
 		interactionTarget: LivingEntity,
 		usedHand: InteractionHand
 	): InteractionResult {
-		if (player.isClientSide || stack.has(ModDataComponents.ENTITY_DATA)
+		if (player.isClientSide
+			|| stack.has(ModDataComponents.ENTITY_DATA)
+			|| interactionTarget !is Mob
 		) {
 			return InteractionResult.PASS
 		}
