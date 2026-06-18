@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.element
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.face
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.override
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.transform
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.transforms
@@ -9,6 +11,7 @@ import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
 import dev.aaronhowser.mods.excessive_utilities.item.MagicalBoomerangItem
 import dev.aaronhowser.mods.excessive_utilities.item.WateringCanItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.world.item.BlockItem
@@ -42,9 +45,95 @@ class ModItemModelProvider(
 		creativeDestructionWand()
 		heatingCoil()
 		angelRings()
+		kikoku()
 
 		handheld()
 		basicItems()
+	}
+
+	private fun kikoku() {
+		val item = ModItems.KIKOKU.get()
+
+		withExistingParent(getName(item), mcLoc("item/handheld"))
+			.texture("blade", modLoc("item/kikoku"))
+			.texture("particle", modLoc("item/kikoku"))
+
+			.element {
+				from(6.8095236f, -8f, 6.8095236f)
+				to(9.190476f, -0.38095236f, 9.190476f)
+
+				allFaces { dir, fb ->
+					fb.texture("#blade")
+
+					if (dir.axis == Direction.Axis.Y) {
+						fb.uvs(4.5f, 10.5f, 7f, 13f)
+					} else {
+						fb.uvs(0f, 0f, 2.5f, 8f)
+					}
+				}
+			}
+
+			.element {
+				from(4.904762f, -0.38095236f, 4.904762f)
+				to(11.095238f, 1.5238094f, 11.095238f)
+
+				allFaces { dir, fb ->
+					fb.texture("#blade")
+
+					when (dir) {
+						Direction.UP -> fb.uvs(2.5f, 0f, 9f, 6.5f)
+						Direction.DOWN -> fb.uvs(2.5f, 8.5f, 9f, 15f)
+						else -> fb.uvs(2.5f, 6.5f, 9f, 8.5f)
+					}
+				}
+			}
+
+			.element {
+				from(7.047619f, 1.5238094f, 7.96875f)
+				to(8.952381f, 9.142857f, 8.03125f)
+
+				face(Direction.NORTH) {
+					texture("#blade")
+					uvs(0f, 8f, 2f, 16f)
+				}
+
+				face(Direction.SOUTH) {
+					texture("#blade")
+					uvs(2f, 8f, 0f, 16f)
+				}
+			}
+
+			.element {
+				from(7.047619f, 9.142857f, 7.96875f)
+				to(8.952381f, 24.38095f, 8.03125f)
+
+				face(Direction.NORTH) {
+					texture("#blade")
+					uvs(9f, 0f, 11f, 16f)
+				}
+
+				face(Direction.SOUTH) {
+					texture("#blade")
+					uvs(11f, 0f, 9f, 16f)
+				}
+			}
+
+			.element {
+				from(7.047619f, 24.38095f, 7.96875f)
+				to(8.952381f, 32f, 8.03125f)
+
+				face(Direction.NORTH) {
+					texture("#blade")
+					uvs(12f, 0f, 14f, 8f)
+				}
+
+				face(Direction.SOUTH) {
+					texture("#blade")
+					uvs(14f, 0f, 12f, 8f)
+				}
+			}
+
+		handledItems.add(item)
 	}
 
 	private fun angelRings() {

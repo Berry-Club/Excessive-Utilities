@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-18T11:00:10.7824409	Item Models: excessive_utilities
+// 1.21.1	2026-06-18T11:20:06.7192735	Item Models: excessive_utilities
 1236a4142d997bf13e37966ee4b6d6a0237f31cf assets/excessive_utilities/models/item/angel_ring.json
 ea8cada31b6cd1de0002d4bdad2250551eb855ed assets/excessive_utilities/models/item/angel_ring_bat.json
 5a34a5b53d51bd014f17fc2057a69f08f02b2acd assets/excessive_utilities/models/item/angel_ring_butterfly.json
@@ -60,6 +60,7 @@ ea54a7efe61eb07eb93d89422b6804e7aa21e6db assets/excessive_utilities/models/item/
 b8ce398d5409c61d511dcc6cdbb912fca2dd9641 assets/excessive_utilities/models/item/indexer_remote.json
 133dc338d61111a2915839333e9c6f5378bb4607 assets/excessive_utilities/models/item/iron_sickle.json
 1e13a69390961ab8ee787c4bc2b7f1c76ec8f9a9 assets/excessive_utilities/models/item/item_filter.json
+265917ff7c3b06b053b5a136b2728f35c4237f60 assets/excessive_utilities/models/item/kikoku.json
 51b4830aa1a9f640cbf0e417a09ef8570c5c26fa assets/excessive_utilities/models/item/lunar_reactive_dust.json
 34c063c725f8c913b5c1393175528bc6712d3001 assets/excessive_utilities/models/item/magical_apple.json
 df749ccee0b114aa68f934b6e60ba5f8971199b0 assets/excessive_utilities/models/item/magical_boomerang.json
