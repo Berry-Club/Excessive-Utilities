@@ -34,7 +34,7 @@ class EnderCollectorBER(
 		AaronRenderUtil.renderCubeWireframeThroughWalls(
 			poseStack,
 			-radius, -radius, -radius,
-			radius * 2, radius * 2, radius * 2,
+			radius + 1, radius + 1, radius + 1,
 			0xFFFFFFFF.toInt()
 		)
 
