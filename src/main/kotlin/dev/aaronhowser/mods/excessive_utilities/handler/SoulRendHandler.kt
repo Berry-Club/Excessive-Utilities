@@ -1,11 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.handler
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttributes
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.particles.ParticleTypes
 import net.minecraft.resources.ResourceLocation
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
@@ -53,8 +54,6 @@ object SoulRendHandler {
 		val victimMaxHealthAttribute = victim.getAttribute(Attributes.MAX_HEALTH) ?: return
 		val currentModifierAmount = victimMaxHealthAttribute.getModifier(SOUL_RENT_HEALTH)?.amount ?: 0.0
 
-		attacker.tell(victim.getAttributeValue(Attributes.MAX_HEALTH).toString())
-
 		victimMaxHealthAttribute.addOrUpdateTransientModifier(
 			AttributeModifier(
 				SOUL_RENT_HEALTH,
@@ -63,7 +62,24 @@ object SoulRendHandler {
 			)
 		)
 
-		attacker.tell(victim.getAttributeValue(Attributes.MAX_HEALTH).toString())
+		spawnSoulParticles(victim)
+	}
+
+	private fun spawnSoulParticles(victim: LivingEntity) {
+		val level = victim.level() as? ServerLevel ?: return
+		val bb = victim.boundingBox
+
+		level.sendParticles(
+			ParticleTypes.SCULK_SOUL,
+			victim.x,
+			victim.y + victim.bbHeight * 0.5,
+			victim.z,
+			8,
+			bb.xsize * 0.5,
+			victim.bbHeight * 0.35,
+			bb.zsize * 0.5,
+			0.02
+		)
 	}
 
 }
