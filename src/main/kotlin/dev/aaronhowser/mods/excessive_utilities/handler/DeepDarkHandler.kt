@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDamageTypePr
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
@@ -19,6 +20,8 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.CaveVines
 import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
 import net.minecraft.world.level.saveddata.SavedData
@@ -79,6 +82,31 @@ class DeepDarkHandler : SavedData() {
 			ddLevel.random,
 			Block.UPDATE_ALL_IMMEDIATE
 		)
+
+		for (i in 0 until 8) {
+			val berryPos = room.portalPos
+				.offset(
+					ddLevel.random.nextInt(-16, 16),
+					-10,
+					ddLevel.random.nextInt(-16, 16),
+				)
+				.mutable()
+
+			while (ddLevel.isInWorldBounds(berryPos) && !ddLevel.isEmptyBlock(berryPos)) {
+				berryPos.move(Direction.DOWN)
+			}
+
+			val length = ddLevel.random.nextInt(3, 9)
+			for (dy in 0..length) {
+				var state = Blocks.CAVE_VINES_PLANT.defaultBlockState()
+
+				if (dy == 0 || ddLevel.random.nextInt(5) == 0) {
+					state = state.setValue(CaveVines.BERRIES, true)
+				}
+
+				ddLevel.setBlockAndUpdate(berryPos.offset(0, -dy, 0), state)
+			}
+		}
 	}
 
 	fun returnFromDimension(entity: Entity) {
@@ -128,15 +156,6 @@ class DeepDarkHandler : SavedData() {
 
 		tag.put(ROOMS_NBT, listTag)
 		return tag
-	}
-
-	private data class Room(
-		val originDimension: ResourceKey<Level>,
-		val originPortalPos: BlockPos,
-		val structureMin: BlockPos
-	) {
-		val portalPos: BlockPos = structureMin.offset(PORTAL_OFFSET)
-		val bounds: BoundingBox = getBounds(structureMin)
 	}
 
 	companion object {
@@ -224,6 +243,15 @@ class DeepDarkHandler : SavedData() {
 
 			player.hurt(damageSource, damageAmount)
 		}
-
 	}
+
+	private data class Room(
+		val originDimension: ResourceKey<Level>,
+		val originPortalPos: BlockPos,
+		val structureMin: BlockPos
+	) {
+		val portalPos: BlockPos = structureMin.offset(PORTAL_OFFSET)
+		val bounds: BoundingBox = getBounds(structureMin)
+	}
+
 }
