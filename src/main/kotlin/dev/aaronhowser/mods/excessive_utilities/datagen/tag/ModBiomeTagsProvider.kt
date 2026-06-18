@@ -6,7 +6,6 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.BiomeTagsProvider
-import net.minecraft.tags.BiomeTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.biome.Biome
 import net.neoforged.neoforge.common.Tags
@@ -21,11 +20,7 @@ class ModBiomeTagsProvider(
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BIOME_MARKER_BLACKLIST)
-
 		tag(Tags.Biomes.IS_OVERWORLD)
-			.add(ModBiomes.DEEP_DARK)
-
-		tag(BiomeTags.HAS_ANCIENT_CITY)
 			.add(ModBiomes.DEEP_DARK)
 	}
 
