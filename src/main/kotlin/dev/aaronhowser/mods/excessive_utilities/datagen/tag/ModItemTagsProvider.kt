@@ -290,7 +290,6 @@ class ModItemTagsProvider(
 				ModBlocks.HUMIDIFIER.asItem(),
 				ModBlocks.MAGIC_ABSORPTION.asItem(),
 				ModBlocks.MAGIC_INFUSER.asItem(),
-				ModBlocks.DEEP_DARK_PORTAL.asItem(),
 				ModBlocks.TRADING_POST.asItem(),
 				ModBlocks.INDEXER.asItem(),
 				ModBlocks.TRANSFER_FILTER.asItem(),
