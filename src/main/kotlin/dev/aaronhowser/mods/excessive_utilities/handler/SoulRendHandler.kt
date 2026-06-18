@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.handler
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttributes
@@ -52,6 +53,8 @@ object SoulRendHandler {
 		val victimMaxHealthAttribute = victim.getAttribute(Attributes.MAX_HEALTH) ?: return
 		val currentModifierAmount = victimMaxHealthAttribute.getModifier(SOUL_RENT_HEALTH)?.amount ?: 0.0
 
+		attacker.tell(victim.getAttributeValue(Attributes.MAX_HEALTH).toString())
+
 		victimMaxHealthAttribute.addOrUpdateTransientModifier(
 			AttributeModifier(
 				SOUL_RENT_HEALTH,
@@ -60,6 +63,7 @@ object SoulRendHandler {
 			)
 		)
 
+		attacker.tell(victim.getAttributeValue(Attributes.MAX_HEALTH).toString())
 	}
 
 }

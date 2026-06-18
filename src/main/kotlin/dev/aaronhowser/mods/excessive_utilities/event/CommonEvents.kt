@@ -44,6 +44,7 @@ import net.neoforged.neoforge.event.AddReloadListenerEvent
 import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.RegisterCommandsEvent
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
+import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent
 import net.neoforged.neoforge.event.entity.living.*
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
@@ -455,6 +456,15 @@ object CommonEvents {
 		val damageSource = player.damageSources().source(ModDamageTypeProvider.DARKNESS)
 
 		player.hurt(damageSource, damageAmount)
+	}
+
+	@SubscribeEvent
+	fun onEntityAttributeModification(event: EntityAttributeModificationEvent) {
+		for (type in event.types) {
+			if (!event.has(type, ModAttributes.SOUL_RENDING)) {
+				event.add(type, ModAttributes.SOUL_RENDING)
+			}
+		}
 	}
 
 }

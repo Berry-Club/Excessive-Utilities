@@ -8,6 +8,11 @@
 	- Added some vanilla Deep Dark stuff as well
 		- Veins of Sculk permeate the dimension
 		- Ancient Cities can spawn rarely
+- Kikoku
+	- Deals 2 Soul Rending
+		- Soul Rending is a new attribute that lowers the max health of anything you attack
+        - Currently only used by the Kikoku, but since it's an Attribute, anything can use it
+        - The Soul Rent attribute modifier on max health decreases over time
 
 ### Changed
 
