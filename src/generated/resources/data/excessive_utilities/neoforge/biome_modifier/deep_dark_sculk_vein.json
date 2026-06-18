@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "excessive_utilities:deep_dark",
+  "features": "excessive_utilities:deep_dark_sculk_vein",
+  "step": "underground_ores"
+}

@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.feature.DeepDarkPillarFeature
+import dev.aaronhowser.mods.excessive_utilities.feature.DeepDarkSculkVeinFeature
 import dev.aaronhowser.mods.excessive_utilities.feature.DeepDarkStalactiteFeature
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.level.levelgen.feature.Feature
@@ -18,5 +19,8 @@ object ModFeatures {
 
 	val DEEP_DARK_STALACTITE: DeferredHolder<Feature<*>, DeepDarkStalactiteFeature> =
 		FEATURE_REGISTRY.register("deep_dark_stalactite", ::DeepDarkStalactiteFeature)
+
+	val DEEP_DARK_SCULK_VEIN: DeferredHolder<Feature<*>, DeepDarkSculkVeinFeature> =
+		FEATURE_REGISTRY.register("deep_dark_sculk_vein", ::DeepDarkSculkVeinFeature)
 
 }

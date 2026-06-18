@@ -12,6 +12,7 @@ object ModConfiguredFeatures {
 
 	val DEEP_DARK_PILLAR = rk("deep_dark_pillar")
 	val DEEP_DARK_STALACTITE = rk("deep_dark_stalactite")
+	val DEEP_DARK_SCULK_VEIN = rk("deep_dark_sculk_vein")
 
 	fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
 
@@ -27,6 +28,14 @@ object ModConfiguredFeatures {
 			DEEP_DARK_STALACTITE,
 			ConfiguredFeature(
 				ModFeatures.DEEP_DARK_STALACTITE.get(),
+				FeatureConfiguration.NONE
+			)
+		)
+
+		context.register(
+			DEEP_DARK_SCULK_VEIN,
+			ConfiguredFeature(
+				ModFeatures.DEEP_DARK_SCULK_VEIN.get(),
 				FeatureConfiguration.NONE
 			)
 		)

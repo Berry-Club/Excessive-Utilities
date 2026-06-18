@@ -15,6 +15,7 @@ object ModPlacedFeatures {
 
 	val DEEP_DARK_PILLAR = rk("deep_dark_pillar")
 	val DEEP_DARK_STALACTITE = rk("deep_dark_stalactite")
+	val DEEP_DARK_SCULK_VEIN = rk("deep_dark_sculk_vein")
 
 	val DEEP_DARK_LAKE_LAVA_SURFACE = rk("deep_dark_lake_lava_surface")
 
@@ -75,6 +76,21 @@ object ModPlacedFeatures {
 		)
 
 		context.register(
+			DEEP_DARK_SCULK_VEIN,
+			PlacedFeature(
+				configuredFeatures.getOrThrow(ModConfiguredFeatures.DEEP_DARK_SCULK_VEIN),
+				listOf(
+					BiomeFilter.biome(),
+					CountPlacement.of(1),
+					HeightRangePlacement.uniform(
+						VerticalAnchor.absolute(DeepDarkConstants.FLOOR_TOP),
+						VerticalAnchor.absolute(DeepDarkConstants.FLOOR_TOP),
+					)
+				)
+			)
+		)
+
+		context.register(
 			DEEP_DARK_LAKE_LAVA_SURFACE,
 			PlacedFeature(
 				configuredFeatures.getOrThrow(MiscOverworldFeatures.LAKE_LAVA),
@@ -115,8 +131,8 @@ object ModPlacedFeatures {
 		context.register(DEEP_DARK_ORE_LAPIS_BURIED, PlacedFeature(configuredFeatures.getOrThrow(OreFeatures.ORE_LAPIS_BURIED), commonOrePlacement(12, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(64)))))
 		context.register(DEEP_DARK_ORE_EMERALD, PlacedFeature(configuredFeatures.getOrThrow(OreFeatures.ORE_EMERALD), commonOrePlacement(256, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(480)))))
 		context.register(DEEP_DARK_ORE_EMERALD_EXTRA, PlacedFeature(configuredFeatures.getOrThrow(OreFeatures.ORE_EMERALD), commonOrePlacement(44, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(480)))))
-		context.register(DEEP_DARK_ORE_COPPER, PlacedFeature(configuredFeatures.getOrThrow(OreFeatures.ORE_COPPPER_SMALL), commonOrePlacement(48, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(112)))))
-		context.register(DEEP_DARK_ORE_COPPER_LARGE, PlacedFeature(configuredFeatures.getOrThrow(OreFeatures.ORE_COPPER_LARGE), commonOrePlacement(48, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(112)))))
+		context.register(DEEP_DARK_ORE_COPPER, PlacedFeature(configuredFeatures.getOrThrow(OreFeatures.ORE_COPPPER_SMALL), commonOrePlacement(24, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(112)))))
+		context.register(DEEP_DARK_ORE_COPPER_LARGE, PlacedFeature(configuredFeatures.getOrThrow(OreFeatures.ORE_COPPER_LARGE), commonOrePlacement(24, HeightRangePlacement.triangle(VerticalAnchor.absolute(-16), VerticalAnchor.absolute(112)))))
 	}
 
 	private fun orePlacement(countPlacement: PlacementModifier, heightRange: PlacementModifier): List<PlacementModifier> {
