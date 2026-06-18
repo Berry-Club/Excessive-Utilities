@@ -13,11 +13,11 @@
 
 - Which Angel Ring wing you have is now a Data Attachment
 	- It was previously a packet that modified a static `Map<UUID, Type>` which is gross
-- The Ender Quarry's beam renders while the EQ itself is off-screen now
 
 ### Fixed
 
 - Lassos only try to pick up `Mob`s. Previously it would try to pick up any `LivingEntity`, including players
+- The Ender Quarry's beam renders while the EQ itself is off-screen now
 
 # 1.6.0
 
