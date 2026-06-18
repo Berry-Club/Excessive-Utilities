@@ -3,10 +3,12 @@ package dev.aaronhowser.mods.excessive_utilities.client.render.block_entity
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderQuarryBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.MagnumTorchBlockEntity
 import net.minecraft.client.renderer.MultiBufferSource
 import net.minecraft.client.renderer.blockentity.BeaconRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.world.phys.AABB
 
 class EnderQuarryBER(
 	val context: BlockEntityRendererProvider.Context
@@ -49,4 +51,17 @@ class EnderQuarryBER(
 			}
 		}
 	}
+
+	override fun getRenderBoundingBox(blockEntity: EnderQuarryBlockEntity): AABB {
+		return AABB.INFINITE
+	}
+
+	override fun shouldRenderOffScreen(blockEntity: EnderQuarryBlockEntity): Boolean {
+		return true
+	}
+
+	override fun getViewDistance(): Int {
+		return Int.MAX_VALUE
+	}
+
 }
