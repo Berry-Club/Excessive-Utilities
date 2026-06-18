@@ -27,6 +27,7 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 			for (regionZ in chunkZ.floorDiv(REGION_SIZE_IN_CHUNKS) - 1..chunkZ.floorDiv(REGION_SIZE_IN_CHUNKS) + 1) {
 				val pillar = getPillarCenter(level.seed, regionX, regionZ)
 
+				if (DeepDarkAncientCityPlacement.isInReservedCityArea(level.seed, pillar.x, pillar.z)) continue
 				if (!pillarCanTouchChunk(pillar, chunkX, chunkZ)) continue
 
 				placed = placePillarChunk(pillar, chunkX, chunkZ, context) || placed
