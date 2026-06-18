@@ -111,7 +111,7 @@ class ServerConfig(
 	lateinit var cursedEarthBonusStrength: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthBonusSpeed: ModConfigSpec.DoubleValue
 
-	lateinit var inversionRitualPeriod: ModConfigSpec.IntValue
+	lateinit var inversionRitualInterval: ModConfigSpec.IntValue
 	lateinit var inversionRitualSpawnsPer: ModConfigSpec.IntValue
 	lateinit var inversionRitualMaxSpawnedMonsters: ModConfigSpec.IntValue
 	lateinit var inversionRitualKillsRequired: ModConfigSpec.IntValue
@@ -522,9 +522,9 @@ class ServerConfig(
 			}
 
 			builder.section("inversion_ritual") {
-				inversionRitualPeriod = builder
+				inversionRitualInterval = builder
 					.comment("The number of ticks between each time the Ritual tries to spawn a new wave of monsters.")
-					.defineInRange("inversionRitualPeriod", 20, 1, Int.MAX_VALUE)
+					.defineInRange("inversionRitualInterval", 20, 1, Int.MAX_VALUE)
 
 				inversionRitualSpawnsPer = builder
 					.comment("How many monsters are spawned in each wave.")

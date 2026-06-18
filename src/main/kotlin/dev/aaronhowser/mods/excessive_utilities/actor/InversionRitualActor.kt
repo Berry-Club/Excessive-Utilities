@@ -42,7 +42,7 @@ class InversionRitualActor(
 	constructor(player: Player, center: BlockPos) : this(player.uuid, center, player.level())
 
 	private val area: AABB = AABB(center).inflate(1024.0)
-	private val period: Int = ServerConfig.CONFIG.inversionRitualPeriod.get()
+	private val interval: Int = ServerConfig.CONFIG.inversionRitualInterval.get()
 
 	private fun getSpawnsPer(): Int = ServerConfig.CONFIG.inversionRitualSpawnsPer.get()
 	private fun getMaxSpawnedMonsters(): Int = ServerConfig.CONFIG.inversionRitualMaxSpawnedMonsters.get()
@@ -61,7 +61,7 @@ class InversionRitualActor(
 	}
 
 	override fun tick() {
-		if (age % period != 0) return
+		if (age % interval != 0) return
 
 		val player = getPlayer()
 

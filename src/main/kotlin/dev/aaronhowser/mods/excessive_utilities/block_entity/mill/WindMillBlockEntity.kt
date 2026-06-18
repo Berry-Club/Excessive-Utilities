@@ -19,7 +19,7 @@ class WindMillBlockEntity(
 		val time = level.gameTime
 
 		val base = 0.5
-		val bonus = sin(time * (2 * Mth.PI) / 6000.0) // Slowly oscillating bonus between 0 and 2 over a 5 minute period
+		val bonus = sin(time * (2 * Mth.PI) / 6000.0) // Slowly oscillating bonus between 0 and 2 over a 5-minute period
 		val weatherBonus = when {
 			level.isRaining -> 1.0
 			level.isThundering -> 2.0
