@@ -41,6 +41,13 @@ class ChandelierBER(
 			maxX, maxY, maxZ,
 			color = 0x66FFFFFF
 		)
+
+		AaronRenderUtil.renderCubeWireframeThroughWalls(
+			poseStack,
+			0.0, 0.0, 0.0,
+			1.0, 1.0, 1.0,
+			color = 0xFFFCFC95.toInt()
+		)
 	}
 
 	override fun getRenderBoundingBox(blockEntity: ChandelierBlockEntity): AABB {
