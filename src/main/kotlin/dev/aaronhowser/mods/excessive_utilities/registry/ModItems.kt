@@ -2,9 +2,12 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.handler.SoulRendHandler
 import dev.aaronhowser.mods.excessive_utilities.item.*
+import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.SwordItem
 import net.minecraft.world.item.Tiers
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -123,8 +126,8 @@ object ModItems : AaronItemRegistry() {
 
 	// Weapons
 
-	val KIKOKU: DeferredItem<KikokuItem> =
-		register("kikoku", ::KikokuItem, KikokuItem.DEFAULT_PROPERTIES)
+	val KIKOKU: DeferredItem<SwordItem> =
+		register("kikoku", { SwordItem(OpiniumTier, it) }, SoulRendHandler.KIKOKU_PROPERTIES)
 	val FIRE_AXE: DeferredItem<FireAxeItem> =
 		register("fire_axe", ::FireAxeItem, FireAxeItem.DEFAULT_PROPERTIES)
 	val LUX_SABER =
