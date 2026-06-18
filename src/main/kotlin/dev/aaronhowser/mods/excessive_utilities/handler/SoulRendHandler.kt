@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.handler
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttributes
@@ -61,6 +62,10 @@ object SoulRendHandler {
 				AttributeModifier.Operation.ADD_VALUE
 			)
 		)
+
+		if (victim.getAttributeValue(Attributes.MAX_HEALTH) <= 0.0) {
+			victim.kill()
+		}
 
 		spawnSoulParticles(victim)
 	}
