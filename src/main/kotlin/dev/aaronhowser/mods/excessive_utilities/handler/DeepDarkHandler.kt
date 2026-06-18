@@ -104,7 +104,8 @@ class DeepDarkHandler : SavedData() {
 					state = state.setValue(CaveVines.BERRIES, true)
 				}
 
-				ddLevel.setBlockAndUpdate(berryPos.offset(0, -dy, 0), state)
+				ddLevel.setBlockAndUpdate(berryPos, state)
+				berryPos.move(Direction.DOWN)
 			}
 		}
 	}
