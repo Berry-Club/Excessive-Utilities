@@ -38,18 +38,15 @@ class DeepDarkHandler : SavedData() {
 		returnInfo.putLong(FROM_PORTAL_POS, originPortalPos.asLong())
 		entity.persistentData.put(PLAYER_RETURN_INFO, returnInfo)
 
-		val room = getOrCreateRoom(originLevel.dimension(), originPortalPos)
+		val room = getOrCreateRoom(originPortalPos)
 
 		placeStructureIfNeeded(ddLevel, room)
 		teleportAbovePortal(entity, ddLevel, room.portalPos)
 	}
 
-	private fun getOrCreateRoom(
-		originDimension: ResourceKey<Level>,
-		originPortalPos: BlockPos
-	): Room {
+	private fun getOrCreateRoom(originPortalPos: BlockPos): Room {
 		val existing = rooms.firstOrNull {
-			it.originDimension == originDimension && it.originPortalPos == originPortalPos
+			it.originPortalPos == originPortalPos
 		}
 
 		if (existing != null) return existing
@@ -61,7 +58,7 @@ class DeepDarkHandler : SavedData() {
 		val overlappingRoom = rooms.firstOrNull { it.bounds.intersects(wantedBounds) }
 		if (overlappingRoom != null) return overlappingRoom
 
-		val room = Room(originDimension, originPortalPos, wantedStructureMin)
+		val room = Room(originPortalPos, wantedStructureMin)
 		rooms.add(room)
 		setDirty()
 
@@ -149,7 +146,6 @@ class DeepDarkHandler : SavedData() {
 
 		for (room in rooms) {
 			val roomTag = CompoundTag()
-			roomTag.putString(ORIGIN_DIM_NBT, room.originDimension.location().toString())
 			roomTag.putLong(ORIGIN_PORTAL_POS_NBT, room.originPortalPos.asLong())
 			roomTag.putLong(STRUCTURE_MIN_NBT, room.structureMin.asLong())
 			listTag.add(roomTag)
@@ -163,7 +159,6 @@ class DeepDarkHandler : SavedData() {
 		private const val SAVED_DATA_NAME = "eu_deep_dark"
 
 		private const val ROOMS_NBT = "Rooms"
-		private const val ORIGIN_DIM_NBT = "OriginDimension"
 		private const val ORIGIN_PORTAL_POS_NBT = "OriginPortalPos"
 		private const val STRUCTURE_MIN_NBT = "StructureMin"
 
@@ -201,15 +196,10 @@ class DeepDarkHandler : SavedData() {
 			for (i in listTag.indices) {
 				val roomTag = listTag.getCompound(i)
 
-				val originDimension = ResourceKey.create(
-					Registries.DIMENSION,
-					ResourceLocation.parse(roomTag.getString(ORIGIN_DIM_NBT))
-				)
-
 				val originPortalPos = roomTag.getLong(ORIGIN_PORTAL_POS_NBT).toBlockPos()
 				val structureMin = roomTag.getLong(STRUCTURE_MIN_NBT).toBlockPos()
 
-				data.rooms.add(Room(originDimension, originPortalPos, structureMin))
+				data.rooms.add(Room(originPortalPos, structureMin))
 			}
 
 			return data
@@ -247,7 +237,6 @@ class DeepDarkHandler : SavedData() {
 	}
 
 	private data class Room(
-		val originDimension: ResourceKey<Level>,
 		val originPortalPos: BlockPos,
 		val structureMin: BlockPos
 	) {
