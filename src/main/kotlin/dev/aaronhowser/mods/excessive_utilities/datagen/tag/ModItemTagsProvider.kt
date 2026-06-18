@@ -306,7 +306,6 @@ class ModItemTagsProvider(
 				ModItems.ENDER_RECEIVER,
 				ModItems.PRECISION_SHEARS,
 				ModItems.SONAR_GOGGLES,
-				ModItems.KIKOKU,
 				ModItems.LUX_SABER
 			)
 
