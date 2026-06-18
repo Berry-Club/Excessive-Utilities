@@ -21,6 +21,7 @@ import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
 import dev.aaronhowser.mods.excessive_utilities.effect.SecondChanceEffect
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.DeepDarkHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.SoulRendHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilActivation
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilInversion
@@ -438,24 +439,9 @@ object CommonEvents {
 		val player = event.entity
 
 		if (player is ServerPlayer && player.level().dimension() == DeepDarkConstants.LEVEL_KEY) {
-			handleGrue(player)
+			DeepDarkHandler.handleGrue(player)
 		}
 
-	}
-
-	private fun handleGrue(player: ServerPlayer) {
-		val interval = ServerConfig.CONFIG.deepDarkDamageInterval.get()
-		val level = player.serverLevel()
-		if (level.gameTime % interval != 0L) return
-
-		val lightLevel = level.getMaxLocalRawBrightness(player.blockPosition())
-		val safeLightLevel = ServerConfig.CONFIG.deepDarkSafeLightLevel.get()
-		if (lightLevel >= safeLightLevel) return
-
-		val damageAmount = ServerConfig.CONFIG.deepDarkDamageAmount.get().toFloat()
-		val damageSource = player.damageSources().source(ModDamageTypeProvider.DARKNESS)
-
-		player.hurt(damageSource, damageAmount)
 	}
 
 	@SubscribeEvent
