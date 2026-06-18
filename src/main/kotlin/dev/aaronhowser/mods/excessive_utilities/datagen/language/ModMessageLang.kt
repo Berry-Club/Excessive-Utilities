@@ -5,6 +5,7 @@ object ModMessageLang {
 	const val DOOM_EFFECT_TIME = "message.excessive_utilities.doom_effect_time"
 	const val EAT_MAGICAL_APPLE = "message.excessive_utilities.eat_magical_apple"
 	const val DOOM_DEATH = "death.attack.eu_doom"
+	const val DARKNESS_DEATH = "death.attack.eu_darkness"
 	const val SET_CREATIVE_HARVEST = "message.excessive_utilities.set_creative_harvest"
 	const val NO_REMOVE_SOUL_FRAGMENT = "message.excessive_utilities.no_remove_soul_fragment"
 	const val SECOND_CHANCE_USED = "message.excessive_utilities.second_chance_used"
@@ -40,6 +41,7 @@ object ModMessageLang {
 			add(DOOM_EFFECT_TIME, "The Spectre of Death will arrive in %d seconds.")
 			add(EAT_MAGICAL_APPLE, "You feel your luck changing.")
 			add(DOOM_DEATH, "%s met their doom.")
+			add(DARKNESS_DEATH, "%s was eaten by a Grue.")
 			add(SET_CREATIVE_HARVEST, "Set mimic block to %s")
 			add(NO_REMOVE_SOUL_FRAGMENT, "You don't have enough health to remove any more Soul Fragments!")
 			add(SECOND_CHANCE_USED, "Your second chance has been used up!")
