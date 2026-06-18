@@ -41,6 +41,13 @@ class MagnumTorchBER(
 			maxX, maxY, maxZ,
 			color = 0x66FFFFFF
 		)
+
+		AaronRenderUtil.renderCubeWireframeThroughWalls(
+			poseStack,
+			0.0, 0.0, 0.0,
+			1.0, 1.0, 1.0,
+			color = 0xFFC18D58.toInt()
+		)
 	}
 
 	override fun getRenderBoundingBox(blockEntity: MagnumTorchBlockEntity): AABB {
