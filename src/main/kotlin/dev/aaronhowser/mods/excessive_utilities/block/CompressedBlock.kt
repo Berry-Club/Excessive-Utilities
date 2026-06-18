@@ -10,7 +10,7 @@ import java.util.*
 import kotlin.math.pow
 
 class CompressedBlock(
-	val compressionLevel: Int,
+	compressionLevel: Int,
 	properties: Properties
 ) : Block(properties) {
 

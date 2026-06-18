@@ -18,7 +18,7 @@ object ModPotions {
 		DeferredRegister.create(Registries.POTION, ExcessiveUtilities.MOD_ID)
 
 	val GRAVITY: DeferredHolder<Potion, Potion> =
-		register("gravity", { MobEffectInstance(ModMobEffects.GRAVITY, 20 * 60) })
+		register("gravity") { MobEffectInstance(ModMobEffects.GRAVITY, 20 * 60) }
 	val LONG_GRAVITY: DeferredHolder<Potion, Potion> =
 		register("long_gravity", "gravity") { MobEffectInstance(ModMobEffects.GRAVITY, 20 * 60 * 8) }
 	val OILY: DeferredHolder<Potion, Potion> =

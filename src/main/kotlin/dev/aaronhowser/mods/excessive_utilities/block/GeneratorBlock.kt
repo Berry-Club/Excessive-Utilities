@@ -87,46 +87,52 @@ class GeneratorBlock(
 		player: Player,
 		hitResult: BlockHitResult
 	): InteractionResult {
-		val blockEntity = level.getBlockEntity(pos)
+		when (
+			val blockEntity = level.getBlockEntity(pos)
+		) {
+			is RainbowGeneratorBlockEntity -> {
+				if (level is ServerLevel) {
+					val handler = RainbowGeneratorHandler.get(level).getGeneratorNetwork(player)
 
-		if (blockEntity is RainbowGeneratorBlockEntity) {
-			if (level is ServerLevel) {
-				val handler = RainbowGeneratorHandler.get(level).getGeneratorNetwork(player)
+					val allTypes = GeneratorType.NON_RAINBOW
+					val activeTypes = handler.getActiveGeneratorTypes()
 
-				val allTypes = GeneratorType.NON_RAINBOW
-				val activeTypes = handler.getActiveGeneratorTypes()
+					val yesComponent = Component.literal("Active: ")
+					val noComponent = Component.literal("Inactive: ")
 
-				val yesComponent = Component.literal("Active: ")
-				val noComponent = Component.literal("Inactive: ")
+					var anyActive = false
+					var anyInactive = false
 
-				var anyActive = false
-				var anyInactive = false
-
-				for (type in allTypes) {
-					if (type in activeTypes) {
-						anyActive = true
-						yesComponent.append("${type.name}, ")
-					} else {
-						anyInactive = true
-						noComponent.append("${type.name}, ")
+					for (type in allTypes) {
+						if (type in activeTypes) {
+							anyActive = true
+							yesComponent.append("${type.name}, ")
+						} else {
+							anyInactive = true
+							noComponent.append("${type.name}, ")
+						}
 					}
+
+					player.tell(Component.literal("Rainbow Generator Status: "))
+					if (anyActive) player.tell(yesComponent)
+					if (anyInactive) player.tell(noComponent)
 				}
 
-				player.tell(Component.literal("Rainbow Generator Status: "))
-				if (anyActive) player.tell(yesComponent)
-				if (anyInactive) player.tell(noComponent)
+				return InteractionResult.sidedSuccess(level.isClientSide)
 			}
 
-			return InteractionResult.sidedSuccess(level.isClientSide)
-		} else if (blockEntity is MagmaticGeneratorBlockEntity || blockEntity is ItemAndFluidInputDataDrivenGeneratorBlockEntity) {
-			player.openMenu(blockEntity as MenuProvider) { it.writeBlockPos(pos) }
-			return InteractionResult.sidedSuccess(level.isClientSide)
-		} else if (blockEntity is MenuProvider) {
-			player.openMenu(blockEntity)
-			return InteractionResult.sidedSuccess(level.isClientSide)
-		}
+			is MagmaticGeneratorBlockEntity, is ItemAndFluidInputDataDrivenGeneratorBlockEntity -> {
+				player.openMenu(blockEntity as MenuProvider) { it.writeBlockPos(pos) }
+				return InteractionResult.sidedSuccess(level.isClientSide)
+			}
 
-		return InteractionResult.PASS
+			is MenuProvider -> {
+				player.openMenu(blockEntity)
+				return InteractionResult.sidedSuccess(level.isClientSide)
+			}
+
+			else -> return InteractionResult.PASS
+		}
 	}
 
 	override fun useItemOn(

@@ -183,7 +183,7 @@ class FilingCabinetBlockEntity(
 		storedItem = item.value()
 
 		val entriesList = tag.getList(ENTRIES_NBT, Tag.TAG_COMPOUND.toInt())
-		for (i in 0 until entriesList.size) {
+		for (i in entriesList.indices) {
 			val tag = entriesList.getCompound(i)
 
 			val count = tag.getInt(COUNT_NBT)

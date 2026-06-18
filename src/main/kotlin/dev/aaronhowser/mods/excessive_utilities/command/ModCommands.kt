@@ -11,7 +11,7 @@ object ModCommands {
 		dispatcher: CommandDispatcher<CommandSourceStack>,
 		buildContext: CommandBuildContext
 	) {
-		val root = dispatcher.register(
+		dispatcher.register(
 			Commands.literal("excessive-utilities")
 				.then(SetCursedCommand.register())
 		)

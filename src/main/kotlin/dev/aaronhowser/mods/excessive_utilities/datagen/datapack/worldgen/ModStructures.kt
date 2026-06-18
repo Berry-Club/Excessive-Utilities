@@ -9,7 +9,6 @@ import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.util.random.WeightedRandomList
 import net.minecraft.world.entity.MobCategory
-import net.minecraft.world.level.biome.MobSpawnSettings
 import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight
@@ -17,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.Structure
 import net.minecraft.world.level.levelgen.structure.StructureSpawnOverride
 import net.minecraft.world.level.levelgen.structure.TerrainAdjustment
 import net.minecraft.world.level.levelgen.structure.structures.JigsawStructure
-import java.util.Optional
+import java.util.*
 
 object ModStructures {
 
@@ -50,10 +49,10 @@ object ModStructures {
 	}
 
 	private fun emptySpawnOverrides(): Map<MobCategory, StructureSpawnOverride> {
-		return MobCategory.values().associateWith {
+		return MobCategory.entries.associateWith {
 			StructureSpawnOverride(
 				StructureSpawnOverride.BoundingBoxType.STRUCTURE,
-				WeightedRandomList.create<MobSpawnSettings.SpawnerData>()
+				WeightedRandomList.create()
 			)
 		}
 	}

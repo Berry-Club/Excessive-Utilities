@@ -12,11 +12,11 @@ import org.spongepowered.asm.mixin.Unique;
 public abstract class LevelMixin implements ChandelierCarrier, MagnumTorchCarrier, SoundMufflerCarrier {
 
 	@Unique
-	LongOpenHashSet eu$chandelierBlockPositions = new LongOpenHashSet();
+	final LongOpenHashSet eu$chandelierBlockPositions = new LongOpenHashSet();
 	@Unique
-	LongOpenHashSet eu$magnumTorchBlockPositions = new LongOpenHashSet();
+	final LongOpenHashSet eu$magnumTorchBlockPositions = new LongOpenHashSet();
 	@Unique
-	LongOpenHashSet eu$soundMufflerBlockPositions = new LongOpenHashSet();
+	final LongOpenHashSet eu$soundMufflerBlockPositions = new LongOpenHashSet();
 
 	@Unique
 	@Override

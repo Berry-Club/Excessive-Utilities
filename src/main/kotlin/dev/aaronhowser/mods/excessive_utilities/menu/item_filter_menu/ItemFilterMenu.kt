@@ -39,8 +39,7 @@ class ItemFilterMenu(
 	init {
 		val filterStack = getFilterStack()
 		val container = ItemFilterItem.getFilterItems(filterStack)
-		for (i in 0 until container.size) {
-			val ghostStack = container[i]
+		for ((i, ghostStack) in container.withIndex()) {
 			filterItems.setStackInSlot(i, ghostStack)
 		}
 

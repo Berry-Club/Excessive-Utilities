@@ -27,7 +27,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModBlockStateProvider(
 	output: PackOutput,
-	private val existingFileHelper: ExistingFileHelper
+	existingFileHelper: ExistingFileHelper
 ) : BlockStateProvider(output, ExcessiveUtilities.MOD_ID, existingFileHelper) {
 
 	override fun registerStatesAndModels() {
