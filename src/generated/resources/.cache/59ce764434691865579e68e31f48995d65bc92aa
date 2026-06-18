@@ -1,3 +1,4 @@
-// 1.21.1	2026-06-17T17:03:03.0998466	Tags for minecraft:worldgen/biome mod id excessive_utilities
+// 1.21.1	2026-06-17T20:47:14.4858266	Tags for minecraft:worldgen/biome mod id excessive_utilities
 a0682f4a52f13dc0f124123627cf6df400adbb45 data/c/tags/worldgen/biome/is_overworld.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/excessive_utilities/tags/worldgen/biome/biome_marker_blacklist.json
+a0682f4a52f13dc0f124123627cf6df400adbb45 data/minecraft/tags/worldgen/biome/has_structure/ancient_city.json
