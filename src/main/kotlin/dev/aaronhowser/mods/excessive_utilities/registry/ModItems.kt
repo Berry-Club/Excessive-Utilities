@@ -16,6 +16,14 @@ object ModItems : AaronItemRegistry() {
 
 	// Ingredients
 
+	@JvmField
+	val RED_COAL: DeferredItem<RedCoalItem> =
+		register("red_coal", ::RedCoalItem, RedCoalItem.DEFAULT_PROPERTIES)
+
+	@JvmField
+	val WARDENS_WAKE: DeferredItem<Item> =
+		basic("wardens_wake")
+
 	val BEDROCKIUM_INGOT: DeferredItem<BedrockiumIngotItem> =
 		register("bedrockium_ingot", ::BedrockiumIngotItem)
 	val SOUL_FRAGMENT: DeferredItem<SoulFragmentItem> =
@@ -46,8 +54,6 @@ object ModItems : AaronItemRegistry() {
 		basic("resonating_redstone_crystal")
 	val UPGRADE_BASE: DeferredItem<Item> =
 		basic("upgrade_base")
-	val OPINIUM_CORE: DeferredItem<OpiniumCoreItem> =
-		register("opinium_core", ::OpiniumCoreItem, OpiniumCoreItem.DEFAULT_PROPERTIES)
 	val DIVISION_SIGIL: DeferredItem<DivisionSigilItem> =
 		register("division_sigil", ::DivisionSigilItem, DivisionSigilItem::defaultProperties)
 	val UNSTABLE_INGOT: DeferredItem<UnstableIngotItem> =
@@ -56,14 +62,8 @@ object ModItems : AaronItemRegistry() {
 		basic("semi_unstable_nugget")
 	val KLEIN_BOTTLE: DeferredItem<Item> =
 		basic("klein_bottle")
-
-	@JvmField
-	val WARDENS_WAKE: DeferredItem<Item> =
-		basic("wardens_wake")
-
-	@JvmField
-	val RED_COAL: DeferredItem<RedCoalItem> =
-		register("red_coal", ::RedCoalItem, RedCoalItem.DEFAULT_PROPERTIES)
+	val OPINIUM_CORE: DeferredItem<OpiniumCoreItem> =
+		register("opinium_core", ::OpiniumCoreItem, OpiniumCoreItem.DEFAULT_PROPERTIES)
 
 	// Tools
 
