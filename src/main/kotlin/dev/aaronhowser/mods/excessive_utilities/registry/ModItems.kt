@@ -40,6 +40,8 @@ object ModItems : AaronItemRegistry() {
 		basic("lunar_reactive_dust")
 	val MOON_STONE: DeferredItem<Item> =
 		basic("moon_stone")
+	val WARDENS_WAKE: DeferredItem<Item> =
+		basic("wardens_wake")
 
 	@JvmField
 	val RED_COAL: DeferredItem<RedCoalItem> =

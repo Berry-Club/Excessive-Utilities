@@ -45,6 +45,7 @@ object ModItemLang {
 			addItem(ModItems.UPGRADE_BASE, "Upgrade Base")
 			addItem(ModItems.OPINIUM_CORE, "Opinium Core")
 			addItem(ModItems.UNSTABLE_INGOT, "Unstable Ingot")
+			addItem(ModItems.WARDENS_WAKE, "Warden's Wake")
 
 			addItem(ModItems.SEMI_UNSTABLE_NUGGET, "Semi-Unstable Nugget")
 			add(MOBIUS_INGOT, "Mobius \"Unstable/Stable\" Ingot")
