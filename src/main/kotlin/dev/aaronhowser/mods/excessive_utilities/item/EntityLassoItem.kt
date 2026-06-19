@@ -10,15 +10,18 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.ChatFormatting
+import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.OwnableEntity
+import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.monster.Enemy
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -90,7 +93,7 @@ class EntityLassoItem(
 
 	override fun useOn(context: UseOnContext): InteractionResult {
 		val stack = context.itemInHand
-		val entityData = stack.get(ModDataComponents.ENTITY_DATA) ?: return InteractionResult.PASS
+		if (!stack.has(ModDataComponents.ENTITY_DATA)) return InteractionResult.PASS
 
 		val level = context.level
 
@@ -109,16 +112,8 @@ class EntityLassoItem(
 			clickedPos
 		}
 
-		val entityTypeString = entityData.copyTag().getString("id")
-		val entityType = level.registryAccess()
-			.registryOrThrow(Registries.ENTITY_TYPE)
-			.get(ResourceLocation.parse(entityTypeString))
-			?: return InteractionResult.FAIL
-
-		val entity = entityType.create(level) ?: return InteractionResult.FAIL
-		entity.load(entityData.copyTag())
-		entity.moveTo(posToSpawn.bottomCenter)
-		level.addFreshEntity(entity)
+		val success = spawnEntityFromStack(stack, level, posToSpawn) != null
+		if (!success) return InteractionResult.FAIL
 
 		stack.remove(ModDataComponents.ENTITY_DATA)
 		stack.remove(ModDataComponents.ENTITY_TYPE)
@@ -159,6 +154,17 @@ class EntityLassoItem(
 			.withStyle(ChatFormatting.GRAY)
 	}
 
+	override fun onDestroyed(
+		itemEntity: ItemEntity,
+		damageSource: DamageSource
+	) {
+		spawnEntityFromStack(
+			itemEntity.item,
+			itemEntity.level(),
+			itemEntity.blockPosition()
+		)
+	}
+
 	companion object {
 		val HAS_ENTITY: ResourceLocation = ExcessiveUtilities.modResource("has_entity")
 		fun hasEntityPredicate(
@@ -168,6 +174,26 @@ class EntityLassoItem(
 			int: Int
 		): Float {
 			return if (stack.has(ModDataComponents.ENTITY_DATA) || stack.has(ModDataComponents.ENTITY_TYPE)) 1f else 0f
+		}
+
+		private fun spawnEntityFromStack(
+			stack: ItemStack,
+			level: Level,
+			pos: BlockPos
+		): Entity? {
+			val entityData = stack.get(ModDataComponents.ENTITY_DATA) ?: return null
+			val entityTypeString = entityData.copyTag().getString("id")
+
+			val entityType = level.registryAccess()
+				.registryOrThrow(Registries.ENTITY_TYPE)
+				.get(ResourceLocation.parse(entityTypeString))
+				?: return null
+
+			val entity = entityType.create(level) ?: return null
+			entity.load(entityData.copyTag())
+
+			level.addFreshEntity(entity)
+			return entity
 		}
 	}
 

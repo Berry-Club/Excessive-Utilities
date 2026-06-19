@@ -18,6 +18,7 @@
 
 - Which Angel Ring wing you have is now a Data Attachment
 	- It was previously a packet that modified a static `Map<UUID, Type>` which is gross
+- When a Lasso is destroyed, it will spawn the held mob
 
 ### Fixed
 
