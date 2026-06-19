@@ -1,7 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.registry
 
+import dev.aaronhowser.mods.aaron.item.ItemWithTooltip
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.registry.AaronItemRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.handler.SoulRendHandler
 import dev.aaronhowser.mods.excessive_utilities.item.*
 import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
@@ -25,7 +28,14 @@ object ModItems : AaronItemRegistry() {
 
 	@JvmField
 	val WARDENS_WAKE: DeferredItem<Item> =
-		basic("wardens_wake")
+		register(
+			"wardens_wake",
+			{
+				ItemWithTooltip(
+					it,
+					ModMenuLang.WARDENS_WAKE.toComponent().withColor(0xFF00D7D8.toInt())
+				)
+			})
 
 	val BEDROCKIUM_INGOT: DeferredItem<BedrockiumIngotItem> =
 		register("bedrockium_ingot", ::BedrockiumIngotItem)

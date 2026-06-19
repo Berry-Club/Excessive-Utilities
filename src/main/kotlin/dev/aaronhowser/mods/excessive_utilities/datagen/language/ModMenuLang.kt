@@ -49,6 +49,7 @@ object ModMenuLang {
 	const val LASSO_ENTITY_WITH_NAME = "tooltip.excessive_utilities.lasso.entity_with_name"
 	const val DEMON_CRAFTING = "container.excessive_utilities.demon_crafting"
 	const val SOUL_RENDING = "attribute.name.excessive_utilities.soul_rending"
+	const val WARDENS_WAKE = "tooltip.excessive_utilities.wardens_wake"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -90,11 +91,9 @@ object ModMenuLang {
 			add(AngelRingItem.Type.DEMON.langKey, "Demon")
 			add(AngelRingItem.Type.GOLD.langKey, "Gold")
 			add(AngelRingItem.Type.BAT.langKey, "Bat")
-
 			add(UNSTABLE_INGOT_CHEESED_1, "Naughty naughty!")
 			add(UNSTABLE_INGOT_CHEESED_2, "Unstable Ingots must be crafted manually, by you.")
 			add(UNSTABLE_INGOT_CHEESED_3, "If this one WAS crafted manually, try using a vanilla Crafting Table instead.")
-
 			add(biomeTagLangKey(BiomeTags.IS_FOREST), "Forest")
 			add(biomeTagLangKey(BiomeTags.IS_HILL), "Hills")
 			add(biomeTagLangKey(BiomeTags.IS_JUNGLE), "Jungle")
@@ -107,16 +106,14 @@ object ModMenuLang {
 			add(biomeTagLangKey(Tags.Biomes.IS_SWAMP), "Swamp")
 			add(biomeTagLangKey(BiomeTags.IS_END), "End")
 			add(biomeTagLangKey(BiomeTags.IS_NETHER), "Nether")
-
 			add(SNOW_GLOBE_TOOLTIP_1, "An entire world contained within a small glass globe.")
 			add(SNOW_GLOBE_TOOLTIP_2, "Perhaps our universe is not so different?")
 			add(SNOW_GLOBE_INSTRUCTIONS, "To activate this globe, take it to any %d of the following biome types:")
 			add(SNOW_GLOBE_READY, "The Snow Globe has gathered enough information about our world.")
-
 			add(ATHENA_COMPATIBLE, "Install Athena for connected textures!")
-
 			add(DEMON_CRAFTING, "Get by throwing the Golden form into Lava while in the Nether!")
 			add(SOUL_RENDING, "Soul Rending")
+			add(WARDENS_WAKE, "Left behind by a Warden that's given up")
 		}
 	}
 
