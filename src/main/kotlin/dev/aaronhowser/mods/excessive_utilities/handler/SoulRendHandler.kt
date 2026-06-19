@@ -56,7 +56,7 @@ object SoulRendHandler {
 		val victimMaxHealthAttribute = victim.getAttribute(Attributes.MAX_HEALTH) ?: return
 		val currentModifierAmount = victimMaxHealthAttribute.getModifier(SOUL_RENT_HEALTH)?.amount ?: 0.0
 
-		victimMaxHealthAttribute.addOrUpdateTransientModifier(
+		victimMaxHealthAttribute.addOrReplacePermanentModifier(
 			AttributeModifier(
 				SOUL_RENT_HEALTH,
 				currentModifierAmount - attackerSoulRending,
@@ -74,7 +74,7 @@ object SoulRendHandler {
 	fun lowerSoulRend(entity: Entity) {
 		if (entity !is LivingEntity
 			|| entity.isClientSide
-			|| entity.tickCount % 60 != 0
+			|| entity.level().gameTime % 60 != 0L
 		) return
 
 		val maxHealthAttribute = entity.getAttribute(Attributes.MAX_HEALTH) ?: return
