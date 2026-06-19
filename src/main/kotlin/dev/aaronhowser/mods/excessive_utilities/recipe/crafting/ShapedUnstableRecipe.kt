@@ -81,9 +81,7 @@ class ShapedUnstableRecipe(
 			}
 		}
 
-		override fun getSerializedName(): String {
-			return id
-		}
+		override fun getSerializedName(): String = id
 
 		companion object {
 			val CODEC: StringRepresentable.EnumCodec<Stability> = StringRepresentable.fromEnum { entries.toTypedArray() }

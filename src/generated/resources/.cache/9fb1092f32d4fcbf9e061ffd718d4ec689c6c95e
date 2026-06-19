@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-19T10:37:41.4858651	Recipes
+// 1.21.1	2026-06-19T11:33:47.2697212	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 5544a3880f9cc21b24f3bbd7a0e3125679de74dc data/excessive_utilities/advancement/recipes/crusher/allium_to_magenta_dye.json
 03553dc68b381cde601be45b74fc8784e96887ab data/excessive_utilities/advancement/recipes/crusher/azure_bluet_to_light_gray_dye.json
@@ -976,7 +976,7 @@ bb56b8e5e7b44176c165194afbcf42b87ac3e380 data/excessive_utilities/recipe/diamond
 5a2efcd1429da32d5012bb4ff5448b3df69a32ff data/excessive_utilities/recipe/diamond_sickle.json
 a21d8fb6ab87b1801057e605eb13d0159be86644 data/excessive_utilities/recipe/diamond_spike.json
 be24de5fc014907f65275fa690e976bc04fc99cc data/excessive_utilities/recipe/disenchantment_generator.json
-3129b97686c16a44dbce685621a916acb7d112c6 data/excessive_utilities/recipe/division/semi_unstable_nugget.json
+98e7fc060bc19ccb72084ee963db4bf33cde494d data/excessive_utilities/recipe/division/semi_unstable_nugget.json
 ee819b7d0c001cac332c3bcb912d60d89dd8a21f data/excessive_utilities/recipe/division/unstable_ingot.json
 02eef74ad0fdc6be5a85ed5354fe63de94cc3358 data/excessive_utilities/recipe/dragon_egg_mill.json
 7000c0f8529ec79cb509a08e1841f30af5267286 data/excessive_utilities/recipe/edged_glass.json

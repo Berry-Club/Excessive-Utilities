@@ -1238,6 +1238,13 @@ class ModRecipeProvider(
 			.define('G', ModBlocks.MAGICAL_SNOW_GLOBE.asIngredient())
 			.save(recipeOutput)
 
+		SpecialShapedRecipeBuilder(ModItems.ENDER_SHARD.toStack(8))
+			.type("damage_glass_cutter", ::DamageGlassCutterRecipe)
+			.pattern("P", "C")
+			.define('P', Tags.Items.ENDER_PEARLS.asIngredient())
+			.define('C', ModItems.GLASS_CUTTER.asIngredient())
+			.save(recipeOutput)
+
 		shapedRecipe(
 			ModBlocks.REDSTONE_LANTERN,
 			"RSR,SCS,RPR",
@@ -2708,9 +2715,11 @@ class ModRecipeProvider(
 			.define('E', Items.ENDER_EYE.asIngredient())
 			.save(recipeOutput)
 
-		fun division(output: ItemStack): SpecialShapedRecipeBuilder {
+		fun division(output: ItemStack, inversion: ShapedDivisionRecipe.Inversion = ShapedDivisionRecipe.Inversion.EITHER): SpecialShapedRecipeBuilder {
 			return SpecialShapedRecipeBuilder(output)
-				.type("division", ::ShapedDivisionRecipe)
+				.type("division") { a, b ->
+					ShapedDivisionRecipe(a, b, inversion)
+				}
 		}
 
 		division(
@@ -2729,7 +2738,7 @@ class ModRecipeProvider(
 			.define('D', Tags.Items.GEMS_DIAMOND.asIngredient())
 			.save(recipeOutput)
 
-		division(ModItems.SEMI_UNSTABLE_NUGGET.getDefaultInstance())
+		division(ModItems.SEMI_UNSTABLE_NUGGET.getDefaultInstance(), ShapedDivisionRecipe.Inversion.INVERTED)
 			.pattern(
 				"N",
 				"S",
@@ -2738,14 +2747,6 @@ class ModRecipeProvider(
 			.define('N', Tags.Items.NUGGETS_IRON.asIngredient())
 			.define('S', ModItems.DIVISION_SIGIL.asIngredient())
 			.define('D', Tags.Items.GEMS_DIAMOND.asIngredient())
-			.save(recipeOutput)
-
-
-		SpecialShapedRecipeBuilder(ModItems.ENDER_SHARD.toStack(8))
-			.type("damage_glass_cutter", ::DamageGlassCutterRecipe)
-			.pattern("P", "C")
-			.define('P', Tags.Items.ENDER_PEARLS.asIngredient())
-			.define('C', ModItems.GLASS_CUTTER.asIngredient())
 			.save(recipeOutput)
 
 	}

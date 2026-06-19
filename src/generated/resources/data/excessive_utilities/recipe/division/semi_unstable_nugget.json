@@ -1,5 +1,6 @@
 {
   "type": "excessive_utilities:shaped_division",
+  "inversion": "inverted",
   "pattern": {
     "key": {
       "D": {

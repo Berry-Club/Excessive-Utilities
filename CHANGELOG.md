@@ -114,6 +114,8 @@
 - Added recipes for the Creative Builder's Wand and Creative Destruction Wand
 - Unstable Ingot recipes can now require if the ingot is stable or not
 	- The Unstable Ingot Block and the two Creative Wands require it
+- Division Sigil recipes can now require if the Sigil is inverted or not
+	- Unstable Nuggets require an inverted Sigil
 
 ### Fixed
 
