@@ -2516,14 +2516,42 @@ class ModRecipeProvider(
 
 	private fun buildUnstableRecipes(recipeOutput: RecipeOutput) {
 
-		fun unstable(output: ItemStack): SpecialShapedRecipeBuilder {
+		fun unstable(
+			output: ItemStack,
+			type: ShapedUnstableRecipe.Stability = ShapedUnstableRecipe.Stability.EITHER
+		): SpecialShapedRecipeBuilder {
 			return SpecialShapedRecipeBuilder(output)
-				.type("unstable", ::ShapedUnstableRecipe)
+				.type("unstable") { a, b ->
+					ShapedUnstableRecipe(a, b, type)
+				}
 		}
 
-		fun unstable(output: ItemLike): SpecialShapedRecipeBuilder {
-			return unstable(output.asItem().defaultInstance)
+		fun unstable(
+			output: ItemLike,
+			stability: ShapedUnstableRecipe.Stability = ShapedUnstableRecipe.Stability.EITHER
+		): SpecialShapedRecipeBuilder {
+			return unstable(output.asItem().defaultInstance, stability)
 		}
+
+		unstable(ModItems.CREATIVE_BUILDERS_WAND, ShapedUnstableRecipe.Stability.STABLE)
+			.pattern(
+				"I",
+				"W",
+				"W"
+			)
+			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
+			.define('W', ModBlocks.MAGICAL_WOOD.asIngredient())
+			.save(recipeOutput)
+
+		unstable(ModItems.CREATIVE_DESTRUCTION_WAND, ShapedUnstableRecipe.Stability.STABLE)
+			.pattern(
+				"W",
+				"W",
+				"I"
+			)
+			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
+			.define('W', ModBlocks.MAGICAL_WOOD.asIngredient())
+			.save(recipeOutput)
 
 		unstable(ModItems.MOON_STONE.withCount(9))
 			.pattern(
@@ -2535,7 +2563,7 @@ class ModRecipeProvider(
 			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
 			.save(recipeOutput, modLoc("moon_stone_from_unstable_ingot"))
 
-		unstable(ModBlocks.BLOCK_OF_UNSTABLE_INGOT)
+		unstable(ModBlocks.BLOCK_OF_UNSTABLE_INGOT, ShapedUnstableRecipe.Stability.STABLE)
 			.pattern(
 				"III",
 				"III",

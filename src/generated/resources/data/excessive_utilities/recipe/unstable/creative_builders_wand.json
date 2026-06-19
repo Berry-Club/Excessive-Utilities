@@ -4,17 +4,20 @@
     "key": {
       "I": {
         "item": "excessive_utilities:unstable_ingot"
+      },
+      "W": {
+        "item": "excessive_utilities:magical_wood"
       }
     },
     "pattern": [
-      "III",
-      "III",
-      "III"
+      "I",
+      "W",
+      "W"
     ]
   },
   "result": {
     "count": 1,
-    "id": "excessive_utilities:block_of_unstable_ingot"
+    "id": "excessive_utilities:creative_builders_wand"
   },
   "stability": "stable"
 }
