@@ -28,11 +28,6 @@
 
 # 1.6.0
 
-### Fixed
-
-- Fixed a crash where the Heating Coil would read the config before it's loaded (#30)
-- Fixed the Reversing Hoe's conversion datamap not being actually registered
-- Lassos now use `#c:capturing_not_supported` instead of a custom tag
 
 ### Changed
 
@@ -52,14 +47,14 @@
 - Transfer Nodes now cache their shape, since building it was very slow
 - Hopefully somewhat improved performance of the Quantum Quarry
 
-# 1.5.0
-
 ### Fixed
 
-- Fixed menus not having shift-click functionality
-	- Please report any that are incorrect!
-- Fixed the Crusher not having a menu (#25)
-- Drums now properly display the color of their held fluid
+- Fixed a crash where the Heating Coil would read the config before it's loaded (#30)
+- Fixed the Reversing Hoe's conversion datamap not being actually registered
+- Lassos now use `#c:capturing_not_supported` instead of a custom tag
+
+# 1.5.0
+
 
 ### Changed
 
@@ -72,15 +67,15 @@
 	- All default recipes require an enchanting power of 15
 		- Equivalent to 15 Bookshelves
 
-# 1.4.0
-
 ### Fixed
 
-- Accepted a PR from Saereth that fixes the Enchantment Generator not working (#14, #18)
-- Fixed the later tiers of Opinium Core being super broken in JEI (#23)
-- Added `doggytalents:dog` to the Lasso blacklist (#24)
-- Lassos now say what entity is held in them (#22)
-- Fixed Magical Snow Globe recipes requiring that all the biomes be visited instead of just 7 (#15)
+- Fixed menus not having shift-click functionality
+	- Please report any that are incorrect!
+- Fixed the Crusher not having a menu (#25)
+- Drums now properly display the color of their held fluid
+
+# 1.4.0
+
 
 ### Changed
 
@@ -90,6 +85,14 @@
 - The Golden and Cursed Lassos can no longer pick up mobs that are owned by other players
 - The Lassos now tell you why they fail
 
+### Fixed
+
+- Accepted a PR from Saereth that fixes the Enchantment Generator not working (#14, #18)
+- Fixed the later tiers of Opinium Core being super broken in JEI (#23)
+- Added `doggytalents:dog` to the Lasso blacklist (#24)
+- Lassos now say what entity is held in them (#22)
+- Fixed Magical Snow Globe recipes requiring that all the biomes be visited instead of just 7 (#15)
+
 # 1.3.1
 
 ### Fixed
@@ -97,12 +100,6 @@
 - Added recipes for Swirling Glass and the Portal to the Last Millennium
 
 # 1.3.0
-
-### Fixed
-
-- Colored block recipes now output 7 instead of 1, to match the amount in the input (#9)
-- Fixed the Ender Quarry placing a Dirt block where it starts (#10)
-- Fixed the Cursed Lasso and Golden Lasso effectively being swapped in functionality (#12)
 
 ### Changed
 
@@ -117,6 +114,12 @@
 	- `#flowers`
 	- `#replaceable_by_trees`
 - Added a failsafe for leaving The Last Millennium if you don't have the return data in your persistent data
+
+### Fixed
+
+- Colored block recipes now output 7 instead of 1, to match the amount in the input (#9)
+- Fixed the Ender Quarry placing a Dirt block where it starts (#10)
+- Fixed the Cursed Lasso and Golden Lasso effectively being swapped in functionality (#12)
 
 # 1.2.1
 
