@@ -17,6 +17,7 @@ import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.SwordItem.createAttributes
 import net.minecraft.world.item.component.Unbreakable
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
+import java.util.WeakHashMap
 
 object SoulRendHandler {
 
@@ -41,6 +42,9 @@ object SoulRendHandler {
 
 	private val SOUL_RENT_HEALTH: ResourceLocation = ExcessiveUtilities.modResource("soul_rent")
 
+	private const val SOUL_REND_COOLDOWN_TICKS = 20L
+	private val lastSoulRentTicks = WeakHashMap<LivingEntity, Long>()
+
 	fun handleIncomingDamage(event: LivingIncomingDamageEvent) {
 		if (event.isCanceled) return
 
@@ -52,6 +56,8 @@ object SoulRendHandler {
 
 		val attackerSoulRending = attacker.getAttributeValue(ModAttributes.SOUL_RENDING)
 		if (attackerSoulRending <= 0.0) return
+
+		if (!canBeSoulRent(victim)) return
 
 		val victimMaxHealthAttribute = victim.getAttribute(Attributes.MAX_HEALTH) ?: return
 		val currentModifierAmount = victimMaxHealthAttribute.getModifier(SOUL_RENT_HEALTH)?.amount ?: 0.0
@@ -69,6 +75,16 @@ object SoulRendHandler {
 		}
 
 		spawnSoulParticles(victim)
+	}
+
+	private fun canBeSoulRent(victim: LivingEntity): Boolean {
+		val currentTick = victim.level().gameTime
+		val lastTick = lastSoulRentTicks[victim]
+
+		if (lastTick != null && currentTick - lastTick < SOUL_REND_COOLDOWN_TICKS) return false
+
+		lastSoulRentTicks[victim] = currentTick
+		return true
 	}
 
 	fun lowerSoulRend(entity: Entity) {
