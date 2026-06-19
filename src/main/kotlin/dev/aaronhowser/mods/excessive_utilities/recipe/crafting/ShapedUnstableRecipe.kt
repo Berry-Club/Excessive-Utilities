@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
+import dev.aaronhowser.mods.excessive_utilities.item.UnstableIngotItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
@@ -24,6 +25,8 @@ class ShapedUnstableRecipe(
 	override fun matches(input: CraftingInput, level: Level): Boolean {
 		for (inputStack in input.items()) {
 			if (!inputStack.isItem(ModItems.UNSTABLE_INGOT)) continue
+
+			if (UnstableIngotItem.isCheesed(inputStack)) return false
 
 			if (!requiredStability.accepts(inputStack)) {
 				return false
