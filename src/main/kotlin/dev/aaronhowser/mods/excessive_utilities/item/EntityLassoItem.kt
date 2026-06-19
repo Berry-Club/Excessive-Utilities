@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
@@ -139,19 +140,23 @@ class EntityLassoItem(
 
 		val registries = context.registries() ?: return
 
-		val customName = Component.Serializer.fromJson(
-			entityData.copyTag().getString("CustomName"),
-			registries
-		)
+		val customNameString = entityData.copyTag().getString("CustomName")
+		if (!customNameString.isNullOrEmpty()) {
+			val customName = Component.Serializer.fromJson(
+				customNameString,
+				registries
+			)
 
-		if (customName == null) {
-			tooltipComponents += typeName
-			return
+			if (customName != null) {
+				tooltipComponents += ModMenuLang.LASSO_ENTITY_WITH_NAME
+					.toGrayComponent(customName, typeName)
+
+				return
+			}
 		}
 
-		tooltipComponents += ModMenuLang.LASSO_ENTITY_WITH_NAME
-			.toComponent(customName, typeName)
-			.withStyle(ChatFormatting.GRAY)
+		tooltipComponents += typeName
+
 	}
 
 	override fun onDestroyed(
@@ -191,7 +196,7 @@ class EntityLassoItem(
 
 			val entity = entityType.create(level) ?: return null
 			entity.load(entityData.copyTag())
-
+			entity.setPos(pos.bottomCenter)
 			level.addFreshEntity(entity)
 			return entity
 		}
