@@ -53,7 +53,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			vertexConsumer: VertexConsumer,
 			time: Float
 		) {
-			val amountSquares = 8
+			val amountSquares = 4
 			val phaseStep = Mth.TWO_PI / amountSquares
 
 			val speed = 0.025
@@ -87,20 +87,32 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 					val scale = when (loopProgress) {
 						in 0.0f..0.125f -> {
 							val shrinkProgress = Mth.inverseLerp(loopProgress, 0f, 0.125f)
-							Mth.lerp(shrinkProgress, 1f, 0.5f)
+							Mth.lerp(shrinkProgress, 0.75f, 0.5f)
 						}
 
 						in 0.125f..0.375f -> 0.5f
 
 						in 0.375f..0.5f -> {
 							val growProgress = Mth.inverseLerp(loopProgress, 0.375f, 0.5f)
-							Mth.lerp(growProgress, 0.5f, 1f)
+							Mth.lerp(growProgress, 0.5f, 0.75f)
+						}
+
+						// 0.5 = it hit the other side
+
+						in 0.5f..0.75f -> {
+							val growProgress = Mth.inverseLerp(loopProgress, 0.5f, 0.75f)
+							Mth.lerp(growProgress, 0.75f, 1f)
+						}
+
+						in 0.75f..1f -> {
+							val shrinkProgress = Mth.inverseLerp(loopProgress, 0.75f, 1f)
+							Mth.lerp(shrinkProgress, 1f, 0.75f)
 						}
 
 						else -> 1f
 					}
 
-					add(Square(0.5f * scale, dz - 0.5f, colors[i]))
+					add(Square(0.5f * scale, dz - 0.5f - 2, colors[i]))
 				}
 			}
 
