@@ -73,6 +73,9 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 					val rawLoopProgress = (loopAngle + Math.PI / 2) / (Math.PI * 2)
 					val loopProgress = (rawLoopProgress - floor(rawLoopProgress)).toFloat()
 
+					// First it shrinks and moves forward
+					// Then it grows and moves back
+
 					val dz = if (loopProgress <= 0.5) {
 						2 * loopProgress
 					} else {
