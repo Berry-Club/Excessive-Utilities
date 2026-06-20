@@ -41,6 +41,9 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			poseStack.scale(0.82f, 0.82f, 0.82f)
 
 			if (displayContext == ItemDisplayContext.GUI) {
+				poseStack.translate(-0.125, -0.125, 0.0)
+				poseStack.scale(0.75f, 0.75f, 0.75f)
+
 				poseStack.mulPose(Axis.XP.rotationDegrees(28f))
 				poseStack.mulPose(Axis.YP.rotationDegrees(-36f))
 			}
