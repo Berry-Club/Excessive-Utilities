@@ -52,6 +52,9 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 
 	companion object {
 
+		const val INNER_COLOR = 0xFFFF8800.toInt()
+		const val OUTER_COLOR = 0xFF0088FF.toInt()
+
 		private fun renderCyclingSquares(
 			poseStack: PoseStack,
 			vertexConsumer: VertexConsumer,
@@ -103,18 +106,12 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 					}
 
 					val color = if (i < amountSquares / 2) {
-						0xFFFF8800.toInt()
+						INNER_COLOR
 					} else {
-						0xFF0088FF.toInt()
+						OUTER_COLOR
 					}
 
-					val armColor = if (i < amountSquares / 2) {
-						0xFFFF8800.toInt()
-					} else {
-						0xFF0088FF.toInt()
-					}
-
-					add(Square(0.5f * scale, dz, color, armColor))
+					add(Square(0.5f * scale, dz, color))
 				}
 			}
 
@@ -122,16 +119,22 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 				val square = squares[i]
 				val nextSquare = squares[(i + 1) % squares.size]
 
-				renderSquare(poseStack, vertexConsumer, square.halfSize, square.z, square.argb)
-				renderCornerArms(poseStack, vertexConsumer, square, nextSquare, square.armArgb)
+				renderSquare(poseStack, vertexConsumer, square.halfSize, square.z, square.colorARgb)
+
+				val armColor = if (square.colorARgb == nextSquare.colorARgb) {
+					square.colorARgb
+				} else {
+					OUTER_COLOR
+				}
+
+				renderCornerArms(poseStack, vertexConsumer, square, nextSquare, armColor)
 			}
 		}
 
 		private data class Square(
 			val halfSize: Float,
 			val z: Float,
-			val argb: Int,
-			val armArgb: Int
+			val colorARgb: Int
 		)
 
 		private fun renderCornerArms(
