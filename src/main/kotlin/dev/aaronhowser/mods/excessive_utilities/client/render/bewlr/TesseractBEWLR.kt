@@ -13,6 +13,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
+import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.sin
 import kotlin.math.sqrt
@@ -73,15 +74,6 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 					val rawLoopProgress = (loopAngle + Math.PI / 2) / (Math.PI * 2)
 					val loopProgress = (rawLoopProgress - floor(rawLoopProgress)).toFloat()
 
-					// First it shrinks and moves forward
-					// Then it grows and moves back
-
-					val dz = if (loopProgress <= 0.5) {
-						2 * loopProgress
-					} else {
-						2 - 2 * loopProgress
-					}
-
 					val scale = when (loopProgress) {
 						in 0.0f..0.125f -> {
 							val shrinkProgress = Mth.inverseLerp(loopProgress, 0f, 0.125f)
@@ -101,6 +93,17 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 							val arcProgress = Mth.inverseLerp(loopProgress, 0.5f, 1f)
 							Mth.lerp(sin(arcProgress * Math.PI).toFloat(), 0.75f, 1f)
 						}
+					}
+
+					val dz = if (loopProgress <= 0.5) {
+						2 * loopProgress
+					} else {
+						val rawDepth = 2 - 2 * loopProgress
+						val outerProgress = Mth.inverseLerp(loopProgress, 0.5f, 1f)
+						val cubeDepth = 0.5f + if (outerProgress < 0.5f) scale / 2 else -scale / 2
+						val cubeBlend = abs(sin(outerProgress * Math.PI * 2)).toFloat()
+
+						Mth.lerp(cubeBlend, rawDepth, cubeDepth)
 					}
 
 					val color = if (i < amountSquares / 2) {
