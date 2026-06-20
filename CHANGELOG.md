@@ -15,7 +15,7 @@
 		- The Soul Rent attribute modifier on max health decreases over time
 - The Tesseract
 	- Replacing the Klein Bottle
-    - The Klein Bottle was RWTema flexing his modeling abilities. I can't model, but I _can_ do fancy math
+	- The Klein Bottle was RWTema flexing his modeling abilities. I can't model, but I _can_ do fancy math
 
 ### Changed
 
@@ -27,6 +27,8 @@
 	- The Unstable Ingot Block and the two Creative Wands require it
 - Division Sigil recipes can now require if the Sigil is inverted or not
 	- Unstable Nuggets require an inverted Sigil
+- The Sound Muffler now prevents vibration events in a configurable radius
+	- This means they protect you from the Warden and Sculk Sensors!
 
 ### Fixed
 

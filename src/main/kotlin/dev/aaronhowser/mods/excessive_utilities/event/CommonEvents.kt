@@ -42,6 +42,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.AddReloadListenerEvent
 import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.RegisterCommandsEvent
+import net.neoforged.neoforge.event.VanillaGameEvent
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent
 import net.neoforged.neoforge.event.entity.living.*
@@ -72,6 +73,11 @@ object CommonEvents {
 	fun onMobSpawn(event: MobSpawnEvent.SpawnPlacementCheck) {
 		MagnumTorchBlockEntity.handleSpawnEvent(event)
 		ChandelierBlockEntity.handleSpawnEvent(event)
+	}
+
+	@SubscribeEvent
+	fun onVanillaGameEvent(event: VanillaGameEvent) {
+		SoundMufflerBlockEntity.handleVanillaGameEvent(event)
 	}
 
 	@SubscribeEvent

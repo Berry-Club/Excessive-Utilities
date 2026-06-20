@@ -11,6 +11,7 @@ class ServerConfig(
 
 	lateinit var chandelierRadius: ModConfigSpec.IntValue
 	lateinit var magnumTorchRadius: ModConfigSpec.IntValue
+	lateinit var soundMufflerRadius: ModConfigSpec.DoubleValue
 	lateinit var basicFilingCabinetCapacity: ModConfigSpec.IntValue
 	lateinit var advancedFilingCabinetCapacity: ModConfigSpec.IntValue
 	lateinit var flatItemTransferNodeSpeed: ModConfigSpec.IntValue
@@ -442,6 +443,10 @@ class ServerConfig(
 			magnumTorchRadius = builder
 				.comment("The radius in blocks that a Magnum Torch prevents monster spawns.")
 				.defineInRange("magnumTorchRadius", 64, 1, Int.MAX_VALUE)
+
+			soundMufflerRadius = builder
+				.comment("The radius in blocks that a Sound Muffler prevents Sculk Sensors, Shriekers, and Wardens from hearing vibrations.")
+				.defineInRange("soundMufflerRadius", 8.0, 0.0, Double.MAX_VALUE)
 
 			conveyorBeltSpeed = builder
 				.comment("The speed in blocks per tick that Conveyor Belts will move entities.")
