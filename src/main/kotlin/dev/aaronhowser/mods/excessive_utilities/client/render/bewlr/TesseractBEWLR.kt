@@ -64,7 +64,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			val speed = 0.025
 
 			val squares = buildList {
-				add(Square(0.5f * 0.75f, 0f, 0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt()))
+//				add(Square(0.5f * 0.75f, 0f, 0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt()))
 
 				for (i in 0 until amountSquares) {
 					val phaseOffset = phaseStep * i
@@ -112,7 +112,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 						0xFF0088FF.toInt()
 					}
 
-					add(Square(0.5f * scale, dz - 0.5f, color, armColor))
+					add(Square(0.5f * scale, dz, color, armColor))
 				}
 			}
 
