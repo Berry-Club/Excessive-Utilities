@@ -77,6 +77,8 @@ object ModItems : AaronItemRegistry() {
 		basic("klein_bottle")
 	val OPINIUM_CORE: DeferredItem<OpiniumCoreItem> =
 		register("opinium_core", ::OpiniumCoreItem, OpiniumCoreItem.DEFAULT_PROPERTIES)
+	val TESSERACT: DeferredItem<Item> =
+		basic("tesseract")
 
 	// Tools
 

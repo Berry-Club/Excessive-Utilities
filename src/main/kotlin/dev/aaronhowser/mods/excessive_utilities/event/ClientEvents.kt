@@ -11,6 +11,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRen
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.ManualMillBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
+import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.TesseractBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.block_entity.*
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.FlatTransferNodeEntityRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.MagicalBoomerangEntityRenderer
@@ -210,6 +211,7 @@ object ClientEvents {
 	@SubscribeEvent
 	fun registerClientExtensions(event: RegisterClientExtensionsEvent) {
 		event.registerItem(OpiniumCoreBEWLR.ClientItemExtensions, ModItems.OPINIUM_CORE.get())
+		event.registerItem(TesseractBEWLR.ClientItemExtensions, ModItems.TESSERACT.get())
 		event.registerItem(ManualMillBEWLR.ClientItemExtensions, ModBlocks.MANUAL_MILL.asItem())
 	}
 

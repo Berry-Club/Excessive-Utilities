@@ -44,6 +44,7 @@ object ModItemLang {
 			addItem(ModItems.RESONATING_REDSTONE_CRYSTAL, "Resonating Redstone Crystal")
 			addItem(ModItems.UPGRADE_BASE, "Upgrade Base")
 			addItem(ModItems.OPINIUM_CORE, "Opinium Core")
+			addItem(ModItems.TESSERACT, "Tesseract")
 			addItem(ModItems.UNSTABLE_INGOT, "Unstable Ingot")
 			addItem(ModItems.WARDENS_WAKE, "Warden's Wake")
 

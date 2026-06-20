@@ -268,7 +268,8 @@ class ModItemModelProvider(
 
 	private fun bewlrs() {
 		val bewlrItems = listOf(
-			ModItems.OPINIUM_CORE.get()
+			ModItems.OPINIUM_CORE.get(),
+			ModItems.TESSERACT.get()
 		)
 
 		for (item in bewlrItems) {
