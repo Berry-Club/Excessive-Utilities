@@ -9,7 +9,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
@@ -67,18 +66,21 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 
 			for (i in 0 until amountSquares) {
 				val phaseOffset = phaseStep * i
-				val dz = 0.5 * (1 + sin(speed * time + phaseOffset))
+				val loopProgress = 1 + sin(speed * time + phaseOffset).toFloat()
+
+				val dz = 0.5 * loopProgress
+
+				val scale = when (loopProgress) {
+					in 0.0f..0.125f -> Mth.lerp(loopProgress / 0.125f, 1f, 0.5f)
+					in 0.125f..0.375f -> 0.5f
+					in 0.375f..0.5f -> Mth.lerp(loopProgress / 0.375f, 0.5f, 1f)
+					else -> 1f
+				}
 
 				poseStack.withPose {
 					poseStack.translate(0.0, 0.0, dz)
-					poseStack.scale(dz.toFloat(), dz.toFloat(), dz.toFloat())
-					renderSquare(
-						poseStack,
-						vertexConsumer,
-						0.5f,
-						colors[i],
-						0xFF
-					)
+					poseStack.scale(scale, scale, scale)
+					renderSquare(poseStack, vertexConsumer, 0.5f, colors[i], 0xFF)
 				}
 			}
 
