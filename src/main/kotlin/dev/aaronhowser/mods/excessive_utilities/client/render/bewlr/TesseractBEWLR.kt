@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
 import kotlin.math.floor
 import kotlin.math.sin
+import kotlin.math.sqrt
 
 class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 	Minecraft.getInstance().blockEntityRenderDispatcher,
@@ -173,8 +174,17 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			alpha: Int
 		) {
 			val pose = poseStack.last()
-			vertex(pose, vertexConsumer, x1, y1, z1, color, alpha)
-			vertex(pose, vertexConsumer, x2, y2, z2, color, alpha)
+
+			val dx = x2 - x1
+			val dy = y2 - y1
+			val dz = z2 - z1
+			val length = sqrt(dx * dx + dy * dy + dz * dz)
+			val normalX = if (length == 0f) 0f else dx / length
+			val normalY = if (length == 0f) 0f else dy / length
+			val normalZ = if (length == 0f) 1f else dz / length
+
+			vertex(pose, vertexConsumer, x1, y1, z1, color, alpha, normalX, normalY, normalZ)
+			vertex(pose, vertexConsumer, x2, y2, z2, color, alpha, normalX, normalY, normalZ)
 		}
 
 		private fun vertex(
@@ -184,7 +194,10 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			y: Float,
 			z: Float,
 			color: Int,
-			alpha: Int
+			alpha: Int,
+			normalX: Float,
+			normalY: Float,
+			normalZ: Float
 		) {
 			val red = color shr 16 and 255
 			val green = color shr 8 and 255
@@ -192,7 +205,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 
 			vertexConsumer.addVertex(pose, x, y, z)
 				.setColor(red, green, blue, alpha)
-				.setNormal(pose, 0f, 0f, 1f)
+				.setNormal(pose, normalX, normalY, normalZ)
 		}
 	}
 
