@@ -109,7 +109,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 						OUTER_COLOR
 					}
 
-					add(Square(0.5f * scale, dz, color))
+					add(Square(0.5f * scale, -dz, color))
 				}
 			}
 
