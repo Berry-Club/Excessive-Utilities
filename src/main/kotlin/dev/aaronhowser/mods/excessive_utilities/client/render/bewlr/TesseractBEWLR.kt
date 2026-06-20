@@ -95,9 +95,9 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 					}
 
 					val color = if (i < amountSquares / 2) {
-						0xFF8800
+						0xFFFF8800.toInt()
 					} else {
-						0x0088FF
+						0xFF0088FF.toInt()
 					}
 
 					add(Square(0.5f * scale, dz - 0.5f - 2, color))
@@ -108,15 +108,15 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 				val square = squares[i]
 				val nextSquare = squares[(i + 1) % squares.size]
 
-				renderSquare(poseStack, vertexConsumer, square.halfSize, square.z, square.color, 0xFF)
-				renderCornerArms(poseStack, vertexConsumer, square, nextSquare, square.color, 0xFF)
+				renderSquare(poseStack, vertexConsumer, square.halfSize, square.z, square.argb)
+				renderCornerArms(poseStack, vertexConsumer, square, nextSquare, square.argb)
 			}
 		}
 
 		private data class Square(
 			val halfSize: Float,
 			val z: Float,
-			val color: Int
+			val argb: Int
 		)
 
 		private fun renderCornerArms(
@@ -124,18 +124,17 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			vertexConsumer: VertexConsumer,
 			square: Square,
 			otherSquare: Square,
-			color: Int,
-			alpha: Int
+			color: Int
 		) {
 			val min = -square.halfSize
 			val max = square.halfSize
 			val otherMin = -otherSquare.halfSize
 			val otherMax = otherSquare.halfSize
 
-			line(poseStack, vertexConsumer, min, min, square.z, otherMin, otherMin, otherSquare.z, color, alpha)
-			line(poseStack, vertexConsumer, max, min, square.z, otherMax, otherMin, otherSquare.z, color, alpha)
-			line(poseStack, vertexConsumer, max, max, square.z, otherMax, otherMax, otherSquare.z, color, alpha)
-			line(poseStack, vertexConsumer, min, max, square.z, otherMin, otherMax, otherSquare.z, color, alpha)
+			line(poseStack, vertexConsumer, min, min, square.z, otherMin, otherMin, otherSquare.z, color)
+			line(poseStack, vertexConsumer, max, min, square.z, otherMax, otherMin, otherSquare.z, color)
+			line(poseStack, vertexConsumer, max, max, square.z, otherMax, otherMax, otherSquare.z, color)
+			line(poseStack, vertexConsumer, min, max, square.z, otherMin, otherMax, otherSquare.z, color)
 		}
 
 		private fun renderSquare(
@@ -143,16 +142,15 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			vertexConsumer: VertexConsumer,
 			halfSize: Float,
 			z: Float,
-			color: Int,
-			alpha: Int
+			color: Int
 		) {
 			val min = -halfSize
 			val max = halfSize
 
-			line(poseStack, vertexConsumer, min, min, z, max, min, z, color, alpha)
-			line(poseStack, vertexConsumer, max, min, z, max, max, z, color, alpha)
-			line(poseStack, vertexConsumer, max, max, z, min, max, z, color, alpha)
-			line(poseStack, vertexConsumer, min, max, z, min, min, z, color, alpha)
+			line(poseStack, vertexConsumer, min, min, z, max, min, z, color)
+			line(poseStack, vertexConsumer, max, min, z, max, max, z, color)
+			line(poseStack, vertexConsumer, max, max, z, min, max, z, color)
+			line(poseStack, vertexConsumer, min, max, z, min, min, z, color)
 		}
 
 		private fun line(
@@ -164,8 +162,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			x2: Float,
 			y2: Float,
 			z2: Float,
-			color: Int,
-			alpha: Int
+			color: Int
 		) {
 			val pose = poseStack.last()
 
@@ -177,8 +174,8 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			val normalY = if (length == 0f) 0f else dy / length
 			val normalZ = if (length == 0f) 1f else dz / length
 
-			vertex(pose, vertexConsumer, x1, y1, z1, color, alpha, normalX, normalY, normalZ)
-			vertex(pose, vertexConsumer, x2, y2, z2, color, alpha, normalX, normalY, normalZ)
+			vertex(pose, vertexConsumer, x1, y1, z1, color, normalX, normalY, normalZ)
+			vertex(pose, vertexConsumer, x2, y2, z2, color, normalX, normalY, normalZ)
 		}
 
 		private fun vertex(
@@ -188,17 +185,12 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			y: Float,
 			z: Float,
 			color: Int,
-			alpha: Int,
 			normalX: Float,
 			normalY: Float,
 			normalZ: Float
 		) {
-			val red = color shr 16 and 255
-			val green = color shr 8 and 255
-			val blue = color and 255
-
 			vertexConsumer.addVertex(pose, x, y, z)
-				.setColor(red, green, blue, alpha)
+				.setColor(color)
 				.setNormal(pose, normalX, normalY, normalZ)
 		}
 	}
