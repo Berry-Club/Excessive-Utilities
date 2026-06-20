@@ -415,7 +415,6 @@ class ModItemModelProvider(
 	private fun basicItems() {
 
 		val skipThese = setOf(
-			ModItems.KLEIN_BOTTLE.get(),
 			ModItems.KIKOKU.get(),
 			ModItems.LUX_SABER.get()
 		)

@@ -153,6 +153,15 @@ class ModRecipeProvider(
 
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
 		shapedRecipe(
+			ModItems.TESSERACT,
+			"E E, S ,E E",
+			mapOf(
+				'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
+				'S' to Items.SCAFFOLDING.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
 			ModBlocks.LAST_MILLENNIUM_PORTAL,
 			"QSQ,SCS,QSQ",
 			mapOf(
@@ -965,10 +974,10 @@ class ModRecipeProvider(
 
 		shapedRecipe(
 			ModBlocks.DEMONICALLY_GARGANTUAN_DRUM,
-			"DKD,DRD,DKD",
+			"DTD,DRD,DTD",
 			mapOf(
 				'D' to ModItems.DEMON_INGOT.asIngredient(),
-				'K' to ModItems.KLEIN_BOTTLE.asIngredient(),
+				'T' to ModItems.TESSERACT.asIngredient(),
 				'R' to ModBlocks.REINFORCED_LARGE_DRUM.asIngredient()
 			)
 		).save(recipeOutput)
@@ -1841,15 +1850,6 @@ class ModRecipeProvider(
 				Blocks.DROPPER.asIngredient(),
 				ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient(),
 				Items.LEVER.asIngredient()
-			)
-		).save(recipeOutput)
-
-		shapelessRecipe(
-			ModItems.KLEIN_BOTTLE,
-			listOf(
-				Items.GLASS_BOTTLE.asIngredient(),
-				Tags.Items.ENDER_PEARLS.asIngredient(),
-				Tags.Items.ENDER_PEARLS.asIngredient(),
 			)
 		).save(recipeOutput)
 

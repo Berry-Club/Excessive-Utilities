@@ -53,8 +53,6 @@ object ModItemLang {
 			addItem(ModItems.DIVISION_SIGIL, "Division Sigil")
 			add(PSEUDO_INVERSION_SIGIL, "Pseudo-Inversion Sigil")
 
-			addItem(ModItems.KLEIN_BOTTLE, "Klein Bottle")
-
 			addItem(ModItems.DESTRUCTION_PICKAXE, "Destruction Pickaxe")
 			addItem(ModItems.EROSION_SHOVEL, "Erosion Shovel")
 			addItem(ModItems.ETHERIC_SWORD, "Etheric Sword")

@@ -73,8 +73,6 @@ object ModItems : AaronItemRegistry() {
 		register("unstable_ingot", ::UnstableIngotItem, PROPERTIES_SINGLE_STACK)
 	val SEMI_UNSTABLE_NUGGET: DeferredItem<Item> =
 		basic("semi_unstable_nugget")
-	val KLEIN_BOTTLE: DeferredItem<Item> =
-		basic("klein_bottle")
 	val OPINIUM_CORE: DeferredItem<OpiniumCoreItem> =
 		register("opinium_core", ::OpiniumCoreItem, OpiniumCoreItem.DEFAULT_PROPERTIES)
 	val TESSERACT: DeferredItem<Item> =

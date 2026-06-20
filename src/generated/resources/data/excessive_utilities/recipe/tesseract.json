@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "tag": "c:ender_pearls"
+    },
+    "S": {
+      "item": "minecraft:scaffolding"
+    }
+  },
+  "pattern": [
+    "E E",
+    " S ",
+    "E E"
+  ],
+  "result": {
+    "count": 1,
+    "id": "excessive_utilities:tesseract"
+  }
+}

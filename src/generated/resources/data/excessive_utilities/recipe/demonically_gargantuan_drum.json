@@ -5,17 +5,17 @@
     "D": {
       "item": "excessive_utilities:demon_ingot"
     },
-    "K": {
-      "item": "excessive_utilities:klein_bottle"
-    },
     "R": {
       "item": "excessive_utilities:reinforced_large_drum"
+    },
+    "T": {
+      "item": "excessive_utilities:tesseract"
     }
   },
   "pattern": [
-    "DKD",
+    "DTD",
     "DRD",
-    "DKD"
+    "DTD"
   ],
   "result": {
     "count": 1,
