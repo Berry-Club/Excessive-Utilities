@@ -19,6 +19,10 @@ class ClientConfig(
 	lateinit var enderPorcupineSearchVolumeColor: ModConfigSpec.ConfigValue<Int>
 	lateinit var enderPorcupineCurrentTargetColor: ModConfigSpec.ConfigValue<Int>
 
+	lateinit var tesseractInnerColor: ModConfigSpec.ConfigValue<Int>
+	lateinit var tesseractOuterColor: ModConfigSpec.ConfigValue<Int>
+	lateinit var tesseractSpeed: ModConfigSpec.DoubleValue
+
 	init {
 		general()
 	}
@@ -59,6 +63,20 @@ class ClientConfig(
 			enderPorcupineCurrentTargetColor = builder
 				.comment("The color of the Ender Porcupine's current target highlight, in the integer version of a hexadecimal number of format 0xAARRGGBB.")
 				.define("enderPorcupineCurrentTargetColor", 0xFFFFFFFF.toInt())
+		}
+
+		builder.section("tesseract") {
+			tesseractSpeed = builder
+				.comment("How fast the Tesseract's animation is.")
+				.defineInRange("tesseractSpeed", 0.025, 0.0, Double.MAX_VALUE)
+
+			tesseractInnerColor = builder
+				.comment("The color of the Tesseract's inner cube.")
+				.define("tesseractInnerColor", 0xFFFF8800.toInt())
+
+			tesseractOuterColor = builder
+			.comment("The color of the Tesseract's outer cube.")
+			.define("tesseractOuterColor", 0xFF0088FF.toInt())
 		}
 
 	}

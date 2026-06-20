@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer
 import com.mojang.math.Axis
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
+import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.client.renderer.MultiBufferSource
@@ -50,8 +51,8 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 
 	companion object {
 
-		const val INNER_COLOR = 0xFFFF8800.toInt()
-		const val OUTER_COLOR = 0xFF0088FF.toInt()
+		fun getInnerColor(): Int = ClientConfig.CONFIG.tesseractInnerColor.get()
+		fun getOuterColor(): Int = ClientConfig.CONFIG.tesseractOuterColor.get()
 
 		private fun renderCyclingSquares(
 			poseStack: PoseStack,
@@ -61,7 +62,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			val amountSquares = 4
 			val phaseStep = Mth.TWO_PI / amountSquares
 
-			val speed = 0.025
+			val speed = ClientConfig.CONFIG.tesseractSpeed.get()
 
 			val squares = buildList {
 				for (i in 0 until amountSquares) {
@@ -104,9 +105,9 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 					}
 
 					val color = if (i < amountSquares / 2) {
-						INNER_COLOR
+						getInnerColor()
 					} else {
-						OUTER_COLOR
+						getOuterColor()
 					}
 
 					add(Square(0.5f * scale, -dz, color))
@@ -122,7 +123,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 				val armColor = if (square.colorARgb == nextSquare.colorARgb) {
 					square.colorARgb
 				} else {
-					OUTER_COLOR
+					getOuterColor()
 				}
 
 				renderCornerArms(poseStack, vertexConsumer, square, nextSquare, armColor)
