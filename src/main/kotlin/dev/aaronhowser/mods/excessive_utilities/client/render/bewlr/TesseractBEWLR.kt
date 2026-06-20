@@ -9,10 +9,12 @@ import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
 import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.RenderType
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
+import kotlin.math.floor
 import kotlin.math.sin
 
 class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
@@ -30,7 +32,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 	) {
 		val gameTime = AaronClientUtil.localLevel?.gameTime ?: 0
 		val time = gameTime + Minecraft.getInstance().timer.gameTimeDeltaTicks
-		val vertexConsumer = buffer.getBuffer(AaronRenderTypes.linesThroughWalls())
+		val vertexConsumer = buffer.getBuffer(RenderType.lines())
 
 		poseStack.withPose {
 			poseStack.translate(0.5, 0.5, 0.5)
@@ -52,42 +54,52 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			vertexConsumer: VertexConsumer,
 			time: Float
 		) {
-			val amountSquares = 4
+			val amountSquares = 8
 			val phaseStep = Mth.TWO_PI / amountSquares
 
-			val speed = 0.1
+			val speed = 0.025
 
 			val colors = listOf(
 				0xFFFFFF,
 				0xFF0000,
 				0x00FF00,
 				0x0000FF,
+				0x00FFFF,
+				0xFF00FF,
+				0xFFFF00,
+				0xF0F0F0,
+				0x0F0F0F
 			)
 
 			for (i in 0 until amountSquares) {
 				val phaseOffset = phaseStep * i
-				val loopProgress = 1 + sin(speed * time + phaseOffset).toFloat()
 
-				val dz = 0.5 * loopProgress
+				val loopAngle = speed * time + phaseOffset
+				val dz = (1 + sin(loopAngle).toFloat()) / 2
+
+				val rawLoopProgress = (loopAngle + Math.PI / 2) / (Math.PI * 2)
+				val loopProgress = (rawLoopProgress - floor(rawLoopProgress)).toFloat()
 
 				val scale = when (loopProgress) {
-					in 0.0f..0.125f -> Mth.lerp(loopProgress / 0.125f, 1f, 0.5f)
+					in 0.0f..0.125f -> {
+						val shrinkProgress = Mth.inverseLerp(loopProgress, 0f, 0.125f)
+						Mth.lerp(shrinkProgress, 1f, 0.5f)
+					}
+
 					in 0.125f..0.375f -> 0.5f
-					in 0.375f..0.5f -> Mth.lerp(loopProgress / 0.375f, 0.5f, 1f)
+
+					in 0.375f..0.5f -> {
+						val growProgress = Mth.inverseLerp(loopProgress, 0.375f, 0.5f)
+						Mth.lerp(growProgress, 0.5f, 1f)
+					}
+
 					else -> 1f
 				}
 
 				poseStack.withPose {
-					poseStack.translate(0.0, 0.0, dz)
-					poseStack.scale(scale, scale, scale)
-					renderSquare(poseStack, vertexConsumer, 0.5f, colors[i], 0xFF)
+					poseStack.translate(0.0, 0.0, dz.toDouble() - 0.5)
+					renderSquare(poseStack, vertexConsumer, 0.5f * scale, colors[i], 0xFF)
 				}
-			}
-
-			renderSquare(poseStack, vertexConsumer, 0.5f, 0, 0xFF)
-			poseStack.withPose {
-				poseStack.translate(0.0, 0.0, 1.0)
-				renderSquare(poseStack, vertexConsumer, 0.5f, 0, 0xFF)
 			}
 		}
 
