@@ -44,8 +44,6 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 				poseStack.mulPose(Axis.YP.rotationDegrees(-36f))
 			}
 
-			poseStack.translate(0.5, 0.5, -2.0)
-
 			renderCyclingSquares(poseStack, vertexConsumer, time)
 		}
 	}
