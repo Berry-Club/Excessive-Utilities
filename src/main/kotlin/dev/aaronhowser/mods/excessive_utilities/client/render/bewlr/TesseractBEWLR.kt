@@ -43,8 +43,11 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 				poseStack.mulPose(Axis.YP.rotationDegrees(-36f))
 			}
 
-//			renderCyclingSquares(poseStack, vertexConsumer, time)
-			renderCyclingSquares(poseStack, vertexConsumer, 95f)
+			poseStack.translate(0.5, 0.5, -2.0)
+
+			renderCyclingSquares(poseStack, vertexConsumer, time)
+//			renderCyclingSquares(poseStack, vertexConsumer, 95f)
+//			renderCyclingSquares(poseStack, vertexConsumer, 0f)
 		}
 	}
 
@@ -61,6 +64,8 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			val speed = 0.025
 
 			val squares = buildList {
+				add(Square(0.5f * 0.75f, 0f, 0xFFFFFFFF.toInt(), 0xFFFFFFFF.toInt()))
+
 				for (i in 0 until amountSquares) {
 					val phaseOffset = phaseStep * i
 
@@ -107,7 +112,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 						0xFF0088FF.toInt()
 					}
 
-					add(Square(0.5f * scale, dz - 0.5f - 2, color, armColor))
+					add(Square(0.5f * scale, dz - 0.5f, color, armColor))
 				}
 			}
 
