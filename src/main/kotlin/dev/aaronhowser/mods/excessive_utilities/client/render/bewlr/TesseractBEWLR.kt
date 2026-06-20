@@ -13,6 +13,7 @@ import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
+import kotlin.math.abs
 import kotlin.math.sin
 
 class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
@@ -46,40 +47,29 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 	}
 
 	companion object {
-		private val COLORS = intArrayOf(
-			0xFF2FFFFF.toInt(),
-			0xFF7B5CFF.toInt(),
-			0xFFFF4EF8.toInt(),
-			0xFFFFFFFF.toInt()
-		)
 
 		private fun renderCyclingSquares(
 			poseStack: PoseStack,
 			vertexConsumer: VertexConsumer,
 			time: Float
 		) {
-			for (plane in 0 until 3) {
+			val amountSquares = 4
+			val phaseStep = Mth.TWO_PI / amountSquares
+
+			val speed = 0.1
+
+			for (i in 0 until amountSquares) {
+				val phaseOffset = phaseStep * i
+				val period = 0.5 * (1 + sin(speed * time + phaseOffset))
+
+				val dz = 0.5 * period
+
+				val sizeWave = abs(sin(speed * time + phaseOffset)).toFloat()
+
 				poseStack.withPose {
-					when (plane) {
-						1 -> poseStack.mulPose(Axis.XP.rotationDegrees(90f))
-						2 -> poseStack.mulPose(Axis.YP.rotationDegrees(90f))
-					}
-
-					val planeSpin = Mth.wrapDegrees(time * (1.2f + plane * 0.35f))
-					poseStack.mulPose(Axis.ZP.rotationDegrees(planeSpin))
-
-					for (i in 0 until 4) {
-						val phase = time * 0.08f + i * 0.25f + plane * 0.12f
-						val pulse = (sin(phase * Mth.TWO_PI) + 1f) * 0.5f
-						val halfSize = 0.18f + i * 0.095f + pulse * 0.035f
-						val color = COLORS[(i + plane) % COLORS.size]
-						val alpha = 190 + (pulse * 65).toInt()
-
-						poseStack.withPose {
-							poseStack.mulPose(Axis.ZP.rotationDegrees(i * 45f + time * (2.5f + plane)))
-							renderSquare(poseStack, vertexConsumer, halfSize, color, alpha)
-						}
-					}
+					poseStack.translate(0.0, 0.0, dz)
+					poseStack.scale(sizeWave, sizeWave, sizeWave)
+					renderSquare(poseStack, vertexConsumer, 0.5f, 0xFFFFFF, 0xFF)
 				}
 			}
 		}
