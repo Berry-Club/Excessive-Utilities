@@ -13,7 +13,6 @@ import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
-import kotlin.math.abs
 import kotlin.math.sin
 
 class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
@@ -58,19 +57,34 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 
 			val speed = 0.1
 
+			val colors = listOf(
+				0xFFFFFF,
+				0xFF0000,
+				0x00FF00,
+				0x0000FF,
+			)
+
 			for (i in 0 until amountSquares) {
 				val phaseOffset = phaseStep * i
-				val period = 0.5 * (1 + sin(speed * time + phaseOffset))
-
-				val dz = 0.5 * period
-
-				val sizeWave = abs(sin(speed * time + phaseOffset)).toFloat()
+				val dz = 0.5 * (1 + sin(speed * time + phaseOffset))
 
 				poseStack.withPose {
 					poseStack.translate(0.0, 0.0, dz)
-					poseStack.scale(sizeWave, sizeWave, sizeWave)
-					renderSquare(poseStack, vertexConsumer, 0.5f, 0xFFFFFF, 0xFF)
+					poseStack.scale(dz.toFloat(), dz.toFloat(), dz.toFloat())
+					renderSquare(
+						poseStack,
+						vertexConsumer,
+						0.5f,
+						colors[i],
+						0xFF
+					)
 				}
+			}
+
+			renderSquare(poseStack, vertexConsumer, 0.5f, 0, 0xFF)
+			poseStack.withPose {
+				poseStack.translate(0.0, 0.0, 1.0)
+				renderSquare(poseStack, vertexConsumer, 0.5f, 0, 0xFF)
 			}
 		}
 
