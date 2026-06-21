@@ -54,9 +54,6 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 
 	companion object {
 
-		fun getInnerColor(): Int = ClientConfig.CONFIG.tesseractInnerColor.get()
-		fun getOuterColor(): Int = ClientConfig.CONFIG.tesseractOuterColor.get()
-
 		private fun renderCyclingSquares(
 			poseStack: PoseStack,
 			vertexConsumer: VertexConsumer,
@@ -66,6 +63,8 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 			val phaseStep = Mth.TWO_PI / amountSquares
 
 			val speed = ClientConfig.CONFIG.tesseractSpeed.get()
+			val innerColor = ClientConfig.CONFIG.tesseractInnerColor.get()
+			val outerColor = ClientConfig.CONFIG.tesseractOuterColor.get()
 
 			val squares = buildList {
 				for (i in 0 until amountSquares) {
@@ -108,9 +107,9 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 					}
 
 					val color = if (i < amountSquares / 2) {
-						getInnerColor()
+						innerColor
 					} else {
-						getOuterColor()
+						outerColor
 					}
 
 					add(Square(0.5f * scale, -dz, color))
@@ -126,7 +125,7 @@ class TesseractBEWLR : BlockEntityWithoutLevelRenderer(
 				val armColor = if (square.colorARgb == nextSquare.colorARgb) {
 					square.colorARgb
 				} else {
-					getOuterColor()
+					outerColor
 				}
 
 				renderCornerArms(poseStack, vertexConsumer, square, nextSquare, armColor)
