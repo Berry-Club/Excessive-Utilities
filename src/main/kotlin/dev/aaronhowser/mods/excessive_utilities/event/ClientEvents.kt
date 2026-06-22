@@ -256,12 +256,18 @@ object ClientEvents {
 	fun onItemTooltip(event: ItemTooltipEvent) {
 		UnstableIngotItem.handleTooltip(event)
 
+		val stack = event.itemStack
+
 		if (
 			!ExcessiveUtilities.IS_ATHENA_LOADED
 			&& ClientConfig.CONFIG.athenaTooltip.get()
-			&& event.itemStack.isItem(ModItemTagsProvider.ATHENA_COMPATIBLE)
+			&& stack.isItem(ModItemTagsProvider.ATHENA_COMPATIBLE)
 		) {
 			event.toolTip += ModMenuLang.ATHENA_COMPATIBLE.toComponent().withStyle(ChatFormatting.DARK_GRAY)
+		}
+
+		if (stack.isItem(ModItemTagsProvider.NOT_YET_IMPLEMENTED)) {
+			event.toolTip += ModMenuLang.NOT_YET_IMPLEMENTED.toComponent().withStyle(ChatFormatting.DARK_RED)
 		}
 	}
 

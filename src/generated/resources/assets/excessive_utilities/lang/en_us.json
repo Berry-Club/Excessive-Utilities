@@ -811,6 +811,7 @@
   "tooltip.excessive_utilities.magical_snow_globe_ready": "The Snow Globe has gathered enough information about our world.",
   "tooltip.excessive_utilities.max_offset": "Max Offset: (%d, %d, %d)",
   "tooltip.excessive_utilities.min_offset": "Min Offset: (%d, %d, %d)",
+  "tooltip.excessive_utilities.not_yet_implented": "Not Yet Implemented",
   "tooltip.excessive_utilities.remaining_uses": "Remaining Uses: %d",
   "tooltip.excessive_utilities.solar_power": "Solar Power: %d%%",
   "tooltip.excessive_utilities.soul_debt": "Soul Debt: %d",

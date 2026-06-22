@@ -50,6 +50,7 @@ object ModMenuLang {
 	const val DEMON_CRAFTING = "container.excessive_utilities.demon_crafting"
 	const val SOUL_RENDING = "attribute.name.excessive_utilities.soul_rending"
 	const val WARDENS_WAKE = "tooltip.excessive_utilities.wardens_wake"
+	const val NOT_YET_IMPLEMENTED = "tooltip.excessive_utilities.not_yet_implented"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -114,6 +115,7 @@ object ModMenuLang {
 			add(DEMON_CRAFTING, "Get by throwing the Golden form into Lava while in the Nether!")
 			add(SOUL_RENDING, "Soul Rending")
 			add(WARDENS_WAKE, "Left behind by a Warden that's given up")
+			add(NOT_YET_IMPLEMENTED, "Not Yet Implemented")
 		}
 	}
 
