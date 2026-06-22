@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/resonator",
+  "criteria": {
+    "has_qed": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:qed"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.qed.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:qed"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.qed.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_qed"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

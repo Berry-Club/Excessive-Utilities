@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-21T23:50:15.8285755	Tags for minecraft:item mod id excessive_utilities
+// 1.21.1	2026-06-22T01:39:28.2424383	Tags for minecraft:item mod id excessive_utilities
 77b841070f3cac5152768155828616a4432538ec data/curios/tags/item/athena_compatible.json
 6cd106da1b41cff4178e301675293cd4b4781548 data/curios/tags/item/ring.json
 391f936c09d7f7b43694f899344222849a8d62a1 data/c/tags/item/brick_blocks.json
@@ -24,6 +24,7 @@ a9fc732d820e0cda4d35fb56727c9620bc0898a4 data/c/tags/item/tools/mining_tool.json
 50a922b6b7c90503a7e47bffb505e8a6444b87e5 data/excessive_utilities/tags/item/corpse_parts.json
 44822a64bf2a149dafb27d49a75bb0d470cb1334 data/excessive_utilities/tags/item/descendants_of_water.json
 89758bebcdbbe44f410b4e115e3e8c46ddc965f7 data/excessive_utilities/tags/item/double_anvil_enchantments.json
+25d109a8db751c76c0ba21679bf8e4720e31928e data/excessive_utilities/tags/item/ender_quarry_upgrade.json
 162cbf1536f6b358a1ab57ce18b4a40dd1639cca data/excessive_utilities/tags/item/filters.json
 4348c5765eafbffd2e2e0f7fdf3203060aa9fd1a data/excessive_utilities/tags/item/gifts_of_earth.json
 8ee236736c47b6dfd9e6da0fa885be4f6959c444 data/excessive_utilities/tags/item/gp_producer.json

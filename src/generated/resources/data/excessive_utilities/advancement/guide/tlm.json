@@ -1,0 +1,29 @@
+{
+  "parent": "excessive_utilities:guide/resonator",
+  "criteria": {
+    "entered_tlm": {
+      "conditions": {
+        "to": "excessive_utilities:the_last_millennium"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.tlm.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:last_millennium_portal"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.tlm.title"
+    }
+  },
+  "requirements": [
+    [
+      "entered_tlm"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

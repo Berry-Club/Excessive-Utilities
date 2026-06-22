@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/qed",
+  "criteria": {
+    "has_ender_quarry": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:ender_quarry"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.ender_quarry.title"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:ender_quarry"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.ender_quarry.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_ender_quarry"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

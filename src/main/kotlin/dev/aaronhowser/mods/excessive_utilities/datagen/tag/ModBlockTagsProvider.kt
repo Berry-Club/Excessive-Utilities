@@ -289,9 +289,11 @@ class ModBlockTagsProvider(
 			)
 
 		tag(ENDER_QUARRY_PART)
+			.add(ModBlocks.ENDER_QUARRY, ModBlocks.ENDER_QUARRY_UPGRADE_BASE)
+			.addTag(ENDER_QUARRY_UPGRADE)
+
+		tag(ENDER_QUARRY_UPGRADE)
 			.add(
-				ModBlocks.ENDER_QUARRY,
-				ModBlocks.ENDER_QUARRY_UPGRADE_BASE,
 				ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE,
 				ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE,
 				ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE,
@@ -565,6 +567,7 @@ class ModBlockTagsProvider(
 		val ENDER_PORCUPINE_BLACKLIST = create("ender_porcupine_blacklist")
 
 		val ENDER_QUARRY_PART = create("ender_quarry_part")
+		val ENDER_QUARRY_UPGRADE = create("ender_quarry_upgrade")
 		val COLLECTABLE_BY_BOOMEREAPERANG = create("collectable_by_boomereaperang")
 		val CURSED_EARTH_REPLACEABLE = create("cursed_earth_replaceable")
 

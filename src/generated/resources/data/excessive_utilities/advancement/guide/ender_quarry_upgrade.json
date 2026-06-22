@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/ender_quarry",
+  "criteria": {
+    "has_ender_quarry_upgrade": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#excessive_utilities:ender_quarry_upgrade"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.ender_quarry.upgrade.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:ender_quarry_speed_two_upgrade"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.ender_quarry_upgrade.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_ender_quarry_upgrade"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

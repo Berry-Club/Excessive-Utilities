@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/gp_producers",
+  "criteria": {
+    "has_resonator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:resonator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.resonator.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:resonator"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.resonator.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_resonator"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

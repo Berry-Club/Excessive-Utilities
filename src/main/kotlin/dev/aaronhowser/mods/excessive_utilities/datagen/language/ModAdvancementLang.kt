@@ -7,6 +7,18 @@ object ModAdvancementLang {
 
 	const val GP_PRODUCERS_TITLE = "advancements.excessive_utilities.gp_producers.title"
 	const val GP_PRODUCERS_DESC = "advancements.excessive_utilities.gp_producers.desc"
+	const val RESONATOR_TITLE = "advancements.excessive_utilities.resonator.title"
+	const val RESONATOR_DESC = "advancements.excessive_utilities.resonator.desc"
+	const val TLM_TITLE = "advancements.excessive_utilities.tlm.title"
+	const val TLM_DESC = "advancements.excessive_utilities.tlm.desc"
+	const val QUANTUM_QUARRY_TITLE = "advancements.excessive_utilities.quantum_quarry.title"
+	const val QUANTUM_QUARRY_DESC = "advancements.excessive_utilities.quantum_quarry.desc"
+	const val QED_TITLE = "advancements.excessive_utilities.qed.title"
+	const val QED_DESC = "advancements.excessive_utilities.qed.desc"
+	const val ENDER_QUARRY_TITLE = "advancements.excessive_utilities.ender_quarry.title"
+	const val ENDER_QUARRY_DESC = "advancements.excessive_utilities.ender_quarry.title"
+	const val ENDER_QUARRY_UPGRADE_TITLE = "advancements.excessive_utilities.ender_quarry_upgrade.title"
+	const val ENDER_QUARRY_UPGRADE_DESC = "advancements.excessive_utilities.ender_quarry.upgrade.desc"
 
 	const val PERFECT_OPINIUM_TITLE = "advancements.excessive_utilities.perfect_opinum.title"
 	const val PERFECT_OPINIUM_DESC = "advancements.excessive_utilities.perfect_opinum.desc"

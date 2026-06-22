@@ -416,6 +416,8 @@ class ModItemTagsProvider(
 				ModBlocks.DRAGON_EGG_MILL.asItem(),
 				ModBlocks.CREATIVE_MILL.asItem()
 			)
+
+		copy(ModBlockTagsProvider.ENDER_QUARRY_PART, ENDER_QUARRY_UPGRADE)
 	}
 
 	companion object {
@@ -456,6 +458,7 @@ class ModItemTagsProvider(
 		val ATHENA_COMPATIBLE = curio("athena_compatible")
 
 		val GP_PRODUCER = create("gp_producer")
+		val ENDER_QUARRY_UPGRADE = create("ender_quarry_upgrade")
 	}
 
 }

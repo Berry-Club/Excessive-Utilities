@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModAdvancementLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.handler.LastMillenniumHandler
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -12,6 +13,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.critereon.ChangeDimensionTrigger
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPredicate
@@ -43,7 +45,13 @@ class ModAdvancementSubProvider(
 				false,
 				false
 			)
-			.addCriterion("has_wood", hasItems(ItemPredicate.Builder.item().of(ItemTags.LOGS)))
+			.addCriterion(
+				"has_wood",
+				hasItems(
+					ItemPredicate.Builder.item()
+						.of(ItemTags.LOGS)
+				)
+			)
 			.save(ROOT)
 
 		val gpProducers = advancement()
@@ -53,8 +61,83 @@ class ModAdvancementSubProvider(
 				ModAdvancementLang.GP_PRODUCERS_TITLE.toComponent(),
 				ModAdvancementLang.GP_PRODUCERS_DESC.toComponent(),
 			)
-			.addCriterion("has_gp_producer", hasItems(ItemPredicate.Builder.item().of(ModItemTagsProvider.GP_PRODUCER)))
+			.addCriterion(
+				"has_gp_producer",
+				hasItems(
+					ItemPredicate.Builder.item()
+						.of(ModItemTagsProvider.GP_PRODUCER)
+				)
+			)
 			.save(GP_PRODUCERS)
+
+		val resonator = advancement()
+			.parent(gpProducers)
+			.display(
+				ModBlocks.RESONATOR,
+				ModAdvancementLang.RESONATOR_TITLE.toComponent(),
+				ModAdvancementLang.RESONATOR_DESC.toComponent(),
+			)
+			.has(ModBlocks.RESONATOR)
+			.save(RESONATOR)
+
+		val tlm = advancement()
+			.parent(resonator)
+			.display(
+				ModBlocks.LAST_MILLENNIUM_PORTAL,
+				ModAdvancementLang.TLM_TITLE.toComponent(),
+				ModAdvancementLang.TLM_DESC.toComponent(),
+			)
+			.addCriterion(
+				"entered_tlm",
+				ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(LastMillenniumHandler.LEVEL_KEY)
+			)
+			.save(TLM)
+
+		val qq = advancement()
+			.parent(resonator)
+			.display(
+				ModBlocks.QUANTUM_QUARRY_ACTUATOR,
+				ModAdvancementLang.QUANTUM_QUARRY_TITLE.toComponent(),
+				ModAdvancementLang.QUANTUM_QUARRY_DESC.toComponent(),
+			)
+			.has(ModBlocks.QUANTUM_QUARRY)
+			.save(QUANTUM_QUARRY)
+
+		val qed = advancement()
+			.parent(resonator)
+			.display(
+				ModBlocks.QED,
+				ModAdvancementLang.QED_TITLE.toComponent(),
+				ModAdvancementLang.QED_DESC.toComponent(),
+			)
+			.has(ModBlocks.QED)
+			.save(QED)
+
+		val enderQuarry = advancement()
+			.parent(qed)
+			.display(
+				ModBlocks.ENDER_QUARRY,
+				ModAdvancementLang.ENDER_QUARRY_TITLE.toComponent(),
+				ModAdvancementLang.ENDER_QUARRY_DESC.toComponent(),
+			)
+			.has(ModBlocks.ENDER_QUARRY)
+			.save(ENDER_QUARRY)
+
+		val enderQuarryUpgrades = advancement()
+			.parent(enderQuarry)
+			.display(
+				ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE,
+				ModAdvancementLang.ENDER_QUARRY_UPGRADE_TITLE.toComponent(),
+				ModAdvancementLang.ENDER_QUARRY_UPGRADE_DESC.toComponent()
+			)
+			.addCriterion(
+				"has_ender_quarry_upgrade",
+				hasItems(
+					ItemPredicate.Builder.item()
+						.of(ModItemTagsProvider.ENDER_QUARRY_UPGRADE)
+				)
+			)
+			.save(ENDER_QUARRY_UPGRADE)
 
 		val perfect = advancement()
 			.parent(root)
@@ -160,6 +243,12 @@ class ModAdvancementSubProvider(
 
 		val ROOT = guide("root")
 		val GP_PRODUCERS = guide("gp_producers")
+		val RESONATOR = guide("resonator")
+		val TLM = guide("tlm")
+		val QUANTUM_QUARRY = guide("quarry")
+		val QED = guide("qed")
+		val ENDER_QUARRY = guide("ender_quarry")
+		val ENDER_QUARRY_UPGRADE = guide("ender_quarry_upgrade")
 
 		val PERFECT_OPINIUM = guide("perfect_opinium")
 		val KIKOKU = guide("kikoku")

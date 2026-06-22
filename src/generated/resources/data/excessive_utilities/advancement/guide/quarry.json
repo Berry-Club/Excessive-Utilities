@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/resonator",
+  "criteria": {
+    "has_quantum_quarry": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:quantum_quarry"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.quantum_quarry.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:quantum_quarry_actuator"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.quantum_quarry.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_quantum_quarry"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
