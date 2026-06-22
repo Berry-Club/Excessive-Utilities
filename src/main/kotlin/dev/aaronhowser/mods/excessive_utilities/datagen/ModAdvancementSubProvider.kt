@@ -60,10 +60,7 @@ class ModAdvancementSubProvider(
 		val perfect = advancement()
 			.parent(root)
 			.display(
-				ModItems.OPINIUM_CORE.withComponent(
-					ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-					OpiniumCoreContentsComponent.getDefaultTiers().last()
-				),
+				OpiniumCoreContentsComponent.perfected().getStack(),
 				ModAdvancementLang.PERFECT_OPINIUM_TITLE.toComponent(),
 				ModAdvancementLang.PERFECT_OPINIUM_DESC.toComponent()
 			)
@@ -76,7 +73,7 @@ class ModAdvancementSubProvider(
 							DataComponentPredicate.builder()
 								.expect(
 									ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-									OpiniumCoreContentsComponent.getDefaultTiers().last()
+									OpiniumCoreContentsComponent.perfected()
 								)
 								.build()
 						)

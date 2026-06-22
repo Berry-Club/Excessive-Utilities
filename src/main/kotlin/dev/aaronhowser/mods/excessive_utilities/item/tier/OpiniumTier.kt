@@ -20,6 +20,6 @@ object OpiniumTier : Tier {
 	override fun getRepairIngredient(): Ingredient = ModItems.OPINIUM_CORE
 		.asIngredient(
 			ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-			OpiniumCoreContentsComponent.getDefaultTiers().last()
+			OpiniumCoreContentsComponent.perfected()
 		)
 }

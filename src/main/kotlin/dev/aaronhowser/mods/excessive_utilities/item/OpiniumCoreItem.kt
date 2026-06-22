@@ -20,7 +20,7 @@ class OpiniumCoreItem(properties: Properties) : Item(properties) {
 			Properties()
 				.component(
 					ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-					OpiniumCoreContentsComponent.getDefaultTiers().first()
+					OpiniumCoreContentsComponent.pathetic()
 				)
 		}
 	}
