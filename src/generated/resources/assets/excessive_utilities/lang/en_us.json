@@ -1,4 +1,6 @@
 {
+  "advancements.excessive_utilities.root.description": "A collection of excessively useful tools, machines, and magic",
+  "advancements.excessive_utilities.root.title": "Excessive Utilities",
   "attribute.name.excessive_utilities.soul_rending": "Soul Rending",
   "biome.c.is_magical": "Magical",
   "biome.c.is_plains": "Plains",

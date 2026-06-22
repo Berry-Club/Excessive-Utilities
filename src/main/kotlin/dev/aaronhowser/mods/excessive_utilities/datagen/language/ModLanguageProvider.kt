@@ -17,6 +17,7 @@ class ModLanguageProvider(
 		ModConfigLang.add(this)
 		ModMenuLang.add(this)
 		ModEnchantmentLang.add(this)
+		ModAdvancementLang.add(this)
 	}
 
 }

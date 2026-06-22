@@ -15,6 +15,7 @@ import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.common.data.AdvancementProvider
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -64,6 +65,16 @@ object ModDataGen {
 		generator.addProvider(
 			event.includeServer(),
 			ModRecipeProvider(output, lookupProvider)
+		)
+
+		generator.addProvider(
+			event.includeServer(),
+			AdvancementProvider(
+				output,
+				lookupProvider,
+				existingFileHelper,
+				listOf(ModAdvancementSubProvider(lookupProvider))
+			)
 		)
 
 		generator.addProvider(
