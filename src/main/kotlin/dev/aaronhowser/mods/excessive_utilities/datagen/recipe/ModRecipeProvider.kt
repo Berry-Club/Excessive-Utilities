@@ -154,10 +154,11 @@ class ModRecipeProvider(
 	private fun buildShapedRecipes(recipeOutput: RecipeOutput, holderLookup: HolderLookup.Provider) {
 		shapedRecipe(
 			ModItems.TESSERACT,
-			"E E, S ,E E",
+			"ERE,RGR,ERE",
 			mapOf(
 				'E' to Tags.Items.ENDER_PEARLS.asIngredient(),
-				'S' to Items.SCAFFOLDING.asIngredient()
+				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
+				'R' to Tags.Items.RODS_BLAZE.asIngredient()
 			)
 		).save(recipeOutput)
 

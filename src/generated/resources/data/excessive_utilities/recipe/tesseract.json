@@ -5,14 +5,17 @@
     "E": {
       "tag": "c:ender_pearls"
     },
-    "S": {
-      "item": "minecraft:scaffolding"
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "R": {
+      "tag": "c:rods/blaze"
     }
   },
   "pattern": [
-    "E E",
-    " S ",
-    "E E"
+    "ERE",
+    "RGR",
+    "ERE"
   ],
   "result": {
     "count": 1,

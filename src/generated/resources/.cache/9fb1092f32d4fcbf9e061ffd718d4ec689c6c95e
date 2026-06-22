@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-21T20:41:54.0932016	Recipes
+// 1.21.1	2026-06-21T23:59:28.4638899	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 5544a3880f9cc21b24f3bbd7a0e3125679de74dc data/excessive_utilities/advancement/recipes/crusher/allium_to_magenta_dye.json
 03553dc68b381cde601be45b74fc8784e96887ab data/excessive_utilities/advancement/recipes/crusher/azure_bluet_to_light_gray_dye.json
@@ -1378,7 +1378,7 @@ bf5a08fb0697b4a32f666f327863e5cc753bbc80 data/excessive_utilities/recipe/sun_cry
 e1b78b8f7b79cef921b005b954003441707fcb2a data/excessive_utilities/recipe/survivalist_generator.json
 c567bc29b5f9b994ecb5f25650feb171d69a341e data/excessive_utilities/recipe/swirling_glass.json
 839edeb993912e5a3f3005d6129c99a0d51233be data/excessive_utilities/recipe/terraformer.json
-575d7f4ce803e8b1405f4f5a3b5d9c54e188014f data/excessive_utilities/recipe/tesseract.json
+805a13ec8de3770b9ddc5717745182e098d65351 data/excessive_utilities/recipe/tesseract.json
 aff87c50820dd2cf50cb3a04dfc43622e4d46779 data/excessive_utilities/recipe/thickened_glass.json
 98abc04faa6c2023548119fbf56cc07ef53189f0 data/excessive_utilities/recipe/transfer_filter.json
 3f8c2aba559e05e9f9d1fecbd0e6eabd13501b4e data/excessive_utilities/recipe/transfer_pipe.json
