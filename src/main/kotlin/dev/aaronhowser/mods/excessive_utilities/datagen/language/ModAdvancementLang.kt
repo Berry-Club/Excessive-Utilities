@@ -12,7 +12,7 @@ object ModAdvancementLang {
 		provider.apply {
 			add(ROOT_TITLE, "Excessive Utilities")
 			add(ROOT_DESC, "A collection of excessively useful items!")
-			add(GP_PRODUCERS_TITLE, "Producing Grid Power")
+			add(GP_PRODUCERS_TITLE, "Milling About")
 			add(GP_PRODUCERS_DESC, "Make something that produces Grid Power")
 		}
 	}
