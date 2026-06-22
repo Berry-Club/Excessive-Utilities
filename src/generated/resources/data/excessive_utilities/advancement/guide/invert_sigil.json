@@ -10,6 +10,9 @@
       "translate": "advancements.excessive_utilities.invert_sigil.desc"
     },
     "icon": {
+      "components": {
+        "!excessive_utilities:remaining_uses": {}
+      },
       "count": 1,
       "id": "excessive_utilities:division_sigil"
     },

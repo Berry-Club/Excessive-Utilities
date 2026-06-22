@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.aaron.datagen.AaronAdvancementSubProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withoutComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModAdvancementLang
@@ -206,8 +207,8 @@ class ModAdvancementSubProvider(
 			.parent(anyGenerator)
 			.display(
 				ModBlocks.NETHER_STAR_GENERATOR.asItem(),
-				ModAdvancementLang.ANY_GENERATOR_TITLE.toComponent(),
-				ModAdvancementLang.ANY_GENERATOR_DESC.toComponent(),
+				ModAdvancementLang.EVERY_GENERATOR_TITLE.toComponent(),
+				ModAdvancementLang.EVERY_GENERATOR_DESC.toComponent(),
 			)
 			.hasAll(
 				ModBlocks.SURVIVALIST_GENERATOR.asItem(),
@@ -262,7 +263,7 @@ class ModAdvancementSubProvider(
 		val invertSigil = advancement()
 			.parent(activateSigil)
 			.display(
-				ModItems.DIVISION_SIGIL.asItem(),
+				ModItems.DIVISION_SIGIL.withoutComponent(ModDataComponents.REMAINING_USES.get()),
 				ModAdvancementLang.INVERT_SIGIL_TITLE.toComponent(),
 				ModAdvancementLang.INVERT_SIGIL_DESC.toComponent(),
 			)
