@@ -26,6 +26,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
+@Suppress("UnusedVariable")
 class ModAdvancementSubProvider(
 	lookupProvider: CompletableFuture<HolderLookup.Provider>
 ) : AaronAdvancementSubProvider(ExcessiveUtilities.MOD_ID, lookupProvider) {
