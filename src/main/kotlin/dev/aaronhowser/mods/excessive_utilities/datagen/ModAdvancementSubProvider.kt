@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModAdvancementLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.core.HolderLookup
@@ -23,6 +24,8 @@ class ModAdvancementSubProvider(
 		saver: Consumer<AdvancementHolder>,
 		existingFileHelper: ExistingFileHelper
 	) {
+		fun Advancement.Builder.save(id: ResourceLocation) = save(saver, id, existingFileHelper)
+
 		advancement()
 			.display(
 				ModItems.ANGEL_BLOCK.get(),
@@ -35,7 +38,7 @@ class ModAdvancementSubProvider(
 				false
 			)
 			.has(Items.CRAFTING_TABLE)
-			.save(saver, ROOT, existingFileHelper)
+			.save(ROOT)
 	}
 
 	companion object {
