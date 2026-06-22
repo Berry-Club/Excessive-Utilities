@@ -10,6 +10,8 @@ object ModAdvancementLang {
 
 	const val PERFECT_OPINIUM_TITLE = "advancements.excessive_utilities.perfect_opinum.title"
 	const val PERFECT_OPINIUM_DESC = "advancements.excessive_utilities.perfect_opinum.desc"
+	const val KIKOKU_TITLE = "advancements.excessive_utilities.kikoku.title"
+	const val KIKOKU_DESC = "advancements.excessive_utilities.kikoku.desc"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -19,6 +21,8 @@ object ModAdvancementLang {
 			add(GP_PRODUCERS_DESC, "Make something that produces Grid Power")
 			add(PERFECT_OPINIUM_TITLE, "Objectively Correct")
 			add(PERFECT_OPINIUM_DESC, "Get an Opinium Core (Perfected)")
+			add(KIKOKU_TITLE, "All According To Kikoku")
+			add(KIKOKU_DESC, "Make the Kikoku")
 		}
 	}
 

@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/perfect_opinium",
+  "criteria": {
+    "has_kikoku": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:kikoku"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.kikoku.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:kikoku"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.kikoku.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_kikoku"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

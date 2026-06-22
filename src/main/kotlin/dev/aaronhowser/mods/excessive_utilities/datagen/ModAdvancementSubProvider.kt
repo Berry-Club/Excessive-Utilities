@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.aaron.datagen.AaronAdvancementSubProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModAdvancementLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -80,6 +79,16 @@ class ModAdvancementSubProvider(
 				)
 			)
 			.save(PERFECT_OPINIUM)
+
+		val kikoku = advancement()
+			.parent(perfect)
+			.display(
+				ModItems.KIKOKU.get(),
+				ModAdvancementLang.KIKOKU_TITLE.toComponent(),
+				ModAdvancementLang.KIKOKU_DESC.toComponent(),
+			)
+			.has(ModItems.KIKOKU)
+			.save(KIKOKU)
 	}
 
 	companion object {
@@ -89,6 +98,7 @@ class ModAdvancementSubProvider(
 		val GP_PRODUCERS = guide("gp_producers")
 
 		val PERFECT_OPINIUM = guide("perfect_opinium")
+		val KIKOKU = guide("kikoku")
 	}
 
 }
