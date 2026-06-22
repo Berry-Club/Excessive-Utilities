@@ -403,6 +403,19 @@ class ModItemTagsProvider(
 				ModBlocks.PATTERNED_GLASS.asItem(),
 				ModBlocks.REDSTONE_GLASS.asItem(),
 			)
+
+		tag(GP_PRODUCER)
+			.add(
+				ModBlocks.MANUAL_MILL.asItem(),
+				ModBlocks.WATER_MILL.asItem(),
+				ModBlocks.WIND_MILL.asItem(),
+				ModBlocks.FIRE_MILL.asItem(),
+				ModBlocks.LAVA_MILL.asItem(),
+				ModBlocks.SOLAR_PANEL.asItem(),
+				ModBlocks.LUNAR_PANEL.asItem(),
+				ModBlocks.DRAGON_EGG_MILL.asItem(),
+				ModBlocks.CREATIVE_MILL.asItem()
+			)
 	}
 
 	companion object {
@@ -441,6 +454,8 @@ class ModItemTagsProvider(
 
 		val RING_CURIO = curio("ring")
 		val ATHENA_COMPATIBLE = curio("athena_compatible")
+
+		val GP_PRODUCER = create("gp_producer")
 	}
 
 }

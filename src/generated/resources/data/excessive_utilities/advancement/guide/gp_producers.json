@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/root",
+  "criteria": {
+    "has_gp_producer": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#excessive_utilities:gp_producer"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.gp_producers.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:manual_mill"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.gp_producers.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_gp_producer"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
