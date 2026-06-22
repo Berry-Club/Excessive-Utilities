@@ -20,16 +20,16 @@
 
 ### Changed
 
-- Which Angel Ring wing you have is now a Data Attachment
-	- It was previously a packet that modified a static `Map<UUID, Type>` which is gross
 - When a Lasso is destroyed, it will spawn the held mob
 - Added recipes for the Creative Builder's Wand and Creative Destruction Wand
+- The Sound Muffler now prevents vibration events in a configurable radius
+	- This means they protect you from the Warden and Sculk Sensors!
 - Unstable Ingot recipes can now require if the ingot is stable or not
 	- The Unstable Ingot Block and the two Creative Wands require it be stable
 - Division Sigil recipes can now require if the Sigil is inverted or not
 	- Unstable Nuggets require an inverted Sigil
-- The Sound Muffler now prevents vibration events in a configurable radius
-	- This means they protect you from the Warden and Sculk Sensors!
+- Which Angel Ring wing you have is now a Data Attachment
+	- It was previously a packet that modified a static `Map<UUID, Type>` which is gross
 
 ### Fixed
 
