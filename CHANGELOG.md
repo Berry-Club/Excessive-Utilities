@@ -17,6 +17,7 @@
 - The Tesseract
 	- Replacing the Klein Bottle
 	- The Klein Bottle was RWTema flexing his modeling abilities. I can't model, but I _can_ do fancy math
+- Advancements!
 
 ### Changed
 
