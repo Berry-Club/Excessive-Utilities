@@ -1,10 +1,10 @@
 {
   "criteria": {
-    "has_minecraft:crafting_table": {
+    "has_wood": {
       "conditions": {
         "items": [
           {
-            "items": "minecraft:crafting_table"
+            "items": "#minecraft:logs"
           }
         ]
       },
@@ -28,7 +28,7 @@
   },
   "requirements": [
     [
-      "has_minecraft:crafting_table"
+      "has_wood"
     ]
   ],
   "sends_telemetry_event": true

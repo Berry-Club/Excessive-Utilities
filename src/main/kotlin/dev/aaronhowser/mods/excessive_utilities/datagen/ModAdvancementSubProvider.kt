@@ -8,9 +8,10 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
+import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
 import net.minecraft.resources.ResourceLocation
-import net.minecraft.world.item.Items
+import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
@@ -37,7 +38,7 @@ class ModAdvancementSubProvider(
 				false,
 				false
 			)
-			.has(Items.CRAFTING_TABLE)
+			.addCriterion("has_wood", hasItems(ItemPredicate.Builder.item().of(ItemTags.LOGS)))
 			.save(ROOT)
 	}
 
