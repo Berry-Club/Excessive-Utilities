@@ -1,0 +1,228 @@
+{
+  "parent": "excessive_utilities:guide/any_generator",
+  "criteria": {
+    "has_culinary_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:culinary_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_death_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:death_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_disenchantment_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:disenchantment_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_ender_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:ender_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_explosive_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:explosive_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_frosty_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:frosty_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_furnace_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:furnace_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_halitosis_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:halitosis_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_heated_redstone_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:heated_redstone_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_magmatic_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:magmatic_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_nether_star_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:nether_star_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_overclocked_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:overclocked_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_pink_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:pink_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_potion_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:potion_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_slimy_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:slimy_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_survivalist_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:survivalist_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.any_generator.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:nether_star_generator"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.any_generator.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_survivalist_generator"
+    ],
+    [
+      "has_furnace_generator"
+    ],
+    [
+      "has_magmatic_generator"
+    ],
+    [
+      "has_ender_generator"
+    ],
+    [
+      "has_heated_redstone_generator"
+    ],
+    [
+      "has_culinary_generator"
+    ],
+    [
+      "has_potion_generator"
+    ],
+    [
+      "has_explosive_generator"
+    ],
+    [
+      "has_pink_generator"
+    ],
+    [
+      "has_overclocked_generator"
+    ],
+    [
+      "has_nether_star_generator"
+    ],
+    [
+      "has_disenchantment_generator"
+    ],
+    [
+      "has_frosty_generator"
+    ],
+    [
+      "has_halitosis_generator"
+    ],
+    [
+      "has_slimy_generator"
+    ],
+    [
+      "has_death_generator"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

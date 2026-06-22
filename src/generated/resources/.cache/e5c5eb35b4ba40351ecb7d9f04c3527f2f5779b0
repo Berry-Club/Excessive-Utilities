@@ -1,5 +1,8 @@
-// 1.21.1	2026-06-22T00:17:44.2538978	Advancements
+// 1.21.1	2026-06-22T00:44:27.1733006	Advancements
+bbf0a01e14a327e405091a00a69f19bf1e5f28e8 data/excessive_utilities/advancement/guide/any_generator.json
+94205ba4f5452270380aca839bfd82c76505cf41 data/excessive_utilities/advancement/guide/every_generator.json
 55f4d4d9f85a9878cbda79018067ca7dd7c58937 data/excessive_utilities/advancement/guide/gp_producers.json
 7f063adebbd146651a66451ae70ff738f3099ad5 data/excessive_utilities/advancement/guide/kikoku.json
 2ae66308c4cdea16dcfd62603f60fb09d235a1e6 data/excessive_utilities/advancement/guide/perfect_opinium.json
+720e5269f5ec1fa6caf88a661a24305c3ca65fe9 data/excessive_utilities/advancement/guide/rainbow_generator.json
 4d81ab6e85d86f2326a4c04805ddfc05b11a0f89 data/excessive_utilities/advancement/guide/root.json

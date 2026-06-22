@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/every_generator",
+  "criteria": {
+    "has_rainbow_generator": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:rainbow_generator"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.rainbow_generator.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:rainbow_generator"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.rainbow_generator.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_rainbow_generator"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

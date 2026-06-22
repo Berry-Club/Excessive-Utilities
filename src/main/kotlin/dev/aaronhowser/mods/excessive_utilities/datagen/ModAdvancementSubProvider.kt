@@ -89,6 +89,70 @@ class ModAdvancementSubProvider(
 			)
 			.has(ModItems.KIKOKU)
 			.save(KIKOKU)
+
+		val anyGenerator = advancement()
+			.parent(root)
+			.display(
+				ModBlocks.SURVIVALIST_GENERATOR.asItem(),
+				ModAdvancementLang.ANY_GENERATOR_TITLE.toComponent(),
+				ModAdvancementLang.ANY_GENERATOR_DESC.toComponent(),
+			)
+			.hasAny(
+				ModBlocks.SURVIVALIST_GENERATOR.asItem(),
+				ModBlocks.FURNACE_GENERATOR.asItem(),
+				ModBlocks.MAGMATIC_GENERATOR.asItem(),
+				ModBlocks.ENDER_GENERATOR.asItem(),
+				ModBlocks.HEATED_REDSTONE_GENERATOR.asItem(),
+				ModBlocks.CULINARY_GENERATOR.asItem(),
+				ModBlocks.POTION_GENERATOR.asItem(),
+				ModBlocks.EXPLOSIVE_GENERATOR.asItem(),
+				ModBlocks.PINK_GENERATOR.asItem(),
+				ModBlocks.OVERCLOCKED_GENERATOR.asItem(),
+				ModBlocks.NETHER_STAR_GENERATOR.asItem(),
+				ModBlocks.DISENCHANTMENT_GENERATOR.asItem(),
+				ModBlocks.FROSTY_GENERATOR.asItem(),
+				ModBlocks.HALITOSIS_GENERATOR.asItem(),
+				ModBlocks.SLIMY_GENERATOR.asItem(),
+				ModBlocks.DEATH_GENERATOR.asItem(),
+			)
+			.save(ANY_GENERATOR)
+
+		val everyGenerator = advancement()
+			.parent(anyGenerator)
+			.display(
+				ModBlocks.NETHER_STAR_GENERATOR.asItem(),
+				ModAdvancementLang.ANY_GENERATOR_TITLE.toComponent(),
+				ModAdvancementLang.ANY_GENERATOR_DESC.toComponent(),
+			)
+			.hasAll(
+				ModBlocks.SURVIVALIST_GENERATOR.asItem(),
+				ModBlocks.FURNACE_GENERATOR.asItem(),
+				ModBlocks.MAGMATIC_GENERATOR.asItem(),
+				ModBlocks.ENDER_GENERATOR.asItem(),
+				ModBlocks.HEATED_REDSTONE_GENERATOR.asItem(),
+				ModBlocks.CULINARY_GENERATOR.asItem(),
+				ModBlocks.POTION_GENERATOR.asItem(),
+				ModBlocks.EXPLOSIVE_GENERATOR.asItem(),
+				ModBlocks.PINK_GENERATOR.asItem(),
+				ModBlocks.OVERCLOCKED_GENERATOR.asItem(),
+				ModBlocks.NETHER_STAR_GENERATOR.asItem(),
+				ModBlocks.DISENCHANTMENT_GENERATOR.asItem(),
+				ModBlocks.FROSTY_GENERATOR.asItem(),
+				ModBlocks.HALITOSIS_GENERATOR.asItem(),
+				ModBlocks.SLIMY_GENERATOR.asItem(),
+				ModBlocks.DEATH_GENERATOR.asItem(),
+			)
+			.save(EVERY_GENERATOR)
+
+		val rainbowGenerator = advancement()
+			.parent(everyGenerator)
+			.display(
+				ModBlocks.RAINBOW_GENERATOR.asItem(),
+				ModAdvancementLang.RAINBOW_GENERATOR_TITLE.toComponent(),
+				ModAdvancementLang.RAINBOW_GENERATOR_DESC.toComponent(),
+			)
+			.has(ModBlocks.RAINBOW_GENERATOR)
+			.save(RAINBOW_GENERATOR)
 	}
 
 	companion object {
@@ -99,6 +163,10 @@ class ModAdvancementSubProvider(
 
 		val PERFECT_OPINIUM = guide("perfect_opinium")
 		val KIKOKU = guide("kikoku")
+
+		val ANY_GENERATOR = guide("any_generator")
+		val EVERY_GENERATOR = guide("every_generator")
+		val RAINBOW_GENERATOR = guide("rainbow_generator")
 	}
 
 }
