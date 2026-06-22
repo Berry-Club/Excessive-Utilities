@@ -1,0 +1,11 @@
+{
+  "type": "excessive_utilities:the_depths",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "minecraft:fixed",
+      "biome": "excessive_utilities:the_depths"
+    },
+    "settings": "excessive_utilities:the_depths"
+  }
+}

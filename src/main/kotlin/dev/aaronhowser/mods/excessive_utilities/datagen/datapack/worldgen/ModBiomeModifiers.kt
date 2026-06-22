@@ -12,37 +12,37 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries
 
 object ModBiomeModifiers {
 
-	val DEEP_DARK_PILLAR = rk("deep_dark_pillar")
-	val DEEP_DARK_STALACTITE = rk("deep_dark_stalactite")
-	val DEEP_DARK_SCULK_VEIN = rk("deep_dark_sculk_vein")
+	val DEPTHS_PILLAR = rk("depths_pillar")
+	val DEPTHS_STALACTITE = rk("depths_stalactite")
+	val DEPTHS_SCULK_VEIN = rk("depths_sculk_vein")
 
 	fun bootstrap(context: BootstrapContext<BiomeModifier>) {
 		val placedFeatures = context.lookup(Registries.PLACED_FEATURE)
 		val biomes = context.lookup(Registries.BIOME)
 
 		context.register(
-			DEEP_DARK_PILLAR,
+			DEPTHS_PILLAR,
 			BiomeModifiers.AddFeaturesBiomeModifier(
-				HolderSet.direct(biomes.getOrThrow(ModBiomes.DEEP_DARK)),
-				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEEP_DARK_PILLAR)),
+				HolderSet.direct(biomes.getOrThrow(ModBiomes.THE_DEPTHS)),
+				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEPTHS_PILLAR)),
 				GenerationStep.Decoration.UNDERGROUND_STRUCTURES
 			)
 		)
 
 		context.register(
-			DEEP_DARK_STALACTITE,
+			DEPTHS_STALACTITE,
 			BiomeModifiers.AddFeaturesBiomeModifier(
-				HolderSet.direct(biomes.getOrThrow(ModBiomes.DEEP_DARK)),
-				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEEP_DARK_STALACTITE)),
+				HolderSet.direct(biomes.getOrThrow(ModBiomes.THE_DEPTHS)),
+				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEPTHS_STALACTITE)),
 				GenerationStep.Decoration.UNDERGROUND_DECORATION
 			)
 		)
 
 		context.register(
-			DEEP_DARK_SCULK_VEIN,
+			DEPTHS_SCULK_VEIN,
 			BiomeModifiers.AddFeaturesBiomeModifier(
-				HolderSet.direct(biomes.getOrThrow(ModBiomes.DEEP_DARK)),
-				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEEP_DARK_SCULK_VEIN)),
+				HolderSet.direct(biomes.getOrThrow(ModBiomes.THE_DEPTHS)),
+				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEPTHS_SCULK_VEIN)),
 				GenerationStep.Decoration.UNDERGROUND_ORES
 			)
 		)

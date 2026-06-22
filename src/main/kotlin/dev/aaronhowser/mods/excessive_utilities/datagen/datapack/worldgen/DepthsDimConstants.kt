@@ -5,9 +5,9 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.Level
 
-object DeepDarkConstants {
+object DepthsDimConstants {
 
-	const val NAME = "deep_dark"
+	const val NAME = "the_depths"
 
 	val LEVEL_KEY: ResourceKey<Level> =
 		ResourceKey.create(Registries.DIMENSION, ExcessiveUtilities.modResource(NAME))

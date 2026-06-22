@@ -11,7 +11,7 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.Gene
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFluidInputDataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.command.ModCommands
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datamap.InversionRitualEnemyWeight
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
@@ -19,7 +19,7 @@ import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
 import dev.aaronhowser.mods.excessive_utilities.effect.SecondChanceEffect
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
-import dev.aaronhowser.mods.excessive_utilities.handler.DeepDarkHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.DepthsHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.SoulRendHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilActivation
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilInversion
@@ -443,8 +443,8 @@ object CommonEvents {
 	fun afterPlayerTick(event: PlayerTickEvent.Post) {
 		val player = event.entity
 
-		if (player is ServerPlayer && player.level().dimension() == DeepDarkConstants.LEVEL_KEY) {
-			DeepDarkHandler.handleGrue(player)
+		if (player is ServerPlayer && player.level().dimension() == DepthsDimConstants.LEVEL_KEY) {
+			DepthsHandler.handleGrue(player)
 		}
 
 	}

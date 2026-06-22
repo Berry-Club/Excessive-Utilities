@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.feature
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.block.Block
@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 
-class DeepDarkSculkVeinFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
+class DepthsSculkVeinFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
 
 	override fun place(context: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {
 		val origin = context.origin()
@@ -185,8 +185,8 @@ class DeepDarkSculkVeinFeature : Feature<NoneFeatureConfiguration>(NoneFeatureCo
 		const val VERTICAL_MOVE_CHANCE = 0.55f
 		const val BRANCH_VERTICAL_MOVE_CHANCE = 0.65f
 
-		const val MIN_VEIN_Y = DeepDarkConstants.MIN_Y + 4
-		const val MAX_VEIN_Y = DeepDarkConstants.FLOOR_TOP + DeepDarkConstants.BLEND_THICKNESS + 4
+		const val MIN_VEIN_Y = DepthsDimConstants.MIN_Y + 4
+		const val MAX_VEIN_Y = DepthsDimConstants.FLOOR_TOP + DepthsDimConstants.BLEND_THICKNESS + 4
 
 		const val SEED_SALT = 81237291L
 	}

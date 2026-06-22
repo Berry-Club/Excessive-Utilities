@@ -22,7 +22,7 @@ object ModBlockLang {
 			addBlock(ModBlocks.MAGICAL_WOOD, "Magical Wood")
 			addBlock(ModBlocks.MAGNUM_TORCH, "Magnum Torch")
 			addBlock(ModBlocks.PEACEFUL_TABLE, "Peaceful Table")
-			addBlock(ModBlocks.DEEP_DARK_PORTAL, "Portal to the Deep Dark")
+			addBlock(ModBlocks.DEPTHS_PORTAL, "Portal to the Depths")
 			addBlock(ModBlocks.LAST_MILLENNIUM_PORTAL, "Portal to the Last Millennium")
 			addBlock(ModBlocks.QED, "QED")
 			addBlock(ModBlocks.REDSTONE_CLOCK, "Redstone Clock")

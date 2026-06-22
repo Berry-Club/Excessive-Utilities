@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.feature
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.block.Block
@@ -12,7 +12,7 @@ import kotlin.math.floor
 import kotlin.math.min
 import kotlin.math.sqrt
 
-class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
+class DepthsPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
 
 	override fun place(context: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {
 		val origin = context.origin()
@@ -27,7 +27,7 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 			for (regionZ in chunkZ.floorDiv(REGION_SIZE_IN_CHUNKS) - 1..chunkZ.floorDiv(REGION_SIZE_IN_CHUNKS) + 1) {
 				val pillar = getPillarCenter(level.seed, regionX, regionZ)
 
-				if (DeepDarkAncientCityPlacement.isInReservedCityArea(level.seed, pillar.x, pillar.z)) continue
+				if (DepthsAncientCityPlacement.isInReservedCityArea(level.seed, pillar.x, pillar.z)) continue
 				if (!pillarCanTouchChunk(pillar, chunkX, chunkZ)) continue
 
 				placed = placePillarChunk(pillar, chunkX, chunkZ, context) || placed
@@ -67,7 +67,7 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 				val distanceFromCenter = getDistanceFromCenter(pillar, x, z)
 				if (distanceFromCenter > MAX_RADIUS + 1) continue
 
-				for (y in DeepDarkConstants.FLOOR_TOP + 1 until DeepDarkConstants.CEILING_BOTTOM) {
+				for (y in DepthsDimConstants.FLOOR_TOP + 1 until DepthsDimConstants.CEILING_BOTTOM) {
 					if (!shouldPlacePillarBlock(distanceFromCenter, x, y, z, level.seed)) continue
 
 					mutablePos.set(x, y, z)
@@ -101,8 +101,8 @@ class DeepDarkPillarFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfi
 	}
 
 	private fun getRadiusAtY(y: Int): Double {
-		val distanceFromFloor = y - DeepDarkConstants.FLOOR_TOP
-		val distanceFromCeiling = DeepDarkConstants.CEILING_BOTTOM - y
+		val distanceFromFloor = y - DepthsDimConstants.FLOOR_TOP
+		val distanceFromCeiling = DepthsDimConstants.CEILING_BOTTOM - y
 		val distanceFromEnd = min(distanceFromFloor, distanceFromCeiling).toDouble()
 
 		if (distanceFromEnd >= BULGE_HEIGHT) return MIDDLE_RADIUS

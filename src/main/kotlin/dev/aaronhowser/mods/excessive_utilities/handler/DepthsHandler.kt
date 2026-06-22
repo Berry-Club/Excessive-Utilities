@@ -5,7 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toBlockPos
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDamageTypeProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -18,7 +18,6 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.CaveVines
@@ -26,12 +25,12 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
 import net.minecraft.world.level.saveddata.SavedData
 
-class DeepDarkHandler : SavedData() {
+class DepthsHandler : SavedData() {
 
 	private val rooms: MutableList<Room> = mutableListOf()
 
 	fun teleportIntoDimension(entity: Entity, originLevel: ServerLevel, originPortalPos: BlockPos) {
-		val ddLevel = getDeepDarkLevel(originLevel)
+		val ddLevel = getDepthsLevel(originLevel)
 
 		val returnInfo = CompoundTag()
 		returnInfo.putString(FROM_DIM, originLevel.dimension().location().toString())
@@ -67,7 +66,7 @@ class DeepDarkHandler : SavedData() {
 
 	private fun placeStructureIfNeeded(ddLevel: ServerLevel, room: Room) {
 		val blockState = ddLevel.getBlockState(room.portalPos)
-		if (blockState.isBlock(ModBlocks.DEEP_DARK_PORTAL)) return
+		if (blockState.isBlock(ModBlocks.DEPTHS_PORTAL)) return
 
 		val structure = ddLevel.structureManager.get(STRUCTURE).get()
 
@@ -156,18 +155,18 @@ class DeepDarkHandler : SavedData() {
 	}
 
 	companion object {
-		private const val SAVED_DATA_NAME = "eu_deep_dark"
+		private const val SAVED_DATA_NAME = "eu_depths"
 
 		private const val ROOMS_NBT = "Rooms"
 		private const val ORIGIN_PORTAL_POS_NBT = "OriginPortalPos"
 		private const val STRUCTURE_MIN_NBT = "StructureMin"
 
-		const val PLAYER_RETURN_INFO = "eu_deep_dark_return_info"
+		const val PLAYER_RETURN_INFO = "eu_depths_return_info"
 		private const val FROM_DIM = "from_dimension"
 		private const val FROM_PORTAL_POS = "from_portal_pos"
 
-		private const val TARGET_Y = DeepDarkConstants.CEILING_BOTTOM + 20
-		private val STRUCTURE = ExcessiveUtilities.modResource("deep_dark_room")
+		private const val TARGET_Y = DepthsDimConstants.CEILING_BOTTOM + 20
+		private val STRUCTURE = ExcessiveUtilities.modResource("depths_room")
 		private val PORTAL_OFFSET = BlockPos(3, 0, 3)
 		private val STRUCTURE_SIZE = BlockPos(7, 6, 7)
 
@@ -189,8 +188,8 @@ class DeepDarkHandler : SavedData() {
 			)
 		}
 
-		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): DeepDarkHandler {
-			val data = DeepDarkHandler()
+		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): DepthsHandler {
+			val data = DepthsHandler()
 
 			val listTag = tag.getList(ROOMS_NBT, Tag.TAG_COMPOUND.toInt())
 			for (i in listTag.indices) {
@@ -205,19 +204,19 @@ class DeepDarkHandler : SavedData() {
 			return data
 		}
 
-		fun get(level: ServerLevel): DeepDarkHandler {
-			if (level.dimension() != DeepDarkConstants.LEVEL_KEY) {
-				return get(getDeepDarkLevel(level))
+		fun get(level: ServerLevel): DepthsHandler {
+			if (level.dimension() != DepthsDimConstants.LEVEL_KEY) {
+				return get(getDepthsLevel(level))
 			}
 
 			val storage = level.dataStorage
-			val factory = Factory(::DeepDarkHandler, ::load)
+			val factory = Factory(::DepthsHandler, ::load)
 
 			return storage.computeIfAbsent(factory, SAVED_DATA_NAME)
 		}
 
-		private fun getDeepDarkLevel(level: ServerLevel): ServerLevel {
-			return level.server.getLevel(DeepDarkConstants.LEVEL_KEY)!!
+		private fun getDepthsLevel(level: ServerLevel): ServerLevel {
+			return level.server.getLevel(DepthsDimConstants.LEVEL_KEY)!!
 		}
 
 		fun handleGrue(player: ServerPlayer) {

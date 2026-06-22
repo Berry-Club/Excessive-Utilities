@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "excessive_utilities:unstable/deep_dark_portal"
+        "recipe": "excessive_utilities:unstable/depths_portal"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "excessive_utilities:unstable/deep_dark_portal"
+      "excessive_utilities:unstable/depths_portal"
     ]
   }
 }

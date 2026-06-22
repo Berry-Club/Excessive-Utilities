@@ -2579,7 +2579,7 @@ class ModRecipeProvider(
 			.define('I', ModItems.UNSTABLE_INGOT.asIngredient())
 			.save(recipeOutput, modLoc("block_of_unstable_ingot_from_unstable_ingots"))
 
-		unstable(ModBlocks.DEEP_DARK_PORTAL)
+		unstable(ModBlocks.DEPTHS_PORTAL)
 			.pattern(
 				"4I4",
 				"IWI",

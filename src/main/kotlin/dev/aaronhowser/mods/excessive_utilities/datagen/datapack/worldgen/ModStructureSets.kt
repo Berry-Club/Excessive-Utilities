@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.feature.DeepDarkAncientCityPlacement
+import dev.aaronhowser.mods.excessive_utilities.feature.DepthsAncientCityPlacement
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
@@ -21,10 +21,10 @@ object ModStructureSets {
 			StructureSet(
 				structures.getOrThrow(ModStructures.ANCIENT_CITY),
 				RandomSpreadStructurePlacement(
-					DeepDarkAncientCityPlacement.SPACING,
-					DeepDarkAncientCityPlacement.SEPARATION,
+					DepthsAncientCityPlacement.SPACING,
+					DepthsAncientCityPlacement.SEPARATION,
 					RandomSpreadType.LINEAR,
-					DeepDarkAncientCityPlacement.SALT
+					DepthsAncientCityPlacement.SALT
 				)
 			)
 		)

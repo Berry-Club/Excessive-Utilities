@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "excessive_utilities:the_depths",
+  "features": "excessive_utilities:depths_stalactite",
+  "step": "underground_decoration"
+}

@@ -11,19 +11,19 @@ import net.minecraft.world.level.levelgen.synth.NormalNoise
 
 object ModNoiseSettings {
 
-	val DEEP_DARK = rk("deep_dark")
+	val THE_DEPTHS = rk("the_depths")
 
 	fun bootstrap(context: BootstrapContext<NoiseGeneratorSettings>) {
 		context.register(
-			DEEP_DARK,
+			THE_DEPTHS,
 			NoiseGeneratorSettings(
-				NoiseSettings(DeepDarkConstants.MIN_Y, DeepDarkConstants.HEIGHT, 1, 1),
+				NoiseSettings(DepthsDimConstants.MIN_Y, DepthsDimConstants.HEIGHT, 1, 1),
 				Blocks.DEEPSLATE.defaultBlockState(),
 				Blocks.AIR.defaultBlockState(),
 				buildNoiseRouter(context.lookup(Registries.NOISE)),
 				deepDarkRules(),
 				listOf(),
-				DeepDarkConstants.FLOOR_TOP,
+				DepthsDimConstants.FLOOR_TOP,
 				false,
 				false,
 				true,
@@ -51,15 +51,15 @@ object ModNoiseSettings {
 		)
 
 		val solidFloor = DensityFunctions.yClampedGradient(
-			DeepDarkConstants.MIN_Y,
-			DeepDarkConstants.FLOOR_TOP,
+			DepthsDimConstants.MIN_Y,
+			DepthsDimConstants.FLOOR_TOP,
 			1.0,
 			0.0
 		)
 
 		val noiseFloor = DensityFunctions.yClampedGradient(
-			DeepDarkConstants.FLOOR_TOP,
-			DeepDarkConstants.FLOOR_TOP + DeepDarkConstants.BLEND_THICKNESS + 4,
+			DepthsDimConstants.FLOOR_TOP,
+			DepthsDimConstants.FLOOR_TOP + DepthsDimConstants.BLEND_THICKNESS + 4,
 			1.0,
 			-1.0
 		)
@@ -70,15 +70,15 @@ object ModNoiseSettings {
 		)
 
 		val solidCeiling = DensityFunctions.yClampedGradient(
-			DeepDarkConstants.CEILING_BOTTOM,
-			DeepDarkConstants.MAX_Y,
+			DepthsDimConstants.CEILING_BOTTOM,
+			DepthsDimConstants.MAX_Y,
 			0.0,
 			1.0
 		)
 
 		val noiseCeiling = DensityFunctions.yClampedGradient(
-			DeepDarkConstants.CEILING_BOTTOM - DeepDarkConstants.BLEND_THICKNESS,
-			DeepDarkConstants.CEILING_BOTTOM,
+			DepthsDimConstants.CEILING_BOTTOM - DepthsDimConstants.BLEND_THICKNESS,
+			DepthsDimConstants.CEILING_BOTTOM,
 			-1.0,
 			1.0
 		)
@@ -127,13 +127,13 @@ object ModNoiseSettings {
 		)
 
 		val isInFloorBlendZone = SurfaceRules.yBlockCheck(
-			VerticalAnchor.absolute(DeepDarkConstants.FLOOR_TOP),
+			VerticalAnchor.absolute(DepthsDimConstants.FLOOR_TOP),
 			0
 		)
 
 		val isInCeilingBlendZone = SurfaceRules.not(
 			SurfaceRules.yBlockCheck(
-				VerticalAnchor.absolute(DeepDarkConstants.CEILING_BOTTOM),
+				VerticalAnchor.absolute(DepthsDimConstants.CEILING_BOTTOM),
 				0
 			)
 		)

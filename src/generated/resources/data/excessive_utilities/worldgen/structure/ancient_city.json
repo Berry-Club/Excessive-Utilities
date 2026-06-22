@@ -1,6 +1,6 @@
 {
   "type": "minecraft:jigsaw",
-  "biomes": "excessive_utilities:deep_dark",
+  "biomes": "excessive_utilities:the_depths",
   "max_distance_from_center": 116,
   "size": 7,
   "spawn_overrides": {

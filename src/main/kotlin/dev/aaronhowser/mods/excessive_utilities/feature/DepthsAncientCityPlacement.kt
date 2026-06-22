@@ -7,7 +7,7 @@ import net.minecraft.world.level.levelgen.WorldgenRandom
 import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType
 import kotlin.math.sqrt
 
-object DeepDarkAncientCityPlacement {
+object DepthsAncientCityPlacement {
 
 	fun isInReservedCityArea(seed: Long, x: Int, z: Int): Boolean {
 		val chunkX = x.floorDiv(16)

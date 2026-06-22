@@ -11,11 +11,11 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "excessive_utilities:deep_dark_portal"
+          "name": "excessive_utilities:depths_portal"
         }
       ],
       "rolls": 1.0
     }
   ],
-  "random_sequence": "excessive_utilities:blocks/deep_dark_portal"
+  "random_sequence": "excessive_utilities:blocks/depths_portal"
 }

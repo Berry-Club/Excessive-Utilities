@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
-import dev.aaronhowser.mods.excessive_utilities.handler.DeepDarkHandler
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
+import dev.aaronhowser.mods.excessive_utilities.handler.DepthsHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 
-class DeepDarkPortalBlock : Block(Properties.ofFullCopy(Blocks.STONE)) {
+class DepthsPortalBLock : Block(Properties.ofFullCopy(Blocks.STONE)) {
 
 	override fun useWithoutItem(
 		state: BlockState,
@@ -23,9 +23,9 @@ class DeepDarkPortalBlock : Block(Properties.ofFullCopy(Blocks.STONE)) {
 	): InteractionResult {
 		if (level !is ServerLevel) return InteractionResult.PASS
 
-		val handler = DeepDarkHandler.get(level)
+		val handler = DepthsHandler.get(level)
 
-		if (level.dimension() == DeepDarkConstants.LEVEL_KEY) {
+		if (level.dimension() == DepthsDimConstants.LEVEL_KEY) {
 			handler.returnFromDimension(player)
 		} else {
 			handler.teleportIntoDimension(player, level, pos)

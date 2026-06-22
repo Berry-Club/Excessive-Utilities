@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.feature
 
-import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DeepDarkConstants
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import net.minecraft.core.BlockPos
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.block.Block
@@ -9,7 +9,7 @@ import net.minecraft.world.level.levelgen.feature.Feature
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration
 
-class DeepDarkStalactiteFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
+class DepthsStalactiteFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfiguration.CODEC) {
 
 	override fun place(context: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {
 		val origin = context.origin()
@@ -27,7 +27,7 @@ class DeepDarkStalactiteFeature : Feature<NoneFeatureConfiguration>(NoneFeatureC
 
 				val ceilingY = findCeilingY(context, mutablePos, x, z) ?: continue
 				val length = getStalactiteLength(random)
-				val minY = maxOf(DeepDarkConstants.FLOOR_TOP + MIN_CLEARANCE_ABOVE_FLOOR, ceilingY - length)
+				val minY = maxOf(DepthsDimConstants.FLOOR_TOP + MIN_CLEARANCE_ABOVE_FLOOR, ceilingY - length)
 
 				for (y in ceilingY - 1 downTo minY) {
 					mutablePos.set(x, y, z)
@@ -46,7 +46,7 @@ class DeepDarkStalactiteFeature : Feature<NoneFeatureConfiguration>(NoneFeatureC
 	private fun findCeilingY(context: FeaturePlaceContext<NoneFeatureConfiguration>, mutablePos: BlockPos.MutableBlockPos, x: Int, z: Int): Int? {
 		val level = context.level()
 
-		for (y in DeepDarkConstants.CEILING_BOTTOM + CEILING_SCAN_ABOVE downTo DeepDarkConstants.FLOOR_TOP + 1) {
+		for (y in DepthsDimConstants.CEILING_BOTTOM + CEILING_SCAN_ABOVE downTo DepthsDimConstants.FLOOR_TOP + 1) {
 			mutablePos.set(x, y, z)
 
 			if (level.isEmptyBlock(mutablePos) || level.getBlockState(mutablePos).canBeReplaced()) continue

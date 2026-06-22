@@ -13,7 +13,7 @@ import net.minecraft.world.level.levelgen.GenerationStep
 
 object ModBiomes {
 
-	val DEEP_DARK = rk("deep_dark")
+	val THE_DEPTHS = rk("the_depths")
 
 	fun bootstrap(context: BootstrapContext<Biome>) {
 
@@ -49,35 +49,35 @@ object ModBiomes {
 			)
 			.build()
 
-		context.register(DEEP_DARK, biome)
+		context.register(THE_DEPTHS, biome)
 	}
 
 	private fun addDenseOverworldOres(builder: BiomeGenerationSettings.Builder) {
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_COAL_UPPER)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_COAL_LOWER)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_IRON_UPPER)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_IRON_UPPER_EXTRA)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_IRON_MIDDLE)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_IRON_SMALL)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_GOLD)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_GOLD_LOWER)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_GOLD_EXTRA)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_REDSTONE)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_REDSTONE_LOWER)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_DIAMOND)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_DIAMOND_MEDIUM)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_DIAMOND_LARGE)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_DIAMOND_BURIED)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_LAPIS)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_LAPIS_BURIED)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_COPPER)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_COPPER_LARGE)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_EMERALD)
-		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEEP_DARK_ORE_EMERALD_EXTRA)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_COAL_UPPER)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_COAL_LOWER)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_IRON_UPPER)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_IRON_UPPER_EXTRA)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_IRON_MIDDLE)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_IRON_SMALL)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_GOLD)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_GOLD_LOWER)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_GOLD_EXTRA)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_REDSTONE)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_REDSTONE_LOWER)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_DIAMOND)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_DIAMOND_MEDIUM)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_DIAMOND_LARGE)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_DIAMOND_BURIED)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_LAPIS)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_LAPIS_BURIED)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_COPPER)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_COPPER_LARGE)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_EMERALD)
+		builder.addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, ModPlacedFeatures.DEPTHS_ORE_EMERALD_EXTRA)
 	}
 
 	private fun addSurfaceLavaLakes(builder: BiomeGenerationSettings.Builder) {
-		builder.addFeature(GenerationStep.Decoration.LAKES, ModPlacedFeatures.DEEP_DARK_LAKE_LAVA_SURFACE)
+		builder.addFeature(GenerationStep.Decoration.LAKES, ModPlacedFeatures.DEPTHS_LAKE_LAVA_SURFACE)
 	}
 
 	private fun rk(path: String): ResourceKey<Biome> {

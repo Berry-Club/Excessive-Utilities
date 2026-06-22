@@ -2,7 +2,8 @@
 
 ### Added
 
-- The Deep Dark dimension!
+- The Depths dimension!
+	- AKA the Deep Dark, but renamed
 	- Uses Deepslate instead of Stone
 	- Vanilla ores spawn more densely
 	- Added some vanilla Deep Dark stuff to it as well

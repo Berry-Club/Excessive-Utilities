@@ -30,8 +30,8 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("magical_wood", ::MagicalWoodBlock)
 	val ENDER_CORE: DeferredBlock<EnderCoreBlock> =
 		registerBlock("ender_core", ::EnderCoreBlock)
-	val DEEP_DARK_PORTAL: DeferredBlock<DeepDarkPortalBlock> =
-		registerBlock("deep_dark_portal", ::DeepDarkPortalBlock)
+	val DEPTHS_PORTAL: DeferredBlock<DepthsPortalBLock> =
+		registerBlock("depths_portal", ::DepthsPortalBLock)
 	val LAST_MILLENNIUM_PORTAL: DeferredBlock<LastMillenniumPortalBlock> =
 		registerBlock("last_millennium_portal", ::LastMillenniumPortalBlock)
 	val MOON_STONE_ORE: DeferredBlock<MoonStoneOreBlock> =

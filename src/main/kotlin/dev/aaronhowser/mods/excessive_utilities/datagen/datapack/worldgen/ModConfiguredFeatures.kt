@@ -10,32 +10,32 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 
 object ModConfiguredFeatures {
 
-	val DEEP_DARK_PILLAR = rk("deep_dark_pillar")
-	val DEEP_DARK_STALACTITE = rk("deep_dark_stalactite")
-	val DEEP_DARK_SCULK_VEIN = rk("deep_dark_sculk_vein")
+	val DEPTHS_PILLAR = rk("depths_pillar")
+	val DEPTHS_STALACTITE = rk("depths_stalactite")
+	val DEPTHS_SCULK_VEIN = rk("depths_sculk_vein")
 
 	fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
 
 		context.register(
-			DEEP_DARK_PILLAR,
+			DEPTHS_PILLAR,
 			ConfiguredFeature(
-				ModFeatures.DEEP_DARK_PILLAR.get(),
+				ModFeatures.DEPTHS_PILLAR.get(),
 				FeatureConfiguration.NONE
 			)
 		)
 
 		context.register(
-			DEEP_DARK_STALACTITE,
+			DEPTHS_STALACTITE,
 			ConfiguredFeature(
-				ModFeatures.DEEP_DARK_STALACTITE.get(),
+				ModFeatures.DEPTHS_STALACTITE.get(),
 				FeatureConfiguration.NONE
 			)
 		)
 
 		context.register(
-			DEEP_DARK_SCULK_VEIN,
+			DEPTHS_SCULK_VEIN,
 			ConfiguredFeature(
-				ModFeatures.DEEP_DARK_SCULK_VEIN.get(),
+				ModFeatures.DEPTHS_SCULK_VEIN.get(),
 				FeatureConfiguration.NONE
 			)
 		)

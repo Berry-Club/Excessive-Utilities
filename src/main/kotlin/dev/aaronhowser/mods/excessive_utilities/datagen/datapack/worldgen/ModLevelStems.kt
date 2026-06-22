@@ -23,8 +23,8 @@ object ModLevelStems {
 		rk("quantum_quarry")
 	val THE_LAST_MILLENNIUM: ResourceKey<LevelStem> =
 		rk("the_last_millennium")
-	val DEEP_DARK =
-		rk(DeepDarkConstants.NAME)
+	val THE_DEPTHS =
+		rk(DepthsDimConstants.NAME)
 
 	fun bootstrap(context: BootstrapContext<LevelStem>) {
 		val dimensionTypeLookup =
@@ -72,12 +72,12 @@ object ModLevelStems {
 		)
 
 		context.register(
-			DEEP_DARK,
+			THE_DEPTHS,
 			LevelStem(
-				dimensionTypeLookup.getOrThrow(ModDimensionTypes.DEEP_DARK),
+				dimensionTypeLookup.getOrThrow(ModDimensionTypes.THE_DEPTHS),
 				NoiseBasedChunkGenerator(
-					FixedBiomeSource(biomeLookup.getOrThrow(ModBiomes.DEEP_DARK)),
-					noiseSettingsLookup.getOrThrow(ModNoiseSettings.DEEP_DARK)
+					FixedBiomeSource(biomeLookup.getOrThrow(ModBiomes.THE_DEPTHS)),
+					noiseSettingsLookup.getOrThrow(ModNoiseSettings.THE_DEPTHS)
 				)
 			)
 		)

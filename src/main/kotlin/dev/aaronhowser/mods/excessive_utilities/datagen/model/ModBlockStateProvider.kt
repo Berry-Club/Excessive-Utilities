@@ -3327,7 +3327,7 @@ class ModBlockStateProvider(
 			ModBlocks.BLOCK_OF_BEDROCKIUM.get(),
 			ModBlocks.CREATIVE_HARVEST.get(),
 			ModBlocks.CREATIVE_ENERGY_SOURCE.get(),
-			ModBlocks.DEEP_DARK_PORTAL.get(),
+			ModBlocks.DEPTHS_PORTAL.get(),
 			ModBlocks.BLOCK_OF_DEMON_METAL.get(),
 			ModBlocks.BLOCK_OF_ENCHANTED_METAL.get(),
 			ModBlocks.SOUND_MUFFLER.get(),

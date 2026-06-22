@@ -21,7 +21,7 @@ class ModBiomeTagsProvider(
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BIOME_MARKER_BLACKLIST)
 		tag(Tags.Biomes.IS_OVERWORLD)
-			.add(ModBiomes.DEEP_DARK)
+			.add(ModBiomes.THE_DEPTHS)
 	}
 
 	companion object {

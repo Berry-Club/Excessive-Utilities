@@ -548,7 +548,7 @@ class ServerConfig(
 					.defineInRange("inversionRitualKillsPer", 100, 1, Int.MAX_VALUE)
 			}
 
-			builder.section("deep_dark") {
+			builder.section("the_depths") {
 				deepDarkDamageAmount = builder
 					.comment("How many points of damage you get from being in darkness in the Deep Dark.")
 					.defineInRange("deepDarkDamageAmount", 1.0, 0.0, Double.MAX_VALUE)

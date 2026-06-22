@@ -14,8 +14,8 @@ object ModDimensionTypes {
 
 	val THE_LAST_MILLENNIUM: ResourceKey<DimensionType> =
 		rk("the_last_millennium")
-	val DEEP_DARK: ResourceKey<DimensionType> =
-		rk(DeepDarkConstants.NAME)
+	val THE_DEPTHS: ResourceKey<DimensionType> =
+		rk(DepthsDimConstants.NAME)
 
 	fun bootstrap(context: BootstrapContext<DimensionType>) {
 		context.register(
@@ -45,7 +45,7 @@ object ModDimensionTypes {
 		)
 
 		context.register(
-			DEEP_DARK,
+			THE_DEPTHS,
 			DimensionType(
 				OptionalLong.of(18000L),
 				false,
@@ -55,9 +55,9 @@ object ModDimensionTypes {
 				1.0,
 				false,
 				true,
-				DeepDarkConstants.MIN_Y,
-				DeepDarkConstants.HEIGHT,
-				DeepDarkConstants.HEIGHT,
+				DepthsDimConstants.MIN_Y,
+				DepthsDimConstants.HEIGHT,
+				DepthsDimConstants.HEIGHT,
 				BlockTags.INFINIBURN_OVERWORLD,
 				BuiltinDimensionTypes.OVERWORLD_EFFECTS,
 				0f,

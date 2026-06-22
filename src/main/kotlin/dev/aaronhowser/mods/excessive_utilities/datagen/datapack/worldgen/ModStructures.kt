@@ -29,7 +29,7 @@ object ModStructures {
 		context.register(
 			ANCIENT_CITY,
 			JigsawStructure(
-				Structure.StructureSettings.Builder(HolderSet.direct(biomes.getOrThrow(ModBiomes.DEEP_DARK)))
+				Structure.StructureSettings.Builder(HolderSet.direct(biomes.getOrThrow(ModBiomes.THE_DEPTHS)))
 					.spawnOverrides(emptySpawnOverrides())
 					.generationStep(GenerationStep.Decoration.UNDERGROUND_DECORATION)
 					.terrainAdapation(TerrainAdjustment.BEARD_BOX)
@@ -37,7 +37,7 @@ object ModStructures {
 				templatePools.getOrThrow(AncientCityStructurePieces.START),
 				Optional.of(ResourceLocation.withDefaultNamespace("city_anchor")),
 				7,
-				ConstantHeight.of(VerticalAnchor.absolute(DeepDarkConstants.FLOOR_TOP + CITY_ANCHOR_Y_OFFSET + FLOOR_CLEARANCE)),
+				ConstantHeight.of(VerticalAnchor.absolute(DepthsDimConstants.FLOOR_TOP + CITY_ANCHOR_Y_OFFSET + FLOOR_CLEARANCE)),
 				false,
 				Optional.empty(),
 				116,

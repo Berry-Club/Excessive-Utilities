@@ -1,5 +1,5 @@
 {
-  "feature": "excessive_utilities:deep_dark_sculk_vein",
+  "feature": "excessive_utilities:depths_stalactite",
   "placement": [
     {
       "type": "minecraft:biome"
@@ -13,10 +13,10 @@
       "height": {
         "type": "minecraft:uniform",
         "max_inclusive": {
-          "absolute": 64
+          "absolute": 128
         },
         "min_inclusive": {
-          "absolute": 64
+          "absolute": 128
         }
       }
     }
