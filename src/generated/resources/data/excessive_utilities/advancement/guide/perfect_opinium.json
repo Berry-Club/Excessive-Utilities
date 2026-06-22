@@ -1,0 +1,63 @@
+{
+  "parent": "excessive_utilities:guide/root",
+  "criteria": {
+    "has_perfected_opinium_core": {
+      "conditions": {
+        "items": [
+          {
+            "components": {
+              "excessive_utilities:opinium_core_contents": {
+                "center": {
+                  "count": 1,
+                  "id": "minecraft:iron_ingot"
+                },
+                "name": {
+                  "translate": "item.excessive_utilities.opinium_core.perfected"
+                },
+                "outer": {
+                  "count": 1,
+                  "id": "minecraft:nether_star"
+                }
+              }
+            },
+            "items": "excessive_utilities:opinium_core"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.perfect_opinum.desc"
+    },
+    "icon": {
+      "components": {
+        "excessive_utilities:opinium_core_contents": {
+          "center": {
+            "count": 1,
+            "id": "minecraft:iron_ingot"
+          },
+          "name": {
+            "translate": "item.excessive_utilities.opinium_core.perfected"
+          },
+          "outer": {
+            "count": 1,
+            "id": "minecraft:nether_star"
+          }
+        }
+      },
+      "count": 1,
+      "id": "excessive_utilities:opinium_core"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.perfect_opinum.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_perfected_opinium_core"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

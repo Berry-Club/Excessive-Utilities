@@ -2,16 +2,20 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.aaron.datagen.AaronAdvancementSubProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModAdvancementLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.critereon.ItemPredicate
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPredicate
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.tags.ItemTags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
@@ -43,7 +47,7 @@ class ModAdvancementSubProvider(
 			.addCriterion("has_wood", hasItems(ItemPredicate.Builder.item().of(ItemTags.LOGS)))
 			.save(ROOT)
 
-		advancement()
+		val gpProducers = advancement()
 			.parent(root)
 			.display(
 				ModBlocks.MANUAL_MILL,
@@ -53,6 +57,32 @@ class ModAdvancementSubProvider(
 			.addCriterion("has_gp_producer", hasItems(ItemPredicate.Builder.item().of(ModItemTagsProvider.GP_PRODUCER)))
 			.save(GP_PRODUCERS)
 
+		val perfect = advancement()
+			.parent(root)
+			.display(
+				ModItems.OPINIUM_CORE.withComponent(
+					ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
+					OpiniumCoreContentsComponent.getDefaultTiers().last()
+				),
+				ModAdvancementLang.PERFECT_OPINIUM_TITLE.toComponent(),
+				ModAdvancementLang.PERFECT_OPINIUM_DESC.toComponent()
+			)
+			.addCriterion(
+				"has_perfected_opinium_core",
+				hasItems(
+					ItemPredicate.Builder.item()
+						.of(ModItems.OPINIUM_CORE)
+						.hasComponents(
+							DataComponentPredicate.builder()
+								.expect(
+									ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
+									OpiniumCoreContentsComponent.getDefaultTiers().last()
+								)
+								.build()
+						)
+				)
+			)
+			.save(PERFECT_OPINIUM)
 	}
 
 	companion object {
@@ -60,6 +90,8 @@ class ModAdvancementSubProvider(
 
 		val ROOT = guide("root")
 		val GP_PRODUCERS = guide("gp_producers")
+
+		val PERFECT_OPINIUM = guide("perfect_opinium")
 	}
 
 }
