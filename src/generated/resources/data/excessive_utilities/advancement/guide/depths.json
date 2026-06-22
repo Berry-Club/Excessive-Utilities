@@ -1,0 +1,29 @@
+{
+  "parent": "excessive_utilities:guide/activate_sigil",
+  "criteria": {
+    "entered_depths": {
+      "conditions": {
+        "to": "excessive_utilities:the_depths"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.depths.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:depths_portal"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.depths.title"
+    }
+  },
+  "requirements": [
+    [
+      "entered_depths"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

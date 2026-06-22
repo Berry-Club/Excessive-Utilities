@@ -1,0 +1,33 @@
+{
+  "parent": "excessive_utilities:guide/root",
+  "criteria": {
+    "has_division_sigil": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:division_sigil"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.find_sigil.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:division_sigil"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.find_sigil.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_division_sigil"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

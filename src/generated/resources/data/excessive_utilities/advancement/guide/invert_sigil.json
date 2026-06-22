@@ -1,0 +1,26 @@
+{
+  "parent": "excessive_utilities:guide/activate_sigil",
+  "criteria": {
+    "impossible": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.invert_sigil.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:division_sigil"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.invert_sigil.title"
+    }
+  },
+  "requirements": [
+    [
+      "impossible"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

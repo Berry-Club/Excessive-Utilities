@@ -32,6 +32,20 @@ object ModAdvancementLang {
 	const val RAINBOW_GENERATOR_TITLE = "advancements.excessive_utilities.rainbow_generator.title"
 	const val RAINBOW_GENERATOR_DESC = "advancements.excessive_utilities.rainbow_generator.desc"
 
+	const val FIND_SIGIL_TITLE = "advancements.excessive_utilities.find_sigil.title"
+	const val FIND_SIGIL_DESC = "advancements.excessive_utilities.find_sigil.desc"
+	const val ACTIVATE_SIGIL_TITLE = "advancements.excessive_utilities.activate_sigil.title"
+	const val ACTIVATE_SIGIL_DESC = "advancements.excessive_utilities.activate_sigil.desc"
+	const val INVERT_SIGIL_TITLE = "advancements.excessive_utilities.invert_sigil.title"
+	const val INVERT_SIGIL_DESC = "advancements.excessive_utilities.invert_sigil.desc"
+
+	const val ANGEL_RING_TITLE = "advancements.excessive_utilities.angel_ring.title"
+	const val ANGEL_RING_DESC = "advancements.excessive_utilities.angel_ring.desc"
+	const val UNSTABLE_TOOL_TITLE = "advancements.excessive_utilities.unstable_tool.title"
+	const val UNSTABLE_TOOL_DESC = "advancements.excessive_utilities.unstable_tool.desc"
+	const val DEPTHS_TITLE = "advancements.excessive_utilities.depths.title"
+	const val DEPTHS_DESC = "advancements.excessive_utilities.depths.desc"
+
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
 			add(ROOT_TITLE, "Excessive Utilities")

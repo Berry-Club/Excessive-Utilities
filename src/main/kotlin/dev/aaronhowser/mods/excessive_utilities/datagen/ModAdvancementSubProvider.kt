@@ -3,9 +3,11 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 import dev.aaronhowser.mods.aaron.datagen.AaronAdvancementSubProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModAdvancementLang
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.LastMillenniumHandler
+import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -236,6 +238,73 @@ class ModAdvancementSubProvider(
 			)
 			.has(ModBlocks.RAINBOW_GENERATOR)
 			.save(RAINBOW_GENERATOR)
+
+		val findSigil = advancement()
+			.parent(root)
+			.display(
+				ModItems.DIVISION_SIGIL.asItem(),
+				ModAdvancementLang.FIND_SIGIL_TITLE.toComponent(),
+				ModAdvancementLang.FIND_SIGIL_DESC.toComponent()
+			)
+			.has(ModItems.DIVISION_SIGIL)
+			.save(FIND_SIGIL)
+
+		val activateSigil = advancement()
+			.parent(findSigil)
+			.display(
+				ModItems.DIVISION_SIGIL.asItem(),
+				ModAdvancementLang.ACTIVATE_SIGIL_TITLE.toComponent(),
+				ModAdvancementLang.ACTIVATE_SIGIL_DESC.toComponent(),
+			)
+			.addImpossibleCriterion()
+			.save(ACTIVATE_SIGIL)
+
+		val invertSigil = advancement()
+			.parent(activateSigil)
+			.display(
+				ModItems.DIVISION_SIGIL.asItem(),
+				ModAdvancementLang.INVERT_SIGIL_TITLE.toComponent(),
+				ModAdvancementLang.INVERT_SIGIL_DESC.toComponent(),
+			)
+			.addImpossibleCriterion()
+			.save(INVERT_SIGIL)
+
+		val angelRing = advancement()
+			.parent(activateSigil)
+			.display(
+				AngelRingItem.Type.FEATHER.getStack(),
+				ModAdvancementLang.ANGEL_RING_TITLE.toComponent(),
+				ModAdvancementLang.ANGEL_RING_DESC.toComponent()
+			)
+			.has(ModItems.ANGEL_RING)
+			.save(ANGEL_RING)
+
+		val unstableTool = advancement()
+			.parent(activateSigil)
+			.display(
+				ModItems.HEALING_AXE,
+				ModAdvancementLang.UNSTABLE_TOOL_TITLE.toComponent(),
+				ModAdvancementLang.UNSTABLE_TOOL_DESC.toComponent()
+			)
+			.hasAny(
+				ModItems.DESTRUCTION_PICKAXE, ModItems.EROSION_SHOVEL,
+				ModItems.ETHERIC_SWORD, ModItems.HEALING_AXE,
+				ModItems.REVERSING_HOE, ModItems.PRECISION_SHEARS
+			)
+			.save(UNSTABLE_TOOL)
+
+		val depths = advancement()
+			.parent(activateSigil)
+			.display(
+				ModBlocks.DEPTHS_PORTAL,
+				ModAdvancementLang.DEPTHS_TITLE.toComponent(),
+				ModAdvancementLang.DEPTHS_DESC.toComponent(),
+			)
+			.addCriterion(
+				"entered_depths",
+				ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(DepthsDimConstants.LEVEL_KEY)
+			)
+			.save(DEPTHS)
 	}
 
 	companion object {
@@ -256,6 +325,14 @@ class ModAdvancementSubProvider(
 		val ANY_GENERATOR = guide("any_generator")
 		val EVERY_GENERATOR = guide("every_generator")
 		val RAINBOW_GENERATOR = guide("rainbow_generator")
+
+		val FIND_SIGIL = guide("find_sigil")
+		val ACTIVATE_SIGIL = guide("activate_sigil")
+		val INVERT_SIGIL = guide("invert_sigil")
+
+		val ANGEL_RING = guide("angel_ring")
+		val UNSTABLE_TOOL = guide("unstable_tool")
+		val DEPTHS = guide("depths")
 	}
 
 }

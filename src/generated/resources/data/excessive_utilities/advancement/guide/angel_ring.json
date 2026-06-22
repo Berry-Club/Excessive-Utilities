@@ -1,0 +1,36 @@
+{
+  "parent": "excessive_utilities:guide/activate_sigil",
+  "criteria": {
+    "has_angel_ring": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:angel_ring"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.angel_ring.desc"
+    },
+    "icon": {
+      "components": {
+        "excessive_utilities:angel_ring_type": "feather"
+      },
+      "count": 1,
+      "id": "excessive_utilities:angel_ring"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.angel_ring.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_angel_ring"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

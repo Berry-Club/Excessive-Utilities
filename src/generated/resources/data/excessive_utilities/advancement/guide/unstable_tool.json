@@ -1,0 +1,88 @@
+{
+  "parent": "excessive_utilities:guide/activate_sigil",
+  "criteria": {
+    "has_destruction_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:destruction_pickaxe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_erosion_shovel": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:erosion_shovel"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_etheric_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:etheric_sword"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_healing_axe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:healing_axe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_precision_shears": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:precision_shears"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_reversing_hoe": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:reversing_hoe"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.excessive_utilities.unstable_tool.desc"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:healing_axe"
+    },
+    "title": {
+      "translate": "advancements.excessive_utilities.unstable_tool.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_destruction_pickaxe",
+      "has_erosion_shovel",
+      "has_etheric_sword",
+      "has_healing_axe",
+      "has_reversing_hoe",
+      "has_precision_shears"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
