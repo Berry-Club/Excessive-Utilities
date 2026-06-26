@@ -12,7 +12,6 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 
-// TODO: Add the gear to the item model
 class ManualMillBER(
 	val context: BlockEntityRendererProvider.Context
 ) : BlockEntityRenderer<ManualMillBlockEntity> {

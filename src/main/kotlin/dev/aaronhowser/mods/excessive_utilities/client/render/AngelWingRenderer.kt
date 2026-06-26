@@ -18,7 +18,6 @@ import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.client.ICurioRenderer
 import kotlin.math.cos
 
-// TODO: GET NEW TEXTURES!!!!!! DO NOT SHIP WITH THESE!!!!!!!!
 class AngelWingRenderer : ICurioRenderer {
 
 	override fun <T : LivingEntity, M : EntityModel<T?>> render(
