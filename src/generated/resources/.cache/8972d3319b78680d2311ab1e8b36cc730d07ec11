@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-26T03:18:12.643738	Block States: excessive_utilities
+// 1.21.1	2026-06-26T03:46:47.769383	Block States: excessive_utilities
 8fb96ad4646ce4b9716e8d3e8a34229fdc507e4c assets/excessive_utilities/blockstates/advanced_filing_cabinet.json
 dbb7e248ef5708c6d46b970e91b78773626214ab assets/excessive_utilities/blockstates/angel_block.json
 65a90e7e3954ee4e5c32067e0f932018b74e4f59 assets/excessive_utilities/blockstates/antenna.json
@@ -1363,7 +1363,7 @@ d8ada42d59caece6c4b80c4db7563b9f8643c639 assets/excessive_utilities/models/item/
 4e544c9ea077dae435d1b7c881f35b55b8883872 assets/excessive_utilities/models/item/magic_infuser.json
 cc3331f1c97f134d410020f013b37ffdad62a6a9 assets/excessive_utilities/models/item/magmatic_generator.json
 b099d9a20df9efa21604fa53fd2e4da5c6b82c52 assets/excessive_utilities/models/item/magnum_torch.json
-e47f2b5ffb4587cb930cc8cedb55bc208a64cfc0 assets/excessive_utilities/models/item/manual_mill.json
+a2b23c3c751a8755b918e3065b7eefce745d2a8f assets/excessive_utilities/models/item/manual_mill.json
 fe93f7718a758911c55d01ca6eae299ece8873bb assets/excessive_utilities/models/item/mechanical_miner.json
 6c438cc299ceeb73e5fccfbab1f41c9511d94d61 assets/excessive_utilities/models/item/mechanical_user.json
 0367d7985f091c103735c3002823e321cac37721 assets/excessive_utilities/models/item/mini_chest.json
