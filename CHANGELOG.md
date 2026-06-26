@@ -39,6 +39,7 @@
 - Fixed a crash when looking at a Lasso's tooltip if the held mob does NOT have a custom name
 - The Ender Quarry's beam renders while the EQ itself is off-screen now
 - Spikes and the Ender Flux Crystal now properly change shape depending on direction
+- The Manual Mill's item model now actually has the Redstone Gear on it
 
 # 1.6.0
 

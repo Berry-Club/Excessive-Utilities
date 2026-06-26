@@ -23,6 +23,7 @@ import net.neoforged.neoforge.client.model.generators.BlockModelBuilder
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel
 import net.neoforged.neoforge.client.model.generators.ModelBuilder
+import net.neoforged.neoforge.client.model.generators.ModelFile
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModBlockStateProvider(
@@ -1920,7 +1921,48 @@ class ModBlockStateProvider(
 				}
 			}
 
-		simpleBlockWithItem(block, model)
+		simpleBlock(block, model)
+
+		itemModels()
+			.getBuilder(name(block))
+			.parent(ModelFile.UncheckedModelFile("builtin/entity"))
+			.transforms {
+				transform(ItemDisplayContext.GUI) {
+					rotation(30f, 225f, 0f)
+					scale(0.625f, 0.625f, 0.625f)
+				}
+
+				transform(ItemDisplayContext.GROUND) {
+					translation(0f, 3f, 0f)
+					scale(0.25f, 0.25f, 0.25f)
+				}
+
+				transform(ItemDisplayContext.FIXED) {
+					scale(0.5f, 0.5f, 0.5f)
+				}
+
+				transform(ItemDisplayContext.THIRD_PERSON_RIGHT_HAND) {
+					rotation(75f, 45f, 0f)
+					translation(0f, 2.5f, 0f)
+					scale(0.375f, 0.375f, 0.375f)
+				}
+
+				transform(ItemDisplayContext.THIRD_PERSON_LEFT_HAND) {
+					rotation(75f, 45f, 0f)
+					translation(0f, 2.5f, 0f)
+					scale(0.375f, 0.375f, 0.375f)
+				}
+
+				transform(ItemDisplayContext.FIRST_PERSON_RIGHT_HAND) {
+					rotation(0f, 45f, 0f)
+					scale(0.4f, 0.4f, 0.4f)
+				}
+
+				transform(ItemDisplayContext.FIRST_PERSON_LEFT_HAND) {
+					rotation(0f, 225f, 0f)
+					scale(0.4f, 0.4f, 0.4f)
+				}
+			}
 	}
 
 	private fun windMill() {
