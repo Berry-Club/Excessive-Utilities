@@ -7,13 +7,16 @@ import net.minecraft.advancements.critereon.BlockPredicate
 import net.minecraft.advancements.critereon.LocationPredicate
 import net.minecraft.advancements.critereon.StatePropertiesPredicate
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.CropBlock
@@ -208,30 +211,11 @@ class ModBlockLootTablesSubProvider(
 				)
 
 				// Drop another for each level of Fortune, if fully grown
-				// FIXME: This shit ain't WORK
-				.withPool(
-					LootPool.lootPool()
-						.setRolls(ConstantValue.exactly(1f))
-						.add(LootItem.lootTableItem(Items.ENDER_PEARL))
-						.`when`(
-							LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.ENDER_LILY.get())
-								.setProperties(
-									StatePropertiesPredicate.Builder.properties()
-										.hasProperty(CropBlock.AGE, 7)
-								)
-						)
-						.`when`(
-							BonusLevelTableCondition.bonusLevelFlatChance(
-								fortune,
-								0f,
-								1f,
-								2f,
-								3f,
-								4f,
-								5f
-							)
-						)
-				)
+				.withPool(createFortuneBonusPool(ModBlocks.ENDER_LILY.get(), Items.ENDER_PEARL, fortune, 1))
+				.withPool(createFortuneBonusPool(ModBlocks.ENDER_LILY.get(), Items.ENDER_PEARL, fortune, 2))
+				.withPool(createFortuneBonusPool(ModBlocks.ENDER_LILY.get(), Items.ENDER_PEARL, fortune, 3))
+				.withPool(createFortuneBonusPool(ModBlocks.ENDER_LILY.get(), Items.ENDER_PEARL, fortune, 4))
+				.withPool(createFortuneBonusPool(ModBlocks.ENDER_LILY.get(), Items.ENDER_PEARL, fortune, 5))
 
 		)
 
@@ -261,33 +245,39 @@ class ModBlockLootTablesSubProvider(
 				)
 
 				// Drop another for each level of Fortune, if fully grown
-				// FIXME: This shit ain't WORK
-				.withPool(
-					LootPool.lootPool()
-						.setRolls(ConstantValue.exactly(1f))
-						.add(LootItem.lootTableItem(Items.REDSTONE))
-						.`when`(
-							LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.RED_ORCHID.get())
-								.setProperties(
-									StatePropertiesPredicate.Builder.properties()
-										.hasProperty(CropBlock.AGE, 7)
-								)
-						)
-						.`when`(
-							BonusLevelTableCondition.bonusLevelFlatChance(
-								fortune,
-								0f,
-								1f,
-								2f,
-								3f,
-								4f,
-								5f
-							)
-						)
-				)
+				.withPool(createFortuneBonusPool(ModBlocks.RED_ORCHID.get(), Items.REDSTONE, fortune, 1))
+				.withPool(createFortuneBonusPool(ModBlocks.RED_ORCHID.get(), Items.REDSTONE, fortune, 2))
+				.withPool(createFortuneBonusPool(ModBlocks.RED_ORCHID.get(), Items.REDSTONE, fortune, 3))
+				.withPool(createFortuneBonusPool(ModBlocks.RED_ORCHID.get(), Items.REDSTONE, fortune, 4))
+				.withPool(createFortuneBonusPool(ModBlocks.RED_ORCHID.get(), Items.REDSTONE, fortune, 5))
 
 		)
 
+	}
+
+	private fun createFortuneBonusPool(
+		crop: Block,
+		drop: ItemLike,
+		fortune: Holder<Enchantment>,
+		minFortuneLevel: Int
+	): LootPool.Builder {
+		val chances = FloatArray(minFortuneLevel + 1) { index ->
+			if (index < minFortuneLevel) 0f else 1f
+		}
+
+		return LootPool.lootPool()
+			.setRolls(ConstantValue.exactly(1f))
+			.add(LootItem.lootTableItem(drop))
+			.`when`(
+				LootItemBlockStatePropertyCondition.hasBlockStateProperties(crop)
+					.setProperties(
+						StatePropertiesPredicate.Builder.properties()
+							.hasProperty(CropBlock.AGE, 7)
+					)
+			)
+			.`when`(
+				BonusLevelTableCondition.bonusLevelFlatChance(fortune, *chances)
+			)
 	}
 
 }

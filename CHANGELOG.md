@@ -61,6 +61,7 @@
 - Transfer Nodes now cache their shape, since building it was very slow
 - Red Orchids now properly generate underground, on Redstone Ore
 - Ender Lilies also now properly generate in the outer End islands
+- Both now also drop more when mined with fortune
 - Hopefully somewhat improved performance of the Quantum Quarry
 
 ### Fixed
