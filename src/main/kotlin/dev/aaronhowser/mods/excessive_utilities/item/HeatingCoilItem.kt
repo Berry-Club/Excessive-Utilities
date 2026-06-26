@@ -14,7 +14,6 @@ import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.ComponentEnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 
-// TODO: Burn the player if held while full of FE?
 class HeatingCoilItem(properties: Properties) : Item(properties) {
 
 	override fun getBurnTime(itemStack: ItemStack, recipeType: RecipeType<*>?): Int {

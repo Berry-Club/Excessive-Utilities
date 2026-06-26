@@ -170,7 +170,6 @@ class FlatTransferNodeEntity(
 		}
 	}
 
-	//FIXME: Dupe bug if placed between two halves of the same Double Chest
 	private fun transferItem(level: ServerLevel) {
 		val source = originItemHandler ?: return
 		val target = targetItemHandler ?: return
@@ -181,15 +180,23 @@ class FlatTransferNodeEntity(
 			val simPull = source.extractItem(i, amountToMove, true)
 			if (simPull.isEmpty) continue
 
-			val copy = simPull.copyWithCount(1)
-			val splitCopy = copy.split(amountToMove)
+			val stackToMove = simPull.copy()
 
-			val simulatedResult = ItemHandlerHelper.insertItemStacked(target, splitCopy, true)
+			val simulatedResult = ItemHandlerHelper.insertItemStacked(target, stackToMove, true)
+			val amountAccepted = stackToMove.count - simulatedResult.count
 
-			if (simulatedResult.count != splitCopy.count) {
-				val actualResult = ItemHandlerHelper.insertItemStacked(target, splitCopy, false)
-				val amountInserted = splitCopy.count - actualResult.count
-				source.extractItem(i, amountInserted, false)
+			if (amountAccepted > 0) {
+				val extracted = source.extractItem(i, amountAccepted, false)
+				if (extracted.isEmpty) continue
+
+				val extractedCount = extracted.count
+				val remainder = ItemHandlerHelper.insertItemStacked(target, extracted, false)
+				val amountInserted = extractedCount - remainder.count
+
+				if (!remainder.isEmpty) {
+					source.insertItem(i, remainder, false)
+				}
+
 				amountToMove -= amountInserted
 				if (amountToMove <= 0) return
 			}

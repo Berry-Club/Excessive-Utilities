@@ -15,7 +15,6 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
 import net.minecraft.world.inventory.Slot
 
-//TODO: Show progress arrow and energy bar
 class EnchanterMenu(
 	containerId: Int,
 	playerInventory: Inventory,
