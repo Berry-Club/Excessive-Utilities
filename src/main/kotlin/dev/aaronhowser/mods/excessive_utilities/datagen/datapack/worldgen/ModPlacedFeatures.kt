@@ -15,6 +15,7 @@ object ModPlacedFeatures {
 	val DEPTHS_PILLAR = rk("depths_pillar")
 	val DEPTHS_STALACTITE = rk("depths_stalactite")
 	val DEPTHS_SCULK_VEIN = rk("depths_sculk_vein")
+	val RED_ORCHID = rk("red_orchid")
 
 	val DEPTHS_LAKE_LAVA_SURFACE = rk("depths_lake_lava_surface")
 
@@ -85,6 +86,19 @@ object ModPlacedFeatures {
 						VerticalAnchor.absolute(DepthsDimConstants.FLOOR_TOP),
 						VerticalAnchor.absolute(DepthsDimConstants.FLOOR_TOP),
 					)
+				)
+			)
+		)
+
+		context.register(
+			RED_ORCHID,
+			PlacedFeature(
+				configuredFeatures.getOrThrow(ModConfiguredFeatures.RED_ORCHID),
+				listOf(
+					CountPlacement.of(1),
+					InSquarePlacement.spread(),
+					HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.top()),
+					BiomeFilter.biome()
 				)
 			)
 		)

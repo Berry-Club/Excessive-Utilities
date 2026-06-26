@@ -66,7 +66,6 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Crops
 
-	//TODO: Spawn in caves
 	val RED_ORCHID: DeferredBlock<RedOrchidBlock> =
 		registerBlockWithoutItem("red_orchid", ::RedOrchidBlock)
 

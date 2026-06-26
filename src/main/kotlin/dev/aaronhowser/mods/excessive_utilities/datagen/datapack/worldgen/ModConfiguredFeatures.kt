@@ -13,6 +13,7 @@ object ModConfiguredFeatures {
 	val DEPTHS_PILLAR = rk("depths_pillar")
 	val DEPTHS_STALACTITE = rk("depths_stalactite")
 	val DEPTHS_SCULK_VEIN = rk("depths_sculk_vein")
+	val RED_ORCHID = rk("red_orchid")
 
 	fun bootstrap(context: BootstrapContext<ConfiguredFeature<*, *>>) {
 
@@ -36,6 +37,14 @@ object ModConfiguredFeatures {
 			DEPTHS_SCULK_VEIN,
 			ConfiguredFeature(
 				ModFeatures.DEPTHS_SCULK_VEIN.get(),
+				FeatureConfiguration.NONE
+			)
+		)
+
+		context.register(
+			RED_ORCHID,
+			ConfiguredFeature(
+				ModFeatures.RED_ORCHID.get(),
 				FeatureConfiguration.NONE
 			)
 		)

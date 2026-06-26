@@ -6,6 +6,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.levelgen.GenerationStep
+import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.world.BiomeModifier
 import net.neoforged.neoforge.common.world.BiomeModifiers
 import net.neoforged.neoforge.registries.NeoForgeRegistries
@@ -15,6 +16,7 @@ object ModBiomeModifiers {
 	val DEPTHS_PILLAR = rk("depths_pillar")
 	val DEPTHS_STALACTITE = rk("depths_stalactite")
 	val DEPTHS_SCULK_VEIN = rk("depths_sculk_vein")
+	val RED_ORCHID = rk("red_orchid")
 
 	fun bootstrap(context: BootstrapContext<BiomeModifier>) {
 		val placedFeatures = context.lookup(Registries.PLACED_FEATURE)
@@ -44,6 +46,15 @@ object ModBiomeModifiers {
 				HolderSet.direct(biomes.getOrThrow(ModBiomes.THE_DEPTHS)),
 				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.DEPTHS_SCULK_VEIN)),
 				GenerationStep.Decoration.UNDERGROUND_ORES
+			)
+		)
+
+		context.register(
+			RED_ORCHID,
+			BiomeModifiers.AddFeaturesBiomeModifier(
+				biomes.getOrThrow(Tags.Biomes.IS_OVERWORLD),
+				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.RED_ORCHID)),
+				GenerationStep.Decoration.UNDERGROUND_DECORATION
 			)
 		)
 

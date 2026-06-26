@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_overworld",
+  "features": "excessive_utilities:red_orchid",
+  "step": "underground_decoration"
+}
