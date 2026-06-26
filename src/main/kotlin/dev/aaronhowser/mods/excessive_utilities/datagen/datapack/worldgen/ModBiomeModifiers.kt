@@ -17,6 +17,7 @@ object ModBiomeModifiers {
 	val DEPTHS_STALACTITE = rk("depths_stalactite")
 	val DEPTHS_SCULK_VEIN = rk("depths_sculk_vein")
 	val RED_ORCHID = rk("red_orchid")
+	val ENDER_LILY_PATCH = rk("ender_lily_patch")
 
 	fun bootstrap(context: BootstrapContext<BiomeModifier>) {
 		val placedFeatures = context.lookup(Registries.PLACED_FEATURE)
@@ -55,6 +56,15 @@ object ModBiomeModifiers {
 				biomes.getOrThrow(Tags.Biomes.IS_OVERWORLD),
 				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.RED_ORCHID)),
 				GenerationStep.Decoration.UNDERGROUND_DECORATION
+			)
+		)
+
+		context.register(
+			ENDER_LILY_PATCH,
+			BiomeModifiers.AddFeaturesBiomeModifier(
+				biomes.getOrThrow(Tags.Biomes.IS_OUTER_END_ISLAND),
+				HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.ENDER_LILY_PATCH)),
+				GenerationStep.Decoration.VEGETAL_DECORATION
 			)
 		)
 

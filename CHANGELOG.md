@@ -60,6 +60,7 @@
 - Mobs spawned by the Resturbed Mob Spawner also now spawn Cursed
 - Transfer Nodes now cache their shape, since building it was very slow
 - Red Orchids now properly generate underground, on Redstone Ore
+- Ender Lilies also now properly generate in the outer End islands
 - Hopefully somewhat improved performance of the Quantum Quarry
 
 ### Fixed

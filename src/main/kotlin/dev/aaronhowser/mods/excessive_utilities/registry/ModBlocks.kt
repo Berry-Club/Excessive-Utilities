@@ -66,10 +66,9 @@ object ModBlocks : AaronBlockRegistry() {
 
 	// Crops
 
+	//TODO: Spawn both in loot
 	val RED_ORCHID: DeferredBlock<RedOrchidBlock> =
 		registerBlockWithoutItem("red_orchid", ::RedOrchidBlock)
-
-	//TODO: Spawn in loot and in end
 	val ENDER_LILY: DeferredBlock<EnderLilyBlock> =
 		registerBlockWithoutItem("ender_lily", ::EnderLilyBlock)
 

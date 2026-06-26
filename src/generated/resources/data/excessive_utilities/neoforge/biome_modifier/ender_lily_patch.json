@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "#c:is_outer_end_island",
+  "features": "excessive_utilities:ender_lily_patch",
+  "step": "vegetal_decoration"
+}

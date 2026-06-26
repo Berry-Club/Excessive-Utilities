@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:random_patch",
+  "config": {
+    "feature": {
+      "feature": {
+        "type": "minecraft:simple_block",
+        "config": {
+          "to_place": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "excessive_utilities:ender_lily",
+              "Properties": {
+                "age": "7"
+              }
+            }
+          }
+        }
+      },
+      "placement": []
+    },
+    "tries": 16,
+    "xz_spread": 4,
+    "y_spread": 2
+  }
+}

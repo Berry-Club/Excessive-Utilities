@@ -7,6 +7,7 @@ import net.minecraft.data.worldgen.features.MiscOverworldFeatures
 import net.minecraft.data.worldgen.features.OreFeatures
 import net.minecraft.resources.ResourceKey
 import net.minecraft.util.valueproviders.UniformInt
+import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.level.levelgen.VerticalAnchor
 import net.minecraft.world.level.levelgen.placement.*
 
@@ -16,6 +17,7 @@ object ModPlacedFeatures {
 	val DEPTHS_STALACTITE = rk("depths_stalactite")
 	val DEPTHS_SCULK_VEIN = rk("depths_sculk_vein")
 	val RED_ORCHID = rk("red_orchid")
+	val ENDER_LILY_PATCH = rk("ender_lily_patch")
 
 	val DEPTHS_LAKE_LAVA_SURFACE = rk("depths_lake_lava_surface")
 
@@ -98,6 +100,19 @@ object ModPlacedFeatures {
 					CountPlacement.of(1),
 					InSquarePlacement.spread(),
 					HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.top()),
+					BiomeFilter.biome()
+				)
+			)
+		)
+
+		context.register(
+			ENDER_LILY_PATCH,
+			PlacedFeature(
+				configuredFeatures.getOrThrow(ModConfiguredFeatures.ENDER_LILY_PATCH),
+				listOf(
+					RarityFilter.onAverageOnceEvery(24),
+					InSquarePlacement.spread(),
+					HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
 					BiomeFilter.biome()
 				)
 			)
