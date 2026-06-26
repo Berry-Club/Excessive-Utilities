@@ -16,9 +16,17 @@
           }
         }
       },
-      "placement": []
+      "placement": [
+        {
+          "type": "minecraft:block_predicate_filter",
+          "predicate": {
+            "type": "minecraft:matching_blocks",
+            "blocks": "minecraft:air"
+          }
+        }
+      ]
     },
-    "tries": 16,
+    "tries": 6,
     "xz_spread": 4,
     "y_spread": 2
   }

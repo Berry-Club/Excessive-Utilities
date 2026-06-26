@@ -64,10 +64,10 @@ object ModConfiguredFeatures {
 			ConfiguredFeature(
 				Feature.RANDOM_PATCH,
 				RandomPatchConfiguration(
-					16,
+					6,
 					4,
 					2,
-					PlacementUtils.inlinePlaced(
+					PlacementUtils.onlyWhenEmpty(
 						Feature.SIMPLE_BLOCK,
 						SimpleBlockConfiguration(
 							BlockStateProvider.simple(

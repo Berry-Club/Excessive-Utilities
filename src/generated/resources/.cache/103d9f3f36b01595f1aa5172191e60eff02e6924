@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-26T04:33:35.6154031	Registries
+// 1.21.1	2026-06-26T04:38:27.7543842	Registries
 e64a6caecb65685b417149d423a9bd66e0d98e35 data/excessive_utilities/damage_type/darkness.json
 c7653945d8ab22823b09863f2c5e7d4c3874578e data/excessive_utilities/damage_type/doom.json
 877bd9be3bfb61b205649d191710f2500792461b data/excessive_utilities/dimension/quantum_quarry.json
@@ -20,7 +20,7 @@ e4a67bce301785cd7313009de8df74787ee8c64b data/excessive_utilities/worldgen/biome
 cfb48ad3a5e628e9a0c2c9b55098d28dcdb2fe02 data/excessive_utilities/worldgen/configured_feature/depths_pillar.json
 d1953bbeb79a850982a066d7c46308353ddd363e data/excessive_utilities/worldgen/configured_feature/depths_sculk_vein.json
 d461329f1f154385f91fc18d62157c254fef386b data/excessive_utilities/worldgen/configured_feature/depths_stalactite.json
-a29b6ebda57ab13dec244a392ac92f115c983608 data/excessive_utilities/worldgen/configured_feature/ender_lily_patch.json
+94a542ca327e2f25b5dcf9ad2c1e5b9758c67b53 data/excessive_utilities/worldgen/configured_feature/ender_lily_patch.json
 e0245cce97bac505a611b4bba339c8932be60b19 data/excessive_utilities/worldgen/configured_feature/red_orchid.json
 b06f09850994634058431a9afdbebbc3f229cb30 data/excessive_utilities/worldgen/noise_settings/the_depths.json
 b25e5de69070a4f27192860f97c3126770c4ff4e data/excessive_utilities/worldgen/placed_feature/depths_lake_lava_surface.json
