@@ -38,6 +38,7 @@
 - Lassos only try to pick up `Mob`s. Previously it would try to pick up any `LivingEntity`, including players
 - Fixed a crash when looking at a Lasso's tooltip if the held mob does NOT have a custom name
 - The Ender Quarry's beam renders while the EQ itself is off-screen now
+- Spikes and the Ender Flux Crystal now properly change shape depending on direction
 
 # 1.6.0
 

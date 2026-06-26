@@ -1,0 +1,35 @@
+{
+  "criteria": {
+    "has_red_coal": {
+      "conditions": {
+        "items": [
+          {
+            "items": "excessive_utilities:red_coal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": {
+      "translate": "advancements.excessive_utilities.root.description"
+    },
+    "icon": {
+      "count": 1,
+      "id": "excessive_utilities:red_coal"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.excessive_utilities.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_red_coal"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

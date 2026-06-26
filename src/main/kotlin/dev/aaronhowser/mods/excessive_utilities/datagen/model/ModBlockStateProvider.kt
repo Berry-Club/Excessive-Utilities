@@ -1321,7 +1321,18 @@ class ModBlockStateProvider(
 		for (spike in spikes) {
 			val name = name(spike)
 			val model = models().getExistingFile(modLoc("block/$name"))
-			simpleBlock(spike, model)
+
+			getVariantBuilder(spike)
+				.forAllStates {
+					val facing = it.getValue(SpikeBlock.FACING)
+
+					ConfiguredModel
+						.builder()
+						.modelFile(model)
+						.rotationX(xRotationForFacing(facing))
+						.rotationY(yRotationForFacing(facing))
+						.build()
+				}
 
 			itemModels()
 				.withExistingParent(name, modLoc("block/$name"))
@@ -1677,29 +1688,33 @@ class ModBlockStateProvider(
 			.forAllStates {
 				val facing = it.getValue(EnderFluxCrystalBlock.FACING)
 
-				val yRot = when (facing) {
-					Direction.NORTH -> 0
-					Direction.EAST -> 90
-					Direction.SOUTH -> 180
-					Direction.WEST -> 270
-					else -> 0
-				}
-
-				val xRot = when (facing) {
-					Direction.UP -> 0
-					Direction.DOWN -> 180
-					else -> 90
-				}
-
 				ConfiguredModel
 					.builder()
 					.modelFile(model)
-					.rotationX(xRot)
-					.rotationY(yRot)
+					.rotationX(xRotationForFacing(facing))
+					.rotationY(yRotationForFacing(facing))
 					.build()
 			}
 
 		simpleBlockItem(block, model)
+	}
+
+	private fun xRotationForFacing(facing: Direction): Int {
+		return when (facing) {
+			Direction.UP -> 0
+			Direction.DOWN -> 180
+			else -> 90
+		}
+	}
+
+	private fun yRotationForFacing(facing: Direction): Int {
+		return when (facing) {
+			Direction.NORTH -> 0
+			Direction.EAST -> 90
+			Direction.SOUTH -> 180
+			Direction.WEST -> 270
+			else -> 0
+		}
 	}
 
 	//TODO: On

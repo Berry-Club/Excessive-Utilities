@@ -32,9 +32,15 @@ class EnderFluxCrystalBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
 			.setValue(FACING, context.clickedFace)
 	}
 
-	//TODO: Rotate the shape based on the facing direction
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
-		return UP_SHAPE
+		return when (state.getValue(FACING)) {
+			Direction.UP -> UP_SHAPE
+			Direction.DOWN -> DOWN_SHAPE
+			Direction.NORTH -> NORTH_SHAPE
+			Direction.SOUTH -> SOUTH_SHAPE
+			Direction.WEST -> WEST_SHAPE
+			Direction.EAST -> EAST_SHAPE
+		}
 	}
 
 	companion object {
@@ -46,16 +52,45 @@ class EnderFluxCrystalBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
 		private val TOP_HEIGHT_BOUNDS = 7.0 to 15.0
 
 		val UP_SHAPE: VoxelShape =
-			Shapes.or(
-				box(
-					BOTTOM_WIDTH_BOUNDS.first, BOTTOM_HEIGHT_BOUNDS.first, BOTTOM_WIDTH_BOUNDS.first,
-					BOTTOM_WIDTH_BOUNDS.second, BOTTOM_HEIGHT_BOUNDS.second, BOTTOM_WIDTH_BOUNDS.second
-				),
-				box(
-					TOP_WIDTH_BOUNDS.first, TOP_HEIGHT_BOUNDS.first, TOP_WIDTH_BOUNDS.first,
-					TOP_WIDTH_BOUNDS.second, TOP_HEIGHT_BOUNDS.second, TOP_WIDTH_BOUNDS.second
-				)
+			createShape(Direction.UP)
+
+		val DOWN_SHAPE: VoxelShape =
+			createShape(Direction.DOWN)
+
+		val NORTH_SHAPE: VoxelShape =
+			createShape(Direction.NORTH)
+
+		val SOUTH_SHAPE: VoxelShape =
+			createShape(Direction.SOUTH)
+
+		val WEST_SHAPE: VoxelShape =
+			createShape(Direction.WEST)
+
+		val EAST_SHAPE: VoxelShape =
+			createShape(Direction.EAST)
+
+		private fun createShape(direction: Direction): VoxelShape {
+			fun directionalBox(widthBounds: Pair<Double, Double>, heightBounds: Pair<Double, Double>): VoxelShape {
+				val min = widthBounds.first
+				val max = widthBounds.second
+				val from = heightBounds.first
+				val to = heightBounds.second
+
+				return when (direction) {
+					Direction.UP -> box(min, from, min, max, to, max)
+					Direction.DOWN -> box(min, 16.0 - to, min, max, 16.0 - from, max)
+					Direction.NORTH -> box(min, min, 16.0 - to, max, max, 16.0 - from)
+					Direction.SOUTH -> box(min, min, from, max, max, to)
+					Direction.WEST -> box(16.0 - to, min, min, 16.0 - from, max, max)
+					Direction.EAST -> box(from, min, min, to, max, max)
+				}
+			}
+
+			return Shapes.or(
+				directionalBox(BOTTOM_WIDTH_BOUNDS, BOTTOM_HEIGHT_BOUNDS),
+				directionalBox(TOP_WIDTH_BOUNDS, TOP_HEIGHT_BOUNDS)
 			)
+		}
 
 	}
 
