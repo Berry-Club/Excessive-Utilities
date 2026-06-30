@@ -2,6 +2,7 @@
 title: Flat Transfer Nodes
 id: excessive_utilities:flat_transfer_nodes
 related_items: [excessive_utilities:flat_transfer_node_items, excessive_utilities:flat_transfer_node_fluids]
+icon: excessive_utilities:flat_transfer_node_items
 type: item
 ---
 
@@ -10,7 +11,7 @@ type: item
 Right-click the Flat Transfer Node on a block to place it. Items/Fluids will be transferred out of the block you placed it on and into the adjacent block in the direction the Node is facing.
 
 <Callout>
-Placed Flat Transfer Nodes are actually entities, so keep that in mind.
+Placed Flat Transfer Nodes are actually entities (not block entities!), so keep that in mind.
 	</Callout>
 
 Right-clicking a placed Flat Transfer Node (or rather, clicking the *block and face* it's on) with an item that has the item tag `#excessive_utilities:interact_with_flat_transfer_nodes` will open its GUI, where you can insert an [Item Filter](@excessive_utilities:item_filter) or a [Fluid Filter](@excessive_utilities:fluid_filter). Left-clicking instead will pop the Transfer Node off the block.

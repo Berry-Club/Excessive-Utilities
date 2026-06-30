@@ -1,4 +1,5 @@
 {
-	"flat_transfer_node_fluids.mdx": "Flat Transfer Node (Fluids)",
-	"flat_transfer_node_items.mdx": "Flat Transfer Node (Items)"
+	"flat_transfer_nodes.mdx": "Flat Transfer Nodes",
+	"item_filter.mdx": "Item Filter",
+	"fluid_filter.mdx": "Fluid Filter"
 }
