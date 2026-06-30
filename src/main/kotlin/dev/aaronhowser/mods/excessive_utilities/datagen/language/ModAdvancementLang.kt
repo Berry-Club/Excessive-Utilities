@@ -16,7 +16,7 @@ object ModAdvancementLang {
 	const val QED_TITLE = "advancements.excessive_utilities.qed.title"
 	const val QED_DESC = "advancements.excessive_utilities.qed.desc"
 	const val ENDER_QUARRY_TITLE = "advancements.excessive_utilities.ender_quarry.title"
-	const val ENDER_QUARRY_DESC = "advancements.excessive_utilities.ender_quarry.title"
+	const val ENDER_QUARRY_DESC = "advancements.excessive_utilities.ender_quarry.desc"
 	const val ENDER_QUARRY_UPGRADE_TITLE = "advancements.excessive_utilities.ender_quarry_upgrade.title"
 	const val ENDER_QUARRY_UPGRADE_DESC = "advancements.excessive_utilities.ender_quarry.upgrade.desc"
 
@@ -60,8 +60,32 @@ object ModAdvancementLang {
 			add(ANY_GENERATOR_DESC, "Make any Generator")
 			add(EVERY_GENERATOR_TITLE, "Every Generator")
 			add(EVERY_GENERATOR_DESC, "Make every Generator")
-			add(RAINBOW_GENERATOR_TITLE, "Rainbow Generator")
+			add(RAINBOW_GENERATOR_TITLE, "RAINBOW")
 			add(RAINBOW_GENERATOR_DESC, "Make the Rainbow Generator")
+			add(RESONATOR_TITLE, "Tuning Spork")
+			add(RESONATOR_DESC, "Make a Resonator")
+			add(TLM_TITLE, "The End of Time")
+			add(TLM_DESC, "Go to The Last Millennium")
+			add(QUANTUM_QUARRY_TITLE, "Theoretical Miner")
+			add(QUANTUM_QUARRY_DESC, "Make a Quantum Quarry")
+			add(QED_TITLE, "QED")
+			add(QED_DESC, "Make a QED")
+			add(ENDER_QUARRY_TITLE, "Powered by Fences!")
+			add(ENDER_QUARRY_DESC, "Make an Ender Quarry")
+			add(ENDER_QUARRY_UPGRADE_TITLE, "World Hole")
+			add(ENDER_QUARRY_UPGRADE_DESC, "Make an upgrade for the Ender Quarry")
+			add(FIND_SIGIL_TITLE, "Mathematical!")
+			add(FIND_SIGIL_DESC, "Find a Division Sigil")
+			add(ACTIVATE_SIGIL_TITLE, "Divide by Diamond")
+			add(ACTIVATE_SIGIL_DESC, "Activate a Division Sigil")
+			add(INVERT_SIGIL_TITLE, "Inverted Sigil")
+			add(INVERT_SIGIL_DESC, "Complete the Inversion Sigil ritual")
+			add(DEPTHS_TITLE, "The Deeper Dark")
+			add(DEPTHS_DESC, "Enter the Depths")
+			add(UNSTABLE_TOOL_TITLE, "Useful for More Than Just Eating!")
+			add(UNSTABLE_TOOL_DESC, "Make any Unstable tool")
+			add(ANGEL_RING_TITLE, "Two-Winged Angel")
+			add(ANGEL_RING_DESC, "Make an Angel Ring")
 		}
 	}
 
