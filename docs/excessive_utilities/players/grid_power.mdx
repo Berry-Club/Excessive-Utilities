@@ -1,1 +1,64 @@
 # Grid Power
+
+Grid Power, or **GP**, is a per-player power budget. GP does not move through cables or batteries. Blocks and items belong to a player, producers add capacity to that player's grid, and consumers reserve part of that capacity while they are active.
+
+If your GP usage is higher than your GP capacity, your grid is overloaded. Overloaded GP consumers stop or lose their powered effect until usage drops or you add more generation.
+
+## Checking Your Grid
+
+Your current GP is shown as:
+
+```text
+used / capacity GP
+```
+
+The HUD appears when you hold a GP display item, such as the **Power Manager**, or look at a block tagged to show GP. If the display is red, your grid is overloaded.
+
+Use the **Power Manager** to print the current producers and consumers in chat. It lists the blocks and items currently contributing to your grid, along with their positions when available.
+
+## Producers
+
+GP generators are owned by the player who placed them. These are the default generation values:
+
+| Producer | Default GP | Notes |
+| --- | ---: | --- |
+| Manual Mill | 15 per player | Generates while players crank it. |
+| Solar Panel | 1 | Needs sky access and daytime. Rain reduces output by 5%. |
+| Lunar Panel | 1 | Needs sky access and nighttime. Rain reduces output by 5%. |
+| Lava Mill | 2 | Needs lava horizontally adjacent. |
+| Fire Mill | 4 | Needs fire directly below it. |
+| Water Mill | 4 per side | Counts horizontally adjacent flowing water, not source blocks. |
+| Wind Mill | Variable | Needs open north and south sides. Output changes over time and improves in weather. |
+| Dragon Egg Mill | 500 | Needs a valid dragon egg block on top. |
+| Creative Mill | 10,000 | Creative-only generation. |
+
+## Consumers
+
+GP consumers only reserve power while they have work to do. These are common default costs:
+
+| Consumer | Default GP | When it is used |
+| --- | ---: | --- |
+| Chicken Wing Ring | 1 | While slowing a fall with the jump key held. |
+| Ring of the Flying Squid | 16 | While thrusting upward with the jump key held. |
+| Angel Ring | 64 | While flying. Creative-mode players do not pay this cost. |
+| Red Coal | 4 | While a boosted Red Coal burn is active in a furnace. |
+| Wireless FE Transmitter | 1 per connection | For each destination that received FE last tick. |
+| Resonator | Recipe cost plus Speed Upgrades | While it has a valid recipe and output space. |
+
+Other GP-powered machines and transfer nodes also reserve GP while active. The Power Manager is the easiest way to find the exact active drain in-game.
+
+## Overload Effects
+
+Overload checks compare total usage to total capacity for your player grid.
+
+- The **Angel Ring** removes its creative-flight effect while overloaded.
+- The **Resonator** pauses progress while overloaded.
+- GP-powered blocks that check overload will stop doing work until enough GP is available again.
+
+Adding generation, waiting for temporary consumers to finish, or disabling/removing consumers clears the overload.
+
+## Practical Setup
+
+Start with a **Manual Mill** or environmental mills to build a small capacity buffer. For early flight items, remember that Chicken Wing Ring and Ring of the Flying Squid only draw GP while actively used, while the Angel Ring draws GP whenever you are flying.
+
+For machines, keep some spare capacity above the listed recipe or machine cost. Speed Upgrades increase throughput but also add GP drain, so a machine that works without upgrades can overload after upgrades are inserted.
