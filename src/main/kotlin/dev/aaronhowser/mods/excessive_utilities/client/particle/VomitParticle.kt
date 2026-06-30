@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.client.particle
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import net.minecraft.client.multiplayer.ClientLevel
 import net.minecraft.client.particle.*
 import net.minecraft.core.particles.SimpleParticleType
@@ -26,8 +27,8 @@ class VomitParticle(
 		quadSize *= 0.55f + random.nextFloat() * 0.45f
 
 		setColor(
-			0.22f + random.nextFloat() * 0.12f,
-			0.75f + random.nextFloat() * 0.2f,
+			random.nextRange(0.22f, 0.34f),
+			random.nextRange(0.75f, 0.95f),
 			0.08f
 		)
 
