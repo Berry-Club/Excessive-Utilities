@@ -1,6 +1,6 @@
 # Soul Debt
 
-Soul Debt tracks how many Soul Fragments are tied to your player. It can be positive or negative:
+Soul Debt tracks how many [Soul Fragments](@excessive_utilities:soul_fragment) are tied to your player. By default, this amount is 0. It can be positive or negative:
 
 - **Soul Surplus** means you have absorbed more Soul Fragments than you have removed.
 - **Soul Debt** means you have removed more Soul Fragments than you have absorbed.
@@ -9,35 +9,24 @@ Each point changes your maximum health by the server's **Health per Soul Fragmen
 
 ## Soul Fragments
 
-Soul Fragments are rare drops from entities. The base drop chance is about **1 in 43 million**. Killing with **Kikoku** adds a separate bonus roll with about a **1 in 4.3 million** chance.
+Soul Fragments are rare drops from entities. The base drop chance is about **1 in 43 million**. Killing with the [Kikoku](@excessive_utilities:kikoku) adds a separate bonus roll with about a **1 in 4.3 million** chance.
 
-Using a Soul Fragment absorbs it and increases your Soul Surplus by 1. With default config, that adds one heart of maximum health.
+Using a Soul Fragment absorbs it and increases your Soul Surplus by 1. With the default config, that adds one heart to your maximum health.
 
-The Soul Fragment tooltip shows your current Soul Debt or Soul Surplus and the current max-health modifier from the system.
+The Soul Fragment's tooltip shows your current Soul Debt or Soul Surplus and the current max-health modifier from the system.
 
 ## Removing Fragments
 
-Use an **Etheric Sword** to remove one Soul Fragment from yourself. If successful, you receive a Soul Fragment item and your stored total decreases by 1.
+Use an [Etheric Sword](@excessive_utilities:etheric_sword) to remove one Soul Fragment from yourself. If successful, you receive a Soul Fragment item and your stored total decreases by 1.
 
-The sword will not remove a fragment if doing so would make your maximum health drop to 0 or below. In that case, it fails and tells you that you do not have enough health to remove any more Soul Fragments.
+The sword will not remove a fragment if doing so would make your maximum health drop to 0 or below.
 
 ## Death Behavior
 
-Server config controls what happens to Soul Debt and Soul Surplus when you die:
+The Server config controls what happens to Soul Debt and Soul Surplus when you die:
 
 | Setting | Behavior |
 | --- | --- |
 | `KEEP` | Keep all Soul Debt and Soul Surplus. This is the default. |
 | `RESET` | Reset to 0 on death. |
 | `REMOVE_NEGATIVE` | Keep Soul Surplus, but clear Soul Debt. |
-
-Respawning after defeating the Ender Dragon does not apply this reset behavior.
-
-## Quick Reference
-
-| Action | Result |
-| --- | --- |
-| Use a Soul Fragment | +1 stored fragment, increasing max health. |
-| Use an Etheric Sword | -1 stored fragment and receive a Soul Fragment item. |
-| Positive stored total | Shown as Soul Surplus. |
-| Negative stored total | Shown as Soul Debt. |
