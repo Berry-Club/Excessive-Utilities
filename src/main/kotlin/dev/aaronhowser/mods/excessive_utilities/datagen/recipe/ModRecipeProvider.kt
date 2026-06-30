@@ -200,6 +200,16 @@ class ModRecipeProvider(
 		).save(recipeOutput)
 
 		shapedRecipe(
+			ModItems.BEDROCKIUM_INGOT,
+			"TQT,QDQ,TQT",
+			mapOf(
+				'T' to ModBlocks.getCompressedCobblestone(3).asIngredient(),
+				'Q' to ModBlocks.getCompressedCobblestone(4).asIngredient(),
+				'D' to Tags.Items.STORAGE_BLOCKS_DIAMOND.asIngredient()
+			)
+		).save(recipeOutput)
+
+		shapedRecipe(
 			ModItems.REINFORCED_WATERING_CAN,
 			"IS ,IBI, I ",
 			mapOf(

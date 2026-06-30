@@ -35,6 +35,7 @@
 - The Purging mob effect now causes vomit particles to spew forth
 	- Can be disabled in the client config
 - Mob Effects with the tag `#excessive_utilities:purging_blacklist` will not be removed by Purging
+- Gave Bedrockium Ingots a recipe
 
 ### Fixed
 
