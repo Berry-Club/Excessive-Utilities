@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.effect
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
-import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModMobEffectTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModParticleTypes
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
@@ -33,10 +33,9 @@ class PurgingEffect : MobEffect(
 	}
 
 	private fun removeOtherEffects(livingEntity: LivingEntity) {
-		val purgingEffect = ModMobEffects.PURGING
 		val effectsToRemove = livingEntity.activeEffects
 			.map { it.effect }
-			.filter { it != purgingEffect }
+			.filterNot { it.`is`(ModMobEffectTagsProvider.PURGING_BLACKLIST) }
 
 		for (effect in effectsToRemove) {
 			livingEntity.removeEffect(effect)
