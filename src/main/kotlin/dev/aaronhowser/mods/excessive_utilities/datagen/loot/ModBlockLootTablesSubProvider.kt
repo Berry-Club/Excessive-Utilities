@@ -14,8 +14,8 @@ import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.BlockLootSubProvider
 import net.minecraft.world.flag.FeatureFlags
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Block
@@ -169,11 +169,11 @@ class ModBlockLootTablesSubProvider(
 					rolls(1f)
 					item(Items.ENDER_PEARL)
 					condition(
-							LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.ENDER_LILY.get())
-								.setProperties(
-									StatePropertiesPredicate.Builder.properties()
-										.hasProperty(CropBlock.AGE, 7)
-								)
+						LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.ENDER_LILY.get())
+							.setProperties(
+								StatePropertiesPredicate.Builder.properties()
+									.hasProperty(CropBlock.AGE, 7)
+							)
 					)
 				}
 
@@ -182,21 +182,21 @@ class ModBlockLootTablesSubProvider(
 					rolls(1f)
 					item(Items.ENDER_PEARL)
 					condition(
-							LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.ENDER_LILY.get())
-								.setProperties(
-									StatePropertiesPredicate.Builder.properties()
-										.hasProperty(CropBlock.AGE, 7)
-								)
+						LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.ENDER_LILY.get())
+							.setProperties(
+								StatePropertiesPredicate.Builder.properties()
+									.hasProperty(CropBlock.AGE, 7)
+							)
 					)
 					condition(
-							LocationCheck.checkLocation(
-								LocationPredicate.Builder.location()
-									.setBlock(
-										BlockPredicate.Builder.block()
-											.of(Tags.Blocks.END_STONES)
-									),
-								BlockPos(0, -1, 0)
-							)
+						LocationCheck.checkLocation(
+							LocationPredicate.Builder.location()
+								.setBlock(
+									BlockPredicate.Builder.block()
+										.of(Tags.Blocks.END_STONES)
+								),
+							BlockPos(0, -1, 0)
+						)
 					)
 				}
 
@@ -225,11 +225,11 @@ class ModBlockLootTablesSubProvider(
 					rolls(1f)
 					item(Items.REDSTONE)
 					condition(
-							LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.RED_ORCHID.get())
-								.setProperties(
-									StatePropertiesPredicate.Builder.properties()
-										.hasProperty(CropBlock.AGE, 7)
-								)
+						LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.RED_ORCHID.get())
+							.setProperties(
+								StatePropertiesPredicate.Builder.properties()
+									.hasProperty(CropBlock.AGE, 7)
+							)
 					)
 				}
 

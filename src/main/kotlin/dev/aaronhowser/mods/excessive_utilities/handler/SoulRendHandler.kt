@@ -17,7 +17,7 @@ import net.minecraft.world.item.Item.Properties
 import net.minecraft.world.item.SwordItem.createAttributes
 import net.minecraft.world.item.component.Unbreakable
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
-import java.util.WeakHashMap
+import java.util.*
 
 object SoulRendHandler {
 

@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.defaultBlockState
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.block.EnderLilyBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModFeatures
 import net.minecraft.core.registries.Registries

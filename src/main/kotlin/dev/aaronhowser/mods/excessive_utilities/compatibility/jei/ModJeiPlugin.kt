@@ -11,7 +11,10 @@ import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.gener
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.extension.ShapedDivisionRecipeExtension
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.extension.ShapedRecipeExtension
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.extension.ShapedUnstableRecipeExtension
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.*
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.AngelRingSubtypeInterpreter
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.DivisionSigilSubtypeInterpreter
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.LassoSubtypeInterpreter
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.OpiniumCoreSubtypeInterpreter
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe

@@ -5,11 +5,11 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block_entity.DrumBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.SoundMufflerBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.client.particle.VomitParticle
 import dev.aaronhowser.mods.excessive_utilities.client.render.AngelWingRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
-import dev.aaronhowser.mods.excessive_utilities.client.particle.VomitParticle
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.ManualMillBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.TesseractBEWLR
