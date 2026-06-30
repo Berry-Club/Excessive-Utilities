@@ -11,6 +11,7 @@ class ClientConfig(
 	lateinit var generatorParticleDensity: ModConfigSpec.DoubleValue
 	lateinit var soundMufflerRadius: ModConfigSpec.DoubleValue
 	lateinit var athenaTooltip: ModConfigSpec.BooleanValue
+	lateinit var disableVomit: ModConfigSpec.BooleanValue
 
 	lateinit var rainbowGeneratorTimeFactor: ModConfigSpec.DoubleValue
 	lateinit var rainbowGeneratorRayWidth: ModConfigSpec.DoubleValue
@@ -40,6 +41,10 @@ class ClientConfig(
 		athenaTooltip = builder
 			.comment("Whether to show the tooltip about Athena compatibility on items that are compatible with Athena")
 			.define("athenaTooltip", true)
+
+		disableVomit = builder
+			.comment("Whether or not Vomit particles should be disabled")
+			.define("disableVomit", false)
 
 		builder.section("rainbow_generator") {
 			rainbowGeneratorTimeFactor = builder
@@ -75,8 +80,8 @@ class ClientConfig(
 				.define("tesseractInnerColor", 0xFFFF8800.toInt())
 
 			tesseractOuterColor = builder
-			.comment("The color of the Tesseract's outer cube.")
-			.define("tesseractOuterColor", 0xFF0088FF.toInt())
+				.comment("The color of the Tesseract's outer cube.")
+				.define("tesseractOuterColor", 0xFF0088FF.toInt())
 		}
 
 	}

@@ -33,6 +33,7 @@
 	- It was previously a packet that modified a static `Map<UUID, Type>` which is gross
 - Items with the `#excessive_utilities:not_yet_implemented` now say it in the tooltip that they're NYI
 - The Purging mob effect now causes vomit particles to spew forth
+	- Can be disabled in the client config
 - Mob Effects with the tag `#excessive_utilities:purging_blacklist` will not be removed by Purging
 
 ### Fixed
