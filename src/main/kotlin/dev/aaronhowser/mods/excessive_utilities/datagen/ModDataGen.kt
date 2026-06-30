@@ -142,11 +142,11 @@ object ModDataGen {
 
 		generator.addProvider(event.includeClient(), languageProvider)
 
-//		generator.addProvider(
-//			event.includeClient(),
-//			ModParticleDescriptionProvider(output, existingFileHelper)
-//		)
-//
+		generator.addProvider(
+			event.includeClient(),
+			ModParticleDescriptionProvider(output, existingFileHelper)
+		)
+
 //		generator.addProvider(
 //			event.includeClient(),
 //			ModPatchouliBookProvider(

@@ -20,7 +20,8 @@ object ModRegistries {
 			ModAttachmentTypes.ATTACHMENT_TYPE_REGISTRY,
 			ModPotions.POTION_REGISTRY,
 			ModFeatures.FEATURE_REGISTRY,
-			ModAttributes.ATTRIBUTE_REGISTRY
+			ModAttributes.ATTRIBUTE_REGISTRY,
+			ModParticleTypes.PARTICLE_TYPE_REGISTRY
 		)
 
 		for (registry in registries) {

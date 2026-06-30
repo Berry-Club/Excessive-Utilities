@@ -1,18 +1,28 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
-import net.minecraft.world.effect.InstantenousMobEffect
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
+import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
+import dev.aaronhowser.mods.excessive_utilities.registry.ModParticleTypes
+import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 
-class PurgingEffect : InstantenousMobEffect(
+class PurgingEffect : MobEffect(
 	MobEffectCategory.HARMFUL,
-	0xEA689F
+	0x43B02A
 ) {
 
-	//TODO: Puke particles
+	override fun shouldApplyEffectTickThisTick(duration: Int, amplifier: Int): Boolean = true
+
 	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
-		livingEntity.removeAllEffects()
+		if (livingEntity.isClientSide) {
+			spawnVomitParticles(livingEntity, amplifier)
+			return true
+		}
+
+		removeOtherEffects(livingEntity)
 
 		if (livingEntity is Player) {
 			livingEntity.foodData.foodLevel = 0
@@ -20,6 +30,46 @@ class PurgingEffect : InstantenousMobEffect(
 		}
 
 		return true
+	}
+
+	private fun removeOtherEffects(livingEntity: LivingEntity) {
+		val purgingEffect = ModMobEffects.PURGING
+		val effectsToRemove = livingEntity.activeEffects
+			.map { it.effect }
+			.filter { it != purgingEffect }
+
+		for (effect in effectsToRemove) {
+			livingEntity.removeEffect(effect)
+		}
+	}
+
+	private fun spawnVomitParticles(livingEntity: LivingEntity, amplifier: Int) {
+		val level = livingEntity.level()
+		val lookAngle = livingEntity.lookAngle
+		val random = livingEntity.random
+		val particleCount = 4 + amplifier.coerceAtMost(4)
+
+		for (i in 0 until particleCount) {
+			val velocity = lookAngle
+				.scale(random.nextRange(0.25, 0.8))
+				.xRot(random.nextRange(-0.1f, 0.2f))
+				.yRot(random.nextRange(-0.2f, 0.2f))
+				.add(0.0, 0.04, 0.0)
+
+			val spawnPos = livingEntity.eyePosition
+				.add(lookAngle.scale(0.35))
+				.add(0.0, -0.15, 0.0)
+
+			level.addParticle(
+				ModParticleTypes.VOMIT.get(),
+				spawnPos.x,
+				spawnPos.y,
+				spawnPos.z,
+				velocity.x,
+				velocity.y,
+				velocity.z
+			)
+		}
 	}
 
 }

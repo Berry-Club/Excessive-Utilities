@@ -32,6 +32,7 @@
 - Which Angel Ring wing you have is now a Data Attachment
 	- It was previously a packet that modified a static `Map<UUID, Type>` which is gross
 - Items with the `#excessive_utilities:not_yet_implemented` now say it in the tooltip that they're NYI
+- The Purging mob effect now causes vomit particles to spew forth
 
 ### Fixed
 

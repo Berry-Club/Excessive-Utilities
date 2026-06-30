@@ -36,7 +36,7 @@ object ModPotions {
 	val DOOM: DeferredHolder<Potion, Potion> =
 		register("doom") { MobEffectInstance(ModMobEffects.DOOM, 20 * 60) }
 	val PURGING: DeferredHolder<Potion, Potion> =
-		register("purging") { MobEffectInstance(ModMobEffects.PURGING) }
+		register("purging") { MobEffectInstance(ModMobEffects.PURGING, 20 * 5) }
 
 	private fun register(
 		name: String,

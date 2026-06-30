@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.AngelWingRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.GridPowerGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.RingRechargeGuiRenderer
 import dev.aaronhowser.mods.excessive_utilities.client.render.WandRenderer
+import dev.aaronhowser.mods.excessive_utilities.client.particle.VomitParticle
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.ManualMillBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.OpiniumCoreBEWLR
 import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.TesseractBEWLR
@@ -230,6 +231,11 @@ object ClientEvents {
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.CREATIVE_HARVEST.get(), ::CreativeHarvestBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.MAGNUM_TORCH.get(), ::MagnumTorchBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.CHANDELIER.get(), ::ChandelierBER)
+	}
+
+	@SubscribeEvent
+	fun registerParticleProviders(event: RegisterParticleProvidersEvent) {
+		event.registerSpriteSet(ModParticleTypes.VOMIT.get(), VomitParticle::Provider)
 	}
 
 	@SubscribeEvent
