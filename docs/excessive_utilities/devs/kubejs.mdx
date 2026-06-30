@@ -1,0 +1,17 @@
+# KubeJS
+
+The algorithm for how much [GP]($players/grid_power) is used by [Speed Upgrades](@excessive_utilities:speed_upgrades) is:
+
+```kt
+stackSize * (122 + 4 * stackSize) / 126.0
+```
+
+While there's a server config option to simply multiply this by a number, you can also use KubeJS to completely rewrite the formula, if you'd ever want to do so.
+
+```js
+const $SpeedUpgradeItem = Java.loadClass('dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem')
+
+$SpeedUpgradeItem.setGpCostCalculator(stackSize => stackSize * 10)
+```
+
+This example makes each Speed Upgrade in the stack simply cost 10 GP before the server config multiplier is applied.

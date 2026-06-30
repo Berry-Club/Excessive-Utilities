@@ -16,7 +16,7 @@ Speed Upgrades cost [Grid Power]($players/grid_power) to function. The amount of
 
 The default function is:
 
-```
+```kt
 stackSize * (122 + 4 * stackSize) / 126.0
 ```
 
@@ -29,6 +29,6 @@ So a full stack of each tier would require:
 
 The server config has a `speedUpgradeGpCostMultiplier` option that multiplies the GP cost of Speed Upgrades. Setting it to 0 will make them free to use.
 
-Additionally, you can modify the formula itself with KubeJS.
+Additionally, you can modify the formula itself with [KubeJS]($devs/kubejs).
 
 <PrefabObtaining/>
