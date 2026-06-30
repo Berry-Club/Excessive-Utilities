@@ -1,12 +1,6 @@
 {
-	"creative_upgrade.mdx": "Creative Upgrade",
-	"ender_receiver.mdx": "Ender Receiver",
-	"ender_transmitter.mdx": "Ender Transmitter",
-	"speed_upgrade_magical.mdx": "Speed Upgrade (Magical)",
-	"speed_upgrade_ultimate.mdx": "Speed Upgrade (Ultimate)",
-	"speed_upgrade.mdx": "Speed Upgrade",
 	"speed_upgrades.mdx": "Speed Upgrades",
 	"stack_upgrade.mdx": "Stack Upgrade",
-	"upgrade_base.mdx": "Upgrade Base",
-	"world_interaction_upgrade.mdx": "World Interaction Upgrade"
+	"world_interaction_upgrade.mdx": "World Interaction Upgrade",
+	"creative_upgrade.mdx": "Creative Upgrade"
 }
