@@ -1,5 +1,14 @@
 {
+	"energy_retrieval_node.mdx": "Energy Retrieval Node",
+	"energy_transfer_node.mdx": "Energy Transfer Node",
+	"fluid_retrieval_node.mdx": "Fluid Retrieval Node",
+	"fluid_transfer_node.mdx": "Fluid Transfer Node",
+	"indexer.mdx": "Indexer",
+	"item_retrieval_node.mdx": "Item Retrieval Node",
+	"item_transfer_node.mdx": "Item Transfer Node",
 	"retrieval_nodes.mdx": "Retrieval Nodes",
+	"transfer_filter.mdx": "Transfer Filter",
 	"transfer_nodes.mdx": "Transfer Nodes",
+	"transfer_pipe_filter.mdx": "Transfer Pipe Filter",
 	"transfer_pipe.mdx": "Transfer Pipe"
 }

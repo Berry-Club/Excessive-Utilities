@@ -1,1 +1,12 @@
-{}
+{
+	"ender_marker.mdx": "Ender Marker",
+	"ender_quarry_fortune_three_upgrade.mdx": "Ender Quarry Fortune III Upgrade",
+	"ender_quarry_fortune_two_upgrade.mdx": "Ender Quarry Fortune II Upgrade",
+	"ender_quarry_fortune_upgrade.mdx": "Ender Quarry Fortune I Upgrade",
+	"ender_quarry_silk_touch_upgrade.mdx": "Ender Quarry Silk Touch Upgrade",
+	"ender_quarry_speed_three_upgrade.mdx": "Ender Quarry Speed III Upgrade",
+	"ender_quarry_speed_two_upgrade.mdx": "Ender Quarry Speed II Upgrade",
+	"ender_quarry_speed_upgrade.mdx": "Ender Quarry Speed I Upgrade",
+	"ender_quarry_upgrade_base.mdx": "Ender Quarry Upgrade Base",
+	"ender_quarry_world_hole_upgrade.mdx": "Ender Quarry World Hole Upgrade"
+}

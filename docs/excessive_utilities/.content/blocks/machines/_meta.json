@@ -1,1 +1,15 @@
-{}
+{
+	"crusher.mdx": "Crusher",
+	"enchanter.mdx": "Enchanter",
+	"ender_flux_crystal.mdx": "Ender Flux Crystal",
+	"ender_quarry.mdx": "Ender Quarry",
+	"ender_thermic_pump.mdx": "Ender-Thermic Pump",
+	"furnace.mdx": "Furnace",
+	"machine_block.mdx": "Machine Block",
+	"qed.mdx": "QED",
+	"quantum_quarry_actuator.mdx": "Quantum Quarry Actuator",
+	"quantum_quarry.mdx": "Quantum Quarry",
+	"resonator.mdx": "Resonator",
+	"wireless_fe_battery.mdx": "Wireless FE Battery",
+	"wireless_fe_transmitter.mdx": "Wireless FE Transmitter"
+}

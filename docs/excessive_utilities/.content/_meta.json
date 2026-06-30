@@ -1,5 +1,6 @@
 {
 	"blocks": "Blocks",
-	"items": "Items",
-	"enchantments": "Enchantments"
+	"effects": "Effects",
+	"enchantments": "Enchantments",
+	"items": "Items"
 }
