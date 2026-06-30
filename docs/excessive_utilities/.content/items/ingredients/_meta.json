@@ -1,8 +1,10 @@
 {
+	"division_sigil.mdx": "Division Sigil",
+	"unstable_ingot.mdx": "Unstable Ingot",
+	"semi_unstable_nugget.mdx": "Semi-Unstable Nugget",
 	"bedrockium_ingot.mdx": "Bedrockium Ingot",
 	"demon_ingot.mdx": "Demon Ingot",
 	"demon_nugget.mdx": "Demon Nugget",
-	"division_sigil.mdx": "Division Sigil",
 	"enchanted_ingot.mdx": "Enchanted Ingot",
 	"ender_shard.mdx": "Ender Shard",
 	"evil_infused_iron_ingot.mdx": "Evil Infused Iron Ingot",
@@ -13,9 +15,7 @@
 	"opinium_core.mdx": "Opinium Core",
 	"redstone_gear.mdx": "Redstone Gear",
 	"resonating_redstone_crystal.mdx": "Resonating Redstone Crystal",
-	"semi_unstable_nugget.mdx": "Semi-Unstable Nugget",
 	"tesseract.mdx": "Tesseract",
-	"unstable_ingot.mdx": "Unstable Ingot",
 	"upgrade_base.mdx": "Upgrade Base",
 	"wardens_wake.mdx": "Warden's Wake"
 }
