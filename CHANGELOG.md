@@ -21,7 +21,7 @@
 
 ### Changed
 
-- When a Lasso is destroyed, it will spawn the held mob
+- When a Lasso is destroyed, it will release the held mob, similar to Shulker Boxes
 - Added recipes for the Creative Builder's Wand and Creative Destruction Wand
 - The Sound Muffler now prevents vibration events in a configurable radius
 	- This means they protect you from the Warden and Sculk Sensors!
