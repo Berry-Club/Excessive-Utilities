@@ -2,13 +2,12 @@
 	"angel_block.mdx": "Angel Block",
 	"blackout_curtain.mdx": "Blackout Curtain",
 	"chandelier.mdx": "Chandelier",
-	"colored": "Colored",
-	"compressed": "Compressed",
+	"compressed_blocks.mdx": "Compressed Blocks",
 	"conveyor_belt.mdx": "Conveyor Belt",
 	"creative_harvest.mdx": "Creative Harvest",
 	"crops": "Crops",
 	"cursed_earth.mdx": "Cursed Earth",
-	"decor": "Decor",
+	"decorative": "Decorative",
 	"dimensions": "Dimensions",
 	"ender_core.mdx": "Ender Core",
 	"ender_porcupine.mdx": "Ender Porcupine",
@@ -29,6 +28,5 @@
 	"spikes": "Spikes",
 	"spikes.mdx": "Spikes",
 	"storage": "Storage",
-	"terraformer": "Terraformer",
 	"transfer": "Transfer"
 }

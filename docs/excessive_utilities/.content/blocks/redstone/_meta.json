@@ -1,8 +1,5 @@
 {
 	"ender_collector.mdx": "Ender Collector",
-	"mechanical_miner.mdx": "Mechanical Miner",
-	"mechanical_user.mdx": "Mechanical User",
 	"redstone_clock.mdx": "Redstone Clock",
-	"redstone_lantern.mdx": "Redstone Lantern",
-	"scanner.mdx": "Scanner"
+	"redstone_lantern.mdx": "Redstone Lantern"
 }
