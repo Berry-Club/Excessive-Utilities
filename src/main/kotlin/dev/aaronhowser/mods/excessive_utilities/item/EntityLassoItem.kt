@@ -141,11 +141,13 @@ class EntityLassoItem(
 		val registries = context.registries() ?: return
 
 		val customNameString = entityData.copyTag().getString("CustomName")
-		if (!customNameString.isNullOrEmpty()) {
-			val customName = Component.Serializer.fromJson(
-				customNameString,
-				registries
-			)
+		if (!customNameString.isNullOrBlank() && customNameString != "null") {
+			val customName = runCatching {
+				Component.Serializer.fromJson(
+					customNameString,
+					registries
+				)
+			}.getOrNull()
 
 			if (customName != null) {
 				tooltipComponents += ModMenuLang.LASSO_ENTITY_WITH_NAME
