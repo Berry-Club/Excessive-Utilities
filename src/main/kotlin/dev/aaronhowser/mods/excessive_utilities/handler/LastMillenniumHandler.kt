@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toBlockPos
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toChunkPos
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
@@ -133,7 +134,8 @@ class LastMillenniumHandler : SavedData() {
 
 		val nextIndex = playerChunks.size
 		val (x, y) = AaronUtil.getGridSpiralPos(nextIndex)
-		val chunkPos = ChunkPos(x * 16, y * 16)
+		val chunksBetween = ServerConfig.CONFIG.tlmChunkDistance.get()
+		val chunkPos = ChunkPos(x * chunksBetween, y * chunksBetween)
 		playerChunks[uuid] = chunkPos
 		return chunkPos
 	}

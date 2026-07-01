@@ -27,6 +27,7 @@ class ServerConfig(
 	lateinit var conveyorBeltSpeed: ModConfigSpec.DoubleValue
 	lateinit var funnyEnderLilyTeleporting: ModConfigSpec.BooleanValue
 	lateinit var enderPorcupineMarchTime: ModConfigSpec.IntValue
+	lateinit var tlmChunkDistance: ModConfigSpec.IntValue
 
 	lateinit var heatingCoilBurnTime: ModConfigSpec.IntValue
 	lateinit var heatingCoilBurnCost: ModConfigSpec.IntValue
@@ -459,6 +460,10 @@ class ServerConfig(
 			enderPorcupineMarchTime = builder
 				.comment("The number of ticks that the Ender Porcupine will wait at each position before moving to the next one")
 				.defineInRange("enderPorcupineMarchTime", 20, 1, Int.MAX_VALUE)
+
+			tlmChunkDistance = builder
+				.comment("How many chunks are between each player's \"home location\" in The Last Millennium")
+				.defineInRange("tlmChunkDistance", 1024, 2, 100)
 
 			builder.section("healing_axe") {
 				healingAxeChancePerTick = builder

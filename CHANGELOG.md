@@ -36,6 +36,8 @@
 	- Can be disabled in the client config
 - Mob Effects with the tag `#excessive_utilities:purging_blacklist` will not be removed by Purging
 - Gave Bedrockium Ingots a recipe
+- The distance between chunks chosen for new Last Millennium locations is now configurable
+	- Defaults to 1024 chunks, was previously 16
 
 ### Fixed
 
