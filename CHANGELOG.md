@@ -1,3 +1,9 @@
+# 1.7.1
+
+### Fixed
+
+- Compatibility with new Aaron
+
 # 1.7.0
 
 ### Added
