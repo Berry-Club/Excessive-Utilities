@@ -4,10 +4,10 @@ plugins {
 	id 'java-library'
 	id 'idea'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.91'
+	id 'net.neoforged.moddev' version '2.0.124'
 	id 'org.jetbrains.kotlin.jvm' version '2.1.21'
-	id "me.shedaniel.unified-publishing" version "0.1.+"
-	id 'org.moddedmc.wiki.toolkit' version '0.4.+'
+	id "me.modmuss50.mod-publish-plugin" version "2.1.1"
+	id 'org.moddedmc.wiki.toolkit' version '0.3.2'
 }
 
 def ENV = System.getenv()
@@ -25,12 +25,19 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 compileKotlin.compilerOptions.jvmTarget = JvmTarget.JVM_21
 
 neoForge {
-	version = neo_version
+	enable {
+		version = neo_version
+		validateAccessTransformers = ENV.CI != "true"
+		disableRecompilation = ENV.CI == "true"
 
-	validateAccessTransformers = true
+		accessTransformers {
+			publish(project.file('src/main/resources/META-INF/accesstransformer.cfg'))
+		}
+	}
 
-	accessTransformers {
-		publish(project.file('src/main/resources/META-INF/accesstransformer.cfg'))
+	parchment {
+		mappingsVersion = project.parchment_mappings_version
+		minecraftVersion = project.parchment_minecraft_version
 	}
 
 	runs {
@@ -42,6 +49,7 @@ neoForge {
 
 		"Client-One" {
 			client()
+			ideName = "Client One"
 			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 
 			if (ENV.MC_CLIENT_ARGS) {
@@ -53,6 +61,7 @@ neoForge {
 
 		"Client-Two" {
 			client()
+			ideName = "Client Two"
 			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 
 			gameDirectory = file 'runs/client'
@@ -64,6 +73,7 @@ neoForge {
 
 		server {
 			server()
+			ideName = "Server"
 			programArgument '--nogui'
 			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 
@@ -114,7 +124,7 @@ repositories {
 	// For EMI
 	maven {
 		name = "TerraformersMC"
-		url = "https://maven.terraformersmc.com/"
+		url = "https://maven.terraformersmc.com/releases/"
 	}
 
 	// For Curios
@@ -234,54 +244,44 @@ java {
 	withJavadocJar()
 }
 
-unifiedPublishing {
-	project {
-		displayName = "Excessive Utilities ${project.minecraft_version} ${project.version}"
-		gameVersions = [project.minecraft_version]
-		gameLoaders = ["neoforge"]
-		releaseType = "release"
+publishMods {
+	file = jar.archiveFile
+	displayName = "Excessive Utilities ${project.minecraft_version} ${project.version}"
+	changelog = "https://github.com/Berry-Club/Excessive-Utilities/blob/master/CHANGELOG.md#" + project.mod_version.toString().replace(".", "")
+	modLoaders.add("neoforge")
 
-		changelog = "https://github.com/Berry-Club/Excessive-Utilities/blob/master/CHANGELOG.md#" + project.mod_version.toString().replace(".", "")
+	type = ENV.RELEASE_TYPE == "beta"
+			? BETA
+			: ENV.RELEASE_TYPE == "alpha" ? ALPHA : STABLE
 
-		mainPublication jar
-
-		relations {
-			depends {
-				curseforge = modrinth = "kotlin-for-forge"
-			}
-
-			depends {
-				curseforge = modrinth = "curios"
-			}
-
-			depends {
-				curseforge = modrinth = "aaron"
-			}
-
-			optional {
-				curseforge = "athena"
-				modrinth = "athena-ctm"
-			}
-
-			optional {
-				curseforge = modrinth = "oracle-index"
-			}
+	if (ENV.CURSEFORGE_KEY) {
+		//noinspection GroovyAssignabilityCheck
+		curseforge {
+			accessToken = providers.environmentVariable("CURSEFORGE_KEY")
+			projectId = project.curseforge_id
+			minecraftVersions.add(project.minecraft_version)
+			client = true
+			server = true
+			requires("kotlin-for-forge")
+			requires("curios")
+			requires("aaron")
+			optional("athena")
+			optional("oracle-index")
 		}
+	}
 
-		if (ENV.CURSEFORGE_KEY) {
-			curseforge {
-				token = ENV.CURSEFORGE_KEY
-				id = project.curseforge_id
-			}
+	if (ENV.MODRINTH_TOKEN) {
+		//noinspection GroovyAssignabilityCheck
+		modrinth {
+			accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+			projectId = project.modrinth_id
+			minecraftVersions.add(project.minecraft_version)
+			requires("kotlin-for-forge")
+			requires("curios")
+			requires("aaron")
+			optional("athena-ctm")
+			optional("oracle-index")
 		}
-
-		if (ENV.MODRINTH_TOKEN) {
-			modrinth {
-				token = ENV.MODRINTH_TOKEN
-				id = project.modrinth_id
-			}
-		}
-
 	}
 }
 
