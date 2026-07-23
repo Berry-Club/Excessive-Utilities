@@ -43,8 +43,7 @@ class ItemFilterMenu(
 			filterItems.setStackInSlot(i, ghostStack)
 		}
 
-		addSlots()
-		addPlayerInventorySlots(159)
+		addSlots(159)
 	}
 
 	private fun getFilterStack(): ItemStack = playerInventory.player.getItemInHand(hand)
@@ -56,7 +55,7 @@ class ItemFilterMenu(
 	fun ignoreDamage(): Boolean = getFlagComponent().ignoreDamage
 	fun ignoreAllComponents(): Boolean = getFlagComponent().ignoreAllComponents
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		for (i in 0 until ItemFilterComponent.CONTAINER_SIZE) {
 			val x = 53 + (i % 4) * 18
 			val y = 29 + (i / 4) * 18

@@ -26,16 +26,15 @@ class SingleFluidGeneratorMenu(
 		checkContainerSize(generatorContainer, CONTAINER_SIZE)
 		checkContainerDataCount(generatorContainerData, GeneratorBlockEntity.DEFAULT_GENERATOR_CONTAINER_DATA_SIZE)
 
-		addSlots()
+		addSlots(96)
 		addDataSlots(generatorContainerData)
-		addPlayerInventorySlots(96)
 	}
 
 	fun getMaxEnergy(): Int = generatorContainerData.get(GeneratorBlockEntity.MAX_ENERGY_DATA_INDEX)
 	fun getCurrentEnergy(): Int = generatorContainerData.get(GeneratorBlockEntity.CURRENT_ENERGY_DATA_INDEX)
 	fun getBurnTimeRemaining(): Int = generatorContainerData.get(GeneratorBlockEntity.BURN_TIME_REMAINING_DATA_INDEX)
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val upgradeSlot = Slot(generatorContainer, GeneratorContainer.UPGRADE_SLOT, 153, 5)
 
 		this.addSlot(upgradeSlot)

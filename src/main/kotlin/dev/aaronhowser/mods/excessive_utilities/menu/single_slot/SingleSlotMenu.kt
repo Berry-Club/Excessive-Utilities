@@ -24,11 +24,10 @@ class SingleSlotMenu(
 	init {
 		checkContainerSize(chestContainer, 1)
 
-		addSlots()
-		addPlayerInventorySlots(84)
+		addSlots(84)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		this.addSlot(Slot(chestContainer, 0, 80, 34))
 	}
 

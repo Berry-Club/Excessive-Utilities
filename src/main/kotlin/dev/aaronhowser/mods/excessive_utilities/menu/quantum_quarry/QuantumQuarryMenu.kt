@@ -33,12 +33,11 @@ class QuantumQuarryMenu(
 		checkContainerSize(upgradesContainer, QuantumQuarryBlockEntity.UPGRADE_CONTAINER_SIZE)
 		checkContainerDataCount(quarryContainerData, QuantumQuarryBlockEntity.CONTAINER_DATA_SIZE)
 
-		addSlots()
+		addSlots(116)
 		addDataSlots(quarryContainerData)
-		addPlayerInventorySlots(116)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val filterSlot = FilteredSlot(upgradesContainer, QuantumQuarryBlockEntity.ITEM_FILTER_SLOT_INDEX, 10, 24) {
 			it.isItem(ModItems.ITEM_FILTER)
 		}

@@ -34,9 +34,8 @@ class EnchanterMenu(
 		checkContainerSize(enchanterContainer, EnchanterBlockEntity.CONTAINER_SIZE)
 		checkContainerDataCount(enchanterContainerData, EnchanterBlockEntity.CONTAINER_DATA_SIZE)
 
-		addSlots()
+		addSlots(98)
 		addDataSlots(enchanterContainerData)
-		addPlayerInventorySlots(98)
 	}
 
 	fun getMaxEnergy(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_ENERGY_DATA_INDEX)
@@ -44,7 +43,7 @@ class EnchanterMenu(
 	fun getProgress(): Int = enchanterContainerData.get(EnchanterBlockEntity.PROGRESS_DATA_INDEX)
 	fun getMaxProgress(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_PROGRESS_DATA_INDEX)
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val leftInputSlot = Slot(enchanterContainer, EnchanterBlockEntity.LEFT_INPUT_SLOT, 49, 41)
 		val rightOutputSlot = Slot(enchanterContainer, EnchanterBlockEntity.RIGHT_INPUT_SLOT, 73, 41)
 

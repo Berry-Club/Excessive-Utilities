@@ -23,13 +23,12 @@ class FlatTransferNodeMenu(
 	init {
 		checkContainerSize(filterContainer, 1)
 
-		addSlots()
-		addPlayerInventorySlots(84)
+		addSlots(84)
 	}
 
 	fun isItemNode(): Boolean = filterEntity.isItemNode
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val filterSlot = FilteredSlot(filterContainer, 0, 80, 34) { it.isItem(ModItemTagsProvider.FILTERS) }
 		this.addSlot(filterSlot)
 	}

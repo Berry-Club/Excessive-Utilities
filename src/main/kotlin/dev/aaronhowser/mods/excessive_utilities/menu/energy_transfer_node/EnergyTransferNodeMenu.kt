@@ -32,12 +32,11 @@ class EnergyTransferNodeMenu(
 	init {
 		checkContainerSize(upgradesContainer, TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE)
 
-		addSlots()
-		addPlayerInventorySlots(108)
+		addSlots(108)
 		addDataSlots(containerData)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		for (i in 0 until TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE) {
 			val x = 35 + i * 18
 			val y = 68

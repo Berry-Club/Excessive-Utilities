@@ -29,11 +29,10 @@ class FluidTransferNodeMenu(
 	init {
 		checkContainerSize(upgradesContainer, TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE)
 
-		addSlots()
-		addPlayerInventorySlots(108)
+		addSlots(108)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val filterSlot = FilteredSlot(filterContainer, 0, 153, 5) { it.isItem(ModItems.FLUID_FILTER) }
 		this.addSlot(filterSlot)
 

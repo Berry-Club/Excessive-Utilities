@@ -38,11 +38,10 @@ class ItemTransferNodeMenu(
 	init {
 		checkContainerSize(upgradesContainer, TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE)
 
-		addSlots()
-		addPlayerInventorySlots(91)
+		addSlots(91)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val filterSlot = FilteredSlot(filterContainer, 0, 153, 5) { it.isItem(ModItems.ITEM_FILTER) }
 		this.addSlot(filterSlot)
 

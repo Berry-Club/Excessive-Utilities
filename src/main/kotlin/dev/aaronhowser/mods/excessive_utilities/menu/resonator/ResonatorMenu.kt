@@ -34,12 +34,11 @@ class ResonatorMenu(
 		checkContainerSize(resonatorContainer, ResonatorBlockEntity.CONTAINER_SIZE)
 		checkContainerDataCount(resonatorContainerData, ResonatorBlockEntity.CONTAINER_DATA_SIZE)
 
-		addSlots()
+		addSlots(90)
 		addDataSlots(resonatorContainerData)
-		addPlayerInventorySlots(90)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val inputSlot = Slot(resonatorContainer, ResonatorBlockEntity.INPUT_SLOT, 51, 38)
 		val outputSlot = OutputSlot(resonatorContainer, ResonatorBlockEntity.OUTPUT_SLOT, 105, 37)
 		val upgradeSlot = FilteredSlot(resonatorContainer, ResonatorBlockEntity.UPGRADE_SLOT, 153, 5) {

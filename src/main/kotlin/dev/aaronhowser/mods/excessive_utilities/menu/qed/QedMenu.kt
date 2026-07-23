@@ -31,16 +31,15 @@ class QedMenu(
 		checkContainerSize(qedContainer, QedBlockEntity.CONTAINER_SIZE)
 		checkContainerDataCount(qedContainerData, QedBlockEntity.CONTAINER_DATA_SIZE)
 
-		addSlots()
+		addSlots(98)
 		addDataSlots(qedContainerData)
-		addPlayerInventorySlots(98)
 	}
 
 	fun getProgress(): Int = qedContainerData.get(QedBlockEntity.CURRENT_PROGRESS_DATA_INDEX)
 	fun getMaxProgress(): Int = qedContainerData.get(QedBlockEntity.MAX_PROGRESS_DATA_INDEX)
 	fun getAmountNearbyCrystals(): Int = qedContainerData.get(QedBlockEntity.AMOUNT_NEARBY_CRYSTALS_DATA_INDEX)
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val outputSlot = OutputSlot(qedContainer, QedBlockEntity.OUTPUT_SLOT, 124, 41)
 		addSlot(outputSlot)
 

@@ -34,12 +34,11 @@ class CrusherMenu(
 		checkContainerSize(machineContainer, CrusherBlockEntity.CONTAINER_SIZE)
 		checkContainerDataCount(machineContainerData, CrusherBlockEntity.CONTAINER_DATA_SIZE)
 
-		addSlots()
+		addSlots(98)
 		addDataSlots(machineContainerData)
-		addPlayerInventorySlots(98)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val inputSlot = Slot(machineContainer, CrusherBlockEntity.INPUT_SLOT, 47, 41)
 		val outputSlot = OutputSlot(machineContainer, CrusherBlockEntity.PRIMARY_OUTPUT_SLOT, 101, 41)
 		val secondaryOutputSlot = OutputSlot(machineContainer, CrusherBlockEntity.SECONDARY_OUTPUT_SLOT, 133, 41)

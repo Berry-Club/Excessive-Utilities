@@ -34,12 +34,11 @@ class SimpleMachineMenu(
 		checkContainerSize(machineContainer, SimpleMachineBlockEntity.CONTAINER_SIZE)
 		checkContainerDataCount(machineContainerData, SimpleMachineBlockEntity.CONTAINER_DATA_SIZE)
 
-		addSlots()
+		addSlots(98)
 		addDataSlots(machineContainerData)
-		addPlayerInventorySlots(98)
 	}
 
-	override fun addSlots() {
+	override fun addContainerSlots() {
 		val inputSlot = Slot(machineContainer, SimpleMachineBlockEntity.INPUT_SLOT, 62, 41)
 		val outputSlot = OutputSlot(machineContainer, SimpleMachineBlockEntity.OUTPUT_SLOT, 116, 41)
 		val upgradeSlot = FilteredSlot(machineContainer, SimpleMachineBlockEntity.UPGRADE_SLOT, 153, 5) {
