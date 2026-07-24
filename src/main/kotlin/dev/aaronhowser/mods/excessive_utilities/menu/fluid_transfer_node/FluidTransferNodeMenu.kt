@@ -5,7 +5,7 @@ import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.FluidTransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.menu.TransferNodeUpgradeSlot
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.network.FriendlyByteBuf
@@ -39,9 +39,7 @@ class FluidTransferNodeMenu(
 			val x = 35 + i * 18
 			val y = 68
 
-			val slot = FilteredSlot(upgradesContainer, i, x, y) {
-				it.isItem(ModItemTagsProvider.TRANSFER_NODE_UPGRADES) || it.isItem(ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES)
-			}
+			val slot = TransferNodeUpgradeSlot(upgradesContainer, i, x, y)
 
 			this.addSlot(slot)
 		}

@@ -4,6 +4,7 @@
 
 - Pseudo Round-Robin Upgrade
 - Depth-First Search Upgrade
+- Breadth-First Search Upgrade
 
 ### Changed
 

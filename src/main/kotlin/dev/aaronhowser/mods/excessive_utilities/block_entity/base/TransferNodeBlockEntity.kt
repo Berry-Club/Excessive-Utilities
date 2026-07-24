@@ -46,15 +46,46 @@ abstract class TransferNodeBlockEntity(
 	protected val upgradeContainer: ImprovedSimpleContainer =
 		object : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
 			override fun canAddItem(stack: ItemStack): Boolean {
-				val tag = if (isRetrieval) {
-					ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES
-				} else {
-					ModItemTagsProvider.TRANSFER_NODE_UPGRADES
-				}
+				if (!super.canAddItem(stack)) return false
+				return canPlaceUpgrade(stack)
+			}
 
-				return stack.isItem(tag)
+			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+				return canPlaceUpgrade(stack)
+			}
+
+			override fun getMaxStackSize(stack: ItemStack): Int {
+				if (isSearchUpgrade(stack)) return 1
+				return super.getMaxStackSize(stack)
 			}
 		}
+
+	private fun canPlaceUpgrade(stack: ItemStack): Boolean {
+		val tag = if (isRetrieval) {
+			ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES
+		} else {
+			ModItemTagsProvider.TRANSFER_NODE_UPGRADES
+		}
+
+		if (!stack.isItem(tag)) return false
+
+		if (stack.isItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE)) {
+			return upgradeContainer.countItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE.get()) == 0
+					&& upgradeContainer.countItem(ModItems.BREADTH_FIRST_SEARCH_UPGRADE.get()) == 0
+		}
+
+		if (stack.isItem(ModItems.BREADTH_FIRST_SEARCH_UPGRADE)) {
+			return upgradeContainer.countItem(ModItems.BREADTH_FIRST_SEARCH_UPGRADE.get()) == 0
+					&& upgradeContainer.countItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE.get()) == 0
+		}
+
+		return true
+	}
+
+	private fun isSearchUpgrade(stack: ItemStack): Boolean {
+		return stack.isItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE)
+				|| stack.isItem(ModItems.BREADTH_FIRST_SEARCH_UPGRADE)
+	}
 
 	override fun getContainers(): List<Container> {
 		return listOf(upgradeContainer)
@@ -74,6 +105,10 @@ abstract class TransferNodeBlockEntity(
 
 	protected fun hasDepthFirstSearchUpgrade(): Boolean {
 		return upgradeContainer.countItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE.get()) > 0
+	}
+
+	protected fun hasBreadthFirstSearchUpgrade(): Boolean {
+		return upgradeContainer.countItem(ModItems.BREADTH_FIRST_SEARCH_UPGRADE.get()) > 0
 	}
 
 	protected fun getSpeedUpgradeCount(): Int {
@@ -162,7 +197,11 @@ abstract class TransferNodeBlockEntity(
 		pullFromPingPos(level)
 
 		if (getBufferAmount() <= 0 || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level, depthFirst = hasDepthFirstSearchUpgrade())
+			ping.march(
+				level,
+				depthFirst = hasDepthFirstSearchUpgrade(),
+				breadthFirst = hasBreadthFirstSearchUpgrade()
+			)
 		}
 	}
 
@@ -180,7 +219,11 @@ abstract class TransferNodeBlockEntity(
 		pushIntoPingPos(level)
 
 		if (getBufferAmount() == amountBefore || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level, depthFirst = hasDepthFirstSearchUpgrade())
+			ping.march(
+				level,
+				depthFirst = hasDepthFirstSearchUpgrade(),
+				breadthFirst = hasBreadthFirstSearchUpgrade()
+			)
 		}
 	}
 
