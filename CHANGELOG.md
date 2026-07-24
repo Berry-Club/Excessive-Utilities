@@ -5,7 +5,8 @@
 - Pseudo Round-Robin Upgrade
 - Depth-First Search Upgrade
 - Breadth-First Search Upgrade
-- Ender Transmitter and Ender Receiver
+- Ender Transmitter 
+- Ender Receiver
 
 ### Changed
 
