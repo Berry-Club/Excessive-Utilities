@@ -211,7 +211,7 @@ object ModItems : AaronItemRegistry() {
 		basic("stack_upgrade")
 	val WORLD_INTERACTION_UPGRADE: DeferredItem<Item> =
 		basic("world_interaction_upgrade")
-	val BREADTH_FIRST_SEARCH_UPGRADE =
+	val BREADTH_FIRST_SEARCH_UPGRADE: DeferredItem<Item> =
 		basic("breadth_first_search_upgrade")
 	val DEPTH_FIRST_SEARCH_UPGRADE: DeferredItem<Item> =
 		basic("depth_first_search_upgrade")
