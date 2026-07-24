@@ -67,6 +67,10 @@ abstract class TransferNodeBlockEntity(
 		return upgradeContainer.countItem(ModItems.CREATIVE_UPGRADE.get()) > 0
 	}
 
+	protected fun hasPseudoRoundRobinUpgrade(): Boolean {
+		return upgradeContainer.countItem(ModItems.PSEUDO_ROUND_ROBIN_UPGRADE.get()) > 0
+	}
+
 	protected fun getSpeedUpgradeCount(): Int {
 		var count = 0
 

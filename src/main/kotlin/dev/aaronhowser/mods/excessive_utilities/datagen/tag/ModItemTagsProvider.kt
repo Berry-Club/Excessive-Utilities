@@ -258,7 +258,6 @@ class ModItemTagsProvider(
 				ModItems.CREATIVE_UPGRADE,
 				ModItems.BREADTH_FIRST_SEARCH_UPGRADE,
 				ModItems.DEPTH_FIRST_SEARCH_UPGRADE,
-				ModItems.PSEUDO_ROUND_ROBIN_UPGRADE,
 				ModItems.ENDER_TRANSMITTER,
 			)
 			.addTags(

@@ -70,7 +70,9 @@ class FluidTransferNodeBlockEntity(
 		pushIntoParent(level)
 
 		if (!bufferTank.isEmpty) {
-			ping.reset()
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
 			return
 		}
 
@@ -80,7 +82,7 @@ class FluidTransferNodeBlockEntity(
 
 		pullFromPingPos(level)
 
-		if (bufferTank.isEmpty) {
+		if (bufferTank.isEmpty || hasPseudoRoundRobinUpgrade()) {
 			ping.march(level)
 		}
 	}
@@ -92,7 +94,9 @@ class FluidTransferNodeBlockEntity(
 		pullFromParent(level)
 
 		if (bufferTank.isEmpty) {
-			ping.reset()
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
 			return
 		}
 
@@ -104,7 +108,7 @@ class FluidTransferNodeBlockEntity(
 		pushIntoPingPos(level)
 		val amountAfter = bufferTank.fluidAmount
 
-		if (amountBefore == amountAfter) {
+		if (amountBefore == amountAfter || hasPseudoRoundRobinUpgrade()) {
 			ping.march(level)
 		}
 	}

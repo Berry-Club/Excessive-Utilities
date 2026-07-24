@@ -33,13 +33,15 @@ class EnergyTransferNodeBlockEntity(
 		pushIntoParent(level)
 
 		if (bufferEnergyStorage.energyStored > 0) {
-			ping.reset()
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
 			return
 		}
 
 		pullFromPingPos(level)
 
-		if (bufferEnergyStorage.energyStored <= 0) {
+		if (bufferEnergyStorage.energyStored <= 0 || hasPseudoRoundRobinUpgrade()) {
 			ping.march(level)
 		}
 	}
@@ -98,7 +100,9 @@ class EnergyTransferNodeBlockEntity(
 		pullFromParent(level)
 
 		if (bufferEnergyStorage.energyStored <= 0) {
-			ping.reset()
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
 			return
 		}
 
@@ -106,7 +110,7 @@ class EnergyTransferNodeBlockEntity(
 		pushIntoPingPos(level)
 		val amountAfter = bufferEnergyStorage.energyStored
 
-		if (amountAfter == amountBefore) {
+		if (amountAfter == amountBefore || hasPseudoRoundRobinUpgrade()) {
 			ping.march(level)
 		}
 	}

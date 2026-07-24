@@ -65,7 +65,9 @@ class ItemTransferNodeBlockEntity(
 		pushIntoParent(level)
 
 		if (!bufferContainer.isEmpty) {
-			ping.reset()
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
 			return
 		}
 
@@ -75,7 +77,7 @@ class ItemTransferNodeBlockEntity(
 
 		pullFromPingPos(level)
 
-		if (bufferContainer.isEmpty) {
+		if (bufferContainer.isEmpty || hasPseudoRoundRobinUpgrade()) {
 			ping.march(level)
 		}
 	}
@@ -87,7 +89,9 @@ class ItemTransferNodeBlockEntity(
 		pullFromParent(level)
 
 		if (bufferContainer.isEmpty) {
-			ping.reset()
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
 			return
 		}
 
@@ -99,7 +103,7 @@ class ItemTransferNodeBlockEntity(
 		pushIntoPingPos(level)
 		val amountAfter = bufferContainer.getItem(0).count
 
-		if (amountBefore == amountAfter) {
+		if (amountBefore == amountAfter || hasPseudoRoundRobinUpgrade()) {
 			ping.march(level)
 		}
 	}
