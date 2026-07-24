@@ -1,0 +1,16 @@
+---
+title: Pseudo Round Robin Upgrade
+id: excessive_utilities:pseudo_round_robin_upgrade
+related_items: [excessive_utilities:pseudo_round_robin_upgrade]
+type: item
+---
+
+The **Pseudo Round Robin Upgrade** can be placed inside [Transfer and Retrieval Nodes](@excessive_utilities:transfer_nodes) to distribute their work across a Transfer Pipe network.
+
+Normally, a Node keeps its Ping at a destination for as long as that destination accepts items, fluid, or energy. With this Upgrade installed, the Ping moves on after every successful transfer, even if the destination could accept more.
+
+The Node also remembers the Ping's position when its buffer runs empty. When more resources become available, it resumes searching from that position instead of starting again at the Node.
+
+This produces a round-robin-like distribution in networks with multiple destinations. It is only *pseudo* round robin because the Ping still chooses randomly between available paths, so destinations are not guaranteed to receive equal amounts or be visited in a fixed order.
+
+<PrefabObtaining/>

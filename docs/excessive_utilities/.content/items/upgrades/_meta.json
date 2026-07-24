@@ -1,6 +1,7 @@
 {
 	"speed_upgrades.mdx": "Speed Upgrades",
 	"stack_upgrade.mdx": "Stack Upgrade",
+	"pseudo_round_robin_upgrade.mdx": "Pseudo Round Robin Upgrade",
 	"world_interaction_upgrade.mdx": "World Interaction Upgrade",
 	"creative_upgrade.mdx": "Creative Upgrade"
 }
