@@ -20,7 +20,6 @@ import net.minecraft.world.Container
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
@@ -62,58 +61,9 @@ class FluidTransferNodeBlockEntity(
 		return level.getCapability(Capabilities.FluidHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
-	// Pull from distant tanks into the buffer,
-	// then push from the buffer into the parent tank.
-	// if there's already stuff in the buffer, there's no reason to try to continue filling it,
-	// so just reset the ping and don't continue searching
-	override fun pullerTick(level: ServerLevel) {
-		pushIntoParent(level)
+	override fun getBufferAmount(): Int = bufferTank.fluidAmount
 
-		if (!bufferTank.isEmpty) {
-			if (!hasPseudoRoundRobinUpgrade()) {
-				ping.reset()
-			}
-			return
-		}
-
-		// Try to pull from inventories at the ping position
-		// If nothing was pulled, move the ping forward and try again next tick
-		// If something was pulled, keep the ping where it is so it can continue pulling from it next tick
-
-		pullFromPingPos(level)
-
-		if (bufferTank.isEmpty || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level)
-		}
-	}
-
-	// Pull from the parent inventory into the buffer,
-	// then search for somewhere to push the items in the buffer to.
-	// If there's nothing in the buffer, don't bother searching for somewhere to put it
-	override fun pusherTick(level: ServerLevel) {
-		pullFromParent(level)
-
-		if (bufferTank.isEmpty) {
-			if (!hasPseudoRoundRobinUpgrade()) {
-				ping.reset()
-			}
-			return
-		}
-
-		// Try to push into inventories at the ping position
-		// If nothing was pushed, move the ping forward and try again next tick
-		// If something was pushed, keep the ping where it is so it can continue pushing into it next tick
-
-		val amountBefore = bufferTank.fluidAmount
-		pushIntoPingPos(level)
-		val amountAfter = bufferTank.fluidAmount
-
-		if (amountBefore == amountAfter || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level)
-		}
-	}
-
-	private fun pushIntoPingPos(level: ServerLevel) {
+	override fun pushIntoPingPos(level: ServerLevel) {
 		val fluidInBuffer = bufferTank.fluid
 		if (fluidInBuffer.isEmpty) return
 
@@ -124,7 +74,7 @@ class FluidTransferNodeBlockEntity(
 			val amountInserted = handler.fill(fluidInBuffer, IFluidHandler.FluidAction.EXECUTE)
 			if (amountInserted <= 0) continue
 
-			if (hasCreativeUpgrade()) {
+			if (!hasCreativeUpgrade()) {
 				bufferTank.drain(amountInserted, IFluidHandler.FluidAction.EXECUTE)
 			}
 
@@ -132,7 +82,7 @@ class FluidTransferNodeBlockEntity(
 		}
 	}
 
-	private fun pullFromPingPos(level: ServerLevel) {
+	override fun pullFromPingPos(level: ServerLevel) {
 		val fluidHandlers = getFluidHandlersAroundPing(level)
 		if (fluidHandlers.isEmpty()) return
 
@@ -169,20 +119,12 @@ class FluidTransferNodeBlockEntity(
 	}
 
 	private fun getFluidHandlersAroundPing(level: ServerLevel): List<IFluidHandler> {
-		val possibleDirections = ping.getNextDirections(level)
-		val pingPos = ping.currentPingPos
-
-		val handlers = mutableListOf<IFluidHandler>()
-		for (dir in possibleDirections) {
-			val neighborPos = pingPos.relative(dir)
-			val handler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, dir.opposite) ?: continue
-			handlers.add(handler)
+		return getCapabilitiesAroundPing(level) { neighborPos, side ->
+			level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, side)
 		}
-
-		return handlers
 	}
 
-	private fun pushIntoParent(level: ServerLevel) {
+	override fun pushIntoParent(level: ServerLevel) {
 		val parentHandler = getParentFluidHandler(level) ?: return
 
 		val fluidInBuffer = bufferTank.fluid
@@ -201,7 +143,7 @@ class FluidTransferNodeBlockEntity(
 		didWorkThisTick = true
 	}
 
-	private fun pullFromParent(level: ServerLevel) {
+	override fun pullFromParent(level: ServerLevel) {
 		if (worldInteraction(level)) return
 
 		val parentHandler = getParentFluidHandler(level) ?: return
@@ -277,24 +219,6 @@ class FluidTransferNodeBlockEntity(
 		return true
 	}
 
-	private val containerData =
-		object : ContainerData {
-			override fun getCount(): Int = CONTAINER_DATA_SIZE
-
-			override fun get(index: Int): Int {
-				return when (index) {
-					X_DATA_INDEX -> ping.currentPingPos.x
-					Y_DATA_INDEX -> ping.currentPingPos.y
-					Z_DATA_INDEX -> ping.currentPingPos.z
-					else -> 0
-				}
-			}
-
-			override fun set(index: Int, value: Int) {
-				// Noop
-			}
-		}
-
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
 		return FluidTransferNodeMenu(
 			containerId,
@@ -338,11 +262,6 @@ class FluidTransferNodeBlockEntity(
 
 		const val TANK_SIZE = 16_000
 		const val FILTER_CONTAINER_SIZE = 1
-
-		const val CONTAINER_DATA_SIZE = 3
-		const val X_DATA_INDEX = 0
-		const val Y_DATA_INDEX = 1
-		const val Z_DATA_INDEX = 2
 
 	}
 

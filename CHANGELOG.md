@@ -1,3 +1,13 @@
+# 1.8.0
+
+### Added
+
+- Pseudo Round-Robin Upgrade
+
+### Changed
+
+- Improved code for Transfer Nodes
+
 # 1.7.1
 
 ### Fixed

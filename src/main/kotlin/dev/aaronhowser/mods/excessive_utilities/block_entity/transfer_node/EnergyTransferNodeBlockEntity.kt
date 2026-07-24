@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.EnergyStorage
@@ -29,24 +28,9 @@ class EnergyTransferNodeBlockEntity(
 		return level.getCapability(Capabilities.EnergyStorage.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
-	override fun pullerTick(level: ServerLevel) {
-		pushIntoParent(level)
+	override fun getBufferAmount(): Int = bufferEnergyStorage.energyStored
 
-		if (bufferEnergyStorage.energyStored > 0) {
-			if (!hasPseudoRoundRobinUpgrade()) {
-				ping.reset()
-			}
-			return
-		}
-
-		pullFromPingPos(level)
-
-		if (bufferEnergyStorage.energyStored <= 0 || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level)
-		}
-	}
-
-	private fun pullFromPingPos(level: ServerLevel) {
+	override fun pullFromPingPos(level: ServerLevel) {
 		val neighborStorages = getEnergyStorageAroundPing(level)
 		if (neighborStorages.isEmpty()) return
 
@@ -68,7 +52,7 @@ class EnergyTransferNodeBlockEntity(
 		}
 	}
 
-	private fun pushIntoParent(level: ServerLevel) {
+	override fun pushIntoParent(level: ServerLevel) {
 		val parentEnergyStorage = getParentEnergyStorage(level) ?: return
 
 		val energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.energyStored, true)
@@ -83,50 +67,17 @@ class EnergyTransferNodeBlockEntity(
 	}
 
 	private fun getEnergyStorageAroundPing(level: ServerLevel): List<IEnergyStorage> {
-		val possibleDirections = ping.getNextDirections(level)
-		val pingPos = ping.currentPingPos
-
-		val handlers = mutableListOf<IEnergyStorage>()
-		for (dir in possibleDirections) {
-			val neighborPos = pingPos.relative(dir)
-			val handler = level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, dir.opposite) ?: continue
-			handlers.add(handler)
-		}
-
-		return handlers
-	}
-
-	override fun pusherTick(level: ServerLevel) {
-		pullFromParent(level)
-
-		if (bufferEnergyStorage.energyStored <= 0) {
-			if (!hasPseudoRoundRobinUpgrade()) {
-				ping.reset()
-			}
-			return
-		}
-
-		val amountBefore = bufferEnergyStorage.energyStored
-		pushIntoPingPos(level)
-		val amountAfter = bufferEnergyStorage.energyStored
-
-		if (amountAfter == amountBefore || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level)
+		return getCapabilitiesAroundPing(level) { neighborPos, side ->
+			level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, side)
 		}
 	}
 
-	private fun pushIntoPingPos(level: ServerLevel) {
-		val possibleDirections = ping.getNextDirections(level)
-		val pingPos = ping.currentPingPos
-
+	override fun pushIntoPingPos(level: ServerLevel) {
 		var energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.energyStored, true)
 		if (energyToPush <= 0) return
 
-		for (dir in possibleDirections) {
-			val neighborPos = pingPos.relative(dir)
-			val handler = level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, dir.opposite) ?: continue
-
-			val accepted = handler.receiveEnergy(energyToPush, false)
+		for (storage in getEnergyStorageAroundPing(level)) {
+			val accepted = storage.receiveEnergy(energyToPush, false)
 			if (accepted <= 0) continue
 
 			if (!hasCreativeUpgrade()) {
@@ -140,7 +91,7 @@ class EnergyTransferNodeBlockEntity(
 		}
 	}
 
-	private fun pullFromParent(level: ServerLevel) {
+	override fun pullFromParent(level: ServerLevel) {
 		val parentStorage = getParentEnergyStorage(level) ?: return
 
 		val amountThatCanFit = bufferEnergyStorage.maxEnergyStored - bufferEnergyStorage.energyStored
@@ -164,26 +115,15 @@ class EnergyTransferNodeBlockEntity(
 		return if (hasStackUpgrade()) 192_000 else 3_000
 	}
 
-	private val containerData: ContainerData =
-		object : ContainerData {
-			override fun getCount(): Int = CONTAINER_DATA_SIZE
+	override fun getContainerDataCount(): Int = CONTAINER_DATA_SIZE
 
-			override fun get(index: Int): Int {
-				return when (index) {
-					X_DATA_INDEX -> placedOnPos.x
-					Y_DATA_INDEX -> placedOnPos.y
-					Z_DATA_INDEX -> placedOnPos.z
-					STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.energyStored
-					MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.maxEnergyStored
-					else -> 0
-				}
-			}
-
-			override fun set(index: Int, value: Int) {
-				// No set
-			}
-
+	override fun getContainerData(index: Int): Int {
+		return when (index) {
+			STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.energyStored
+			MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.maxEnergyStored
+			else -> super.getContainerData(index)
 		}
+	}
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
 		return EnergyTransferNodeMenu(containerId, playerInventory, upgradeContainer, containerData)
@@ -205,9 +145,6 @@ class EnergyTransferNodeBlockEntity(
 		const val BUFFER_ENERGY_NBT = "BufferEnergy"
 
 		const val CONTAINER_DATA_SIZE = 5
-		const val X_DATA_INDEX = 0
-		const val Y_DATA_INDEX = 1
-		const val Z_DATA_INDEX = 2
 		const val STORED_ENERGY_DATA_INDEX = 3
 		const val MAX_ENERGY_DATA_INDEX = 4
 	}

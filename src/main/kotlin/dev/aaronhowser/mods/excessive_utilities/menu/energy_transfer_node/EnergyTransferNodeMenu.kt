@@ -49,9 +49,9 @@ class EnergyTransferNodeMenu(
 		}
 	}
 
-	fun getPingX(): Int = containerData.get(EnergyTransferNodeBlockEntity.X_DATA_INDEX)
-	fun getPingY(): Int = containerData.get(EnergyTransferNodeBlockEntity.Y_DATA_INDEX)
-	fun getPingZ(): Int = containerData.get(EnergyTransferNodeBlockEntity.Z_DATA_INDEX)
+	fun getPingX(): Int = containerData.get(TransferNodeBlockEntity.X_DATA_INDEX)
+	fun getPingY(): Int = containerData.get(TransferNodeBlockEntity.Y_DATA_INDEX)
+	fun getPingZ(): Int = containerData.get(TransferNodeBlockEntity.Z_DATA_INDEX)
 	fun getStoredEnergy(): Int = containerData.get(EnergyTransferNodeBlockEntity.STORED_ENERGY_DATA_INDEX)
 	fun getMaxEnergy(): Int = containerData.get(EnergyTransferNodeBlockEntity.MAX_ENERGY_DATA_INDEX)
 

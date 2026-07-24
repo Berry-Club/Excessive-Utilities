@@ -19,6 +19,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
@@ -144,8 +145,81 @@ abstract class TransferNodeBlockEntity(
 		}
 	}
 
-	abstract fun pullerTick(level: ServerLevel)
-	abstract fun pusherTick(level: ServerLevel)
+	private fun pullerTick(level: ServerLevel) {
+		pushIntoParent(level)
+
+		if (getBufferAmount() > 0) {
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
+			return
+		}
+
+		pullFromPingPos(level)
+
+		if (getBufferAmount() <= 0 || hasPseudoRoundRobinUpgrade()) {
+			ping.march(level)
+		}
+	}
+
+	private fun pusherTick(level: ServerLevel) {
+		pullFromParent(level)
+
+		if (getBufferAmount() <= 0) {
+			if (!hasPseudoRoundRobinUpgrade()) {
+				ping.reset()
+			}
+			return
+		}
+
+		val amountBefore = getBufferAmount()
+		pushIntoPingPos(level)
+
+		if (getBufferAmount() == amountBefore || hasPseudoRoundRobinUpgrade()) {
+			ping.march(level)
+		}
+	}
+
+	protected abstract fun getBufferAmount(): Int
+	protected abstract fun pullFromParent(level: ServerLevel)
+	protected abstract fun pushIntoParent(level: ServerLevel)
+	protected abstract fun pullFromPingPos(level: ServerLevel)
+	protected abstract fun pushIntoPingPos(level: ServerLevel)
+
+	protected fun <T : Any> getCapabilitiesAroundPing(
+		level: ServerLevel,
+		getCapability: (BlockPos, Direction) -> T?
+	): List<T> {
+		val capabilities = mutableListOf<T>()
+		for (direction in ping.getNextDirections(level)) {
+			val neighborPos = ping.currentPingPos.relative(direction)
+			val capability = getCapability(neighborPos, direction.opposite) ?: continue
+			capabilities.add(capability)
+		}
+
+		return capabilities
+	}
+
+	protected open fun getContainerDataCount(): Int = PING_CONTAINER_DATA_SIZE
+
+	protected open fun getContainerData(index: Int): Int {
+		return when (index) {
+			X_DATA_INDEX -> ping.currentPingPos.x
+			Y_DATA_INDEX -> ping.currentPingPos.y
+			Z_DATA_INDEX -> ping.currentPingPos.z
+			else -> 0
+		}
+	}
+
+	protected val containerData: ContainerData =
+		object : ContainerData {
+			override fun getCount(): Int = getContainerDataCount()
+
+			override fun get(index: Int): Int = getContainerData(index)
+
+			override fun set(index: Int, value: Int) {
+			}
+		}
 
 	override fun getDisplayName(): Component = blockState.block.name
 
@@ -175,6 +249,11 @@ abstract class TransferNodeBlockEntity(
 
 	companion object {
 		const val UPGRADE_CONTAINER_SIZE = 6
+		const val PING_CONTAINER_DATA_SIZE = 3
+
+		const val X_DATA_INDEX = 0
+		const val Y_DATA_INDEX = 1
+		const val Z_DATA_INDEX = 2
 
 		const val UPGRADES_NBT = "Upgrades"
 		const val IS_RETRIEVAL_NBT = "IsRetrieval"

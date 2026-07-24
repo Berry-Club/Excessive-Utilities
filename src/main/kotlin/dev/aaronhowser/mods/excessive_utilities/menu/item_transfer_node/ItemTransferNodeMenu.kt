@@ -32,7 +32,7 @@ class ItemTransferNodeMenu(
 				SimpleContainer(TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE),
 				SimpleContainer(ItemTransferNodeBlockEntity.BUFFER_CONTAINER_SIZE),
 				SimpleContainer(ItemTransferNodeBlockEntity.FILTER_CONTAINER_SIZE),
-				SimpleContainerData(ItemTransferNodeBlockEntity.CONTAINER_DATA_SIZE)
+				SimpleContainerData(TransferNodeBlockEntity.PING_CONTAINER_DATA_SIZE)
 			)
 
 	init {
@@ -60,9 +60,9 @@ class ItemTransferNodeMenu(
 		this.addSlot(bufferSlot)
 	}
 
-	fun getPingX(): Int = containerData.get(ItemTransferNodeBlockEntity.X_DATA_INDEX)
-	fun getPingY(): Int = containerData.get(ItemTransferNodeBlockEntity.Y_DATA_INDEX)
-	fun getPingZ(): Int = containerData.get(ItemTransferNodeBlockEntity.Z_DATA_INDEX)
+	fun getPingX(): Int = containerData.get(TransferNodeBlockEntity.X_DATA_INDEX)
+	fun getPingY(): Int = containerData.get(TransferNodeBlockEntity.Y_DATA_INDEX)
+	fun getPingZ(): Int = containerData.get(TransferNodeBlockEntity.Z_DATA_INDEX)
 
 	override fun stillValid(player: Player): Boolean {
 		return upgradesContainer.stillValid(player)

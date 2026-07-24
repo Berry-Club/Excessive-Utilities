@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.FluidTransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.ItemTransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
@@ -48,9 +47,9 @@ class FluidTransferNodeMenu(
 		}
 	}
 
-	fun getPingX(): Int = containerData.get(ItemTransferNodeBlockEntity.X_DATA_INDEX)
-	fun getPingY(): Int = containerData.get(ItemTransferNodeBlockEntity.Y_DATA_INDEX)
-	fun getPingZ(): Int = containerData.get(ItemTransferNodeBlockEntity.Z_DATA_INDEX)
+	fun getPingX(): Int = containerData.get(TransferNodeBlockEntity.X_DATA_INDEX)
+	fun getPingY(): Int = containerData.get(TransferNodeBlockEntity.Y_DATA_INDEX)
+	fun getPingZ(): Int = containerData.get(TransferNodeBlockEntity.Z_DATA_INDEX)
 
 	override fun stillValid(player: Player): Boolean {
 		return upgradesContainer.stillValid(player)
@@ -64,7 +63,7 @@ class FluidTransferNodeMenu(
 		): FluidTransferNodeMenu {
 			val upgradeContainer = SimpleContainer(TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE)
 			val filterContainer = SimpleContainer(FluidTransferNodeBlockEntity.FILTER_CONTAINER_SIZE)
-			val containerData = SimpleContainerData(FluidTransferNodeBlockEntity.CONTAINER_DATA_SIZE)
+			val containerData = SimpleContainerData(TransferNodeBlockEntity.PING_CONTAINER_DATA_SIZE)
 
 			val nodePos = data.readBlockPos()
 			val node = playerInventory.player.level().getBlockEntity(nodePos)
