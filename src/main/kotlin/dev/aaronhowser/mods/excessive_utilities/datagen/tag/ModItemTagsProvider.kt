@@ -18,11 +18,11 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModItemTagsProvider(
-	pOutput: PackOutput,
-	pLookupProvider: CompletableFuture<HolderLookup.Provider>,
-	pBlockTags: CompletableFuture<TagLookup<Block>>,
+	output: PackOutput,
+	lookupProvider: CompletableFuture<HolderLookup.Provider>,
+	blockTags: CompletableFuture<TagLookup<Block>>,
 	existingFileHelper: ExistingFileHelper
-) : ItemTagsProvider(pOutput, pLookupProvider, pBlockTags, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+) : ItemTagsProvider(output, lookupProvider, blockTags, ExcessiveUtilities.MOD_ID, existingFileHelper) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(RENDER_GP_WHILE_HOLDING)

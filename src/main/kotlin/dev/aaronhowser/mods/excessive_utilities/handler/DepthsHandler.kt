@@ -108,9 +108,9 @@ class DepthsHandler : SavedData() {
 
 	fun returnFromDimension(entity: Entity) {
 		val level = entity.level() as? ServerLevel ?: return
-		val pData = entity.persistentData
+		val data = entity.persistentData
 
-		if (!pData.contains(PLAYER_RETURN_INFO)) {
+		if (!data.contains(PLAYER_RETURN_INFO)) {
 			val targetLevel = level.server.overworld()
 			val spawnPos = targetLevel.sharedSpawnPos
 
@@ -127,7 +127,7 @@ class DepthsHandler : SavedData() {
 			return
 		}
 
-		val returnInfo = pData.getCompound(PLAYER_RETURN_INFO)
+		val returnInfo = data.getCompound(PLAYER_RETURN_INFO)
 		val fromDimKey = ResourceKey.create(
 			Registries.DIMENSION,
 			ResourceLocation.parse(returnInfo.getString(FROM_DIM))
@@ -136,7 +136,7 @@ class DepthsHandler : SavedData() {
 		val targetLevel = level.server.getLevel(fromDimKey) ?: return
 		val targetPortalPos = returnInfo.getLong(FROM_PORTAL_POS).toBlockPos()
 
-		pData.remove(PLAYER_RETURN_INFO)
+		data.remove(PLAYER_RETURN_INFO)
 		teleportAbovePortal(entity, targetLevel, targetPortalPos)
 	}
 

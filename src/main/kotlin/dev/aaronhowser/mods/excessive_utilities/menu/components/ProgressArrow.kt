@@ -24,10 +24,10 @@ class ProgressArrow(
 	Component.empty()
 ) {
 
-	override fun renderWidget(pGuiGraphics: GuiGraphics, pMouseX: Int, pMouseY: Int, pPartialTick: Float) {
+	override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
 		if (!shouldRenderProgress()) return
 
-		pGuiGraphics.blitSprite(
+		guiGraphics.blitSprite(
 			texture,
 			WIDTH, HEIGHT,
 			0, 0,
@@ -37,19 +37,19 @@ class ProgressArrow(
 			this.height,
 		)
 
-		if (isHovered) renderTooltip(pGuiGraphics, pMouseX, pMouseY)
+		if (isHovered) renderTooltip(guiGraphics, mouseX, mouseY)
 	}
 
-	private fun renderTooltip(pGuiGraphics: GuiGraphics, pMouseX: Int, pMouseY: Int) {
+	private fun renderTooltip(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
 		if (percentDoneFunction() <= 0f) return
 
 		val percentString = (percentDoneFunction() * 100).toInt().toString() + "%"
 
-		pGuiGraphics.renderComponentTooltip(
+		guiGraphics.renderComponentTooltip(
 			font,
 			listOf(Component.literal(percentString)),
-			pMouseX,
-			pMouseY
+			mouseX,
+			mouseY
 		)
 	}
 
@@ -59,8 +59,8 @@ class ProgressArrow(
 		onClickFunction(mouseX, mouseY, button)
 	}
 
-	override fun updateWidgetNarration(pNarrationElementOutput: NarrationElementOutput) {
-		return this.defaultButtonNarrationText(pNarrationElementOutput)
+	override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
+		return this.defaultButtonNarrationText(narrationElementOutput)
 	}
 
 	companion object {

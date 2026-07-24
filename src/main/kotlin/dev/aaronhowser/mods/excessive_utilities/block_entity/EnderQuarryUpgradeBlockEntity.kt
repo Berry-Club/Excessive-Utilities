@@ -49,9 +49,9 @@ class EnderQuarryUpgradeBlockEntity(
 		super.saveAdditional(tag, registries)
 
 		tag.putString(UPGRADE_TYPE_TAG, upgradeType.id)
-		val pPos = parentBlock
-		if (pPos != null) {
-			tag.putLong(PARENT_POS_TAG, pPos.asLong())
+		val pos = parentBlock
+		if (pos != null) {
+			tag.putLong(PARENT_POS_TAG, pos.asLong())
 		}
 	}
 

@@ -65,22 +65,22 @@ class EnergyBar(
 		if (isHovered) renderTooltip(guiGraphics, mouseX, mouseY)
 	}
 
-	private fun renderTooltip(pGuiGraphics: GuiGraphics, pMouseX: Int, pMouseY: Int) {
+	private fun renderTooltip(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
 		val currentAmountString = String.format("%,d", currentGetter.asInt)
 		val maxAmountString = String.format("%,d", maxGetter.asInt)
 
 		val component = ModMenuLang.FE_WITH_CAPACITY.toComponent(currentAmountString, maxAmountString)
 
-		pGuiGraphics.renderComponentTooltip(
+		guiGraphics.renderComponentTooltip(
 			font,
 			listOf(component),
-			pMouseX,
-			pMouseY
+			mouseX,
+			mouseY
 		)
 	}
 
-	override fun updateWidgetNarration(pNarrationElementOutput: NarrationElementOutput) {
-		return this.defaultButtonNarrationText(pNarrationElementOutput)
+	override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {
+		return this.defaultButtonNarrationText(narrationElementOutput)
 	}
 
 	companion object {

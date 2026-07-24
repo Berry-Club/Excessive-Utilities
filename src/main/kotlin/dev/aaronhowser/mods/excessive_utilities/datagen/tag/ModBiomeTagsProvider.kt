@@ -13,10 +13,10 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModBiomeTagsProvider(
-	pOutput: PackOutput,
-	pProvider: CompletableFuture<HolderLookup.Provider>,
+	output: PackOutput,
+	provider: CompletableFuture<HolderLookup.Provider>,
 	existingFileHelper: ExistingFileHelper
-) : BiomeTagsProvider(pOutput, pProvider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+) : BiomeTagsProvider(output, provider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BIOME_MARKER_BLACKLIST)

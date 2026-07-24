@@ -30,11 +30,11 @@ class LastMillenniumHandler : SavedData() {
 	fun teleportIntoDimension(entity: Entity, target: UUID) {
 		val level = entity.level() as? ServerLevel ?: return
 
-		val pData = entity.persistentData
+		val data = entity.persistentData
 		val returnInfo = CompoundTag()
 		returnInfo.putString(FROM_DIM, level.dimension().location().toString())
 		returnInfo.putLong(FROM_POS, entity.blockPosition().asLong())
-		pData.put(PLAYER_RETURN_INFO, returnInfo)
+		data.put(PLAYER_RETURN_INFO, returnInfo)
 
 		val targetLevel = getLastMillenniumLevel(level)
 		val chunkPos = getChunk(target)
@@ -76,9 +76,9 @@ class LastMillenniumHandler : SavedData() {
 	fun returnFromDimension(entity: Entity) {
 		val level = entity.level() as? ServerLevel ?: return
 
-		val pData = entity.persistentData
+		val data = entity.persistentData
 
-		if (!pData.contains(PLAYER_RETURN_INFO)) {
+		if (!data.contains(PLAYER_RETURN_INFO)) {
 			val targetLevel = level.server.overworld()
 			val spawnPos = targetLevel.sharedSpawnPos
 
@@ -95,7 +95,7 @@ class LastMillenniumHandler : SavedData() {
 			return
 		}
 
-		val returnInfo = pData.getCompound(PLAYER_RETURN_INFO)
+		val returnInfo = data.getCompound(PLAYER_RETURN_INFO)
 
 		val fromDimString = returnInfo.getString(FROM_DIM)
 		val fromPosLong = returnInfo.getLong(FROM_POS)
@@ -109,7 +109,7 @@ class LastMillenniumHandler : SavedData() {
 
 		val targetLevel = level.server.getLevel(fromDimKey) ?: return
 
-		pData.remove(PLAYER_RETURN_INFO)
+		data.remove(PLAYER_RETURN_INFO)
 
 		entity.teleportTo(
 			targetLevel,
