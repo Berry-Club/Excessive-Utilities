@@ -3,6 +3,7 @@
 ### Added
 
 - Pseudo Round-Robin Upgrade
+- Depth-First Search Upgrade
 
 ### Changed
 

@@ -72,6 +72,10 @@ abstract class TransferNodeBlockEntity(
 		return upgradeContainer.countItem(ModItems.PSEUDO_ROUND_ROBIN_UPGRADE.get()) > 0
 	}
 
+	protected fun hasDepthFirstSearchUpgrade(): Boolean {
+		return upgradeContainer.countItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE.get()) > 0
+	}
+
 	protected fun getSpeedUpgradeCount(): Int {
 		var count = 0
 
@@ -158,7 +162,7 @@ abstract class TransferNodeBlockEntity(
 		pullFromPingPos(level)
 
 		if (getBufferAmount() <= 0 || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level)
+			ping.march(level, depthFirst = hasDepthFirstSearchUpgrade())
 		}
 	}
 
@@ -176,7 +180,7 @@ abstract class TransferNodeBlockEntity(
 		pushIntoPingPos(level)
 
 		if (getBufferAmount() == amountBefore || hasPseudoRoundRobinUpgrade()) {
-			ping.march(level)
+			ping.march(level, depthFirst = hasDepthFirstSearchUpgrade())
 		}
 	}
 

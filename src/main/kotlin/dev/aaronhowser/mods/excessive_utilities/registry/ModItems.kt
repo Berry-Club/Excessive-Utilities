@@ -213,9 +213,9 @@ object ModItems : AaronItemRegistry() {
 		basic("world_interaction_upgrade")
 	val BREADTH_FIRST_SEARCH_UPGRADE =
 		basic("breadth_first_search_upgrade")
-	val DEPTH_FIRST_SEARCH_UPGRADE =
+	val DEPTH_FIRST_SEARCH_UPGRADE: DeferredItem<Item> =
 		basic("depth_first_search_upgrade")
-	val PSEUDO_ROUND_ROBIN_UPGRADE =
+	val PSEUDO_ROUND_ROBIN_UPGRADE: DeferredItem<Item> =
 		basic("pseudo_round_robin_upgrade")
 	val ENDER_TRANSMITTER =
 		basic("ender_transmitter")

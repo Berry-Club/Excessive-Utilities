@@ -16,22 +16,36 @@ class TransferNodePing(
 		private set
 
 	private var cameFromDirection: Direction = homePlacedOnDirection
+	private val depthFirstPath: MutableList<BlockPos> = mutableListOf(homePos)
+	private val depthFirstVisited: MutableSet<BlockPos> = mutableSetOf(homePos)
+	private var depthFirstEnabled: Boolean = false
 
 	fun reset() {
 		currentPingPos = homePos
 		cameFromDirection = homePlacedOnDirection
+		depthFirstPath.clear()
+		depthFirstPath.add(homePos)
+		depthFirstVisited.clear()
+		depthFirstVisited.add(homePos)
 	}
 
-	//TODO: Remember forks and if there's nowhere for it to go, backtrack to the last fork and try a different path
-	fun march(level: Level) {
+	fun march(level: Level, depthFirst: Boolean) {
+		if (depthFirst != depthFirstEnabled) {
+			reset()
+			depthFirstEnabled = depthFirst
+		}
+
+		if (depthFirst) {
+			marchDepthFirst(level)
+		} else {
+			marchRandomly(level)
+		}
+	}
+
+	private fun marchRandomly(level: Level) {
 		val nextDirections = getNextDirections(level).toMutableList()
 
-		nextDirections.removeIf { dir ->
-			val nextPos = currentPingPos.relative(dir)
-			val blockThere = level.getBlockState(nextPos).block
-
-			blockThere !is TransferPipeBlock && blockThere !is TransferNodeBlock
-		}
+		nextDirections.removeIf { !canMarchTo(level, currentPingPos.relative(it)) }
 
 		if (nextDirections.isEmpty()) {
 			reset()
@@ -43,6 +57,42 @@ class TransferNodePing(
 
 		currentPingPos = currentPingPos.relative(nextDirection)
 		cameFromDirection = nextDirection.opposite
+	}
+
+	private fun marchDepthFirst(level: Level) {
+		val nextDirections = getNextDirections(level).toMutableList()
+		nextDirections.removeIf {
+			val nextPos = currentPingPos.relative(it)
+			nextPos in depthFirstVisited || !canMarchTo(level, nextPos)
+		}
+
+		if (nextDirections.isNotEmpty()) {
+			val nextDirection = nextDirections[level.random.nextInt(nextDirections.size)]
+			currentPingPos = currentPingPos.relative(nextDirection)
+			cameFromDirection = nextDirection.opposite
+			depthFirstPath.add(currentPingPos)
+			depthFirstVisited.add(currentPingPos)
+			return
+		}
+
+		if (depthFirstPath.size <= 1) {
+			reset()
+			return
+		}
+
+		val previousPos = depthFirstPath.removeLast()
+		currentPingPos = depthFirstPath.last()
+		cameFromDirection = directionFromTo(currentPingPos, previousPos)
+	}
+
+	private fun canMarchTo(level: Level, pos: BlockPos): Boolean {
+		val block = level.getBlockState(pos).block
+		return block is TransferPipeBlock || block is TransferNodeBlock
+	}
+
+	private fun directionFromTo(from: BlockPos, to: BlockPos): Direction {
+		return Direction.fromDelta(to.x - from.x, to.y - from.y, to.z - from.z)
+			?: homePlacedOnDirection
 	}
 
 	/** @return A list of directions that Transfer Pipes are allowed to search from, or that the Ping can march to */
