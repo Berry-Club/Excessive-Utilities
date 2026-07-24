@@ -97,8 +97,10 @@ class TransferNodePing(
 	}
 
 	private fun marchBreadthFirst(level: Level) {
-		val nextDirections = getNextDirections(level)
-		for (direction in nextDirections) {
+		val nextDirections = getNextDirections(level).toMutableList()
+		while (nextDirections.isNotEmpty()) {
+			val directionIndex = level.random.nextInt(nextDirections.size)
+			val direction = nextDirections.removeAt(directionIndex)
 			val nextPos = currentPingPos.relative(direction)
 			if (nextPos in breadthFirstVisited || !canMarchTo(level, nextPos)) continue
 

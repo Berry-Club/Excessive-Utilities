@@ -199,7 +199,7 @@ abstract class TransferNodeBlockEntity(
 		if (getBufferAmount() <= 0 || hasPseudoRoundRobinUpgrade()) {
 			ping.march(
 				level,
-				depthFirst = hasDepthFirstSearchUpgrade(),
+				depthFirst = hasDepthFirstSearchUpgrade() || hasPseudoRoundRobinUpgrade(),
 				breadthFirst = hasBreadthFirstSearchUpgrade()
 			)
 		}
@@ -221,7 +221,7 @@ abstract class TransferNodeBlockEntity(
 		if (getBufferAmount() == amountBefore || hasPseudoRoundRobinUpgrade()) {
 			ping.march(
 				level,
-				depthFirst = hasDepthFirstSearchUpgrade(),
+				depthFirst = hasDepthFirstSearchUpgrade() || hasPseudoRoundRobinUpgrade(),
 				breadthFirst = hasBreadthFirstSearchUpgrade()
 			)
 		}

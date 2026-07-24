@@ -7,10 +7,12 @@ type: item
 
 The **Pseudo Round Robin Upgrade** can be placed inside [Transfer and Retrieval Nodes](@excessive_utilities:transfer_nodes) to distribute their work across a Transfer Pipe network.
 
-Normally, a Node keeps its Ping at a destination for as long as that destination accepts items, fluid, or energy. With this Upgrade installed, the Ping moves on after every successful transfer, even if the destination could accept more.
+Normally, a Node keeps its Ping at a destination for as long as that destination accepts items, fluid, or energy. It also resets the Ping to the Node whenever its buffer empties.
 
-The Node also remembers the Ping's position when its buffer runs empty. When more resources become available, it resumes searching from that position instead of starting again at the Node.
+With this Upgrade installed, the Ping moves on after every successful transfer, even if the destination could accept more. It remembers its route like a [Depth-First Search Upgrade](@excessive_utilities:depth_first_search_upgrade), backtracking to previous junctions instead of resetting at dead ends.
 
-This produces a round-robin-like distribution in networks with multiple destinations. It is only *pseudo* round robin because the Ping still chooses randomly between available paths, so destinations are not guaranteed to receive equal amounts or be visited in a fixed order.
+Emptying the buffer does not reset the search. If the source runs dry, the Transfer Node remains at its current point in the search and resumes from there when more resources become available. The Ping returns to the Node only after the entire reachable pipe network has been searched.
+
+The Node still transfers as much of its buffer as it can at each destination. Distribution is therefore not guaranteed to be perfectly even. It works best with non-stackable items, consistently sized batches from a [Stack Upgrade](@excessive_utilities:stack_upgrade), or a network whose destinations are laid out at equal distances.
 
 <PrefabObtaining/>

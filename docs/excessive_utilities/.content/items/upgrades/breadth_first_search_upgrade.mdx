@@ -7,11 +7,15 @@ type: item
 
 The **Breadth-First Search Upgrade** can be placed inside [Transfer and Retrieval Nodes](@excessive_utilities:transfer_nodes) to make their Ping search a Transfer Pipe network from nearest to farthest.
 
-The Ping first visits every reachable pipe one step away from the Node, then every pipe two steps away, and so on. Inventories, tanks, and energy storages near the Node are therefore considered before ones farther along the network.
+At each junction, the Ping searches one pipe down each valid branch before searching two pipes down any branch. It continues this process one step at a time, effectively searching all branches simultaneously.
 
-This is useful when nearby destinations should receive resources before distant destinations, or when a Retrieval Node should prefer nearby sources.
+This ensures that the nearest valid inventory, tank, or energy storage is always found first. If multiple valid destinations are the same distance from the Node, their search order is random.
 
-The Upgrade changes only the order in which pipes are searched. It does not increase transfer speed or the amount moved per operation.
+Each pipe visited still takes one operation. Networks with many branches and sub-branches can therefore take much longer to search. Breadth-First Search is best suited to networks with numerous short branches, such as a line of Transfer Pipes running alongside a line of inventories.
+
+Once a branch has been searched, the Node does not search it again until the Ping resets. A Transfer Node normally resets its Ping when its buffer empties. A [Pseudo Round Robin Upgrade](@excessive_utilities:pseudo_round_robin_upgrade) prevents that reset.
+
+The Upgrade changes only the search order. It does not increase transfer speed or the amount moved per operation.
 
 Only one Breadth-First Search Upgrade can be installed in a Node. It cannot be installed together with a [Depth-First Search Upgrade](@excessive_utilities:depth_first_search_upgrade).
 

@@ -9,9 +9,11 @@ The **Depth-First Search Upgrade** can be placed inside [Transfer and Retrieval 
 
 Normally, a Ping chooses a random connected path at each junction. If it reaches a dead end, it returns to the Node and begins a new search.
 
-With this Upgrade installed, the Ping remembers the path it followed. At a dead end, it travels back to the most recent junction and tries an unexplored branch. This continues until every reachable branch has been searched, after which the Ping returns to the Node and starts over.
+With this Upgrade installed, the Ping remembers the path it followed. At a dead end, it travels back to the most recent junction and randomly chooses an unexplored branch. This continues until every reachable branch has been searched, after which the Ping returns to the Node and starts over.
 
 Depth-first searching is useful when a pipe network has many branches because the Node can thoroughly search the network without repeatedly losing its progress at dead ends.
+
+The Ping also resets when a Transfer Node empties its buffer. A [Pseudo Round Robin Upgrade](@excessive_utilities:pseudo_round_robin_upgrade) prevents that reset.
 
 The Upgrade changes only the order in which pipes are searched. It does not increase transfer speed or the amount moved per operation.
 
