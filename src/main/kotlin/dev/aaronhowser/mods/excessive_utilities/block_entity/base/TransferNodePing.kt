@@ -54,9 +54,7 @@ class TransferNodePing(
 	}
 
 	private fun marchRandomly(level: Level) {
-		val nextDirections = getNextDirections(level).toMutableList()
-
-		nextDirections.removeIf { !canMarchTo(level, currentPingPos.relative(it)) }
+		val nextDirections = getNextDirections(level).filter { canMarchTo(level, currentPingPos.relative(it)) }
 
 		if (nextDirections.isEmpty()) {
 			reset()
@@ -71,8 +69,7 @@ class TransferNodePing(
 	}
 
 	private fun marchDepthFirst(level: Level) {
-		val nextDirections = getNextDirections(level).toMutableList()
-		nextDirections.removeIf {
+		val nextDirections = getNextDirections(level).filterNot {
 			val nextPos = currentPingPos.relative(it)
 			nextPos in depthFirstVisited || !canMarchTo(level, nextPos)
 		}
@@ -98,10 +95,12 @@ class TransferNodePing(
 
 	private fun marchBreadthFirst(level: Level) {
 		val nextDirections = getNextDirections(level).toMutableList()
+
 		while (nextDirections.isNotEmpty()) {
 			val directionIndex = level.random.nextInt(nextDirections.size)
 			val direction = nextDirections.removeAt(directionIndex)
 			val nextPos = currentPingPos.relative(direction)
+
 			if (nextPos in breadthFirstVisited || !canMarchTo(level, nextPos)) continue
 
 			breadthFirstQueue.addLast(SearchStep(nextPos, direction.opposite))
