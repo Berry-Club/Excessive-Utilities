@@ -8,6 +8,8 @@ import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency.EnderFrequencyMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency.EnderFrequencyScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu
@@ -84,6 +86,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("quantum_quarry", ::QuantumQuarryMenu)
 	val CRUSHER: DeferredHolder<MenuType<*>, MenuType<CrusherMenu>> =
 		register("crusher", ::CrusherMenu)
+	val ENDER_FREQUENCY: DeferredHolder<MenuType<*>, MenuType<EnderFrequencyMenu>> =
+		register("ender_frequency") { IMenuTypeExtension.create(::EnderFrequencyMenu) }
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
@@ -103,6 +107,7 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		event.register(ENCHANTER.get(), ::EnchanterScreen)
 		event.register(QUANTUM_QUARRY.get(), ::QuantumQuarryScreen)
 		event.register(CRUSHER.get(), ::CrusherScreen)
+		event.register(ENDER_FREQUENCY.get(), ::EnderFrequencyScreen)
 	}
 
 }

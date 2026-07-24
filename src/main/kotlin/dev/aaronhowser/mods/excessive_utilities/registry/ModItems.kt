@@ -217,10 +217,10 @@ object ModItems : AaronItemRegistry() {
 		basic("depth_first_search_upgrade")
 	val PSEUDO_ROUND_ROBIN_UPGRADE: DeferredItem<Item> =
 		basic("pseudo_round_robin_upgrade")
-	val ENDER_TRANSMITTER =
-		basic("ender_transmitter")
-	val ENDER_RECEIVER =
-		basic("ender_receiver")
+	val ENDER_TRANSMITTER: DeferredItem<EnderFrequencyItem> =
+		register("ender_transmitter", { EnderFrequencyItem(EnderFrequencyItem.Role.TRANSMITTER, it) })
+	val ENDER_RECEIVER: DeferredItem<EnderFrequencyItem> =
+		register("ender_receiver", { EnderFrequencyItem(EnderFrequencyItem.Role.RECEIVER, it) })
 	val CREATIVE_UPGRADE: DeferredItem<Item> =
 		basic("creative_upgrade")
 

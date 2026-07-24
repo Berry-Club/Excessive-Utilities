@@ -5,7 +5,9 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.WorldInteractionItemRecipe
@@ -62,6 +64,21 @@ class ItemTransferNodeBlockEntity(
 		val stackInBuffer = bufferContainer.getItem(0)
 		if (stackInBuffer.isEmpty) return
 
+		val frequency = getTransmitterFrequency()
+		if (frequency != null) {
+			val remaining = stackInBuffer.copy()
+			EnderFrequencyNetwork.get(level.server)
+				.visitReceivers(level.server, frequency, TransferNodeBlock.Type.ITEM) { receiver ->
+					pushIntoEnderReceiver(receiver, remaining)
+				}
+
+			if (!hasCreativeUpgrade()) {
+				bufferContainer.setItem(0, remaining)
+			}
+
+			if (bufferContainer.getItem(0).isEmpty) return
+		}
+
 		val itemHandlers = getItemHandlersAroundPing(level)
 		if (itemHandlers.isEmpty()) return
 
@@ -83,6 +100,8 @@ class ItemTransferNodeBlockEntity(
 	}
 
 	override fun pullFromPingPos(level: ServerLevel) {
+		if (hasConfiguredReceiver()) return
+
 		val itemHandlers = getItemHandlersAroundPing(level)
 		if (itemHandlers.isEmpty()) return
 
@@ -105,6 +124,39 @@ class ItemTransferNodeBlockEntity(
 		return getCapabilitiesAroundPing(level) { neighborPos, side ->
 			level.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, side)
 		}
+	}
+
+	fun receiveWireless(stack: ItemStack): Int {
+		if (!passesFilter(stack)) return 0
+
+		val current = bufferContainer.getItem(0)
+		if (!current.isEmpty && !ItemStack.isSameItemSameComponents(current, stack)) return 0
+
+		val capacity = if (current.isEmpty) stack.maxStackSize else current.maxStackSize - current.count
+		val accepted = stack.count.coerceAtMost(capacity)
+		if (accepted <= 0) return 0
+
+		val replacement = if (current.isEmpty) stack.copyWithCount(accepted) else current.copy().also { it.grow(accepted) }
+		bufferContainer.setItem(0, replacement)
+		return accepted
+	}
+
+	private fun pushIntoEnderReceiver(
+		receiver: TransferNodeBlockEntity,
+		remaining: ItemStack
+	): Boolean {
+		if (remaining.isEmpty) return false
+		if (receiver !is ItemTransferNodeBlockEntity) return false
+
+		val accepted = receiver.receiveWireless(remaining)
+		if (accepted <= 0) return false
+
+		if (!hasCreativeUpgrade()) {
+			remaining.shrink(accepted)
+		}
+
+		didWorkThisTick = true
+		return true
 	}
 
 	override fun pushIntoParent(level: ServerLevel) {

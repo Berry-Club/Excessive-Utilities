@@ -4,7 +4,9 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
 import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeMenu
@@ -67,6 +69,17 @@ class FluidTransferNodeBlockEntity(
 		val fluidInBuffer = bufferTank.fluid
 		if (fluidInBuffer.isEmpty) return
 
+		val frequency = getTransmitterFrequency()
+		if (frequency != null) {
+			val remaining = fluidInBuffer.copy()
+			EnderFrequencyNetwork.get(level.server)
+				.visitReceivers(level.server, frequency, TransferNodeBlock.Type.FLUID) { receiver ->
+					pushIntoEnderReceiver(receiver, remaining)
+				}
+
+			if (bufferTank.isEmpty) return
+		}
+
 		val fluidHandlers = getFluidHandlersAroundPing(level)
 		if (fluidHandlers.isEmpty()) return
 
@@ -83,6 +96,8 @@ class FluidTransferNodeBlockEntity(
 	}
 
 	override fun pullFromPingPos(level: ServerLevel) {
+		if (hasConfiguredReceiver()) return
+
 		val fluidHandlers = getFluidHandlersAroundPing(level)
 		if (fluidHandlers.isEmpty()) return
 
@@ -122,6 +137,31 @@ class FluidTransferNodeBlockEntity(
 		return getCapabilitiesAroundPing(level) { neighborPos, side ->
 			level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, side)
 		}
+	}
+
+	fun receiveWireless(stack: FluidStack): Int {
+		val filterStack = filterContainer.getItem(0)
+		if (filterStack.isItem(ModItems.FLUID_FILTER) && !FluidFilterItem.passesFilter(filterStack, stack)) return 0
+		return bufferTank.fill(stack, IFluidHandler.FluidAction.EXECUTE)
+	}
+
+	private fun pushIntoEnderReceiver(
+		receiver: TransferNodeBlockEntity,
+		remaining: FluidStack
+	): Boolean {
+		if (remaining.isEmpty) return false
+		if (receiver !is FluidTransferNodeBlockEntity) return false
+
+		val accepted = receiver.receiveWireless(remaining)
+		if (accepted <= 0) return false
+
+		if (!hasCreativeUpgrade()) {
+			bufferTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE)
+			remaining.shrink(accepted)
+		}
+
+		didWorkThisTick = true
+		return true
 	}
 
 	override fun pushIntoParent(level: ServerLevel) {

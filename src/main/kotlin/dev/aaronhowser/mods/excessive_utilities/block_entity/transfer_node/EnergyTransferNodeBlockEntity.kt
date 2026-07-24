@@ -2,7 +2,9 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
+import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -31,6 +33,8 @@ class EnergyTransferNodeBlockEntity(
 	override fun getBufferAmount(): Int = bufferEnergyStorage.energyStored
 
 	override fun pullFromPingPos(level: ServerLevel) {
+		if (hasConfiguredReceiver()) return
+
 		val neighborStorages = getEnergyStorageAroundPing(level)
 		if (neighborStorages.isEmpty()) return
 
@@ -75,6 +79,18 @@ class EnergyTransferNodeBlockEntity(
 	override fun pushIntoPingPos(level: ServerLevel) {
 		var energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.energyStored, true)
 		if (energyToPush <= 0) return
+
+		val frequency = getTransmitterFrequency()
+		if (frequency != null) {
+			EnderFrequencyNetwork.get(level.server)
+				.visitReceivers(level.server, frequency, TransferNodeBlock.Type.ENERGY) { receiver ->
+					val accepted = pushIntoEnderReceiver(receiver, energyToPush)
+					energyToPush -= accepted
+					accepted > 0
+				}
+
+			if (energyToPush <= 0) return
+		}
 
 		for (storage in getEnergyStorageAroundPing(level)) {
 			val accepted = storage.receiveEnergy(energyToPush, false)
@@ -123,6 +139,27 @@ class EnergyTransferNodeBlockEntity(
 			MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.maxEnergyStored
 			else -> super.getContainerData(index)
 		}
+	}
+
+	fun receiveWireless(maxAmount: Int): Int {
+		return bufferEnergyStorage.receiveEnergy(maxAmount, false)
+	}
+
+	private fun pushIntoEnderReceiver(
+		receiver: TransferNodeBlockEntity,
+		maxAmount: Int
+	): Int {
+		if (receiver !is EnergyTransferNodeBlockEntity) return 0
+
+		val accepted = receiver.receiveWireless(maxAmount)
+		if (accepted <= 0) return 0
+
+		if (!hasCreativeUpgrade()) {
+			bufferEnergyStorage.extractEnergy(accepted, false)
+		}
+
+		didWorkThisTick = true
+		return accepted
 	}
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {

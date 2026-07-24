@@ -51,6 +51,11 @@ object ModMenuLang {
 	const val SOUL_RENDING = "attribute.name.excessive_utilities.soul_rending"
 	const val WARDENS_WAKE = "tooltip.excessive_utilities.wardens_wake"
 	const val NOT_YET_IMPLEMENTED = "tooltip.excessive_utilities.not_yet_implented"
+	const val ENDER_FREQUENCY_NAME = "menu.excessive_utilities.ender_frequency.name"
+	const val ENDER_FREQUENCY_PUBLIC = "menu.excessive_utilities.ender_frequency.public"
+	const val ENDER_FREQUENCY_PRIVATE = "menu.excessive_utilities.ender_frequency.private"
+	const val ENDER_FREQUENCY_PUBLIC_TOOLTIP = "tooltip.excessive_utilities.ender_frequency.public"
+	const val ENDER_FREQUENCY_PRIVATE_TOOLTIP = "tooltip.excessive_utilities.ender_frequency.private"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -116,6 +121,11 @@ object ModMenuLang {
 			add(SOUL_RENDING, "Soul Rending")
 			add(WARDENS_WAKE, "Left behind by a Warden that's given up")
 			add(NOT_YET_IMPLEMENTED, "Not Yet Implemented")
+			add(ENDER_FREQUENCY_NAME, "Frequency Name")
+			add(ENDER_FREQUENCY_PUBLIC, "Public")
+			add(ENDER_FREQUENCY_PRIVATE, "Private")
+			add(ENDER_FREQUENCY_PUBLIC_TOOLTIP, "Public Frequency")
+			add(ENDER_FREQUENCY_PRIVATE_TOOLTIP, "Private Frequency")
 		}
 	}
 

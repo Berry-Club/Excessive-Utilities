@@ -297,8 +297,6 @@ class ModItemTagsProvider(
 				ModBlocks.PLAYER_CHEST.asItem(),
 			)
 			.add(
-				ModItems.ENDER_TRANSMITTER,
-				ModItems.ENDER_RECEIVER,
 				ModItems.PRECISION_SHEARS,
 				ModItems.SONAR_GOGGLES,
 				ModItems.LUX_SABER

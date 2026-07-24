@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.registry.AaronDataComponentRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.FluidFilterComponent
+import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.ItemFilterComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
 import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
@@ -74,5 +75,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		int("remaining_uses")
 	val CRAFTED_IN_MENU: DeferredHolder<DataComponentType<*>, DataComponentType<ResourceLocation>> =
 		register("crafted_in_menu", ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC)
+	val ENDER_FREQUENCY: DeferredHolder<DataComponentType<*>, DataComponentType<EnderFrequencyComponent>> =
+		register("ender_frequency", EnderFrequencyComponent.CODEC, EnderFrequencyComponent.STREAM_CODEC)
 
 }

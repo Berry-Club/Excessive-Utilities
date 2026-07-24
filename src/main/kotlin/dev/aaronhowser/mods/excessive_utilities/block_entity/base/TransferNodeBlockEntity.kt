@@ -9,6 +9,10 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
+import dev.aaronhowser.mods.excessive_utilities.item.EnderFrequencyItem
+import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
+import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
+import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -29,6 +33,9 @@ abstract class TransferNodeBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
 ) : GpDrainBlockEntity(type, pos, blockState), ContainerContainer, MenuProvider {
+
+	val nodeType: TransferNodeBlock.Type
+		get() = (blockState.block as TransferNodeBlock).type
 
 	protected val placedOnDirection: Direction = this.blockState.getValue(TransferNodeBlock.PLACED_ON)
 	protected val placedOnPos: BlockPos = blockPos.relative(placedOnDirection)
@@ -60,6 +67,8 @@ abstract class TransferNodeBlockEntity(
 			}
 		}
 
+	private var registeredReceiverFrequency: EnderFrequencyComponent? = null
+
 	private fun canPlaceUpgrade(stack: ItemStack): Boolean {
 		val tag = if (isRetrieval) {
 			ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES
@@ -68,6 +77,12 @@ abstract class TransferNodeBlockEntity(
 		}
 
 		if (!stack.isItem(tag)) return false
+
+		if (stack.item is EnderFrequencyItem) {
+			for (upgradeStack in upgradeContainer.items) {
+				if (upgradeStack.item is EnderFrequencyItem) return false
+			}
+		}
 
 		if (stack.isItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE)) {
 			return upgradeContainer.countItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE.get()) == 0
@@ -142,6 +157,7 @@ abstract class TransferNodeBlockEntity(
 	protected var cooldown = 20
 
 	override fun serverTick(level: ServerLevel) {
+		refreshEnderFrequencyRegistration()
 		super.serverTick(level)
 
 		val isOverloaded = isOverloaded() && getGpUsage() > 0.0
@@ -154,6 +170,62 @@ abstract class TransferNodeBlockEntity(
 			activeTick(level)
 			cooldown += 20
 		}
+	}
+
+	override fun onLoad() {
+		super.onLoad()
+		refreshEnderFrequencyRegistration()
+	}
+
+	override fun setRemoved() {
+		unregisterEnderReceiver()
+		super.setRemoved()
+	}
+
+	private fun refreshEnderFrequencyRegistration() {
+		val serverLevel = level as? ServerLevel ?: return
+		val current = getEnderFrequency(EnderFrequencyItem.Role.RECEIVER).takeIf { isRetrieval }
+		if (current == registeredReceiverFrequency) return
+
+		unregisterEnderReceiver()
+		if (current != null) {
+			EnderFrequencyNetwork.get(serverLevel.server).registerReceiver(this, current)
+			registeredReceiverFrequency = current
+		}
+	}
+
+	private fun unregisterEnderReceiver() {
+		val frequency = registeredReceiverFrequency ?: return
+		val serverLevel = level as? ServerLevel
+		if (serverLevel != null) {
+			EnderFrequencyNetwork.get(serverLevel.server).unregisterReceiver(this, frequency)
+		}
+
+		registeredReceiverFrequency = null
+	}
+
+	protected fun getTransmitterFrequency(): EnderFrequencyComponent? {
+		if (isRetrieval) return null
+		return getEnderFrequency(EnderFrequencyItem.Role.TRANSMITTER)
+	}
+
+	protected fun hasConfiguredReceiver(): Boolean {
+		return isRetrieval && getEnderFrequency(EnderFrequencyItem.Role.RECEIVER) != null
+	}
+
+	private fun getEnderFrequency(role: EnderFrequencyItem.Role): EnderFrequencyComponent? {
+		for (stack in upgradeContainer.items) {
+			val item = stack.item as? EnderFrequencyItem ?: continue
+			if (item.role != role) continue
+			return stack.get(ModDataComponents.ENDER_FREQUENCY)
+		}
+
+		return null
+	}
+
+	fun isReceiverFor(frequency: EnderFrequencyComponent, type: TransferNodeBlock.Type): Boolean {
+		return isRetrieval && nodeType == type
+				&& getEnderFrequency(EnderFrequencyItem.Role.RECEIVER) == frequency
 	}
 
 	protected open fun activeTick(level: ServerLevel) {
