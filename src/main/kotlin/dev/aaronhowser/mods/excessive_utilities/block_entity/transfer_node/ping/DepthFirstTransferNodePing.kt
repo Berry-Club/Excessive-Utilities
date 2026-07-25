@@ -36,20 +36,24 @@ class DepthFirstTransferNodePing(
 			return
 		}
 
-		if (path.size <= 1) {
-			reset()
-			return
+		while (path.size > 1) {
+			val previousPos = path.removeLast()
+			val nextPos = path.last()
+			val cameFrom = Direction.fromDelta(
+				previousPos.x - nextPos.x,
+				previousPos.y - nextPos.y,
+				previousPos.z - nextPos.z
+			) ?: homePlacedOnDirection
+
+			move(nextPos, cameFrom)
+
+			val hasUnvisitedDirection = getMarchableDirections(level).any { direction ->
+				currentPingPos.relative(direction) !in visitedPositions
+			}
+
+			if (hasUnvisitedDirection) return
 		}
 
-		val previousPos = currentPingPos
-		path.removeLast()
-		val nextPos = path.last()
-		val cameFrom = Direction.fromDelta(
-			previousPos.x - nextPos.x,
-			previousPos.y - nextPos.y,
-			previousPos.z - nextPos.z
-		) ?: homePlacedOnDirection
-
-		move(nextPos, cameFrom)
+		reset()
 	}
 }
