@@ -3,10 +3,15 @@
 ### Added
 
 - Pseudo Round-Robin Upgrade
+	- It doesn't stop moving the Ping when it finds somewhere to put stuff
 - Depth-First Search Upgrade
+	- Every time the path forks, it searches all of one branch then jumps back to the fork, then searches all of the next branch, etc
 - Breadth-First Search Upgrade
-- Ender Transmitter 
-- Ender Receiver
+	- Every time the path forks, it searches all of them at the same time
+- Ender Transmitter and Ender Receiver
+	- Right click to set frequency
+		- Can be private or public
+	- Transmitter goes on Transfer Nodes and sends items/fluids/energy to any Retrieval Node with an Ender Receiver set to the same frequency
 
 ### Changed
 
