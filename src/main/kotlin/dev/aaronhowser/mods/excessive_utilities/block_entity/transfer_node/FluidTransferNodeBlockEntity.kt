@@ -4,9 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
-import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
 import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node.FluidTransferNodeMenu
@@ -69,13 +67,11 @@ class FluidTransferNodeBlockEntity(
 		val fluidInBuffer = bufferTank.fluid
 		if (fluidInBuffer.isEmpty) return
 
-		val frequency = getTransmitterFrequency()
-		if (frequency != null) {
+		if (hasConfiguredTransmitter()) {
 			val remaining = fluidInBuffer.copy()
-			EnderFrequencyNetwork.get(level.server)
-				.visitReceivers(level.server, frequency, TransferNodeBlock.Type.FLUID) { receiver ->
-					pushIntoEnderReceiver(receiver, remaining)
-				}
+			visitEnderReceivers(level) { receiver ->
+				transferToEnderReceiver(receiver, remaining)
+			}
 
 			if (bufferTank.isEmpty) return
 		}
@@ -139,20 +135,20 @@ class FluidTransferNodeBlockEntity(
 		}
 	}
 
-	fun receiveWireless(stack: FluidStack): Int {
+	fun receiveEnderTransfer(stack: FluidStack): Int {
 		val filterStack = filterContainer.getItem(0)
 		if (filterStack.isItem(ModItems.FLUID_FILTER) && !FluidFilterItem.passesFilter(filterStack, stack)) return 0
 		return bufferTank.fill(stack, IFluidHandler.FluidAction.EXECUTE)
 	}
 
-	private fun pushIntoEnderReceiver(
+	private fun transferToEnderReceiver(
 		receiver: TransferNodeBlockEntity,
 		remaining: FluidStack
 	): Boolean {
 		if (remaining.isEmpty) return false
 		if (receiver !is FluidTransferNodeBlockEntity) return false
 
-		val accepted = receiver.receiveWireless(remaining)
+		val accepted = receiver.receiveEnderTransfer(remaining)
 		if (accepted <= 0) return false
 
 		if (!hasCreativeUpgrade()) {

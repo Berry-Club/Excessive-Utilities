@@ -40,7 +40,8 @@ abstract class TransferNodeBlockEntity(
 	protected val placedOnDirection: Direction = this.blockState.getValue(TransferNodeBlock.PLACED_ON)
 	protected val placedOnPos: BlockPos = blockPos.relative(placedOnDirection)
 
-	protected val ping = TransferNodePing(blockPos, placedOnDirection)
+	protected var ping = TransferNodePing.SearchMode.RANDOM.create(blockPos, placedOnDirection)
+		private set
 
 	var isRetrieval: Boolean = false
 		set(value) {
@@ -204,9 +205,22 @@ abstract class TransferNodeBlockEntity(
 		registeredReceiverFrequency = null
 	}
 
-	protected fun getTransmitterFrequency(): EnderFrequencyComponent? {
+	private fun getTransmitterFrequency(): EnderFrequencyComponent? {
 		if (isRetrieval) return null
 		return getEnderFrequency(EnderFrequencyItem.Role.TRANSMITTER)
+	}
+
+	protected fun hasConfiguredTransmitter(): Boolean {
+		return getTransmitterFrequency() != null
+	}
+
+	protected fun visitEnderReceivers(
+		level: ServerLevel,
+		visitor: (TransferNodeBlockEntity) -> Boolean
+	): Boolean {
+		val frequency = getTransmitterFrequency() ?: return false
+		return EnderFrequencyNetwork.get(level.server)
+			.visitReceivers(level.server, frequency, nodeType, visitor)
 	}
 
 	protected fun hasConfiguredReceiver(): Boolean {
@@ -269,11 +283,8 @@ abstract class TransferNodeBlockEntity(
 		pullFromPingPos(level)
 
 		if (getBufferAmount() <= 0 || hasPseudoRoundRobinUpgrade()) {
-			ping.march(
-				level,
-				depthFirst = hasDepthFirstSearchUpgrade() || hasPseudoRoundRobinUpgrade(),
-				breadthFirst = hasBreadthFirstSearchUpgrade()
-			)
+			updatePingSearchMode()
+			ping.march(level)
 		}
 	}
 
@@ -291,12 +302,20 @@ abstract class TransferNodeBlockEntity(
 		pushIntoPingPos(level)
 
 		if (getBufferAmount() == amountBefore || hasPseudoRoundRobinUpgrade()) {
-			ping.march(
-				level,
-				depthFirst = hasDepthFirstSearchUpgrade() || hasPseudoRoundRobinUpgrade(),
-				breadthFirst = hasBreadthFirstSearchUpgrade()
-			)
+			updatePingSearchMode()
+			ping.march(level)
 		}
+	}
+
+	private fun updatePingSearchMode() {
+		val searchMode = when {
+			hasBreadthFirstSearchUpgrade() -> TransferNodePing.SearchMode.BREADTH_FIRST
+			hasDepthFirstSearchUpgrade() || hasPseudoRoundRobinUpgrade() -> TransferNodePing.SearchMode.DEPTH_FIRST
+			else -> TransferNodePing.SearchMode.RANDOM
+		}
+
+		if (ping.searchMode == searchMode) return
+		ping = searchMode.create(blockPos, placedOnDirection)
 	}
 
 	protected abstract fun getBufferAmount(): Int

@@ -2,9 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
-import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -80,17 +78,13 @@ class EnergyTransferNodeBlockEntity(
 		var energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.energyStored, true)
 		if (energyToPush <= 0) return
 
-		val frequency = getTransmitterFrequency()
-		if (frequency != null) {
-			EnderFrequencyNetwork.get(level.server)
-				.visitReceivers(level.server, frequency, TransferNodeBlock.Type.ENERGY) { receiver ->
-					val accepted = pushIntoEnderReceiver(receiver, energyToPush)
-					energyToPush -= accepted
-					accepted > 0
-				}
-
-			if (energyToPush <= 0) return
+		visitEnderReceivers(level) { receiver ->
+			val accepted = transferToEnderReceiver(receiver, energyToPush)
+			energyToPush -= accepted
+			accepted > 0
 		}
+
+		if (energyToPush <= 0) return
 
 		for (storage in getEnergyStorageAroundPing(level)) {
 			val accepted = storage.receiveEnergy(energyToPush, false)
@@ -141,17 +135,17 @@ class EnergyTransferNodeBlockEntity(
 		}
 	}
 
-	fun receiveWireless(maxAmount: Int): Int {
+	fun receiveEnderTransfer(maxAmount: Int): Int {
 		return bufferEnergyStorage.receiveEnergy(maxAmount, false)
 	}
 
-	private fun pushIntoEnderReceiver(
+	private fun transferToEnderReceiver(
 		receiver: TransferNodeBlockEntity,
 		maxAmount: Int
 	): Int {
 		if (receiver !is EnergyTransferNodeBlockEntity) return 0
 
-		val accepted = receiver.receiveWireless(maxAmount)
+		val accepted = receiver.receiveEnderTransfer(maxAmount)
 		if (accepted <= 0) return 0
 
 		if (!hasCreativeUpgrade()) {

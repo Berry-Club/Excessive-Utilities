@@ -6,115 +6,39 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.Level
 
-// https://github.com/Leclowndu93150/Extra-Utilities/blob/master/src/main/java/com/leclowndu93150/extrautils2/blockentity/transfer/TransferNodePing.java
-class TransferNodePing(
-	private val homePos: BlockPos,
-	private val homePlacedOnDirection: Direction
+sealed class TransferNodePing(
+	protected val homePos: BlockPos,
+	protected val homePlacedOnDirection: Direction
 ) {
 
+	abstract val searchMode: SearchMode
+
 	var currentPingPos: BlockPos = homePos
-		private set
+		protected set
 
-	private var cameFromDirection: Direction = homePlacedOnDirection
-	private val depthFirstPath: MutableList<BlockPos> = mutableListOf(homePos)
-	private val depthFirstVisited: MutableSet<BlockPos> = mutableSetOf(homePos)
-	private val breadthFirstQueue: ArrayDeque<SearchStep> = ArrayDeque()
-	private val breadthFirstVisited: MutableSet<BlockPos> = mutableSetOf(homePos)
-	private var searchMode: SearchMode = SearchMode.RANDOM
+	protected var cameFromDirection: Direction = homePlacedOnDirection
 
-	fun reset() {
+	open fun reset() {
 		currentPingPos = homePos
 		cameFromDirection = homePlacedOnDirection
-		depthFirstPath.clear()
-		depthFirstPath.add(homePos)
-		depthFirstVisited.clear()
-		depthFirstVisited.add(homePos)
-		breadthFirstQueue.clear()
-		breadthFirstVisited.clear()
-		breadthFirstVisited.add(homePos)
 	}
 
-	fun march(level: Level, depthFirst: Boolean, breadthFirst: Boolean) {
-		val newSearchMode = when {
-			breadthFirst -> SearchMode.BREADTH_FIRST
-			depthFirst -> SearchMode.DEPTH_FIRST
-			else -> SearchMode.RANDOM
-		}
+	abstract fun march(level: Level)
 
-		if (newSearchMode != searchMode) {
-			reset()
-			searchMode = newSearchMode
-		}
-
-		when (searchMode) {
-			SearchMode.RANDOM -> marchRandomly(level)
-			SearchMode.DEPTH_FIRST -> marchDepthFirst(level)
-			SearchMode.BREADTH_FIRST -> marchBreadthFirst(level)
+	protected fun getMarchableDirections(level: Level): List<Direction> {
+		return getNextDirections(level).filter { direction ->
+			canMarchTo(level, currentPingPos.relative(direction))
 		}
 	}
 
-	private fun marchRandomly(level: Level) {
-		val nextDirections = getNextDirections(level).filter { canMarchTo(level, currentPingPos.relative(it)) }
-
-		if (nextDirections.isEmpty()) {
-			reset()
-			return
-		}
-
-		val nextIndex = level.random.nextInt(nextDirections.size)
-		val nextDirection = nextDirections[nextIndex]
-
-		currentPingPos = currentPingPos.relative(nextDirection)
-		cameFromDirection = nextDirection.opposite
+	protected fun move(direction: Direction) {
+		currentPingPos = currentPingPos.relative(direction)
+		cameFromDirection = direction.opposite
 	}
 
-	private fun marchDepthFirst(level: Level) {
-		val nextDirections = getNextDirections(level).filterNot {
-			val nextPos = currentPingPos.relative(it)
-			nextPos in depthFirstVisited || !canMarchTo(level, nextPos)
-		}
-
-		if (nextDirections.isNotEmpty()) {
-			val nextDirection = nextDirections[level.random.nextInt(nextDirections.size)]
-			currentPingPos = currentPingPos.relative(nextDirection)
-			cameFromDirection = nextDirection.opposite
-			depthFirstPath.add(currentPingPos)
-			depthFirstVisited.add(currentPingPos)
-			return
-		}
-
-		if (depthFirstPath.size <= 1) {
-			reset()
-			return
-		}
-
-		val previousPos = depthFirstPath.removeLast()
-		currentPingPos = depthFirstPath.last()
-		cameFromDirection = directionFromTo(currentPingPos, previousPos)
-	}
-
-	private fun marchBreadthFirst(level: Level) {
-		val nextDirections = getNextDirections(level).toMutableList()
-
-		while (nextDirections.isNotEmpty()) {
-			val directionIndex = level.random.nextInt(nextDirections.size)
-			val direction = nextDirections.removeAt(directionIndex)
-			val nextPos = currentPingPos.relative(direction)
-
-			if (nextPos in breadthFirstVisited || !canMarchTo(level, nextPos)) continue
-
-			breadthFirstQueue.addLast(SearchStep(nextPos, direction.opposite))
-			breadthFirstVisited.add(nextPos)
-		}
-
-		if (breadthFirstQueue.isEmpty()) {
-			reset()
-			return
-		}
-
-		val nextStep = breadthFirstQueue.removeFirst()
-		currentPingPos = nextStep.pos
-		cameFromDirection = nextStep.cameFromDirection
+	protected fun move(searchStep: SearchStep) {
+		currentPingPos = searchStep.pos
+		cameFromDirection = searchStep.cameFromDirection
 	}
 
 	private fun canMarchTo(level: Level, pos: BlockPos): Boolean {
@@ -122,7 +46,7 @@ class TransferNodePing(
 		return block is TransferPipeBlock || block is TransferNodeBlock
 	}
 
-	private fun directionFromTo(from: BlockPos, to: BlockPos): Direction {
+	protected fun directionFromTo(from: BlockPos, to: BlockPos): Direction {
 		return Direction.fromDelta(to.x - from.x, to.y - from.y, to.z - from.z)
 			?: homePlacedOnDirection
 	}
@@ -137,8 +61,8 @@ class TransferNodePing(
 
 		when (block) {
 			is TransferPipeBlock -> {
-				directions.removeIf { dir ->
-					val property = TransferPipeBlock.CONNECTIONS[dir.ordinal]
+				directions.removeIf { direction ->
+					val property = TransferPipeBlock.CONNECTIONS[direction.ordinal]
 					!stateAtPingPos.getValue(property).allowsTravel
 				}
 			}
@@ -157,15 +81,121 @@ class TransferNodePing(
 		return directions
 	}
 
-	private data class SearchStep(
+	enum class SearchMode {
+		RANDOM,
+		DEPTH_FIRST,
+		BREADTH_FIRST;
+
+		fun create(homePos: BlockPos, homePlacedOnDirection: Direction): TransferNodePing {
+			return when (this) {
+				RANDOM -> RandomTransferNodePing(homePos, homePlacedOnDirection)
+				DEPTH_FIRST -> DepthFirstTransferNodePing(homePos, homePlacedOnDirection)
+				BREADTH_FIRST -> BreadthFirstTransferNodePing(homePos, homePlacedOnDirection)
+			}
+		}
+	}
+
+	protected data class SearchStep(
 		val pos: BlockPos,
 		val cameFromDirection: Direction
 	)
+}
 
-	private enum class SearchMode {
-		RANDOM,
-		DEPTH_FIRST,
-		BREADTH_FIRST
+private class RandomTransferNodePing(
+	homePos: BlockPos,
+	homePlacedOnDirection: Direction
+) : TransferNodePing(homePos, homePlacedOnDirection) {
+
+	override val searchMode: SearchMode = SearchMode.RANDOM
+
+	override fun march(level: Level) {
+		val nextDirections = getMarchableDirections(level)
+		if (nextDirections.isEmpty()) {
+			reset()
+			return
+		}
+
+		move(nextDirections[level.random.nextInt(nextDirections.size)])
+	}
+}
+
+private class DepthFirstTransferNodePing(
+	homePos: BlockPos,
+	homePlacedOnDirection: Direction
+) : TransferNodePing(homePos, homePlacedOnDirection) {
+
+	override val searchMode: SearchMode = SearchMode.DEPTH_FIRST
+
+	private val path: MutableList<BlockPos> = mutableListOf(homePos)
+	private val visited: MutableSet<BlockPos> = mutableSetOf(homePos)
+
+	override fun reset() {
+		super.reset()
+		path.clear()
+		path.add(homePos)
+		visited.clear()
+		visited.add(homePos)
 	}
 
+	override fun march(level: Level) {
+		val nextDirections = getMarchableDirections(level).filter { direction ->
+			currentPingPos.relative(direction) !in visited
+		}
+
+		if (nextDirections.isNotEmpty()) {
+			val nextDirection = nextDirections[level.random.nextInt(nextDirections.size)]
+			move(nextDirection)
+			path.add(currentPingPos)
+			visited.add(currentPingPos)
+			return
+		}
+
+		if (path.size <= 1) {
+			reset()
+			return
+		}
+
+		val previousPos = path.removeLast()
+		val nextPos = path.last()
+		move(SearchStep(nextPos, directionFromTo(nextPos, previousPos)))
+	}
+}
+
+private class BreadthFirstTransferNodePing(
+	homePos: BlockPos,
+	homePlacedOnDirection: Direction
+) : TransferNodePing(homePos, homePlacedOnDirection) {
+
+	override val searchMode: SearchMode = SearchMode.BREADTH_FIRST
+
+	private val queue: ArrayDeque<SearchStep> = ArrayDeque()
+	private val visited: MutableSet<BlockPos> = mutableSetOf(homePos)
+
+	override fun reset() {
+		super.reset()
+		queue.clear()
+		visited.clear()
+		visited.add(homePos)
+	}
+
+	override fun march(level: Level) {
+		val nextDirections = getMarchableDirections(level).toMutableList()
+
+		while (nextDirections.isNotEmpty()) {
+			val directionIndex = level.random.nextInt(nextDirections.size)
+			val direction = nextDirections.removeAt(directionIndex)
+			val nextPos = currentPingPos.relative(direction)
+			if (nextPos in visited) continue
+
+			queue.addLast(SearchStep(nextPos, direction.opposite))
+			visited.add(nextPos)
+		}
+
+		if (queue.isEmpty()) {
+			reset()
+			return
+		}
+
+		move(queue.removeFirst())
+	}
 }

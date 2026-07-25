@@ -5,9 +5,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
-import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.WorldInteractionItemRecipe
@@ -64,13 +62,11 @@ class ItemTransferNodeBlockEntity(
 		val stackInBuffer = bufferContainer.getItem(0)
 		if (stackInBuffer.isEmpty) return
 
-		val frequency = getTransmitterFrequency()
-		if (frequency != null) {
+		if (hasConfiguredTransmitter()) {
 			val remaining = stackInBuffer.copy()
-			EnderFrequencyNetwork.get(level.server)
-				.visitReceivers(level.server, frequency, TransferNodeBlock.Type.ITEM) { receiver ->
-					pushIntoEnderReceiver(receiver, remaining)
-				}
+			visitEnderReceivers(level) { receiver ->
+				transferToEnderReceiver(receiver, remaining)
+			}
 
 			if (!hasCreativeUpgrade()) {
 				bufferContainer.setItem(0, remaining)
@@ -126,7 +122,7 @@ class ItemTransferNodeBlockEntity(
 		}
 	}
 
-	fun receiveWireless(stack: ItemStack): Int {
+	fun receiveEnderTransfer(stack: ItemStack): Int {
 		if (!passesFilter(stack)) return 0
 
 		val current = bufferContainer.getItem(0)
@@ -141,14 +137,14 @@ class ItemTransferNodeBlockEntity(
 		return accepted
 	}
 
-	private fun pushIntoEnderReceiver(
+	private fun transferToEnderReceiver(
 		receiver: TransferNodeBlockEntity,
 		remaining: ItemStack
 	): Boolean {
 		if (remaining.isEmpty) return false
 		if (receiver !is ItemTransferNodeBlockEntity) return false
 
-		val accepted = receiver.receiveWireless(remaining)
+		val accepted = receiver.receiveEnderTransfer(remaining)
 		if (accepted <= 0) return false
 
 		if (!hasCreativeUpgrade()) {
