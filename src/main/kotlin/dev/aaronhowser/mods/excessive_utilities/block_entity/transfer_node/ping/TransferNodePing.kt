@@ -36,19 +36,14 @@ sealed class TransferNodePing(
 		cameFromDirection = direction.opposite
 	}
 
-	protected fun move(searchStep: SearchStep) {
-		currentPingPos = searchStep.pos
-		cameFromDirection = searchStep.cameFromDirection
+	protected fun move(pos: BlockPos, cameFrom: Direction) {
+		currentPingPos = pos
+		cameFromDirection = cameFrom
 	}
 
 	private fun canMarchTo(level: Level, pos: BlockPos): Boolean {
 		val block = level.getBlockState(pos).block
 		return block is TransferPipeBlock || block is TransferNodeBlock
-	}
-
-	protected fun directionFromTo(from: BlockPos, to: BlockPos): Direction {
-		return Direction.fromDelta(to.x - from.x, to.y - from.y, to.z - from.z)
-			?: homePlacedOnDirection
 	}
 
 	/** @return A list of directions that Transfer Pipes are allowed to search from, or that the Ping can march to */
@@ -95,8 +90,4 @@ sealed class TransferNodePing(
 		}
 	}
 
-	protected data class SearchStep(
-		val pos: BlockPos,
-		val cameFromDirection: Direction
-	)
 }
