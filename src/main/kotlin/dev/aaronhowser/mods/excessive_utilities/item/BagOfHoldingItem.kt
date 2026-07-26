@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding.BagOfHoldingHandler
+import dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding.BagOfHoldingMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -13,8 +14,6 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
-import net.minecraft.world.inventory.ChestMenu
-import net.minecraft.world.inventory.MenuType
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemUtils
@@ -80,14 +79,7 @@ class BagOfHoldingItem(properties: Properties) : Item(properties) {
 		val level = playerInventory.player.level() as ServerLevel
 		val bag = BagOfHoldingHandler.get(level).getOrCreateBag(bagId)
 
-		return object : ChestMenu(MenuType.GENERIC_9x6, containerId, playerInventory, bag.container, 6) {
-			override fun stillValid(player: Player): Boolean {
-				val heldStack = player.getItemInHand(usedHand)
-				return bag.isActive &&
-						heldStack.isItem(this@BagOfHoldingItem) &&
-						heldStack.get(ModDataComponents.BAG_OF_HOLDING_ID) == bagId
-			}
-		}
+		return BagOfHoldingMenu(containerId, playerInventory, bag, bagId, usedHand)
 	}
 
 	companion object {
