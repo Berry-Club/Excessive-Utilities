@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu
 
+import dev.aaronhowser.mods.aaron.menu.HeldItemMenu
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
-import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.FluidFilterComponent
@@ -20,7 +20,7 @@ class FluidFilterMenu(
 	containerId: Int,
 	playerInventory: Inventory,
 	val hand: InteractionHand
-) : MenuWithInventory(ModMenuTypes.FLUID_FILTER.get(), containerId, playerInventory), MenuWithButtons {
+) : HeldItemMenu(ModMenuTypes.FLUID_FILTER.get(), containerId, playerInventory, hand), MenuWithButtons {
 
 	constructor(
 		containerId: Int,
@@ -71,8 +71,8 @@ class FluidFilterMenu(
 		}
 	}
 
-	override fun stillValid(player: Player): Boolean {
-		return getFilterStack().isItem(ModItems.FLUID_FILTER)
+	override fun isValidHeldItem(heldItem: ItemStack): Boolean {
+		return heldItem.isItem(ModItems.FLUID_FILTER)
 	}
 
 	override fun handleButtonPressed(buttonId: Int) {

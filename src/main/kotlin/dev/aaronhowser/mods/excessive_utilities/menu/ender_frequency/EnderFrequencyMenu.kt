@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency
 
+import dev.aaronhowser.mods.aaron.menu.HeldItemMenu
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.excessive_utilities.item.EnderFrequencyItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
@@ -8,17 +9,15 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
-import net.minecraft.world.entity.player.Player
-import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 
 class EnderFrequencyMenu(
 	containerId: Int,
-	private val playerInventory: Inventory,
+	playerInventory: Inventory,
 	val hand: InteractionHand,
 	val initialName: String,
 	val initiallyPrivate: Boolean
-) : AbstractContainerMenu(ModMenuTypes.ENDER_FREQUENCY.get(), containerId) {
+) : HeldItemMenu(ModMenuTypes.ENDER_FREQUENCY.get(), containerId, playerInventory, hand) {
 
 	constructor(containerId: Int, inventory: Inventory, hand: InteractionHand) : this(
 		containerId,
@@ -44,10 +43,8 @@ class EnderFrequencyMenu(
 		data.readBoolean()
 	)
 
-	override fun stillValid(player: Player): Boolean {
-		return player.getItemInHand(hand).item is EnderFrequencyItem
+	override fun isValidHeldItem(heldItem: ItemStack): Boolean {
+		return heldItem.item is EnderFrequencyItem
 	}
-
-	override fun quickMoveStack(player: Player, index: Int): ItemStack = ItemStack.EMPTY
 
 }

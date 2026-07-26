@@ -23,56 +23,16 @@ class BagOfHoldingMenu(
 	init {
 		checkContainerSize(bag.container, BAG_SLOT_COUNT)
 		bag.container.startOpen(playerInventory.player)
-		addBagSlots()
-		addPlayerInventorySlots()
+		addSlots(103 + (BAG_ROWS - 4) * SLOT_SPACING)
 	}
 
-	private fun addBagSlots() {
+	override fun addContainerSlots() {
 		for (row in 0 until BAG_ROWS) {
 			for (column in 0 until SLOTS_PER_ROW) {
 				val slotIndex = column + row * SLOTS_PER_ROW
 				addSlot(Slot(bag.container, slotIndex, 8 + column * SLOT_SPACING, 18 + row * SLOT_SPACING))
 			}
 		}
-	}
-
-	private fun addPlayerInventorySlots() {
-		val inventoryStartY = 103 + (BAG_ROWS - 4) * SLOT_SPACING
-
-		for (row in 0 until PLAYER_INVENTORY_ROWS) {
-			for (column in 0 until SLOTS_PER_ROW) {
-				val inventorySlot = column + row * SLOTS_PER_ROW + SLOTS_PER_ROW
-				addPlayerSlot(inventorySlot, 8 + column * SLOT_SPACING, inventoryStartY + row * SLOT_SPACING)
-			}
-		}
-
-		for (hotbarSlot in 0 until SLOTS_PER_ROW) {
-			addPlayerSlot(hotbarSlot, 8 + hotbarSlot * SLOT_SPACING, inventoryStartY + 58)
-		}
-	}
-
-	override fun quickMoveStackFromUnlockedSlot(player: Player, slotIndex: Int): ItemStack {
-		val sourceSlot = slots.getOrNull(slotIndex) ?: return ItemStack.EMPTY
-		if (!sourceSlot.hasItem()) return ItemStack.EMPTY
-
-		val sourceStack = sourceSlot.item
-		val originalStack = sourceStack.copy()
-
-		val moved = if (slotIndex < BAG_SLOT_COUNT) {
-			moveItemStackTo(sourceStack, BAG_SLOT_COUNT, slots.size, true)
-		} else {
-			moveItemStackTo(sourceStack, 0, BAG_SLOT_COUNT, false)
-		}
-		if (!moved) return ItemStack.EMPTY
-
-		if (sourceStack.isEmpty) {
-			sourceSlot.setByPlayer(ItemStack.EMPTY)
-		} else {
-			sourceSlot.setChanged()
-		}
-
-		sourceSlot.onTake(player, sourceStack)
-		return originalStack
 	}
 
 	override fun isValidHeldItem(heldItem: ItemStack): Boolean {
@@ -90,7 +50,6 @@ class BagOfHoldingMenu(
 		private const val BAG_ROWS = 6
 		private const val BAG_SLOT_COUNT = BAG_ROWS * 9
 		private const val SLOTS_PER_ROW = 9
-		private const val PLAYER_INVENTORY_ROWS = 3
 		private const val SLOT_SPACING = 18
 	}
 }
