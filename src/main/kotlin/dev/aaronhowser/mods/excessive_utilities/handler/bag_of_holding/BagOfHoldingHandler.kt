@@ -13,7 +13,7 @@ class BagOfHoldingHandler : SavedData() {
 
 	private val bags: MutableMap<UUID, BagOfHolding> = mutableMapOf()
 
-	fun getBag(uuid: UUID): BagOfHolding {
+	fun getOrCreateBag(uuid: UUID): BagOfHolding {
 		val existingBag = bags[uuid]
 		if (existingBag != null) return existingBag
 

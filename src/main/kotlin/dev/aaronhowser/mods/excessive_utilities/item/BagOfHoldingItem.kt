@@ -78,7 +78,7 @@ class BagOfHoldingItem(properties: Properties) : Item(properties) {
 		usedHand: InteractionHand
 	): AbstractContainerMenu {
 		val level = playerInventory.player.level() as ServerLevel
-		val bag = BagOfHoldingHandler.get(level).getBag(bagId)
+		val bag = BagOfHoldingHandler.get(level).getOrCreateBag(bagId)
 
 		return object : ChestMenu(MenuType.GENERIC_9x6, containerId, playerInventory, bag.container, 6) {
 			override fun stillValid(player: Player): Boolean {
