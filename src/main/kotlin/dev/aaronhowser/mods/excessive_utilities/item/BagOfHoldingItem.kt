@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding.BagOfHoldingHandler
 import dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding.BagOfHoldingMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents

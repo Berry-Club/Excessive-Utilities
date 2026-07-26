@@ -9,10 +9,10 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.ping.TransferNodePing
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
-import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
-import dev.aaronhowser.mods.excessive_utilities.item.EnderFrequencyItem
-import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
 import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
+import dev.aaronhowser.mods.excessive_utilities.item.EnderFrequencyItem
+import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
+import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos

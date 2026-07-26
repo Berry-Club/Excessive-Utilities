@@ -3,11 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronDataComponentRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
-import dev.aaronhowser.mods.excessive_utilities.item.component.FluidFilterComponent
-import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
-import dev.aaronhowser.mods.excessive_utilities.item.component.ItemFilterComponent
-import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeProgressComponent
-import dev.aaronhowser.mods.excessive_utilities.item.component.OpiniumCoreContentsComponent
+import dev.aaronhowser.mods.excessive_utilities.item.component.*
 import net.minecraft.core.Holder
 import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries

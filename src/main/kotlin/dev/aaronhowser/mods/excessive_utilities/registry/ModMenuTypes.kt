@@ -6,10 +6,10 @@ import dev.aaronhowser.mods.excessive_utilities.menu.crusher.CrusherMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.crusher.CrusherScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.enchanter.EnchanterScreen
-import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineMenu
-import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency.EnderFrequencyMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency.EnderFrequencyScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine.EnderPorcupineScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node.FlatTransferNodeMenu

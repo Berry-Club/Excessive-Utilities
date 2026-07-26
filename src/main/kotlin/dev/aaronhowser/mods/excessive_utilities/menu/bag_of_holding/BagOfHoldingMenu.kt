@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding
 
+import dev.aaronhowser.mods.aaron.menu.HeldItemMenu
 import dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding.BagOfHolding
 import dev.aaronhowser.mods.excessive_utilities.item.BagOfHoldingItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
-import dev.aaronhowser.mods.aaron.menu.HeldItemMenu
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player

@@ -1,8 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.packet
 
 import dev.aaronhowser.mods.aaron.packet.AaronPacketRegistrar
-import dev.aaronhowser.mods.excessive_utilities.packet.client_to_server.UpdateControlsPacket
 import dev.aaronhowser.mods.excessive_utilities.packet.client_to_server.ConfigureEnderFrequencyPacket
+import dev.aaronhowser.mods.excessive_utilities.packet.client_to_server.UpdateControlsPacket
 import dev.aaronhowser.mods.excessive_utilities.packet.server_to_client.UpdateGridPowerPacket
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 
