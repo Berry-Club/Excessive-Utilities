@@ -1,9 +1,11 @@
-package dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding_handler
+package dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding
 
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.nbt.ListTag
 import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.saveddata.SavedData
 import java.util.*
 
@@ -12,11 +14,24 @@ class BagOfHoldingHandler : SavedData() {
 	private val bags: MutableMap<UUID, BagOfHolding> = mutableMapOf()
 
 	fun getBag(uuid: UUID): BagOfHolding {
-		return bags.getOrPut(uuid) { BagOfHolding(uuid) }
+		val existingBag = bags[uuid]
+		if (existingBag != null) return existingBag
+
+		val bag = BagOfHolding(uuid, ::setDirty)
+		bags[uuid] = bag
+		setDirty()
+		return bag
+	}
+
+	fun removeBag(uuid: UUID): List<ItemStack> {
+		val bag = bags.remove(uuid) ?: return emptyList()
+		val items = bag.takeItems()
+		setDirty()
+		return items
 	}
 
 	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
-		val bagList = tag.getList(BAG_LIST_TAG, Tag.TAG_COMPOUND.toInt())
+		val bagList = ListTag()
 
 		for (bag in bags.values) {
 			if (bag.isEmpty()) continue
@@ -25,6 +40,7 @@ class BagOfHoldingHandler : SavedData() {
 			bagList.add(bagTag)
 		}
 
+		tag.put(BAG_LIST_TAG, bagList)
 		return tag
 	}
 
@@ -38,7 +54,7 @@ class BagOfHoldingHandler : SavedData() {
 			val bagList = tag.getList(BAG_LIST_TAG, Tag.TAG_COMPOUND.toInt())
 			for (i in bagList.indices) {
 				val bagTag = bagList.getCompound(i)
-				val bag = BagOfHolding.fromTag(bagTag, provider)
+				val bag = BagOfHolding.fromTag(bagTag, provider, handler::setDirty) ?: continue
 				handler.bags[bag.bagUUID] = bag
 			}
 
