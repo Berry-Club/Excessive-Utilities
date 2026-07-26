@@ -21,6 +21,8 @@
 
 - Fixed Fluid Transfer Nodes using Creative Upgrade behavior by default
 	- PR by Aiidoneus
+- Fixed the Division Sigil ritual only working on day 1 of the world
+	- PR by Aiidoneus
 
 # 1.7.1
 
