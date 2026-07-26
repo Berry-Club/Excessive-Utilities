@@ -212,9 +212,10 @@ object DivisionSigilActivation {
 		level: ServerLevel,
 		result: ActivationResult
 	) {
-		val minTime = 17_500
-		val maxTime = 18_500
-		if (level.dayTime !in minTime..maxTime) {
+		val minTime = 17_500L
+		val maxTime = 18_500L
+		val timeOfDay = level.dayTime % 24_000L
+		if (timeOfDay !in minTime..maxTime) {
 			result.failWithMessages(ModMessageLang.DIVISION_MIDNIGHT.toComponent())
 		}
 	}
