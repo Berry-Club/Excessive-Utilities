@@ -24,7 +24,7 @@
 - Fixed the Division Sigil ritual only working on day 1 of the world
 	- PR by Aiidoneus
 - Fixed the Mini Chest and Slightly Larger Chest not saving their contents (#46)
-- Fixed the Golden Bag of Holding not properly saving items
+- Fixed the Golden Bag of Holding not properly saving items (#47)
 
 # 1.7.1
 
