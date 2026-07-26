@@ -17,6 +17,11 @@
 
 - Improved code for Transfer Nodes
 
+### Fixed
+
+- Fixed Fluid Transfer Nodes using Creative Upgrade behavior by default
+	- PR by Aiidoneus
+
 # 1.7.1
 
 ### Fixed
