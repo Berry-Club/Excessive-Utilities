@@ -23,6 +23,7 @@
 	- PR by Aiidoneus
 - Fixed the Division Sigil ritual only working on day 1 of the world
 	- PR by Aiidoneus
+- Fixed the Mini Chest and Slightly Larger Chest not saving their contents (#46)
 
 # 1.7.1
 
