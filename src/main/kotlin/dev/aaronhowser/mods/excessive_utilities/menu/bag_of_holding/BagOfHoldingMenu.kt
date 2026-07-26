@@ -12,6 +12,8 @@ import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.*
 
+// Most of my mod menus have the player slots first and the menu slots second
+// This is using the vanilla one which uses the reverse order so some stuff has to be reimplemented
 class BagOfHoldingMenu(
 	containerId: Int,
 	playerInventory: Inventory,
@@ -23,7 +25,8 @@ class BagOfHoldingMenu(
 	init {
 		checkContainerSize(bag.container, BAG_SLOT_COUNT)
 		bag.container.startOpen(playerInventory.player)
-		addSlots(103 + (BAG_ROWS - 4) * SLOT_SPACING)
+		addContainerSlots()
+		addPlayerInventorySlots(103 + (BAG_ROWS - 4) * SLOT_SPACING)
 	}
 
 	override fun addContainerSlots() {
@@ -39,6 +42,36 @@ class BagOfHoldingMenu(
 		return bag.isActive &&
 				heldItem.item is BagOfHoldingItem &&
 				heldItem.get(ModDataComponents.BAG_OF_HOLDING_ID) == bagId
+	}
+
+	override fun quickMoveStack(player: Player, slotIndex: Int): ItemStack {
+		val clickedSlot = slots.getOrNull(slotIndex)
+		if (clickedSlot == null || !clickedSlot.hasItem()) return ItemStack.EMPTY
+
+		if (clickedSlot.container === playerInventory && clickedSlot.slotIndex == playerInventory.selected) {
+			return ItemStack.EMPTY
+		}
+
+		val clickedStack = clickedSlot.item
+		val originalStack = clickedStack.copy()
+		val wasMoved = if (slotIndex < BAG_SLOT_COUNT) {
+			moveItemStackTo(clickedStack, BAG_SLOT_COUNT, slots.size, true)
+		} else {
+			moveItemStackTo(clickedStack, 0, BAG_SLOT_COUNT, false)
+		}
+
+		if (!wasMoved) return ItemStack.EMPTY
+
+		if (clickedStack.isEmpty) {
+			clickedSlot.setByPlayer(ItemStack.EMPTY)
+		} else {
+			clickedSlot.setChanged()
+		}
+
+		if (clickedStack.count == originalStack.count) return ItemStack.EMPTY
+
+		clickedSlot.onTake(player, clickedStack)
+		return originalStack
 	}
 
 	override fun removed(player: Player) {
