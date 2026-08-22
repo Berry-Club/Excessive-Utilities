@@ -5,8 +5,8 @@
     "excessive_utilities:creative_upgrade",
     "excessive_utilities:breadth_first_search_upgrade",
     "excessive_utilities:depth_first_search_upgrade",
-    "excessive_utilities:pseudo_round_robin_upgrade",
     "excessive_utilities:ender_transmitter",
+    "excessive_utilities:pseudo_round_robin_upgrade",
     "#excessive_utilities:speed_upgrades"
   ]
 }

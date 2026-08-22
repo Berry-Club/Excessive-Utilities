@@ -259,6 +259,7 @@ class ModItemTagsProvider(
 				ModItems.BREADTH_FIRST_SEARCH_UPGRADE,
 				ModItems.DEPTH_FIRST_SEARCH_UPGRADE,
 				ModItems.ENDER_TRANSMITTER,
+				ModItems.PSEUDO_ROUND_ROBIN_UPGRADE
 			)
 			.addTags(
 				SPEED_UPGRADES
@@ -299,7 +300,8 @@ class ModItemTagsProvider(
 			.add(
 				ModItems.PRECISION_SHEARS,
 				ModItems.SONAR_GOGGLES,
-				ModItems.LUX_SABER
+				ModItems.LUX_SABER,
+				ModItems.INDEXER_REMOTE
 			)
 
 		tag(RENDER_ENDER_PORCUPINE_WHILE_HOLDING)
