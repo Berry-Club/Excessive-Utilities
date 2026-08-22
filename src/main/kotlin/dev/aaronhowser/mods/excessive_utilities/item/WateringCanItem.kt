@@ -56,7 +56,7 @@ class WateringCanItem(
 	): InteractionResultHolder<ItemStack> {
 		val stack = player.getItemInHand(usedHand)
 
-		if (player.isFakePlayer && ServerConfig.CONFIG.isWateringCanBreakable.get()) {
+		if (!isReinforced && player.isFakePlayer && ServerConfig.CONFIG.isWateringCanBreakable.get()) {
 			stack.setUnit(ModDataComponents.IS_BROKEN)
 		}
 
@@ -84,7 +84,7 @@ class WateringCanItem(
 	) {
 		if (level !is ServerLevel || livingEntity !is Player) return
 
-		if (livingEntity.isFakePlayer && ServerConfig.CONFIG.isWateringCanBreakable.get()) {
+		if (!isReinforced && livingEntity.isFakePlayer && ServerConfig.CONFIG.isWateringCanBreakable.get()) {
 			stack.setUnit(ModDataComponents.IS_BROKEN)
 			return
 		}
