@@ -45,10 +45,9 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 			val owner = stack.get(ModDataComponents.OWNER) ?: return coalTime
 			val level = furnace.level as? ServerLevel ?: return coalTime
 
-			val handler = GridPowerHandler.get(level).getGrid(owner)
-			val capacity = handler.getCapacity()
-			val usage = handler.getUsage()
-			val space = capacity - usage
+			val handler = GridPowerHandler.get(level)
+			val power = handler.getGridPower(owner)
+			val space = power.capacity - power.usage
 
 			val requirement = ServerConfig.CONFIG.redCoalGpCost.get()
 			if (space < requirement) {
@@ -71,7 +70,7 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 				}
 			}
 
-			handler.addConsumer(gpConsumer)
+			handler.getPlayerGrid(owner).addConsumer(gpConsumer)
 
 			return boostedTime
 		}

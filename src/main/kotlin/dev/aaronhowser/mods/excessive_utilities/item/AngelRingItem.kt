@@ -85,7 +85,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 		}
 
 		private fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
-			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)
+			val handler = GridPowerHandler.get(player.serverLevel()).getPlayerGrid(player)
 
 			val currentConsumers = handler.getConsumers()
 			val existing = currentConsumers
@@ -149,8 +149,8 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 			val flightAttribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT) ?: return
 			val currentlyHasModifier = flightAttribute.hasModifier(ATTRIBUTE_MODIFIER_NAME)
 
-			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)
-			if (!handler.isOverloaded()) {
+			val handler = GridPowerHandler.get(player.serverLevel())
+			if (!handler.isOverloaded(player.uuid)) {
 				if (currentlyHasModifier) return
 
 				flightAttribute.addTransientModifier(

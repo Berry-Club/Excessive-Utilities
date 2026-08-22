@@ -16,6 +16,25 @@ The HUD appears when you hold a GP display item, such as the **Power Manager**, 
 
 Use the **Power Manager** to print the current producers and consumers in chat. It lists the blocks and items currently contributing to your grid, along with their positions when available.
 
+## Sharing Grid Power
+
+Players can form a shared grid that combines every member's GP capacity and usage. Blocks and items remain owned by the player who placed or used them; joining or leaving a shared grid only changes which totals are combined.
+
+Use `/excessive-utilities grid invite <player>` to invite an online player. A solo player who sends the first accepted invitation becomes the grid owner. Only the owner can invite or remove members.
+
+| Command | Effect |
+| --- | --- |
+| `/excessive-utilities grid invite <player>` | Invite an online player to your grid. |
+| `/excessive-utilities grid accept` | Accept your current grid invitation. |
+| `/excessive-utilities grid decline` | Decline your current grid invitation. |
+| `/excessive-utilities grid leave` | Leave your current shared grid. |
+| `/excessive-utilities grid kick <player>` | Remove a member. This can be used while that member is offline. |
+| `/excessive-utilities grid members` | List everyone whose GP is currently shared with you. |
+
+Any member can leave while the owner is offline. If the owner leaves, another member becomes the owner. When only one player remains, the shared group is removed and that player returns to a solo grid. Leaving or being removed does not change ownership of anything you placed.
+
+Grid groups are saved with the world. Invitations are temporary and are cleared when the server restarts.
+
 ## Producers
 
 GP generators are owned by the player who placed them. These are the default generation values:
@@ -49,7 +68,7 @@ Other GP-powered machines and transfer nodes also reserve GP while active. The P
 
 ## Overload Effects
 
-Overload checks compare total usage to total capacity for your player grid.
+Overload checks compare total usage to total capacity for your solo or shared grid.
 
 - The **Angel Ring** removes its creative-flight effect while overloaded.
 - The **Resonator** pauses progress while overloaded.

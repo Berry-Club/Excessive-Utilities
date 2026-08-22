@@ -1,5 +1,12 @@
 # 1.9.0
 
+### Added
+
+- Added shared Grid Power groups
+	- Grid owners can invite players to combine their GP generation and usage
+	- Added commands to invite, accept, decline, leave, remove members, and list members
+	- Players continue to own the blocks and items they place, even while sharing a grid
+
 ### Changed
 
 - Updated Kotlin from 2.1.21 to 2.4.10

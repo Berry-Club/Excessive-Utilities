@@ -97,7 +97,7 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties), ICurioItem
 		}
 
 		private fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
-			val handler = GridPowerHandler.get(player.serverLevel()).getGrid(player)
+			val handler = GridPowerHandler.get(player.serverLevel()).getPlayerGrid(player)
 
 			val currentConsumers = handler.getConsumers()
 			val existing = currentConsumers

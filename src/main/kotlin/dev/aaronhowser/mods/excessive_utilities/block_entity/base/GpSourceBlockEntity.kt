@@ -43,7 +43,7 @@ abstract class GpSourceBlockEntity(
 		val owner = ownerUuid ?: return
 
 		if (gpGeneration.isStillValid() && gpGeneration.getAmount() > 0) {
-			val grid = GridPowerHandler.get(level).getGrid(owner)
+			val grid = GridPowerHandler.get(level).getPlayerGrid(owner)
 			grid.addProducer(gpGeneration)
 		}
 	}

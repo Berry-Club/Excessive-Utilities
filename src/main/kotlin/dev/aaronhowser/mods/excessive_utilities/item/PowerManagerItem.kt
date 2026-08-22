@@ -22,9 +22,9 @@ class PowerManagerItem(properties: Properties) : Item(properties) {
 		val stack = player.getItemInHand(usedHand)
 
 		if (level is ServerLevel) {
-			val grid = GridPowerHandler.get(level).getGrid(player)
+			val handler = GridPowerHandler.get(level)
 
-			val producers = grid.getProducers()
+			val producers = handler.getProducers(player.uuid)
 			if (producers.isNotEmpty()) {
 				player.tell("Producers:")
 				for (producer in producers) {
@@ -37,7 +37,7 @@ class PowerManagerItem(properties: Properties) : Item(properties) {
 				}
 			}
 
-			val consumers = grid.getConsumers()
+			val consumers = handler.getConsumers(player.uuid)
 			if (consumers.isNotEmpty()) {
 				player.tell("Consumers:")
 				for (consumer in consumers) {

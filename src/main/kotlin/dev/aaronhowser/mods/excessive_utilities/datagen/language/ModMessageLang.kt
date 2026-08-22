@@ -10,6 +10,28 @@ object ModMessageLang {
 	const val NO_REMOVE_SOUL_FRAGMENT = "message.excessive_utilities.no_remove_soul_fragment"
 	const val SECOND_CHANCE_USED = "message.excessive_utilities.second_chance_used"
 
+	const val GRID_INVITE_SELF = "message.excessive_utilities.grid.invite.self"
+	const val GRID_ALREADY_MEMBER = "message.excessive_utilities.grid.invite.already_member"
+	const val GRID_TARGET_GROUPED = "message.excessive_utilities.grid.invite.target_grouped"
+	const val GRID_INVITE_NOT_OWNER = "message.excessive_utilities.grid.invite.not_owner"
+	const val GRID_INVITE_FAILED = "message.excessive_utilities.grid.invite.failed"
+	const val GRID_INVITE_SENT = "message.excessive_utilities.grid.invite.sent"
+	const val GRID_INVITE_RECEIVED = "message.excessive_utilities.grid.invite.received"
+	const val GRID_NO_INVITATION = "message.excessive_utilities.grid.invitation.none"
+	const val GRID_INVALID_INVITATION = "message.excessive_utilities.grid.invitation.invalid"
+	const val GRID_JOINED = "message.excessive_utilities.grid.joined"
+	const val GRID_PLAYER_JOINED = "message.excessive_utilities.grid.player_joined"
+	const val GRID_INVITATION_DECLINED = "message.excessive_utilities.grid.invitation.declined"
+	const val GRID_NOT_SHARED = "message.excessive_utilities.grid.not_shared"
+	const val GRID_LEFT = "message.excessive_utilities.grid.left"
+	const val GRID_MEMBERS = "message.excessive_utilities.grid.members"
+	const val GRID_KICK_SELF = "message.excessive_utilities.grid.kick.self"
+	const val GRID_KICK_NOT_OWNER = "message.excessive_utilities.grid.kick.not_owner"
+	const val GRID_TARGET_NOT_MEMBER = "message.excessive_utilities.grid.kick.target_not_member"
+	const val GRID_KICK_FAILED = "message.excessive_utilities.grid.kick.failed"
+	const val GRID_MEMBER_REMOVED = "message.excessive_utilities.grid.kick.removed"
+	const val GRID_REMOVED = "message.excessive_utilities.grid.kick.received"
+
 	const val DIVISION_OVERWORLD_ONLY = "message.excessive_utilities.division.overworld_only"
 	const val DIVISION_SEE_SKY = "message.excessive_utilities.division.see_sky"
 	const val DIVISION_REDSTONE = "message.excessive_utilities.division.redstone"
@@ -45,6 +67,28 @@ object ModMessageLang {
 			add(SET_CREATIVE_HARVEST, "Set mimic block to %s")
 			add(NO_REMOVE_SOUL_FRAGMENT, "You don't have enough health to remove any more Soul Fragments!")
 			add(SECOND_CHANCE_USED, "Your second chance has been used up!")
+
+			add(GRID_INVITE_SELF, "You cannot invite yourself.")
+			add(GRID_ALREADY_MEMBER, "That player is already in your grid.")
+			add(GRID_TARGET_GROUPED, "That player is already in a shared grid.")
+			add(GRID_INVITE_NOT_OWNER, "Only the grid owner can invite players.")
+			add(GRID_INVITE_FAILED, "That player cannot be invited to your grid.")
+			add(GRID_INVITE_SENT, "Invited %s to your grid.")
+			add(GRID_INVITE_RECEIVED, "%s invited you to their grid. Use /excessive-utilities grid accept to join.")
+			add(GRID_NO_INVITATION, "You do not have a grid invitation.")
+			add(GRID_INVALID_INVITATION, "Your grid invitation is no longer valid.")
+			add(GRID_JOINED, "Joined %s's grid.")
+			add(GRID_PLAYER_JOINED, "%s joined your grid.")
+			add(GRID_INVITATION_DECLINED, "Declined %s's grid invitation.")
+			add(GRID_NOT_SHARED, "You are not in a shared grid.")
+			add(GRID_LEFT, "Left the shared grid.")
+			add(GRID_MEMBERS, "Grid members: %s")
+			add(GRID_KICK_SELF, "Use the leave command to leave your grid.")
+			add(GRID_KICK_NOT_OWNER, "Only the grid owner can remove players.")
+			add(GRID_TARGET_NOT_MEMBER, "That player is not in your grid.")
+			add(GRID_KICK_FAILED, "You cannot remove that player from the grid.")
+			add(GRID_MEMBER_REMOVED, "Removed %s from the grid.")
+			add(GRID_REMOVED, "You were removed from %s's grid.")
 
 			add(DIVISION_OVERWORLD_ONLY, "You can only activate the Division Sigil in the Overworld!")
 			add(DIVISION_SEE_SKY, "The Enchanting Table must be able to see the sky.")
