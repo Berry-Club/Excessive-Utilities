@@ -5,7 +5,7 @@ plugins {
 	id 'idea'
 	id 'maven-publish'
 	id 'net.neoforged.moddev' version '2.0.124'
-	id 'org.jetbrains.kotlin.jvm' version '2.1.21'
+	id 'org.jetbrains.kotlin.jvm' version '2.4.10'
 	id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 	id 'org.moddedmc.wiki.toolkit' version '0.3.2'
 }
@@ -137,7 +137,7 @@ repositories {
 
 	// For Modonomicon
 	maven {
-		url "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/"
+		url = "https://dl.cloudsmith.io/public/klikli-dev/mods/maven/"
 		content {
 			includeGroup "com.klikli_dev"
 		}
@@ -145,13 +145,13 @@ repositories {
 
 	// For Patchouli DataGen and Aaron
 	maven {
-		url "https://maven.latvian.dev/releases"
+		url = "https://maven.latvian.dev/releases"
 		content {
 			includeGroup "dev.aaronhowser.mods"
 		}
 	}
 
-	maven { url "https://maven.sinytra.org" }
+	maven { url = "https://maven.sinytra.org" }
 
 	maven {
 		name = "Jared's maven"

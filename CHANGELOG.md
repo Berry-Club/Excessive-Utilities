@@ -1,3 +1,10 @@
+# 1.9.0
+
+### Changed
+
+- Updated Kotlin from 2.1.21 to 2.4.10
+- Updated Kotlin for Forge from 5.10.0 to 5.12.0
+
 # 1.8.0
 
 ### Added
