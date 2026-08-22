@@ -10,6 +10,7 @@
 
 ### Fixed
 
+- Fixed the Ender Porcupine not being mineable with a pickaxe or dropping itself
 - Fixed Reinforced Watering Cans breaking when used by fake players (#52)
 - Fixed a Crusher recipe turning 1 Glowstone Dust into 4 Glowstone Dust, instead of 1 Glowstone block (#59)
 

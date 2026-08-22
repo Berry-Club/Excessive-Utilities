@@ -29,6 +29,7 @@ class ModBlockTagsProvider(
 				ModBlocks.CONVEYOR_BELT,
 				ModBlocks.ENDER_COLLECTOR,
 				ModBlocks.ENDER_CORE,
+				ModBlocks.ENDER_PORCUPINE,
 				ModBlocks.DEPTHS_PORTAL,
 				ModBlocks.LAST_MILLENNIUM_PORTAL,
 				ModBlocks.CREATIVE_HARVEST,
