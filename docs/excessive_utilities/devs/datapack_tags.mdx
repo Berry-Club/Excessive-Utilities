@@ -1,0 +1,87 @@
+# Datapack Tags
+
+## Infinite Enchantment Stacking
+
+Items in the `#excessive_utilities:infinite_enchant_stacking` item tag can accept any enchantment from an Enchanted Book in an Anvil, including enchantments that are normally incompatible with the item or its other enchantments.
+
+When the item's current enchantment level is below that enchantment's normal maximum, levels combine using vanilla Anvil rules. Matching levels increase by one, while different levels keep the higher level. Once the current level reaches the normal maximum, the book's level is added directly with no maximum.
+
+For example, when applying Sharpness books:
+
+- Sharpness IV + Sharpness III becomes Sharpness IV
+- Sharpness IV + Sharpness IV becomes Sharpness V
+- Sharpness IV + Sharpness V becomes Sharpness V
+- Sharpness V + Sharpness III becomes Sharpness VIII
+
+By default, this tag contains:
+
+- [Kikoku](@excessive_utilities:kikoku)
+- [Compound Bow](@excessive_utilities:compound_bow)
+- [Fire Axe](@excessive_utilities:fire_axe)
+
+## Item Tags
+
+### Flat Transfer Node Interaction
+
+Items in `#excessive_utilities:interact_with_flat_transfer_nodes` can open and remove Flat Transfer Nodes. It contains the Pipe Wrench, both Flat Transfer Node items, and `#c:tools/wrench` by default.
+
+### Division Sigil Inversion Ingredients
+
+The Division Sigil inversion ritual requires four inventories around its beacon. Each inventory must contain 12 unique matching items, except Descendants of Water, which requires 12 matching stacks instead.
+
+- North uses `#excessive_utilities:children_of_fire`. Its defaults include stones, glass blocks, terracotta, coal, iron and gold ingots, cooked food, bricks, bread, and green dye.
+- South uses `#excessive_utilities:gifts_of_earth`. Its defaults include dirt, sand, gravel, several Overworld ores, obsidian, grass blocks, and clay.
+- East uses `#excessive_utilities:descendants_of_water`. It contains potions by default.
+- West uses `#excessive_utilities:spices_of_air`. It contains `#c:music_discs` by default.
+
+## Block Tags
+
+### Tool Targets
+
+- `#excessive_utilities:mineable/fire_axe` controls which connected blocks the Fire Axe can fell. It contains `#minecraft:logs` by default.
+- `#excessive_utilities:mineable/glass_cutter` controls which blocks the Glass Cutter can quickly mine. It contains `#c:glass_blocks` and `#c:glass_panes` by default.
+- `#excessive_utilities:destruction_pickaxe_target` defines filler blocks that the Destruction Pickaxe destroys. It contains `#c:stones` and `#c:netherracks` by default.
+- `#excessive_utilities:erosion_shovel_target` defines filler blocks that the Erosion Shovel destroys. It contains dirt, sand, gravel, and Soul Sand by default.
+- `#excessive_utilities:collectable_by_boomereaperang` controls which blocks the Boomereaperang breaks and collects. It contains flowers, grass, and ferns by default.
+
+### Cursed Earth Replacement
+
+`#excessive_utilities:cursed_earth_replaceable` controls which blocks can be converted into Cursed Earth by a Drop of Evil or the Division Sigil activation ritual. It contains `#minecraft:dirt`, excluding Cursed Earth itself, by default.
+
+### Machine Blacklists
+
+- `#excessive_utilities:creative_harvest_blacklist` prevents the Creative Harvest from mimicking listed blocks. It contains the Creative Harvest itself by default.
+- `#excessive_utilities:ender_quarry_blacklist` prevents the Ender Quarry from mining listed blocks. Its defaults include common filler blocks, fluids, plants, logs, sand, and Bedrock.
+- `#excessive_utilities:ender_porcupine_blacklist` prevents the Ender Porcupine from interacting with listed blocks. It contains the Ender Porcupine itself by default.
+- `#excessive_utilities:fe_transmitter_blacklist` prevents the Wireless FE Transmitter from sending energy to listed blocks. It contains Wireless FE Batteries and Wireless FE Transmitters by default.
+
+### Paintbrush Blacklist
+
+Blocks in `#excessive_utilities:paintbrush_blacklist` cannot be recolored with the Paintbrush. The tag is empty by default.
+
+### Dragon Egg Mill Sources
+
+Blocks in `#excessive_utilities:valid_for_dragon_egg_mill` allow a Dragon Egg Mill beneath them to generate Grid Power. It contains the Dragon Egg by default.
+
+## Entity Type Tags
+
+### Cursed Earth Blacklist
+
+Entity types in `#excessive_utilities:cursed_earth_blacklist` cannot be selected by Cursed Earth's additional spawning logic. The tag is empty by default.
+
+### Division Sigil Inversion Entities
+
+- `#excessive_utilities:inversion_ritual_sacrifice` defines valid sacrifices for the inversion ritual. It contains Iron Golems by default.
+- `#excessive_utilities:inversion_ritual_despawn_on_start` defines entities removed when the inversion ritual begins. It contains Endermen by default.
+
+## Mob Effect Tags
+
+### Purging Blacklist
+
+Mob effects in `#excessive_utilities:purging_blacklist` cannot be removed by the Purging effect. It contains Purging itself by default.
+
+## Biome Tags
+
+### Biome Marker Blacklist
+
+Biomes in `#excessive_utilities:biome_marker_blacklist` do not receive a Biome Marker variant. The tag is empty by default.

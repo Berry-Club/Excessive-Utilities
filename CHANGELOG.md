@@ -9,17 +9,18 @@
 
 ### Changed
 
-- Updated Kotlin from 2.1.21 to 2.4.10
-- Added the Indexer Remote to the NYI tag, hiding it (#54)
+- Added caves to the Depths (#45, #57)
 - Replaced the enchantment-doubling item tag with `#excessive_utilities:infinite_enchant_stacking` (#60)
 	- Tagged items can accept any enchantment from an Anvil, including incompatible enchantments
-	- Enchanted books add their levels to existing enchantments without enforcing maximum levels
-- Added caves to the Depths (#45, #57)
+	- Enchantment levels combine using normal Anvil rules until reaching their maximum, after which enchanted books add their levels without enforcing a maximum
+- Updated Kotlin from 2.1.21 to 2.4.10
+- Added the Indexer Remote to the NYI tag, hiding it (#54)
+- Added wiki documentation for public datapack tags and their default values
 
 ### Fixed
 
-- Fixed the Ender Porcupine not being mineable with a pickaxe or dropping itself
 - Fixed Reinforced Watering Cans breaking when used by fake players (#52)
+- Fixed the Ender Porcupine not being mineable with a pickaxe or dropping itself
 - Fixed a Crusher recipe turning 1 Glowstone Dust into 4 Glowstone Dust, instead of 1 Glowstone block (#59)
 
 # 1.8.0
