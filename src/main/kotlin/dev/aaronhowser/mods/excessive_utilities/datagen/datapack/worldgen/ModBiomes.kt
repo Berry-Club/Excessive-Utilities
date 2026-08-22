@@ -27,6 +27,7 @@ object ModBiomes {
 
 		addDenseOverworldOres(biomeGenerationSettingsBuilder)
 		addSurfaceLavaLakes(biomeGenerationSettingsBuilder)
+		biomeGenerationSettingsBuilder.addCarver(GenerationStep.Carving.AIR, ModConfiguredCarvers.DEPTHS_CAVE)
 		BiomeDefaultFeatures.addFossilDecoration(biomeGenerationSettingsBuilder)
 
 		val biome = Biome.BiomeBuilder()

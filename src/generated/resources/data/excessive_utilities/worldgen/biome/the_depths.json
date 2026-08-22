@@ -1,5 +1,7 @@
 {
-  "carvers": {},
+  "carvers": {
+    "air": "excessive_utilities:depths_cave"
+  },
   "downfall": 0.0,
   "effects": {
     "fog_color": 65793,

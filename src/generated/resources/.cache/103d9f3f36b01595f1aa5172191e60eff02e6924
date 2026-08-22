@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-26T04:38:27.7543842	Registries
+// 1.21.1	2026-08-22T17:03:09.8796454	Registries
 e64a6caecb65685b417149d423a9bd66e0d98e35 data/excessive_utilities/damage_type/darkness.json
 c7653945d8ab22823b09863f2c5e7d4c3874578e data/excessive_utilities/damage_type/doom.json
 877bd9be3bfb61b205649d191710f2500792461b data/excessive_utilities/dimension/quantum_quarry.json
@@ -16,7 +16,8 @@ f1ddf6b9a8b5b312d60ffb5122e37fb21a70c539 data/excessive_utilities/neoforge/biome
 46f745ae6c06a87a76c680409c89cf6257c5cc70 data/excessive_utilities/neoforge/biome_modifier/depths_stalactite.json
 a3cce1f54fb5c64b4f6b1b65b00544eb0d0abeb4 data/excessive_utilities/neoforge/biome_modifier/ender_lily_patch.json
 ab6de62014a89c19446bc5177ef1ebce02deaec1 data/excessive_utilities/neoforge/biome_modifier/red_orchid.json
-e4a67bce301785cd7313009de8df74787ee8c64b data/excessive_utilities/worldgen/biome/the_depths.json
+68d1b90269d9a61866b6fc657e29ef125efb97f4 data/excessive_utilities/worldgen/biome/the_depths.json
+abfe74e454c8e352273ef5ec236f4ea7f5a60e49 data/excessive_utilities/worldgen/configured_carver/depths_cave.json
 cfb48ad3a5e628e9a0c2c9b55098d28dcdb2fe02 data/excessive_utilities/worldgen/configured_feature/depths_pillar.json
 d1953bbeb79a850982a066d7c46308353ddd363e data/excessive_utilities/worldgen/configured_feature/depths_sculk_vein.json
 d461329f1f154385f91fc18d62157c254fef386b data/excessive_utilities/worldgen/configured_feature/depths_stalactite.json

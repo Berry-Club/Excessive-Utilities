@@ -7,6 +7,7 @@
 - Replaced the enchantment-doubling item tag with `#excessive_utilities:infinite_enchant_stacking` (#60)
 	- Tagged items can accept any enchantment from an Anvil, including incompatible enchantments
 	- Enchanted books add their levels to existing enchantments without enforcing maximum levels
+- Added caves to the Depths (#45, #57)
 
 ### Fixed
 

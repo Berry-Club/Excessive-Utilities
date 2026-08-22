@@ -44,6 +44,7 @@ object ModDataGen {
 					.add(Registries.BIOME, ModBiomes::bootstrap)
 					.add(Registries.STRUCTURE, ModStructures::bootstrap)
 					.add(Registries.STRUCTURE_SET, ModStructureSets::bootstrap)
+					.add(Registries.CONFIGURED_CARVER, ModConfiguredCarvers::bootstrap)
 					.add(Registries.CONFIGURED_FEATURE, ModConfiguredFeatures::bootstrap)
 					.add(Registries.PLACED_FEATURE, ModPlacedFeatures::bootstrap)
 					.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, ModBiomeModifiers::bootstrap),

@@ -157,5 +157,4 @@ object ModNoiseSettings {
 		return ResourceKey.create(Registries.NOISE_SETTINGS, ExcessiveUtilities.modResource(path))
 	}
 
-
 }
