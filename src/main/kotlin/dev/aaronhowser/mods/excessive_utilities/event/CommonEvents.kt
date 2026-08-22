@@ -359,10 +359,18 @@ object CommonEvents {
 
 			for ((enchantment, level) in bookEnchantments.entrySet()) {
 				val currentLevel = newEnchantments.getLevel(enchantment)
-				val newLevel = currentLevel.toLong() + level
-				val cappedNewLevel = newLevel.coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
+				val newLevel = if (currentLevel < enchantment.value().maxLevel) {
+					if (currentLevel == level) {
+						currentLevel + 1
+					} else {
+						maxOf(currentLevel, level)
+					}
+				} else {
+					val combinedLevel = currentLevel.toLong() + level
+					combinedLevel.coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
+				}
 
-				newEnchantments.set(enchantment, cappedNewLevel)
+				newEnchantments.set(enchantment, newLevel)
 			}
 
 			val output = leftStack.copy()
