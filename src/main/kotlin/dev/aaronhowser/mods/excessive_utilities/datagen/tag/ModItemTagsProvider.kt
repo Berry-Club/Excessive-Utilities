@@ -181,7 +181,7 @@ class ModItemTagsProvider(
 				ModItems.MAGICAL_BOOMERANG
 			)
 
-		tag(DOUBLE_ANVIL_ENCHANTMENTS)
+		tag(INFINITE_ENCHANT_STACKING)
 			.add(
 				ModItems.KIKOKU,
 				ModItems.COMPOUND_BOW,
@@ -441,7 +441,7 @@ class ModItemTagsProvider(
 		val QUARTZ_STORAGE_BLOCKS = common("storage_blocks/quartz")
 
 		val MAGICAL_BOOMERANG_ENCHANTABLE = create("magical_boomerang_enchantable")
-		val DOUBLE_ANVIL_ENCHANTMENTS = create("double_anvil_enchantments")
+		val INFINITE_ENCHANT_STACKING = create("infinite_enchant_stacking")
 
 		val NOT_YET_IMPLEMENTED = create("not_yet_implemented")
 

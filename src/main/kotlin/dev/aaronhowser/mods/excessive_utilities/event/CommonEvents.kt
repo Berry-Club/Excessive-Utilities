@@ -33,7 +33,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.*
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.bus.api.SubscribeEvent
@@ -351,23 +350,19 @@ object CommonEvents {
 	fun onAnvilUpdate(event: AnvilUpdateEvent) {
 		val leftStack = event.left
 		val rightStack = event.right
-		val player = event.player
 
-		if (leftStack.isItem(ModItemTagsProvider.DOUBLE_ANVIL_ENCHANTMENTS) && rightStack.isItem(Items.ENCHANTED_BOOK)) {
+		if (leftStack.isItem(ModItemTagsProvider.INFINITE_ENCHANT_STACKING) && rightStack.isItem(Items.ENCHANTED_BOOK)) {
 			val currentEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(leftStack)
 			val bookEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(rightStack)
 
 			val newEnchantments = ItemEnchantments.Mutable(currentEnchantments)
 
 			for ((enchantment, level) in bookEnchantments.entrySet()) {
-				val noIncompatibleEnchantments = newEnchantments.keySet().all { Enchantment.areCompatible(enchantment, it) }
-				val valid = player.hasInfiniteMaterials() || (noIncompatibleEnchantments && leftStack.supportsEnchantment(enchantment))
-				if (!valid) continue
-
 				val currentLevel = newEnchantments.getLevel(enchantment)
-				if (currentLevel < level * 2) {
-					newEnchantments.set(enchantment, level * 2)
-				}
+				val newLevel = currentLevel.toLong() + level
+				val cappedNewLevel = newLevel.coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
+
+				newEnchantments.set(enchantment, cappedNewLevel)
 			}
 
 			val output = leftStack.copy()
