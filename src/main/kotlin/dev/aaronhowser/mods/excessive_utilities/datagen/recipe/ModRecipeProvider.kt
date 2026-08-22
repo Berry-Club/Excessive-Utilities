@@ -2460,7 +2460,7 @@ class ModRecipeProvider(
 		)
 
 		recipe(
-			Tags.Items.DUSTS_GLOWSTONE.asIngredient(),
+			Items.GLOWSTONE.asIngredient(),
 			Items.GLOWSTONE_DUST.withCount(4)
 		)
 

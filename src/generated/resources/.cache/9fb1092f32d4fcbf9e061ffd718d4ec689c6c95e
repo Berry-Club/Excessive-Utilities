@@ -1,4 +1,4 @@
-// 1.21.1	2026-06-30T12:25:14.5135402	Recipes
+// 1.21.1	2026-08-22T16:41:20.4807421	Recipes
 848f7fcdb4fa78474939b93f0c43703d650abf43 data/excessive_utilities/advancement/recipes/building_blocks/thickened_glass.json
 5544a3880f9cc21b24f3bbd7a0e3125679de74dc data/excessive_utilities/advancement/recipes/crusher/allium_to_magenta_dye.json
 03553dc68b381cde601be45b74fc8784e96887ab data/excessive_utilities/advancement/recipes/crusher/azure_bluet_to_light_gray_dye.json
@@ -935,7 +935,7 @@ bf8b5a68b2387c6b2377856ec5b3bbea602ee7e5 data/excessive_utilities/recipe/crusher
 3229cfcf1797828f93f104f0e5504464e15a66e9 data/excessive_utilities/recipe/crusher/minecraft/coal.json
 51949c8615f865fe33a494d050c1da199eb1bc2e data/excessive_utilities/recipe/crusher/minecraft/diamond.json
 e8abd917fe72cbcd6a590feecf13c70c44f7af1c data/excessive_utilities/recipe/crusher/minecraft/emerald.json
-172f3777d02979af2af82caa55bb9033f24622d2 data/excessive_utilities/recipe/crusher/minecraft/glowstone_dust.json
+3bda9ef0d40dfdf98c97c5754fd82ec508eecf40 data/excessive_utilities/recipe/crusher/minecraft/glowstone_dust.json
 48d9b9aa428b301ce786939b3ae4a91f3592421c data/excessive_utilities/recipe/crusher/minecraft/gravel.json
 e141b45bb56ec940292c913793a0264ea9c3c2da data/excessive_utilities/recipe/crusher/minecraft/lapis_lazuli.json
 3cfe0a759ab505cbde83e34632b10c5bae00d260 data/excessive_utilities/recipe/crusher/minecraft/quartz.json
