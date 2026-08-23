@@ -5,6 +5,59 @@ related_items: [excessive_utilities:division_sigil]
 type: item
 ---
 
-**Division Sigil** is an item.
+The **Division Sigil** is used to create [Unstable Ingots](@excessive_utilities:unstable_ingot). A non-inverted Sigil can hold up to 256 uses. The activation ritual restores those uses, while a much more demanding ritual can invert the Sigil into the **Pseudo-Inversion Sigil**, which has unlimited uses.
+
+Use a non-inverted Sigil on the center block of either ritual to check the setup. It will tell you whether the structure is ready and, when possible, where something is missing.
+
+## Activation Ritual
+
+The activation ritual must be built in an Overworld biome. Place an Enchanting Table at the center of the following setup:
+
+- The Enchanting Table must have an unobstructed view of the sky.
+- Surround it with Redstone Dust on all eight blocks at the same height.
+- Build a solid 11×11 layer of blocks in the `#minecraft:dirt` tag directly beneath it.
+- Keep the block above the Enchanting Table at block light level 7 or lower.
+- Perform the ritual around midnight, between 17,500 and 18,500 ticks in the Minecraft day.
+
+When the setup is ready, kill any mob close to the Enchanting Table. The lowest-charge Division Sigil anywhere in the killer's inventory is activated and filled to 256 uses. The block beneath the table is also converted to [Cursed Earth](@excessive_utilities:cursed_earth), which immediately begins spreading across the dirt platform.
+
+Only the player who lands the killing blow has a Sigil activated.
+
+## Inversion Ritual
+
+The inversion ritual takes place in an End biome. Place a Beacon at the center, then build this 9×9 pattern at the same height. `R` is Redstone Dust, `S` is String, and `B` is the Beacon. South is at the top of the diagram and east is on the left.
+
+```
+RSSSSSSSS
+RSRRRRRRR
+RSRSSSSSR
+RSRSRRRSR
+RSRSBSRSR
+RSRRRSRSR
+RSSSSSRSR
+RRRRRRRSR
+SSSSSSSSR
+```
+
+Place an inventory five blocks north, south, east, and west of the Beacon. Each must be accessible from the side facing the Beacon and contain the following:
+
+- **North — Children of Fire:** 12 different matching items. Defaults include stone, glass, terracotta, coal, metal ingots, cooked food, bricks, bread, and green dye.
+- **South — Gifts of Earth:** 12 different matching items. Defaults include dirt, sand, gravel, Overworld ores, Obsidian, Grass Blocks, and Clay.
+- **East — Descendants of Water:** 12 matching items in total. Potions are included by default; unlike the other directions, these are counted by quantity rather than by unique item type.
+- **West — Spices of Air:** 12 different matching items. Music Discs are included by default.
+
+The exact ingredient lists are datapack tags and may be changed by a modpack. See [Datapack Tags]($devs/datapack_tags#division-sigil-inversion-ingredients) for their IDs.
+
+Once the structure is ready, the player carrying a non-inverted Division Sigil must kill an Iron Golem near the Beacon. This begins the ritual.
+
+## Surviving the Inversion
+
+The ritual repeatedly summons Cursed monsters near its initiating player. These enemies are faster, hit harder, and actively target nearby players. Kill 100 ritual-spawned monsters to complete the ritual under the default configuration.
+
+The initiating player must remain alive, in the End, and within the ritual's large active area. Leaving or dying ends the ritual without inverting the Sigil. When the ritual ends, its remaining Cursed monsters are removed.
+
+On success, one non-inverted Division Sigil carried by each player in the ritual area becomes a Pseudo-Inversion Sigil. Its remaining-uses component is removed, giving it unlimited uses.
+
+Server owners can configure the delay between waves, monsters spawned per wave, maximum living ritual monsters, and number of kills required.
 
 <PrefabObtaining/>

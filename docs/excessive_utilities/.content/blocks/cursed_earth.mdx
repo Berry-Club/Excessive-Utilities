@@ -5,14 +5,30 @@ related_items: [excessive_utilities:cursed_earth]
 type: block
 ---
 
-**Cursed Earth** will rapidly spawn monsters on top of itself. If it lights on fire, it will spread EXTREMELY QUICKLY to other nearby Cursed Earth blocks, burning them into Dirt.
+**Cursed Earth** spreads across nearby dirt and rapidly spawns hostile mobs in dark areas. It is intended for powerful mob farms, but an uncovered patch can become dangerous very quickly.
 
-Cursed Earth can be obtained by using a [Drop of Evil](@excessive_utilities:drop_of_evil) on Dirt blocks.
+Cursed Earth can be created by using a [Drop of Evil](@excessive_utilities:drop_of_evil) on a compatible dirt block. Activating a [Division Sigil](@excessive_utilities:division_sigil) also creates it beneath the ritual's Enchanting Table.
+
+## Spreading and Light
+
+Newly created Cursed Earth spreads quickly at first, then continues spreading more slowly during random block ticks. It can replace blocks in the `#excessive_utilities:cursed_earth_replaceable` tag, which contains dirt blocks by default. It needs a fairly open block above its target and will not spread normally when the light above it is greater than 4.
+
+By default, Cursed Earth exposed to the daytime sky ignites with Soul Fire. Fire spreads rapidly through nearby Cursed Earth, eventually turning it back into Dirt. Cover the area before converting a large platform, and keep ordinary fire away from it unless you intend to remove it.
+
+## Cursed Mobs
+
+Monsters spawned directly by Cursed Earth are **Cursed**. Cursed mobs appear almost completely dark, emit smoke, move 20% faster, and deal 150% additional base attack damage with the default configuration.
+
+The [Resturbed Mob Spawner](@excessive_utilities:resturbed_mob_spawner) also marks the mobs it creates as Cursed. A server operator can apply or remove the same state with the mod's entity curse command.
+
+Cursed Earth uses the local biome's normal monster list and spawn rules. It stops attempting additional spawns when the configured number of monsters is already nearby, and entity types in `#excessive_utilities:cursed_earth_blacklist` cannot be selected.
 
 ## Configuration
 
-The following can be configured:
-- The number of ticks between each attempt to do work
-- The chance per work tick that a mob will spawn
-- The max amount of nearby mobs that can be present before it stops spawning more
-- The radius in which it checks for nearby mobs
+Server owners can configure:
+
+- Whether Cursed Earth burns when exposed to daylight
+- The maximum number of nearby monsters before spawning pauses
+- The radius used to count those monsters
+- The attack-damage and movement-speed bonuses given to Cursed mobs
+- The period and chance used for Cursed Earth's work attempts
