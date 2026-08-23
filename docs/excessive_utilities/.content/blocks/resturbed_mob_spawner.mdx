@@ -5,6 +5,22 @@ related_items: [excessive_utilities:resturbed_mob_spawner]
 type: block
 ---
 
-The **Resturbed Mob Spawner** works like a regular Mob Spawner, but can be mined without breaking, and disabled with Redstone.
+The **Resturbed Mob Spawner** is a portable, Redstone-controllable version of a vanilla Mob Spawner. It retains the original spawner's entity type and spawning data, so it can be moved without rebuilding the farm around a new spawner.
 
-Obtain it by using a [Drop of Evil](@excessive_utilities:drop_of_evil) on a regular Mob Spawner.
+## Obtaining and Moving
+
+Use a [Drop of Evil](@excessive_utilities:drop_of_evil) on a vanilla Mob Spawner to convert it. The original block is removed and a Resturbed Mob Spawner item is dropped in its place. Its tooltip shows the entity it will spawn.
+
+Unlike a vanilla spawner, a Resturbed Mob Spawner drops itself when mined with a Pickaxe. Its spawning data is stored on the item and restored when the block is placed again.
+
+## Spawning
+
+While unpowered, the block follows vanilla Mob Spawner behavior. A player must be within the spawner's activation range, the selected mob must have room to appear, and the spawner respects its stored delay, spawn count, nearby-entity limit, and spawn range.
+
+Every mob created by a Resturbed Mob Spawner is [Cursed](@excessive_utilities:cursed_earth). Cursed mobs are visibly darkened and receive configurable bonuses to movement speed and attack damage; the defaults are described in the **Cursed Mobs** section of the Cursed Earth page.
+
+## Redstone Control
+
+Any neighboring Redstone signal pauses the spawner completely. Its internal mob stops spinning while disabled, making its state easy to see. Removing the signal lets it continue from its existing spawn delay rather than resetting the spawner.
+
+This makes a Lever sufficient for manual control, while ordinary Redstone circuitry can enable the farm only when its output is needed.
