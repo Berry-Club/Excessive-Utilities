@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:compressed_cobblestone_9"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "excessive_utilities:compressed_cobblestone_8"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "excessive_utilities:compressed_gravel_14"
+    }
+  ],
+  "result": {
+    "count": 9,
+    "id": "excessive_utilities:compressed_gravel_13"
+  }
+}
