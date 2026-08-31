@@ -7,7 +7,7 @@ plugins {
 	id 'net.neoforged.moddev' version '2.0.124'
 	id 'org.jetbrains.kotlin.jvm' version '2.4.10'
 	id "me.modmuss50.mod-publish-plugin" version "2.1.1"
-	id 'org.moddedmc.wiki.toolkit' version '0.3.2'
+	id 'org.moddedmc.wiki.toolkit' version '0.5.0'
 }
 
 def ENV = System.getenv()
