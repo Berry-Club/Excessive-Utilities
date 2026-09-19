@@ -7,6 +7,8 @@
 - Made the block placed by the Ender Quarry configurable, defaulting to Dirt
 - Added a config option for the World Hole Upgrade to remove blacklisted blocks without collecting their drops
 	- Blocks in the new `#excessive_utilities:ender_quarry_world_hole_blacklist` tag are always preserved
+- Transfer Nodes now reset their search after they finish inserting into an inventory, which can be disabled in the server config, using old behavior instead (#64)
+- Added a client config option for the number of particles displayed by Transfer Nodes
 
 ### Fixed
 

@@ -21,6 +21,7 @@ class ServerConfig(
 	lateinit var advancedFilingCabinetCapacity: ModConfigSpec.IntValue
 	lateinit var flatItemTransferNodeSpeed: ModConfigSpec.IntValue
 	lateinit var flatFluidTransferNodeSpeed: ModConfigSpec.IntValue
+	lateinit var transferNodesResetPingAfterTransfer: ModConfigSpec.BooleanValue
 	lateinit var peacefulTableOnlyInPeaceful: ModConfigSpec.BooleanValue
 	lateinit var peacefulTableChancePerTick: ModConfigSpec.DoubleValue
 	lateinit var healthPerSoulFragment: ModConfigSpec.DoubleValue
@@ -527,6 +528,10 @@ class ServerConfig(
 					.comment("The amount of fluid in millibuckets per tick that Flat Fluid Transfer Nodes will transfer.")
 					.defineInRange("flatFluidTransferNodeSpeed", 1000 / 20, 1, Int.MAX_VALUE)
 			}
+
+			transferNodesResetPingAfterTransfer = builder
+				.comment("Whether Transfer Nodes should restart their search after they finish inserting their buffered contents into an inventory.")
+				.define("transferNodesResetPingAfterTransfer", true)
 
 			builder.section("peaceful_table") {
 				peacefulTableOnlyInPeaceful = builder

@@ -4,21 +4,21 @@ import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.TransferNodeBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.ping.TransferNodePing
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.ender_frequency.EnderFrequencyNetwork
 import dev.aaronhowser.mods.excessive_utilities.item.EnderFrequencyItem
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
+import dev.aaronhowser.mods.excessive_utilities.packet.server_to_client.TransferNodeParticlesPacket
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.particles.DustParticleOptions
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
@@ -26,6 +26,7 @@ import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
@@ -254,21 +255,8 @@ abstract class TransferNodeBlockEntity(
 	}
 
 	protected open fun spawnParticles(level: ServerLevel) {
-		val pingPos = ping.currentPingPos
-
-		for (i in 0 until 5) {
-			val x = pingPos.x + 0.5 + level.random.nextRange(-0.5, 0.5)
-			val y = pingPos.y + 0.5 + level.random.nextRange(-0.5, 0.5)
-			val z = pingPos.z + 0.5 + level.random.nextRange(-0.5, 0.5)
-
-			level.sendParticles(
-				DustParticleOptions.REDSTONE,
-				x, y, z,
-				1,
-				0.0, 0.0, 0.0,
-				0.0
-			)
-		}
+		TransferNodeParticlesPacket(ping.currentPingPos)
+			.messageAllPlayersTrackingChunk(level, ChunkPos(ping.currentPingPos))
 	}
 
 	private fun pullerTick(level: ServerLevel) {
@@ -301,8 +289,16 @@ abstract class TransferNodeBlockEntity(
 
 		val amountBefore = getBufferAmount()
 		pushIntoPingPos(level)
+		val transferred = getBufferAmount() < amountBefore
 
-		if (getBufferAmount() == amountBefore || hasPseudoRoundRobinUpgrade()) {
+		if (getBufferAmount() <= 0
+			&& !hasPseudoRoundRobinUpgrade()
+			&& ServerConfig.CONFIG.transferNodesResetPingAfterTransfer.get()
+		) {
+			ping.reset()
+		}
+
+		if (!transferred || hasPseudoRoundRobinUpgrade()) {
 			updatePingSearchMode()
 			ping.march(level)
 		}

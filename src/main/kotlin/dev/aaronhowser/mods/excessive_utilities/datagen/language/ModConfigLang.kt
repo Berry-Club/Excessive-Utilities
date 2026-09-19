@@ -36,6 +36,7 @@ object ModConfigLang {
 		addConfig("flat_transfer_nodes", "Flat Transfer Nodes")
 		addConfig(ServerConfig.CONFIG.flatItemTransferNodeSpeed, "Flat Item Transfer Node Speed (items/tick)")
 		addConfig(ServerConfig.CONFIG.flatFluidTransferNodeSpeed, "Flat Fluid Transfer Node Speed (mb/tick)")
+		addConfig(ServerConfig.CONFIG.transferNodesResetPingAfterTransfer, "Transfer Nodes Reset Search After Transfer")
 
 		addConfig("peaceful_table", "Peaceful Table")
 		addConfig(ServerConfig.CONFIG.peacefulTableOnlyInPeaceful, "Peaceful Table Only in Peaceful")
@@ -173,6 +174,7 @@ object ModConfigLang {
 		addConfig(ClientConfig.CONFIG.generatorParticleDensity, "Generator Particle Density")
 		addConfig(ClientConfig.CONFIG.athenaTooltip, "Athena Tooltip")
 		addConfig(ClientConfig.CONFIG.disableVomit, "Disable Vomit Particles")
+		addConfig(ClientConfig.CONFIG.transferNodeParticleCount, "Transfer Node Particle Count")
 
 		addConfig("rainbow_generator", "Rainbow Generator")
 		addConfig(ClientConfig.CONFIG.rainbowGeneratorTimeFactor, "Rainbow Generator Time Factor")

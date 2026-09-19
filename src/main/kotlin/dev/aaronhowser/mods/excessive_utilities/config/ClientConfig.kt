@@ -12,6 +12,7 @@ class ClientConfig(
 	lateinit var soundMufflerRadius: ModConfigSpec.DoubleValue
 	lateinit var athenaTooltip: ModConfigSpec.BooleanValue
 	lateinit var disableVomit: ModConfigSpec.BooleanValue
+	lateinit var transferNodeParticleCount: ModConfigSpec.IntValue
 
 	lateinit var rainbowGeneratorTimeFactor: ModConfigSpec.DoubleValue
 	lateinit var rainbowGeneratorRayWidth: ModConfigSpec.DoubleValue
@@ -45,6 +46,10 @@ class ClientConfig(
 		disableVomit = builder
 			.comment("Whether or not Vomit particles should be disabled")
 			.define("disableVomit", false)
+
+		transferNodeParticleCount = builder
+			.comment("The number of particles Transfer Nodes display at their current search position. Set to 0 to disable them.")
+			.defineInRange("transferNodeParticleCount", 5, 0, 100)
 
 		builder.section("rainbow_generator") {
 			rainbowGeneratorTimeFactor = builder
