@@ -10,7 +10,8 @@ object ClientKeyHandler {
 
 	fun updateControls() {
 		val player = AaronClientUtil.localPlayer as? LocalPlayer ?: return
-		val isSpaceHeld = player.input.jumping
+		val input = player.input ?: return
+		val isSpaceHeld = input.jumping
 
 		if (isSpaceHeld != wasSpaceHeld) {
 			wasSpaceHeld = isSpaceHeld
