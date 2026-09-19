@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency
 
 import dev.aaronhowser.mods.aaron.menu.components.TexturedLabel
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
@@ -97,7 +98,7 @@ class EnderFrequencyScreen(
 
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
 		val inventoryKey = minecraft?.options?.keyInventory
-		if (nameBox.isFocused && inventoryKey?.matches(keyCode, scanCode) == true) {
+		if (nameBox.isFocused && inventoryKey?.matches(keyCode, scanCode).isTrue()) {
 			return true
 		}
 

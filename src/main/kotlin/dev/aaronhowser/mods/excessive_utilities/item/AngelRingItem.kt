@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -105,7 +106,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 					if (!player.isAlive || player.isRemoved) return false
 
 					val curiosInventory = CuriosApi.getCuriosInventory(player).getOrNull()
-					val stillHasStack = curiosInventory?.isEquipped(ModItems.ANGEL_RING.get()) == true
+					val stillHasStack = curiosInventory?.isEquipped(ModItems.ANGEL_RING.get()).isTrue()
 
 					if (!stillHasStack) {
 						val attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT)
