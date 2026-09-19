@@ -10,6 +10,8 @@
 
 ### Fixed
 
+- Fixed Speed Upgrades in generators not consuming Grid Power (#67)
+- Fixed upgraded machines continuing to run while their Grid Power network was overloaded
 - Fixed generators allowing any item in their Speed Upgrade slot and treating it as an upgrade (#65)
 - Fixed an occasional crash due to client input being accessed before it's available (#74)
 	- PR by aarmful

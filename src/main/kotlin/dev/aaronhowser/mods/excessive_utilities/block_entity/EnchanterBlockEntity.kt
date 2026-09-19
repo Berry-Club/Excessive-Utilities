@@ -98,6 +98,10 @@ class EnchanterBlockEntity(
 
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
+		if (isOverloaded()) {
+			updateBlockState(isCrafting = false)
+			return
+		}
 
 		if (level.gameTime % 20 == 0L) {
 			currentEnchantingPower = getCurrentEnchantingLevel(level)

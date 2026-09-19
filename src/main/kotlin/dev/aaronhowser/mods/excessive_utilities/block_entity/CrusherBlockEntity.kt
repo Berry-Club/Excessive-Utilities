@@ -88,6 +88,10 @@ class CrusherBlockEntity(
 
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
+		if (isOverloaded()) {
+			updateBlockState(isCrafting = false)
+			return
+		}
 
 		val recipe = getRecipe()?.value
 		if (recipe == null) {

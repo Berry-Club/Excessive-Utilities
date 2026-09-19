@@ -132,6 +132,11 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 
 	override fun serverTick(level: ServerLevel) {
 		super.serverTick(level)
+		if (isOverloaded()) {
+			didWorkLastTick = false
+			updateBlockState(level)
+			return
+		}
 
 		val amountSpeedUpgrades = container.getItem(UPGRADE_SLOT).count
 		for (i in 0..amountSpeedUpgrades) {

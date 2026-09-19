@@ -1,16 +1,16 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator
 
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
+import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.SingleItemGeneratorMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -26,23 +26,20 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
 import net.neoforged.neoforge.items.IItemHandlerModifiable
-import java.util.*
 
 abstract class GeneratorBlockEntity(
 	type: BlockEntityType<*>,
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(type, pos, blockState), ContainerContainer, MenuProvider {
+) : GpDrainBlockEntity(type, pos, blockState), ContainerContainer, MenuProvider {
 
 	abstract val generatorType: GeneratorType
-	var ownerUuid: UUID? = null
 
 	protected open val energyStorage = EnergyStorage(1_000_000)
 	protected open val publicEnergyCapability: IEnergyStorage =
@@ -71,6 +68,13 @@ abstract class GeneratorBlockEntity(
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = false
 	protected open fun isValidUpgrade(itemStack: ItemStack): Boolean {
 		return itemStack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+	}
+
+	override fun getGpUsage(): Double {
+		if (burnTimeRemaining <= 0) return 0.0
+
+		val amountUpgrades = container.getItem(GeneratorContainer.UPGRADE_SLOT).count
+		return SpeedUpgradeItem.getGpCost(amountUpgrades)
 	}
 
 	protected open val containerData: ContainerData =
@@ -111,9 +115,17 @@ abstract class GeneratorBlockEntity(
 			setChanged()
 		}
 
-	protected open fun serverTick(level: ServerLevel) {
+	override fun serverTick(level: ServerLevel) {
+		super.serverTick(level)
+
 		addToNetwork(level)
 		pushOutEnergy(level)
+
+		if (isOverloaded()) {
+			val wasLit = blockState.getValue(GeneratorBlock.LIT)
+			changeLitState(level, wasLit, false)
+			return
+		}
 
 		val speed = container.getSpeed()
 		var success = false
@@ -204,7 +216,7 @@ abstract class GeneratorBlockEntity(
 		return true
 	}
 
-	protected open fun clientTick(level: Level) {}
+	override fun clientTick(level: Level) {}
 
 	override fun getDisplayName(): Component = blockState.block.name
 
@@ -218,7 +230,6 @@ abstract class GeneratorBlockEntity(
 		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
 		tag.putInt(FE_PER_TICK_NBT, fePerTick)
 		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
-		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
 		tag.saveItems(container, registries)
 	}
 
@@ -227,13 +238,11 @@ abstract class GeneratorBlockEntity(
 
 		burnTimeRemaining = tag.getInt(BURN_TIME_REMAINING_NBT)
 		fePerTick = tag.getInt(FE_PER_TICK_NBT)
-		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
 		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 		tag.loadItems(container, registries)
 	}
 
 	companion object {
-		const val OWNER_UUID_NBT = "OwnerUUID"
 		const val BURN_TIME_REMAINING_NBT = "BurnTimeRemaining"
 		const val FE_PER_TICK_NBT = "FePerTick"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
