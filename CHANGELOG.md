@@ -1,3 +1,10 @@
+# 1.9.1
+
+### Fixed
+
+- Fixed an occasional crash due to client input being accessed before it's available (#74)
+	- PR by aarmful
+
 # 1.9.0
 
 ### Added
