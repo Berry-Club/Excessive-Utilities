@@ -11,6 +11,7 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.Gene
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFluidInputDataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.command.ModCommands
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.datamap.InversionRitualEnemyWeight
@@ -37,6 +38,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.fml.event.config.ModConfigEvent
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
 import net.neoforged.neoforge.event.AddReloadListenerEvent
@@ -63,6 +65,16 @@ import kotlin.jvm.optionals.getOrNull
 	modid = ExcessiveUtilities.MOD_ID
 )
 object CommonEvents {
+
+	@SubscribeEvent
+	fun onConfigLoading(event: ModConfigEvent.Loading) {
+		ServerConfig.updateCachedValues(event.config)
+	}
+
+	@SubscribeEvent
+	fun onConfigReloading(event: ModConfigEvent.Reloading) {
+		ServerConfig.updateCachedValues(event.config)
+	}
 
 	@SubscribeEvent
 	fun registerPayloads(event: RegisterPayloadHandlersEvent) {

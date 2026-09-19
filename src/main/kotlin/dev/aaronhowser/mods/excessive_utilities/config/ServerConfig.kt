@@ -2,6 +2,11 @@ package dev.aaronhowser.mods.excessive_utilities.config
 
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.section
 import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.resources.ResourceLocation
+import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.Blocks
+import net.neoforged.fml.config.ModConfig
 import net.neoforged.neoforge.common.ModConfigSpec
 import org.apache.commons.lang3.tuple.Pair
 
@@ -88,10 +93,14 @@ class ServerConfig(
 
 	lateinit var enderQuarryFePerBlock: ModConfigSpec.DoubleValue
 	lateinit var enderQuarryBlocksPerTick: ModConfigSpec.DoubleValue
+	lateinit var enderQuarryReplacementBlockId: ModConfigSpec.ConfigValue<String>
+	var enderQuarryReplacementBlock: Block = Blocks.DIRT
+		private set
 
 	lateinit var eqSpeedOneSpeedMultiplier: ModConfigSpec.DoubleValue
 	lateinit var eqSpeedTwoSpeedMultiplier: ModConfigSpec.DoubleValue
 	lateinit var eqSpeedThreeSpeedMultiplier: ModConfigSpec.DoubleValue
+	lateinit var eqWorldHoleIgnoresBlacklist: ModConfigSpec.BooleanValue
 
 	lateinit var eqSilkTouchCostMultiplier: ModConfigSpec.DoubleValue
 	lateinit var eqFortuneOneCostMultiplier: ModConfigSpec.DoubleValue
@@ -203,6 +212,10 @@ class ServerConfig(
 				.comment("The maximum number of blocks the Ender Quarry will mine per tick.")
 				.defineInRange("enderQuarryBlocksPerTick", 0.5, 0.0, Double.MAX_VALUE)
 
+			enderQuarryReplacementBlockId = builder
+				.comment("The block that the Ender Quarry replaces mined blocks with when it does not have a World Hole Upgrade.")
+				.define("enderQuarryReplacementBlock", "minecraft:dirt")
+
 			builder.section("eq_upgrades") {
 				eqSpeedOneSpeedMultiplier = builder
 					.comment("How many times faster the Ender Quarry mines with a Speed I Upgrade.")
@@ -215,6 +228,13 @@ class ServerConfig(
 				eqSpeedThreeSpeedMultiplier = builder
 					.comment("How many times faster the Ender Quarry mines with a Speed III Upgrade.")
 					.defineInRange("eqSpeedThreeSpeedMultiplier", 3.0, 0.0, Double.MAX_VALUE)
+
+				eqWorldHoleIgnoresBlacklist = builder
+					.comment(
+						"Whether the World Hole Upgrade removes blocks in the Ender Quarry blacklist without collecting their drops.",
+						"Blocks in the Ender Quarry World Hole blacklist are never removed."
+					)
+					.define("eqWorldHoleIgnoresBlacklist", false)
 
 				builder.section("eq_upgrade_costs") {
 					eqSilkTouchCostMultiplier = builder
@@ -640,6 +660,21 @@ class ServerConfig(
 
 		val CONFIG: ServerConfig = configPair.left
 		val CONFIG_SPEC: ModConfigSpec = configPair.right
+
+		fun updateCachedValues(config: ModConfig) {
+			if (config.spec !== CONFIG_SPEC) return
+
+			val configuredBlockId = CONFIG.enderQuarryReplacementBlockId.get()
+			val replacementBlockId = ResourceLocation.tryParse(configuredBlockId)
+
+			CONFIG.enderQuarryReplacementBlock = if (replacementBlockId != null) {
+				BuiltInRegistries.BLOCK
+					.getOptional(replacementBlockId)
+					.orElse(Blocks.DIRT)
+			} else {
+				Blocks.DIRT
+			}
+		}
 	}
 
 }

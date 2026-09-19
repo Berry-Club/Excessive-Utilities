@@ -305,6 +305,9 @@ class ModBlockTagsProvider(
 				BlockTags.CORALS
 			)
 
+		tag(ENDER_QUARRY_WORLD_HOLE_BLACKLIST)
+			.add(Blocks.BEDROCK)
+
 		tag(ENDER_QUARRY_PART)
 			.add(ModBlocks.ENDER_QUARRY, ModBlocks.ENDER_QUARRY_UPGRADE_BASE)
 			.addTag(ENDER_QUARRY_UPGRADE)
@@ -579,6 +582,7 @@ class ModBlockTagsProvider(
 
 		val CREATIVE_HARVEST_BLACKLIST = create("creative_harvest_blacklist")
 		val ENDER_QUARRY_BLACKLIST = create("ender_quarry_blacklist")
+		val ENDER_QUARRY_WORLD_HOLE_BLACKLIST = create("ender_quarry_world_hole_blacklist")
 		val PAINTBRUSH_BLACKLIST = create("paintbrush_blacklist")
 		val FE_TRANSMITTER_BLACKLIST = create("fe_transmitter_blacklist")
 		val ENDER_PORCUPINE_BLACKLIST = create("ender_porcupine_blacklist")

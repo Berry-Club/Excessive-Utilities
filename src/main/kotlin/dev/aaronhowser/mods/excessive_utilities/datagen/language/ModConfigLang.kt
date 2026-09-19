@@ -107,11 +107,13 @@ object ModConfigLang {
 		addConfig(ServerConfig.CONFIG.enderQuarryMarkerSearchDistance, "Ender Quarry Marker Search Distance")
 		addConfig(ServerConfig.CONFIG.enderQuarryFePerBlock, "Ender Quarry FE/block")
 		addConfig(ServerConfig.CONFIG.enderQuarryBlocksPerTick, "Ender Quarry Blocks/tick")
+		addConfig(ServerConfig.CONFIG.enderQuarryReplacementBlockId, "Ender Quarry Replacement Block")
 
 		addConfig("eq_upgrades", "Ender Quarry Upgrades")
 		addConfig(ServerConfig.CONFIG.eqSpeedOneSpeedMultiplier, "Ender Quarry Speed One Speed Multiplier")
 		addConfig(ServerConfig.CONFIG.eqSpeedTwoSpeedMultiplier, "Ender Quarry Speed Two Speed Multiplier")
 		addConfig(ServerConfig.CONFIG.eqSpeedThreeSpeedMultiplier, "Ender Quarry Speed Three Speed Multiplier")
+		addConfig(ServerConfig.CONFIG.eqWorldHoleIgnoresBlacklist, "World Hole Upgrade Ignores Quarry Blacklist")
 
 		addConfig("eq_upgrade_costs", "Ender Quarry Upgrade Costs")
 		addConfig(ServerConfig.CONFIG.eqSilkTouchCostMultiplier, "Ender Quarry Silk Touch Cost Multiplier")

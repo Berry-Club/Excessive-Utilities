@@ -4,6 +4,9 @@
 
 - Expanded the Ender Quarry blacklist to ignore crops, corals, more plants, snow, suspicious blocks, and budding amethyst (#71)
 	- Basically stuff that you can see on the surface or stuff that is worse off when broken
+- Made the block placed by the Ender Quarry configurable, defaulting to Dirt
+- Added a config option for the World Hole Upgrade to remove blacklisted blocks without collecting their drops
+	- Blocks in the new `#excessive_utilities:ender_quarry_world_hole_blacklist` tag are always preserved
 
 ### Fixed
 

@@ -210,15 +210,23 @@ class EnderQuarryBlockEntity(
 		if (!canMineBlock(level, target)) return
 
 		val hasWorldHoleUpgrade = getUpgrades().contains(EnderQuarryUpgradeType.WORLD_HOLE)
+		val targetState = level.getBlockState(target)
+		val discardDrops = hasWorldHoleUpgrade
+				&& ServerConfig.CONFIG.eqWorldHoleIgnoresBlacklist.get()
+				&& targetState.isBlock(ModBlockTagsProvider.ENDER_QUARRY_BLACKLIST)
 
-		val naturalDrops = gatherDrops(level, target)
+		val naturalDrops = if (discardDrops) emptyList() else gatherDrops(level, target)
 		val otherDrops = ItemCatcher.catchStacksDuring {
-			if (hasWorldHoleUpgrade) {
-				level.removeBlock(target, false)
+			val replacementState = if (hasWorldHoleUpgrade) {
+				Blocks.AIR.defaultBlockState()
 			} else {
-				level.setBlock(target, Blocks.DIRT.defaultBlockState(), Block.UPDATE_ALL)
+				ServerConfig.CONFIG.enderQuarryReplacementBlock.defaultBlockState()
 			}
+
+			level.setBlock(target, replacementState, Block.UPDATE_CLIENTS or Block.UPDATE_KNOWN_SHAPE)
 		}
+
+		if (discardDrops) return
 
 		val allDrops = naturalDrops + otherDrops
 
@@ -276,12 +284,14 @@ class EnderQuarryBlockEntity(
 	 * @return true if the Quarry should try to mine the block, false if it should skip it and move on to the next one
 	 */
 	private fun canMineBlock(level: ServerLevel, target: BlockPos): Boolean {
-		val skipCobble = !getUpgrades().contains(EnderQuarryUpgradeType.WORLD_HOLE)
+		val hasWorldHoleUpgrade = getUpgrades().contains(EnderQuarryUpgradeType.WORLD_HOLE)
 		val state = level.getBlockState(target)
+		val ignoresBlacklist = hasWorldHoleUpgrade
+				&& ServerConfig.CONFIG.eqWorldHoleIgnoresBlacklist.get()
 
 		if (state.isAir
-			|| (skipCobble && state.isBlock(Blocks.COBBLESTONE))
-			|| state.isBlock(ModBlockTagsProvider.ENDER_QUARRY_BLACKLIST)
+			|| state.isBlock(ModBlockTagsProvider.ENDER_QUARRY_WORLD_HOLE_BLACKLIST)
+			|| (!ignoresBlacklist && state.isBlock(ModBlockTagsProvider.ENDER_QUARRY_BLACKLIST))
 		) return false
 
 		val unbreakable = state.getDestroySpeed(level, target) < 0
