@@ -42,6 +42,10 @@ object ModBlockEntityTypes : AaronBlockEntityTypeRegistry() {
 		register("slightly_larger_chest", ::SlightlyLargerChestBlockEntity, ModBlocks.SLIGHTLY_LARGER_CHEST)
 	val MINI_CHEST: DeferredHolder<BlockEntityType<*>, BlockEntityType<MiniChestBlockEntity>> =
 		register("mini_chest", ::MiniChestBlockEntity, ModBlocks.MINI_CHEST)
+	val MECHANICAL_MINER: DeferredHolder<BlockEntityType<*>, BlockEntityType<MechanicalMinerBlockEntity>> =
+		register("mechanical_miner", ::MechanicalMinerBlockEntity, ModBlocks.MECHANICAL_MINER)
+	val MECHANICAL_USER: DeferredHolder<BlockEntityType<*>, BlockEntityType<MechanicalUserBlockEntity>> =
+		register("mechanical_user", ::MechanicalUserBlockEntity, ModBlocks.MECHANICAL_USER)
 	val RESONATOR: DeferredHolder<BlockEntityType<*>, BlockEntityType<ResonatorBlockEntity>> =
 		register("resonator", ::ResonatorBlockEntity, ModBlocks.RESONATOR)
 	val TRASH_CAN: DeferredHolder<BlockEntityType<*>, BlockEntityType<TrashCanBlockEntity>> =

@@ -391,13 +391,12 @@ class ModBlockStateProvider(
 	}
 
 	private fun mechanicalBlocks() {
-		mechanicalBlock(ModBlocks.MECHANICAL_USER.get(), "user")
-		mechanicalBlock(ModBlocks.MECHANICAL_MINER.get(), "miner")
-		mechanicalBlock(ModBlocks.SCANNER.get(), "scanner")
+		mechanicalBlock(ModBlocks.MECHANICAL_USER.get(), "user", directional = true)
+		mechanicalBlock(ModBlocks.MECHANICAL_MINER.get(), "miner", directional = true)
+		mechanicalBlock(ModBlocks.SCANNER.get(), "scanner", directional = false)
 	}
 
-	//TODO: Orientation
-	private fun mechanicalBlock(block: Block, textureName: String) {
+	private fun mechanicalBlock(block: Block, textureName: String, directional: Boolean) {
 		val side = modLoc("block/mechanical/side")
 		val back = modLoc("block/mechanical/back")
 		val texture = modLoc("block/mechanical/$textureName")
@@ -405,7 +404,12 @@ class ModBlockStateProvider(
 		val model = models()
 			.cubeBottomTop(name(block), side, back, texture)
 
-		simpleBlockWithItem(block, model)
+		if (directional) {
+			directionalBlock(block, model)
+			simpleBlockItem(block, model)
+		} else {
+			simpleBlockWithItem(block, model)
+		}
 	}
 
 	private fun antenna() {

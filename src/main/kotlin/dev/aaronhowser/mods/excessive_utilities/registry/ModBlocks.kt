@@ -4,6 +4,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.registry.AaronBlockRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
+import dev.aaronhowser.mods.excessive_utilities.block_entity.MechanicalMinerBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.MechanicalUserBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.EnderQuarryUpgradeType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.*
@@ -76,10 +78,14 @@ object ModBlocks : AaronBlockRegistry() {
 
 	val REDSTONE_LANTERN: DeferredBlock<RedstoneLanternBlock> =
 		registerBlock("redstone_lantern", ::RedstoneLanternBlock)
-	val MECHANICAL_MINER =
-		basicBlock("mechanical_miner")
-	val MECHANICAL_USER =
-		basicBlock("mechanical_user")
+	val MECHANICAL_MINER: DeferredBlock<MechanicalInteractorBlock> =
+		registerBlock("mechanical_miner") {
+			MechanicalInteractorBlock(::MechanicalMinerBlockEntity) { ModBlockEntityTypes.MECHANICAL_MINER.get() }
+		}
+	val MECHANICAL_USER: DeferredBlock<MechanicalInteractorBlock> =
+		registerBlock("mechanical_user") {
+			MechanicalInteractorBlock(::MechanicalUserBlockEntity) { ModBlockEntityTypes.MECHANICAL_USER.get() }
+		}
 	val REDSTONE_CLOCK: DeferredBlock<RedstoneClockBlock> =
 		registerBlock("redstone_clock", ::RedstoneClockBlock)
 	val SCANNER =

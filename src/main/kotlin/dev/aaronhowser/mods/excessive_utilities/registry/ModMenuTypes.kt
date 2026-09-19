@@ -24,6 +24,10 @@ import dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator.ItemFl
 import dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator.ItemFluidGeneratorScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.item_transfer_node.ItemTransferNodeScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner.MechanicalMinerMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner.MechanicalMinerScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user.MechanicalUserMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user.MechanicalUserScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedMenu
 import dev.aaronhowser.mods.excessive_utilities.menu.qed.QedScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
@@ -88,6 +92,10 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		register("crusher", ::CrusherMenu)
 	val ENDER_FREQUENCY: DeferredHolder<MenuType<*>, MenuType<EnderFrequencyMenu>> =
 		register("ender_frequency") { IMenuTypeExtension.create(::EnderFrequencyMenu) }
+	val MECHANICAL_MINER: DeferredHolder<MenuType<*>, MenuType<MechanicalMinerMenu>> =
+		register("mechanical_miner", ::MechanicalMinerMenu)
+	val MECHANICAL_USER: DeferredHolder<MenuType<*>, MenuType<MechanicalUserMenu>> =
+		register("mechanical_user", ::MechanicalUserMenu)
 
 	override fun registerScreens(event: RegisterMenuScreensEvent) {
 		event.register(FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeScreen)
@@ -108,6 +116,8 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 		event.register(QUANTUM_QUARRY.get(), ::QuantumQuarryScreen)
 		event.register(CRUSHER.get(), ::CrusherScreen)
 		event.register(ENDER_FREQUENCY.get(), ::EnderFrequencyScreen)
+		event.register(MECHANICAL_MINER.get(), ::MechanicalMinerScreen)
+		event.register(MECHANICAL_USER.get(), ::MechanicalUserScreen)
 	}
 
 }

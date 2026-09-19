@@ -182,6 +182,18 @@ object CommonEvents {
 
 		event.registerBlockEntity(
 			Capabilities.ItemHandler.BLOCK,
+			ModBlockEntityTypes.MECHANICAL_MINER.get(),
+			MechanicalMinerBlockEntity::getItemHandler
+		)
+
+		event.registerBlockEntity(
+			Capabilities.ItemHandler.BLOCK,
+			ModBlockEntityTypes.MECHANICAL_USER.get(),
+			MechanicalUserBlockEntity::getItemHandler
+		)
+
+		event.registerBlockEntity(
+			Capabilities.ItemHandler.BLOCK,
 			ModBlockEntityTypes.FILING_CABINET.get(),
 			FilingCabinetBlockEntity::getItemHandler
 		)
