@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item.component
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
@@ -178,7 +179,7 @@ data class ItemFilterComponent(
 
 		fun getMessage(isOn: Boolean): MutableComponent {
 			val message = if (isOn) messageOn else messageOf
-			return Component.translatable(message)
+			return message.toGrayComponent()
 		}
 
 		companion object {

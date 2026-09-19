@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -62,7 +63,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 		tooltipFlag: TooltipFlag
 	) {
 		val type = stack.getOrDefault(ModDataComponents.ANGEL_RING_TYPE, Type.INVISIBLE)
-		tooltipComponents.add(Component.translatable(type.langKey))
+		tooltipComponents.add(type.langKey.toComponent())
 	}
 
 	companion object {

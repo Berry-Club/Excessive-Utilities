@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency
 import dev.aaronhowser.mods.aaron.menu.components.TexturedLabel
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
@@ -50,7 +51,7 @@ class EnderFrequencyScreen(
 			topPos + 28,
 			imageWidth - 20,
 			20,
-			Component.translatable(ModMenuLang.ENDER_FREQUENCY_NAME)
+			ModMenuLang.ENDER_FREQUENCY_NAME.toComponent()
 		)
 
 		nameBox.setMaxLength(EnderFrequencyComponent.MAX_NAME_LENGTH)

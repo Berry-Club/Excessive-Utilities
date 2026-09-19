@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency.EnderFrequencyMenu
@@ -46,9 +47,11 @@ class EnderFrequencyItem(
 		val frequency = stack.get(ModDataComponents.ENDER_FREQUENCY) ?: return
 		tooltip.add(Component.literal(frequency.name).withStyle(ChatFormatting.LIGHT_PURPLE))
 		tooltip.add(
-			Component.translatable(
-				if (frequency.isPrivate) ModMenuLang.ENDER_FREQUENCY_PRIVATE_TOOLTIP else ModMenuLang.ENDER_FREQUENCY_PUBLIC_TOOLTIP
-			).withStyle(ChatFormatting.GRAY)
+			if (frequency.isPrivate) {
+				ModMenuLang.ENDER_FREQUENCY_PRIVATE_TOOLTIP
+			} else {
+				ModMenuLang.ENDER_FREQUENCY_PUBLIC_TOOLTIP
+			}.toGrayComponent()
 		)
 	}
 

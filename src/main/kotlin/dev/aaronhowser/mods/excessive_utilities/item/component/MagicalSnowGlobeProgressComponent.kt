@@ -60,8 +60,7 @@ data class MagicalSnowGlobeProgressComponent(
 
 		val STREAM_CODEC: StreamCodec<ByteBuf, MagicalSnowGlobeProgressComponent> =
 			StreamCodec.composite(
-				ByteBufCodecs.map(
-					::HashMap,
+				AaronExtraStreamCodecs.map(
 					AaronExtraStreamCodecs.tagKeyStreamCodec(Registries.BIOME),
 					ByteBufCodecs.BOOL
 				), MagicalSnowGlobeProgressComponent::biomes,

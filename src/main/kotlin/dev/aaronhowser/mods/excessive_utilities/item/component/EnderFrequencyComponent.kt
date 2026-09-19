@@ -21,8 +21,12 @@ data class EnderFrequencyComponent(
 		val CODEC: Codec<EnderFrequencyComponent> =
 			RecordCodecBuilder.create { instance ->
 				instance.group(
-					Codec.STRING.fieldOf("name").forGetter(EnderFrequencyComponent::name),
-					UUIDUtil.CODEC.optionalFieldOf("owner").forGetter(EnderFrequencyComponent::owner)
+					Codec.STRING
+						.fieldOf("name")
+						.forGetter(EnderFrequencyComponent::name),
+					UUIDUtil.CODEC
+						.optionalFieldOf("owner")
+						.forGetter(EnderFrequencyComponent::owner)
 				).apply(instance, ::EnderFrequencyComponent)
 			}
 

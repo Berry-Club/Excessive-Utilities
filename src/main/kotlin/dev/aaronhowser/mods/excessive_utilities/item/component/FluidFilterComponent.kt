@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -147,7 +148,7 @@ data class FluidFilterComponent(
 
 		fun getMessage(isOn: Boolean): MutableComponent {
 			val message = if (isOn) messageOn else messageOf
-			return Component.translatable(message).withStyle(ChatFormatting.GRAY)
+			return message.toGrayComponent()
 		}
 
 		companion object {
