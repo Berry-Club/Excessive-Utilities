@@ -1,59 +1,128 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user
 
+import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.aaron.menu.components.ChangingTextButton
+import dev.aaronhowser.mods.aaron.menu.components.MultiStageSpriteButton
+import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
+import dev.aaronhowser.mods.aaron.menu.textures.ScreenSprite
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity.RedstoneMode
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
-import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorScreen
-import net.minecraft.client.gui.components.Button
+import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorMenu
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 class MechanicalUserScreen(
 	menu: MechanicalUserMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseMechanicalInteractorScreen<MechanicalUserMenu>(menu, playerInventory, title) {
-	override val background: ResourceLocation = BACKGROUND
+) : BaseScreen<MechanicalUserMenu>(menu, playerInventory, title) {
+	override val background: ScreenBackground = BACKGROUND
 
-	private lateinit var interactionModeButton: Button
-	private lateinit var leftClickButton: Button
-	private lateinit var upperLeftSlotButton: Button
-	private lateinit var sneakingButton: Button
+	override fun baseInit() {
+		super.baseInit()
 
-	override fun addMachineSpecificButtons() {
-		interactionModeButton = addRenderableWidget(createButton(80, 104, 68, 16, MechanicalUserMenu.CYCLE_INTERACTION_MODE_BUTTON))
-		leftClickButton = addRenderableWidget(createButton(8, 122, 68, 16, MechanicalUserMenu.TOGGLE_LEFT_CLICK_BUTTON))
-		upperLeftSlotButton = addRenderableWidget(createButton(80, 122, 68, 16, MechanicalUserMenu.TOGGLE_UPPER_LEFT_SLOT_ONLY_BUTTON))
-		sneakingButton = addRenderableWidget(createButton(80, 140, 68, 16, MechanicalUserMenu.TOGGLE_SNEAKING_BUTTON))
-	}
+		val interactionModeButton = ChangingTextButton(
+			x = leftPos + 80,
+			y = topPos + 104,
+			width = 68,
+			height = 16,
+			messageGetter = { menu.interactionMode.langKey.toComponent() },
+			onPress = {
+				buttonClicked(MechanicalUserMenu.CYCLE_INTERACTION_MODE_BUTTON)
+			}
+		)
 
-	override fun createRedstoneModeButton(): Button {
-		return createRedstoneModeButton(32, 102)
-	}
+		val leftClickButton = ChangingTextButton(
+			x = leftPos + 8,
+			y = topPos + 122,
+			width = 68,
+			height = 16,
+			messageGetter = {
+				if (menu.isLeftClick) {
+					ModMenuLang.MECHANICAL_USER_CLICK_LEFT.toComponent()
+				} else {
+					ModMenuLang.MECHANICAL_USER_CLICK_RIGHT.toComponent()
+				}
+			},
+			onPress = {
+				buttonClicked(MechanicalUserMenu.TOGGLE_LEFT_CLICK_BUTTON)
+			}
+		)
 
-	override fun updateMachineSpecificButtonMessages() {
-		interactionModeButton.message = menu.interactionMode.langKey.toComponent()
-		leftClickButton.message = if (menu.isLeftClick) {
-			ModMenuLang.MECHANICAL_USER_CLICK_LEFT.toComponent()
-		} else {
-			ModMenuLang.MECHANICAL_USER_CLICK_RIGHT.toComponent()
-		}
-		upperLeftSlotButton.message = if (menu.useUpperLeftSlotOnly) {
-			ModMenuLang.MECHANICAL_USER_SLOT_UPPER_LEFT.toComponent()
-		} else {
-			ModMenuLang.MECHANICAL_USER_SLOT_RANDOM.toComponent()
-		}
-		sneakingButton.message = if (menu.isSneaking) {
-			ModMenuLang.MECHANICAL_USER_SNEAKING_ON.toComponent()
-		} else {
-			ModMenuLang.MECHANICAL_USER_SNEAKING_OFF.toComponent()
-		}
+		val upperLeftSlotButton = ChangingTextButton(
+			x = leftPos + 80,
+			y = topPos + 122,
+			width = 68,
+			height = 16,
+			messageGetter = {
+				if (menu.useUpperLeftSlotOnly) {
+					ModMenuLang.MECHANICAL_USER_SLOT_UPPER_LEFT.toComponent()
+				} else {
+					ModMenuLang.MECHANICAL_USER_SLOT_RANDOM.toComponent()
+				}
+			},
+			onPress = {
+				buttonClicked(MechanicalUserMenu.TOGGLE_UPPER_LEFT_SLOT_ONLY_BUTTON)
+			}
+		)
+
+		val sneakingButton = ChangingTextButton(
+			x = leftPos + 80,
+			y = topPos + 140,
+			width = 68,
+			height = 16,
+			messageGetter = {
+				if (menu.isSneaking) {
+					ModMenuLang.MECHANICAL_USER_SNEAKING_ON.toComponent()
+				} else {
+					ModMenuLang.MECHANICAL_USER_SNEAKING_OFF.toComponent()
+				}
+			},
+			onPress = {
+				buttonClicked(MechanicalUserMenu.TOGGLE_SNEAKING_BUTTON)
+			}
+		)
+
+		val redstoneModeButton = MultiStageSpriteButton.Builder(font)
+			.addStage(
+				RedstoneMode.ALWAYS_ON.langKey.toComponent(),
+				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/always_on"), 16, 16)
+			)
+			.addStage(
+				RedstoneMode.WHILE_POWERED.langKey.toComponent(),
+				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_on"), 16, 16)
+			)
+			.addStage(
+				RedstoneMode.WHILE_UNPOWERED.langKey.toComponent(),
+				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_off"), 16, 16)
+			)
+			.addStage(
+				RedstoneMode.ON_PULSE.langKey.toComponent(),
+				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_pulse"), 16, 16)
+			)
+			.location(leftPos + 32, topPos + 102)
+			.size(20)
+			.currentStageGetter { menu.redstoneMode.ordinal }
+			.onPress {
+				buttonClicked(BaseMechanicalInteractorMenu.CYCLE_REDSTONE_MODE_BUTTON)
+			}
+			.build()
+
+		addRenderableWidget(interactionModeButton)
+		addRenderableWidget(leftClickButton)
+		addRenderableWidget(upperLeftSlotButton)
+		addRenderableWidget(sneakingButton)
+		addRenderableWidget(redstoneModeButton)
 	}
 
 	companion object {
-		val BACKGROUND: ResourceLocation =
-			ExcessiveUtilities.modResource("textures/gui/mechanical_user.png")
+		val BACKGROUND = ScreenBackground(
+			ExcessiveUtilities.modResource("textures/gui/mechanical_user.png"),
+			176,
+			240
+		)
 	}
 
 }
