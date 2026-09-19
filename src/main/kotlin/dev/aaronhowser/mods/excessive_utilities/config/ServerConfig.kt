@@ -115,6 +115,7 @@ class ServerConfig(
 	lateinit var quantumQuarryFePerBlock: ModConfigSpec.DoubleValue
 	lateinit var quantumQuarryBlocksPerTick: ModConfigSpec.DoubleValue
 
+	lateinit var boomerangFlightDurationSeconds: ModConfigSpec.IntValue
 	lateinit var boomerangItemPickupRadius: ModConfigSpec.DoubleValue
 	lateinit var boomereaperangRadius: ModConfigSpec.DoubleValue
 
@@ -634,6 +635,10 @@ class ServerConfig(
 			}
 
 			builder.section("boomerang") {
+				boomerangFlightDurationSeconds = builder
+					.comment("The number of seconds a Boomerang will fly before returning to its owner.")
+					.defineInRange("boomerangFlightDurationSeconds", 3, 1, Int.MAX_VALUE / 20)
+
 				boomerangItemPickupRadius = builder
 					.comment("The radius in blocks around the Boomerang that it will pick up items.")
 					.defineInRange("boomerangItemPickupRadius", 4.0, 0.0, Double.MAX_VALUE)

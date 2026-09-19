@@ -75,6 +75,7 @@ object ModConfigLang {
 		addConfig(ServerConfig.CONFIG.bedrockDrumCapacity, "Bedrockium Drum Capacity")
 
 		addConfig("boomerang", "Boomerang")
+		addConfig(ServerConfig.CONFIG.boomerangFlightDurationSeconds, "Boomerang Flight Duration (Seconds)")
 		addConfig(ServerConfig.CONFIG.boomerangItemPickupRadius, "Boomerang Item Pickup Radius")
 		addConfig(ServerConfig.CONFIG.boomereaperangRadius, "Boomereaperang Radius")
 

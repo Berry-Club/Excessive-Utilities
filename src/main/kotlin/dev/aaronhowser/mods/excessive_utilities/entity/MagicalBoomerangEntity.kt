@@ -25,7 +25,6 @@ import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
-import net.minecraft.world.phys.HitResult
 import net.minecraft.world.phys.Vec3
 
 class MagicalBoomerangEntity(
@@ -71,15 +70,13 @@ class MagicalBoomerangEntity(
 		return 4f + (bladerangLevel * 4f)
 	}
 
-	override fun onHit(result: HitResult) {
-		super.onHit(result)
-		if (result.type != HitResult.Type.MISS) {
-			explode()
-		}
-	}
-
 	override fun onHitBlock(result: BlockHitResult) {
 		super.onHitBlock(result)
+
+		if (!isReturning) {
+			explode()
+		}
+
 		isReturning = true
 	}
 
@@ -87,12 +84,18 @@ class MagicalBoomerangEntity(
 		val kaboomerangLevel = getEnchantmentLevel(ModEnchantmentProvider.KABOOMERANG)
 		if (kaboomerangLevel <= 0) return
 
-		//TODO
+		level().explode(
+			owner,
+			x, y, z,
+			kaboomerangLevel.toFloat(),
+			Level.ExplosionInteraction.NONE
+		)
 	}
 
 	override fun onHitEntity(result: EntityHitResult) {
 		super.onHitEntity(result)
 		val hitEntity = result.entity
+		val wasReturning = isReturning
 
 		if (hitEntity != owner) {
 			isReturning = true
@@ -102,6 +105,10 @@ class MagicalBoomerangEntity(
 			enterInventory(hitEntity)
 		} else if (hitEntity is LivingEntity) {
 			hurtEntity(hitEntity)
+		}
+
+		if (!wasReturning && hitEntity != owner) {
+			explode()
 		}
 	}
 
@@ -131,6 +138,11 @@ class MagicalBoomerangEntity(
 
 	override fun tick() {
 		super.tick()
+
+		val maxOutboundTicks = ServerConfig.CONFIG.boomerangFlightDurationSeconds.get() * 20
+		if (!isReturning && tickCount >= maxOutboundTicks) {
+			isReturning = true
+		}
 
 		returnToOwner()
 		breakPlants()
@@ -197,6 +209,4 @@ class MagicalBoomerangEntity(
 
 	override fun isNoGravity(): Boolean = true
 	override fun getDefaultGravity(): Double = 0.0
-
-
 }

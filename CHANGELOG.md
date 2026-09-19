@@ -12,6 +12,8 @@
 
 ### Fixed
 
+- Fixed Kaboomerang not creating explosions on impact (#41)
+- Fixed Magical Boomerangs flying forever when they do not hit anything; their flight duration is now configurable and defaults to 3 seconds (#56)
 - Fixed Speed Upgrades in generators not consuming Grid Power (#67)
 - Fixed upgraded machines continuing to run while their Grid Power network was overloaded
 - Fixed generators allowing any item in their Speed Upgrade slot and treating it as an upgrade (#65)

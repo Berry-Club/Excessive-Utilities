@@ -539,6 +539,7 @@
   "excessive_utilities.configuration.basicFilingCabinetCapacity": "Basic Filing Cabinet Capacity",
   "excessive_utilities.configuration.bedrockDrumCapacity": "Bedrockium Drum Capacity",
   "excessive_utilities.configuration.boomerang": "Boomerang",
+  "excessive_utilities.configuration.boomerangFlightDurationSeconds": "Boomerang Flight Duration (Seconds)",
   "excessive_utilities.configuration.boomerangItemPickupRadius": "Boomerang Item Pickup Radius",
   "excessive_utilities.configuration.boomereaperangRadius": "Boomereaperang Radius",
   "excessive_utilities.configuration.chandelierRadius": "Chandelier Radius",
