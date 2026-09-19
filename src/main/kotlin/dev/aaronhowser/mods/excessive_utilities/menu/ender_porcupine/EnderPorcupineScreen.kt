@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
@@ -17,11 +17,11 @@ class EnderPorcupineScreen(
 	menu: EnderPorcupineMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<EnderPorcupineMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<EnderPorcupineMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 
-	override val showInventoryLabel: Boolean = false
+	override val showTexturedInventoryLabel: Boolean = false
 
 	private lateinit var minXIncreaseButton: Button
 	private lateinit var minYIncreaseButton: Button

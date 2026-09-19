@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.fluid_filter_menu
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
@@ -17,7 +17,7 @@ class FluidFilterScreen(
 	menu: FluidFilterMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<FluidFilterMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<FluidFilterMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = 55

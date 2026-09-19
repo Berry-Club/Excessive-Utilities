@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.components.MultiStageSpriteButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
@@ -15,7 +15,7 @@ class MechanicalMinerScreen(
 	menu: MechanicalMinerMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<MechanicalMinerMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<MechanicalMinerMenu>(menu, playerInventory, title) {
 	override val background: ScreenBackground = BACKGROUND
 
 	override fun baseInit() {

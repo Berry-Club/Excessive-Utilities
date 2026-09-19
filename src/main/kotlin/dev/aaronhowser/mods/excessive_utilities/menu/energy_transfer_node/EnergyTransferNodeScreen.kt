@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
@@ -12,7 +12,7 @@ class EnergyTransferNodeScreen(
 	menu: EnergyTransferNodeMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<EnergyTransferNodeMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<EnergyTransferNodeMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = 22
@@ -20,6 +20,8 @@ class EnergyTransferNodeScreen(
 	private lateinit var energyBar: EnergyBar
 
 	override fun baseInit() {
+		super.baseInit()
+
 		energyBar = EnergyBar(
 			x = leftPos + 79,
 			y = topPos + 24,

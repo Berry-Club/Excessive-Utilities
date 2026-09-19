@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.resonator
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -15,7 +15,7 @@ class ResonatorScreen(
 	menu: ResonatorMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<ResonatorMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<ResonatorMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = 4
@@ -23,6 +23,8 @@ class ResonatorScreen(
 	private lateinit var progressArrow: ProgressArrow
 
 	override fun baseInit() {
+		super.baseInit()
+
 		progressArrow = ProgressArrow(
 			x = leftPos + 73,
 			y = topPos + 37,

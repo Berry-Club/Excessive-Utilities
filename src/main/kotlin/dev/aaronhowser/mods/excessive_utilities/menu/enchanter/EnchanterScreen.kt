@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.enchanter
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
@@ -12,7 +12,7 @@ class EnchanterScreen(
 	menu: EnchanterMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<EnchanterMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<EnchanterMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int
@@ -22,6 +22,8 @@ class EnchanterScreen(
 	private lateinit var progressArrow: ProgressArrow
 
 	override fun baseInit() {
+		super.baseInit()
+
 		energyBar = EnergyBar(
 			x = leftPos + 7,
 			y = topPos + 21,

@@ -1,6 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
+import dev.aaronhowser.mods.aaron.menu.components.TexturedLabel
+import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
 import dev.aaronhowser.mods.excessive_utilities.packet.client_to_server.ConfigureEnderFrequencyPacket
@@ -10,6 +12,7 @@ import net.minecraft.client.gui.components.EditBox
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
+import java.util.function.Supplier
 
 class EnderFrequencyScreen(
 	menu: EnderFrequencyMenu,
@@ -28,6 +31,18 @@ class EnderFrequencyScreen(
 
 	override fun init() {
 		super.init()
+
+		val titleLabel = TexturedLabel(
+			x = leftPos,
+			y = topPos,
+			font = font,
+			messageGetter = Supplier(::getTitleLabelMessage),
+			backgroundSprite = ExcessiveUtilities.modResource("label/plain"),
+			textColor = 4210752
+		)
+
+		addRenderableWidget(titleLabel)
+
 		nameBox = EditBox(
 			font,
 			leftPos + 10,
@@ -65,14 +80,14 @@ class EnderFrequencyScreen(
 		}
 	}
 
+	private fun getTitleLabelMessage(): Component = title
+
 	override fun renderBg(graphics: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {
 		graphics.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, 0xFF202020.toInt())
 		graphics.fill(leftPos + 2, topPos + 2, leftPos + imageWidth - 2, topPos + imageHeight - 2, 0xFF404040.toInt())
 	}
 
-	override fun renderLabels(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {
-		graphics.drawString(font, title, 10, 8, 0xFFFFFF, false)
-	}
+	override fun renderLabels(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {}
 
 	override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
 		renderBackground(graphics, mouseX, mouseY, partialTick)

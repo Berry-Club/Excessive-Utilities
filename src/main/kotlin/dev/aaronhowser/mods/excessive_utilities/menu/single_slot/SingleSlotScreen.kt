@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.single_slot
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.network.chat.Component
@@ -10,7 +10,7 @@ class SingleSlotScreen(
 	menu: SingleSlotMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<SingleSlotMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<SingleSlotMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = -2

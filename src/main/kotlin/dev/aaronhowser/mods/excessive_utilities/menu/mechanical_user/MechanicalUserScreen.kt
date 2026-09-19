@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.components.ChangingTextButton
 import dev.aaronhowser.mods.aaron.menu.components.MultiStageSpriteButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
@@ -17,7 +17,7 @@ class MechanicalUserScreen(
 	menu: MechanicalUserMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<MechanicalUserMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<MechanicalUserMenu>(menu, playerInventory, title) {
 	override val background: ScreenBackground = BACKGROUND
 
 	override fun baseInit() {

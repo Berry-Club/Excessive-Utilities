@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
@@ -13,7 +13,7 @@ class ItemFluidGeneratorScreen(
 	menu: ItemFluidGeneratorMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<ItemFluidGeneratorMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<ItemFluidGeneratorMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int

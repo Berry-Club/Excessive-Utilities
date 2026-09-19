@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.qed
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ProgressArrow
@@ -12,7 +12,7 @@ class QedScreen(
 	menu: QedMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<QedMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<QedMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = 12
@@ -20,6 +20,8 @@ class QedScreen(
 	private lateinit var progressArrow: ProgressArrow
 
 	override fun baseInit() {
+		super.baseInit()
+
 		progressArrow = ProgressArrow(
 			x = leftPos + 90,
 			y = topPos + 41,

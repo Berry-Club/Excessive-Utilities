@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenSprite
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
@@ -16,7 +16,7 @@ class ItemFilterScreen(
 	menu: ItemFilterMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<ItemFilterMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<ItemFilterMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = 73

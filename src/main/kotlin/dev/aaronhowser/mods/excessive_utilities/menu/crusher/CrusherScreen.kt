@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.crusher
 
-import dev.aaronhowser.mods.aaron.menu.BaseScreen
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
@@ -12,7 +12,7 @@ class CrusherScreen(
 	menu: CrusherMenu,
 	playerInventory: Inventory,
 	title: Component
-) : BaseScreen<CrusherMenu>(menu, playerInventory, title) {
+) : ExcessiveUtilitiesScreen<CrusherMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
 	override val inventoryLabelOffsetY: Int = 12
