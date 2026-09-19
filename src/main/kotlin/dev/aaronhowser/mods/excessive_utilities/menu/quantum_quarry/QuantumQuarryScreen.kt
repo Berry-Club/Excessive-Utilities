@@ -20,7 +20,7 @@ class QuantumQuarryScreen(
 ) : ExcessiveUtilitiesScreen<QuantumQuarryMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = BRIGHT_TEAL_LABEL
+	override val titleLabelSprite: ResourceLocation = LABEL
 
 	private lateinit var energyBar: EnergyBar
 
@@ -113,6 +113,9 @@ class QuantumQuarryScreen(
 
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/quantum_quarry.png"), 176, 198)
+
+		val LABEL: ResourceLocation =
+			ExcessiveUtilities.modResource("label/quantum_quarry")
 	}
 
 }
