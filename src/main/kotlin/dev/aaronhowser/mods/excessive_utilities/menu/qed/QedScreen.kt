@@ -17,7 +17,6 @@ class QedScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = TEAL_LABEL
-	override val inventoryLabelOffsetY: Int = 12
 
 	private lateinit var progressArrow: ProgressArrow
 

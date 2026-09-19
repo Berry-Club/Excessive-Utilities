@@ -17,7 +17,6 @@ class CrusherScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = RED_LABEL
-	override val inventoryLabelOffsetY: Int = 12
 
 	private lateinit var energyBar: EnergyBar
 	private lateinit var progressArrow: ProgressArrow

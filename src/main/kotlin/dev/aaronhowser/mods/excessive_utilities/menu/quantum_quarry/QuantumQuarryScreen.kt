@@ -21,7 +21,6 @@ class QuantumQuarryScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = BRIGHT_TEAL_LABEL
-	override val inventoryLabelOffsetY: Int = 30
 
 	private lateinit var energyBar: EnergyBar
 

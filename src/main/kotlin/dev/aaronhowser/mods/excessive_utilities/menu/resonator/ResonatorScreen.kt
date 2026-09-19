@@ -19,8 +19,7 @@ class ResonatorScreen(
 ) : ExcessiveUtilitiesScreen<ResonatorMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = RED_LABEL
-	override val inventoryLabelOffsetY: Int = 4
+	override val titleLabelSprite: ResourceLocation = DARK_RED_LABEL
 
 	private lateinit var progressArrow: ProgressArrow
 

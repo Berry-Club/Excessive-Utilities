@@ -16,8 +16,6 @@ class SingleFluidGeneratorScreen(
 ) : ExcessiveUtilitiesScreen<SingleFluidGeneratorMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-	override val inventoryLabelOffsetY: Int
-		get() = 10
 
 	private lateinit var energyBar: EnergyBar
 	private lateinit var fluidBar: FluidBar

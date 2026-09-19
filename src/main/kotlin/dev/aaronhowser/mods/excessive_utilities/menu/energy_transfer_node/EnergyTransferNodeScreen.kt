@@ -16,8 +16,7 @@ class EnergyTransferNodeScreen(
 ) : ExcessiveUtilitiesScreen<EnergyTransferNodeMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = RED_LABEL
-	override val inventoryLabelOffsetY: Int = 22
+	override val titleLabelSprite: ResourceLocation = YELLOW_LABEL
 
 	private lateinit var energyBar: EnergyBar
 

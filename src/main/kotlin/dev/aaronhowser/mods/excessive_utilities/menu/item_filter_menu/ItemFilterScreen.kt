@@ -21,7 +21,6 @@ class ItemFilterScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = RED_LABEL
-	override val inventoryLabelOffsetY: Int = 73
 
 	private lateinit var invertButton: Button
 	private lateinit var useTagsButton: Button

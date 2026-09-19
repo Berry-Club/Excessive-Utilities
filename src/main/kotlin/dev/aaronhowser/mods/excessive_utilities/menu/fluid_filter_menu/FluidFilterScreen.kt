@@ -22,7 +22,6 @@ class FluidFilterScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = BLUE_LABEL
-	override val inventoryLabelOffsetY: Int = 55
 
 	private lateinit var invertButton: Button
 	private lateinit var useTagsButton: Button

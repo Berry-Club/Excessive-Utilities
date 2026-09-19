@@ -16,8 +16,7 @@ class EnchanterScreen(
 ) : ExcessiveUtilitiesScreen<EnchanterMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = RED_LABEL
-	override val inventoryLabelOffsetY: Int = 12
+	override val titleLabelSprite: ResourceLocation = LABEL
 
 	private lateinit var energyBar: EnergyBar
 	private lateinit var progressArrow: ProgressArrow
@@ -49,6 +48,9 @@ class EnchanterScreen(
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/enchanter.png"), 176, 180)
 		val PROGRESS_ARROW_TEXTURE = ExcessiveUtilities.modResource("enchanter_arrow_right")
+
+		val LABEL: ResourceLocation =
+			ExcessiveUtilities.modResource("label/enchanter")
 	}
 
 }
