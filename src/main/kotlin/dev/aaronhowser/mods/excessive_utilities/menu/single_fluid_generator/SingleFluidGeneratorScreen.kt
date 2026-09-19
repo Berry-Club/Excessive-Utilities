@@ -1,8 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.single_fluid_generator
 
-import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import dev.aaronhowser.mods.excessive_utilities.menu.components.FluidBar
 import net.minecraft.network.chat.Component

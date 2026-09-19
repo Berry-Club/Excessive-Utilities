@@ -1,11 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.resonator
 
-import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ProgressArrow
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.network.chat.Component

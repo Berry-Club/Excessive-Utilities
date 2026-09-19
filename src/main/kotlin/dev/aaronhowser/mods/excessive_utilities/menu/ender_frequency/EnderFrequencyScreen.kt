@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.menu.components.TexturedLabel
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent

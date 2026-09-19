@@ -15,8 +15,8 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.player.Inventory
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
@@ -29,7 +29,7 @@ import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.lang.ref.WeakReference
-import java.util.UUID
+import java.util.*
 
 class MechanicalUserBlockEntity(
 	pos: BlockPos,
@@ -96,8 +96,8 @@ class MechanicalUserBlockEntity(
 		fakePlayer.isShiftKeyDown = isSneaking
 		val facingVector = Vec3(facing.stepX.toDouble(), facing.stepY.toDouble(), facing.stepZ.toDouble())
 		fakePlayer.setPos(blockPos.center.subtract(facingVector).subtract(0.0, fakePlayer.eyeHeight.toDouble(), 0.0))
-		fakePlayer.setYRot(facing.toYRot())
-		fakePlayer.setXRot(if (facing.stepY == 0) 0f else if (facing.stepY > 0) -90f else 90f)
+		fakePlayer.yRot = facing.toYRot()
+		fakePlayer.xRot = if (facing.stepY == 0) 0f else if (facing.stepY > 0) -90f else 90f
 
 		val hitResult = BlockHitResult(targetPos.center, facing.opposite, targetPos, false)
 		when (interactionMode) {

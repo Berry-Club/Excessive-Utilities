@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user
 
-import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.components.ChangingTextButton
 import dev.aaronhowser.mods.aaron.menu.components.MultiStageSpriteButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
@@ -9,6 +8,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity.RedstoneMode
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorMenu
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
