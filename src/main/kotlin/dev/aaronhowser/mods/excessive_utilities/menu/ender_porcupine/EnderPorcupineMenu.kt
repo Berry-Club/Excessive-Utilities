@@ -27,7 +27,7 @@ class EnderPorcupineMenu(
 		addDataSlots(containerData)
 	}
 
-	override fun handleButtonPressed(buttonId: Int) {
+	override fun handleButtonPressed(buttonId: Int, isShiftDown: Boolean) {
 		val dataIndex = when (buttonId) {
 			INCREASE_MIN_X_BUTTON_ID, DECREASE_MIN_X_BUTTON_ID -> EnderPorcupineBlockEntity.MIN_X_DATA_INDEX
 			INCREASE_MIN_Y_BUTTON_ID, DECREASE_MIN_Y_BUTTON_ID -> EnderPorcupineBlockEntity.MIN_Y_DATA_INDEX

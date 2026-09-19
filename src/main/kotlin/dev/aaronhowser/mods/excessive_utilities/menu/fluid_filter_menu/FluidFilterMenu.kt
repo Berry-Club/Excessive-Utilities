@@ -75,7 +75,7 @@ class FluidFilterMenu(
 		return heldItem.isItem(ModItems.FLUID_FILTER)
 	}
 
-	override fun handleButtonPressed(buttonId: Int) {
+	override fun handleButtonPressed(buttonId: Int, isShiftDown: Boolean) {
 		val filterStack = getFilterStack()
 
 		val toggledFlag = when (buttonId) {
