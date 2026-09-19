@@ -48,6 +48,7 @@ object ModConfigLang {
 		addConfig(ServerConfig.CONFIG.cursedEarthCheckRadius, "Cursed Earth Check Radius")
 		addConfig(ServerConfig.CONFIG.cursedEarthBonusStrength, "Cursed Earth Bonus Strength")
 		addConfig(ServerConfig.CONFIG.cursedEarthBonusSpeed, "Cursed Earth Bonus Speed")
+		addConfig(ServerConfig.CONFIG.cursedMobSoundPitchReduction, "Cursed Mob Sound Pitch Reduction")
 		addConfig("cursedEarthChance", "Cursed Earth Chance per Check")
 		addConfig("cursedEarthPeriod", "Cursed Earth Period (ticks)")
 

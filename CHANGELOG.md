@@ -10,6 +10,7 @@
 - Transfer Nodes now reset their search after they finish inserting into an inventory, which can be disabled in the server config, using old behavior instead (#64)
 - Added a client config option for the number of particles displayed by Transfer Nodes
 - Screen labels (the text that says "QED" and "Inventory" etc) now use automatically-resizing backgrounds instead of being baked into the screen texture
+- Cursed mobs now play sounds at a configurably lower pitch
 
 ### Fixed
 

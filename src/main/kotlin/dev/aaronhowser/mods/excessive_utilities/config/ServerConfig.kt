@@ -124,6 +124,7 @@ class ServerConfig(
 	lateinit var cursedEarthCheckRadius: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthBonusStrength: ModConfigSpec.DoubleValue
 	lateinit var cursedEarthBonusSpeed: ModConfigSpec.DoubleValue
+	lateinit var cursedMobSoundPitchReduction: ModConfigSpec.DoubleValue
 
 	lateinit var inversionRitualInterval: ModConfigSpec.IntValue
 	lateinit var inversionRitualSpawnsPer: ModConfigSpec.IntValue
@@ -564,6 +565,10 @@ class ServerConfig(
 				cursedEarthBonusSpeed = builder
 					.comment("How many times faster mobs spawned by Cursed Earth move.")
 					.defineInRange("cursedEarthBonusSpeed", 0.2, Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY)
+
+				cursedMobSoundPitchReduction = builder
+					.comment("How much lower the pitch of sounds played by cursed mobs should be.")
+					.defineInRange("cursedMobSoundPitchReduction", 0.2, 0.0, 1.0)
 			}
 
 			builder.section("inversion_ritual") {
@@ -668,6 +673,7 @@ class ServerConfig(
 	companion object {
 		private val configPair: Pair<ServerConfig, ModConfigSpec> = ModConfigSpec.Builder().configure(::ServerConfig)
 
+		@JvmField
 		val CONFIG: ServerConfig = configPair.left
 		val CONFIG_SPEC: ModConfigSpec = configPair.right
 
