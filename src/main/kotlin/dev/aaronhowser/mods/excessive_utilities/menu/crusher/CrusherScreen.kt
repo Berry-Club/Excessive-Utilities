@@ -35,7 +35,7 @@ class CrusherScreen(
 			x = leftPos + 69,
 			y = topPos + 41,
 			font = font,
-			percentDoneFunction = { menu.getProgress().toFloat() / menu.getMaxProgress() },
+			percentDoneFunction = { menu.getProgress().toFloat() / menu.getMaxProgress() * 100 },
 			shouldRenderProgress = { menu.getProgress() > 0 }
 		)
 
