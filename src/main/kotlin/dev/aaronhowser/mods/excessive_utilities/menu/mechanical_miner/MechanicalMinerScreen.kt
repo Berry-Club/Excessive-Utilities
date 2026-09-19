@@ -3,11 +3,11 @@ package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner
 import dev.aaronhowser.mods.aaron.menu.BaseScreen
 import dev.aaronhowser.mods.aaron.menu.components.MultiStageSpriteButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
-import dev.aaronhowser.mods.aaron.menu.textures.ScreenSprite
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity.RedstoneMode
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user.MechanicalUserScreen
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
@@ -24,19 +24,19 @@ class MechanicalMinerScreen(
 		val redstoneModeButton = MultiStageSpriteButton.Builder(font)
 			.addStage(
 				RedstoneMode.ALWAYS_ON.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/always_on"), 16, 16)
+				MechanicalUserScreen.ALWAYS_ON_SPRITE
 			)
 			.addStage(
 				RedstoneMode.WHILE_POWERED.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_on"), 16, 16)
+				MechanicalUserScreen.REDSTONE_ON_SPRITE
 			)
 			.addStage(
 				RedstoneMode.WHILE_UNPOWERED.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_off"), 16, 16)
+				MechanicalUserScreen.REDSTONE_OFF_SPRITE
 			)
 			.addStage(
 				RedstoneMode.ON_PULSE.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_pulse"), 16, 16)
+				MechanicalUserScreen.REDSTONE_PULSE_SPRITE
 			)
 			.location(leftPos + 78, topPos + 119)
 			.size(20)

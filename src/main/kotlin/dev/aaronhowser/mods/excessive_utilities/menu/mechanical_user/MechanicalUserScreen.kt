@@ -88,19 +88,19 @@ class MechanicalUserScreen(
 		val redstoneModeButton = MultiStageSpriteButton.Builder(font)
 			.addStage(
 				RedstoneMode.ALWAYS_ON.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/always_on"), 16, 16)
+				ALWAYS_ON_SPRITE
 			)
 			.addStage(
 				RedstoneMode.WHILE_POWERED.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_on"), 16, 16)
+				REDSTONE_ON_SPRITE
 			)
 			.addStage(
 				RedstoneMode.WHILE_UNPOWERED.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_off"), 16, 16)
+				REDSTONE_OFF_SPRITE
 			)
 			.addStage(
 				RedstoneMode.ON_PULSE.langKey.toComponent(),
-				ScreenSprite(ExcessiveUtilities.modResource("redstone_mode/redstone_pulse"), 16, 16)
+				REDSTONE_PULSE_SPRITE
 			)
 			.location(leftPos + 32, topPos + 102)
 			.size(20)
@@ -118,6 +118,27 @@ class MechanicalUserScreen(
 	}
 
 	companion object {
+		val ALWAYS_ON_SPRITE = ScreenSprite(
+			ExcessiveUtilities.modResource("redstone_mode/always_on"),
+			16,
+			16
+		)
+		val REDSTONE_ON_SPRITE = ScreenSprite(
+			ExcessiveUtilities.modResource("redstone_mode/redstone_on"),
+			16,
+			16
+		)
+		val REDSTONE_OFF_SPRITE = ScreenSprite(
+			ExcessiveUtilities.modResource("redstone_mode/redstone_off"),
+			16,
+			16
+		)
+		val REDSTONE_PULSE_SPRITE = ScreenSprite(
+			ExcessiveUtilities.modResource("redstone_mode/redstone_pulse"),
+			16,
+			16
+		)
+
 		val BACKGROUND = ScreenBackground(
 			ExcessiveUtilities.modResource("textures/gui/mechanical_user.png"),
 			176,
