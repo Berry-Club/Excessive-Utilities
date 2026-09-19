@@ -4,6 +4,8 @@
 
 - Fixed an occasional crash due to client input being accessed before it's available (#74)
 	- PR by aarmful
+- Fixed the Ender Quarry sometimes stopping the marker search early (#73)
+	- PR by aarmful
 
 # 1.9.0
 
