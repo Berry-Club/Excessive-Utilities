@@ -280,13 +280,29 @@ class ModBlockTagsProvider(
 				Blocks.WATER,
 				Blocks.LAVA,
 				Blocks.TALL_GRASS,
-				Blocks.SHORT_GRASS
+				Blocks.SHORT_GRASS,
+				Blocks.LILY_PAD,
+				Blocks.BAMBOO,
+				Blocks.KELP,
+				Blocks.KELP_PLANT,
+				Blocks.SWEET_BERRY_BUSH,
+				Blocks.COCOA,
+				Blocks.RED_MUSHROOM,
+				Blocks.BROWN_MUSHROOM,
+				Blocks.BUDDING_AMETHYST,
+				Blocks.SUSPICIOUS_SAND,
+				Blocks.SUSPICIOUS_GRAVEL,
+				Blocks.SNOW,
+				Blocks.SNOW_BLOCK,
+				Blocks.POWDER_SNOW
 			)
 			.addTags(
 				BlockTags.FLOWERS,
 				BlockTags.LOGS,
 				BlockTags.SAND,
-				BlockTags.REPLACEABLE_BY_TREES
+				BlockTags.REPLACEABLE_BY_TREES,
+				BlockTags.CROPS,
+				BlockTags.CORALS
 			)
 
 		tag(ENDER_QUARRY_PART)

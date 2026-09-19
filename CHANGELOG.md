@@ -1,5 +1,10 @@
 # 1.9.1
 
+### Changed
+
+- Expanded the Ender Quarry blacklist to ignore crops, corals, more plants, snow, suspicious blocks, and budding amethyst (#71)
+	- Basically stuff that you can see on the surface or stuff that is worse off when broken
+
 ### Fixed
 
 - Fixed an occasional crash due to client input being accessed before it's available (#74)
