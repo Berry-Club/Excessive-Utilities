@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorScreen
-import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -17,11 +16,6 @@ class MechanicalMinerScreen(
 
 	override fun createRedstoneModeButton(): Button {
 		return createRedstoneModeButton(78, 119)
-	}
-
-	override fun renderMachineSpecificBackground(guiGraphics: GuiGraphics) {
-		renderSlotBackground(guiGraphics, 8, 120)
-		renderSlotBackground(guiGraphics, 152, 120)
 	}
 
 	companion object {

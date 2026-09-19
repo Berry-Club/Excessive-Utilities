@@ -4,7 +4,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorScreen
-import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
@@ -50,10 +49,6 @@ class MechanicalUserScreen(
 		} else {
 			ModMenuLang.MECHANICAL_USER_SNEAKING_OFF.toComponent()
 		}
-	}
-
-	override fun renderMachineSpecificBackground(guiGraphics: GuiGraphics) {
-		renderSlotBackground(guiGraphics, 152, 138)
 	}
 
 	companion object {

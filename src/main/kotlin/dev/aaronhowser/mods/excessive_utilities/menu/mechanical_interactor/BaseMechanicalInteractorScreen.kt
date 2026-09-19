@@ -90,13 +90,6 @@ abstract class BaseMechanicalInteractorScreen<T : BaseMechanicalInteractorMenu>(
 
 	override fun renderBg(guiGraphics: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {
 		guiGraphics.blit(background, leftPos, topPos, 0f, 0f, imageWidth, imageHeight, 256, 256)
-		renderMachineSpecificBackground(guiGraphics)
-	}
-
-	protected open fun renderMachineSpecificBackground(guiGraphics: GuiGraphics) {}
-
-	protected fun renderSlotBackground(guiGraphics: GuiGraphics, x: Int, y: Int) {
-		guiGraphics.blit(background, leftPos + x - 1, topPos + y - 1, 61f, 42f, 18, 18, 256, 256)
 	}
 
 	companion object {
