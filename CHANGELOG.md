@@ -10,6 +10,7 @@
 
 ### Fixed
 
+- Fixed generators allowing any item in their Speed Upgrade slot and treating it as an upgrade (#65)
 - Fixed an occasional crash due to client input being accessed before it's available (#74)
 	- PR by aarmful
 - Fixed the Ender Quarry sometimes stopping the marker search early (#73)

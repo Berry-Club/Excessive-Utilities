@@ -25,7 +25,12 @@ open class GeneratorContainer(
 	protected open fun canPlaceUpgrade(stack: ItemStack): Boolean = stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
 	protected open fun canPlaceSecondaryInput(stack: ItemStack): Boolean = false
 
-	fun getSpeed(): Int = getItem(UPGRADE_SLOT).count + 1
+	fun getSpeed(): Int {
+		val upgradeStack = getItem(UPGRADE_SLOT)
+		if (!canPlaceUpgrade(upgradeStack)) return 1
+
+		return upgradeStack.count + 1
+	}
 
 	open val itemHandler: InvWrapper =
 		object : InvWrapper(this) {
