@@ -15,29 +15,30 @@ abstract class ExcessiveUtilitiesScreen<M : AbstractContainerMenu>(
 	title: Component
 ) : BaseScreen<M>(menu, playerInventory, title) {
 
-	final override val showTitleLabel: Boolean = false
-	final override val showInventoryLabel: Boolean = false
+	override val titleLabelOffsetX: Int = 4
+	override val titleLabelOffsetY: Int = 4
 
 	protected open val titleLabelSprite: ResourceLocation = PLAIN_LABEL
-	protected open val showTexturedInventoryLabel: Boolean = true
 
 	override fun baseInit() {
 		super.baseInit()
 
-		val titleLabel = TexturedLabel(
-			x = leftPos + titleLabelOffsetX,
-			y = topPos + titleLabelOffsetY,
-			font = font,
-			messageGetter = { title },
-			backgroundSprite = titleLabelSprite,
-			textColor = LABEL_TEXT_COLOR,
-			verticalPadding = 2,
-			horizontalPadding = 3
-		)
+		if (showTitleLabel) {
+			val titleLabel = TexturedLabel(
+				x = leftPos + titleLabelOffsetX,
+				y = topPos + titleLabelOffsetY,
+				font = font,
+				messageGetter = { title },
+				backgroundSprite = titleLabelSprite,
+				textColor = LABEL_TEXT_COLOR,
+				verticalPadding = 2,
+				horizontalPadding = 3
+			)
 
-		addRenderableWidget(titleLabel)
+			addRenderableWidget(titleLabel)
+		}
 
-		if (showTexturedInventoryLabel) {
+		if (showInventoryLabel) {
 			val inventoryLabel = TexturedLabel(
 				x = leftPos + inventoryLabelX + inventoryLabelOffsetX,
 				y = topPos + inventoryLabelY + inventoryLabelOffsetY,

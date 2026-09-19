@@ -23,7 +23,7 @@ class EnderPorcupineScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = TEAL_LABEL
 
-	override val showTexturedInventoryLabel: Boolean = false
+	override val showInventoryLabel: Boolean = false
 
 	private lateinit var minXIncreaseButton: Button
 	private lateinit var minYIncreaseButton: Button
