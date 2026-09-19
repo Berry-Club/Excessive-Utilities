@@ -9,10 +9,8 @@ import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import io.netty.buffer.ByteBuf
-import net.minecraft.ChatFormatting
 import net.minecraft.core.NonNullList
 import net.minecraft.network.RegistryFriendlyByteBuf
-import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
