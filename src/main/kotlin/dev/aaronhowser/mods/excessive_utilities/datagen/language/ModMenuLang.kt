@@ -56,6 +56,22 @@ object ModMenuLang {
 	const val ENDER_FREQUENCY_PRIVATE = "menu.excessive_utilities.ender_frequency.private"
 	const val ENDER_FREQUENCY_PUBLIC_TOOLTIP = "tooltip.excessive_utilities.ender_frequency.public"
 	const val ENDER_FREQUENCY_PRIVATE_TOOLTIP = "tooltip.excessive_utilities.ender_frequency.private"
+	const val MECHANICAL_INTERACTOR_ALWAYS_ON = "menu.excessive_utilities.mechanical_interactor.always_on"
+	const val MECHANICAL_INTERACTOR_REDSTONE_ON = "menu.excessive_utilities.mechanical_interactor.redstone_on"
+	const val MECHANICAL_INTERACTOR_REDSTONE_OFF = "menu.excessive_utilities.mechanical_interactor.redstone_off"
+	const val MECHANICAL_INTERACTOR_REDSTONE_PULSE = "menu.excessive_utilities.mechanical_interactor.redstone_pulse"
+	const val MECHANICAL_USER_MODE_GENERIC_CLICK = "menu.excessive_utilities.mechanical_user.mode.generic_click"
+	const val MECHANICAL_USER_MODE_PLACE_BLOCK = "menu.excessive_utilities.mechanical_user.mode.place_block"
+	const val MECHANICAL_USER_MODE_USE_ITEM_ON_BLOCK = "menu.excessive_utilities.mechanical_user.mode.use_item_on_block"
+	const val MECHANICAL_USER_MODE_ACTIVATE_BLOCK_WITH_ITEM = "menu.excessive_utilities.mechanical_user.mode.activate_block_with_item"
+	const val MECHANICAL_USER_MODE_USE_ITEM = "menu.excessive_utilities.mechanical_user.mode.use_item"
+	const val MECHANICAL_USER_MODE_ENTITY = "menu.excessive_utilities.mechanical_user.mode.entity"
+	const val MECHANICAL_USER_CLICK_RIGHT = "menu.excessive_utilities.mechanical_user.click.right"
+	const val MECHANICAL_USER_CLICK_LEFT = "menu.excessive_utilities.mechanical_user.click.left"
+	const val MECHANICAL_USER_SLOT_RANDOM = "menu.excessive_utilities.mechanical_user.slot.random"
+	const val MECHANICAL_USER_SLOT_UPPER_LEFT = "menu.excessive_utilities.mechanical_user.slot.upper_left"
+	const val MECHANICAL_USER_SNEAKING_ON = "menu.excessive_utilities.mechanical_user.sneaking.on"
+	const val MECHANICAL_USER_SNEAKING_OFF = "menu.excessive_utilities.mechanical_user.sneaking.off"
 
 	fun add(provider: ModLanguageProvider) {
 		provider.apply {
@@ -126,6 +142,22 @@ object ModMenuLang {
 			add(ENDER_FREQUENCY_PRIVATE, "Private")
 			add(ENDER_FREQUENCY_PUBLIC_TOOLTIP, "Public Frequency")
 			add(ENDER_FREQUENCY_PRIVATE_TOOLTIP, "Private Frequency")
+			add(MECHANICAL_INTERACTOR_ALWAYS_ON, "Always On")
+			add(MECHANICAL_INTERACTOR_REDSTONE_ON, "Redstone On")
+			add(MECHANICAL_INTERACTOR_REDSTONE_OFF, "Redstone Off")
+			add(MECHANICAL_INTERACTOR_REDSTONE_PULSE, "Redstone Pulse")
+			add(MECHANICAL_USER_MODE_GENERIC_CLICK, "Mode: Generic Click")
+			add(MECHANICAL_USER_MODE_PLACE_BLOCK, "Mode: Place Block")
+			add(MECHANICAL_USER_MODE_USE_ITEM_ON_BLOCK, "Mode: Use Item on Block")
+			add(MECHANICAL_USER_MODE_ACTIVATE_BLOCK_WITH_ITEM, "Mode: Activate Block with Item")
+			add(MECHANICAL_USER_MODE_USE_ITEM, "Mode: Use Item")
+			add(MECHANICAL_USER_MODE_ENTITY, "Mode: Entity")
+			add(MECHANICAL_USER_CLICK_RIGHT, "Click: Right")
+			add(MECHANICAL_USER_CLICK_LEFT, "Click: Left")
+			add(MECHANICAL_USER_SLOT_RANDOM, "Slot: Random")
+			add(MECHANICAL_USER_SLOT_UPPER_LEFT, "Slot: Upper Left")
+			add(MECHANICAL_USER_SNEAKING_ON, "Sneak: On")
+			add(MECHANICAL_USER_SNEAKING_OFF, "Sneak: Off")
 		}
 	}
 
