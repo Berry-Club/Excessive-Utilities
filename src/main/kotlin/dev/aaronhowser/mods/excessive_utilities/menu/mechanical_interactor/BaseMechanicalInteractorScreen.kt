@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor
 
-import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.aaron.menu.components.MultiStageSpriteButton
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenSprite
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
+import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity.RedstoneMode
 import net.minecraft.client.gui.GuiGraphics
@@ -100,26 +100,18 @@ abstract class BaseMechanicalInteractorScreen<T : BaseMechanicalInteractorMenu>(
 	}
 
 	companion object {
-		private val ALWAYS_ON_SPRITE = ScreenSprite(
-			ExcessiveUtilities.modResource("redstone_mode/always_on"),
-			16,
-			16
-		)
-		private val REDSTONE_ON_SPRITE = ScreenSprite(
-			ExcessiveUtilities.modResource("redstone_mode/redstone_on"),
-			16,
-			16
-		)
-		private val REDSTONE_OFF_SPRITE = ScreenSprite(
-			ExcessiveUtilities.modResource("redstone_mode/redstone_off"),
-			16,
-			16
-		)
-		private val REDSTONE_PULSE_SPRITE = ScreenSprite(
-			ExcessiveUtilities.modResource("redstone_mode/redstone_pulse"),
-			16,
-			16
-		)
+		private val ALWAYS_ON_SPRITE = sprite("always_on")
+		private val REDSTONE_ON_SPRITE = sprite("redstone_on")
+		private val REDSTONE_OFF_SPRITE = sprite("redstone_off")
+		private val REDSTONE_PULSE_SPRITE = sprite("redstone_pulse")
+
+		private fun sprite(name: String): ScreenSprite {
+			return ScreenSprite(
+				ExcessiveUtilities.modResource("redstone_mode/$name"),
+				16,
+				16
+			)
+		}
 	}
 
 }
