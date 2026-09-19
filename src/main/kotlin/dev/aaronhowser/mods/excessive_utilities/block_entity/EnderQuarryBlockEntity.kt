@@ -553,9 +553,10 @@ class EnderQuarryBlockEntity(
 				if (checkState.isBlock(ModBlocks.ENDER_MARKER)) {
 					markers.add(checkPos.immutable())
 					directionIterator.remove()
-					break
 				}
 			}
+
+			if (directions.isEmpty()) break
 		}
 
 		if (markers.size < 3) return false
