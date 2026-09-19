@@ -75,9 +75,11 @@ class MechanicalUserMenu(
 			} else {
 				interactionMode.nextEnum()
 			}
+
 			TOGGLE_LEFT_CLICK_BUTTON -> isLeftClick = !isLeftClick
 			TOGGLE_UPPER_LEFT_SLOT_ONLY_BUTTON -> useUpperLeftSlotOnly = !useUpperLeftSlotOnly
 			TOGGLE_SNEAKING_BUTTON -> isSneaking = !isSneaking
+
 			else -> {
 				super.handleButtonPressed(buttonId, isShiftDown)
 				return
