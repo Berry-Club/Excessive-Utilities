@@ -11,6 +11,7 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInte
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorMenu
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 class MechanicalUserScreen(
@@ -18,7 +19,9 @@ class MechanicalUserScreen(
 	playerInventory: Inventory,
 	title: Component
 ) : ExcessiveUtilitiesScreen<MechanicalUserMenu>(menu, playerInventory, title) {
+
 	override val background: ScreenBackground = BACKGROUND
+	override val titleLabelSprite: ResourceLocation = RED_LABEL
 
 	override fun baseInit() {
 		super.baseInit()

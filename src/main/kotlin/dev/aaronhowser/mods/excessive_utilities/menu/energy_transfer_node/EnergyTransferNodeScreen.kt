@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 //TODO: Render the ping XYZ
@@ -15,6 +16,7 @@ class EnergyTransferNodeScreen(
 ) : ExcessiveUtilitiesScreen<EnergyTransferNodeMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val titleLabelSprite: ResourceLocation = RED_LABEL
 	override val inventoryLabelOffsetY: Int = 22
 
 	private lateinit var energyBar: EnergyBar

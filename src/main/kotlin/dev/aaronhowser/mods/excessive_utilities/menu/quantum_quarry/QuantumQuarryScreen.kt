@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 import java.text.DecimalFormat
 import kotlin.jvm.optionals.getOrNull
@@ -19,6 +20,7 @@ class QuantumQuarryScreen(
 ) : ExcessiveUtilitiesScreen<QuantumQuarryMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val titleLabelSprite: ResourceLocation = BRIGHT_TEAL_LABEL
 	override val inventoryLabelOffsetY: Int = 30
 
 	private lateinit var energyBar: EnergyBar

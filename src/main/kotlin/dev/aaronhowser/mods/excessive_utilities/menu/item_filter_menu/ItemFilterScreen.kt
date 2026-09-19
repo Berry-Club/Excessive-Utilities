@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ToggleSpriteButton
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 class ItemFilterScreen(
@@ -19,6 +20,7 @@ class ItemFilterScreen(
 ) : ExcessiveUtilitiesScreen<ItemFilterMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val titleLabelSprite: ResourceLocation = RED_LABEL
 	override val inventoryLabelOffsetY: Int = 73
 
 	private lateinit var invertButton: Button

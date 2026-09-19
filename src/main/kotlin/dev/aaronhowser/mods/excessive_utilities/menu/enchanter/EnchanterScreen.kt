@@ -1,11 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.enchanter
 
-import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ProgressArrow
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 class EnchanterScreen(
@@ -15,8 +16,8 @@ class EnchanterScreen(
 ) : ExcessiveUtilitiesScreen<EnchanterMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
-	override val inventoryLabelOffsetY: Int
-		get() = 12
+	override val titleLabelSprite: ResourceLocation = RED_LABEL
+	override val inventoryLabelOffsetY: Int = 12
 
 	private lateinit var energyBar: EnergyBar
 	private lateinit var progressArrow: ProgressArrow

@@ -1,9 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node
 
-import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 class FlatTransferNodeScreen(
@@ -12,7 +13,10 @@ class FlatTransferNodeScreen(
 	title: Component
 ) : ExcessiveUtilitiesScreen<FlatTransferNodeMenu>(menu, playerInventory, title) {
 
-	override val background: ScreenBackground = if (menu.isItemNode()) ITEM_BACKGROUND else FLUID_BACKGROUND
+	override val background: ScreenBackground =
+		if (menu.isItemNode()) ITEM_BACKGROUND else FLUID_BACKGROUND
+	override val titleLabelSprite: ResourceLocation =
+		if (menu.isItemNode()) RED_LABEL else BLUE_LABEL
 
 	override val inventoryLabelOffsetY: Int = -2
 

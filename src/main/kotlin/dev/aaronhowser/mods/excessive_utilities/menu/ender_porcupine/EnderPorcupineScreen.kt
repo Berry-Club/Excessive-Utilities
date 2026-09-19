@@ -11,6 +11,7 @@ import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.ImageButton
 import net.minecraft.client.gui.components.WidgetSprites
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 class EnderPorcupineScreen(
@@ -20,6 +21,7 @@ class EnderPorcupineScreen(
 ) : ExcessiveUtilitiesScreen<EnderPorcupineMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val titleLabelSprite: ResourceLocation = TEAL_LABEL
 
 	override val showTexturedInventoryLabel: Boolean = false
 

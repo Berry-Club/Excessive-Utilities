@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.components.ToggleSpriteButt
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterScreen
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
 
 //TODO: Texture and move buttons around
@@ -20,6 +21,7 @@ class FluidFilterScreen(
 ) : ExcessiveUtilitiesScreen<FluidFilterMenu>(menu, playerInventory, title) {
 
 	override val background: ScreenBackground = BACKGROUND
+	override val titleLabelSprite: ResourceLocation = BLUE_LABEL
 	override val inventoryLabelOffsetY: Int = 55
 
 	private lateinit var invertButton: Button
