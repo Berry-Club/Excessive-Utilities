@@ -4,7 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.client.render.AaronRenderUtil
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderPorcupineBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.ender_porcupine.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.client.renderer.MultiBufferSource

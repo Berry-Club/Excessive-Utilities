@@ -10,6 +10,8 @@
 
 ### Fixed
 
+- The Ender Porcupine now uses a single delegating handler for items/fluids/energy each (#70)
+	- Previously it would directly use the target's handler, which would get cached by other mods and not change when the Porcupine changes targets
 - Fixed an occasional crash due to client input being accessed before it's available (#74)
 	- PR by aarmful
 - Fixed the Ender Quarry sometimes stopping the marker search early (#73)

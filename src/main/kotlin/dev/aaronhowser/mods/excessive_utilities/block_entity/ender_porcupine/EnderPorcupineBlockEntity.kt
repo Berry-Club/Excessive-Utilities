@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.block_entity
+package dev.aaronhowser.mods.excessive_utilities.block_entity.ender_porcupine
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
@@ -30,6 +30,7 @@ import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import net.neoforged.neoforge.items.IItemHandler
 import kotlin.math.absoluteValue
 
+@Suppress("TYPE_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 class EnderPorcupineBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
@@ -51,6 +52,10 @@ class EnderPorcupineBlockEntity(
 
 	var allOffsets: List<BlockPos> = emptyList()
 		private set
+
+	private val itemHandlers: MutableMap<Direction?, IItemHandler> = mutableMapOf()
+	private val fluidHandlers: MutableMap<Direction?, IFluidHandler> = mutableMapOf()
+	private val energyHandlers: MutableMap<Direction?, IEnergyStorage> = mutableMapOf()
 
 	init {
 		updateOffsets()
@@ -82,29 +87,56 @@ class EnderPorcupineBlockEntity(
 		return offset.x.absoluteValue + offset.y.absoluteValue + offset.z.absoluteValue.toDouble()
 	}
 
-	fun getItemHandler(direction: Direction?): IItemHandler? {
-		val stateThere = level?.getBlockState(getLinkedPosition())
-		if (stateThere?.isBlock(ModBlockTagsProvider.ENDER_PORCUPINE_BLACKLIST).isTrue()) return null
+	fun getItemHandler(direction: Direction?): IItemHandler {
+		val existingHandler = itemHandlers[direction]
+		if (existingHandler != null) return existingHandler
 
-		@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-		return level?.getCapability(Capabilities.ItemHandler.BLOCK, getLinkedPosition(), direction)
+		val newHandler = EnderPorcupineItemHandler(this, direction)
+		itemHandlers[direction] = newHandler
+		return newHandler
 	}
 
-	fun getFluidHandler(direction: Direction?): IFluidHandler? {
-		val stateThere = level?.getBlockState(getLinkedPosition())
+	fun findTargetItemHandler(direction: Direction?): IItemHandler? {
+		val linkedPosition = getLinkedPosition()
+		val stateThere = level?.getBlockState(linkedPosition)
 		if (stateThere?.isBlock(ModBlockTagsProvider.ENDER_PORCUPINE_BLACKLIST).isTrue()) return null
 
-
-		@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-		return level?.getCapability(Capabilities.FluidHandler.BLOCK, getLinkedPosition(), direction)
+		return level?.getCapability(Capabilities.ItemHandler.BLOCK, linkedPosition, direction)
 	}
 
-	fun getEnergyHandler(direction: Direction?): IEnergyStorage? {
-		val stateThere = level?.getBlockState(getLinkedPosition())
+	fun getFluidHandler(direction: Direction?): IFluidHandler {
+		val existingHandler = fluidHandlers[direction]
+		if (existingHandler != null) return existingHandler
+
+		val newHandler = EnderPorcupineFluidHandler(this, direction)
+		fluidHandlers[direction] = newHandler
+		return newHandler
+	}
+
+	fun findTargetFluidHandler(direction: Direction?): IFluidHandler? {
+		val linkedPosition = getLinkedPosition()
+		val stateThere = level?.getBlockState(linkedPosition)
 		if (stateThere?.isBlock(ModBlockTagsProvider.ENDER_PORCUPINE_BLACKLIST).isTrue()) return null
 
-		@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
-		return level?.getCapability(Capabilities.EnergyStorage.BLOCK, getLinkedPosition(), direction)
+
+		return level?.getCapability(Capabilities.FluidHandler.BLOCK, linkedPosition, direction)
+	}
+
+	fun getEnergyHandler(direction: Direction?): IEnergyStorage {
+		val existingHandler = energyHandlers[direction]
+		if (existingHandler != null) return existingHandler
+
+		val newHandler = EnderPorcupineEnergyStorage(this, direction)
+		energyHandlers[direction] = newHandler
+		return newHandler
+	}
+
+	fun findTargetEnergyHandler(direction: Direction?): IEnergyStorage? {
+		val linkedPosition = getLinkedPosition()
+		val stateThere = level?.getBlockState(linkedPosition)
+		if (stateThere?.isBlock(ModBlockTagsProvider.ENDER_PORCUPINE_BLACKLIST).isTrue()) return null
+
+		return level?.getCapability(Capabilities.EnergyStorage.BLOCK, linkedPosition, direction)
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

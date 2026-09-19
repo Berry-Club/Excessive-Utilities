@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.registry
 import dev.aaronhowser.mods.aaron.registry.AaronBlockEntityTypeRegistry
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block_entity.*
+import dev.aaronhowser.mods.excessive_utilities.block_entity.ender_porcupine.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.*
 import dev.aaronhowser.mods.excessive_utilities.block_entity.mill.*
 import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.EnergyTransferNodeBlockEntity

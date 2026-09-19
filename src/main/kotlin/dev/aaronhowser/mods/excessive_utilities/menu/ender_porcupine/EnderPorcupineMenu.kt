@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_porcupine
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
-import dev.aaronhowser.mods.excessive_utilities.block_entity.EnderPorcupineBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.ender_porcupine.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player

@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.AngelBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.*
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SimpleMachineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.ender_porcupine.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFluidInputDataDrivenGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.MagmaticGeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.command.ModCommands
