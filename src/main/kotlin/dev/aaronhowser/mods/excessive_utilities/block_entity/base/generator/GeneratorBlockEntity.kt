@@ -163,10 +163,11 @@ abstract class GeneratorBlockEntity(
 	protected open fun generatorTick(level: ServerLevel): Boolean {
 		if (burnTimeRemaining <= 0) {
 			fePerTick = 0
-			val wasLit = blockState.getValue(GeneratorBlock.LIT)
-			val shouldBeLit = tryStartBurning(level)
-			changeLitState(level, wasLit, shouldBeLit)
-			return shouldBeLit
+			if (!tryStartBurning(level)) {
+				val wasLit = blockState.getValue(GeneratorBlock.LIT)
+				changeLitState(level, wasLit, false)
+				return false
+			}
 		}
 
 		val wasLit = blockState.getValue(GeneratorBlock.LIT)

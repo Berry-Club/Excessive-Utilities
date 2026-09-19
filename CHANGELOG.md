@@ -17,6 +17,7 @@
 - The Ender Porcupine now uses a single delegating handler for items/fluids/energy each (#70)
 	- Previously it would directly use the target's handler, which would get cached by other mods and not change when the Porcupine changes targets
 - Fixed the Crusher showing as 0.50% instead of 50% etc
+- Generators start generating FE the same tick they start burning fuel (#66)
 
 # 1.9.0
 
