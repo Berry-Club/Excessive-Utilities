@@ -1,8 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.simple_machine
 
-import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
 import dev.aaronhowser.mods.excessive_utilities.menu.components.ProgressArrow
 import net.minecraft.network.chat.Component
@@ -17,7 +17,6 @@ class SimpleMachineScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = YELLOW_LABEL
-	override val inventoryLabelOffsetY: Int = 12
 
 	private lateinit var energyBar: EnergyBar
 	private lateinit var progressArrow: ProgressArrow

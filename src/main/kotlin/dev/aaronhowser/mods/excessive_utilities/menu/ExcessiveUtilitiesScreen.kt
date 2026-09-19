@@ -18,6 +18,9 @@ abstract class ExcessiveUtilitiesScreen<M : AbstractContainerMenu>(
 	override val titleLabelOffsetX: Int = 4
 	override val titleLabelOffsetY: Int = 4
 
+	override val inventoryLabelOffsetY: Int = -5
+	override val inventoryLabelOffsetX: Int = -4
+
 	protected open val titleLabelSprite: ResourceLocation = PLAIN_LABEL
 
 	override fun baseInit() {
