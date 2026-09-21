@@ -1,47 +1,32 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency
 
-import dev.aaronhowser.mods.aaron.menu.components.TexturedLabel
+import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
+import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.packet.client_to_server.ConfigureEnderFrequencyPacket
-import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.EditBox
-import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
-import java.util.function.Supplier
 
 class EnderFrequencyScreen(
 	menu: EnderFrequencyMenu,
 	inventory: Inventory,
 	title: Component
-) : AbstractContainerScreen<EnderFrequencyMenu>(menu, inventory, title) {
+) : ExcessiveUtilitiesScreen<EnderFrequencyMenu>(menu, inventory, title) {
+
+	override val background: ScreenBackground = BACKGROUND
+	override val showInventoryLabel: Boolean = false
 
 	private lateinit var nameBox: EditBox
 	private var isPrivate: Boolean = menu.initiallyPrivate
 
-	init {
-		imageWidth = 220
-		imageHeight = 110
-	}
-
-	override fun init() {
-		super.init()
-
-		val titleLabel = TexturedLabel(
-			x = leftPos,
-			y = topPos,
-			font = font,
-			messageGetter = Supplier(::getTitleLabelMessage),
-			backgroundSprite = ExcessiveUtilities.modResource("label/plain"),
-			textColor = 4210752
-		)
-
-		addRenderableWidget(titleLabel)
+	override fun baseInit() {
+		super.baseInit()
 
 		nameBox = EditBox(
 			font,
@@ -80,21 +65,6 @@ class EnderFrequencyScreen(
 		}
 	}
 
-	private fun getTitleLabelMessage(): Component = title
-
-	override fun renderBg(graphics: GuiGraphics, partialTick: Float, mouseX: Int, mouseY: Int) {
-		graphics.fill(leftPos, topPos, leftPos + imageWidth, topPos + imageHeight, 0xFF202020.toInt())
-		graphics.fill(leftPos + 2, topPos + 2, leftPos + imageWidth - 2, topPos + imageHeight - 2, 0xFF404040.toInt())
-	}
-
-	override fun renderLabels(graphics: GuiGraphics, mouseX: Int, mouseY: Int) {}
-
-	override fun render(graphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
-		renderBackground(graphics, mouseX, mouseY, partialTick)
-		super.render(graphics, mouseX, mouseY, partialTick)
-		renderTooltip(graphics, mouseX, mouseY)
-	}
-
 	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
 		val inventoryKey = minecraft?.options?.keyInventory
 		if (nameBox.isFocused && inventoryKey?.matches(keyCode, scanCode).isTrue()) {
@@ -102,6 +72,10 @@ class EnderFrequencyScreen(
 		}
 
 		return super.keyPressed(keyCode, scanCode, modifiers)
+	}
+
+	companion object {
+		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/ender_frequency.png"), 220, 110)
 	}
 
 }
