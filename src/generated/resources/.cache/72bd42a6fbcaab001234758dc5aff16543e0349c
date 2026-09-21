@@ -1,4 +1,4 @@
-// 1.21.1	2026-09-18T20:07:23.0298356	Tags for minecraft:block mod id excessive_utilities
+// 1.21.1	2026-09-20T23:58:33.0171977	Tags for minecraft:block mod id excessive_utilities
 5124cada2ba7e5783038acde07858db18ecdb114 data/c/tags/block/cobblestones/normal.json
 676677f0fefb47ab19c741e37dbec55f376d979b data/c/tags/block/dyed.json
 d61cb8ccee09da1d1a9a601aa9b7557f67844654 data/c/tags/block/dyed/black.json
@@ -33,6 +33,7 @@ e4b691a3815ea9824a06a6513aad4419cb2c9138 data/excessive_utilities/tags/block/end
 4c5664850e821b7d72bb1fb02b097f7931c9fcf4 data/excessive_utilities/tags/block/ender_quarry_blacklist.json
 25d109a8db751c76c0ba21679bf8e4720e31928e data/excessive_utilities/tags/block/ender_quarry_part.json
 cb4faae4ec23711670989cc8522e7c8029f99a75 data/excessive_utilities/tags/block/ender_quarry_upgrade.json
+cfab2ab481bf476a645d326b87627918009b9e50 data/excessive_utilities/tags/block/ender_quarry_world_hole_blacklist.json
 e3b181cfa91272158c0704c4d7d9f17a056ef3fe data/excessive_utilities/tags/block/erosion_shovel_target.json
 a0f522a32649d10f63ac1b9b6a169b7fc9b10264 data/excessive_utilities/tags/block/fe_transmitter_blacklist.json
 b147fcff5c0b4d72df1cb7809b063b2562180832 data/excessive_utilities/tags/block/mineable/fire_axe.json
