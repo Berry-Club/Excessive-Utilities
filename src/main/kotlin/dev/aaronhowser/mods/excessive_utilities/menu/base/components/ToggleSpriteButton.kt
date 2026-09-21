@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.menu.components
+package dev.aaronhowser.mods.excessive_utilities.menu.base.components
 
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenSprite
 import net.minecraft.client.gui.Font

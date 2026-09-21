@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
-import dev.aaronhowser.mods.excessive_utilities.menu.components.EnergyBar
+import dev.aaronhowser.mods.excessive_utilities.menu.base.components.EnergyBar
 import net.minecraft.client.gui.GuiGraphics
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component

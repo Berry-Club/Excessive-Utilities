@@ -4,7 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextEnum
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.prevEnum
 import dev.aaronhowser.mods.excessive_utilities.block_entity.MechanicalUserBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorMenu
+import dev.aaronhowser.mods.excessive_utilities.menu.base.BaseMechanicalInteractorMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer

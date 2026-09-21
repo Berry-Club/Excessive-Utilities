@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.menu.components
+package dev.aaronhowser.mods.excessive_utilities.menu.base.components
 
 import com.mojang.blaze3d.systems.RenderSystem
 import net.minecraft.client.Minecraft

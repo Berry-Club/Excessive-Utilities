@@ -7,7 +7,7 @@ import dev.aaronhowser.mods.aaron.packet.c2s.ClientClickedMenuButton
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
-import dev.aaronhowser.mods.excessive_utilities.menu.components.ToggleSpriteButton
+import dev.aaronhowser.mods.excessive_utilities.menu.base.components.ToggleSpriteButton
 import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation

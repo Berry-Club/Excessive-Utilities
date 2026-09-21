@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor
+package dev.aaronhowser.mods.excessive_utilities.menu.base
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
@@ -7,7 +7,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextEnum
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.prevEnum
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity.RedstoneMode
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.world.Container
 import net.minecraft.world.entity.player.Inventory
@@ -25,10 +24,10 @@ abstract class BaseMechanicalInteractorMenu(
 	val machineData: ContainerData
 ) : MenuWithInventory(menuType, containerId, playerInventory), MenuWithButtons {
 
-	var redstoneMode: RedstoneMode
+	var redstoneMode: MechanicalInteractorBlockEntity.RedstoneMode
 		get() {
 			val ordinal = machineData.get(MechanicalInteractorBlockEntity.REDSTONE_MODE_DATA_INDEX)
-			return RedstoneMode.fromOrdinal(ordinal)
+			return MechanicalInteractorBlockEntity.RedstoneMode.fromOrdinal(ordinal)
 		}
 		set(value) {
 			machineData.set(MechanicalInteractorBlockEntity.REDSTONE_MODE_DATA_INDEX, value.ordinal)

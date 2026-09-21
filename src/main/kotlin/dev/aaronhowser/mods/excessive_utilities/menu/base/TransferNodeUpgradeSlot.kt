@@ -1,4 +1,4 @@
-package dev.aaronhowser.mods.excessive_utilities.menu
+package dev.aaronhowser.mods.excessive_utilities.menu.base
 
 import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
