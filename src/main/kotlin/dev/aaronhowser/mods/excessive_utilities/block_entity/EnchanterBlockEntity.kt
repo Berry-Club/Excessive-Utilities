@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.wrapper.InvWrapper
 
@@ -48,9 +49,9 @@ class EnchanterBlockEntity(
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 	override fun getContainers(): List<Container> = listOf(container)
 
-	private val itemHandler: IItemHandlerModifiable = EnchanterItemHandler()
+	private val itemHandler: IItemHandler = EnchanterItemHandler()
 
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
+	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
 
 	override fun getGpUsage(): Double {
 		val isCrafting = recipeCache != null
