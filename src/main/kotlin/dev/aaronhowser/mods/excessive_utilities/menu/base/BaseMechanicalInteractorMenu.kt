@@ -32,15 +32,6 @@ abstract class BaseMechanicalInteractorMenu(
 			machineData.set(MechanicalInteractorBlockEntity.REDSTONE_MODE_DATA_INDEX, value.ordinal)
 		}
 
-	protected fun initializeMenu(expectedDataSize: Int) {
-		checkContainerSize(machineContainer, getExpectedContainerSize())
-		checkContainerDataCount(machineData, expectedDataSize)
-		addSlots(157)
-		addDataSlots(machineData)
-	}
-
-	protected abstract fun getExpectedContainerSize(): Int
-
 	override fun addContainerSlots() {
 		for (row in 0 until 3) {
 			for (column in 0 until 3) {
@@ -50,7 +41,6 @@ abstract class BaseMechanicalInteractorMenu(
 		}
 
 		val speedSlot = Slot(machineContainer, MechanicalInteractorBlockEntity.UPGRADE_SLOT, 153, 5)
-
 		addSlot(speedSlot)
 	}
 

@@ -56,7 +56,7 @@ class MechanicalMinerScreen(
 		val BACKGROUND = ScreenBackground(
 			ExcessiveUtilities.modResource("textures/gui/mechanical_miner.png"),
 			176,
-			240
+			199
 		)
 	}
 

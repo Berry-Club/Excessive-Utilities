@@ -34,7 +34,10 @@ class MechanicalUserMenu(
 			)
 
 	init {
-		initializeMenu(MechanicalUserBlockEntity.MENU_DATA_SIZE)
+		checkContainerSize(machineContainer, MechanicalInteractorBlockEntity.BASE_CONTAINER_SIZE)
+		checkContainerDataCount(machineData, MechanicalUserBlockEntity.MENU_DATA_SIZE)
+		addSlots(159)
+		addDataSlots(machineData)
 	}
 
 	var interactionMode: MechanicalUserBlockEntity.InteractionMode
@@ -63,8 +66,6 @@ class MechanicalUserMenu(
 		set(value) {
 			machineData.set(MechanicalUserBlockEntity.SNEAKING_DATA_INDEX, if (value) 1 else 0)
 		}
-
-	override fun getExpectedContainerSize(): Int = MechanicalInteractorBlockEntity.BASE_CONTAINER_SIZE
 
 	override fun handleButtonPressed(buttonId: Int, isShiftDown: Boolean) {
 		when (buttonId) {

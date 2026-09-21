@@ -36,10 +36,11 @@ class MechanicalMinerMenu(
 			)
 
 	init {
-		initializeMenu(MechanicalInteractorBlockEntity.MENU_DATA_SIZE)
+		checkContainerSize(machineContainer, MechanicalMinerBlockEntity.CONTAINER_SIZE)
+		checkContainerDataCount(machineData, MechanicalInteractorBlockEntity.MENU_DATA_SIZE)
+		addSlots(117)
+		addDataSlots(machineData)
 	}
-
-	override fun getExpectedContainerSize(): Int = MechanicalMinerBlockEntity.CONTAINER_SIZE
 
 	override fun addContainerSlots() {
 		super.addContainerSlots()
