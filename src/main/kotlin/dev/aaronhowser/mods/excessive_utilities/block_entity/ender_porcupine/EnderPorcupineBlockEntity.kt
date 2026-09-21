@@ -153,36 +153,7 @@ class EnderPorcupineBlockEntity(
 		maximumOffset = tag.getLong(MAXIMUM_OFFSET_NBT).toBlockPos()
 	}
 
-	private val containerData =
-		object : ContainerData {
-			override fun getCount(): Int = CONTAINER_DATA_SIZE
-
-			override fun get(index: Int): Int {
-				return when (index) {
-					MIN_X_DATA_INDEX -> minimumOffset.x
-					MIN_Y_DATA_INDEX -> minimumOffset.y
-					MIN_Z_DATA_INDEX -> minimumOffset.z
-					MAX_X_DATA_INDEX -> maximumOffset.x
-					MAX_Y_DATA_INDEX -> maximumOffset.y
-					MAX_Z_DATA_INDEX -> maximumOffset.z
-					CURRENT_OFFSET_X_DATA_INDEX -> getCurrentOffset().x
-					CURRENT_OFFSET_Y_DATA_INDEX -> getCurrentOffset().y
-					CURRENT_OFFSET_Z_DATA_INDEX -> getCurrentOffset().z
-					else -> 0
-				}
-			}
-
-			override fun set(index: Int, value: Int) {
-				when (index) {
-					MIN_X_DATA_INDEX -> minimumOffset = BlockPos(value, minimumOffset.y, minimumOffset.z)
-					MIN_Y_DATA_INDEX -> minimumOffset = BlockPos(minimumOffset.x, value, minimumOffset.z)
-					MIN_Z_DATA_INDEX -> minimumOffset = BlockPos(minimumOffset.x, minimumOffset.y, value)
-					MAX_X_DATA_INDEX -> maximumOffset = BlockPos(value, maximumOffset.y, maximumOffset.z)
-					MAX_Y_DATA_INDEX -> maximumOffset = BlockPos(maximumOffset.x, value, maximumOffset.z)
-					MAX_Z_DATA_INDEX -> maximumOffset = BlockPos(maximumOffset.x, maximumOffset.y, value)
-				}
-			}
-		}
+	private val containerData: ContainerData = EnderPorcupineContainerData()
 
 	override fun getDisplayName(): Component = blockState.block.name
 
@@ -198,6 +169,38 @@ class EnderPorcupineBlockEntity(
 	override fun setChanged() {
 		super.setChanged()
 		level?.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_ALL_IMMEDIATE)
+	}
+
+	private inner class EnderPorcupineContainerData : ContainerData {
+
+		override fun getCount(): Int = CONTAINER_DATA_SIZE
+
+		override fun get(index: Int): Int {
+			return when (index) {
+				MIN_X_DATA_INDEX -> minimumOffset.x
+				MIN_Y_DATA_INDEX -> minimumOffset.y
+				MIN_Z_DATA_INDEX -> minimumOffset.z
+				MAX_X_DATA_INDEX -> maximumOffset.x
+				MAX_Y_DATA_INDEX -> maximumOffset.y
+				MAX_Z_DATA_INDEX -> maximumOffset.z
+				CURRENT_OFFSET_X_DATA_INDEX -> getCurrentOffset().x
+				CURRENT_OFFSET_Y_DATA_INDEX -> getCurrentOffset().y
+				CURRENT_OFFSET_Z_DATA_INDEX -> getCurrentOffset().z
+				else -> 0
+			}
+		}
+
+		override fun set(index: Int, value: Int) {
+			when (index) {
+				MIN_X_DATA_INDEX -> minimumOffset = BlockPos(value, minimumOffset.y, minimumOffset.z)
+				MIN_Y_DATA_INDEX -> minimumOffset = BlockPos(minimumOffset.x, value, minimumOffset.z)
+				MIN_Z_DATA_INDEX -> minimumOffset = BlockPos(minimumOffset.x, minimumOffset.y, value)
+				MAX_X_DATA_INDEX -> maximumOffset = BlockPos(value, maximumOffset.y, maximumOffset.z)
+				MAX_Y_DATA_INDEX -> maximumOffset = BlockPos(maximumOffset.x, value, maximumOffset.z)
+				MAX_Z_DATA_INDEX -> maximumOffset = BlockPos(maximumOffset.x, maximumOffset.y, value)
+			}
+		}
+
 	}
 
 	companion object {
