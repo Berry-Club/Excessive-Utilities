@@ -17,7 +17,7 @@ class BagOfHolding(
 	var isActive = true
 		private set
 
-	private val container = BagOfHoldingContainer()
+	val container = BagOfHoldingContainer()
 
 	fun takeItems(): List<ItemStack> {
 		isActive = false
@@ -57,7 +57,7 @@ class BagOfHolding(
 		}
 	}
 
-	private inner class BagOfHoldingContainer : SimpleContainer(SLOT_COUNT) {
+	inner class BagOfHoldingContainer : SimpleContainer(SLOT_COUNT) {
 		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
 			return isActive && stack.item !is BagOfHoldingItem
 		}
