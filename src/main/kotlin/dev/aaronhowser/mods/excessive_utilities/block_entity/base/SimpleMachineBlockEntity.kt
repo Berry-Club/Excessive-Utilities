@@ -78,26 +78,10 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 				// Unused
 			}
 		}
+	private val itemHandler: IItemHandlerModifiable = SimpleMachineItemHandler()
 
 	override fun getContainers(): List<Container> = listOf(container)
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable =
-		object : RangedWrapper(InvWrapper(container), INPUT_SLOT, OUTPUT_SLOT + 1) {
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-				return if (slot == OUTPUT_SLOT) {
-					super.extractItem(slot, amount, simulate)
-				} else {
-					ItemStack.EMPTY
-				}
-			}
-
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				return if (slot == OUTPUT_SLOT) {
-					stack
-				} else {
-					super.insertItem(slot, stack, simulate)
-				}
-			}
-		}
+	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
 	override fun getGpUsage(): Double {
 		val level = level ?: return 0.0
@@ -245,6 +229,26 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		progress = tag.getInt(PROGRESS_NBT)
 		tag.loadItems(container, registries)
 		tag.loadEnergy(ENERGY_NBT, energyStorage, registries)
+	}
+
+	private inner class SimpleMachineItemHandler : RangedWrapper(
+		InvWrapper(container),
+		INPUT_SLOT,
+		OUTPUT_SLOT + 1
+	) {
+
+		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
+			if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
+
+			return super.extractItem(slot, amount, simulate)
+		}
+
+		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
+			if (slot == OUTPUT_SLOT) return stack
+
+			return super.insertItem(slot, stack, simulate)
+		}
+
 	}
 
 	companion object {
