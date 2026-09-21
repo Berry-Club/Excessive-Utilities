@@ -80,11 +80,11 @@ object ModBlocks : AaronBlockRegistry() {
 		registerBlock("redstone_lantern", ::RedstoneLanternBlock)
 	val MECHANICAL_MINER: DeferredBlock<MechanicalInteractorBlock> =
 		registerBlock("mechanical_miner") {
-			MechanicalInteractorBlock(::MechanicalMinerBlockEntity) { ModBlockEntityTypes.MECHANICAL_MINER.get() }
+			MechanicalInteractorBlock(::MechanicalMinerBlockEntity, ModBlockEntityTypes.MECHANICAL_MINER::get)
 		}
 	val MECHANICAL_USER: DeferredBlock<MechanicalInteractorBlock> =
 		registerBlock("mechanical_user") {
-			MechanicalInteractorBlock(::MechanicalUserBlockEntity) { ModBlockEntityTypes.MECHANICAL_USER.get() }
+			MechanicalInteractorBlock(::MechanicalUserBlockEntity, ModBlockEntityTypes.MECHANICAL_USER::get)
 		}
 	val REDSTONE_CLOCK: DeferredBlock<RedstoneClockBlock> =
 		registerBlock("redstone_clock", ::RedstoneClockBlock)
