@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.QuantumQuarryBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.inventory.Slot
 
 class QuantumQuarryMenu(
 	containerId: Int,
@@ -35,9 +35,9 @@ class QuantumQuarryMenu(
 	}
 
 	override fun addContainerSlots() {
-		val filterSlot = Slot(upgradesContainer, QuantumQuarryBlockEntity.ITEM_FILTER_SLOT_INDEX, 10, 24)
-		val enchantedBookSlot = Slot(upgradesContainer, QuantumQuarryBlockEntity.ENCHANTED_BOOK_SLOT_INDEX, 10, 42)
-		val biomeFilterSlot = Slot(upgradesContainer, QuantumQuarryBlockEntity.BIOME_FILTER_SLOT_INDEX, 10, 60)
+		val filterSlot = ContainerSlot(upgradesContainer, QuantumQuarryBlockEntity.ITEM_FILTER_SLOT_INDEX, 10, 24)
+		val enchantedBookSlot = ContainerSlot(upgradesContainer, QuantumQuarryBlockEntity.ENCHANTED_BOOK_SLOT_INDEX, 10, 42)
+		val biomeFilterSlot = ContainerSlot(upgradesContainer, QuantumQuarryBlockEntity.BIOME_FILTER_SLOT_INDEX, 10, 60)
 
 		addSlot(filterSlot)
 		addSlot(enchantedBookSlot)

@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.crusher
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.CrusherBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.inventory.Slot
 
 class CrusherMenu(
 	containerId: Int,
@@ -35,11 +35,11 @@ class CrusherMenu(
 	}
 
 	override fun addContainerSlots() {
-		val inputSlot = Slot(machineContainer, CrusherBlockEntity.INPUT_SLOT, 47, 41)
-		val outputSlot = Slot(machineContainer, CrusherBlockEntity.PRIMARY_OUTPUT_SLOT, 101, 41)
-		val secondaryOutputSlot = Slot(machineContainer, CrusherBlockEntity.SECONDARY_OUTPUT_SLOT, 133, 41)
+		val inputSlot = ContainerSlot(machineContainer, CrusherBlockEntity.INPUT_SLOT, 47, 41)
+		val outputSlot = ContainerSlot(machineContainer, CrusherBlockEntity.PRIMARY_OUTPUT_SLOT, 101, 41)
+		val secondaryOutputSlot = ContainerSlot(machineContainer, CrusherBlockEntity.SECONDARY_OUTPUT_SLOT, 133, 41)
 
-		val upgradeSlot = Slot(machineContainer, CrusherBlockEntity.UPGRADE_SLOT, 153, 5)
+		val upgradeSlot = ContainerSlot(machineContainer, CrusherBlockEntity.UPGRADE_SLOT, 153, 5)
 
 		addSlot(inputSlot)
 		addSlot(outputSlot)

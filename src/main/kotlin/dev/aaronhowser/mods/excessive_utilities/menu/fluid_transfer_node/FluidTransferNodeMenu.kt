@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.FluidTransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.menu.base.TransferNodeUpgradeSlot
@@ -12,7 +13,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.inventory.Slot
 
 class FluidTransferNodeMenu(
 	containerId: Int,
@@ -30,7 +30,7 @@ class FluidTransferNodeMenu(
 	}
 
 	override fun addContainerSlots() {
-		val filterSlot = Slot(filterContainer, 0, 153, 5)
+		val filterSlot = ContainerSlot(filterContainer, 0, 153, 5)
 		this.addSlot(filterSlot)
 
 		for (i in 0 until TransferNodeBlockEntity.UPGRADE_CONTAINER_SIZE) {

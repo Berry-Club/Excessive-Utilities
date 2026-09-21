@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.menu.base
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextEnum
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.prevEnum
@@ -12,7 +13,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.MenuType
-import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
 abstract class BaseMechanicalInteractorMenu(
@@ -35,12 +35,19 @@ abstract class BaseMechanicalInteractorMenu(
 	override fun addContainerSlots() {
 		for (row in 0 until 3) {
 			for (column in 0 until 3) {
-				val slot = column + row * 3
-				addSlot(Slot(machineContainer, slot, 62 + column * 18, 43 + row * 18))
+				val slotIndex = column + row * 3
+				val slot = ContainerSlot(
+					machineContainer,
+					slotIndex,
+					62 + column * 18,
+					43 + row * 18
+				)
+
+				addSlot(slot)
 			}
 		}
 
-		val speedSlot = Slot(machineContainer, MechanicalInteractorBlockEntity.UPGRADE_SLOT, 153, 5)
+		val speedSlot = ContainerSlot(machineContainer, MechanicalInteractorBlockEntity.UPGRADE_SLOT, 153, 5)
 		addSlot(speedSlot)
 	}
 

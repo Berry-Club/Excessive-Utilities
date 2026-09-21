@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.base
 
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.world.Container
-import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
 class TransferNodeUpgradeSlot(
@@ -11,7 +11,7 @@ class TransferNodeUpgradeSlot(
 	slotIndex: Int,
 	x: Int,
 	y: Int
-) : Slot(container, slotIndex, x, y) {
+) : ContainerSlot(container, slotIndex, x, y) {
 
 	override fun getMaxStackSize(stack: ItemStack): Int {
 		if (stack.isItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE)

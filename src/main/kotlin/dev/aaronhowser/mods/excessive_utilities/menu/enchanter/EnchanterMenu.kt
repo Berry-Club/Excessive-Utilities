@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.enchanter
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnchanterBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.inventory.Slot
 
 class EnchanterMenu(
 	containerId: Int,
@@ -40,12 +40,12 @@ class EnchanterMenu(
 	fun getMaxProgress(): Int = enchanterContainerData.get(EnchanterBlockEntity.MAX_PROGRESS_DATA_INDEX)
 
 	override fun addContainerSlots() {
-		val leftInputSlot = Slot(enchanterContainer, EnchanterBlockEntity.LEFT_INPUT_SLOT, 49, 41)
-		val rightInputSlot = Slot(enchanterContainer, EnchanterBlockEntity.RIGHT_INPUT_SLOT, 73, 41)
+		val leftInputSlot = ContainerSlot(enchanterContainer, EnchanterBlockEntity.LEFT_INPUT_SLOT, 49, 41)
+		val rightInputSlot = ContainerSlot(enchanterContainer, EnchanterBlockEntity.RIGHT_INPUT_SLOT, 73, 41)
 
-		val outputSlot = Slot(enchanterContainer, EnchanterBlockEntity.OUTPUT_SLOT, 127, 41)
+		val outputSlot = ContainerSlot(enchanterContainer, EnchanterBlockEntity.OUTPUT_SLOT, 127, 41)
 
-		val upgradeSlot = Slot(enchanterContainer, EnchanterBlockEntity.UPGRADE_SLOT, 153, 5)
+		val upgradeSlot = ContainerSlot(enchanterContainer, EnchanterBlockEntity.UPGRADE_SLOT, 153, 5)
 
 		addSlot(leftInputSlot)
 		addSlot(rightInputSlot)

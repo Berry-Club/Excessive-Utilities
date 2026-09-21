@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding
 
 import dev.aaronhowser.mods.aaron.menu.HeldItemMenu
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding.BagOfHolding
 import dev.aaronhowser.mods.excessive_utilities.item.BagOfHoldingItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -8,7 +9,6 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.MenuType
-import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import java.util.*
 
@@ -33,7 +33,14 @@ class BagOfHoldingMenu(
 		for (row in 0 until BAG_ROWS) {
 			for (column in 0 until SLOTS_PER_ROW) {
 				val slotIndex = column + row * SLOTS_PER_ROW
-				addSlot(Slot(bag.container, slotIndex, 8 + column * SLOT_SPACING, 18 + row * SLOT_SPACING))
+				val slot = ContainerSlot(
+					bag.container,
+					slotIndex,
+					8 + column * SLOT_SPACING,
+					18 + row * SLOT_SPACING
+				)
+
+				addSlot(slot)
 			}
 		}
 	}
@@ -44,8 +51,8 @@ class BagOfHoldingMenu(
 				heldItem.get(ModDataComponents.BAG_OF_HOLDING_ID) == bagId
 	}
 
-	override fun quickMoveStack(player: Player, slotIndex: Int): ItemStack {
-		val clickedSlot = slots.getOrNull(slotIndex)
+	override fun quickMoveStack(player: Player, clickedSlotIndex: Int): ItemStack {
+		val clickedSlot = slots.getOrNull(clickedSlotIndex)
 		if (clickedSlot == null || !clickedSlot.hasItem()) return ItemStack.EMPTY
 
 		if (clickedSlot.container === playerInventory && clickedSlot.slotIndex == playerInventory.selected) {
@@ -54,7 +61,7 @@ class BagOfHoldingMenu(
 
 		val clickedStack = clickedSlot.item
 		val originalStack = clickedStack.copy()
-		val wasMoved = if (slotIndex < BAG_SLOT_COUNT) {
+		val wasMoved = if (clickedSlotIndex < BAG_SLOT_COUNT) {
 			moveItemStackTo(clickedStack, BAG_SLOT_COUNT, slots.size, true)
 		} else {
 			moveItemStackTo(clickedStack, 0, BAG_SLOT_COUNT, false)

@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.simple_machine
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SimpleMachineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.inventory.Slot
 
 class SimpleMachineMenu(
 	containerId: Int,
@@ -35,9 +35,9 @@ class SimpleMachineMenu(
 	}
 
 	override fun addContainerSlots() {
-		val inputSlot = Slot(machineContainer, SimpleMachineBlockEntity.INPUT_SLOT, 62, 41)
-		val outputSlot = Slot(machineContainer, SimpleMachineBlockEntity.OUTPUT_SLOT, 116, 41)
-		val upgradeSlot = Slot(machineContainer, SimpleMachineBlockEntity.UPGRADE_SLOT, 153, 5)
+		val inputSlot = ContainerSlot(machineContainer, SimpleMachineBlockEntity.INPUT_SLOT, 62, 41)
+		val outputSlot = ContainerSlot(machineContainer, SimpleMachineBlockEntity.OUTPUT_SLOT, 116, 41)
+		val upgradeSlot = ContainerSlot(machineContainer, SimpleMachineBlockEntity.UPGRADE_SLOT, 153, 5)
 
 		addSlot(outputSlot)
 		addSlot(inputSlot)

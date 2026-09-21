@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner
 
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
+
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.MechanicalMinerBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
@@ -10,7 +12,6 @@ import net.minecraft.world.SimpleContainer
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
@@ -45,7 +46,7 @@ class MechanicalMinerMenu(
 	override fun addContainerSlots() {
 		super.addContainerSlots()
 
-		val bookSlot = Slot(machineContainer, MechanicalMinerBlockEntity.ENCHANTMENT_SLOT, 135, 5)
+		val bookSlot = ContainerSlot(machineContainer, MechanicalMinerBlockEntity.ENCHANTMENT_SLOT, 135, 5)
 
 		addSlot(bookSlot)
 	}

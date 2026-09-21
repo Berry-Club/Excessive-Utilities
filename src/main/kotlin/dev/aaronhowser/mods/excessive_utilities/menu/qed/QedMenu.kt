@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.qed
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
+import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.QedBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.inventory.SimpleContainerData
-import net.minecraft.world.inventory.Slot
 
 class QedMenu(
 	containerId: Int,
@@ -39,14 +39,14 @@ class QedMenu(
 	fun getAmountNearbyCrystals(): Int = qedContainerData.get(QedBlockEntity.AMOUNT_NEARBY_CRYSTALS_DATA_INDEX)
 
 	override fun addContainerSlots() {
-		val outputSlot = Slot(qedContainer, QedBlockEntity.OUTPUT_SLOT, 124, 41)
+		val outputSlot = ContainerSlot(qedContainer, QedBlockEntity.OUTPUT_SLOT, 124, 41)
 		addSlot(outputSlot)
 
 		for (i in 0 until 3) for (j in 0 until 3) {
 			val index = j * 3 + i
 			val x = 30 + i * 18
 			val y = 23 + j * 18
-			val slot = Slot(qedContainer, index, x, y)
+			val slot = ContainerSlot(qedContainer, index, x, y)
 			addSlot(slot)
 		}
 	}
