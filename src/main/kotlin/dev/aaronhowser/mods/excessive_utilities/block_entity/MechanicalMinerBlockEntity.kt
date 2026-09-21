@@ -67,12 +67,12 @@ class MechanicalMinerBlockEntity(
 		}
 	}
 
-	override fun canPlaceInteractionItem(slot: Int, stack: ItemStack): Boolean {
+	override fun canInsertItem(slot: Int, stack: ItemStack): Boolean {
 		if (slot == ENCHANTMENT_SLOT) {
 			return stack.isItem(Items.ENCHANTED_BOOK)
 		}
 
-		return true
+		return super.canInsertItem(slot, stack)
 	}
 
 	override fun operate() {

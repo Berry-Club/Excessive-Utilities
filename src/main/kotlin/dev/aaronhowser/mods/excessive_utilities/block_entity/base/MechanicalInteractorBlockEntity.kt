@@ -42,7 +42,13 @@ abstract class MechanicalInteractorBlockEntity(
 	private var pendingPulses = 0
 	private var cooldown = 0
 
-	protected open fun canPlaceInteractionItem(slot: Int, stack: ItemStack): Boolean = true
+	protected open fun canInsertItem(slot: Int, stack: ItemStack): Boolean {
+		if (slot == UPGRADE_SLOT) {
+			return stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+		}
+
+		return true
+	}
 
 	override fun getContainers(): List<Container> = listOf(container)
 
@@ -182,11 +188,7 @@ abstract class MechanicalInteractorBlockEntity(
 	private inner class MechanicalInteractorContainer(size: Int) : ImprovedSimpleContainer(this, size) {
 
 		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
-			if (slot == UPGRADE_SLOT) {
-				return stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-			}
-
-			return canPlaceInteractionItem(slot, stack)
+			return canInsertItem(slot, stack)
 		}
 
 	}
