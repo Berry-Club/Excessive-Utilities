@@ -32,7 +32,14 @@ class FilingCabinetBlockEntity(
 	private var storedItem: Item? = null
 	private val storedEntries: MutableMap<DataComponentPatch, Int> = mutableMapOf()
 
-	fun getItemCount(): Int = storedEntries.values.sum()
+	fun getItemCount(): Int {
+		var total = 0L
+		for (count in storedEntries.values) {
+			total += count
+		}
+
+		return total.coerceAtMost(Int.MAX_VALUE.toLong()).toInt()
+	}
 
 	fun getMaxAmount(): Int {
 		return if (blockState.isBlock(ModBlocks.FILING_CABINET)) {
@@ -42,92 +49,7 @@ class FilingCabinetBlockEntity(
 		}
 	}
 
-	private val itemHandler: IItemHandler =
-		object : IItemHandler {
-			override fun getSlots(): Int = getMaxAmount()
-
-			override fun getStackInSlot(slot: Int): ItemStack {
-				val item = storedItem ?: return ItemStack.EMPTY
-
-				val (data, count) = storedEntries.entries.elementAtOrNull(slot) ?: return ItemStack.EMPTY
-				val stack = recreateStack(item, data)
-				stack.count = count
-
-				return stack
-			}
-
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				if (storedItem == null) {
-					storedItem = stack.item
-				}
-
-				if (stack.item != storedItem) {
-					return stack
-				}
-
-				val currentTotalCount = getItemCount()
-				val amountToInsert = stack.count.coerceAtMost(getMaxAmount() - currentTotalCount)
-				if (amountToInsert <= 0) {
-					return stack
-				}
-
-				val stackComponents = stack.componentsPatch
-				val currentCount = storedEntries.getOrDefault(stackComponents, 0)
-
-				if (!simulate) {
-					storedEntries[stackComponents] = currentCount + amountToInsert
-					setChanged()
-				}
-
-				val remainder = stack.copy()
-				remainder.count = stack.count - amountToInsert
-				return remainder
-			}
-
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-				val item = storedItem
-
-				if (item == null || amount <= 0) {
-					return ItemStack.EMPTY
-				}
-
-				val (data, amountStored) = storedEntries.entries.elementAtOrNull(slot) ?: return ItemStack.EMPTY
-
-				val amountToRemove = amount.coerceAtMost(amountStored)
-				if (amountToRemove <= 0) {
-					return ItemStack.EMPTY
-				}
-
-				if (!simulate) {
-					val newCount = amountStored - amountToRemove
-
-					if (newCount <= 0) {
-						storedEntries.remove(data)
-						if (storedEntries.isEmpty()) {
-							storedItem = null
-						}
-					} else {
-						storedEntries[data] = newCount
-					}
-
-					setChanged()
-				}
-
-				val stack = recreateStack(item, data)
-				stack.count = amountToRemove
-				return stack
-			}
-
-			override fun getSlotLimit(slot: Int): Int = getMaxAmount()
-
-			override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
-				if (storedItem == null) {
-					return true
-				}
-
-				return stack.item == storedItem
-			}
-		}
+	private val itemHandler: IItemHandler = FilingCabinetItemHandler()
 
 	fun getItemHandler(direction: Direction): IItemHandler = itemHandler
 
@@ -136,10 +58,14 @@ class FilingCabinetBlockEntity(
 		val item = storedItem ?: return
 
 		for ((data, count) in storedEntries) {
-			val stack = recreateStack(item, data)
-			stack.count = count
+			var remaining = count
+			while (remaining > 0) {
+				val stack = recreateStack(item, data)
+				stack.count = remaining.coerceAtMost(stack.maxStackSize)
 
-			Block.popResource(level, worldPosition, stack)
+				Block.popResource(level, worldPosition, stack)
+				remaining -= stack.count
+			}
 		}
 
 		storedItem = null
@@ -178,26 +104,48 @@ class FilingCabinetBlockEntity(
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
 
+		storedItem = null
+		storedEntries.clear()
+
 		val itemString = tag.getString(ITEM_NBT)
 		if (itemString.isEmpty()) return
 
+		val itemId = ResourceLocation.tryParse(itemString) ?: return
 		val itemRk = ResourceKey.create(
 			Registries.ITEM,
-			ResourceLocation.parse(itemString)
+			itemId
 		)
 
-		val item = registries.lookupOrThrow(Registries.ITEM).getOrThrow(itemRk)
-		storedItem = item.value()
+		val item = registries
+			.lookupOrThrow(Registries.ITEM)
+			.get(itemRk)
+			.orElse(null)
+			?: return
 
+		val registryOps = RegistryOps.create(NbtOps.INSTANCE, registries)
 		val entriesList = tag.getList(ENTRIES_NBT, Tag.TAG_COMPOUND.toInt())
 		for (i in entriesList.indices) {
-			val tag = entriesList.getCompound(i)
+			val entryTag = entriesList.getCompound(i)
 
-			val count = tag.getInt(COUNT_NBT)
-			val dataTag = tag.getCompound(DATA_NBT)
+			val savedCount = entryTag.getInt(COUNT_NBT)
+			if (savedCount <= 0) continue
 
-			val data = DataComponentPatch.CODEC.decode(NbtOps.INSTANCE, dataTag).getOrThrow().first
-			storedEntries[data] = count
+			val dataTag = entryTag.getCompound(DATA_NBT)
+			val decodedData = DataComponentPatch.CODEC
+				.parse(registryOps, dataTag)
+				.result()
+				.orElse(null)
+				?: continue
+
+			val currentCount = storedEntries.getOrDefault(decodedData, 0)
+			val combinedCount = currentCount.toLong() + savedCount
+			storedEntries[decodedData] = combinedCount
+				.coerceAtMost(Int.MAX_VALUE.toLong())
+				.toInt()
+		}
+
+		if (storedEntries.isNotEmpty()) {
+			storedItem = item.value()
 		}
 	}
 
@@ -211,6 +159,108 @@ class FilingCabinetBlockEntity(
 			val stack = ItemStack(item)
 			stack.applyComponents(data)
 			return stack
+		}
+	}
+
+	private inner class FilingCabinetItemHandler : IItemHandler {
+
+		override fun getSlots(): Int = getMaxAmount()
+
+		override fun getStackInSlot(slot: Int): ItemStack {
+			if (slot !in 0 until slots) return ItemStack.EMPTY
+
+			val item = storedItem ?: return ItemStack.EMPTY
+
+			val (data, count) = storedEntries.entries.elementAtOrNull(slot) ?: return ItemStack.EMPTY
+			val stack = recreateStack(item, data)
+			stack.count = count.coerceAtMost(stack.maxStackSize)
+
+			return stack
+		}
+
+		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
+			if (slot !in 0 until slots || stack.isEmpty) return stack
+
+			val item = storedItem
+			if (item != null && stack.item != item) {
+				return stack
+			}
+
+			val currentTotalCount = getItemCount()
+			val amountToInsert = stack.count.coerceAtMost(getMaxAmount() - currentTotalCount)
+			if (amountToInsert <= 0) {
+				return stack
+			}
+
+			val stackComponents = stack.componentsPatch
+			val currentCount = storedEntries.getOrDefault(stackComponents, 0)
+
+			if (!simulate) {
+				if (storedItem == null) {
+					storedItem = stack.item
+				}
+
+				storedEntries[stackComponents] = currentCount + amountToInsert
+				setChanged()
+			}
+
+			val remainder = stack.copy()
+			remainder.count = stack.count - amountToInsert
+			return remainder
+		}
+
+		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
+			if (slot !in 0 until slots) return ItemStack.EMPTY
+
+			val item = storedItem
+
+			if (item == null || amount <= 0) {
+				return ItemStack.EMPTY
+			}
+
+			val (data, amountStored) = storedEntries.entries.elementAtOrNull(slot) ?: return ItemStack.EMPTY
+
+			val stack = recreateStack(item, data)
+			val amountToRemove = amount
+				.coerceAtMost(amountStored)
+				.coerceAtMost(stack.maxStackSize)
+			if (amountToRemove <= 0) {
+				return ItemStack.EMPTY
+			}
+
+			if (!simulate) {
+				val newCount = amountStored - amountToRemove
+
+				if (newCount <= 0) {
+					storedEntries.remove(data)
+					if (storedEntries.isEmpty()) {
+						storedItem = null
+					}
+				} else {
+					storedEntries[data] = newCount
+				}
+
+				setChanged()
+			}
+
+			stack.count = amountToRemove
+			return stack
+		}
+
+		override fun getSlotLimit(slot: Int): Int {
+			if (slot !in 0 until slots) return 0
+
+			return getMaxAmount()
+		}
+
+		override fun isItemValid(slot: Int, stack: ItemStack): Boolean {
+			if (slot !in 0 until slots || stack.isEmpty) return false
+
+			if (storedItem == null) {
+				return true
+			}
+
+			return stack.item == storedItem
 		}
 	}
 
