@@ -41,7 +41,7 @@ class MechanicalMinerScreen(
 				RedstoneMode.ON_PULSE.langKey.toComponent(),
 				MechanicalUserScreen.REDSTONE_PULSE_SPRITE
 			)
-			.location(leftPos + 78, topPos + 119)
+			.location(leftPos + 151, topPos + 24)
 			.size(20)
 			.currentStageGetter { menu.redstoneMode.ordinal }
 			.onPress {
