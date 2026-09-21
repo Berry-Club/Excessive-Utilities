@@ -34,12 +34,7 @@ class ItemTransferNodeBlockEntity(
 ) : TransferNodeBlockEntity(ModBlockEntityTypes.ITEM_TRANSFER_NODE.get(), pos, blockState) {
 
 	private val bufferContainer = ImprovedSimpleContainer(this, BUFFER_CONTAINER_SIZE)
-	private val filterContainer =
-		object : ImprovedSimpleContainer(this, FILTER_CONTAINER_SIZE) {
-			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
-				return stack.isItem(ModItems.ITEM_FILTER.get())
-			}
-		}
+	private val filterContainer = ItemTransferNodeFilterContainer()
 
 	override fun getContainers(): List<Container> {
 		return listOf(bufferContainer, upgradeContainer, filterContainer)
@@ -355,6 +350,14 @@ class ItemTransferNodeBlockEntity(
 
 		const val BUFFER_CONTAINER_SIZE = 1
 		const val FILTER_CONTAINER_SIZE = 1
+
+	}
+
+	private inner class ItemTransferNodeFilterContainer : ImprovedSimpleContainer(this, FILTER_CONTAINER_SIZE) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return stack.isItem(ModItems.ITEM_FILTER)
+		}
 
 	}
 

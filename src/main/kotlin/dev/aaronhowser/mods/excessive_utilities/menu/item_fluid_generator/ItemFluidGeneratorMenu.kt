@@ -1,12 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFluidInputDataDrivenGeneratorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.world.Container
@@ -39,9 +36,7 @@ class ItemFluidGeneratorMenu(
 
 	override fun addContainerSlots() {
 		val inputSlot = Slot(generatorContainer, GeneratorContainer.INPUT_SLOT, 68, 46)
-		val upgradeSlot = FilteredSlot(generatorContainer, GeneratorContainer.UPGRADE_SLOT, 153, 5) {
-			it.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-		}
+		val upgradeSlot = Slot(generatorContainer, GeneratorContainer.UPGRADE_SLOT, 153, 5)
 
 		this.addSlot(inputSlot)
 		this.addSlot(upgradeSlot)

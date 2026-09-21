@@ -47,18 +47,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 
 	protected val energyStorage = EnergyStorage(MAX_ENERGY)
 
-	protected open val container: ImprovedSimpleContainer =
-		object : ImprovedSimpleContainer(this, 3) {
-			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
-				val level = level ?: return false
-
-				return when (slot) {
-					INPUT_SLOT -> isValidInput(stack)
-					UPGRADE_SLOT -> stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-					else -> false
-				}
-			}
-		}
+	protected open val container: ImprovedSimpleContainer = SimpleMachineContainer()
 
 	protected val containerData: ContainerData =
 		object : ContainerData {
@@ -276,10 +265,18 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 			return super.extractItem(slot, amount, simulate)
 		}
 
-		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-			if (slot == OUTPUT_SLOT) return stack
+	}
 
-			return super.insertItem(slot, stack, simulate)
+	private inner class SimpleMachineContainer : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			val level = level ?: return false
+
+			return when (slot) {
+				INPUT_SLOT -> isValidInput(stack)
+				UPGRADE_SLOT -> stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+				else -> false
+			}
 		}
 
 	}

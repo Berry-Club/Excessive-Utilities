@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
@@ -19,6 +20,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarr
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
@@ -63,22 +65,7 @@ class QuantumQuarryBlockEntity(
 
 	private val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
 	private val bufferItemHandler: ExtractOnlyInvWrapper = ExtractOnlyInvWrapper(bufferContainer)
-	private val upgradesContainer: ImprovedSimpleContainer =
-		object : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
-			override fun setItem(index: Int, stack: ItemStack) {
-				super.setItem(index, stack)
-
-				if (index == BIOME_FILTER_SLOT_INDEX && stack.isNotEmpty()) {
-					val level = level
-					if (level is ServerLevel) {
-						val miningDimLevel = level.server.getLevel(LEVEL_KEY)
-						if (miningDimLevel != null) {
-							targetNewChunk(miningDimLevel)
-						}
-					}
-				}
-			}
-		}
+	private val upgradesContainer: ImprovedSimpleContainer = QuantumQuarryUpgradeContainer()
 
 	override fun getContainers(): List<Container> = listOf(bufferContainer, upgradesContainer)
 
@@ -495,6 +482,33 @@ class QuantumQuarryBlockEntity(
 			val biome = miningDimension.getBiome(targetPos)
 			val registry = miningDimension.registryAccess().registryOrThrow(Registries.BIOME)
 			return registry.getId(biome.value())
+		}
+
+	}
+
+	private inner class QuantumQuarryUpgradeContainer : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return when (slot) {
+				ITEM_FILTER_SLOT_INDEX -> stack.isItem(ModItems.ITEM_FILTER)
+				ENCHANTED_BOOK_SLOT_INDEX -> stack.isItem(Items.ENCHANTED_BOOK)
+				BIOME_FILTER_SLOT_INDEX -> stack.isItem(ModItems.BIOME_MARKER)
+				else -> false
+			}
+		}
+
+		override fun setItem(index: Int, stack: ItemStack) {
+			super.setItem(index, stack)
+
+			if (index == BIOME_FILTER_SLOT_INDEX && stack.isNotEmpty()) {
+				val level = level
+				if (level is ServerLevel) {
+					val miningDimLevel = level.server.getLevel(LEVEL_KEY)
+					if (miningDimLevel != null) {
+						targetNewChunk(miningDimLevel)
+					}
+				}
+			}
 		}
 
 	}

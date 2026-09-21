@@ -34,7 +34,7 @@ class QedBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(ModBlockEntityTypes.QED.get(), pos, blockState), ContainerContainer, MenuProvider {
 
-	private val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	private val container: ImprovedSimpleContainer = QedContainer()
 	override fun getContainers(): List<Container> {
 		return listOf(container)
 	}
@@ -221,6 +221,14 @@ class QedBlockEntity(
 				blockEntity.serverTick(level)
 			}
 		}
+	}
+
+	private inner class QedContainer : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return slot != OUTPUT_SLOT
+		}
+
 	}
 
 }

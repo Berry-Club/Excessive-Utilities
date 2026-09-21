@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.qed
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.OutputSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.QedBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -40,7 +39,7 @@ class QedMenu(
 	fun getAmountNearbyCrystals(): Int = qedContainerData.get(QedBlockEntity.AMOUNT_NEARBY_CRYSTALS_DATA_INDEX)
 
 	override fun addContainerSlots() {
-		val outputSlot = OutputSlot(qedContainer, QedBlockEntity.OUTPUT_SLOT, 124, 41)
+		val outputSlot = Slot(qedContainer, QedBlockEntity.OUTPUT_SLOT, 124, 41)
 		addSlot(outputSlot)
 
 		for (i in 0 until 3) for (j in 0 until 3) {

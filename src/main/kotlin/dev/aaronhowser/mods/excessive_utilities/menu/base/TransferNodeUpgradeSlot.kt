@@ -1,24 +1,17 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.base
 
-import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.world.Container
+import net.minecraft.world.inventory.Slot
 import net.minecraft.world.item.ItemStack
 
 class TransferNodeUpgradeSlot(
 	container: Container,
-	private val slotIndex: Int,
+	slotIndex: Int,
 	x: Int,
 	y: Int
-) : FilteredSlot(container, slotIndex, x, y) {
-
-	override fun mayPlace(stack: ItemStack): Boolean {
-		val isUpgrade = stack.isItem(ModItemTagsProvider.TRANSFER_NODE_UPGRADES)
-				|| stack.isItem(ModItemTagsProvider.RETRIEVAL_NODE_UPGRADES)
-		return isUpgrade && container.canPlaceItem(slotIndex, stack)
-	}
+) : Slot(container, slotIndex, x, y) {
 
 	override fun getMaxStackSize(stack: ItemStack): Int {
 		if (stack.isItem(ModItems.DEPTH_FIRST_SEARCH_UPGRADE)

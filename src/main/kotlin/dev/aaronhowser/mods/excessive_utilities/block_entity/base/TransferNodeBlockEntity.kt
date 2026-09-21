@@ -53,22 +53,7 @@ abstract class TransferNodeBlockEntity(
 
 	protected var didWorkThisTick: Boolean = false
 
-	protected val upgradeContainer: ImprovedSimpleContainer =
-		object : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
-			override fun canAddItem(stack: ItemStack): Boolean {
-				if (!super.canAddItem(stack)) return false
-				return canPlaceUpgrade(stack)
-			}
-
-			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
-				return canPlaceUpgrade(stack)
-			}
-
-			override fun getMaxStackSize(stack: ItemStack): Int {
-				if (isSearchUpgrade(stack)) return 1
-				return super.getMaxStackSize(stack)
-			}
-		}
+	protected val upgradeContainer: ImprovedSimpleContainer = TransferNodeUpgradeContainer()
 
 	private var registeredReceiverFrequency: EnderFrequencyComponent? = null
 
@@ -392,6 +377,24 @@ abstract class TransferNodeBlockEntity(
 
 		const val UPGRADES_NBT = "Upgrades"
 		const val IS_RETRIEVAL_NBT = "IsRetrieval"
+	}
+
+	private inner class TransferNodeUpgradeContainer : ImprovedSimpleContainer(this, UPGRADE_CONTAINER_SIZE) {
+
+		override fun canAddItem(stack: ItemStack): Boolean {
+			if (!super.canAddItem(stack)) return false
+			return canPlaceUpgrade(stack)
+		}
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return canPlaceUpgrade(stack)
+		}
+
+		override fun getMaxStackSize(stack: ItemStack): Int {
+			if (isSearchUpgrade(stack)) return 1
+			return super.getMaxStackSize(stack)
+		}
+
 	}
 
 }

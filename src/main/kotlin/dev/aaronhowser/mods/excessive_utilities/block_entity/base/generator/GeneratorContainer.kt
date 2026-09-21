@@ -34,7 +34,6 @@ open class GeneratorContainer(
 
 	open val itemHandler: InvWrapper =
 		object : InvWrapper(this) {
-			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = canPlaceItem(slot, stack)
 			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = ItemStack.EMPTY
 		}
 

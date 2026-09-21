@@ -55,17 +55,7 @@ class FlatTransferNodeEntity(
 			lookAt(EntityAnchorArgument.Anchor.EYES, lookTowards)
 		}
 
-	private val container: SimpleContainer =
-		object : SimpleContainer(1) {
-			override fun canAddItem(stack: ItemStack): Boolean {
-				if (!super.canAddItem(stack)) return false
-				return if (isItemNode) {
-					stack.isItem(ModItems.ITEM_FILTER)
-				} else {
-					stack.isItem(ModItems.FLUID_FILTER)
-				}
-			}
-		}
+	private val container: SimpleContainer = FlatTransferNodeContainer()
 
 	val originItemHandler: IItemHandler?
 		get() = level()
@@ -300,6 +290,23 @@ class FlatTransferNodeEntity(
 			node.kill()
 			event.isCanceled = true
 		}
+	}
+
+	private inner class FlatTransferNodeContainer : SimpleContainer(1) {
+
+		override fun canAddItem(stack: ItemStack): Boolean {
+			if (!super.canAddItem(stack)) return false
+			return canPlaceItem(0, stack)
+		}
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return if (isItemNode) {
+				stack.isItem(ModItems.ITEM_FILTER)
+			} else {
+				stack.isItem(ModItems.FLUID_FILTER)
+			}
+		}
+
 	}
 
 }

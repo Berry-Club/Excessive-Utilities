@@ -44,9 +44,7 @@ class MechanicalMinerMenu(
 	override fun addContainerSlots() {
 		super.addContainerSlots()
 
-		val bookSlot = object : Slot(machineContainer, MechanicalMinerBlockEntity.ENCHANTMENT_SLOT, 135, 5) {
-			override fun mayPlace(stack: ItemStack): Boolean = stack.isItem(Items.ENCHANTED_BOOK)
-		}
+		val bookSlot = Slot(machineContainer, MechanicalMinerBlockEntity.ENCHANTMENT_SLOT, 135, 5)
 
 		addSlot(bookSlot)
 	}

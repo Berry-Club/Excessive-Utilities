@@ -2,11 +2,13 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.menu.resonator.ResonatorMenu
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.ResonatorRecipe
@@ -35,7 +37,7 @@ class ResonatorBlockEntity(
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.RESONATOR.get(), pos, blockState), ContainerContainer, MenuProvider {
 
-	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	private val container = ResonatorContainer()
 	override fun getContainers(): List<Container> = listOf(container)
 
 	override fun getGpUsage(): Double {
@@ -53,13 +55,6 @@ class ResonatorBlockEntity(
 
 	private val itemHandler: IItemHandlerModifiable =
 		object : InvWrapper(container) {
-			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = slot == INPUT_SLOT
-
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				if (slot != INPUT_SLOT) return stack
-				return super.insertItem(slot, stack, simulate)
-			}
-
 			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
 				if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
 				return super.extractItem(slot, amount, simulate)
@@ -176,6 +171,18 @@ class ResonatorBlockEntity(
 		const val GP_HUNDREDTHS_COST_DATA_INDEX = 2 // GP cost multiplied by 100, because container data only supports ints
 
 		const val CRAFT_TIME = 20 * 10
+	}
+
+	private inner class ResonatorContainer : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return when (slot) {
+				INPUT_SLOT -> true
+				UPGRADE_SLOT -> stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+				else -> false
+			}
+		}
+
 	}
 
 }

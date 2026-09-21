@@ -1,11 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.resonator
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
-import dev.aaronhowser.mods.aaron.menu.components.OutputSlot
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.ResonatorBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
@@ -40,10 +36,8 @@ class ResonatorMenu(
 
 	override fun addContainerSlots() {
 		val inputSlot = Slot(resonatorContainer, ResonatorBlockEntity.INPUT_SLOT, 51, 38)
-		val outputSlot = OutputSlot(resonatorContainer, ResonatorBlockEntity.OUTPUT_SLOT, 105, 37)
-		val upgradeSlot = FilteredSlot(resonatorContainer, ResonatorBlockEntity.UPGRADE_SLOT, 153, 5) {
-			it.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-		}
+		val outputSlot = Slot(resonatorContainer, ResonatorBlockEntity.OUTPUT_SLOT, 105, 37)
+		val upgradeSlot = Slot(resonatorContainer, ResonatorBlockEntity.UPGRADE_SLOT, 153, 5)
 
 		this.addSlot(inputSlot)
 		this.addSlot(outputSlot)

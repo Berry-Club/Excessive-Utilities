@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.menu.base
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.FilteredSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextEnum
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.prevEnum
@@ -50,9 +49,7 @@ abstract class BaseMechanicalInteractorMenu(
 			}
 		}
 
-		val speedSlot = FilteredSlot(machineContainer, MechanicalInteractorBlockEntity.UPGRADE_SLOT, 153, 5) {
-			it.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-		}
+		val speedSlot = Slot(machineContainer, MechanicalInteractorBlockEntity.UPGRADE_SLOT, 153, 5)
 
 		addSlot(speedSlot)
 	}

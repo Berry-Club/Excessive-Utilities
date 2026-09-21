@@ -11,6 +11,7 @@
 - Added a client config option for the number of particles displayed by Transfer Nodes
 - Screen labels (the text that says "QED" and "Inventory" etc) now use automatically-resizing backgrounds instead of being baked into the screen texture
 - Cursed mobs now play sounds at a configurably lower pitch
+- Moved a lot of inventory gatekeeping logic (speed upgrade slot can only take speed upgrades etc) to the Container rather than reimplementing it in the Slots and ItemHandlers
 
 ### Fixed
 

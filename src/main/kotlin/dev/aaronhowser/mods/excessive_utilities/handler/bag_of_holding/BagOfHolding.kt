@@ -17,17 +17,7 @@ class BagOfHolding(
 	var isActive = true
 		private set
 
-	val container = object : SimpleContainer(SLOT_COUNT) {
-		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
-			return isActive && stack.item !is BagOfHoldingItem
-		}
-
-		override fun setChanged() {
-			if (isActive) {
-				onChanged()
-			}
-		}
-	}
+	private val container = BagOfHoldingContainer()
 
 	fun takeItems(): List<ItemStack> {
 		isActive = false
@@ -64,6 +54,18 @@ class BagOfHolding(
 			ContainerHelper.loadAllItems(tag, bag.container.items, registries)
 
 			return bag
+		}
+	}
+
+	private inner class BagOfHoldingContainer : SimpleContainer(SLOT_COUNT) {
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return isActive && stack.item !is BagOfHoldingItem
+		}
+
+		override fun setChanged() {
+			if (isActive) {
+				onChanged()
+			}
 		}
 	}
 

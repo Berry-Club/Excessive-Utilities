@@ -32,16 +32,7 @@ abstract class MechanicalInteractorBlockEntity(
 	containerSize: Int
 ) : GpDrainBlockEntity(type, pos, blockState), MenuProvider, ContainerContainer {
 
-	protected val container: ImprovedSimpleContainer =
-		object : ImprovedSimpleContainer(this, containerSize) {
-			override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
-				if (slot == UPGRADE_SLOT) {
-					return stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-				}
-
-				return canPlaceInteractionItem(slot, stack)
-			}
-		}
+	protected val container: ImprovedSimpleContainer = MechanicalInteractorContainer(containerSize)
 
 	private val itemHandler = RangedWrapper(InvWrapper(container), 0, INVENTORY_SIZE)
 
@@ -186,6 +177,18 @@ abstract class MechanicalInteractorBlockEntity(
 				blockEntity.serverTick(level as ServerLevel)
 			}
 		}
+	}
+
+	private inner class MechanicalInteractorContainer(size: Int) : ImprovedSimpleContainer(this, size) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			if (slot == UPGRADE_SLOT) {
+				return stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+			}
+
+			return canPlaceInteractionItem(slot, stack)
+		}
+
 	}
 
 }

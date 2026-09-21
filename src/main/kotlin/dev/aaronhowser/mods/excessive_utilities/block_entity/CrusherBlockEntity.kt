@@ -45,7 +45,7 @@ class CrusherBlockEntity(
 	private val energyStorage = EnergyStorage(100_000)
 	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
 
-	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	private val container = CrusherContainer()
 	override fun getContainers(): List<Container> = listOf(container)
 
 	private val itemHandler: IItemHandler = CrusherItemHandler()
@@ -249,20 +249,21 @@ class CrusherBlockEntity(
 
 	private inner class CrusherItemHandler : InvWrapper(container) {
 
-		override fun isItemValid(slot: Int, stack: ItemStack): Boolean = when (slot) {
-			INPUT_SLOT -> true
-			UPGRADE_SLOT -> stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-			else -> false
-		}
-
-		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-			if (slot != INPUT_SLOT) return stack
-			return super.insertItem(slot, stack, simulate)
-		}
-
 		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
 			if (slot != PRIMARY_OUTPUT_SLOT && slot != SECONDARY_OUTPUT_SLOT) return ItemStack.EMPTY
 			return super.extractItem(slot, amount, simulate)
+		}
+
+	}
+
+	private inner class CrusherContainer : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return when (slot) {
+				INPUT_SLOT -> true
+				UPGRADE_SLOT -> stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+				else -> false
+			}
 		}
 
 	}

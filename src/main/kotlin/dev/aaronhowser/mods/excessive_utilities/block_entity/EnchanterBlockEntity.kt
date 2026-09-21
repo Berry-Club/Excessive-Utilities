@@ -45,7 +45,7 @@ class EnchanterBlockEntity(
 	private val energyStorage = EnergyStorage(100_000)
 	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
 
-	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
+	private val container = EnchanterContainer()
 	override fun getContainers(): List<Container> = listOf(container)
 
 	private val itemHandler: IItemHandler = EnchanterItemHandler()
@@ -270,22 +270,22 @@ class EnchanterBlockEntity(
 
 	private inner class EnchanterItemHandler : InvWrapper(container) {
 
-		override fun isItemValid(slot: Int, stack: ItemStack): Boolean = when (slot) {
-			LEFT_INPUT_SLOT -> true
-			RIGHT_INPUT_SLOT -> true
-			UPGRADE_SLOT -> stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-			OUTPUT_SLOT -> false
-			else -> false
-		}
-
-		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-			if (slot != LEFT_INPUT_SLOT && slot != RIGHT_INPUT_SLOT) return stack
-			return super.insertItem(slot, stack, simulate)
-		}
-
 		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
 			if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
 			return super.extractItem(slot, amount, simulate)
+		}
+
+	}
+
+	private inner class EnchanterContainer : ImprovedSimpleContainer(this, CONTAINER_SIZE) {
+
+		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
+			return when (slot) {
+				LEFT_INPUT_SLOT -> true
+				RIGHT_INPUT_SLOT -> true
+				UPGRADE_SLOT -> stack.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+				else -> false
+			}
 		}
 
 	}
