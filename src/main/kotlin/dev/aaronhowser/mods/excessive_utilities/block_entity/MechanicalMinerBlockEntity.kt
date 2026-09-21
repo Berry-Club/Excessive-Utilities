@@ -75,8 +75,7 @@ class MechanicalMinerBlockEntity(
 		return super.canInsertItem(slot, stack)
 	}
 
-	override fun operate() {
-		val level = level as? ServerLevel ?: return
+	override fun operate(level: ServerLevel) {
 		val facing = blockState.getValue(MechanicalInteractorBlock.FACING)
 		val targetPos = blockPos.relative(facing)
 		val targetState = level.getBlockState(targetPos)

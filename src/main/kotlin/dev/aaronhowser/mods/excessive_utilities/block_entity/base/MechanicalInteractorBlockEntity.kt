@@ -89,11 +89,11 @@ abstract class MechanicalInteractorBlockEntity(
 			pendingPulses--
 		}
 
-		operate()
+		operate(level)
 		setChanged()
 	}
 
-	protected abstract fun operate()
+	protected abstract fun operate(level: ServerLevel)
 
 	protected open fun getMenuData(index: Int): Int {
 		return when (index) {

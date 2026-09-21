@@ -80,8 +80,7 @@ class MechanicalUserBlockEntity(
 		return populatedSlots[level.random.nextInt(populatedSlots.size)]
 	}
 
-	override fun operate() {
-		val level = level as? ServerLevel ?: return
+	override fun operate(level: ServerLevel) {
 		val facing = blockState.getValue(MechanicalInteractorBlock.FACING)
 		val targetPos = blockPos.relative(facing)
 		val selectedSlot = getSelectedSlot(level)
