@@ -231,26 +231,6 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		tag.loadEnergy(ENERGY_NBT, energyStorage, registries)
 	}
 
-	private inner class SimpleMachineItemHandler : RangedWrapper(
-		InvWrapper(container),
-		INPUT_SLOT,
-		OUTPUT_SLOT + 1
-	) {
-
-		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-			if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
-
-			return super.extractItem(slot, amount, simulate)
-		}
-
-		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-			if (slot == OUTPUT_SLOT) return stack
-
-			return super.insertItem(slot, stack, simulate)
-		}
-
-	}
-
 	companion object {
 		const val CONTAINER_SIZE = 3
 		const val INPUT_SLOT = 0
@@ -282,6 +262,26 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		fun getEnergyCapability(machine: SimpleMachineBlockEntity<*>, direction: Direction?): IEnergyStorage {
 			return machine.energyStorage
 		}
+	}
+
+	private inner class SimpleMachineItemHandler : RangedWrapper(
+		InvWrapper(container),
+		INPUT_SLOT,
+		OUTPUT_SLOT + 1
+	) {
+
+		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
+			if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
+
+			return super.extractItem(slot, amount, simulate)
+		}
+
+		override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
+			if (slot == OUTPUT_SLOT) return stack
+
+			return super.insertItem(slot, stack, simulate)
+		}
+
 	}
 
 }

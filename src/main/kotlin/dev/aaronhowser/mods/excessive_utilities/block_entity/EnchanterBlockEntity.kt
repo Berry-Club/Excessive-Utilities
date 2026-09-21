@@ -251,6 +251,23 @@ class EnchanterBlockEntity(
 		progress = tag.getInt(PROGRESS_NBT)
 	}
 
+	companion object {
+		const val PROGRESS_NBT = "Progress"
+		const val ENERGY_NBT = "Energy"
+
+		const val CONTAINER_SIZE = 4
+		const val LEFT_INPUT_SLOT = 0
+		const val RIGHT_INPUT_SLOT = 1
+		const val OUTPUT_SLOT = 2
+		const val UPGRADE_SLOT = 3
+
+		const val CONTAINER_DATA_SIZE = 4
+		const val CURRENT_ENERGY_DATA_INDEX = 0
+		const val MAX_ENERGY_DATA_INDEX = 1
+		const val PROGRESS_DATA_INDEX = 2
+		const val MAX_PROGRESS_DATA_INDEX = 3
+	}
+
 	private inner class EnchanterItemHandler : InvWrapper(container) {
 
 		override fun isItemValid(slot: Int, stack: ItemStack): Boolean = when (slot) {
@@ -273,20 +290,4 @@ class EnchanterBlockEntity(
 
 	}
 
-	companion object {
-		const val PROGRESS_NBT = "Progress"
-		const val ENERGY_NBT = "Energy"
-
-		const val CONTAINER_SIZE = 4
-		const val LEFT_INPUT_SLOT = 0
-		const val RIGHT_INPUT_SLOT = 1
-		const val OUTPUT_SLOT = 2
-		const val UPGRADE_SLOT = 3
-
-		const val CONTAINER_DATA_SIZE = 4
-		const val CURRENT_ENERGY_DATA_INDEX = 0
-		const val MAX_ENERGY_DATA_INDEX = 1
-		const val PROGRESS_DATA_INDEX = 2
-		const val MAX_PROGRESS_DATA_INDEX = 3
-	}
 }

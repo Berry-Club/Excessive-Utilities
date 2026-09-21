@@ -34,6 +34,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
 import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.items.IItemHandler
 import net.neoforged.neoforge.items.IItemHandlerModifiable
 import net.neoforged.neoforge.items.wrapper.InvWrapper
 
@@ -48,9 +49,9 @@ class CrusherBlockEntity(
 	private val container = ImprovedSimpleContainer(this, CONTAINER_SIZE)
 	override fun getContainers(): List<Container> = listOf(container)
 
-	private val itemHandler: IItemHandlerModifiable = CrusherItemHandler()
+	private val itemHandler: IItemHandler = CrusherItemHandler()
 
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
+	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
 
 	override fun getGpUsage(): Double {
 		val isCrafting = recipeCache != null
@@ -230,6 +231,23 @@ class CrusherBlockEntity(
 		progress = tag.getInt(PROGRESS_NBT)
 	}
 
+	companion object {
+		const val PROGRESS_NBT = "Progress"
+		const val ENERGY_NBT = "Energy"
+
+		const val CONTAINER_SIZE = 4
+		const val INPUT_SLOT = 0
+		const val PRIMARY_OUTPUT_SLOT = 1
+		const val SECONDARY_OUTPUT_SLOT = 2
+		const val UPGRADE_SLOT = 3
+
+		const val CONTAINER_DATA_SIZE = 4
+		const val CURRENT_ENERGY_DATA_INDEX = 0
+		const val MAX_ENERGY_DATA_INDEX = 1
+		const val PROGRESS_DATA_INDEX = 2
+		const val MAX_PROGRESS_DATA_INDEX = 3
+	}
+
 	private inner class CrusherItemHandler : InvWrapper(container) {
 
 		override fun isItemValid(slot: Int, stack: ItemStack): Boolean = when (slot) {
@@ -250,20 +268,4 @@ class CrusherBlockEntity(
 
 	}
 
-	companion object {
-		const val PROGRESS_NBT = "Progress"
-		const val ENERGY_NBT = "Energy"
-
-		const val CONTAINER_SIZE = 4
-		const val INPUT_SLOT = 0
-		const val PRIMARY_OUTPUT_SLOT = 1
-		const val SECONDARY_OUTPUT_SLOT = 2
-		const val UPGRADE_SLOT = 3
-
-		const val CONTAINER_DATA_SIZE = 4
-		const val CURRENT_ENERGY_DATA_INDEX = 0
-		const val MAX_ENERGY_DATA_INDEX = 1
-		const val PROGRESS_DATA_INDEX = 2
-		const val MAX_PROGRESS_DATA_INDEX = 3
-	}
 }
