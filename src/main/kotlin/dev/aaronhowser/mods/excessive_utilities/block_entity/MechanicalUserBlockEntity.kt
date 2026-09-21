@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInte
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user.MechanicalUserMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
@@ -83,6 +84,7 @@ class MechanicalUserBlockEntity(
 	override fun operate(level: ServerLevel) {
 		val facing = blockState.getValue(MechanicalInteractorBlock.FACING)
 		val targetPos = blockPos.relative(facing)
+
 		val selectedSlot = getSelectedSlot(level)
 		val fakePlayer = getFakePlayer(level)
 
@@ -91,12 +93,14 @@ class MechanicalUserBlockEntity(
 			fakePlayer.inventory.setItem(slot, container.getItem(slot).copy())
 		}
 
+		val facingVector = Vec3.atLowerCornerOf(facing.normal)
+		val fakePlayerEyePosition = blockPos.center
+			.add(facingVector.scale(FAKE_PLAYER_FACE_OFFSET))
+
 		fakePlayer.inventory.selected = selectedSlot
 		fakePlayer.isShiftKeyDown = isSneaking
-		val facingVector = Vec3(facing.stepX.toDouble(), facing.stepY.toDouble(), facing.stepZ.toDouble())
-		fakePlayer.setPos(blockPos.center.subtract(facingVector).subtract(0.0, fakePlayer.eyeHeight.toDouble(), 0.0))
-		fakePlayer.yRot = facing.toYRot()
-		fakePlayer.xRot = if (facing.stepY == 0) 0f else if (facing.stepY > 0) -90f else 90f
+		fakePlayer.setPos(fakePlayerEyePosition.subtract(0.0, fakePlayer.eyeHeight.toDouble(), 0.0))
+		fakePlayer.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos.center)
 
 		val hitResult = BlockHitResult(targetPos.center, facing.opposite, targetPos, false)
 		when (interactionMode) {
@@ -112,7 +116,12 @@ class MechanicalUserBlockEntity(
 		fakePlayer.isShiftKeyDown = false
 	}
 
-	private fun genericClick(level: ServerLevel, fakePlayer: FakePlayer, targetPos: BlockPos, hitResult: BlockHitResult) {
+	private fun genericClick(
+		level: ServerLevel,
+		fakePlayer: FakePlayer,
+		targetPos: BlockPos,
+		hitResult: BlockHitResult
+	) {
 		if (isLeftClick) {
 			fakePlayer.gameMode.destroyBlock(targetPos)
 		} else {
@@ -123,7 +132,10 @@ class MechanicalUserBlockEntity(
 		}
 	}
 
-	private fun useItemOnBlock(fakePlayer: FakePlayer, hitResult: BlockHitResult) {
+	private fun useItemOnBlock(
+		fakePlayer: FakePlayer,
+		hitResult: BlockHitResult
+	) {
 		if (isLeftClick) {
 			fakePlayer.gameMode.destroyBlock(hitResult.blockPos)
 			return
@@ -133,7 +145,12 @@ class MechanicalUserBlockEntity(
 		fakePlayer.mainHandItem.useOn(context)
 	}
 
-	private fun placeBlock(level: ServerLevel, fakePlayer: FakePlayer, targetPos: BlockPos, hitResult: BlockHitResult) {
+	private fun placeBlock(
+		level: ServerLevel,
+		fakePlayer: FakePlayer,
+		targetPos: BlockPos,
+		hitResult: BlockHitResult
+	) {
 		if (isLeftClick) return
 		if (fakePlayer.mainHandItem.item !is BlockItem) return
 		if (!level.getBlockState(targetPos).canBeReplaced()) return
@@ -142,7 +159,12 @@ class MechanicalUserBlockEntity(
 		fakePlayer.mainHandItem.useOn(context)
 	}
 
-	private fun activateBlock(level: ServerLevel, fakePlayer: FakePlayer, targetPos: BlockPos, hitResult: BlockHitResult) {
+	private fun activateBlock(
+		level: ServerLevel,
+		fakePlayer: FakePlayer,
+		targetPos: BlockPos,
+		hitResult: BlockHitResult
+	) {
 		val targetState = level.getBlockState(targetPos)
 		if (isLeftClick) {
 			targetState.attack(level, targetPos, fakePlayer)
@@ -154,25 +176,28 @@ class MechanicalUserBlockEntity(
 		}
 	}
 
-	private fun useItem(level: ServerLevel, fakePlayer: FakePlayer) {
+	private fun useItem(
+		level: ServerLevel,
+		fakePlayer: FakePlayer
+	) {
 		if (!isLeftClick) {
 			fakePlayer.gameMode.useItem(fakePlayer, level, fakePlayer.mainHandItem, InteractionHand.MAIN_HAND)
 		}
 	}
 
-	private fun interactWithEntity(level: ServerLevel, fakePlayer: FakePlayer, targetPos: BlockPos) {
-		val entities = level.getEntities(fakePlayer, AABB(targetPos), Entity::isPickable)
-		var closestEntity: Entity? = null
-		var closestDistance = Double.MAX_VALUE
-		for (entity in entities) {
-			val distance = entity.position().distanceToSqr(targetPos.center)
-			if (distance < closestDistance) {
-				closestEntity = entity
-				closestDistance = distance
-			}
-		}
+	private fun interactWithEntity(
+		level: ServerLevel,
+		fakePlayer: FakePlayer,
+		targetPos: BlockPos
+	) {
+		val entities = level.getEntities(
+			fakePlayer,
+			AABB(targetPos).inflate(ENTITY_INTERACTION_MARGIN),
+			Entity::isPickable
+		)
 
-		val targetEntity = closestEntity ?: return
+		val targetEntity = entities.minByOrNull { it.distanceToSqr(targetPos.center) } ?: return
+
 		if (isLeftClick) {
 			if (targetEntity !is ItemEntity) {
 				fakePlayer.attack(targetEntity)
@@ -284,6 +309,8 @@ class MechanicalUserBlockEntity(
 		private const val FAKE_PLAYER_UUID_NBT = "FakePlayerUuid"
 
 		private const val FAKE_PLAYER_NAME = "ExcessiveUtilitiesMechanicalUser"
+		private const val FAKE_PLAYER_FACE_OFFSET = 0.5001
+		private const val ENTITY_INTERACTION_MARGIN = 0.25
 	}
 
 }
