@@ -1,7 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
-import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
+import dev.aaronhowser.mods.aaron.fake_player.AttributeFakePlayer
+import dev.aaronhowser.mods.aaron.fake_player.BetterFakePlayerFactory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.excessive_utilities.block.MechanicalInteractorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
@@ -11,20 +12,13 @@ import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user.MechanicalU
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
-import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.RegistryAccess
-import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.EquipmentSlot
-import net.minecraft.world.entity.ai.attributes.Attribute
-import net.minecraft.world.entity.ai.attributes.AttributeModifier
-import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -32,7 +26,6 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
-import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
@@ -354,65 +347,8 @@ class MechanicalUserBlockEntity(
 	private class MechanicalUserFakePlayer(
 		level: ServerLevel,
 		gameProfile: GameProfile
-	) : FakePlayer(level, gameProfile) {
-
+	) : AttributeFakePlayer(level, gameProfile) {
 		override fun getAttackStrengthScale(adjustTicks: Float): Float = 1f
-
-		override fun getAttributeValue(attribute: Holder<Attribute>): Double {
-			val baseValue = super.getAttributeValue(attribute)
-			if (attribute != Attributes.ATTACK_DAMAGE) return baseValue
-
-			return getStackAttributeValue(mainHandItem, attribute, registryAccess(), baseValue)
-		}
-
-		private fun getStackAttributeValue(
-			itemStack: ItemStack,
-			attribute: Holder<Attribute>,
-			registryAccess: RegistryAccess,
-			baseValue: Double
-		): Double {
-			val modifiers = getModifiersForAttribute(attribute, itemStack, registryAccess)
-
-			val baseIncrease = modifiers
-				.filter { it.operation == AttributeModifier.Operation.ADD_VALUE }
-				.sumOf { it.amount }
-
-			val increasedBase = baseValue + baseIncrease
-
-			val multipliedBase = modifiers
-				.filter { it.operation == AttributeModifier.Operation.ADD_MULTIPLIED_BASE }
-				.fold(increasedBase) { currentValue, modifier -> currentValue * modifier.amount }
-
-			return modifiers
-				.filter { it.operation == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL }
-				.fold(multipliedBase) { currentValue, modifier -> currentValue * (1.0 + modifier.amount) }
-		}
-
-		private fun getModifiersForAttribute(
-			attribute: Holder<Attribute>,
-			itemStack: ItemStack,
-			registryAccess: RegistryAccess
-		): List<AttributeModifier> {
-			if (itemStack.isEmpty) return emptyList()
-
-			val enchantmentModifiers = itemStack.getAllEnchantments(
-				registryAccess.lookupOrThrow(Registries.ENCHANTMENT)
-			)
-				.entrySet()
-				.flatMap { (enchantment, level) ->
-					enchantment.value().effects()
-						.get(EnchantmentEffectComponents.ATTRIBUTES)
-						?.filter { it.attribute == attribute }
-						?.map { it.getModifier(level, EquipmentSlot.MAINHAND) }
-						?: emptyList()
-				}
-
-			val stackModifiers = itemStack.attributeModifiers.modifiers
-				.filter { it.slot.test(EquipmentSlot.MAINHAND) && it.attribute == attribute }
-				.map { it.modifier }
-
-			return enchantmentModifiers + stackModifiers
-		}
 	}
 
 }

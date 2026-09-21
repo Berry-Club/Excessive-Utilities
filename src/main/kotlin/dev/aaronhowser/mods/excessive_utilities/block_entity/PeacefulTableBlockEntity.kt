@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
 import com.mojang.datafixers.util.Either
-import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
+import dev.aaronhowser.mods.aaron.fake_player.BetterFakePlayerFactory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
