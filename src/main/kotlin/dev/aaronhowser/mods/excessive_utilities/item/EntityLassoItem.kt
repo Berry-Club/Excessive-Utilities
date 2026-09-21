@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getMinimalTag
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
@@ -85,7 +86,7 @@ class EntityLassoItem(
 		val customNbt = CustomData.of(entityNbt)
 
 		stack.set(ModDataComponents.ENTITY_DATA, customNbt)
-		stack.set(ModDataComponents.ENTITY_TYPE, interactionTarget.type.builtInRegistryHolder())
+		stack.set(ModDataComponents.ENTITY_TYPE, interactionTarget.type.registryHolder())
 
 		interactionTarget.remove(Entity.RemovalReason.DISCARDED)
 

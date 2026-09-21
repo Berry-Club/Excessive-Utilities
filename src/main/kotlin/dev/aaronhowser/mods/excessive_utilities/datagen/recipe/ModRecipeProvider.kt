@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withCount
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -738,7 +739,7 @@ class ModRecipeProvider(
 				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
 				'L' to ModItems.GOLDEN_LASSO.asIngredient(
 					ModDataComponents.ENTITY_TYPE.get(),
-					EntityType.CHICKEN.builtInRegistryHolder()
+					EntityType.CHICKEN.registryHolder()
 				),
 				'R' to ModItems.RESONATING_REDSTONE_CRYSTAL.asIngredient()
 			)
@@ -752,7 +753,7 @@ class ModRecipeProvider(
 				'D' to Tags.Items.GEMS_DIAMOND.asIngredient(),
 				'L' to ModItems.GOLDEN_LASSO.asIngredient(
 					ModDataComponents.ENTITY_TYPE.get(),
-					EntityType.SQUID.builtInRegistryHolder()
+					EntityType.SQUID.registryHolder()
 				),
 				'C' to ModItems.CHICKEN_WING_RING.asIngredient(),
 				'E' to Tags.Items.ENDER_PEARLS.asIngredient()
@@ -2055,8 +2056,19 @@ class ModRecipeProvider(
 			bigger: ItemLike,
 			smaller: ItemLike
 		) {
-			val biggerName = bigger.asItem().builtInRegistryHolder().key().location().path
-			val smallerName = smaller.asItem().builtInRegistryHolder().key().location().path
+			val biggerName = bigger
+				.asItem()
+				.registryHolder()
+				.key()
+				.location()
+				.path
+
+			val smallerName = smaller
+				.asItem()
+				.registryHolder()
+				.key()
+				.location()
+				.path
 
 			shapedRecipe(
 				bigger,
@@ -2629,13 +2641,13 @@ class ModRecipeProvider(
 				.define(
 					'B', ModItems.GOLDEN_LASSO.asIngredient(
 						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.BAT.builtInRegistryHolder()
+						EntityType.BAT.registryHolder()
 					)
 				)
 				.define(
 					'H', ModItems.CURSED_LASSO.asIngredient(
 						ModDataComponents.ENTITY_TYPE.get(),
-						EntityType.GHAST.builtInRegistryHolder()
+						EntityType.GHAST.registryHolder()
 					)
 				)
 				.define('U', ModItems.UNSTABLE_INGOT.asIngredient())

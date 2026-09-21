@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datamap
 
 import com.mojang.serialization.Codec
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -62,7 +63,7 @@ class InversionRitualEnemyWeight(
 				.filterIsInstance<EntityType<out Mob>>()
 
 			for (type in registry) {
-				val weight = type.builtInRegistryHolder().getData(DATA_MAP)
+				val weight = type.registryHolder().getData(DATA_MAP)
 				if (weight != null) {
 					weights[type] = weight.weight
 				}

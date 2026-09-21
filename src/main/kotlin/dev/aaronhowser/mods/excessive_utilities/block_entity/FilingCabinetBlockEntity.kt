@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
@@ -150,7 +151,13 @@ class FilingCabinetBlockEntity(
 		super.saveAdditional(tag, registries)
 
 		val item = storedItem ?: return
-		tag.putString(ITEM_NBT, item.builtInRegistryHolder().key().location().toString())
+		tag.putString(
+			ITEM_NBT,
+			item.registryHolder()
+				.key()
+				.location()
+				.toString()
+		)
 
 		val registryOps = RegistryOps.create(NbtOps.INSTANCE, registries)
 

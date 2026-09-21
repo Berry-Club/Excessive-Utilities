@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.datamap
 
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFluid
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.Registries
 import net.minecraft.server.level.ServerLevel
@@ -37,7 +38,7 @@ class NetherLavaDunkConversion(
 
 			val item = itemEntity.item
 			val output = item.item
-				.builtInRegistryHolder()
+				.registryHolder()
 				.getData(DATA_MAP)
 				?.output
 				?: return

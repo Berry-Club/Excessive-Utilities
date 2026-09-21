@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.datamap
 
 import com.mojang.serialization.Codec
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.level.block.Block
@@ -26,7 +27,7 @@ class ReversingHoeConversion(
 				.build()
 
 		fun getResult(state: BlockState): BlockState? {
-			return state.block.builtInRegistryHolder().getData(DATA_MAP)?.outputState
+			return state.block.registryHolder().getData(DATA_MAP)?.outputState
 		}
 	}
 
