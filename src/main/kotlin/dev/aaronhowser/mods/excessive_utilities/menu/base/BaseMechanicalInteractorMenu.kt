@@ -35,7 +35,7 @@ abstract class BaseMechanicalInteractorMenu(
 	protected fun initializeMenu(expectedDataSize: Int) {
 		checkContainerSize(machineContainer, getExpectedContainerSize())
 		checkContainerDataCount(machineData, expectedDataSize)
-		addSlots(158)
+		addSlots(157)
 		addDataSlots(machineData)
 	}
 
