@@ -120,22 +120,6 @@ abstract class MechanicalInteractorBlockEntity(
 		cooldown = tag.getInt(COOLDOWN_NBT)
 	}
 
-	enum class RedstoneMode(val langKey: String) {
-		ALWAYS_ON(ModMenuLang.MECHANICAL_INTERACTOR_ALWAYS_ON),
-		WHILE_POWERED(ModMenuLang.MECHANICAL_INTERACTOR_REDSTONE_ON),
-		WHILE_UNPOWERED(ModMenuLang.MECHANICAL_INTERACTOR_REDSTONE_OFF),
-		ON_PULSE(ModMenuLang.MECHANICAL_INTERACTOR_REDSTONE_PULSE);
-
-		companion object {
-			fun fromOrdinal(ordinal: Int): RedstoneMode {
-				if (ordinal < 0) return entries.last()
-				if (ordinal >= entries.size) return entries.first()
-
-				return entries[ordinal]
-			}
-		}
-	}
-
 	companion object {
 		const val INVENTORY_SIZE = 9
 		const val UPGRADE_SLOT = 9
@@ -160,12 +144,26 @@ abstract class MechanicalInteractorBlockEntity(
 		}
 	}
 
-	private inner class MechanicalInteractorContainer(size: Int) : ImprovedSimpleContainer(this, size) {
+	enum class RedstoneMode(val langKey: String) {
+		ALWAYS_ON(ModMenuLang.MECHANICAL_INTERACTOR_ALWAYS_ON),
+		WHILE_POWERED(ModMenuLang.MECHANICAL_INTERACTOR_REDSTONE_ON),
+		WHILE_UNPOWERED(ModMenuLang.MECHANICAL_INTERACTOR_REDSTONE_OFF),
+		ON_PULSE(ModMenuLang.MECHANICAL_INTERACTOR_REDSTONE_PULSE);
 
+		companion object {
+			fun fromOrdinal(ordinal: Int): RedstoneMode {
+				if (ordinal < 0) return entries.last()
+				if (ordinal >= entries.size) return entries.first()
+
+				return entries[ordinal]
+			}
+		}
+	}
+
+	private inner class MechanicalInteractorContainer(size: Int) : ImprovedSimpleContainer(this, size) {
 		override fun canPlaceItem(slot: Int, stack: ItemStack): Boolean {
 			return canInsertItem(slot, stack)
 		}
-
 	}
 
 }

@@ -544,6 +544,8 @@ class ModBlockTagsProvider(
 
 		tag(PAINTBRUSH_BLACKLIST)
 
+		tag(MECHANICAL_MINER_BLACKLIST)
+
 		tag(PAINTBRUSH_WOOLS)
 			.add(
 				Blocks.WHITE_WOOL,
@@ -586,6 +588,7 @@ class ModBlockTagsProvider(
 		val PAINTBRUSH_BLACKLIST = create("paintbrush_blacklist")
 		val FE_TRANSMITTER_BLACKLIST = create("fe_transmitter_blacklist")
 		val ENDER_PORCUPINE_BLACKLIST = create("ender_porcupine_blacklist")
+		val MECHANICAL_MINER_BLACKLIST = create("mechanical_miner_blacklist")
 
 		val ENDER_QUARRY_PART = create("ender_quarry_part")
 		val ENDER_QUARRY_UPGRADE = create("ender_quarry_upgrade")

@@ -1,9 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.ItemCatcher
 import dev.aaronhowser.mods.excessive_utilities.block.MechanicalInteractorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner.MechanicalMinerMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -14,7 +17,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -24,7 +26,6 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
@@ -97,22 +98,25 @@ class MechanicalMinerBlockEntity(
 		val facing = blockState.getValue(MechanicalInteractorBlock.FACING)
 		val targetPos = blockPos.relative(facing)
 		val targetState = level.getBlockState(targetPos)
-		if (targetState.isAir || targetState.getDestroySpeed(level, targetPos) < 0f) return
+
+		if (targetState.isAir) return
+		if (targetState.isBlock(ModBlockTagsProvider.MECHANICAL_MINER_BLACKLIST)) return
+		if (targetState.getDestroySpeed(level, targetPos) < 0f) return
 
 		val fakePlayer = getFakePlayer(level)
 		fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, createMiningTool(level))
+
 		val facingVector = Vec3(facing.stepX.toDouble(), facing.stepY.toDouble(), facing.stepZ.toDouble())
 		fakePlayer.setPos(targetPos.center.subtract(facingVector).subtract(0.0, fakePlayer.eyeHeight.toDouble(), 0.0))
 
-		val itemEntitiesBefore = level.getEntitiesOfClass(ItemEntity::class.java, AABB(targetPos).inflate(1.0))
-			.mapTo(mutableSetOf(), ItemEntity::getUUID)
+		var blockDestroyed = false
+		val droppedItems = ItemCatcher.catchEntitiesDuring {
+			blockDestroyed = fakePlayer.gameMode.destroyBlock(targetPos)
+		}
 
-		if (!fakePlayer.gameMode.destroyBlock(targetPos)) return
+		if (!blockDestroyed) return
 
-		val droppedItems = level.getEntitiesOfClass(ItemEntity::class.java, AABB(targetPos).inflate(1.0))
 		for (itemEntity in droppedItems) {
-			if (itemEntity.uuid in itemEntitiesBefore) continue
-
 			val remainder = ItemHandlerHelper.insertItemStacked(super.getItemHandler(null), itemEntity.item.copy(), false)
 			if (remainder.isEmpty) {
 				itemEntity.discard()
