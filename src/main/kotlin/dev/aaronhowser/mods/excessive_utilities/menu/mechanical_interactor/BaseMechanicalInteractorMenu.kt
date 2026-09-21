@@ -42,8 +42,6 @@ abstract class BaseMechanicalInteractorMenu(
 	}
 
 	protected abstract fun getExpectedContainerSize(): Int
-	protected abstract fun getUpgradeSlotX(): Int
-	protected abstract fun getUpgradeSlotY(): Int
 
 	override fun addContainerSlots() {
 		for (row in 0 until 3) {
@@ -53,11 +51,11 @@ abstract class BaseMechanicalInteractorMenu(
 			}
 		}
 
-		addSlot(
-			FilteredSlot(machineContainer, MechanicalInteractorBlockEntity.UPGRADE_SLOT, getUpgradeSlotX(), getUpgradeSlotY()) {
-				it.isItem(ModItemTagsProvider.SPEED_UPGRADES)
-			}
-		)
+		val speedSlot = FilteredSlot(machineContainer, MechanicalInteractorBlockEntity.UPGRADE_SLOT, 153, 5) {
+			it.isItem(ModItemTagsProvider.SPEED_UPGRADES)
+		}
+
+		addSlot(speedSlot)
 	}
 
 	override fun handleButtonPressed(buttonId: Int, isShiftDown: Boolean) {

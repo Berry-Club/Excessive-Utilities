@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.MechanicalMinerBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_interactor.BaseMechanicalInteractorMenu
@@ -39,21 +40,19 @@ class MechanicalMinerMenu(
 	}
 
 	override fun getExpectedContainerSize(): Int = MechanicalMinerBlockEntity.CONTAINER_SIZE
-	override fun getUpgradeSlotX(): Int = 152
-	override fun getUpgradeSlotY(): Int = 120
 
 	override fun addContainerSlots() {
 		super.addContainerSlots()
 
-		addSlot(
-			object : Slot(machineContainer, MechanicalMinerBlockEntity.ENCHANTMENT_SLOT, 8, 120) {
-				override fun mayPlace(stack: ItemStack): Boolean = stack.`is`(Items.ENCHANTED_BOOK)
-			}
-		)
+		val bookSlot = object : Slot(machineContainer, MechanicalMinerBlockEntity.ENCHANTMENT_SLOT, 135, 5) {
+			override fun mayPlace(stack: ItemStack): Boolean = stack.isItem(Items.ENCHANTED_BOOK)
+		}
+
+		addSlot(bookSlot)
 	}
 
 	override fun moveMachineSpecificStack(stack: ItemStack): Boolean {
-		if (!stack.`is`(Items.ENCHANTED_BOOK)) return false
+		if (!stack.isItem(Items.ENCHANTED_BOOK)) return false
 
 		return moveItemStackTo(
 			stack,

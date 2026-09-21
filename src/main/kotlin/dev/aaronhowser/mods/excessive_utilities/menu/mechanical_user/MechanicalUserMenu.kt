@@ -65,8 +65,6 @@ class MechanicalUserMenu(
 		}
 
 	override fun getExpectedContainerSize(): Int = MechanicalInteractorBlockEntity.BASE_CONTAINER_SIZE
-	override fun getUpgradeSlotX(): Int = 152
-	override fun getUpgradeSlotY(): Int = 138
 
 	override fun handleButtonPressed(buttonId: Int, isShiftDown: Boolean) {
 		when (buttonId) {
