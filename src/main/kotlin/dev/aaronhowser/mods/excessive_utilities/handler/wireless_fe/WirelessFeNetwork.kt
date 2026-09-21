@@ -13,28 +13,30 @@ class WirelessFeNetwork(
 	fun addBattery(battery: WirelessFeBatteryBlockEntity) = batteries.add(battery)
 	fun removeBattery(battery: WirelessFeBatteryBlockEntity) = batteries.remove(battery)
 
-	val energyStorage: IEnergyStorage =
-		object : IEnergyStorage {
+	val energyStorage: IEnergyStorage = NetworkEnergyStorage()
 
-			override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = 0
-			override fun canReceive(): Boolean = false
+	private inner class NetworkEnergyStorage : IEnergyStorage {
 
-			override fun getEnergyStored(): Int = batteries.sumOf { it.energyStorage.energyStored }
-			override fun getMaxEnergyStored(): Int = batteries.sumOf { it.energyStorage.maxEnergyStored }
-			override fun canExtract(): Boolean = batteries.any { it.energyStorage.canExtract() }
+		override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = 0
+		override fun canReceive(): Boolean = false
 
-			override fun extractEnergy(toExtract: Int, simulate: Boolean): Int {
-				var amountExtracted = 0
+		override fun getEnergyStored(): Int = batteries.sumOf { it.energyStorage.energyStored }
+		override fun getMaxEnergyStored(): Int = batteries.sumOf { it.energyStorage.maxEnergyStored }
+		override fun canExtract(): Boolean = batteries.any { it.energyStorage.canExtract() }
 
-				for (battery in batteries) {
-					if (amountExtracted >= toExtract) break
+		override fun extractEnergy(toExtract: Int, simulate: Boolean): Int {
+			var amountExtracted = 0
 
-					val extracted = battery.energyStorage.extractEnergy(toExtract - amountExtracted, simulate)
-					amountExtracted += extracted
-				}
+			for (battery in batteries) {
+				if (amountExtracted >= toExtract) break
 
-				return amountExtracted
+				val extracted = battery.energyStorage.extractEnergy(toExtract - amountExtracted, simulate)
+				amountExtracted += extracted
 			}
+
+			return amountExtracted
 		}
+
+	}
 
 }
