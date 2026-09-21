@@ -123,7 +123,7 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties), ICurioItem
 						}
 					}
 
-					if (ringStack == ItemStack.EMPTY) {
+					if (!stillHasStack) {
 						val wornCurios = CuriosApi.getCuriosInventory(player).getOrNull()?.equippedCurios
 						if (wornCurios != null) {
 							for (slot in 0 until wornCurios.slots) {

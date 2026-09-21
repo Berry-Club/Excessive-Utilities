@@ -127,7 +127,7 @@ class ChickenWingRingItem(properties: Properties) : Item(properties), ICurioItem
 						}
 					}
 
-					if (ringStack == ItemStack.EMPTY) {
+					if (!isHoldingItem) {
 						val wornCurios = CuriosApi.getCuriosInventory(player).getOrNull()?.equippedCurios
 						if (wornCurios != null) {
 							for (slot in 0 until wornCurios.slots) {
