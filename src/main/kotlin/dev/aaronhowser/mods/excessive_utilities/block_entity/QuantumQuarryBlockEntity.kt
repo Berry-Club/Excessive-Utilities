@@ -358,42 +358,7 @@ class QuantumQuarryBlockEntity(
 		setChunkForced(level, targetChunk, false)
 	}
 
-	private val containerData: ContainerData =
-		object : ContainerData {
-			override fun get(index: Int): Int {
-				return when (index) {
-					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
-					TARGET_X_DATA_INDEX -> targetBlockPos?.x ?: 0
-					TARGET_Y_DATA_INDEX -> targetBlockPos?.y ?: 0
-					TARGET_Z_DATA_INDEX -> targetBlockPos?.z ?: 0
-					PROGRESS_PERCENT_DATA_INDEX -> Mth.floor(progressThroughBlock * 100)
-					AMOUNT_BLOCKS_BROKEN_DATA_INDEX -> amountBlocksBroken
-
-					BIOME_ID_DATA_INDEX -> {
-						val level = level
-						val targetPos = targetBlockPos
-						if (targetPos != null && level is ServerLevel) {
-							val miningDimLevel = level.server.getLevel(LEVEL_KEY)
-							if (miningDimLevel != null) {
-								val biome = miningDimLevel.getBiome(targetPos)
-								val registry = miningDimLevel.registryAccess().registryOrThrow(Registries.BIOME)
-								return registry.getId(biome.value())
-							}
-						}
-
-						0
-					}
-
-					else -> 0
-				}
-			}
-
-			override fun set(index: Int, value: Int) {
-				// No need to implement since the client doesn't write to these
-			}
-
-			override fun getCount(): Int = CONTAINER_DATA_SIZE
-		}
+	private val containerData: ContainerData = QuantumQuarryContainerData()
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.saveAdditional(tag, registries)
@@ -449,6 +414,40 @@ class QuantumQuarryBlockEntity(
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
 		return QuantumQuarryMenu(containerId, playerInventory, upgradesContainer, containerData)
+	}
+
+	private inner class QuantumQuarryContainerData : ContainerData {
+
+		override fun get(index: Int): Int {
+			return when (index) {
+				CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
+				TARGET_X_DATA_INDEX -> targetBlockPos?.x ?: 0
+				TARGET_Y_DATA_INDEX -> targetBlockPos?.y ?: 0
+				TARGET_Z_DATA_INDEX -> targetBlockPos?.z ?: 0
+				PROGRESS_PERCENT_DATA_INDEX -> Mth.floor(progressThroughBlock * 100)
+				AMOUNT_BLOCKS_BROKEN_DATA_INDEX -> amountBlocksBroken
+				BIOME_ID_DATA_INDEX -> getTargetBiomeId()
+				else -> 0
+			}
+		}
+
+		override fun set(index: Int, value: Int) {
+			// No need to implement since the client doesn't write to these
+		}
+
+		override fun getCount(): Int = CONTAINER_DATA_SIZE
+
+		private fun getTargetBiomeId(): Int {
+			val level = level
+			val targetPos = targetBlockPos
+			if (targetPos == null || level !is ServerLevel) return 0
+
+			val miningDimension = level.server.getLevel(LEVEL_KEY) ?: return 0
+			val biome = miningDimension.getBiome(targetPos)
+			val registry = miningDimension.registryAccess().registryOrThrow(Registries.BIOME)
+			return registry.getId(biome.value())
+		}
+
 	}
 
 	companion object {
