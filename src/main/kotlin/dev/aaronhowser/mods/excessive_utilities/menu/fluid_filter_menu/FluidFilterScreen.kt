@@ -8,7 +8,6 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.ToggleSpriteButton
 import dev.aaronhowser.mods.excessive_utilities.menu.item_filter_menu.ItemFilterScreen
-import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
@@ -23,10 +22,6 @@ class FluidFilterScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = BLUE_LABEL
 
-	private lateinit var invertButton: Button
-	private lateinit var useTagsButton: Button
-	private lateinit var ignoreAllComponentsButton: Button
-
 	override fun baseInit() {
 		super.baseInit()
 
@@ -38,7 +33,7 @@ class FluidFilterScreen(
 
 		var buttonX = middleX - buttonSpacing - buttonWidth - buttonSpacing
 
-		invertButton = ToggleSpriteButton(
+		val invertButton = ToggleSpriteButton(
 			x = buttonX,
 			y = buttonY,
 			width = 20,
@@ -59,7 +54,7 @@ class FluidFilterScreen(
 
 		buttonX += buttonWidth + buttonSpacing
 
-		useTagsButton = ToggleSpriteButton(
+		val useTagsButton = ToggleSpriteButton(
 			x = buttonX,
 			y = buttonY,
 			width = 20,
@@ -79,7 +74,7 @@ class FluidFilterScreen(
 
 		buttonX += buttonWidth + buttonSpacing
 
-		ignoreAllComponentsButton = ToggleSpriteButton(
+		val ignoreAllComponentsButton = ToggleSpriteButton(
 			x = buttonX,
 			y = buttonY,
 			width = 20,

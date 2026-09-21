@@ -17,13 +17,10 @@ class SingleFluidGeneratorScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 
-	private lateinit var energyBar: EnergyBar
-	private lateinit var fluidBar: FluidBar
-
 	override fun baseInit() {
 		super.baseInit()
 
-		energyBar = EnergyBar(
+		val energyBar = EnergyBar(
 			x = leftPos + 114,
 			y = topPos + 18,
 			maxGetter = { menu.getMaxEnergy() },
@@ -31,7 +28,7 @@ class SingleFluidGeneratorScreen(
 			font = font
 		)
 
-		fluidBar = FluidBar(
+		val fluidBar = FluidBar(
 			x = leftPos + 69,
 			y = topPos + 40,
 			capacityGetter = { menu.blockEntity?.tank?.capacity ?: 0 },

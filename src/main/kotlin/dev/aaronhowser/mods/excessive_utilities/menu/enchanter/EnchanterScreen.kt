@@ -18,13 +18,10 @@ class EnchanterScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = LABEL
 
-	private lateinit var energyBar: EnergyBar
-	private lateinit var progressArrow: ProgressArrow
-
 	override fun baseInit() {
 		super.baseInit()
 
-		energyBar = EnergyBar(
+		val energyBar = EnergyBar(
 			x = leftPos + 7,
 			y = topPos + 21,
 			maxGetter = { menu.getMaxEnergy() },
@@ -32,7 +29,7 @@ class EnchanterScreen(
 			font = font
 		)
 
-		progressArrow = ProgressArrow(
+		val progressArrow = ProgressArrow(
 			x = leftPos + 95,
 			y = topPos + 41,
 			font = font,

@@ -22,12 +22,10 @@ class QuantumQuarryScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = LABEL
 
-	private lateinit var energyBar: EnergyBar
-
 	override fun baseInit() {
 		super.baseInit()
 
-		energyBar = EnergyBar(
+		val energyBar = EnergyBar(
 			x = leftPos + 149,
 			y = topPos + 21,
 			maxGetter = { 1_000_000 },

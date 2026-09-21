@@ -8,7 +8,6 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.ToggleSpriteButton
-import net.minecraft.client.gui.components.Button
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.player.Inventory
@@ -22,11 +21,6 @@ class ItemFilterScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = RED_LABEL
 
-	private lateinit var invertButton: Button
-	private lateinit var useTagsButton: Button
-	private lateinit var ignoreDamageButton: Button
-	private lateinit var ignoreAllComponentsButton: Button
-
 	override fun baseInit() {
 		super.baseInit()
 
@@ -38,7 +32,7 @@ class ItemFilterScreen(
 
 		var buttonX = middleX - (buttonSpacing / 2) - buttonWidth - buttonSpacing - buttonWidth
 
-		invertButton = ToggleSpriteButton(
+		val invertButton = ToggleSpriteButton(
 			x = buttonX,
 			y = buttonY,
 			width = 20,
@@ -58,7 +52,7 @@ class ItemFilterScreen(
 
 		buttonX += buttonWidth + buttonSpacing
 
-		useTagsButton = ToggleSpriteButton(
+		val useTagsButton = ToggleSpriteButton(
 			x = buttonX,
 			y = buttonY,
 			width = 20,
@@ -78,7 +72,7 @@ class ItemFilterScreen(
 
 		buttonX += buttonWidth + buttonSpacing
 
-		ignoreDamageButton = ToggleSpriteButton(
+		val ignoreDamageButton = ToggleSpriteButton(
 			x = buttonX,
 			y = buttonY,
 			width = 20,
@@ -98,7 +92,7 @@ class ItemFilterScreen(
 
 		buttonX += buttonWidth + buttonSpacing
 
-		ignoreAllComponentsButton = ToggleSpriteButton(
+		val ignoreAllComponentsButton = ToggleSpriteButton(
 			x = buttonX,
 			y = buttonY,
 			width = 20,

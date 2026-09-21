@@ -7,7 +7,6 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.ImageButton
 import net.minecraft.client.gui.components.WidgetSprites
 import net.minecraft.network.chat.Component
@@ -25,22 +24,6 @@ class EnderPorcupineScreen(
 
 	override val showInventoryLabel: Boolean = false
 
-	private lateinit var minXIncreaseButton: Button
-	private lateinit var minYIncreaseButton: Button
-	private lateinit var minZIncreaseButton: Button
-
-	private lateinit var minXDecreaseButton: Button
-	private lateinit var minYDecreaseButton: Button
-	private lateinit var minZDecreaseButton: Button
-
-	private lateinit var maxXIncreaseButton: Button
-	private lateinit var maxYIncreaseButton: Button
-	private lateinit var maxZIncreaseButton: Button
-
-	private lateinit var maxXDecreaseButton: Button
-	private lateinit var maxYDecreaseButton: Button
-	private lateinit var maxZDecreaseButton: Button
-
 	override fun baseInit() {
 		super.baseInit()
 
@@ -51,7 +34,7 @@ class EnderPorcupineScreen(
 		val yButtonX = leftPos + 24
 		val zButtonX = leftPos + 40
 
-		minXIncreaseButton = ImageButton(
+		val minXIncreaseButton = ImageButton(
 			xButtonX,
 			increaseMinButtonY,
 			16,
@@ -62,7 +45,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		minXDecreaseButton = ImageButton(
+		val minXDecreaseButton = ImageButton(
 			xButtonX,
 			decreaseMinButtonY,
 			16,
@@ -73,7 +56,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		minYIncreaseButton = ImageButton(
+		val minYIncreaseButton = ImageButton(
 			yButtonX,
 			increaseMinButtonY,
 			16,
@@ -84,7 +67,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		minYDecreaseButton = ImageButton(
+		val minYDecreaseButton = ImageButton(
 			yButtonX,
 			decreaseMinButtonY,
 			16,
@@ -95,7 +78,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		minZIncreaseButton = ImageButton(
+		val minZIncreaseButton = ImageButton(
 			zButtonX,
 			increaseMinButtonY,
 			16,
@@ -106,7 +89,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		minZDecreaseButton = ImageButton(
+		val minZDecreaseButton = ImageButton(
 			zButtonX,
 			decreaseMinButtonY,
 			16,
@@ -127,7 +110,7 @@ class EnderPorcupineScreen(
 		val increaseMaxButtonY = topPos + 124
 		val decreaseMaxButtonY = topPos + 156
 
-		maxXIncreaseButton = ImageButton(
+		val maxXIncreaseButton = ImageButton(
 			xButtonX,
 			increaseMaxButtonY,
 			16,
@@ -138,7 +121,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		maxXDecreaseButton = ImageButton(
+		val maxXDecreaseButton = ImageButton(
 			xButtonX,
 			decreaseMaxButtonY,
 			16,
@@ -149,7 +132,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		maxYIncreaseButton = ImageButton(
+		val maxYIncreaseButton = ImageButton(
 			yButtonX,
 			increaseMaxButtonY,
 			16,
@@ -160,7 +143,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		maxYDecreaseButton = ImageButton(
+		val maxYDecreaseButton = ImageButton(
 			yButtonX,
 			decreaseMaxButtonY,
 			16,
@@ -171,7 +154,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		maxZIncreaseButton = ImageButton(
+		val maxZIncreaseButton = ImageButton(
 			zButtonX,
 			increaseMaxButtonY,
 			16,
@@ -182,7 +165,7 @@ class EnderPorcupineScreen(
 			packet.messageServer()
 		}
 
-		maxZDecreaseButton = ImageButton(
+		val maxZDecreaseButton = ImageButton(
 			zButtonX,
 			decreaseMaxButtonY,
 			16,

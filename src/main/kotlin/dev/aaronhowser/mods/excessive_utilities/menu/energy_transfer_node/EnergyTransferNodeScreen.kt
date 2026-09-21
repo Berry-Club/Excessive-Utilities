@@ -18,12 +18,10 @@ class EnergyTransferNodeScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = YELLOW_LABEL
 
-	private lateinit var energyBar: EnergyBar
-
 	override fun baseInit() {
 		super.baseInit()
 
-		energyBar = EnergyBar(
+		val energyBar = EnergyBar(
 			x = leftPos + 79,
 			y = topPos + 24,
 			maxGetter = { menu.getMaxEnergy() },

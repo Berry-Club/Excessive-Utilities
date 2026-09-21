@@ -22,7 +22,6 @@ class EnderFrequencyScreen(
 ) : AbstractContainerScreen<EnderFrequencyMenu>(menu, inventory, title) {
 
 	private lateinit var nameBox: EditBox
-	private lateinit var privacyButton: Button
 	private var isPrivate: Boolean = menu.initiallyPrivate
 
 	init {
@@ -58,9 +57,9 @@ class EnderFrequencyScreen(
 		nameBox.setResponder { saveFrequency() }
 		addRenderableWidget(nameBox)
 
-		privacyButton = Button.builder(privacyMessage()) {
+		val privacyButton = Button.builder(privacyMessage()) {
 			isPrivate = !isPrivate
-			privacyButton.message = privacyMessage()
+			it.message = privacyMessage()
 			saveFrequency()
 		}.bounds(leftPos + 10, topPos + 55, imageWidth - 20, 20).build()
 

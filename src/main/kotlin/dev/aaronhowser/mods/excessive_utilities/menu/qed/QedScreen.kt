@@ -18,12 +18,10 @@ class QedScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = TEAL_LABEL
 
-	private lateinit var progressArrow: ProgressArrow
-
 	override fun baseInit() {
 		super.baseInit()
 
-		progressArrow = ProgressArrow(
+		val progressArrow = ProgressArrow(
 			x = leftPos + 90,
 			y = topPos + 41,
 			font = font,

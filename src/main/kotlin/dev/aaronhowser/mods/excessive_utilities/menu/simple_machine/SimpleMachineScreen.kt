@@ -18,13 +18,10 @@ class SimpleMachineScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = YELLOW_LABEL
 
-	private lateinit var energyBar: EnergyBar
-	private lateinit var progressArrow: ProgressArrow
-
 	override fun baseInit() {
 		super.baseInit()
 
-		energyBar = EnergyBar(
+		val energyBar = EnergyBar(
 			x = leftPos + 7,
 			y = topPos + 21,
 			maxGetter = { menu.getMaxEnergy() },
@@ -32,7 +29,7 @@ class SimpleMachineScreen(
 			font = font
 		)
 
-		progressArrow = ProgressArrow(
+		val progressArrow = ProgressArrow(
 			x = leftPos + 84,
 			y = topPos + 41,
 			font = font,

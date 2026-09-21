@@ -15,12 +15,10 @@ class SingleItemGeneratorScreen(
 
 	override val background: ScreenBackground = BACKGROUND
 
-	private lateinit var energyBar: EnergyBar
-
 	override fun baseInit() {
 		super.baseInit()
 
-		energyBar = EnergyBar(
+		val energyBar = EnergyBar(
 			x = leftPos + 114,
 			y = topPos + 18,
 			maxGetter = { menu.getMaxEnergy() },

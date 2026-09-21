@@ -21,12 +21,10 @@ class ResonatorScreen(
 	override val background: ScreenBackground = BACKGROUND
 	override val titleLabelSprite: ResourceLocation = DARK_RED_LABEL
 
-	private lateinit var progressArrow: ProgressArrow
-
 	override fun baseInit() {
 		super.baseInit()
 
-		progressArrow = ProgressArrow(
+		val progressArrow = ProgressArrow(
 			x = leftPos + 73,
 			y = topPos + 37,
 			font = font,
