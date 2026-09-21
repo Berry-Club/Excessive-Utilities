@@ -1,10 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
-import dev.aaronhowser.mods.excessive_utilities.item.component.EnderFrequencyComponent
 import dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency.EnderFrequencyMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.ChatFormatting
@@ -34,9 +32,6 @@ class EnderFrequencyItem(
 
 			player.openMenu(SimpleMenuProvider(constructor, stack.hoverName)) { data ->
 				data.writeEnum(usedHand)
-				val frequency = stack.get(ModDataComponents.ENDER_FREQUENCY)
-				data.writeUtf(frequency?.name ?: "", EnderFrequencyComponent.MAX_NAME_LENGTH)
-				data.writeBoolean(frequency?.isPrivate.isTrue())
 			}
 		}
 

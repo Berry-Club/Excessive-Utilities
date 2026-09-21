@@ -91,7 +91,7 @@ object ModMenuTypes : AaronMenuTypesRegistry() {
 	val CRUSHER: DeferredHolder<MenuType<*>, MenuType<CrusherMenu>> =
 		register("crusher", ::CrusherMenu)
 	val ENDER_FREQUENCY: DeferredHolder<MenuType<*>, MenuType<EnderFrequencyMenu>> =
-		register("ender_frequency") { IMenuTypeExtension.create(::EnderFrequencyMenu) }
+		register("ender_frequency") { IMenuTypeExtension.create(EnderFrequencyMenu::fromNetwork) }
 	val MECHANICAL_MINER: DeferredHolder<MenuType<*>, MenuType<MechanicalMinerMenu>> =
 		register("mechanical_miner", ::MechanicalMinerMenu)
 	val MECHANICAL_USER: DeferredHolder<MenuType<*>, MenuType<MechanicalUserMenu>> =
