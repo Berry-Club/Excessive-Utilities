@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isDamageSource
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import net.minecraft.tags.DamageTypeTags
 import net.minecraft.world.effect.MobEffect
@@ -37,7 +38,7 @@ class OilyEffect : MobEffect(
 	companion object {
 		fun handleIncomingDamage(event: LivingIncomingDamageEvent) {
 			if (event.isCanceled) return
-			if (!event.source.`is`(DamageTypeTags.IS_FIRE)) return
+			if (!event.source.isDamageSource(DamageTypeTags.IS_FIRE)) return
 
 			event.amount *= ServerConfig.CONFIG.oilyFireDamageFactor.get().toFloat()
 		}

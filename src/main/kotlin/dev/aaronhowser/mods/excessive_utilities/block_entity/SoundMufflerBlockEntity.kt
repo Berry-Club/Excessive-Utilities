@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.excessive_utilities.SoundMufflerCarrier
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
@@ -60,9 +61,9 @@ class SoundMufflerBlockEntity(
 
 		fun handleVanillaGameEvent(event: VanillaGameEvent) {
 			val gameEvent = event.vanillaEvent
-			if (!gameEvent.`is`(GameEventTags.VIBRATIONS)
-				&& !gameEvent.`is`(GameEventTags.SHRIEKER_CAN_LISTEN)
-				&& !gameEvent.`is`(GameEventTags.WARDEN_CAN_LISTEN)
+			if (!gameEvent.isHolder(GameEventTags.VIBRATIONS)
+				&& !gameEvent.isHolder(GameEventTags.SHRIEKER_CAN_LISTEN)
+				&& !gameEvent.isHolder(GameEventTags.WARDEN_CAN_LISTEN)
 			) {
 				return
 			}

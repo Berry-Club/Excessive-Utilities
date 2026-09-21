@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModMobEffectTagsProvider
@@ -36,7 +37,7 @@ class PurgingEffect : MobEffect(
 	private fun removeOtherEffects(livingEntity: LivingEntity) {
 		val effectsToRemove = livingEntity.activeEffects
 			.map { it.effect }
-			.filterNot { it.`is`(ModMobEffectTagsProvider.PURGING_BLACKLIST) }
+			.filterNot { it.isHolder(ModMobEffectTagsProvider.PURGING_BLACKLIST) }
 
 		for (effect in effectsToRemove) {
 			livingEntity.removeEffect(effect)

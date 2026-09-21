@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block.MechanicalInteractorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner.MechanicalMinerMenu
@@ -68,7 +69,7 @@ class MechanicalMinerBlockEntity(
 
 	override fun canPlaceInteractionItem(slot: Int, stack: ItemStack): Boolean {
 		if (slot == ENCHANTMENT_SLOT) {
-			return stack.`is`(Items.ENCHANTED_BOOK)
+			return stack.isItem(Items.ENCHANTED_BOOK)
 		}
 
 		return true

@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.feature
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.shuffle
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
@@ -34,7 +35,7 @@ class RedOrchidFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfigurat
 		)
 
 		for (pos in volume) {
-			if (!level.getBlockState(pos).`is`(Tags.Blocks.ORES_REDSTONE)) continue
+			if (!level.getBlockState(pos).isBlock(Tags.Blocks.ORES_REDSTONE)) continue
 
 			val orchidPos = pos.above()
 			if (!level.isEmptyBlock(orchidPos)) continue
