@@ -19,6 +19,7 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
@@ -53,6 +54,37 @@ class MechanicalUserBlockEntity(
 
 	private var fakePlayerReference: WeakReference<FakePlayer>? = null
 	private var fakePlayerUuid = UUID.randomUUID()
+
+	private val menuData = object : ContainerData {
+		override fun get(index: Int): Int {
+			return when (index) {
+				REDSTONE_MODE_DATA_INDEX -> redstoneMode.ordinal
+				INTERACTION_MODE_DATA_INDEX -> interactionMode.ordinal
+				IS_LEFT_CLICK_DATA_INDEX -> if (isLeftClick) 1 else 0
+				USE_UPPER_LEFT_SLOT_ONLY_DATA_INDEX -> if (useUpperLeftSlotOnly) 1 else 0
+				SNEAKING_DATA_INDEX -> if (isSneaking) 1 else 0
+				else -> 0
+			}
+		}
+
+		override fun set(index: Int, value: Int) {
+			when (index) {
+				REDSTONE_MODE_DATA_INDEX -> {
+					setRedstoneMode(value)
+					return
+				}
+				INTERACTION_MODE_DATA_INDEX -> interactionMode = InteractionMode.fromOrdinal(value)
+				IS_LEFT_CLICK_DATA_INDEX -> isLeftClick = value != 0
+				USE_UPPER_LEFT_SLOT_ONLY_DATA_INDEX -> useUpperLeftSlotOnly = value != 0
+				SNEAKING_DATA_INDEX -> isSneaking = value != 0
+				else -> return
+			}
+
+			setChanged()
+		}
+
+		override fun getCount(): Int = MENU_DATA_SIZE
+	}
 
 	private fun getFakePlayer(level: ServerLevel): FakePlayer {
 		val existingPlayer = fakePlayerReference?.get()
@@ -228,33 +260,6 @@ class MechanicalUserBlockEntity(
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
 		return MechanicalUserMenu(containerId, playerInventory, container, menuData)
-	}
-
-	override fun getMenuDataSize(): Int = MENU_DATA_SIZE
-
-	override fun getMenuData(index: Int): Int {
-		return when (index) {
-			INTERACTION_MODE_DATA_INDEX -> interactionMode.ordinal
-			IS_LEFT_CLICK_DATA_INDEX -> if (isLeftClick) 1 else 0
-			USE_UPPER_LEFT_SLOT_ONLY_DATA_INDEX -> if (useUpperLeftSlotOnly) 1 else 0
-			SNEAKING_DATA_INDEX -> if (isSneaking) 1 else 0
-			else -> super.getMenuData(index)
-		}
-	}
-
-	override fun setMenuData(index: Int, value: Int) {
-		when (index) {
-			INTERACTION_MODE_DATA_INDEX -> interactionMode = InteractionMode.fromOrdinal(value)
-			IS_LEFT_CLICK_DATA_INDEX -> isLeftClick = value != 0
-			USE_UPPER_LEFT_SLOT_ONLY_DATA_INDEX -> useUpperLeftSlotOnly = value != 0
-			SNEAKING_DATA_INDEX -> isSneaking = value != 0
-			else -> {
-				super.setMenuData(index, value)
-				return
-			}
-		}
-
-		setChanged()
 	}
 
 	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {

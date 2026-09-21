@@ -18,6 +18,7 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
+import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.component.Unbreakable
@@ -46,6 +47,23 @@ class MechanicalMinerBlockEntity(
 
 	private var fakePlayerReference: WeakReference<FakePlayer>? = null
 	private var fakePlayerUuid = UUID.randomUUID()
+
+	private val menuData = object : ContainerData {
+		override fun get(index: Int): Int {
+			return when (index) {
+				REDSTONE_MODE_DATA_INDEX -> redstoneMode.ordinal
+				else -> 0
+			}
+		}
+
+		override fun set(index: Int, value: Int) {
+			if (index == REDSTONE_MODE_DATA_INDEX) {
+				setRedstoneMode(value)
+			}
+		}
+
+		override fun getCount(): Int = MENU_DATA_SIZE
+	}
 
 	private fun getFakePlayer(level: ServerLevel): FakePlayer {
 		val existingPlayer = fakePlayerReference?.get()
@@ -138,6 +156,7 @@ class MechanicalMinerBlockEntity(
 	companion object {
 		const val ENCHANTMENT_SLOT = 10
 		const val CONTAINER_SIZE = 11
+		const val MENU_DATA_SIZE = 1
 
 		private const val FAKE_PLAYER_NAME = "ExcessiveUtilitiesMechanicalMiner"
 		private const val FAKE_PLAYER_UUID_NBT = "FakePlayerUuid"

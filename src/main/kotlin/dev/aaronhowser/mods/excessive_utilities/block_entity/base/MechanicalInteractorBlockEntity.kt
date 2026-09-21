@@ -16,7 +16,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
-import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
@@ -95,33 +94,11 @@ abstract class MechanicalInteractorBlockEntity(
 
 	protected abstract fun operate(level: ServerLevel)
 
-	protected open fun getMenuData(index: Int): Int {
-		return when (index) {
-			REDSTONE_MODE_DATA_INDEX -> redstoneMode.ordinal
-			else -> 0
-		}
+	protected fun setRedstoneMode(value: Int) {
+		redstoneMode = RedstoneMode.fromOrdinal(value)
+		pendingPulses = 0
+		setChanged()
 	}
-
-	protected open fun setMenuData(index: Int, value: Int) {
-		if (index == REDSTONE_MODE_DATA_INDEX) {
-			redstoneMode = RedstoneMode.fromOrdinal(value)
-			pendingPulses = 0
-			setChanged()
-		}
-	}
-
-	protected open fun getMenuDataSize(): Int = MENU_DATA_SIZE
-
-	protected val menuData: ContainerData =
-		object : ContainerData {
-			override fun get(index: Int): Int = getMenuData(index)
-
-			override fun set(index: Int, value: Int) {
-				setMenuData(index, value)
-			}
-
-			override fun getCount(): Int = getMenuDataSize()
-		}
 
 	override fun getDisplayName(): Component = blockState.block.name
 
@@ -166,8 +143,6 @@ abstract class MechanicalInteractorBlockEntity(
 		const val BASE_COOLDOWN = 20
 
 		const val REDSTONE_MODE_DATA_INDEX = 0
-		const val MENU_DATA_SIZE = 1
-
 		private const val REDSTONE_MODE_NBT = "RedstoneMode"
 		private const val POWERED_NBT = "Powered"
 		private const val PENDING_PULSES_NBT = "PendingPulses"

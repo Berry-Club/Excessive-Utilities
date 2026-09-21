@@ -4,7 +4,6 @@ import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.MechanicalMinerBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.menu.base.BaseMechanicalInteractorMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
@@ -33,12 +32,12 @@ class MechanicalMinerMenu(
 				containerId,
 				playerInventory,
 				SimpleContainer(MechanicalMinerBlockEntity.CONTAINER_SIZE),
-				SimpleContainerData(MechanicalInteractorBlockEntity.MENU_DATA_SIZE)
+				SimpleContainerData(MechanicalMinerBlockEntity.MENU_DATA_SIZE)
 			)
 
 	init {
 		checkContainerSize(machineContainer, MechanicalMinerBlockEntity.CONTAINER_SIZE)
-		checkContainerDataCount(machineData, MechanicalInteractorBlockEntity.MENU_DATA_SIZE)
+		checkContainerDataCount(machineData, MechanicalMinerBlockEntity.MENU_DATA_SIZE)
 		addSlots(117)
 		addDataSlots(machineData)
 	}
