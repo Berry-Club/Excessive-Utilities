@@ -2,12 +2,11 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.AngelRingGridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
@@ -26,10 +25,8 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.NeoForgeMod
-import top.theillusivec4.curios.api.CuriosApi
 import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.type.capability.ICurioItem
-import kotlin.jvm.optionals.getOrNull
 
 class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 
@@ -99,42 +96,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 				return existing
 			}
 
-			val new = object : GridPowerContribution.HeldItem(
-				gpStack = ringStack,
-				player = player
-			) {
-				override fun isStillValid(): Boolean {
-					if (!player.isAlive || player.isRemoved) return false
-
-					val curiosInventory = CuriosApi.getCuriosInventory(player).getOrNull()
-					val stillHasStack = curiosInventory?.isEquipped(ModItems.ANGEL_RING.get()).isTrue()
-
-					if (!stillHasStack) {
-						val attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT)
-						if (attribute != null && attribute.hasModifier(ATTRIBUTE_MODIFIER_NAME)) {
-							attribute.removeModifier(ATTRIBUTE_MODIFIER_NAME)
-							player.abilities.flying = false
-							player.onUpdateAbilities()
-						}
-					}
-
-					return stillHasStack
-				}
-
-				override fun getAmount(): Double {
-					if (player.hasInfiniteMaterials() || !player.abilities.flying) return 0.0
-
-					return ServerConfig.CONFIG.angelRingGpCost.get()
-				}
-
-				private val stackCopy = ringStack.copy()
-				override fun getDisplayStack(): ItemStack = stackCopy
-				override fun getDisplayName(): Component = stackCopy.displayName
-				override fun getDisplayText(): Component {
-					val amount = getAmount()
-					return Component.literal("$amount")
-				}
-			}
+			val new = AngelRingGridPowerContribution(ringStack, player)
 
 			handler.addConsumer(new)
 
