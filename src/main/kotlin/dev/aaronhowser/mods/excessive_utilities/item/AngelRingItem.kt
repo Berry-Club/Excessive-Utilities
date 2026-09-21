@@ -2,11 +2,12 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
-import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.AngelRingGridPowerContribution
+import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
@@ -20,13 +21,16 @@ import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.NeoForgeMod
+import top.theillusivec4.curios.api.CuriosApi
 import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.type.capability.ICurioItem
+import kotlin.jvm.optionals.getOrNull
 
 class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 
@@ -96,7 +100,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 				return existing
 			}
 
-			val new = AngelRingGridPowerContribution(ringStack, player)
+			val new = PowerConsumer(ringStack, player)
 
 			handler.addConsumer(new)
 
@@ -148,6 +152,49 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 			val CODEC: Codec<Type> = StringRepresentable.fromValues { entries.toTypedArray() }
 			val STREAM_CODEC: StreamCodec<ByteBuf, Type> = AaronExtraStreamCodecs.enumStreamCodec(Type::class.java)
 		}
+	}
+
+	class PowerConsumer(
+		ringStack: ItemStack,
+		player: ServerPlayer
+	) : GridPowerContribution.HeldItem(ringStack, player) {
+
+		private val displayStack = ringStack.copy()
+
+		override fun isStillValid(): Boolean {
+			if (!player.isAlive || player.isRemoved) return false
+
+			val curiosInventory = CuriosApi.getCuriosInventory(player).getOrNull()
+			val stillHasRing = curiosInventory?.isEquipped(ModItems.ANGEL_RING.get()).isTrue()
+			if (!stillHasRing) {
+				removeFlight(player)
+			}
+
+			return stillHasRing
+		}
+
+		override fun getAmount(): Double {
+			if (player.hasInfiniteMaterials() || !player.abilities.flying) return 0.0
+
+			return ServerConfig.CONFIG.angelRingGpCost.get()
+		}
+
+		override fun getDisplayStack(): ItemStack = displayStack
+		override fun getDisplayName(): Component = displayStack.displayName
+
+		override fun getDisplayText(): Component {
+			return Component.literal(getAmount().toString())
+		}
+
+		private fun removeFlight(player: Player) {
+			val attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT) ?: return
+			if (!attribute.hasModifier(AngelRingItem.ATTRIBUTE_MODIFIER_NAME)) return
+
+			attribute.removeModifier(AngelRingItem.ATTRIBUTE_MODIFIER_NAME)
+			player.abilities.flying = false
+			player.onUpdateAbilities()
+		}
+
 	}
 
 }

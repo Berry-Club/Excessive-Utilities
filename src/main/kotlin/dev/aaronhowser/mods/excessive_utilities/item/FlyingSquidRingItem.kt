@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
-import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.FlyingSquidRingGridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
+import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.HeldRingGridPowerConsumer
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.server.level.ServerPlayer
@@ -106,11 +106,26 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties), ICurioItem
 				return existing
 			}
 
-			val new = FlyingSquidRingGridPowerContribution(ringStack, player)
+			val new = PowerConsumer(ringStack, player)
 
 			handler.addConsumer(new)
 
 			return new
+		}
+
+	}
+
+	class PowerConsumer(
+		ringStack: ItemStack,
+		player: ServerPlayer
+	) : HeldRingGridPowerConsumer(ringStack, player) {
+
+		override fun getAmount(): Double {
+			if (player.hasInfiniteMaterials()) return 0.0
+			if (!KeyHandler.isHoldingSpace(player)) return 0.0
+			if (player.onGround() || player.isPassenger || player.abilities.flying) return 0.0
+
+			return ServerConfig.CONFIG.flyingSquidRingGpCost.get()
 		}
 
 	}

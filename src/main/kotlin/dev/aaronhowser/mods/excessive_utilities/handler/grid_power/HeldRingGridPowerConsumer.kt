@@ -6,7 +6,7 @@ import net.minecraft.world.item.ItemStack
 import top.theillusivec4.curios.api.CuriosApi
 import kotlin.jvm.optionals.getOrNull
 
-abstract class HeldRingGridPowerContribution(
+abstract class HeldRingGridPowerConsumer(
 	gpStack: ItemStack,
 	player: Player
 ) : GridPowerContribution.HeldItem(gpStack, player) {
