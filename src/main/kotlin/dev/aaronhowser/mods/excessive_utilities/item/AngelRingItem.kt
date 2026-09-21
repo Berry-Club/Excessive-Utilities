@@ -188,9 +188,9 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 
 		private fun removeFlight(player: Player) {
 			val attribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT) ?: return
-			if (!attribute.hasModifier(AngelRingItem.ATTRIBUTE_MODIFIER_NAME)) return
+			if (!attribute.hasModifier(ATTRIBUTE_MODIFIER_NAME)) return
 
-			attribute.removeModifier(AngelRingItem.ATTRIBUTE_MODIFIER_NAME)
+			attribute.removeModifier(ATTRIBUTE_MODIFIER_NAME)
 			player.abilities.flying = false
 			player.onUpdateAbilities()
 		}
