@@ -27,9 +27,9 @@ class MechanicalUserScreen(
 		super.baseInit()
 
 		val interactionModeButton = ChangingTextButton(
-			x = leftPos + 80,
+			x = leftPos + 90,
 			y = topPos + 104,
-			width = 68,
+			width = 80,
 			height = 16,
 			messageGetter = { menu.interactionMode.langKey.toComponent() },
 			onPress = {
@@ -38,9 +38,9 @@ class MechanicalUserScreen(
 		)
 
 		val leftClickButton = ChangingTextButton(
-			x = leftPos + 8,
-			y = topPos + 122,
-			width = 68,
+			x = leftPos + 5,
+			y = topPos + 104,
+			width = 80,
 			height = 16,
 			messageGetter = {
 				if (menu.isLeftClick) {
@@ -55,9 +55,9 @@ class MechanicalUserScreen(
 		)
 
 		val upperLeftSlotButton = ChangingTextButton(
-			x = leftPos + 80,
+			x = leftPos + 5,
 			y = topPos + 122,
-			width = 68,
+			width = 80,
 			height = 16,
 			messageGetter = {
 				if (menu.useUpperLeftSlotOnly) {
@@ -72,9 +72,9 @@ class MechanicalUserScreen(
 		)
 
 		val sneakingButton = ChangingTextButton(
-			x = leftPos + 80,
-			y = topPos + 140,
-			width = 68,
+			x = leftPos + 90,
+			y = topPos + 122,
+			width = 80,
 			height = 16,
 			messageGetter = {
 				if (menu.isSneaking) {
