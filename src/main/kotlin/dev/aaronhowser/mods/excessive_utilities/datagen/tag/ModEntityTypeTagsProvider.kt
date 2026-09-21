@@ -18,12 +18,14 @@ class ModEntityTypeTagsProvider(
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BOOMERANG_PICKUP)
-			.add(
-				EntityType.ITEM,
-				EntityType.EXPERIENCE_ORB
-			)
+			.add(EntityType.ITEM, EntityType.EXPERIENCE_ORB)
 
 		tag(CURSED_EARTH_BLACKLIST)
+
+		tag(MECHANICAL_USER_LEFT_CLICK_BLACKLIST)
+			.add(EntityType.ITEM, EntityType.EXPERIENCE_ORB)
+
+		tag(MECHANICAL_USER_RIGHT_CLICK_BLACKLIST)
 
 		tag(INVERSION_RITUAL_SACRIFICE)
 			.add(EntityType.IRON_GOLEM)
@@ -38,6 +40,8 @@ class ModEntityTypeTagsProvider(
 
 		val BOOMERANG_PICKUP = create("boomerang_pickup")
 		val CURSED_EARTH_BLACKLIST = create("cursed_earth_blacklist")
+		val MECHANICAL_USER_LEFT_CLICK_BLACKLIST = create("mechanical_user_left_click_blacklist")
+		val MECHANICAL_USER_RIGHT_CLICK_BLACKLIST = create("mechanical_user_right_click_blacklist")
 
 		val INVERSION_RITUAL_SACRIFICE = create("inversion_ritual_sacrifice")
 		val INVERSION_RITUAL_DESPAWN_ON_START = create("inversion_ritual_despawn_on_start")

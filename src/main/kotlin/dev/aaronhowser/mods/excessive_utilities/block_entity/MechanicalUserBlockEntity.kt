@@ -1,21 +1,30 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
+import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.excessive_utilities.block.MechanicalInteractorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModEntityTypeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user.MechanicalUserMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.RegistryAccess
+import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.item.ItemEntity
+import net.minecraft.world.entity.EquipmentSlot
+import net.minecraft.world.entity.ai.attributes.Attribute
+import net.minecraft.world.entity.ai.attributes.AttributeModifier
+import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
@@ -23,12 +32,12 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.common.util.FakePlayerFactory
 import net.neoforged.neoforge.items.ItemHandlerHelper
 import java.lang.ref.WeakReference
 import java.util.*
@@ -73,6 +82,7 @@ class MechanicalUserBlockEntity(
 					setRedstoneMode(value)
 					return
 				}
+
 				INTERACTION_MODE_DATA_INDEX -> interactionMode = InteractionMode.fromOrdinal(value)
 				IS_LEFT_CLICK_DATA_INDEX -> isLeftClick = value != 0
 				USE_UPPER_LEFT_SLOT_ONLY_DATA_INDEX -> useUpperLeftSlotOnly = value != 0
@@ -91,7 +101,10 @@ class MechanicalUserBlockEntity(
 		if (existingPlayer != null) return existingPlayer
 
 		val profile = GameProfile(fakePlayerUuid, FAKE_PLAYER_NAME)
-		val fakePlayer = FakePlayerFactory.get(level, profile)
+		val fakePlayer = BetterFakePlayerFactory.get(level, profile) {
+			MechanicalUserFakePlayer(level, profile)
+		}
+
 		fakePlayer.isSilent = true
 		fakePlayer.setOnGround(true)
 		fakePlayerReference = WeakReference(fakePlayer)
@@ -156,11 +169,19 @@ class MechanicalUserBlockEntity(
 	) {
 		if (isLeftClick) {
 			fakePlayer.gameMode.destroyBlock(targetPos)
-		} else {
-			val result = fakePlayer.gameMode.useItemOn(fakePlayer, level, fakePlayer.mainHandItem, InteractionHand.MAIN_HAND, hitResult)
-			if (result == InteractionResult.PASS) {
-				fakePlayer.gameMode.useItem(fakePlayer, level, fakePlayer.mainHandItem, InteractionHand.MAIN_HAND)
-			}
+			return
+		}
+
+		val result = fakePlayer.gameMode.useItemOn(
+			fakePlayer,
+			level,
+			fakePlayer.mainHandItem,
+			InteractionHand.MAIN_HAND,
+			hitResult
+		)
+
+		if (result == InteractionResult.PASS) {
+			fakePlayer.gameMode.useItem(fakePlayer, level, fakePlayer.mainHandItem, InteractionHand.MAIN_HAND)
 		}
 	}
 
@@ -200,11 +221,19 @@ class MechanicalUserBlockEntity(
 		val targetState = level.getBlockState(targetPos)
 		if (isLeftClick) {
 			targetState.attack(level, targetPos, fakePlayer)
-		} else {
-			val itemResult = targetState.useItemOn(fakePlayer.mainHandItem, level, fakePlayer, InteractionHand.MAIN_HAND, hitResult)
-			if (itemResult == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) {
-				targetState.useWithoutItem(level, fakePlayer, hitResult)
-			}
+			return
+		}
+
+		val itemResult = targetState.useItemOn(
+			fakePlayer.mainHandItem,
+			level,
+			fakePlayer,
+			InteractionHand.MAIN_HAND,
+			hitResult
+		)
+
+		if (itemResult == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) {
+			targetState.useWithoutItem(level, fakePlayer, hitResult)
 		}
 	}
 
@@ -213,7 +242,12 @@ class MechanicalUserBlockEntity(
 		fakePlayer: FakePlayer
 	) {
 		if (!isLeftClick) {
-			fakePlayer.gameMode.useItem(fakePlayer, level, fakePlayer.mainHandItem, InteractionHand.MAIN_HAND)
+			fakePlayer.gameMode.useItem(
+				fakePlayer,
+				level,
+				fakePlayer.mainHandItem,
+				InteractionHand.MAIN_HAND
+			)
 		}
 	}
 
@@ -224,17 +258,17 @@ class MechanicalUserBlockEntity(
 	) {
 		val entities = level.getEntities(
 			fakePlayer,
-			AABB(targetPos).inflate(ENTITY_INTERACTION_MARGIN),
+			AABB(targetPos),
 			Entity::isPickable
 		)
 
-		val targetEntity = entities.minByOrNull { it.distanceToSqr(targetPos.center) } ?: return
+		val targetEntity = entities.firstOrNull() ?: return
 
 		if (isLeftClick) {
-			if (targetEntity !is ItemEntity) {
-				fakePlayer.attack(targetEntity)
-			}
+			if (targetEntity.isEntity(ModEntityTypeTagsProvider.MECHANICAL_USER_LEFT_CLICK_BLACKLIST)) return
+			fakePlayer.attack(targetEntity)
 		} else {
+			if (targetEntity.isEntity(ModEntityTypeTagsProvider.MECHANICAL_USER_RIGHT_CLICK_BLACKLIST)) return
 			fakePlayer.interactOn(targetEntity, InteractionHand.MAIN_HAND)
 		}
 	}
@@ -282,6 +316,23 @@ class MechanicalUserBlockEntity(
 		}
 	}
 
+	companion object {
+		const val INTERACTION_MODE_DATA_INDEX = 1
+		const val IS_LEFT_CLICK_DATA_INDEX = 2
+		const val USE_UPPER_LEFT_SLOT_ONLY_DATA_INDEX = 3
+		const val SNEAKING_DATA_INDEX = 4
+		const val MENU_DATA_SIZE = 5
+
+		private const val INTERACTION_MODE_NBT = "InteractionMode"
+		private const val IS_LEFT_CLICK_NBT = "IsLeftClick"
+		private const val USE_UPPER_LEFT_SLOT_ONLY_NBT = "UseUpperLeftSlotOnly"
+		private const val SNEAKING_NBT = "Sneaking"
+		private const val FAKE_PLAYER_UUID_NBT = "FakePlayerUuid"
+
+		private const val FAKE_PLAYER_NAME = "ExcessiveUtilitiesMechanicalUser"
+		private const val FAKE_PLAYER_FACE_OFFSET = 0.5001
+	}
+
 	enum class InteractionMode(val langKey: String) {
 		GENERIC_CLICK(ModMenuLang.MECHANICAL_USER_MODE_GENERIC_CLICK),
 		PLACE_BLOCK(ModMenuLang.MECHANICAL_USER_MODE_PLACE_BLOCK),
@@ -300,22 +351,68 @@ class MechanicalUserBlockEntity(
 		}
 	}
 
-	companion object {
-		const val INTERACTION_MODE_DATA_INDEX = 1
-		const val IS_LEFT_CLICK_DATA_INDEX = 2
-		const val USE_UPPER_LEFT_SLOT_ONLY_DATA_INDEX = 3
-		const val SNEAKING_DATA_INDEX = 4
-		const val MENU_DATA_SIZE = 5
+	private class MechanicalUserFakePlayer(
+		level: ServerLevel,
+		gameProfile: GameProfile
+	) : FakePlayer(level, gameProfile) {
 
-		private const val INTERACTION_MODE_NBT = "InteractionMode"
-		private const val IS_LEFT_CLICK_NBT = "IsLeftClick"
-		private const val USE_UPPER_LEFT_SLOT_ONLY_NBT = "UseUpperLeftSlotOnly"
-		private const val SNEAKING_NBT = "Sneaking"
-		private const val FAKE_PLAYER_UUID_NBT = "FakePlayerUuid"
+		override fun getAttackStrengthScale(adjustTicks: Float): Float = 1f
 
-		private const val FAKE_PLAYER_NAME = "ExcessiveUtilitiesMechanicalUser"
-		private const val FAKE_PLAYER_FACE_OFFSET = 0.5001
-		private const val ENTITY_INTERACTION_MARGIN = 0.25
+		override fun getAttributeValue(attribute: Holder<Attribute>): Double {
+			val baseValue = super.getAttributeValue(attribute)
+			if (attribute != Attributes.ATTACK_DAMAGE) return baseValue
+
+			return getStackAttributeValue(mainHandItem, attribute, registryAccess(), baseValue)
+		}
+
+		private fun getStackAttributeValue(
+			itemStack: ItemStack,
+			attribute: Holder<Attribute>,
+			registryAccess: RegistryAccess,
+			baseValue: Double
+		): Double {
+			val modifiers = getModifiersForAttribute(attribute, itemStack, registryAccess)
+
+			val baseIncrease = modifiers
+				.filter { it.operation == AttributeModifier.Operation.ADD_VALUE }
+				.sumOf { it.amount }
+
+			val increasedBase = baseValue + baseIncrease
+
+			val multipliedBase = modifiers
+				.filter { it.operation == AttributeModifier.Operation.ADD_MULTIPLIED_BASE }
+				.fold(increasedBase) { currentValue, modifier -> currentValue * modifier.amount }
+
+			return modifiers
+				.filter { it.operation == AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL }
+				.fold(multipliedBase) { currentValue, modifier -> currentValue * (1.0 + modifier.amount) }
+		}
+
+		private fun getModifiersForAttribute(
+			attribute: Holder<Attribute>,
+			itemStack: ItemStack,
+			registryAccess: RegistryAccess
+		): List<AttributeModifier> {
+			if (itemStack.isEmpty) return emptyList()
+
+			val enchantmentModifiers = itemStack.getAllEnchantments(
+				registryAccess.lookupOrThrow(Registries.ENCHANTMENT)
+			)
+				.entrySet()
+				.flatMap { (enchantment, level) ->
+					enchantment.value().effects()
+						.get(EnchantmentEffectComponents.ATTRIBUTES)
+						?.filter { it.attribute == attribute }
+						?.map { it.getModifier(level, EquipmentSlot.MAINHAND) }
+						?: emptyList()
+				}
+
+			val stackModifiers = itemStack.attributeModifiers.modifiers
+				.filter { it.slot.test(EquipmentSlot.MAINHAND) && it.attribute == attribute }
+				.map { it.modifier }
+
+			return enchantmentModifiers + stackModifiers
+		}
 	}
 
 }
