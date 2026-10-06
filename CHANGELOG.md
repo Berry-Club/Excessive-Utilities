@@ -1,3 +1,9 @@
+# 1.11.0
+
+### Fixed
+
+- Fixed certain capability checks crashing when passed in a null Direction
+
 # 1.10.0
 
 ### Changed

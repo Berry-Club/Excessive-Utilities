@@ -22,7 +22,7 @@ class EnergyTrashCanBlockEntity(
 			override fun canReceive(): Boolean = true
 		}
 
-	fun getEnergyStorage(direction: Direction): IEnergyStorage = energyStorage
+	fun getEnergyStorage(direction: Direction?): IEnergyStorage = energyStorage
 
 
 }

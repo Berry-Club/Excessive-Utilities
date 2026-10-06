@@ -51,7 +51,7 @@ class FilingCabinetBlockEntity(
 
 	private val itemHandler: IItemHandler = FilingCabinetItemHandler()
 
-	fun getItemHandler(direction: Direction): IItemHandler = itemHandler
+	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
 
 	fun dropAllItems() {
 		val level = level ?: return
