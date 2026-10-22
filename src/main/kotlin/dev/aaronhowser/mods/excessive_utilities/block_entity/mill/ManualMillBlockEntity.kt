@@ -7,6 +7,8 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
@@ -66,14 +68,14 @@ class ManualMillBlockEntity(
 		}
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 		tag.putBoolean(IS_BEING_CRANKED_KEY, isBeingCranked)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		isBeingCranked = tag.getBoolean(IS_BEING_CRANKED_KEY)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		isBeingCranked = tag.getBooleanOr(IS_BEING_CRANKED_KEY, false)
 	}
 
 	// Syncs with client

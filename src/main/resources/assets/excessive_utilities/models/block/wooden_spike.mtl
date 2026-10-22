@@ -1,5 +1,5 @@
 newmtl base
-map_Kd excessive_utilities:block/spike/wooden/base
+map_Kd #base
 
 newmtl side
-map_Kd excessive_utilities:block/spike/wooden/side
+map_Kd #side

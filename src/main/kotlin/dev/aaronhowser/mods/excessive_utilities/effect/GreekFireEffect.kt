@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.effect
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.server.level.ServerLevel
 
 class GreekFireEffect : MobEffect(
 	MobEffectCategory.HARMFUL,
@@ -13,7 +14,7 @@ class GreekFireEffect : MobEffect(
 		return true
 	}
 
-	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+	override fun applyEffectTick(level: ServerLevel, livingEntity: LivingEntity, amplifier: Int): Boolean {
 		if (livingEntity.remainingFireTicks == 0) {
 			livingEntity.remainingFireTicks = 15
 		}

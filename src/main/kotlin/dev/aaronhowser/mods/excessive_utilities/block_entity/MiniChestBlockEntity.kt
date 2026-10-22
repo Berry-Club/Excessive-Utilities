@@ -10,6 +10,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
@@ -18,7 +20,9 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.wrapper.InvWrapper
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
 
 class MiniChestBlockEntity(
 	pos: BlockPos,
@@ -27,9 +31,9 @@ class MiniChestBlockEntity(
 
 	val container = ImprovedSimpleContainer(this, 1)
 	override fun getContainers(): List<Container> = listOf(container)
-	private val invWrapper = InvWrapper(container)
+	private val invWrapper: ResourceHandler<ItemResource> = VanillaContainerWrapper.of(container)
 
-	fun getItemHandler(direction: Direction?): InvWrapper = invWrapper
+	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = invWrapper
 
 	override fun getDisplayName(): Component = blockState.block.name
 
@@ -37,14 +41,14 @@ class MiniChestBlockEntity(
 		return SingleSlotMenu(containerId, playerInventory, container)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
-		tag.saveItems(container, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		tag.saveItems(container)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		tag.loadItems(container, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		tag.loadItems(container)
 	}
 
 }

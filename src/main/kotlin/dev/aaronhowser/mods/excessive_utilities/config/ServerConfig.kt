@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.config
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.section
 import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.fml.config.ModConfig
@@ -487,7 +487,7 @@ class ServerConfig(
 
 			tlmChunkDistance = builder
 				.comment("How many chunks are between each player's \"home location\" in The Last Millennium")
-				.defineInRange("tlmChunkDistance", 1024, 2, 100)
+				.defineInRange("tlmChunkDistance", 100, 2, 100)
 
 			oilyFireDamageFactor = builder
 				.comment("How much to multiply incoming fire damage when you have the Oily potion applied")
@@ -681,7 +681,7 @@ class ServerConfig(
 			if (config.spec !== CONFIG_SPEC) return
 
 			val configuredBlockId = CONFIG.enderQuarryReplacementBlockId.get()
-			val replacementBlockId = ResourceLocation.tryParse(configuredBlockId)
+			val replacementBlockId = Identifier.tryParse(configuredBlockId)
 
 			CONFIG.enderQuarryReplacementBlock = if (replacementBlockId != null) {
 				BuiltInRegistries.BLOCK

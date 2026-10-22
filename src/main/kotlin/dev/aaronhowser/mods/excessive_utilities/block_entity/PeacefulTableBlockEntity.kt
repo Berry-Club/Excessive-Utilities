@@ -2,10 +2,8 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
 import com.mojang.datafixers.util.Either
-import dev.aaronhowser.mods.aaron.fake_player.BetterFakePlayerFactory
+import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -15,6 +13,8 @@ import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Difficulty
 import net.minecraft.world.DifficultyInstance
@@ -24,7 +24,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.SwordItem
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
@@ -37,9 +37,11 @@ import net.neoforged.neoforge.common.CommonHooks
 import net.neoforged.neoforge.common.extensions.IOwnedSpawner
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.event.EventHooks
-import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil
+import net.neoforged.neoforge.transfer.item.ItemResource
 import java.lang.ref.WeakReference
 import java.util.*
+import net.minecraft.core.UUIDUtil
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 import kotlin.math.min
@@ -89,15 +91,15 @@ class PeacefulTableBlockEntity(
 
 		val adjacentInventories = Direction.entries
 			.mapNotNull { direction ->
-				level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos.relative(direction), direction.opposite)
+				level.getCapability(Capabilities.Item.BLOCK, blockPos.relative(direction), direction.opposite)
 			}
 
 		val sword = adjacentInventories
 			.asSequence()
 			.flatMap { inventory ->
-				(0 until inventory.slots).asSequence().map { inventory.getStackInSlot(it) }
+				(0 until inventory.size()).asSequence().map { inventory.getResource(it).toStack(inventory.getAmountAsInt(it)) }
 			}
-			.firstOrNull { it.item is SwordItem }
+			.firstOrNull { it.`is`(ItemTags.SWORDS) }
 
 		fakePlayer.setItemInHand(InteractionHand.MAIN_HAND, sword ?: ItemStack.EMPTY)
 
@@ -117,7 +119,8 @@ class PeacefulTableBlockEntity(
 			for (inv in adjacentInventories) {
 				if (copy.isEmpty) break
 
-				copy = ItemHandlerHelper.insertItemStacked(inv, copy, false)
+				val accepted = ResourceHandlerUtil.insertStacking(inv, ItemResource.of(copy), copy.count, null)
+				copy = copy.copyWithCount(copy.count - accepted)
 			}
 
 			val countAfter = copy.count
@@ -134,15 +137,15 @@ class PeacefulTableBlockEntity(
 		return Either.left(this)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
-		tag.putUuidIfNotNull(UUID_NBT, this.uuid)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		this.uuid?.let { tag.putIntArray(UUID_NBT, UUIDUtil.uuidToIntArray(it)) }
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		this.uuid = tag.getUuidOrNull(UUID_NBT)
+		this.uuid = tag.getIntArray(UUID_NBT).filter { it.size == 4 }.map(UUIDUtil::uuidFromIntArray).orElse(null)
 	}
 
 	companion object {
@@ -171,19 +174,19 @@ class PeacefulTableBlockEntity(
 				?.type
 				?: return null
 
-			val mob = entityType.create(level) as? Mob ?: return null
-			mob.moveTo(pos.bottomCenter)
+			val mob = entityType.create(level, EntitySpawnReason.EVENT) as? Mob ?: return null
+			mob.setPos(pos.bottomCenter)
 
 			EventHooks.finalizeMobSpawnSpawner(
 				mob,
 				level,
 				DifficultyInstance(
 					Difficulty.HARD,
-					level.dayTime,
+					level.gameTime,
 					level.getChunkAt(pos).inhabitedTime,
-					level.moonBrightness
+					level.getMoonBrightness(pos)
 				),
-				MobSpawnType.SPAWNER,
+				EntitySpawnReason.SPAWNER,
 				null,
 				table,
 				true
@@ -217,7 +220,7 @@ class PeacefulTableBlockEntity(
 			val effectiveDamage = damage * (1.0 - damageReduction)
 			val hitsToKill = (mob.health / effectiveDamage).toInt()
 
-			val unbreaking = mob.level().registryAccess().registryOrThrow(Registries.ENCHANTMENT).getHolderOrThrow(Enchantments.UNBREAKING)
+			val unbreaking = mob.level().registryAccess().lookupOrThrow(Registries.ENCHANTMENT).getOrThrow(Enchantments.UNBREAKING)
 			val unbreakingLevel = swordStack.getEnchantmentLevel(unbreaking)
 
 			for (i in 0 until hitsToKill) {
@@ -237,7 +240,7 @@ class PeacefulTableBlockEntity(
 
 			mob.captureDrops(mutableListOf())
 
-			val lootTable = level.server.reloadableRegistries().getLootTable(mob.lootTable)
+			val lootTable = level.server.reloadableRegistries().getLootTable(mob.lootTable.orElseThrow())
 			val lootParamsBuilder = LootParams.Builder(level)
 				.withParameter(LootContextParams.THIS_ENTITY, mob)
 				.withParameter(LootContextParams.ORIGIN, mob.position())
@@ -247,7 +250,9 @@ class PeacefulTableBlockEntity(
 				.withParameter(LootContextParams.LAST_DAMAGE_PLAYER, fakePlayer).withLuck(fakePlayer.luck)
 
 			val lootParams = lootParamsBuilder.create(LootContextParamSets.ENTITY)
-			lootTable.getRandomItems(lootParams, mob.lootTableSeed, mob::spawnAtLocation)
+			lootTable.getRandomItems(lootParams, mob.lootTableSeed) { stack ->
+				mob.spawnAtLocation(level, stack, 0f)
+			}
 
 			val drops = mob.captureDrops(null) ?: return emptyList()
 
@@ -274,7 +279,7 @@ class PeacefulTableBlockEntity(
 				var multiplyTotal = 0.0
 
 				for (entry in attributeModifiers) {
-					if (entry.attribute == Attributes.ATTACK_DAMAGE && entry.slot == EquipmentSlotGroup.MAINHAND) {
+				if (entry.attribute == Attributes.ATTACK_DAMAGE && entry.slot == EquipmentSlotGroup.MAINHAND) {
 						val modifier = entry.modifier
 						when (modifier.operation) {
 							AttributeModifier.Operation.ADD_VALUE -> baseAmount += modifier.amount

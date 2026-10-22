@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+
 import dev.aaronhowser.mods.aaron.block.SimpleContainerBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
@@ -14,7 +16,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
@@ -23,7 +24,6 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
@@ -32,13 +32,14 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
-import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 class GeneratorBlock(
-	val beTypeGetter: () -> BlockEntityType<out GeneratorBlockEntity>
-) : SimpleContainerBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+	val beTypeGetter: () -> BlockEntityType<out GeneratorBlockEntity>,
+	properties: Properties
+) : SimpleContainerBlock(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -118,17 +119,17 @@ class GeneratorBlock(
 					if (anyInactive) player.tell(noComponent)
 				}
 
-				return InteractionResult.sidedSuccess(level.isClientSide)
+				return InteractionResult.SUCCESS
 			}
 
 			is MagmaticGeneratorBlockEntity, is ItemAndFluidInputDataDrivenGeneratorBlockEntity -> {
 				player.openMenu(blockEntity as MenuProvider) { it.writeBlockPos(pos) }
-				return InteractionResult.sidedSuccess(level.isClientSide)
+				return InteractionResult.SUCCESS
 			}
 
 			is MenuProvider -> {
 				player.openMenu(blockEntity)
-				return InteractionResult.sidedSuccess(level.isClientSide)
+				return InteractionResult.SUCCESS
 			}
 
 			else -> return InteractionResult.PASS
@@ -143,19 +144,34 @@ class GeneratorBlock(
 		player: Player,
 		hand: InteractionHand,
 		hitResult: BlockHitResult
-	): ItemInteractionResult {
-		val fluidTransferred = FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction)
+	): InteractionResult {
+		val fluidTransferred = FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction, null)
 
 		return if (fluidTransferred) {
-			ItemInteractionResult.sidedSuccess(level.isClientSide)
+			InteractionResult.SUCCESS
 		} else {
-			ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+			InteractionResult.PASS
 		}
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 		val LIT: BooleanProperty = BlockStateProperties.LIT
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

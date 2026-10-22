@@ -4,17 +4,19 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.ResonatorRecipe
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.ItemStack
 
 class ResonatorJeiCategory(
-	recipeType: RecipeType<RecipeHolder<ResonatorRecipe>>,
+	recipeType: IRecipeType<RecipeHolder<ResonatorRecipe>>,
 	guiHelper: IGuiHelper
 ) : AbstractRecipeCategory<RecipeHolder<ResonatorRecipe>>(
 	recipeType,
@@ -31,11 +33,11 @@ class ResonatorJeiCategory(
 		val outputSlot = builder.addOutputSlot(65, 9)
 
 		inputSlot
-			.addItemStacks(recipe.ingredient.items.toList())
+			.addItemStacks(recipe.ingredient.getItemHolders().map(::ItemStack).toList())
 			.setStandardSlotBackground()
 
 		outputSlot
-			.addItemStack(recipe.result)
+			.add(recipe.result)
 			.setOutputSlotBackground()
 	}
 

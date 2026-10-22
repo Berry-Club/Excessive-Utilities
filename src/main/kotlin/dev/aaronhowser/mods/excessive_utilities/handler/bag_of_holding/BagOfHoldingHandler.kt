@@ -7,6 +7,8 @@ import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.saveddata.SavedData
+import net.minecraft.util.datafix.DataFixTypes
+import net.minecraft.world.level.saveddata.SavedDataType
 import java.util.*
 
 class BagOfHoldingHandler : SavedData() {
@@ -30,7 +32,7 @@ class BagOfHoldingHandler : SavedData() {
 		return items
 	}
 
-	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
+	fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
 		val bagList = ListTag()
 
 		for (bag in bags.values) {
@@ -51,9 +53,9 @@ class BagOfHoldingHandler : SavedData() {
 		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): BagOfHoldingHandler {
 			val handler = BagOfHoldingHandler()
 
-			val bagList = tag.getList(BAG_LIST_TAG, Tag.TAG_COMPOUND.toInt())
+			val bagList = tag.getList(BAG_LIST_TAG).orElseThrow()
 			for (i in bagList.indices) {
-				val bagTag = bagList.getCompound(i)
+				val bagTag = bagList.getCompound(i).orElseThrow()
 				val bag = BagOfHolding.fromTag(bagTag, provider, handler::setDirty) ?: continue
 				handler.bags[bag.bagUUID] = bag
 			}
@@ -67,9 +69,16 @@ class BagOfHoldingHandler : SavedData() {
 			}
 
 			val storage = level.dataStorage
-			val factory = Factory(::BagOfHoldingHandler, ::load)
-
-			return storage.computeIfAbsent(factory, SAVED_DATA_NAME)
+			val type = SavedDataType(
+                dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities.modResource(SAVED_DATA_NAME),
+                ::BagOfHoldingHandler,
+                CompoundTag.CODEC.xmap(
+                    { tag -> load(tag, level.registryAccess()) },
+                    { data -> data.save(CompoundTag(), level.registryAccess()) }
+                ),
+                DataFixTypes.SAVED_DATA_COMMAND_STORAGE
+            )
+            return storage.computeIfAbsent(type)
 		}
 
 	}

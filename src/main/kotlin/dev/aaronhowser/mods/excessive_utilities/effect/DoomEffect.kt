@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
+import net.minecraft.server.level.ServerLevel
 
 class DoomEffect : MobEffect(
 	MobEffectCategory.HARMFUL,
@@ -19,7 +20,7 @@ class DoomEffect : MobEffect(
 		return true
 	}
 
-	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+	override fun applyEffectTick(level: ServerLevel, livingEntity: LivingEntity, amplifier: Int): Boolean {
 		if (livingEntity.isClientSide || livingEntity.isDeadOrDying) return true
 
 		if (livingEntity.hasInfiniteMaterials()) {
@@ -38,7 +39,7 @@ class DoomEffect : MobEffect(
 		}
 
 		if (remainingDuration <= 1) {
-			livingEntity.hurt(livingEntity.damageSources().source(ModDamageTypeProvider.DOOM), Float.MAX_VALUE)
+			livingEntity.hurtServer(level, livingEntity.damageSources().source(ModDamageTypeProvider.DOOM), Float.MAX_VALUE)
 		}
 
 		return true

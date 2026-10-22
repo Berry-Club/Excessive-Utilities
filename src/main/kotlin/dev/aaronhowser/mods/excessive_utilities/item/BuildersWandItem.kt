@@ -111,7 +111,7 @@ class BuildersWandItem(properties: Properties) : Item(properties) {
 
 			val walker = BlockWalker
 				.Builder(level)
-				.searchOffsets(searchDirections.map(Direction::getNormal))
+				.searchOffsets(searchDirections.map { it.unitVec3i })
 				.startPos(clickedBlockPos)
 				.filter { level, pos, state ->
 					val posAtFce = pos.relative(clickedFace)
@@ -134,3 +134,7 @@ class BuildersWandItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+

@@ -10,6 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.packet.client_to_server.ConfigureEnderFrequencyPacket
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.EditBox
+import net.minecraft.client.input.KeyEvent
 import net.minecraft.network.chat.Component
 import net.minecraft.world.entity.player.Inventory
 
@@ -17,9 +18,8 @@ class EnderFrequencyScreen(
 	menu: EnderFrequencyMenu,
 	inventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<EnderFrequencyMenu>(menu, inventory, title) {
+) : ExcessiveUtilitiesScreen<EnderFrequencyMenu>(menu, inventory, title, BACKGROUND) {
 
-	override val background: ScreenBackground = BACKGROUND
 	override val showInventoryLabel: Boolean = false
 
 	private lateinit var nameBox: EditBox
@@ -65,13 +65,13 @@ class EnderFrequencyScreen(
 		}
 	}
 
-	override fun keyPressed(keyCode: Int, scanCode: Int, modifiers: Int): Boolean {
-		val inventoryKey = minecraft?.options?.keyInventory
-		if (nameBox.isFocused && inventoryKey?.matches(keyCode, scanCode).isTrue()) {
+	override fun keyPressed(event: KeyEvent): Boolean {
+		val inventoryKey = minecraft.options.keyInventory
+		if (nameBox.isFocused && inventoryKey.matches(event)) {
 			return true
 		}
 
-		return super.keyPressed(keyCode, scanCode, modifiers)
+		return super.keyPressed(event)
 	}
 
 	companion object {

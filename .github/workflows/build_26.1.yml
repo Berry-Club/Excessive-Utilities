@@ -1,12 +1,12 @@
-name: Java CI (1.21.1)
+name: Java CI (26.1.2)
 
 on:
     push:
         branches:
-            - '1.21.1-Neoforge'
+            - '26.1'
     workflow_dispatch:
         branches:
-            - '1.21.1-Neoforge'
+            - '26.1'
         inputs:
             release_type:
                 description: 'Release Type'
@@ -30,11 +30,11 @@ jobs:
               with:
                   fetch-depth: 5
 
-            - name: Set up JDK 21
+            - name: Set up JDK 25
               uses: actions/setup-java@v4
               with:
                   distribution: 'temurin'
-                  java-version: '21'
+                  java-version: '25'
                   cache: gradle
 
             - name: Grant execute permission for gradlew
@@ -49,6 +49,7 @@ jobs:
                   arguments: build -x test --stacktrace
 
             - name: Publish to latvian.dev Maven
+              if: ${{ github.event_name == 'workflow_dispatch' && inputs.release_type != 'none' }}
               uses: gradle/gradle-build-action@v3
               env:
                   MAVEN_URL: 'https://maven.latvian.dev/releases'

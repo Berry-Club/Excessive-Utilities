@@ -1,15 +1,17 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.base.components
 
-import com.mojang.blaze3d.systems.RenderSystem
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.renderer.RenderPipelines
+import net.minecraft.client.renderer.texture.TextureAtlas
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.Minecraft
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.data.AtlasIds
+import net.minecraft.resources.Identifier
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
-import net.minecraft.world.inventory.InventoryMenu
-import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions
 import net.neoforged.neoforge.fluids.FluidStack
 import java.util.function.Supplier
 
@@ -21,8 +23,8 @@ class FluidBar(
 	val font: Font
 ) : AbstractWidget(x, y, WIDTH, HEIGHT, Component.empty()) {
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
+	override fun extractWidgetRenderState(
+		guiGraphics: GuiGraphicsExtractor,
 		mouseX: Int,
 		mouseY: Int,
 		partialTick: Float
@@ -40,54 +42,42 @@ class FluidBar(
 	}
 
 	private fun drawFluid(
-		guiGraphics: GuiGraphics,
+		guiGraphics: GuiGraphicsExtractor,
 		fluid: FluidStack,
 		x: Int,
 		y: Int,
 		width: Int,
 		height: Int
 	) {
-		val extensions = IClientFluidTypeExtensions.of(fluid.fluid)
-		val textureLocation = extensions.getStillTexture(fluid) ?: return
-		val tintColor = extensions.getTintColor(fluid)
+        val model = Minecraft.getInstance().modelManager.fluidStateModelSet.get(fluid.fluid.defaultFluidState())
+        val sprite = model.stillMaterial().sprite()
+        val color = model.fluidTintSource()?.colorAsStack(fluid) ?: -1
 
-		val sprite = Minecraft.getInstance()
-			.getTextureAtlas(InventoryMenu.BLOCK_ATLAS)
-			.apply(textureLocation)
-
-		val r = (tintColor shr 16 and 0xFF) / 255.0f
-		val g = (tintColor shr 8 and 0xFF) / 255.0f
-		val b = (tintColor and 0xFF) / 255.0f
-		val a = ((tintColor shr 24 and 0xFF) / 255.0f).let { if (it == 0.0f) 1.0f else it }
-
-		RenderSystem.enableBlend()
-		RenderSystem.setShaderColor(r, g, b, a)
-
+		guiGraphics.enableScissor(x, y, x + width, y + height)
 		val tileSize = 16
-		var drawnHeight = 0
-		while (drawnHeight < height) {
-			val currentTileHeight = (height - drawnHeight).coerceAtMost(tileSize)
-			var drawnWidth = 0
-			while (drawnWidth < width) {
-				val currentTileWidth = (width - drawnWidth).coerceAtMost(tileSize)
-				guiGraphics.blit(
-					x + drawnWidth,
-					y + height - drawnHeight - currentTileHeight,
-					0,
-					currentTileWidth,
-					currentTileHeight,
-					sprite
+		var drawnY = 0
+		while (drawnY < height) {
+			var drawnX = 0
+			while (drawnX < width) {
+				val tileWidth = (width - drawnX).coerceAtMost(tileSize)
+				val tileHeight = (height - drawnY).coerceAtMost(tileSize)
+				guiGraphics.blitSprite(
+					RenderPipelines.GUI_TEXTURED,
+					sprite,
+					x + drawnX,
+					y + height - drawnY - tileSize,
+					tileSize,
+					tileSize,
+					color
 				)
-				drawnWidth += currentTileWidth
+				drawnX += tileWidth
 			}
-			drawnHeight += currentTileHeight
+			drawnY += (height - drawnY).coerceAtMost(tileSize)
 		}
-
-		RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f)
-		RenderSystem.disableBlend()
+		guiGraphics.disableScissor()
 	}
 
-	private fun renderTooltip(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+	private fun renderTooltip(guiGraphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
 		val fluid = fluidGetter.get()
 		val capacity = capacityGetter.get()
 		val amountString = String.format("%,d", fluid.amount)
@@ -101,7 +91,7 @@ class FluidBar(
 		}
 		lines.add(Component.literal("$amountString / $capacityString mB"))
 
-		guiGraphics.renderComponentTooltip(font, lines, mouseX, mouseY)
+		guiGraphics.setTooltipForNextFrame(font, lines.map { it.visualOrderText }, mouseX, mouseY)
 	}
 
 	override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getMinimalTag
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
+
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
@@ -13,13 +13,17 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.network.chat.ComponentSerialization
+import net.minecraft.resources.Identifier
+import net.minecraft.nbt.NbtOps
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EntitySpawnReason
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.Mob
 import net.minecraft.world.entity.OwnableEntity
@@ -29,15 +33,18 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.item.component.CustomData
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
+import net.minecraft.util.ProblemReporter
+import net.minecraft.world.level.storage.TagValueInput
 import net.neoforged.neoforge.common.Tags
 
 class EntityLassoItem(
 	val canHoldHostileMobs: Boolean,
 	properties: Properties
-) : Item(properties) {
+) : Item(properties), TooltipItem {
 
 	override fun interactLivingEntity(
 		stack: ItemStack,
@@ -86,7 +93,7 @@ class EntityLassoItem(
 		val customNbt = CustomData.of(entityNbt)
 
 		stack.set(ModDataComponents.ENTITY_DATA, customNbt)
-		stack.set(ModDataComponents.ENTITY_TYPE, interactionTarget.type.registryHolder())
+		stack.set(ModDataComponents.ENTITY_TYPE, BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(interactionTarget.type))
 
 		interactionTarget.remove(Entity.RemovalReason.DISCARDED)
 
@@ -123,10 +130,11 @@ class EntityLassoItem(
 		return InteractionResult.SUCCESS
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val entityType = stack.get(ModDataComponents.ENTITY_TYPE) ?: return
@@ -135,28 +143,20 @@ class EntityLassoItem(
 		val entityData = stack.get(ModDataComponents.ENTITY_DATA)
 
 		if (entityData == null) {
-			tooltipComponents += typeName.copy().withStyle(ChatFormatting.GRAY)
+			builder.accept(typeName.copy().withStyle(ChatFormatting.GRAY))
 			return
 		}
 
 		val registries = context.registries() ?: return
-
-		val customNameString = entityData.copyTag().getString("CustomName")
-		if (!customNameString.isNullOrEmpty()) {
-			val customName = Component.Serializer.fromJson(
-				customNameString,
-				registries
-			)
-
+		val customNameTag = entityData.copyTag().get("CustomName")
+		if (customNameTag != null) {
+			val customName = ComponentSerialization.CODEC.parse(registries.createSerializationContext(NbtOps.INSTANCE), customNameTag).result().orElse(null)
 			if (customName != null) {
-				tooltipComponents += ModMenuLang.LASSO_ENTITY_WITH_NAME
-					.toGrayComponent(customName, typeName)
-
+				builder.accept(ModMenuLang.LASSO_ENTITY_WITH_NAME.toGrayComponent(customName, typeName))
 				return
 			}
 		}
-
-		tooltipComponents += typeName
+		builder.accept(typeName)
 
 	}
 
@@ -172,7 +172,7 @@ class EntityLassoItem(
 	}
 
 	companion object {
-		val HAS_ENTITY: ResourceLocation = ExcessiveUtilities.modResource("has_entity")
+		val HAS_ENTITY: Identifier = ExcessiveUtilities.modResource("has_entity")
 		fun hasEntityPredicate(
 			stack: ItemStack,
 			localLevel: Level?,
@@ -188,15 +188,15 @@ class EntityLassoItem(
 			pos: BlockPos
 		): Entity? {
 			val entityData = stack.get(ModDataComponents.ENTITY_DATA) ?: return null
-			val entityTypeString = entityData.copyTag().getString("id")
+			val entityTypeString = entityData.copyTag().getString("id").orElse(null) ?: return null
 
 			val entityType = level.registryAccess()
-				.registryOrThrow(Registries.ENTITY_TYPE)
-				.get(ResourceLocation.parse(entityTypeString))
-				?: return null
+				.lookupOrThrow(Registries.ENTITY_TYPE)
+				.get(Identifier.parse(entityTypeString))
 
-			val entity = entityType.create(level) ?: return null
-			entity.load(entityData.copyTag())
+			val entityHolder = entityType.orElse(null) ?: return null
+			val entity = entityHolder.value().create(level, EntitySpawnReason.LOAD) ?: return null
+			entity.load(TagValueInput.create(ProblemReporter.DISCARDING, level.registryAccess(), entityData.copyTag()))
 			entity.setPos(pos.bottomCenter)
 			level.addFreshEntity(entity)
 			return entity
@@ -204,3 +204,14 @@ class EntityLassoItem(
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

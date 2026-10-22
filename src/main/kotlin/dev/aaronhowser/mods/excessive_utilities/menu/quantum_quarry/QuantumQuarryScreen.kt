@@ -5,10 +5,10 @@ import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.EnergyBar
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 import java.text.DecimalFormat
 import kotlin.jvm.optionals.getOrNull
@@ -17,10 +17,8 @@ class QuantumQuarryScreen(
 	menu: QuantumQuarryMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<QuantumQuarryMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = LABEL
+) : ExcessiveUtilitiesScreen<QuantumQuarryMenu>(menu, playerInventory, title, BACKGROUND) {
+	override val titleLabelSprite: Identifier = LABEL
 
 	override fun baseInit() {
 		super.baseInit()
@@ -36,57 +34,57 @@ class QuantumQuarryScreen(
 		addRenderableWidget(energyBar)
 	}
 
-	override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
-		super.renderLabels(guiGraphics, mouseX, mouseY)
+	override fun extractLabels(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
+		super.extractLabels(graphics, mouseX, mouseY)
 
 		val x = "%,d".format(menu.getTargetX())
 		val y = "%,d".format(menu.getTargetY())
 		val z = "%,d".format(menu.getTargetZ())
 
-		guiGraphics.drawString(
+		graphics.text(
 			font,
 			Component.literal("X: $x"),
 			35,
 			20,
-			4210752,
+			LABEL_TEXT_COLOR,
 			false
 		)
 
-		guiGraphics.drawString(
+		graphics.text(
 			font,
 			Component.literal("Y: $y"),
 			35,
 			30,
-			4210752,
+			LABEL_TEXT_COLOR,
 			false
 		)
 
-		guiGraphics.drawString(
+		graphics.text(
 			font,
 			Component.literal("Z: $z"),
 			35,
 			40,
-			4210752,
+			LABEL_TEXT_COLOR,
 			false
 		)
 
 		val biomeRegistry = AaronClientUtil.localLevel
 			?.registryAccess()
-			?.registryOrThrow(Registries.BIOME)
+			?.lookup(Registries.BIOME)?.orElseThrow()
 
 		if (biomeRegistry != null) {
 			val biomeId = menu.getBiomeId()
-			val biome = biomeRegistry.byId(biomeId)
+			val biome = biomeRegistry.get(biomeId).orElse(null)
 			if (biome != null) {
-				val biomeKey = biomeRegistry.getResourceKey(biome).getOrNull()
+				val biomeKey = biome.unwrapKey().orElseThrow()
 				if (biomeKey != null) {
 					val component = AaronClientUtil.getBiomeDisplay(biomeKey)
-					guiGraphics.drawString(
+					graphics.text(
 						font,
 						component,
 						35,
 						50,
-						4210752,
+						LABEL_TEXT_COLOR,
 						false
 					)
 				}
@@ -98,12 +96,12 @@ class QuantumQuarryScreen(
 
 		val minedString = DecimalFormat("#,##0.##").format(amountMined + progress)
 
-		guiGraphics.drawString(
+		graphics.text(
 			font,
 			Component.literal("$minedString mined"),
 			35,
 			60,
-			4210752,
+			LABEL_TEXT_COLOR,
 			false
 		)
 
@@ -112,7 +110,7 @@ class QuantumQuarryScreen(
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/quantum_quarry.png"), 176, 198)
 
-		val LABEL: ResourceLocation =
+		val LABEL: Identifier =
 			ExcessiveUtilities.modResource("label/quantum_quarry")
 	}
 

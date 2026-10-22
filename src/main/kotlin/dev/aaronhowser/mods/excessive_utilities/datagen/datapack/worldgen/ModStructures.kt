@@ -6,8 +6,8 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.AncientCityStructurePieces
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
-import net.minecraft.util.random.WeightedRandomList
+import net.minecraft.resources.Identifier
+import net.minecraft.util.random.WeightedList
 import net.minecraft.world.entity.MobCategory
 import net.minecraft.world.level.levelgen.GenerationStep
 import net.minecraft.world.level.levelgen.VerticalAnchor
@@ -35,12 +35,12 @@ object ModStructures {
 					.terrainAdapation(TerrainAdjustment.BEARD_BOX)
 					.build(),
 				templatePools.getOrThrow(AncientCityStructurePieces.START),
-				Optional.of(ResourceLocation.withDefaultNamespace("city_anchor")),
+				Optional.of(Identifier.withDefaultNamespace("city_anchor")),
 				7,
 				ConstantHeight.of(VerticalAnchor.absolute(DepthsDimConstants.FLOOR_TOP + CITY_ANCHOR_Y_OFFSET + FLOOR_CLEARANCE)),
 				false,
 				Optional.empty(),
-				116,
+				JigsawStructure.MaxDistance(116),
 				emptyList(),
 				JigsawStructure.DEFAULT_DIMENSION_PADDING,
 				JigsawStructure.DEFAULT_LIQUID_SETTINGS
@@ -52,7 +52,7 @@ object ModStructures {
 		return MobCategory.entries.associateWith {
 			StructureSpawnOverride(
 				StructureSpawnOverride.BoundingBoxType.STRUCTURE,
-				WeightedRandomList.create()
+				WeightedList.of()
 			)
 		}
 	}

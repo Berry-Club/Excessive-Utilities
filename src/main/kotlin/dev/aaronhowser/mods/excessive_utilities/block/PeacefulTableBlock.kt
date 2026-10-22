@@ -8,6 +8,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
@@ -17,7 +18,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class PeacefulTableBlock : Block(Properties.ofFullCopy(Blocks.CRAFTING_TABLE)), EntityBlock {
+class PeacefulTableBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		return SHAPE
@@ -51,3 +52,13 @@ class PeacefulTableBlock : Block(Properties.ofFullCopy(Blocks.CRAFTING_TABLE)), 
 	}
 
 }
+
+
+
+
+
+
+
+
+
+

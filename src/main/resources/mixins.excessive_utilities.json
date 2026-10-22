@@ -4,7 +4,6 @@
 	"package": "dev.aaronhowser.mods.excessive_utilities.mixin",
 	"mixins": [
 		"AbstractFurnaceBlockEntityMixin",
-		"AnvilMenuMixin",
 		"DiggingMixin",
 		"EntityMixin",
 		"LevelMixin"
@@ -13,7 +12,7 @@
 		"defaultRequire": 1
 	},
 	"client": [
-		"AnvilScreenMixin",
+		"LivingEntityRenderStateMixin",
 		"LivingEntityRendererMixin"
 	]
 }

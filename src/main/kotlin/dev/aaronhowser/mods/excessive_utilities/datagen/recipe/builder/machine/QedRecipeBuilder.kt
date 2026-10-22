@@ -5,14 +5,18 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.ShapedRecipePattern
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.core.registries.BuiltInRegistries
 
 class QedRecipeBuilder(
 	val result: ItemStack,
@@ -43,20 +47,21 @@ class QedRecipeBuilder(
 		error("Unsupported")
 	}
 
-	override fun getResult(): Item = result.item
+	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(result.item))
 
-	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+	override fun save(recipeOutput: RecipeOutput, recipeKey: ResourceKey<Recipe<*>>) {
+		val originalId = recipeKey.identifier()
 		val idString = StringBuilder()
 
 		idString
 			.append("qed/")
-			.append(id.path)
+			.append(originalId.path)
 
 		val id = ExcessiveUtilities.modResource(idString.toString())
 
 		val advancement = recipeOutput.advancement()
-			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))
-			.rewards(AdvancementRewards.Builder.recipe(id))
+			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(ResourceKey.create(Registries.RECIPE, id)))
+			.rewards(AdvancementRewards.Builder.recipe(ResourceKey.create(Registries.RECIPE, id)))
 			.requirements(AdvancementRequirements.Strategy.OR)
 
 		for (criterion in criteria) {
@@ -66,6 +71,6 @@ class QedRecipeBuilder(
 		val pattern = ShapedRecipePattern.of(keys, rows)
 
 		val recipe = QedRecipe(pattern, result, crystalTicks)
-		recipeOutput.accept(id, recipe, advancement.build(id.withPrefix("recipes/")))
+		recipeOutput.accept(ResourceKey.create(Registries.RECIPE, id), recipe, advancement.build(id.withPrefix("recipes/")))
 	}
 }

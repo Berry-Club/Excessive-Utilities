@@ -5,7 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.tags.BlockTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.DyeColor
@@ -13,14 +13,12 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.BlockTagsProvider
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModBlockTagsProvider(
 	output: PackOutput,
-	lookupProvider: CompletableFuture<HolderLookup.Provider>,
-	existingFileHelper: ExistingFileHelper
-) : BlockTagsProvider(output, lookupProvider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	lookupProvider: CompletableFuture<HolderLookup.Provider>
+) : BlockTagsProvider(output, lookupProvider, ExcessiveUtilities.MOD_ID) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BlockTags.MINEABLE_WITH_PICKAXE)
@@ -569,7 +567,7 @@ class ModBlockTagsProvider(
 
 	companion object {
 		private fun create(id: String): TagKey<Block> = BlockTags.create(ExcessiveUtilities.modResource(id))
-		private fun common(id: String): TagKey<Block> = BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", id))
+		private fun common(id: String): TagKey<Block> = BlockTags.create(Identifier.fromNamespaceAndPath("c", id))
 
 		val SICKLE_MINEABLE = common("mineable/sickle")
 		val GLASS_CUTTER_MINEABLE = create("mineable/glass_cutter")

@@ -18,12 +18,13 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.level.block.state.BlockBehaviour
 
-class MiniChestBlock : SimpleContainerBlock(Properties.ofFullCopy(Blocks.CHEST)), EntityBlock {
+class MiniChestBlock(properties: BlockBehaviour.Properties) : SimpleContainerBlock(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -53,25 +54,38 @@ class MiniChestBlock : SimpleContainerBlock(Properties.ofFullCopy(Blocks.CHEST))
 		val be = level.getBlockEntity(pos)
 		if (be is MenuProvider) {
 			player.openMenu(be)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS
 	}
 
 	override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
-	override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos): Int {
+	override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos, direction: Direction): Int {
 		val be = level.getBlockEntity(pos)
 		if (be is MiniChestBlockEntity) {
 			return AbstractContainerMenu.getRedstoneSignalFromContainer(be.container)
 		}
 
-		return super.getAnalogOutputSignal(state, level, pos)
+		return super.getAnalogOutputSignal(state, level, pos, direction)
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 		val SHAPE: VoxelShape = box(5.0, 0.0, 5.0, 11.0, 6.0, 11.0)
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

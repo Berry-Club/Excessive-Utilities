@@ -9,22 +9,23 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.level.Level
 
-class ItemFilterItem(properties: Properties) : Item(properties) {
+class ItemFilterItem(properties: Properties) : Item(properties), TooltipItem {
 
 	override fun use(
 		level: Level,
 		player: Player,
 		usedHand: InteractionHand
-	): InteractionResultHolder<ItemStack?> {
+	): InteractionResult {
 		val usedStack = player.getItemInHand(usedHand)
 
 		if (level.isServerSide) {
@@ -36,19 +37,20 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 			player.openMenu(provider) { data -> data.writeEnum(usedHand) }
 		}
 
-		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val filterComponent = getFilterComponent(stack)
 		for (flag in filterComponent.flags) {
 			val component = flag.getMessage(true).withStyle(ChatFormatting.BLUE)
-			tooltipComponents.add(component)
+			builder.accept(component)
 		}
 
 		val filterStacks = filterComponent.getItems()
@@ -76,7 +78,7 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 				}
 			}
 
-			tooltipComponents.add(component)
+			builder.accept(component)
 		}
 
 	}
@@ -120,3 +122,10 @@ class ItemFilterItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+
+

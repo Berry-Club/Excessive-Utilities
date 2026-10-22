@@ -4,8 +4,8 @@ plugins {
 	id 'java-library'
 	id 'idea'
 	id 'maven-publish'
-	id 'net.neoforged.moddev' version '2.0.124'
-	id 'org.jetbrains.kotlin.jvm' version '2.4.10'
+	id 'net.neoforged.moddev' version '2.0.141'
+	id 'org.jetbrains.kotlin.jvm' version '2.3.21'
 	id "me.modmuss50.mod-publish-plugin" version "2.1.1"
 	id 'org.moddedmc.wiki.toolkit' version '0.5.0'
 }
@@ -21,8 +21,8 @@ base.archivesName = archiveName
 
 println("Building version: ${version}")
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
-compileKotlin.compilerOptions.jvmTarget = JvmTarget.JVM_21
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+compileKotlin.compilerOptions.jvmTarget = JvmTarget.JVM_25
 
 neoForge {
 	enable {
@@ -33,11 +33,6 @@ neoForge {
 		accessTransformers {
 			publish(project.file('src/main/resources/META-INF/accesstransformer.cfg'))
 		}
-	}
-
-	parchment {
-		mappingsVersion = project.parchment_mappings_version
-		minecraftVersion = project.parchment_minecraft_version
 	}
 
 	runs {
@@ -56,7 +51,7 @@ neoForge {
 				programArguments.addAll(ENV.MC_CLIENT_ARGS.split(' '))
 			}
 
-			gameDirectory = file 'runs/1-21/client'
+			gameDirectory = file 'runs/26-1/client'
 		}
 
 		"Client-Two" {
@@ -64,7 +59,7 @@ neoForge {
 			ideName = "Client Two"
 			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 
-			gameDirectory = file 'runs/1-21/client'
+			gameDirectory = file 'runs/26-1/client'
 
 			if (ENV.MC_CLIENT_2_ARGS) {
 				programArguments.addAll(ENV.MC_CLIENT_2_ARGS.split(' '))
@@ -77,7 +72,7 @@ neoForge {
 			programArgument '--nogui'
 			systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
 
-			gameDirectory = file 'runs/1-21/server'
+			gameDirectory = file 'runs/26-1/server'
 		}
 
 		gameTestServer {
@@ -86,16 +81,16 @@ neoForge {
 		}
 
 		data {
-			data()
+			clientData()
 
 			programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
 
-			gameDirectory = file 'runs/1-21/client'
+			gameDirectory = file 'runs/26-1/client'
 		}
 
 		"Wiki-Export-Client" {
 			client()
-			gameDirectory = file 'runs/1-21/wiki_exporter'
+			gameDirectory = file 'runs/26-1/wiki_exporter'
 			systemProperty 'wiki_exporter.enabled', 'true'
 		}
 	}
@@ -166,8 +161,8 @@ dependencies {
 //	compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
 //	runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 
-	compileOnly("mezz.jei:jei-1.21.1-neoforge-api:${jei_version}")
-	runtimeOnly("mezz.jei:jei-1.21.1-neoforge:${jei_version}")
+	compileOnly("mezz.jei:jei-26.1.2-neoforge-api:${jei_version}")
+	runtimeOnly("mezz.jei:jei-26.1.2-neoforge:${jei_version}")
 
 	compileOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}:api"
 	runtimeOnly "top.theillusivec4.curios:curios-neoforge:${curios_version}"
@@ -175,12 +170,11 @@ dependencies {
 //	implementation("com.klikli_dev:modonomicon-1.21.1-neoforge:${modonomicon_version}") { transitive = false }
 
 //	implementation "dev.aaronhowser.mods:patchoulidatagen-${pdg_version}"
-	implementation "dev.aaronhowser.mods:aaron-1.21.1:${aaron_lib_version}"
+	implementation "dev.aaronhowser.mods:aaron-26.1:${aaron_lib_version}"
 
 //	compileOnly "vazkii.patchouli:Patchouli:${patchouli_version}:api"
 //	runtimeOnly "vazkii.patchouli:Patchouli:${patchouli_version}"
 
-	runtimeOnly "org.sinytra:wiki-exporter-neoforge:2.2.1+1.21.1"
 }
 
 tasks.withType(ProcessResources).configureEach {

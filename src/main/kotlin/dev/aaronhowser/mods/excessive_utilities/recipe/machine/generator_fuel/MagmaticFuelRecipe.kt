@@ -25,8 +25,8 @@ class MagmaticFuelRecipe(
 		return fluidIngredient.test(fluidStack)
 	}
 
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.MAGMATIC_FUEL.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.SINGLE_FLUID_FUEL.get()
+	override fun getSerializer(): RecipeSerializer<MagmaticFuelRecipe> = ModRecipeSerializers.MAGMATIC_FUEL.get()
+	override fun getType(): RecipeType<MagmaticFuelRecipe> = ModRecipeTypes.SINGLE_FLUID_FUEL.get()
 
 	companion object {
 		fun getRecipe(
@@ -34,15 +34,15 @@ class MagmaticFuelRecipe(
 			fluidStack: FluidStack
 		): MagmaticFuelRecipe? {
 			val input = Input(fluidStack)
-			return getAllRecipes(level.recipeManager)
+			return getAllRecipes(dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				.firstOrNull { it.value.matches(input, level) }
 				?.value
 		}
 
 		fun getAllRecipes(
-			recipeManager: RecipeManager
+			recipeManager: RecipeMap
 		): List<RecipeHolder<MagmaticFuelRecipe>> {
-			return recipeManager.getAllRecipesFor(ModRecipeTypes.SINGLE_FLUID_FUEL.get())
+			return recipeManager.byType(ModRecipeTypes.SINGLE_FLUID_FUEL.get()).toList()
 		}
 	}
 
@@ -54,15 +54,13 @@ class MagmaticFuelRecipe(
 		fun getFluid(): FluidStack = fluidStack
 	}
 
-	class Serializer : RecipeSerializer<MagmaticFuelRecipe> {
-		override fun codec(): MapCodec<MagmaticFuelRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, MagmaticFuelRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<MagmaticFuelRecipe> =
 				RecordCodecBuilder.mapCodec { instance ->
 					instance.group(
-						SizedFluidIngredient.FLAT_CODEC
+						SizedFluidIngredient.CODEC
 							.fieldOf("ingredient")
 							.forGetter(MagmaticFuelRecipe::fluidIngredient),
 						Codec.INT

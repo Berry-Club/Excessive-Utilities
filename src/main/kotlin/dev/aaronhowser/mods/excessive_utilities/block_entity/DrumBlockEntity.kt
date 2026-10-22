@@ -12,11 +12,16 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.BlockAndTintGetter
+import net.minecraft.client.renderer.block.BlockAndTintGetter
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.core.component.DataComponentGetter
 import net.neoforged.neoforge.fluids.SimpleFluidContent
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.fluid.FluidResource
 import java.util.function.IntSupplier
 
 class DrumBlockEntity(
@@ -35,7 +40,7 @@ class DrumBlockEntity(
 			ModBlocks.BEDROCKIUM_DRUM.get() -> IntSupplier { ServerConfig.CONFIG.bedrockDrumCapacity.get() }
 			ModBlocks.CREATIVE_DRUM.get() -> IntSupplier { Int.MAX_VALUE }
 
-			else -> IntSupplier { 0 }
+			else -> error("Unsupported drum block: ${blockState.block}")
 		}
 
 	val tank: ConfigurableFluidTank =
@@ -45,7 +50,7 @@ class DrumBlockEntity(
 			}
 		}
 
-	override fun applyImplicitComponents(componentInput: DataComponentInput) {
+	override fun applyImplicitComponents(componentInput: DataComponentGetter) {
 		val tankComponent = componentInput.get(ModDataComponents.TANK)
 		if (tankComponent != null) {
 			tank.setFromFluidContent(tankComponent)
@@ -56,18 +61,18 @@ class DrumBlockEntity(
 		components.set(ModDataComponents.TANK, SimpleFluidContent.copyOf(tank.copy()))
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
-		tank.addToTag(registries, tag)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		tag.store("Fluid", FluidStack.OPTIONAL_CODEC, tank.fluid)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		tank.loadFromTag(registries, tag)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		tag.read("Fluid", FluidStack.OPTIONAL_CODEC).ifPresent(tank::setFluid)
 	}
 
 	companion object {
-		fun getFluidCapability(blockEntity: DrumBlockEntity, direction: Direction?): IFluidHandler {
+		fun getFluidCapability(blockEntity: DrumBlockEntity, direction: Direction?): ResourceHandler<FluidResource> {
 			return blockEntity.tank
 		}
 

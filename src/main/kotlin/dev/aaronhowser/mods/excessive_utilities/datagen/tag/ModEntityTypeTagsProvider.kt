@@ -5,17 +5,16 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.EntityTypeTagsProvider
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModEntityTypeTagsProvider(
 	output: PackOutput,
-	provider: CompletableFuture<HolderLookup.Provider>,
-	existingFileHelper: ExistingFileHelper
-) : EntityTypeTagsProvider(output, provider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	provider: CompletableFuture<HolderLookup.Provider>
+) : EntityTypeTagsProvider(output, provider, ExcessiveUtilities.MOD_ID) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BOOMERANG_PICKUP)
@@ -34,8 +33,8 @@ class ModEntityTypeTagsProvider(
 		tag(INVERSION_RITUAL_DESPAWN_ON_START)
 			.add(EntityType.ENDERMAN)
 
-		tag(DEATH_GENERATOR_DOOM_BLACKLIST)
-			.addOptional(ResourceLocation.fromNamespaceAndPath("mekanism", "robit"))
+        getOrCreateRawBuilder(DEATH_GENERATOR_DOOM_BLACKLIST)
+            .addOptionalElement(Identifier.fromNamespaceAndPath("mekanism", "robit"))
 	}
 
 	companion object {

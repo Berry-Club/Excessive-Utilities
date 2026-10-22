@@ -13,6 +13,8 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.Vec3i
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
@@ -25,9 +27,10 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.fluid.FluidResource
 import kotlin.math.absoluteValue
 
 @Suppress("TYPE_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
@@ -53,9 +56,9 @@ class EnderPorcupineBlockEntity(
 	var allOffsets: List<BlockPos> = emptyList()
 		private set
 
-	private val itemHandlers: MutableMap<Direction?, IItemHandler> = mutableMapOf()
-	private val fluidHandlers: MutableMap<Direction?, IFluidHandler> = mutableMapOf()
-	private val energyHandlers: MutableMap<Direction?, IEnergyStorage> = mutableMapOf()
+	private val itemHandlers: MutableMap<Direction?, ResourceHandler<ItemResource>> = mutableMapOf()
+	private val fluidHandlers: MutableMap<Direction?, ResourceHandler<FluidResource>> = mutableMapOf()
+	private val energyHandlers: MutableMap<Direction?, EnergyHandler> = mutableMapOf()
 
 	init {
 		updateOffsets()
@@ -87,7 +90,8 @@ class EnderPorcupineBlockEntity(
 		return offset.x.absoluteValue + offset.y.absoluteValue + offset.z.absoluteValue.toDouble()
 	}
 
-	fun getItemHandler(direction: Direction?): IItemHandler {
+	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource>? {
+		if (findTargetItemHandler(direction) == null) return null
 		val existingHandler = itemHandlers[direction]
 		if (existingHandler != null) return existingHandler
 
@@ -96,15 +100,16 @@ class EnderPorcupineBlockEntity(
 		return newHandler
 	}
 
-	fun findTargetItemHandler(direction: Direction?): IItemHandler? {
+	fun findTargetItemHandler(direction: Direction?): ResourceHandler<ItemResource>? {
 		val linkedPosition = getLinkedPosition()
 		val stateThere = level?.getBlockState(linkedPosition)
 		if (stateThere?.isBlock(ModBlockTagsProvider.ENDER_PORCUPINE_BLACKLIST).isTrue()) return null
 
-		return level?.getCapability(Capabilities.ItemHandler.BLOCK, linkedPosition, direction)
+		return level?.getCapability(Capabilities.Item.BLOCK, linkedPosition, direction)
 	}
 
-	fun getFluidHandler(direction: Direction?): IFluidHandler {
+	fun getFluidHandler(direction: Direction?): ResourceHandler<FluidResource>? {
+		if (findTargetFluidHandler(direction) == null) return null
 		val existingHandler = fluidHandlers[direction]
 		if (existingHandler != null) return existingHandler
 
@@ -113,44 +118,44 @@ class EnderPorcupineBlockEntity(
 		return newHandler
 	}
 
-	fun findTargetFluidHandler(direction: Direction?): IFluidHandler? {
+	fun findTargetFluidHandler(direction: Direction?): ResourceHandler<FluidResource>? {
 		val linkedPosition = getLinkedPosition()
 		val stateThere = level?.getBlockState(linkedPosition)
 		if (stateThere?.isBlock(ModBlockTagsProvider.ENDER_PORCUPINE_BLACKLIST).isTrue()) return null
 
 
-		return level?.getCapability(Capabilities.FluidHandler.BLOCK, linkedPosition, direction)
+		return level?.getCapability(Capabilities.Fluid.BLOCK, linkedPosition, direction)
 	}
 
-	fun getEnergyHandler(direction: Direction?): IEnergyStorage {
+	fun getEnergyHandler(direction: Direction?): EnergyHandler {
 		val existingHandler = energyHandlers[direction]
 		if (existingHandler != null) return existingHandler
 
-		val newHandler = EnderPorcupineEnergyStorage(this, direction)
+		val newHandler = EnderPorcupineSimpleEnergyHandler(this, direction)
 		energyHandlers[direction] = newHandler
 		return newHandler
 	}
 
-	fun findTargetEnergyHandler(direction: Direction?): IEnergyStorage? {
+	fun findTargetEnergyHandler(direction: Direction?): EnergyHandler? {
 		val linkedPosition = getLinkedPosition()
 		val stateThere = level?.getBlockState(linkedPosition)
 		if (stateThere?.isBlock(ModBlockTagsProvider.ENDER_PORCUPINE_BLACKLIST).isTrue()) return null
 
-		return level?.getCapability(Capabilities.EnergyStorage.BLOCK, linkedPosition, direction)
+		return level?.getCapability(Capabilities.Energy.BLOCK, linkedPosition, direction)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
 		tag.putLong(MINIMUM_OFFSET_NBT, minimumOffset.asLong())
 		tag.putLong(MAXIMUM_OFFSET_NBT, maximumOffset.asLong())
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		minimumOffset = tag.getLong(MINIMUM_OFFSET_NBT).toBlockPos()
-		maximumOffset = tag.getLong(MAXIMUM_OFFSET_NBT).toBlockPos()
+		minimumOffset = tag.getLongOr(MINIMUM_OFFSET_NBT, 0L).toBlockPos()
+		maximumOffset = tag.getLongOr(MAXIMUM_OFFSET_NBT, 0L).toBlockPos()
 	}
 
 	private val containerData: ContainerData = EnderPorcupineContainerData()

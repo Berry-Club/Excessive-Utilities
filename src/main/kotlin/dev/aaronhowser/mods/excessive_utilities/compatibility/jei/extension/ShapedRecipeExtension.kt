@@ -5,10 +5,13 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension
+import net.minecraft.world.item.crafting.display.SlotDisplay
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.ShapedRecipe
+import net.minecraft.world.item.crafting.Ingredient
+import net.minecraft.world.item.crafting.CraftingRecipe
 
-class ShapedRecipeExtension<T : ShapedRecipe> : ICraftingCategoryExtension<T> {
+class ShapedRecipeExtension<T : CraftingRecipe> : ICraftingCategoryExtension<T> {
 
 	override fun setRecipe(
 		recipeHolder: RecipeHolder<T>,
@@ -19,14 +22,18 @@ class ShapedRecipeExtension<T : ShapedRecipe> : ICraftingCategoryExtension<T> {
 		val registry = AaronClientUtil.localLevel?.registryAccess() ?: return
 
 		val recipe = recipeHolder.value
-		val result = recipe.getResultItem(registry)
-
-		val width = recipe.width
-		val height = recipe.height
-
-		craftingGridHelper.createAndSetOutputs(builder, listOf(result))
-		craftingGridHelper.createAndSetIngredients(builder, recipe.ingredients, width, height)
+		craftingGridHelper.createAndSetOutputs(builder, recipe.display().first().result())
+		craftingGridHelper.createAndSetIngredientsFromDisplays(builder, getIngredients(recipeHolder), getWidth(recipeHolder), getHeight(recipeHolder))
 	}
+
+	override fun getIngredients(recipeHolder: RecipeHolder<T>): List<SlotDisplay> =
+		recipeHolder.value.placementInfo().ingredients().map { Ingredient.optionalIngredientToDisplay(java.util.Optional.of(it)) }
+
+	override fun getWidth(recipeHolder: RecipeHolder<T>): Int =
+		(recipeHolder.value as? ShapedRecipe)?.width ?: 0
+
+	override fun getHeight(recipeHolder: RecipeHolder<T>): Int =
+		(recipeHolder.value as? ShapedRecipe)?.height ?: 0
 
 	override fun isHandled(recipeHolder: RecipeHolder<T>): Boolean {
 		return recipeHolder.value.isSpecial

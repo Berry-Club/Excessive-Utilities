@@ -7,6 +7,9 @@
 	"flip_v": true,
 	"render_type": "cutout",
 	"textures": {
+		"center": "excessive_utilities:block/drum/center_colored",
+		"stripe": "excessive_utilities:block/drum/iron/center",
+		"top": "excessive_utilities:block/drum/iron/top",
 		"particle": "excessive_utilities:block/drum/iron/top"
 	}
 }

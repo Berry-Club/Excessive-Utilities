@@ -1,0 +1,20 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "excessive_utilities:item/watering_can_broken"
+        },
+        "threshold": 1.0
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "excessive_utilities:item/watering_can"
+    },
+    "predicate": "excessive_utilities:is_broken",
+    "property": "excessive_utilities:item_predicate"
+  }
+}

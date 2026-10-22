@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnergyTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.FluidTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.TrashCanBlockEntity
@@ -19,15 +21,16 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
 class TrashCanBlock(
-	val type: Type
-) : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
+	val type: Type,
+	properties: Properties
+) : Block(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -78,7 +81,7 @@ class TrashCanBlock(
 
 		if (blockEntity is MenuProvider) {
 			player.openMenu(blockEntity)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS
@@ -89,7 +92,7 @@ class TrashCanBlock(
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 
 		val REGULAR_SHAPE: VoxelShape = Shapes.or(
 			box(2.0, 0.0, 2.0, 14.0, 10.0, 14.0),
@@ -115,3 +118,16 @@ class TrashCanBlock(
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

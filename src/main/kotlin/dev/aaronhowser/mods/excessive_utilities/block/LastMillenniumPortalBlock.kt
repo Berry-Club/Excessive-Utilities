@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.excessive_utilities.handler.LastMillenniumHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -16,14 +15,10 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.portal.DimensionTransition
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.phys.Vec3
 
-class LastMillenniumPortalBlock : Block(
-	Properties
-		.ofFullCopy(Blocks.IRON_BLOCK)
-), EntityBlock {
+class LastMillenniumPortalBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun useWithoutItem(
 		state: BlockState,
@@ -74,21 +69,17 @@ class LastMillenniumPortalBlock : Block(
 
 	companion object {
 
-		private fun getDestinationInLastMillennium(level: ServerLevel, entity: Entity): DimensionTransition {
-			val targetLevel = LastMillenniumHandler.getLastMillenniumLevel(level)
-			val chunkPos = LastMillenniumHandler.get(level).getChunk(entity)
-
-			val post = DimensionTransition.PLACE_PORTAL_TICKET
-			return DimensionTransition(
-				targetLevel,
-				chunkPos.getMiddleBlockPosition(64).bottomCenter,
-				Vec3.ZERO,
-				0f,
-				0f,
-				false,
-				post
-			)
-		}
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

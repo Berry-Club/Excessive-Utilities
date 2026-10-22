@@ -11,20 +11,19 @@ import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.SwordItem
-import net.minecraft.world.item.component.Unbreakable
+import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 
-class EthericSwordItem(properties: Properties) : SwordItem(UnstableTier, properties) {
+class EthericSwordItem(properties: Properties) : Item(properties) {
 
 	override fun use(
 		level: Level,
 		player: Player,
 		usedHand: InteractionHand
-	): InteractionResultHolder<ItemStack> {
+	): InteractionResult {
 		val stack = player.getItemInHand(usedHand)
 
 		if (level.isServerSide && !player.isFakePlayer) {
@@ -32,22 +31,24 @@ class EthericSwordItem(properties: Properties) : SwordItem(UnstableTier, propert
 
 			if (success) {
 				player.giveOrDropStack(ModItems.SOUL_FRAGMENT.getDefaultInstance())
-				return InteractionResultHolder.success(stack)
+				return InteractionResult.SUCCESS
 			} else {
 				player.tell(ModMessageLang.NO_REMOVE_SOUL_FRAGMENT.toComponent())
-				return InteractionResultHolder.fail(stack)
+				return InteractionResult.FAIL
 			}
 		}
 
-		return InteractionResultHolder.pass(stack)
+		return InteractionResult.PASS
 	}
 
 	companion object {
 		val DEFAULT_PROPERTIES: Properties = Properties()
 			.stacksTo(1)
-			.setNoRepair()
-			.component(DataComponents.UNBREAKABLE, Unbreakable(false))
-			.attributes(createAttributes(UnstableTier, 3f, -2.4f))
+			.durability(UnstableTier.durability())
 	}
 
 }
+
+
+
+

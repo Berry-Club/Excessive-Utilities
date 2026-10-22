@@ -10,8 +10,7 @@ import dev.aaronhowser.mods.excessive_utilities.item.*
 import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.SwordItem
-import net.minecraft.world.item.Tiers
+import net.minecraft.world.item.ToolMaterial
 import net.neoforged.neoforge.registries.DeferredItem
 import net.neoforged.neoforge.registries.DeferredRegister
 
@@ -81,20 +80,20 @@ object ModItems : AaronItemRegistry() {
 	// Tools
 
 	val WOODEN_SICKLE: DeferredItem<SickleItem> =
-		register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.WOOD) }
+	register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.WOOD) }
 	val STONE_SICKLE: DeferredItem<SickleItem> =
-		register("stone_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.STONE) }
+	register("stone_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.STONE) }
 	val IRON_SICKLE: DeferredItem<SickleItem> =
-		register("iron_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
+	register("iron_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.IRON) }
 
 	//	val COPPER_SICKLE: DeferredItem<SickleItem> =
 //		register("copper_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
 	val GOLDEN_SICKLE: DeferredItem<SickleItem> =
-		register("golden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.GOLD) }
+	register("golden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.GOLD) }
 	val DIAMOND_SICKLE: DeferredItem<SickleItem> =
-		register("diamond_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.DIAMOND) }
+	register("diamond_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.DIAMOND) }
 	val NETHERITE_SICKLE: DeferredItem<SickleItem> =
-		register("netherite_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.NETHERITE) }
+	register("netherite_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.NETHERITE) }
 	val DESTRUCTION_PICKAXE: DeferredItem<DestructionPickaxeItem> =
 		register("destruction_pickaxe", ::DestructionPickaxeItem, DestructionPickaxeItem.DEFAULT_PROPERTIES)
 	val EROSION_SHOVEL: DeferredItem<ErosionShovelItem> =
@@ -136,8 +135,8 @@ object ModItems : AaronItemRegistry() {
 
 	// Weapons
 
-	val KIKOKU: DeferredItem<SwordItem> =
-		register("kikoku", { SwordItem(OpiniumTier, it) }, SoulRendHandler.KIKOKU_PROPERTIES)
+	val KIKOKU: DeferredItem<Item> =
+		register("kikoku", { Item(it.durability(OpiniumTier.durability())) }, SoulRendHandler.KIKOKU_PROPERTIES)
 	val FIRE_AXE: DeferredItem<FireAxeItem> =
 		register("fire_axe", ::FireAxeItem, FireAxeItem.DEFAULT_PROPERTIES)
 	val LUX_SABER =

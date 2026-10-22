@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.enchanter
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
+import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnchanterBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container

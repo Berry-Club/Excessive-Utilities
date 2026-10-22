@@ -10,27 +10,29 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.ResultContainer
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import net.neoforged.neoforge.event.entity.player.PlayerEvent
 
-class UnstableIngotItem(properties: Properties) : Item(properties) {
+class UnstableIngotItem(properties: Properties) : Item(properties), TooltipItem {
 
 	override fun inventoryTick(
 		stack: ItemStack,
-		level: Level,
+		level: ServerLevel,
 		entity: Entity,
-		slotId: Int,
-		isSelected: Boolean
+		slot: EquipmentSlot?
 	) {
 		if (level.isClientSide) return
 
@@ -72,17 +74,18 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 		}
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val countdown = stack.get(ModDataComponents.COUNTDOWN)
 		if (countdown != null) {
 			val seconds = countdown / 20f
 			val formattedSeconds = "%.1f".format(seconds)
-			tooltipComponents += ModMenuLang.SECONDS_UNTIL_EXPLOSION.toComponent(formattedSeconds).withStyle(ChatFormatting.RED)
+			builder.accept(ModMenuLang.SECONDS_UNTIL_EXPLOSION.toComponent(formattedSeconds).withStyle(ChatFormatting.RED))
 		}
 	}
 
@@ -90,9 +93,9 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 		const val MAX_COUNTDOWN = 20 * 10
 		const val EXPLOSION_RADIUS = 2.0f
 
-		val VANILLA_CRAFTING_MENU_ID: ResourceLocation = ResourceLocation.withDefaultNamespace("crafting")
+		val VANILLA_CRAFTING_MENU_ID: Identifier = Identifier.withDefaultNamespace("crafting")
 
-		private fun getCurrentMenuId(player: Player): ResourceLocation? {
+		private fun getCurrentMenuId(player: Player): Identifier? {
 			val menuType = try {
 				player.containerMenu.type
 			} catch (e: UnsupportedOperationException) {
@@ -186,3 +189,10 @@ class UnstableIngotItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+
+

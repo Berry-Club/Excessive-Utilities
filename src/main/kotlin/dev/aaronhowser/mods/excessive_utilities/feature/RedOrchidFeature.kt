@@ -19,15 +19,15 @@ class RedOrchidFeature : Feature<NoneFeatureConfiguration>(NoneFeatureConfigurat
 	// and THAT sounds like a horrible idea
 	override fun place(context: FeaturePlaceContext<NoneFeatureConfiguration>): Boolean {
 		val origin = context.origin()
-		val chunkPos = ChunkPos(origin)
+		val chunkPos = ChunkPos.containing(origin)
 
 		val level = context.level()
 
 		val random = context.random()
 		val candidates = mutableListOf<BlockPos>()
 
-		val minY = maxOf(level.minBuildHeight, MIN_REDSTONE_ORE_Y)
-		val maxY = minOf(level.maxBuildHeight - 2, MAX_REDSTONE_ORE_Y)
+		val minY = maxOf(level.minY, MIN_REDSTONE_ORE_Y)
+		val maxY = minOf((level.maxY + 1) - 2, MAX_REDSTONE_ORE_Y)
 
 		val volume = BlockPos.betweenClosed(
 			chunkPos.minBlockX, minY, chunkPos.minBlockZ,

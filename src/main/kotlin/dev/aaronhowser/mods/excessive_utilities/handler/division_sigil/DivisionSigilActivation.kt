@@ -212,7 +212,7 @@ object DivisionSigilActivation {
 	) {
 		val minTime = 17_500L
 		val maxTime = 18_500L
-		val timeOfDay = level.dayTime % 24_000L
+		val timeOfDay = level.overworldClockTime % 24_000L
 		if (timeOfDay !in minTime..maxTime) {
 			messages += ModMessageLang.DIVISION_MIDNIGHT.toComponent()
 		}

@@ -6,22 +6,29 @@ import dev.aaronhowser.mods.aaron.client.render.AaronRenderUtil
 import dev.aaronhowser.mods.excessive_utilities.block_entity.QedBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
+import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.world.phys.AABB
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer
+import net.minecraft.world.phys.Vec3
 
 class QedBER(
 	val context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<QedBlockEntity> {
+) : BlockEntityRenderer<QedBlockEntity, LegacyBlockEntityRenderState<QedBlockEntity>> {
+	override fun createRenderState() = LegacyBlockEntityRenderState<QedBlockEntity>()
+	override fun extractRenderState(blockEntity: QedBlockEntity, state: LegacyBlockEntityRenderState<QedBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
+		state.blockPos = blockEntity.blockPos
+	}
 
-	override fun render(
-		blockEntity: QedBlockEntity,
-		partialTick: Float,
+	override fun submit(
+		state: LegacyBlockEntityRenderState<QedBlockEntity>,
 		poseStack: PoseStack,
-		bufferSource: MultiBufferSource,
-		packedLight: Int,
-		packedOverlay: Int
+		collector: SubmitNodeCollector,
+		camera: CameraRenderState
 	) {
 		val player = AaronClientUtil.localPlayer ?: return
 		if (!player.isHolding(ModBlocks.ENDER_FLUX_CRYSTAL.asItem())) return

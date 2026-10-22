@@ -5,24 +5,22 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.data.tags.ItemTagsProvider
-import net.minecraft.resources.ResourceLocation
+import net.neoforged.neoforge.common.data.ItemTagsProvider
+import net.minecraft.resources.Identifier
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModItemTagsProvider(
 	output: PackOutput,
-	lookupProvider: CompletableFuture<HolderLookup.Provider>,
-	blockTags: CompletableFuture<TagLookup<Block>>,
-	existingFileHelper: ExistingFileHelper
-) : ItemTagsProvider(output, lookupProvider, blockTags, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	lookupProvider: CompletableFuture<HolderLookup.Provider>
+) : ItemTagsProvider(output, lookupProvider, ExcessiveUtilities.MOD_ID) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(RENDER_GP_WHILE_HOLDING)
@@ -90,6 +88,9 @@ class ModItemTagsProvider(
 			.add(
 				ModItems.PIPE_WRENCH
 			)
+
+		tag(Tags.Items.ENDER_PEARLS)
+			.add(Items.ENDER_PEARL)
 
 		tag(Tags.Items.DYES_MAGENTA)
 			.add(
@@ -413,13 +414,25 @@ class ModItemTagsProvider(
 				ModBlocks.CREATIVE_MILL.asItem()
 			)
 
-		copy(ModBlockTagsProvider.ENDER_QUARRY_PART, ENDER_QUARRY_UPGRADE)
+		tag(ENDER_QUARRY_UPGRADE)
+			.add(
+				ModBlocks.ENDER_QUARRY.asItem(),
+				ModBlocks.ENDER_QUARRY_UPGRADE_BASE.asItem(),
+				ModBlocks.ENDER_QUARRY_FORTUNE_UPGRADE.asItem(),
+				ModBlocks.ENDER_QUARRY_FORTUNE_TWO_UPGRADE.asItem(),
+				ModBlocks.ENDER_QUARRY_FORTUNE_THREE_UPGRADE.asItem(),
+				ModBlocks.ENDER_QUARRY_SILK_TOUCH_UPGRADE.asItem(),
+				ModBlocks.ENDER_QUARRY_SPEED_UPGRADE.asItem(),
+				ModBlocks.ENDER_QUARRY_SPEED_TWO_UPGRADE.asItem(),
+				ModBlocks.ENDER_QUARRY_SPEED_THREE_UPGRADE.asItem(),
+				ModBlocks.ENDER_QUARRY_WORLD_HOLE_UPGRADE.asItem()
+			)
 	}
 
 	companion object {
 		private fun create(id: String): TagKey<Item> = ItemTags.create(ExcessiveUtilities.modResource(id))
-		private fun common(id: String): TagKey<Item> = ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", id))
-		private fun curio(id: String): TagKey<Item> = ItemTags.create(ResourceLocation.fromNamespaceAndPath("curios", id))
+		private fun common(id: String): TagKey<Item> = ItemTags.create(Identifier.fromNamespaceAndPath("c", id))
+		private fun curio(id: String): TagKey<Item> = ItemTags.create(Identifier.fromNamespaceAndPath("curios", id))
 
 		val TRANSFER_NODE_UPGRADES = create("transfer_node_upgrades")
 		val RETRIEVAL_NODE_UPGRADES = create("retrieval_node_upgrades")

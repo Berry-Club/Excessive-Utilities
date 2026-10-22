@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
-import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
+import dev.aaronhowser.mods.aaron.container.ExtractOnlyResourceHandler
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
@@ -11,6 +11,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
@@ -20,7 +22,8 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 class CreativeChestBlockEntity(
 	pos: BlockPos,
@@ -28,20 +31,13 @@ class CreativeChestBlockEntity(
 ) : BlockEntity(ModBlockEntityTypes.CREATIVE_CHEST.get(), pos, blockState), MenuProvider, ContainerContainer {
 
 	private val container: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 1)
-	private val itemHandler: ExtractOnlyInvWrapper =
-		object : ExtractOnlyInvWrapper(container) {
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-				val stackInSlot = container.getItem(slot)
-				val amountToTake = minOf(amount, stackInSlot.maxStackSize)
-				return stackInSlot.copyWithCount(amountToTake)
-			}
-		}
+	private val itemHandler: ResourceHandler<ItemResource> = ExtractOnlyResourceHandler(container)
 
 	override fun getContainers(): List<Container> {
 		return listOf(container)
 	}
 
-	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
+	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = itemHandler
 
 	override fun getDisplayName(): Component = blockState.block.name
 
@@ -49,16 +45,16 @@ class CreativeChestBlockEntity(
 		return SingleSlotMenu(containerId, playerInventory, container)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		tag.saveItems(container, registries)
+		tag.saveItems(container)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		tag.loadItems(container, registries)
+		tag.loadItems(container)
 	}
 
 

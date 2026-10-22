@@ -10,14 +10,14 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
 class OverclockedFuelJeiCategory(
-	recipeType: RecipeType<Recipe>,
+	recipeType: IRecipeType<Recipe>,
 	guiHelper: IGuiHelper
 ) : AbstractRecipeCategory<OverclockedFuelJeiCategory.Recipe>(
 	recipeType,
@@ -32,7 +32,7 @@ class OverclockedFuelJeiCategory(
 			.setStandardSlotBackground()
 
 		for (stack in recipe.stacks) {
-			itemInputSlot.addItemStack(stack)
+			itemInputSlot.add(stack)
 		}
 	}
 
@@ -50,7 +50,7 @@ class OverclockedFuelJeiCategory(
 		fun registerRecipes(level: Level, registration: IRecipeRegistration) {
 			val ingredientManager = registration.jeiHelpers.ingredientManager
 
-			val fuels = getStackFuels(ingredientManager)
+			val fuels = getStackFuels(level, ingredientManager)
 			val recipes = mutableListOf<Recipe>()
 
 			val fePerBurnTick = ServerConfig.CONFIG.overclockedGeneratorFePerBurnTick.get()

@@ -9,6 +9,7 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -16,7 +17,7 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class EnderPorcupineBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBlock {
+class EnderPorcupineBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return EnderPorcupineBlockEntity(pos, state)
@@ -37,7 +38,7 @@ class EnderPorcupineBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBl
 
 		if (blockEntity is MenuProvider) {
 			player.openMenu(blockEntity)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS
@@ -48,3 +49,14 @@ class EnderPorcupineBlock : Block(Properties.ofFullCopy(Blocks.STONE)), EntityBl
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

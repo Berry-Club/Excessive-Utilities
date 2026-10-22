@@ -1,11 +1,11 @@
 {
-  "parent": "excessive_utilities:item/transfer_pipe",
+  "parent": "minecraft:block/block",
   "display": {
     "firstperson_lefthand": {
       "rotation": [
-        0,
-        225,
-        0
+        0.0,
+        225.0,
+        0.0
       ],
       "scale": [
         0.4,
@@ -15,9 +15,9 @@
     },
     "firstperson_righthand": {
       "rotation": [
-        0,
-        45,
-        0
+        0.0,
+        45.0,
+        0.0
       ],
       "scale": [
         0.4,
@@ -27,9 +27,9 @@
     },
     "fixed": {
       "rotation": [
-        0,
-        180,
-        0
+        0.0,
+        180.0,
+        0.0
       ],
       "scale": [
         0.5,
@@ -44,28 +44,33 @@
         0.25
       ],
       "translation": [
-        0,
-        3,
-        0
+        0.0,
+        3.0,
+        0.0
       ]
     },
     "gui": {
       "rotation": [
-        30,
-        225,
-        0
+        30.0,
+        225.0,
+        0.0
       ],
       "scale": [
         0.625,
         0.625,
         0.625
+      ],
+      "translation": [
+        0.0,
+        0.0,
+        0.0
       ]
     },
     "thirdperson_lefthand": {
       "rotation": [
-        75,
-        45,
-        0
+        75.0,
+        45.0,
+        0.0
       ],
       "scale": [
         0.375,
@@ -73,16 +78,16 @@
         0.375
       ],
       "translation": [
-        0,
+        0.0,
         2.5,
-        0
+        0.0
       ]
     },
     "thirdperson_righthand": {
       "rotation": [
-        75,
-        45,
-        0
+        75.0,
+        45.0,
+        0.0
       ],
       "scale": [
         0.375,
@@ -90,9 +95,9 @@
         0.375
       ],
       "translation": [
-        0,
+        0.0,
         2.5,
-        0
+        0.0
       ]
     }
   },
@@ -109,13 +114,31 @@
           ]
         },
         "east": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            16.0
+          ]
         },
         "north": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            16.0
+          ]
         },
         "south": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            16.0
+          ]
         },
         "up": {
           "texture": "#pipe",
@@ -127,24 +150,36 @@
           ]
         },
         "west": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            6.0,
+            0.0,
+            10.0,
+            16.0
+          ]
         }
       },
       "from": [
-        6,
-        0,
-        6
+        6.0,
+        0.0,
+        6.0
       ],
       "to": [
-        10,
-        16,
-        10
+        10.0,
+        16.0,
+        10.0
       ]
     },
     {
       "faces": {
         "down": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            0.0,
+            6.0,
+            16.0,
+            10.0
+          ]
         },
         "east": {
           "texture": "#pipe",
@@ -156,13 +191,31 @@
           ]
         },
         "north": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            0.0,
+            6.0,
+            16.0,
+            10.0
+          ]
         },
         "south": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            0.0,
+            6.0,
+            16.0,
+            10.0
+          ]
         },
         "up": {
-          "texture": "#pipe"
+          "texture": "#pipe",
+          "uv": [
+            0.0,
+            6.0,
+            16.0,
+            10.0
+          ]
         },
         "west": {
           "texture": "#pipe",
@@ -175,14 +228,14 @@
         }
       },
       "from": [
-        0,
-        6,
-        6
+        0.0,
+        6.0,
+        6.0
       ],
       "to": [
-        16,
-        10,
-        10
+        16.0,
+        10.0,
+        10.0
       ]
     },
     {
@@ -243,18 +296,17 @@
         }
       },
       "from": [
-        6,
-        6,
-        0
+        6.0,
+        6.0,
+        0.0
       ],
       "to": [
-        10,
-        10,
-        16
+        10.0,
+        10.0,
+        16.0
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
   "textures": {
     "pipe": "excessive_utilities:block/transfer_pipe/pipe"
   }

@@ -9,10 +9,12 @@
       "y": 90
     },
     "facing=north,lit=false": {
-      "model": "excessive_utilities:block/furnace_generator_off"
+      "model": "excessive_utilities:block/furnace_generator_off",
+      "y": 0
     },
     "facing=north,lit=true": {
-      "model": "excessive_utilities:block/furnace_generator_on"
+      "model": "excessive_utilities:block/furnace_generator_on",
+      "y": 0
     },
     "facing=south,lit=false": {
       "model": "excessive_utilities:block/furnace_generator_off",

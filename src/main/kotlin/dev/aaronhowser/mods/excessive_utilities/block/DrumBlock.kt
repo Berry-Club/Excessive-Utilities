@@ -3,22 +3,22 @@ package dev.aaronhowser.mods.excessive_utilities.block
 import dev.aaronhowser.mods.excessive_utilities.block_entity.DrumBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import net.neoforged.neoforge.fluids.FluidUtil
+import net.minecraft.world.level.block.state.BlockBehaviour
+import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
-class DrumBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+class DrumBlock(properties: BlockBehaviour.Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return DrumBlockEntity(pos, state)
@@ -32,9 +32,9 @@ class DrumBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
 		player: Player,
 		hand: InteractionHand,
 		hitResult: BlockHitResult
-	): ItemInteractionResult {
-		val fluidTransferred = FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction)
-		return if (fluidTransferred) ItemInteractionResult.sidedSuccess(level.isClientSide) else ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+	): InteractionResult {
+		val fluidTransferred = FluidUtil.interactWithFluidHandler(player, hand, level, pos, hitResult.direction, null)
+		return if (fluidTransferred) InteractionResult.SUCCESS else InteractionResult.PASS
 	}
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
@@ -46,3 +46,15 @@ class DrumBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

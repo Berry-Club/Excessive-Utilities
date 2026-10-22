@@ -1,13 +1,5 @@
 {
   "parent": "minecraft:item/generated",
-  "overrides": [
-    {
-      "model": "excessive_utilities:item/magical_boomerang_thrown",
-      "predicate": {
-        "excessive_utilities:magical_boomerang_thrown": 1.0
-      }
-    }
-  ],
   "textures": {
     "layer0": "excessive_utilities:item/magical_boomerang/not_thrown"
   }

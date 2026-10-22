@@ -1,0 +1,20 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "excessive_utilities:item/magical_boomerang_thrown"
+        },
+        "threshold": 1.0
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:model",
+      "model": "excessive_utilities:item/magical_boomerang"
+    },
+    "predicate": "excessive_utilities:magical_boomerang_thrown",
+    "property": "excessive_utilities:item_predicate"
+  }
+}

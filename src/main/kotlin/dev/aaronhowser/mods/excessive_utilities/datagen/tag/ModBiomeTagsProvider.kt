@@ -9,14 +9,12 @@ import net.minecraft.data.tags.BiomeTagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.biome.Biome
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModBiomeTagsProvider(
 	output: PackOutput,
-	provider: CompletableFuture<HolderLookup.Provider>,
-	existingFileHelper: ExistingFileHelper
-) : BiomeTagsProvider(output, provider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	provider: CompletableFuture<HolderLookup.Provider>
+) : BiomeTagsProvider(output, provider, ExcessiveUtilities.MOD_ID) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BIOME_MARKER_BLACKLIST)

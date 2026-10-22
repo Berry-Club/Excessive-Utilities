@@ -12,17 +12,17 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
 
 class WirelessFeTransmitterBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.WIRELESS_FE_TRANSMITTER.get(), pos, blockState) {
 
-	private val destinationCache: MutableSet<IEnergyStorage> = mutableSetOf()
+	private val destinationCache: MutableSet<EnergyHandler> = mutableSetOf()
 	private var destinationsUsedLastTick: Int = 0
 
-	fun getEnergyStorage(): IEnergyStorage? {
+	fun getSimpleEnergyHandler(): EnergyHandler? {
 		val level = level as? ServerLevel ?: return null
 		val uuid = ownerUuid ?: return null
 		return WirelessFeNetworkHandler.get(level).getNetwork(uuid).energyStorage
@@ -47,13 +47,13 @@ class WirelessFeTransmitterBlockEntity(
 		val fePerTick = ServerConfig.CONFIG.wirelessFeTransmitterRate.get()
 
 		for (destination in destinationCache) {
-			if (networkEnergy.energyStored <= 0) break
+			if (networkEnergy.getAmountAsInt() <= 0) break
 
-			val maxAmount = minOf(fePerTick, networkEnergy.energyStored)
-			val actualAmount = destination.receiveEnergy(maxAmount, true)
+			val maxAmount = minOf(fePerTick, networkEnergy.getAmountAsInt())
+			val actualAmount = destination.insertEnergy(maxAmount, true)
 
 			if (actualAmount > 0) {
-				destination.receiveEnergy(actualAmount, false)
+				destination.insertEnergy(actualAmount, false)
 				networkEnergy.extractEnergy(actualAmount, false)
 				destinationsUsedLastTick++
 			}
@@ -82,12 +82,12 @@ class WirelessFeTransmitterBlockEntity(
 
 				@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
 				val energyHandler = level.getCapability(
-					Capabilities.EnergyStorage.BLOCK,
+					Capabilities.Energy.BLOCK,
 					pos,
 					dir
 				)
 
-				if (energyHandler != null && energyHandler.canReceive()) {
+				if (energyHandler != null && energyHandler.getAmountAsLong() < energyHandler.getCapacityAsLong()) {
 					destinationCache.add(energyHandler)
 					continue@posLoop
 				}
@@ -96,8 +96,8 @@ class WirelessFeTransmitterBlockEntity(
 	}
 
 	companion object {
-		fun getEnergyCapability(transmitter: WirelessFeTransmitterBlockEntity, direction: Direction?): IEnergyStorage? {
-			return transmitter.getEnergyStorage()
+		fun getEnergyCapability(transmitter: WirelessFeTransmitterBlockEntity, direction: Direction?): EnergyHandler? {
+			return transmitter.getSimpleEnergyHandler()
 		}
 
 		fun tick(

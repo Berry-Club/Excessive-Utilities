@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 
-class MoonStoneOreBlock(copyBlock: Block) : Block(Properties.ofFullCopy(copyBlock)) {
+class MoonStoneOreBlock(properties: Properties) : Block(properties) {
 
 	init {
 		registerDefaultState(
@@ -43,7 +43,17 @@ class MoonStoneOreBlock(copyBlock: Block) : Block(Properties.ofFullCopy(copyBloc
 
 	companion object {
 		val VISIBLE: BooleanProperty = BooleanProperty.create("visible")
-		fun shouldBeVisible(level: Level) = level.isNight
+		fun shouldBeVisible(level: Level) = level.isDarkOutside()
 	}
 
 }
+
+
+
+
+
+
+
+
+
+

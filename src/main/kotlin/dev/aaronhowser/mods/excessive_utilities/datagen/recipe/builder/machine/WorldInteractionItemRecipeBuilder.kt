@@ -5,12 +5,16 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.WorldInteractionI
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
-import net.minecraft.advancements.critereon.RecipeUnlockedTrigger
+import net.minecraft.advancements.criterion.RecipeUnlockedTrigger
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.core.registries.BuiltInRegistries
 import java.util.*
 
 class WorldInteractionItemRecipeBuilder(
@@ -22,19 +26,20 @@ class WorldInteractionItemRecipeBuilder(
 
 	override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = error("Unsupported")
 	override fun group(groupName: String?): RecipeBuilder = error("Unsupported")
-	override fun getResult(): Item = output.item
+	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(output.item))
 
-	override fun save(recipeOutput: RecipeOutput, id: ResourceLocation) {
+	override fun save(recipeOutput: RecipeOutput, recipeKey: ResourceKey<Recipe<*>>) {
+		val id = recipeKey.identifier()
 		val path = StringBuilder()
 			.append("world_interaction_upgrade/item/")
 			.append(id.path)
 			.toString()
 
-		val realId = ResourceLocation.fromNamespaceAndPath(id.namespace, path)
+		val realId = Identifier.fromNamespaceAndPath(id.namespace, path)
 
 		val advancement = recipeOutput.advancement()
-			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(realId))
-			.rewards(AdvancementRewards.Builder.recipe(realId))
+			.addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(ResourceKey.create(Registries.RECIPE, realId)))
+			.rewards(AdvancementRewards.Builder.recipe(ResourceKey.create(Registries.RECIPE, realId)))
 			.requirements(AdvancementRequirements.Strategy.OR)
 
 		val recipe = WorldInteractionItemRecipe(
@@ -45,7 +50,7 @@ class WorldInteractionItemRecipeBuilder(
 		)
 
 		recipeOutput.accept(
-			realId,
+			ResourceKey.create(Registries.RECIPE, realId),
 			recipe,
 			advancement.build(realId.withPrefix("recipes/world_interaction_upgrade/item/"))
 		)

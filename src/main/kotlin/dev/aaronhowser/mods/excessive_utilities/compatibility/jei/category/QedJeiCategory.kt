@@ -3,19 +3,20 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.QedRecipe
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class QedJeiCategory(
-	recipeType: RecipeType<RecipeHolder<QedRecipe>>,
+	recipeType: IRecipeType<RecipeHolder<QedRecipe>>,
 	guiHelper: IGuiHelper
 ) : AbstractRecipeCategory<RecipeHolder<QedRecipe>>(
 	recipeType,
@@ -55,14 +56,14 @@ class QedJeiCategory(
 					} else null
 
 				slot
-					.addItemStacks(ingredient?.items?.toList() ?: listOf(ItemStack.EMPTY))
+					.addItemStacks(ingredient?.orElse(null)?.getItemHolders()?.map(::ItemStack)?.toList() ?: listOf(ItemStack.EMPTY))
 					.setStandardSlotBackground()
 			}
 		}
 
 		val outputSlot = builder.addOutputSlot(90, 18)
 		outputSlot
-			.addItemStack(recipe.result)
+			.add(recipe.result)
 			.setOutputSlotBackground()
 	}
 
@@ -79,6 +80,6 @@ class QedJeiCategory(
 		).setPosition(58, 4).setColor(0xFF808080.toInt())
 	}
 
-	override fun getRegistryName(recipe: RecipeHolder<QedRecipe>): ResourceLocation = recipe.id()
+	override fun getIdentifier(recipe: RecipeHolder<QedRecipe>): Identifier = recipe.id.identifier()
 
 }

@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
+import net.minecraft.server.level.ServerLevel
 
 class PurgingEffect : MobEffect(
 	MobEffectCategory.HARMFUL,
@@ -18,7 +19,7 @@ class PurgingEffect : MobEffect(
 
 	override fun shouldApplyEffectTickThisTick(duration: Int, amplifier: Int): Boolean = true
 
-	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+	override fun applyEffectTick(level: ServerLevel, livingEntity: LivingEntity, amplifier: Int): Boolean {
 		if (livingEntity.isClientSide) {
 			spawnVomitParticles(livingEntity, amplifier)
 			return true

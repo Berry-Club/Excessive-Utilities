@@ -4,7 +4,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import net.minecraft.client.gui.Font
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
 import net.minecraft.network.chat.Component
@@ -25,8 +26,8 @@ class EnergyBar(
 	Component.empty()
 ) {
 
-	override fun renderWidget(
-		guiGraphics: GuiGraphics,
+	override fun extractWidgetRenderState(
+		guiGraphics: GuiGraphicsExtractor,
 		mouseX: Int,
 		mouseY: Int,
 		partialTick: Float
@@ -38,6 +39,7 @@ class EnergyBar(
 
 		if (isSmall) {
 			guiGraphics.blitSprite(
+				RenderPipelines.GUI_TEXTURED,
 				TEXTURE,
 				WIDTH_SMALL,
 				HEIGHT_SMALL,
@@ -50,6 +52,7 @@ class EnergyBar(
 			)
 		} else {
 			guiGraphics.blitSprite(
+				RenderPipelines.GUI_TEXTURED,
 				TEXTURE,
 				WIDTH_BIG,
 				HEIGHT_BIG,
@@ -65,15 +68,15 @@ class EnergyBar(
 		if (isHovered) renderTooltip(guiGraphics, mouseX, mouseY)
 	}
 
-	private fun renderTooltip(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+	private fun renderTooltip(guiGraphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
 		val currentAmountString = String.format("%,d", currentGetter.asInt)
 		val maxAmountString = String.format("%,d", maxGetter.asInt)
 
 		val component = ModMenuLang.FE_WITH_CAPACITY.toComponent(currentAmountString, maxAmountString)
 
-		guiGraphics.renderComponentTooltip(
+		guiGraphics.setTooltipForNextFrame(
 			font,
-			listOf(component),
+			listOf(component.visualOrderText),
 			mouseX,
 			mouseY
 		)

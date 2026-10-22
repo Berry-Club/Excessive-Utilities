@@ -19,7 +19,7 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.component.ItemContainerContents
 import net.minecraft.world.level.material.Fluid
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 data class FluidFilterComponent(
 	val itemContents: ItemContainerContents,
@@ -80,11 +80,11 @@ data class FluidFilterComponent(
 				return passesNestedFilter != isInverted
 			}
 
-			val filterFluid = FluidUtil.getFluidContained(stackInFilter).orElse(FluidStack.EMPTY)
+			val filterFluid = FluidUtil.getFirstStackContained(stackInFilter)
 			if (filterFluid.isEmpty) continue
 
 			if (useTags) {
-				val tagsMatch = filterFluid.tags.anyMatch { checkedStack.isFluid(it) }
+				val tagsMatch = filterFluid.tags().anyMatch { checkedStack.isFluid(it) }
 				if (tagsMatch) return !isInverted
 			}
 
@@ -156,3 +156,8 @@ data class FluidFilterComponent(
 	}
 
 }
+
+
+
+
+

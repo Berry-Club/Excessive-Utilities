@@ -1,15 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.element
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.face
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.transform
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.transforms
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDyeName
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.particle
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import net.minecraft.client.renderer.RenderType
 import net.minecraft.core.Direction
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
@@ -19,13 +13,10 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.minecraft.world.level.block.RedstoneLampBlock
-import net.neoforged.neoforge.client.model.generators.*
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModBlockStateProvider(
-	output: PackOutput,
-	existingFileHelper: ExistingFileHelper
-) : BlockStateProvider(output, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	output: PackOutput
+) : BlockStateProvider(output, ExcessiveUtilities.MOD_ID) {
 
 	override fun registerStatesAndModels() {
 		singleTextureBlocks()
@@ -307,7 +298,7 @@ class ModBlockStateProvider(
 					.texture("texture", originalBlockTexture)
 					.particle(originalBlockTexture)
 					.texture("overlay", overlay)
-					.renderType(RenderType.cutout().name)
+					.renderType("cutout")
 
 					.element {
 						from(0f, 0f, 0f)
@@ -425,7 +416,7 @@ class ModBlockStateProvider(
 			.texture("side", side)
 			.texture("top", top)
 			.particle(side)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			// Base
 			.element {
@@ -433,7 +424,7 @@ class ModBlockStateProvider(
 				to(14f, 1f, 14f)
 
 				allFaces { dir, fb ->
-					texture("#base")
+					fb.texture("#base")
 				}
 			}
 
@@ -443,7 +434,7 @@ class ModBlockStateProvider(
 				to(9f, 6f, 9f)
 
 				allFaces { dir, fb ->
-					texture("#side")
+					fb.texture("#side")
 				}
 			}
 
@@ -453,7 +444,7 @@ class ModBlockStateProvider(
 				to(12f, 10f, 10f)
 
 				allFaces { dir, fb ->
-					texture("#top")
+					fb.texture("#top")
 				}
 			}
 
@@ -463,7 +454,7 @@ class ModBlockStateProvider(
 				to(10f, 10f, 12f)
 
 				allFaces { dir, fb ->
-					texture("#top")
+					fb.texture("#top")
 				}
 
 				allFaces { dir, fb ->
@@ -579,7 +570,7 @@ class ModBlockStateProvider(
 			.texture("bottom", modLoc("block/machine_block/bottom"))
 			.texture("overlay", modLoc("block/enchanter/face_off"))
 			.particle(modLoc("block/enchanter/top"))
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(0f, 0f, 0f)
@@ -654,7 +645,7 @@ class ModBlockStateProvider(
 			.texture("bottom", modLoc("block/machine_block/bottom"))
 			.texture("overlay", modLoc("block/crusher/off"))
 			.particle(modLoc("block/machine_block/side"))
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(0f, 0f, 0f)
@@ -718,7 +709,7 @@ class ModBlockStateProvider(
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("texture", modLoc("block/ender_porcupine"))
 			.particle(modLoc("block/ender_porcupine"))
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(2f, 0f, 0f)
@@ -812,7 +803,7 @@ class ModBlockStateProvider(
 
 				val model = models()
 					.cross(nameWithAge, modLoc("block/red_orchid/$age"))
-					.renderType(RenderType.cutout().name)
+					.renderType("cutout")
 
 				ConfiguredModel
 					.builder()
@@ -831,7 +822,7 @@ class ModBlockStateProvider(
 
 				val model = models()
 					.cross(nameWithAge, modLoc("block/ender_lily/$age"))
-					.renderType(RenderType.cutout().name)
+					.renderType("cutout")
 
 				ConfiguredModel
 					.builder()
@@ -853,7 +844,7 @@ class ModBlockStateProvider(
 			.withExistingParent(name(block) + "_core", mcLoc("block/block"))
 			.texture("pipe", texture)
 			.particle(texture)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(6f, 6f, 6f)
@@ -956,7 +947,7 @@ class ModBlockStateProvider(
 		val itemModel = itemModels()
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("pipe", texture)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.transforms {
 
@@ -1031,7 +1022,8 @@ class ModBlockStateProvider(
 				}
 			}
 
-		simpleBlockItem(block, itemModel)
+		// The item model is already registered above; simpleBlockItem would create
+		// a second model whose parent is itself.
 	}
 
 	private fun transferPipes() {
@@ -1424,7 +1416,7 @@ class ModBlockStateProvider(
 				.texture("base", base)
 				.texture("numbers", numbers)
 				.particle(base)
-				.renderType(RenderType.cutout().name)
+				.renderType("cutout")
 
 				.element {
 					from(1.01f, 1.01f, 1.01f)
@@ -1608,7 +1600,7 @@ class ModBlockStateProvider(
 			.withExistingParent(name(block), mcLoc("block/block"))
 			.texture("texture", texture)
 			.particle(texture)
-			.renderType(RenderType.translucent().name)
+			.renderType("translucent")
 
 			.element {
 				from(4f, 0f, 4f)
@@ -1925,7 +1917,7 @@ class ModBlockStateProvider(
 
 		itemModels()
 			.getBuilder(name(block))
-			.parent(ModelFile.UncheckedModelFile("builtin/entity"))
+			.parent(ModelFile.UncheckedModelFile("block/block"))
 			.transforms {
 				transform(ItemDisplayContext.GUI) {
 					rotation(30f, 225f, 0f)
@@ -1978,7 +1970,7 @@ class ModBlockStateProvider(
 			.texture("base", base)
 			.texture("fan", fan)
 			.particle(top)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			// Top
 			.element {
@@ -2061,7 +2053,7 @@ class ModBlockStateProvider(
 			.texture("base", base)
 			.texture("fan", fan)
 			.particle(top)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(0f, 0f, 0f)
@@ -2114,7 +2106,7 @@ class ModBlockStateProvider(
 			.texture("base", modLoc("block/mill/base"))
 			.texture("fan", modLoc("block/mill/fan_spinning"))
 			.particle(modLoc("block/mill/fire"))
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			// North
 			.element {
@@ -2600,7 +2592,7 @@ class ModBlockStateProvider(
 			.texture("top", top)
 			.texture("bottom", bottom)
 			.particle(side)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(6f, 0f, 6f)
@@ -2629,7 +2621,7 @@ class ModBlockStateProvider(
 			.withExistingParent(name(block), "block/block")
 			.particle(texture)
 			.texture("texture", texture)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(8f, 0f, 0.8f)
@@ -2839,7 +2831,7 @@ class ModBlockStateProvider(
 				.texture("stone", mcLoc("block/$baseTexture"))
 				.texture("overlay", modLoc("block/moon_stone_ore_overlay"))
 				.particle(mcLoc("block/stone"))
-				.renderType(RenderType.cutout().name)
+				.renderType("cutout")
 
 				.element {
 					from(0f, 0f, 0f)
@@ -3050,7 +3042,7 @@ class ModBlockStateProvider(
 			.texture("bottom", bottom)
 			.texture("overlay", overlayOff)
 			.particle(side)
-			.renderType(RenderType.cutout().name)
+			.renderType("cutout")
 
 			.element {
 				from(0f, 0f, 0f)
@@ -3412,7 +3404,7 @@ class ModBlockStateProvider(
 			val texture = modLoc("block/$name")
 			val model = models()
 				.cubeAll(name, texture)
-				.renderType(RenderType.cutout().name)
+				.renderType("cutout")
 
 			simpleBlockWithItem(block, model)
 		}
@@ -3478,7 +3470,7 @@ class ModBlockStateProvider(
 
 			val model = models()
 				.cubeAll(name(block), texture)
-				.renderType(RenderType.translucent().name)
+				.renderType("translucent")
 
 			simpleBlockItem(block, model)
 		}
@@ -3489,7 +3481,7 @@ class ModBlockStateProvider(
 
 			val model = models()
 				.cubeAll(name(block), texture)
-				.renderType(RenderType.cutout().name)
+				.renderType("cutout")
 
 			simpleBlockItem(block, model)
 		}

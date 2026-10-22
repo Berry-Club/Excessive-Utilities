@@ -12,9 +12,9 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.fluids.FluidUtil
-import net.neoforged.neoforge.items.ItemStackHandler
-import net.neoforged.neoforge.items.SlotItemHandler
+import net.minecraft.world.SimpleContainer
+import net.minecraft.world.inventory.Slot
+import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
 class FluidFilterMenu(
 	containerId: Int,
@@ -29,11 +29,13 @@ class FluidFilterMenu(
 	) : this(containerId, playerInventory, data.readEnum(InteractionHand::class.java))
 
 	private val filterItems =
-		object : ItemStackHandler(FluidFilterComponent.CONTAINER_SIZE) {
-			override fun onContentsChanged(slot: Int) {
-				val stackThere = getStackInSlot(slot)
+		object : SimpleContainer(FluidFilterComponent.CONTAINER_SIZE) {
+			override fun setChanged() {
+				super.setChanged()
 				val filterStack = getFilterStack()
-				FluidFilterItem.setStack(filterStack, slot, stackThere)
+				for (slot in 0 until FluidFilterComponent.CONTAINER_SIZE) {
+					FluidFilterItem.setStack(filterStack, slot, getItem(slot))
+				}
 			}
 		}
 
@@ -41,7 +43,7 @@ class FluidFilterMenu(
 		val filterStack = getFilterStack()
 		val container = FluidFilterItem.getFilterItems(filterStack)
 		for ((i, ghostStack) in container.withIndex()) {
-			filterItems.setStackInSlot(i, ghostStack)
+			filterItems.setItem(i, ghostStack)
 		}
 
 		addSlots(141)
@@ -60,8 +62,8 @@ class FluidFilterMenu(
 			val x = 53 + (i % 4) * 18
 			val y = 29 + (i / 4) * 18
 
-			val slot = object : SlotItemHandler(filterItems, i, x, y) {
-				override fun mayPlace(stack: ItemStack): Boolean = FluidUtil.getFluidContained(stack).isPresent
+			val slot = object : Slot(filterItems, i, x, y) {
+				override fun mayPlace(stack: ItemStack): Boolean = !FluidUtil.getFirstStackContained(stack).isEmpty
 				override fun mayPickup(player: Player): Boolean = true
 				override fun getMaxStackSize(): Int = 1
 				override fun getMaxStackSize(stack: ItemStack): Int = 1

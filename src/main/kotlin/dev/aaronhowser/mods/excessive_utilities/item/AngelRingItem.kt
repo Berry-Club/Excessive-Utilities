@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import net.minecraft.server.level.ServerLevel
+
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
@@ -16,7 +18,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import io.netty.buffer.ByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.codec.StreamCodec
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.entity.LivingEntity
@@ -25,6 +27,7 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.NeoForgeMod
 import top.theillusivec4.curios.api.CuriosApi
@@ -32,7 +35,7 @@ import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.type.capability.ICurioItem
 import kotlin.jvm.optionals.getOrNull
 
-class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
+class AngelRingItem(properties: Properties) : Item(properties), ICurioItem, TooltipItem {
 
 	override fun curioTick(slotContext: SlotContext, stack: ItemStack) {
 		val entity = slotContext.entity()
@@ -57,14 +60,15 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 		return true
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val type = stack.getOrDefault(ModDataComponents.ANGEL_RING_TYPE, Type.INVISIBLE)
-		tooltipComponents.add(type.langKey.toComponent())
+		builder.accept(type.langKey.toComponent())
 	}
 
 	companion object {
@@ -77,7 +81,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 					.component(ModDataComponents.ANGEL_RING_TYPE, Type.INVISIBLE)
 			}
 
-		val RING_TYPE: ResourceLocation = ExcessiveUtilities.modResource("ring_type")
+		val RING_TYPE: Identifier = ExcessiveUtilities.modResource("ring_type")
 		fun hasEntityPredicate(
 			stack: ItemStack,
 			localLevel: Level?,
@@ -89,7 +93,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 		}
 
 		private fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
-			val handler = GridPowerHandler.get(player.serverLevel()).getPlayerGrid(player)
+			val handler = GridPowerHandler.get(player.level()).getPlayerGrid(player)
 
 			val currentConsumers = handler.getConsumers()
 			val existing = currentConsumers
@@ -111,7 +115,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 			val flightAttribute = player.getAttribute(NeoForgeMod.CREATIVE_FLIGHT) ?: return
 			val currentlyHasModifier = flightAttribute.hasModifier(ATTRIBUTE_MODIFIER_NAME)
 
-			val handler = GridPowerHandler.get(player.serverLevel())
+			val handler = GridPowerHandler.get(player.level())
 			if (!handler.isOverloaded(player.uuid)) {
 				if (currentlyHasModifier) return
 
@@ -143,7 +147,7 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 		;
 
 		val langKey: String = "tooltip.excessive_utilities.angel_ring.type.$id"
-		val textureLocation: ResourceLocation = ExcessiveUtilities.modResource("textures/entity/angel_wing/$id.png")
+		val textureLocation: Identifier = ExcessiveUtilities.modResource("textures/entity/angel_wing/$id.png")
 
 		override fun getSerializedName(): String = id
 		fun getStack(): ItemStack = ModItems.ANGEL_RING.withComponent(ModDataComponents.ANGEL_RING_TYPE.get(), this)
@@ -198,3 +202,11 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem {
 	}
 
 }
+
+
+
+
+
+
+
+

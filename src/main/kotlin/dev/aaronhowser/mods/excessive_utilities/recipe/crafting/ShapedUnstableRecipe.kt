@@ -16,10 +16,10 @@ import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
 class ShapedUnstableRecipe(
-	pattern: ShapedRecipePattern,
+	val pattern: ShapedRecipePattern,
 	val output: ItemStack,
 	val requiredStability: Stability,
-) : ShapedRecipe("", CraftingBookCategory.MISC, pattern, output, false) {
+) : SpecialShapedRecipe(pattern, output) {
 
 	override fun matches(input: CraftingInput, level: Level): Boolean {
 		for (inputStack in input.items()) {
@@ -36,11 +36,9 @@ class ShapedUnstableRecipe(
 	}
 
 	override fun isSpecial(): Boolean = true
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.SHAPED_UNSTABLE.get()
+	override fun getSerializer(): RecipeSerializer<ShapedUnstableRecipe> = ModRecipeSerializers.SHAPED_UNSTABLE.get()
 
-	class Serializer : RecipeSerializer<ShapedUnstableRecipe> {
-		override fun codec(): MapCodec<ShapedUnstableRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, ShapedUnstableRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<ShapedUnstableRecipe> =
@@ -49,7 +47,7 @@ class ShapedUnstableRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(ShapedUnstableRecipe::pattern),
-						ItemStack.STRICT_CODEC
+						ItemStack.CODEC
 							.fieldOf("result")
 							.forGetter(ShapedUnstableRecipe::output),
 						Stability.CODEC

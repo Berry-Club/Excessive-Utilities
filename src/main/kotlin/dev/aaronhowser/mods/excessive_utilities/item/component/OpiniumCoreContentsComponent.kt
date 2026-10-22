@@ -79,8 +79,8 @@ data class OpiniumCoreContentsComponent(
 		}
 
 		fun pathetic() = OpiniumCoreContentsComponent(
-			Items.IRON_BLOCK.defaultInstance,
-			ModItems.RED_COAL.getDefaultInstance(),
+			ItemStack.EMPTY,
+			ItemStack.EMPTY,
 			ModItemLang.OPINIUM_CORE_PATHETIC.toComponent()
 		)
 
@@ -134,3 +134,4 @@ data class OpiniumCoreContentsComponent(
 	}
 
 }
+

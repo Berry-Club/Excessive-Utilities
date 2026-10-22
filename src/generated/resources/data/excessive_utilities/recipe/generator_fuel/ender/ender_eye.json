@@ -3,7 +3,5 @@
   "duration": 3200,
   "fe_per_tick": 80,
   "generator_type": "ender",
-  "ingredient": {
-    "item": "minecraft:ender_eye"
-  }
+  "ingredient": "minecraft:ender_eye"
 }

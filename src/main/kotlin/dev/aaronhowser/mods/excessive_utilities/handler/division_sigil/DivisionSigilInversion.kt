@@ -29,7 +29,8 @@ import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
-import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 object DivisionSigilInversion {
 
@@ -154,9 +155,9 @@ object DivisionSigilInversion {
 		messages: MutableList<Component>
 	) {
 		for (direction in Direction.Plane.HORIZONTAL) {
-			val checkPos = beaconPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
+			val checkPos = beaconPos.offset(direction.unitVec3i.multiply(CHEST_HORIZONTAL_OFFSET))
 			val itemHandler = level.getCapability(
-				Capabilities.ItemHandler.BLOCK,
+				Capabilities.Item.BLOCK,
 				checkPos,
 				direction.opposite
 			)
@@ -231,10 +232,10 @@ object DivisionSigilInversion {
 		)
 
 		for ((direction, itemTag) in contentRequirements) {
-			val checkPos = beaconPos.offset(direction.normal.multiply(CHEST_HORIZONTAL_OFFSET))
+			val checkPos = beaconPos.offset(direction.unitVec3i.multiply(CHEST_HORIZONTAL_OFFSET))
 
 			val itemHandler = level.getCapability(
-				Capabilities.ItemHandler.BLOCK,
+				Capabilities.Item.BLOCK,
 				checkPos,
 				direction.opposite
 			) ?: continue
@@ -259,12 +260,12 @@ object DivisionSigilInversion {
 	}
 
 	private fun countMatchingStacks(
-		itemHandler: IItemHandler,
+		itemHandler: ResourceHandler<ItemResource>,
 		itemTag: TagKey<Item>
 	): Int {
 		var count = 0
-		for (slot in 0 until itemHandler.slots) {
-			val stack = itemHandler.getStackInSlot(slot)
+		for (slot in 0 until itemHandler.size()) {
+			val stack = itemHandler.getResource(slot).toStack(itemHandler.getAmountAsInt(slot))
 			if (stack.isItem(itemTag)) {
 				count += stack.count
 			}
@@ -273,12 +274,12 @@ object DivisionSigilInversion {
 	}
 
 	private fun countUniqueMatchingItems(
-		itemHandler: IItemHandler,
+		itemHandler: ResourceHandler<ItemResource>,
 		itemTag: TagKey<Item>
 	): Int {
 		val uniqueItems = mutableSetOf<Item>()
-		for (slot in 0 until itemHandler.slots) {
-			val stack = itemHandler.getStackInSlot(slot)
+		for (slot in 0 until itemHandler.size()) {
+			val stack = itemHandler.getResource(slot).toStack(itemHandler.getAmountAsInt(slot))
 			if (stack.isItem(itemTag)) {
 				uniqueItems.add(stack.item)
 			}

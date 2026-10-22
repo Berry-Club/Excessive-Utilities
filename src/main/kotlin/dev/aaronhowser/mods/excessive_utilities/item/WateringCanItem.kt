@@ -18,13 +18,14 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.item.UseAnim
+import net.minecraft.world.item.component.TooltipDisplay
+import net.minecraft.world.item.ItemUseAnimation
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Blocks
@@ -36,10 +37,10 @@ import net.neoforged.neoforge.fluids.SimpleFluidContent
 class WateringCanItem(
 	val isReinforced: Boolean,
 	properties: Properties
-) : Item(properties) {
+) : Item(properties), TooltipItem {
 
 	override fun getUseDuration(stack: ItemStack, entity: LivingEntity): Int = Int.MAX_VALUE
-	override fun getUseAnimation(stack: ItemStack): UseAnim = UseAnim.BOW
+	override fun getUseAnimation(stack: ItemStack): ItemUseAnimation = ItemUseAnimation.BOW
 
 	override fun shouldCauseReequipAnimation(
 		oldStack: ItemStack,
@@ -53,7 +54,7 @@ class WateringCanItem(
 		level: Level,
 		player: Player,
 		usedHand: InteractionHand
-	): InteractionResultHolder<ItemStack> {
+	): InteractionResult {
 		val stack = player.getItemInHand(usedHand)
 
 		if (!isReinforced && player.isFakePlayer && ServerConfig.CONFIG.isWateringCanBreakable.get()) {
@@ -61,19 +62,19 @@ class WateringCanItem(
 		}
 
 		if (stack.has(ModDataComponents.IS_BROKEN)) {
-			return InteractionResultHolder.fail(stack)
+			return InteractionResult.FAIL
 		}
 
 		if (tryCollectWater(player, stack)) {
-			return InteractionResultHolder.consume(stack)
+			return InteractionResult.CONSUME
 		}
 
 		if (!player.hasInfiniteMaterials() && needsToBeFilled(stack)) {
-			return InteractionResultHolder.fail(stack)
+			return InteractionResult.FAIL
 		}
 
 		player.startUsingItem(usedHand)
-		return InteractionResultHolder.consume(stack)
+		return InteractionResult.CONSUME
 	}
 
 	override fun onUseTick(
@@ -192,14 +193,15 @@ class WateringCanItem(
 		return true
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		if (stack.has(ModDataComponents.IS_BROKEN)) {
-			tooltipComponents += ModMenuLang.BROKEN.toComponent()
+			builder.accept(ModMenuLang.BROKEN.toComponent())
 			return
 		}
 
@@ -210,7 +212,7 @@ class WateringCanItem(
 		val heldFormat = "%,d".format(heldWater)
 		val maxFormat = "%,d".format(MAX_WATER)
 
-		tooltipComponents += ModMenuLang.HELD_WATER.toComponent(heldFormat, maxFormat)
+		builder.accept(ModMenuLang.HELD_WATER.toComponent(heldFormat, maxFormat))
 	}
 
 	companion object {
@@ -267,3 +269,10 @@ class WateringCanItem(
 	}
 
 }
+
+
+
+
+
+
+

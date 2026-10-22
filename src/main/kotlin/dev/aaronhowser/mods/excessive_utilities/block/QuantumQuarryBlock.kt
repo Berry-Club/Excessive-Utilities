@@ -12,8 +12,9 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.BlockBehaviour
 
-class QuantumQuarryBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)), EntityBlock {
+class QuantumQuarryBlock(properties: BlockBehaviour.Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return QuantumQuarryBlockEntity(pos, state)
@@ -32,3 +33,13 @@ class QuantumQuarryBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)), Entity
 	}
 
 }
+
+
+
+
+
+
+
+
+
+

@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.ItemInteractionResult
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
@@ -21,10 +21,14 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.ScheduledTickAccess
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.Tags
 
-class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
+class TransferPipeBlock(properties: BlockBehaviour.Properties) : Block(properties) {
 
 	init {
 		registerDefaultState(
@@ -48,11 +52,13 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 
 	override fun updateShape(
 		state: BlockState,
-		direction: Direction,
-		neighborState: BlockState,
-		level: LevelAccessor,
+		level: LevelReader,
+		 ticks: ScheduledTickAccess,
 		pos: BlockPos,
-		neighborPos: BlockPos
+		 directionToNeighbour: Direction,
+		 neighbourPos: BlockPos,
+		 neighbourState: BlockState,
+		 random: RandomSource
 	): BlockState {
 		if (level is Level) {
 			return updateConnections(level, pos, state)
@@ -69,17 +75,17 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 		player: Player,
 		hand: InteractionHand,
 		hitResult: BlockHitResult
-	): ItemInteractionResult {
-		if (!stack.isItem(Tags.Items.TOOLS_WRENCH)) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+	): InteractionResult {
+		if (!stack.isItem(Tags.Items.TOOLS_WRENCH)) return InteractionResult.PASS
 
 		if (level.isServerSide) {
 			val delta = pos.center.vectorTo(hitResult.location)
-			val direction = Direction.getNearest(delta)
+			val direction = Direction.getNearest(delta.x.compareTo(0.0), delta.y.compareTo(0.0), delta.z.compareTo(0.0), null) ?: return InteractionResult.FAIL
 
 			toggleBlocked(level, pos, direction)
 		}
 
-		return ItemInteractionResult.sidedSuccess(level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
@@ -161,13 +167,13 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 			if (neighborBlock is TransferPipeBlock) return true
 			if (neighborBlock is TransferNodeBlock) return true
 
-			val hasItemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, direction.opposite) != null
+			val hasItemHandler = level.getCapability(Capabilities.Item.BLOCK, neighborPos, direction.opposite) != null
 			if (hasItemHandler) return true
 
-			val hasFluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, direction.opposite) != null
+			val hasFluidHandler = level.getCapability(Capabilities.Fluid.BLOCK, neighborPos, direction.opposite) != null
 			if (hasFluidHandler) return true
 
-			val hasEnergyHandler = level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, direction.opposite) != null
+			val hasEnergyHandler = level.getCapability(Capabilities.Energy.BLOCK, neighborPos, direction.opposite) != null
 			return hasEnergyHandler
 		}
 
@@ -203,3 +209,16 @@ class TransferPipeBlock : Block(Properties.of().strength(0.5f).noOcclusion()) {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

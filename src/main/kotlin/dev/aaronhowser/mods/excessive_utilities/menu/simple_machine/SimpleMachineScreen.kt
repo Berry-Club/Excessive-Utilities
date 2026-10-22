@@ -6,17 +6,15 @@ import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.EnergyBar
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.ProgressArrow
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 
 class SimpleMachineScreen(
 	menu: SimpleMachineMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<SimpleMachineMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = YELLOW_LABEL
+) : ExcessiveUtilitiesScreen<SimpleMachineMenu>(menu, playerInventory, title, BACKGROUND) {
+	override val titleLabelSprite: Identifier = YELLOW_LABEL
 
 	override fun baseInit() {
 		super.baseInit()

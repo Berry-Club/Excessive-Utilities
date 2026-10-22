@@ -4,18 +4,16 @@ import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 
 class FlatTransferNodeScreen(
 	menu: FlatTransferNodeMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<FlatTransferNodeMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground =
-		if (menu.isItemNode()) ITEM_BACKGROUND else FLUID_BACKGROUND
-	override val titleLabelSprite: ResourceLocation =
+) : ExcessiveUtilitiesScreen<FlatTransferNodeMenu>(menu, playerInventory, title,
+	if (menu.isItemNode()) ITEM_BACKGROUND else FLUID_BACKGROUND) {
+	override val titleLabelSprite: Identifier =
 		if (menu.isItemNode()) RED_LABEL else BLUE_LABEL
 
 	companion object {

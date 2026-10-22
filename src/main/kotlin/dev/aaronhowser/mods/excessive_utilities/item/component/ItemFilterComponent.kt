@@ -88,7 +88,7 @@ data class ItemFilterComponent(
 			// If using tags it ignores item + components and just checks if
 			// the stack in the filter has any of the tags of the checked stack
 			if (useTags) {
-				val tagsMatch = stackInFilter.tags.anyMatch { checkedStack.isItem(it) }
+				val tagsMatch = stackInFilter.tags().anyMatch { checkedStack.isItem(it) }
 				if (tagsMatch) return !isInverted
 			}
 
@@ -188,3 +188,8 @@ data class ItemFilterComponent(
 	}
 
 }
+
+
+
+
+

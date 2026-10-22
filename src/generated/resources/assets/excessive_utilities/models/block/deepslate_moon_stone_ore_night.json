@@ -5,84 +5,152 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#stone"
+          "texture": "#stone",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "east": {
           "cullface": "east",
-          "texture": "#stone"
+          "texture": "#stone",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "north": {
           "cullface": "north",
-          "texture": "#stone"
+          "texture": "#stone",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "south": {
           "cullface": "south",
-          "texture": "#stone"
+          "texture": "#stone",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "up": {
           "cullface": "up",
-          "texture": "#stone"
+          "texture": "#stone",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "west": {
           "cullface": "west",
-          "texture": "#stone"
+          "texture": "#stone",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         }
       },
       "from": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "to": [
-        16,
-        16,
-        16
+        16.0,
+        16.0,
+        16.0
       ]
     },
     {
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#overlay"
+          "texture": "#overlay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "east": {
           "cullface": "east",
-          "texture": "#overlay"
+          "texture": "#overlay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "north": {
           "cullface": "north",
-          "texture": "#overlay"
+          "texture": "#overlay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "south": {
           "cullface": "south",
-          "texture": "#overlay"
+          "texture": "#overlay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "up": {
           "cullface": "up",
-          "texture": "#overlay"
+          "texture": "#overlay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "west": {
           "cullface": "west",
-          "texture": "#overlay"
+          "texture": "#overlay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         }
       },
       "from": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
-      "neoforge_data": {
-        "block_light": 8,
-        "sky_light": 8
-      },
+      "light_emission": 8,
       "to": [
-        16,
-        16,
-        16
+        16.0,
+        16.0,
+        16.0
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
   "textures": {
     "overlay": "excessive_utilities:block/moon_stone_ore_overlay",
     "particle": "minecraft:block/stone",

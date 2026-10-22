@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.block_entity.extractEnergy
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineMenu
 import net.minecraft.core.BlockPos
@@ -28,13 +29,18 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
-import net.neoforged.neoforge.energy.EnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandlerModifiable
-import net.neoforged.neoforge.items.wrapper.InvWrapper
-import net.neoforged.neoforge.items.wrapper.RangedWrapper
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.DelegatingResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.RangedResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 // I thought the Crusher was also single input single output but it isn't
 // so all the time I spent making this abstract was pointless
@@ -45,7 +51,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 	blockState: BlockState
 ) : GpDrainBlockEntity(type, pos, blockState), ContainerContainer, MenuProvider {
 
-	protected val energyStorage = EnergyStorage(MAX_ENERGY)
+	protected val energyStorage = SimpleEnergyHandler(MAX_ENERGY)
 
 	protected open val container: ImprovedSimpleContainer = SimpleMachineContainer()
 
@@ -55,8 +61,8 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 
 			override fun get(index: Int): Int {
 				return when (index) {
-					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
-					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.getAmountAsInt()
+					MAX_ENERGY_DATA_INDEX -> energyStorage.getCapacityAsInt()
 					PROGRESS_DATA_INDEX -> progress
 					MAX_PROGRESS_DATA_INDEX -> maxProgress
 					else -> -1
@@ -67,10 +73,10 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 				// Unused
 			}
 		}
-	private val itemHandler: IItemHandlerModifiable = SimpleMachineItemHandler()
+	private val itemHandler: ResourceHandler<ItemResource> = SimpleMachineItemHandler()
 
 	override fun getContainers(): List<Container> = listOf(container)
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
+	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = itemHandler
 
 	override fun getGpUsage(): Double {
 		val level = level ?: return 0.0
@@ -132,7 +138,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		}
 
 		val feRequired = getFePerTick(recipe)
-		if (energyStorage.energyStored < feRequired) {
+		if (energyStorage.getAmountAsInt() < feRequired) {
 			return
 		}
 
@@ -150,7 +156,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 			progress -= recipeDuration
 
 			val stackInInput = container.getItem(INPUT_SLOT)
-			val newOutput = recipe.value.assemble(SingleRecipeInput(stackInInput), level.registryAccess())
+			val newOutput = recipe.value.assemble(SingleRecipeInput(stackInInput))
 
 			val stackInOutput = container.getItem(OUTPUT_SLOT)
 			if (stackInOutput.isEmpty) {
@@ -181,7 +187,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		val amountCanBeAdded = stackInOutput.maxStackSize - stackInOutput.count
 		if (amountCanBeAdded <= 0) return false
 
-		val newOutput = recipe.value.getResultItem(level.registryAccess())
+		val newOutput = recipe.value.assemble(SingleRecipeInput(container.getItem(INPUT_SLOT)))
 		if (!ItemStack.isSameItemSameComponents(stackInOutput, newOutput)) return false
 
 		return newOutput.count <= amountCanBeAdded
@@ -204,20 +210,20 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 	}
 
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
 		tag.putInt(PROGRESS_NBT, progress)
-		tag.saveItems(container, registries)
-		tag.saveEnergy(ENERGY_NBT, energyStorage, registries)
+		tag.saveItems(container)
+		tag.saveEnergy(ENERGY_NBT, energyStorage)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		progress = tag.getInt(PROGRESS_NBT)
-		tag.loadItems(container, registries)
-		tag.loadEnergy(ENERGY_NBT, energyStorage, registries)
+		progress = tag.getIntOr(PROGRESS_NBT, 0)
+		tag.loadItems(container)
+		tag.loadEnergy(ENERGY_NBT, energyStorage)
 	}
 
 	companion object {
@@ -248,21 +254,17 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 			}
 		}
 
-		fun getEnergyCapability(machine: SimpleMachineBlockEntity<*>, direction: Direction?): IEnergyStorage {
+		fun getEnergyCapability(machine: SimpleMachineBlockEntity<*>, direction: Direction?): EnergyHandler {
 			return machine.energyStorage
 		}
 	}
 
-	private inner class SimpleMachineItemHandler : RangedWrapper(
-		InvWrapper(container),
-		INPUT_SLOT,
-		OUTPUT_SLOT + 1
+	private inner class SimpleMachineItemHandler : DelegatingResourceHandler<ItemResource>(
+		RangedResourceHandler.of(VanillaContainerWrapper.of(container), INPUT_SLOT, OUTPUT_SLOT + 1)
 	) {
-
-		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-			if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
-
-			return super.extractItem(slot, amount, simulate)
+		override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
+			if (index != OUTPUT_SLOT - INPUT_SLOT) return 0
+			return getDelegate().extract(index, resource, amount, transaction)
 		}
 
 	}

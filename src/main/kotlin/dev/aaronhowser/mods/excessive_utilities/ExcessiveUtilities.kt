@@ -3,7 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRegistries
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.fml.ModContainer
 import net.neoforged.fml.ModList
@@ -39,7 +39,7 @@ class ExcessiveUtilities(
 		@JvmField
 		val LOGGER: Logger = LogManager.getLogger(MOD_ID)
 
-		fun modResource(path: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(MOD_ID, path)
+		fun modResource(path: String): Identifier = Identifier.fromNamespaceAndPath(MOD_ID, path)
 
 		val IS_ATHENA_LOADED: Boolean by lazy {
 			ModList.get().isLoaded("athena")

@@ -8,10 +8,11 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class ResonatorBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.COAL_BLOCK)) {
+class ResonatorBlock(properties: Properties) : GpDrainBlock(properties) {
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		return SHAPE
@@ -25,3 +26,13 @@ class ResonatorBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.COAL_BLOCK)) {
 		val SHAPE: VoxelShape = box(0.0, 0.0, 0.0, 16.0, 15.0, 16.0)
 	}
 }
+
+
+
+
+
+
+
+
+
+

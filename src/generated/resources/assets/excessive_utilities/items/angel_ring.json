@@ -1,0 +1,90 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "excessive_utilities:item/angel_ring_bat"
+        },
+        "threshold": 5.0
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:range_dispatch",
+      "entries": [
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "excessive_utilities:item/angel_ring_gold"
+          },
+          "threshold": 4.0
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:range_dispatch",
+        "entries": [
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "excessive_utilities:item/angel_ring_demon"
+            },
+            "threshold": 3.0
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:range_dispatch",
+          "entries": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "excessive_utilities:item/angel_ring_butterfly"
+              },
+              "threshold": 2.0
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:range_dispatch",
+            "entries": [
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "excessive_utilities:item/angel_ring_feather"
+                },
+                "threshold": 1.0
+              }
+            ],
+            "fallback": {
+              "type": "minecraft:range_dispatch",
+              "entries": [
+                {
+                  "model": {
+                    "type": "minecraft:model",
+                    "model": "excessive_utilities:item/angel_ring_invisible"
+                  },
+                  "threshold": 0.0
+                }
+              ],
+              "fallback": {
+                "type": "minecraft:model",
+                "model": "excessive_utilities:item/angel_ring"
+              },
+              "predicate": "excessive_utilities:ring_type",
+              "property": "excessive_utilities:item_predicate"
+            },
+            "predicate": "excessive_utilities:ring_type",
+            "property": "excessive_utilities:item_predicate"
+          },
+          "predicate": "excessive_utilities:ring_type",
+          "property": "excessive_utilities:item_predicate"
+        },
+        "predicate": "excessive_utilities:ring_type",
+        "property": "excessive_utilities:item_predicate"
+      },
+      "predicate": "excessive_utilities:ring_type",
+      "property": "excessive_utilities:item_predicate"
+    },
+    "predicate": "excessive_utilities:ring_type",
+    "property": "excessive_utilities:item_predicate"
+  }
+}

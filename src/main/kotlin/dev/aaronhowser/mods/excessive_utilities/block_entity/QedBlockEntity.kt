@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
-import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
+import dev.aaronhowser.mods.aaron.container.ExtractOnlyResourceHandler
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
@@ -14,6 +14,8 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -28,6 +30,9 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class QedBlockEntity(
 	pos: BlockPos,
@@ -39,14 +44,11 @@ class QedBlockEntity(
 		return listOf(container)
 	}
 
-	private val itemHandler: ExtractOnlyInvWrapper =
-		object : ExtractOnlyInvWrapper(container) {
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-				return if (slot == OUTPUT_SLOT) {
-					super.extractItem(slot, amount, simulate)
-				} else {
-					ItemStack.EMPTY
-				}
+	private val itemHandler: ResourceHandler<ItemResource> =
+		object : ExtractOnlyResourceHandler(container) {
+			override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
+				if (index != OUTPUT_SLOT) return 0
+				return super.extract(index, resource, amount, transaction)
 			}
 		}
 
@@ -81,7 +83,7 @@ class QedBlockEntity(
 
 		while (progress >= maxProgress) {
 			val input = getRecipeInput()
-			val newOutput = recipe.assemble(input, level.registryAccess())
+			val newOutput = recipe.assemble(input)
 
 			val stackInOutput = container.getItem(OUTPUT_SLOT)
 			if (stackInOutput.isEmpty) {
@@ -186,18 +188,18 @@ class QedBlockEntity(
 		return QedMenu(containerId, playerInventory, container, containerData)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
 		tag.putInt(PROGRESS_NBT, progress)
-		tag.saveItems(container, registries)
+		tag.saveItems(container)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		progress = tag.getInt(PROGRESS_NBT)
-		tag.loadItems(container, registries)
+		progress = tag.getIntOr(PROGRESS_NBT, 0)
+		tag.loadItems(container)
 	}
 
 	companion object {

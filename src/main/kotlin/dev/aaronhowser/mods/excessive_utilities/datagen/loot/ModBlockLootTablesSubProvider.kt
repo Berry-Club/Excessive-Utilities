@@ -1,12 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.loot
 
-import dev.aaronhowser.mods.aaron.datagen.AaronLootTableDsl
+import dev.aaronhowser.mods.aaron.datagen.loot.AaronLootTableDsl
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import net.minecraft.advancements.critereon.BlockPredicate
-import net.minecraft.advancements.critereon.LocationPredicate
-import net.minecraft.advancements.critereon.StatePropertiesPredicate
+import net.minecraft.advancements.criterion.BlockPredicate
+import net.minecraft.advancements.criterion.LocationPredicate
+import net.minecraft.advancements.criterion.StatePropertiesPredicate
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
@@ -28,6 +28,8 @@ import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableConditio
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.predicates.TimeCheck
+import net.minecraft.world.clock.WorldClocks
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredHolder
 
@@ -75,7 +77,7 @@ class ModBlockLootTablesSubProvider(
 				pool {
 					rolls(1f)
 					item(ModItems.MOON_STONE)
-					condition(TimeCheck.time(IntRange.range(13000, 23000)))
+					condition(TimeCheck.time(registries.lookupOrThrow(Registries.WORLD_CLOCK).getOrThrow(WorldClocks.OVERWORLD), IntRange.range(13000, 23000)))
 				}
 				pool {
 					rolls(1f)
@@ -90,7 +92,7 @@ class ModBlockLootTablesSubProvider(
 				pool {
 					rolls(1f)
 					item(ModItems.MOON_STONE)
-					condition(TimeCheck.time(IntRange.range(13000, 23000)))
+					condition(TimeCheck.time(registries.lookupOrThrow(Registries.WORLD_CLOCK).getOrThrow(WorldClocks.OVERWORLD), IntRange.range(13000, 23000)))
 				}
 				pool {
 					rolls(1f)
@@ -108,9 +110,7 @@ class ModBlockLootTablesSubProvider(
 					rolls(1f)
 					item(ModBlocks.RESTURBED_MOB_SPAWNER.asItem()) {
 						apply(
-							CopyComponentsFunction.copyComponents(
-								CopyComponentsFunction.Source.BLOCK_ENTITY
-							)
+							CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
 								.include(DataComponents.BLOCK_ENTITY_DATA)
 						)
 					}
@@ -125,9 +125,7 @@ class ModBlockLootTablesSubProvider(
 					rolls(1f)
 					item(ModBlocks.MAGICAL_SNOW_GLOBE.asItem()) {
 						apply(
-							CopyComponentsFunction.copyComponents(
-								CopyComponentsFunction.Source.BLOCK_ENTITY
-							)
+							CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
 								.include(ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS.get())
 						)
 					}
@@ -143,9 +141,7 @@ class ModBlockLootTablesSubProvider(
 						rolls(1f)
 						item(drum) {
 							apply(
-								CopyComponentsFunction.copyComponents(
-									CopyComponentsFunction.Source.BLOCK_ENTITY
-								)
+								CopyComponentsFunction.copyComponentsFromBlockEntity(LootContextParams.BLOCK_ENTITY)
 									.include(ModDataComponents.TANK.get())
 							)
 						}
@@ -193,7 +189,7 @@ class ModBlockLootTablesSubProvider(
 							LocationPredicate.Builder.location()
 								.setBlock(
 									BlockPredicate.Builder.block()
-										.of(Tags.Blocks.END_STONES)
+									.of(registries.lookupOrThrow(Registries.BLOCK), Tags.Blocks.END_STONES)
 								),
 							BlockPos(0, -1, 0)
 						)

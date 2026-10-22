@@ -5,7 +5,8 @@
       "y": 90
     },
     "enabled=false,facing=north": {
-      "model": "excessive_utilities:block/crusher_off"
+      "model": "excessive_utilities:block/crusher_off",
+      "y": 0
     },
     "enabled=false,facing=south": {
       "model": "excessive_utilities:block/crusher_off",
@@ -20,7 +21,8 @@
       "y": 90
     },
     "enabled=true,facing=north": {
-      "model": "excessive_utilities:block/crusher_on"
+      "model": "excessive_utilities:block/crusher_on",
+      "y": 0
     },
     "enabled=true,facing=south": {
       "model": "excessive_utilities:block/crusher_on",

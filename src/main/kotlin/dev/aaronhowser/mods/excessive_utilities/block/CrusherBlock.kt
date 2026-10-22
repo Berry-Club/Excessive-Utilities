@@ -9,12 +9,13 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 
-class CrusherBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.STONE)) {
+class CrusherBlock(properties: Properties) : GpDrainBlock(properties) {
 
 	init {
 		registerDefaultState(
@@ -38,8 +39,19 @@ class CrusherBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.STONE)) {
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 		val ENABLED: BooleanProperty = BlockStateProperties.ENABLED
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

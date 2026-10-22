@@ -4,12 +4,15 @@ import com.mojang.blaze3d.vertex.PoseStack
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.client.render.AaronRenderUtil
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getPovResult
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
 import dev.aaronhowser.mods.excessive_utilities.item.BuildersWandItem
 import dev.aaronhowser.mods.excessive_utilities.item.DestructionWandItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.state.level.BlockOutlineRenderState
+import net.minecraft.client.renderer.state.level.LevelRenderState
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
@@ -17,12 +20,13 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
-import net.neoforged.neoforge.client.event.RenderHighlightEvent
+import net.neoforged.neoforge.client.CustomBlockOutlineRenderer
+import net.neoforged.neoforge.client.event.ExtractBlockOutlineRenderStateEvent
 import java.util.function.Predicate
 
 object WandRenderer {
 
-	fun renderTargetBlocks(event: RenderHighlightEvent.Block) {
+	fun renderTargetBlocks(event: ExtractBlockOutlineRenderStateEvent) {
 		val player = AaronClientUtil.localPlayer ?: return
 
 		val builderWand = getHeldWand(player, isBuilder = true)
@@ -31,23 +35,15 @@ object WandRenderer {
 		if (builderWand == null && destructionWand == null) return
 
 		val level = player.level()
-		val hit = event.target
-		val pos = hit.blockPos
-		val face = hit.direction
-
-		val poseStack = event.poseStack
-		val bufferSource = event.multiBufferSource
-		val cameraPos = event.camera.position
-
-		if (builderWand != null) {
-			val success = renderBuilderWand(level, pos, face, builderWand, player, poseStack, bufferSource, cameraPos)
-			if (success) event.isCanceled = true
-		}
-
-		if (destructionWand != null) {
-			val success = renderDestructionWand(level, pos, face, destructionWand, player, poseStack, bufferSource, cameraPos)
-			if (success) event.isCanceled = true
-		}
+		val pos = event.blockPos
+		val face = player.getPovResult().direction
+		event.addCustomRenderer(CustomBlockOutlineRenderer { state: BlockOutlineRenderState, buffer: MultiBufferSource.BufferSource, poseStack: PoseStack, _, levelState: LevelRenderState ->
+			val cameraPos = levelState.cameraRenderState.pos
+			var rendered = false
+			if (builderWand != null) rendered = renderBuilderWand(level, pos, face, builderWand, player, poseStack, buffer, cameraPos) || rendered
+			if (destructionWand != null) rendered = renderDestructionWand(level, pos, face, destructionWand, player, poseStack, buffer, cameraPos) || rendered
+			rendered
+		})
 
 	}
 

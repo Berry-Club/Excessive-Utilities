@@ -3,7 +3,5 @@
   "duration": 1600,
   "fe_per_tick": 40,
   "generator_type": "ender",
-  "ingredient": {
-    "tag": "c:ender_pearls"
-  }
+  "ingredient": "minecraft:ender_pearl"
 }

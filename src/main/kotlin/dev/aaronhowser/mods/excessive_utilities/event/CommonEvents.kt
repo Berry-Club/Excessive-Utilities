@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
+import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.actor.InversionRitualActor
@@ -44,9 +45,11 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.config.ModConfigEvent
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.event.AddReloadListenerEvent
+import net.neoforged.neoforge.event.AddServerReloadListenersEvent
 import net.neoforged.neoforge.event.AnvilUpdateEvent
 import net.neoforged.neoforge.event.RegisterCommandsEvent
+import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
+import net.neoforged.neoforge.common.tooltip.TooltipLocation
 import net.neoforged.neoforge.event.VanillaGameEvent
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent
@@ -61,6 +64,8 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
+import net.neoforged.neoforge.event.OnDatapackSyncEvent
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -68,6 +73,16 @@ import kotlin.jvm.optionals.getOrNull
 	modid = ExcessiveUtilities.MOD_ID
 )
 object CommonEvents {
+
+	@SubscribeEvent
+	fun registerTooltipAppenders(event: RegisterTooltipAppendersEvent) {
+		event.registerAppender(TooltipLocation.POST_CUSTOM) { stack, context, display, _, flag, builder ->
+			val item = stack.item
+			if (item is TooltipItem) {
+				item.appendTooltip(stack, context, display, builder, flag)
+			}
+		}
+	}
 
 	@SubscribeEvent
 	fun onConfigLoading(event: ModConfigEvent.Loading) {
@@ -99,103 +114,103 @@ object CommonEvents {
 	fun onRegisterCapabilities(event: RegisterCapabilitiesEvent) {
 
 		event.registerBlockEntity(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			ModBlockEntityTypes.DRUM.get(),
 			DrumBlockEntity::getFluidCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.RESONATOR.get(),
 			ResonatorBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.ENCHANTER.get(),
 			EnchanterBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.ENCHANTER.get(),
 			EnchanterBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.CRUSHER.get(),
 			CrusherBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.CRUSHER.get(),
 			CrusherBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(),
 			WirelessFeBatteryBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.WIRELESS_FE_TRANSMITTER.get(),
 			WirelessFeTransmitterBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.SLIGHTLY_LARGER_CHEST.get(),
 			SlightlyLargerChestBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.TRASH_CAN.get(),
 			TrashCanBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.CREATIVE_CHEST.get(),
 			CreativeChestBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			ModBlockEntityTypes.FLUID_TRASH_CAN.get(),
 			FluidTrashCanBlockEntity::getFluidHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.ENERGY_TRASH_CAN.get(),
 			EnergyTrashCanBlockEntity::getEnergyStorage
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.MINI_CHEST.get(),
 			MiniChestBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.MECHANICAL_MINER.get(),
 			MechanicalMinerBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.MECHANICAL_USER.get(),
 			MechanicalUserBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.FILING_CABINET.get(),
 			FilingCabinetBlockEntity::getItemHandler
 		)
@@ -222,92 +237,92 @@ object CommonEvents {
 
 		for (beType in generators) {
 			event.registerBlockEntity(
-				Capabilities.EnergyStorage.BLOCK,
+				Capabilities.Energy.BLOCK,
 				beType,
 				GeneratorBlockEntity::getEnergyCapability
 			)
 
 			event.registerBlockEntity(
-				Capabilities.ItemHandler.BLOCK,
+				Capabilities.Item.BLOCK,
 				beType,
 				GeneratorBlockEntity::getItemHandler
 			)
 		}
 
 		event.registerBlockEntity(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			ModBlockEntityTypes.MAGMATIC_GENERATOR.get(),
 			MagmaticGeneratorBlockEntity::getFluidCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			ModBlockEntityTypes.SLIMY_GENERATOR.get(),
 			ItemAndFluidInputDataDrivenGeneratorBlockEntity::getFluidCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			ModBlockEntityTypes.HEATED_REDSTONE_GENERATOR.get(),
 			ItemAndFluidInputDataDrivenGeneratorBlockEntity::getFluidCapability
 		)
 
 		event.registerItem(
-			Capabilities.EnergyStorage.ITEM,
+			Capabilities.Energy.ITEM,
 			HeatingCoilItem::getEnergyCapability,
 			ModItems.HEATING_COIL.get()
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.ENDER_QUARRY.get(),
 			EnderQuarryBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.QUANTUM_QUARRY.get(),
 			QuantumQuarryBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.QUANTUM_QUARRY_ACTUATOR.get(),
 			QuantumQuarryActuatorBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.CREATIVE_ENERGY_SOURCE.get(),
 			CreativeEnergySourceBlockEntity::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.FURNACE.get(),
 			SimpleMachineBlockEntity.Companion::getEnergyCapability
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.FURNACE.get(),
 			EUFurnaceBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.ItemHandler.BLOCK,
+			Capabilities.Item.BLOCK,
 			ModBlockEntityTypes.ENDER_PORCUPINE.get(),
 			EnderPorcupineBlockEntity::getItemHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			ModBlockEntityTypes.ENDER_PORCUPINE.get(),
 			EnderPorcupineBlockEntity::getFluidHandler
 		)
 
 		event.registerBlockEntity(
-			Capabilities.EnergyStorage.BLOCK,
+			Capabilities.Energy.BLOCK,
 			ModBlockEntityTypes.ENDER_PORCUPINE.get(),
 			EnderPorcupineBlockEntity::getEnergyHandler
 		)
@@ -419,12 +434,12 @@ object CommonEvents {
 			)
 
 			event.output = output
-			event.cost = operationCost
+			event.setXpCost(operationCost.coerceAtMost(40L).toInt())
 		}
 	}
 
 	@SubscribeEvent
-	fun onBlockBreak(event: BlockEvent.BreakEvent) {
+	fun onBlockBreak(event: BreakBlockEvent) {
 		DestructionWandItem.handleBreakBlockEvent(event)
 	}
 
@@ -476,14 +491,19 @@ object CommonEvents {
 		}
 	}
 
+    @SubscribeEvent
+    fun syncRecipes(event: OnDatapackSyncEvent) {
+        event.sendRecipes(ModRecipeTypes.RECIPE_TYPES_REGISTRY.entries.map { it.get() })
+    }
+
 	@SubscribeEvent
 	fun onRegisterCommandsEvent(event: RegisterCommandsEvent) {
 		ModCommands.register(event.dispatcher, event.buildContext)
 	}
 
 	@SubscribeEvent
-	fun registerReloadListeners(event: AddReloadListenerEvent) {
-		event.addListener(InversionRitualEnemyWeight.ReloadListener())
+	fun registerReloadListeners(event: AddServerReloadListenersEvent) {
+		event.addListener(ExcessiveUtilities.modResource("inversion_ritual_enemy_weights"), InversionRitualEnemyWeight.ReloadListener())
 	}
 
 	@SubscribeEvent

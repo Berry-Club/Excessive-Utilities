@@ -12,10 +12,6 @@ object UnstableIngotSubtypeInterpreter : ISubtypeInterpreter<ItemStack> {
 		return stability(ingredient)
 	}
 
-	override fun getLegacyStringSubtypeInfo(ingredient: ItemStack, context: UidContext): String {
-		return stability(ingredient).toString()
-	}
-
 	private fun stability(stack: ItemStack): Int {
 		return when {
 			UnstableIngotItem.isCheesed(stack) -> -1

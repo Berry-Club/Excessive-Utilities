@@ -9,14 +9,16 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.item.crafting.RecipeType
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.energy.ComponentEnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.transfer.access.ItemAccess
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.ItemAccessEnergyHandler
 
-class HeatingCoilItem(properties: Properties) : Item(properties) {
+class HeatingCoilItem(properties: Properties) : Item(properties), TooltipItem {
 
-	override fun getBurnTime(itemStack: ItemStack, recipeType: RecipeType<*>?): Int {
+	fun getBurnTime(itemStack: ItemStack, recipeType: RecipeType<*>?): Int {
 		if (recipeType != RecipeType.SMELTING) {
 			return 0
 		}
@@ -24,7 +26,7 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 		val requiredEnergy =
 			ServerConfig.CONFIG.heatingCoilBurnCost.get()
 
-		val availableEnergy = itemStack.getCapability(Capabilities.EnergyStorage.ITEM, null)?.energyStored ?: 0
+		val availableEnergy = ItemAccess.forStack(itemStack).getCapability(Capabilities.Energy.ITEM)?.amountAsInt ?: 0
 
 		return if (availableEnergy >= requiredEnergy) {
 			ServerConfig.CONFIG.heatingCoilBurnTime.get()
@@ -50,10 +52,11 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 		return max - held
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val energy = stack.getOrDefault(ModDataComponents.ENERGY, 0)
@@ -62,7 +65,7 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 		val formattedEnergy = "%,d".format(energy)
 		val formattedMaxEnergy = "%,d".format(maxEnergy)
 
-		tooltipComponents += ModMenuLang.FE_WITH_CAPACITY.toComponent(formattedEnergy, formattedMaxEnergy)
+		builder.accept(ModMenuLang.FE_WITH_CAPACITY.toComponent(formattedEnergy, formattedMaxEnergy))
 	}
 
 	companion object {
@@ -73,22 +76,18 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 					.component(ModDataComponents.ENERGY, 0)
 			}
 
-		fun getEnergyCapability(stack: ItemStack, unusedContext: Any?): IEnergyStorage {
-			return ComponentEnergyStorage(
-				stack,
-				ModDataComponents.ENERGY.get(),
-				ServerConfig.CONFIG.heatingCoilMaxEnergy.get(),
-				100_000,
-				0
+		fun getEnergyCapability(stack: ItemStack, access: ItemAccess): EnergyHandler {
+			return ItemAccessEnergyHandler(
+				access, ModDataComponents.ENERGY.get(), ServerConfig.CONFIG.heatingCoilMaxEnergy.get(), 100_000, 0
 			)
 		}
 
 		@JvmStatic
 		fun burnInFuelSlot(stack: ItemStack) {
-			val capability = stack.getCapability(Capabilities.EnergyStorage.ITEM, null) ?: return
 			val requiredEnergy = ServerConfig.CONFIG.heatingCoilBurnCost.get()
-			if (capability.energyStored >= requiredEnergy) {
-				capability.extractEnergy(requiredEnergy, false)
+			val currentEnergy = stack.getOrDefault(ModDataComponents.ENERGY, 0)
+			if (currentEnergy >= requiredEnergy) {
+				stack.set(ModDataComponents.ENERGY, currentEnergy - requiredEnergy)
 			}
 		}
 
@@ -118,3 +117,15 @@ class HeatingCoilItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

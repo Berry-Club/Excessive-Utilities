@@ -5,6 +5,8 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.saveddata.SavedData
+import net.minecraft.util.datafix.DataFixTypes
+import net.minecraft.world.level.saveddata.SavedDataType
 import java.util.*
 
 class RainbowGeneratorHandler : SavedData() {
@@ -24,7 +26,7 @@ class RainbowGeneratorHandler : SavedData() {
 		generatorNetworks.entries.removeIf { (_, network) -> network.isEmpty() }
 	}
 
-	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
+	fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
 		return tag
 	}
 
@@ -41,8 +43,16 @@ class RainbowGeneratorHandler : SavedData() {
 			}
 
 			val storage = level.dataStorage
-			val factory = Factory(::RainbowGeneratorHandler, ::load)
-			return storage.computeIfAbsent(factory, SAVED_DATA_NAME)
+			val type = SavedDataType(
+                dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities.modResource(SAVED_DATA_NAME),
+                ::RainbowGeneratorHandler,
+                CompoundTag.CODEC.xmap(
+                    { tag -> load(tag, level.registryAccess()) },
+                    { data -> data.save(CompoundTag(), level.registryAccess()) }
+                ),
+                DataFixTypes.SAVED_DATA_COMMAND_STORAGE
+            )
+            return storage.computeIfAbsent(type)
 		}
 
 	}

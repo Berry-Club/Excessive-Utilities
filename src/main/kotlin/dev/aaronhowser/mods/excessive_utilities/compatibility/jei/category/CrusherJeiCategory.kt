@@ -1,19 +1,21 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.ItemStack
 
 class CrusherJeiCategory(
-	recipeType: RecipeType<RecipeHolder<CrusherRecipe>>,
+	recipeType: IRecipeType<RecipeHolder<CrusherRecipe>>,
 	guiHelper: IGuiHelper
 ) : AbstractRecipeCategory<RecipeHolder<CrusherRecipe>>(
 	recipeType,
@@ -30,18 +32,18 @@ class CrusherJeiCategory(
 		val primaryOutputSlot = builder.addOutputSlot(63, 9)
 
 		inputSlot
-			.addItemStacks(recipe.ingredient.items.toList())
+			.addItemStacks(recipe.ingredient.getItemHolders().map(::ItemStack).toList())
 			.setStandardSlotBackground()
 
 		primaryOutputSlot
-			.addItemStack(recipe.getPrimaryOutput())
+			.add(recipe.getPrimaryOutput())
 			.setOutputSlotBackground()
 
 		if (recipe.secondaryChance > 0) {
 			val secondaryOutputSlot = builder.addOutputSlot(95, 9)
 
 			secondaryOutputSlot
-				.addItemStack(recipe.getSecondaryOutput())
+				.add(recipe.getSecondaryOutput())
 				.setOutputSlotBackground()
 		}
 
@@ -61,6 +63,6 @@ class CrusherJeiCategory(
 
 	}
 
-	override fun getRegistryName(recipe: RecipeHolder<CrusherRecipe>): ResourceLocation = recipe.id
+	override fun getIdentifier(recipe: RecipeHolder<CrusherRecipe>): Identifier = recipe.id.identifier()
 
 }

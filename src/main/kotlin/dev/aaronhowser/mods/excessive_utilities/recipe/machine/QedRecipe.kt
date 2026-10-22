@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.recipe.machine
 
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -17,31 +18,29 @@ class QedRecipe(
 	val pattern: ShapedRecipePattern,
 	val result: ItemStack,
 	val crystalTicks: Int
-) : Recipe<CraftingInput> {
+) : MachineRecipe<CraftingInput> {
 
 	override fun matches(input: CraftingInput, level: Level): Boolean = pattern.matches(input)
-	override fun assemble(input: CraftingInput, registries: HolderLookup.Provider): ItemStack = result.copy()
-	override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.QED.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.QED.get()
+	override fun assemble(input: CraftingInput): ItemStack = result.copy()
+	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
+	override fun getSerializer(): RecipeSerializer<QedRecipe> = ModRecipeSerializers.QED.get()
+	override fun getType(): RecipeType<QedRecipe> = ModRecipeTypes.QED.get()
 
 	companion object {
-		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<QedRecipe>> {
-			return recipeManager.getAllRecipesFor(ModRecipeTypes.QED.get())
+		fun getAllRecipes(recipeManager: RecipeMap): List<RecipeHolder<QedRecipe>> {
+			return recipeManager.byType(ModRecipeTypes.QED.get()).toList()
 		}
 
 		fun getRecipe(level: Level, input: CraftingInput): RecipeHolder<QedRecipe>? {
-			return getAllRecipes(level.recipeManager)
+			return getAllRecipes(dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				.firstOrNull { recipeHolder ->
 					recipeHolder.value.matches(input, level)
 				}
 		}
 	}
 
-	class Serializer : RecipeSerializer<QedRecipe> {
-		override fun codec(): MapCodec<QedRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, QedRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<QedRecipe> =

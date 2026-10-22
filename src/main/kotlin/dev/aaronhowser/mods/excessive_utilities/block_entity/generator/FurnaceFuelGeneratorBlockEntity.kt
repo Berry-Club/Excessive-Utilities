@@ -26,7 +26,8 @@ class FurnaceFuelGeneratorBlockEntity(
 	override val generatorType: GeneratorType = furnaceFuelGeneratorType.baseGeneratorType
 
 	override fun isValidInput(itemStack: ItemStack): Boolean {
-		return itemStack.getBurnTime(RecipeType.SMELTING) > 0
+		val level = level ?: return false
+		return itemStack.getBurnTime(RecipeType.SMELTING, level.fuelValues()) > 0
 	}
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
@@ -35,7 +36,7 @@ class FurnaceFuelGeneratorBlockEntity(
 		val inputStack = container.getItem(GeneratorContainer.INPUT_SLOT)
 		if (inputStack.isEmpty) return false
 
-		val burnTime = inputStack.getBurnTime(RecipeType.SMELTING)
+		val burnTime = inputStack.getBurnTime(RecipeType.SMELTING, level.fuelValues())
 		if (burnTime <= 0) return false
 
 		if (furnaceFuelGeneratorType == FurnaceFuelGeneratorType.OVERCLOCKED) {

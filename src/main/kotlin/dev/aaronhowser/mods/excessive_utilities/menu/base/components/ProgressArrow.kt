@@ -2,18 +2,20 @@ package dev.aaronhowser.mods.excessive_utilities.menu.base.components
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.client.gui.Font
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
+import net.minecraft.client.input.MouseButtonEvent
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.util.Mth
 
 class ProgressArrow(
 	x: Int,
 	y: Int,
 	val font: Font,
-	val texture: ResourceLocation = TEXTURE,
+	val texture: Identifier = TEXTURE,
 	val percentDoneFunction: () -> Float,
 	val shouldRenderProgress: () -> Boolean,
 	val onClickFunction: (Double, Double, Int) -> Unit = { _, _, _ -> }
@@ -24,10 +26,11 @@ class ProgressArrow(
 	Component.empty()
 ) {
 
-	override fun renderWidget(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int, partialTick: Float) {
+	override fun extractWidgetRenderState(guiGraphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int, partialTick: Float) {
 		if (!shouldRenderProgress()) return
 
 		guiGraphics.blitSprite(
+			RenderPipelines.GUI_TEXTURED,
 			texture,
 			WIDTH, HEIGHT,
 			0, 0,
@@ -40,23 +43,23 @@ class ProgressArrow(
 		if (isHovered) renderTooltip(guiGraphics, mouseX, mouseY)
 	}
 
-	private fun renderTooltip(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
+	private fun renderTooltip(guiGraphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
 		if (percentDoneFunction() <= 0f) return
 
 		val percentString = (percentDoneFunction() * 100).toInt().toString() + "%"
 
-		guiGraphics.renderComponentTooltip(
+		guiGraphics.setTooltipForNextFrame(
 			font,
-			listOf(Component.literal(percentString)),
+			listOf(Component.literal(percentString).visualOrderText),
 			mouseX,
 			mouseY
 		)
 	}
 
-	override fun onClick(mouseX: Double, mouseY: Double, button: Int) {
-		super.onClick(mouseX, mouseY, button)
+	override fun onClick(event: MouseButtonEvent, doubleClick: Boolean) {
+		super.onClick(event, doubleClick)
 
-		onClickFunction(mouseX, mouseY, button)
+		onClickFunction(event.x(), event.y(), event.button())
 	}
 
 	override fun updateWidgetNarration(narrationElementOutput: NarrationElementOutput) {

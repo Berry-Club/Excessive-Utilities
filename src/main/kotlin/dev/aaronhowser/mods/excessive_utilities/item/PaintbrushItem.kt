@@ -8,7 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.Registries
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.tags.TagKey
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.DyeColor
@@ -61,7 +61,7 @@ class PaintbrushItem(properties: Properties) : Item(properties) {
 			for (dyeColor in DyeColor.entries) {
 				val tag = TagKey.create(
 					Registries.BLOCK,
-					ResourceLocation.fromNamespaceAndPath(
+					Identifier.fromNamespaceAndPath(
 						"c",
 						"dyed/${dyeColor.getDyeName()}"
 					)
@@ -160,3 +160,7 @@ class PaintbrushItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+

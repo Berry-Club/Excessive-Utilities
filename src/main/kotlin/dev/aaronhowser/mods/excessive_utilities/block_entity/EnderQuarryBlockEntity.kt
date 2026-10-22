@@ -1,9 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
+import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.block_entity.SyncingBlockEntity
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
-import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
+import dev.aaronhowser.mods.aaron.container.ExtractOnlyResourceHandler
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
@@ -20,6 +21,8 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.nbt.LongArrayTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
@@ -36,12 +39,14 @@ import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
+import net.minecraft.core.UUIDUtil
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.energy.EnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -55,9 +60,9 @@ class EnderQuarryBlockEntity(
 
 	override val syncImmediately: Boolean = true
 
-	private val energyStorage: EnergyStorage = EnergyStorage(1_000_000)
+	private val energyStorage: SimpleEnergyHandler = SimpleEnergyHandler(1_000_000)
 	private val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
-	private val bufferItemHandler: ExtractOnlyInvWrapper = ExtractOnlyInvWrapper(bufferContainer)
+	private val bufferItemHandler: ResourceHandler<ItemResource> = ExtractOnlyResourceHandler(bufferContainer)
 
 	override fun getContainers(): List<ImprovedSimpleContainer> = listOf(bufferContainer)
 
@@ -143,11 +148,11 @@ class EnderQuarryBlockEntity(
 		progressMine(level)
 	}
 
-	override fun collectReceivingItemHandlers(level: ServerLevel): Collection<IItemHandler> {
+	override fun collectReceivingItemHandlers(level: ServerLevel): Collection<ResourceHandler<ItemResource>> {
 		return Direction.entries
 			.mapNotNull {
 				level.getCapability(
-					Capabilities.ItemHandler.BLOCK,
+					Capabilities.Item.BLOCK,
 					blockPos.relative(it),
 					it.opposite
 				)
@@ -168,7 +173,7 @@ class EnderQuarryBlockEntity(
 			fePerBlock *= upgrade.feMultiplierGetter.asDouble
 		}
 
-		if (energyStorage.energyStored < fePerBlock) return
+		if (energyStorage.getAmountAsInt() < fePerBlock) return
 
 		var blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
 
@@ -255,10 +260,10 @@ class EnderQuarryBlockEntity(
 		}
 
 		val upgrades = getUpgrades()
-		val enchantmentRegistry = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+		val enchantmentRegistry = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
 
 		if (EnderQuarryUpgradeType.SILK_TOUCH in upgrades) {
-			tool.enchant(enchantmentRegistry.getHolderOrThrow(Enchantments.SILK_TOUCH), 1)
+			tool.enchant(enchantmentRegistry.getOrThrow(Enchantments.SILK_TOUCH), 1)
 		} else {
 			val fortuneLevel = when {
 				EnderQuarryUpgradeType.FORTUNE_THREE in upgrades -> 3
@@ -268,7 +273,7 @@ class EnderQuarryBlockEntity(
 			}
 
 			if (fortuneLevel > 0) {
-				tool.enchant(enchantmentRegistry.getHolderOrThrow(Enchantments.FORTUNE), fortuneLevel)
+				tool.enchant(enchantmentRegistry.getOrThrow(Enchantments.FORTUNE), fortuneLevel)
 			}
 		}
 
@@ -321,7 +326,7 @@ class EnderQuarryBlockEntity(
 				currentPos.z < max.z - 1 ->
 					BlockPos(min.x + 1, currentPos.y, currentPos.z + 1)
 
-				currentPos.y > level.minBuildHeight + 1 ->
+				currentPos.y > level.minY + 1 ->
 					BlockPos(min.x + 1, currentPos.y - 1, min.z + 1)
 
 				else -> null
@@ -543,10 +548,10 @@ class EnderQuarryBlockEntity(
 		val searchDistance = ServerConfig.CONFIG.enderQuarryMarkerSearchDistance.get()
 
 		// Skip this one, because that's where the quarry is
-		val directionToQuarry = Direction.fromDelta(
+		val directionToQuarry = Direction.getNearest(
 			blockPos.x - markerPos.x,
 			0,
-			blockPos.z - markerPos.z
+			blockPos.z - markerPos.z, null
 		) ?: return false
 
 		val directions = Direction.Plane.HORIZONTAL.toMutableSet()
@@ -611,12 +616,12 @@ class EnderQuarryBlockEntity(
 		setChanged()
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		ContainerHelper.saveAllItems(tag, bufferContainer.items, registries)
+		ContainerHelper.saveAllItems(tag, bufferContainer.items)
 
-		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage)
 
 		val min = minBoundary
 		val max = maxBoundary
@@ -636,43 +641,36 @@ class EnderQuarryBlockEntity(
 			tag.putString(BOUNDARY_TYPE_NBT, bType.id)
 		}
 
-		val upgradePositionLongs = upgradePositions.map(BlockPos::asLong).toLongArray()
-		tag.put(UPGRADE_POSITIONS_NBT, LongArrayTag(upgradePositionLongs))
-		tag.putUUID(FAKE_PLAYER_UUID_NBT, fakePlayerUuid)
+		tag.store(UPGRADE_POSITIONS_NBT, Codec.LONG.listOf(), upgradePositions.map(BlockPos::asLong))
+		tag.store(FAKE_PLAYER_UUID_NBT, UUIDUtil.CODEC, fakePlayerUuid)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		ContainerHelper.loadAllItems(tag, bufferContainer.items, registries)
+		ContainerHelper.loadAllItems(tag, bufferContainer.items)
 
-		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage)
 
-		if (tag.contains(MIN_BOUNDARY_NBT) && tag.contains(MAX_BOUNDARY_NBT)) {
-			minBoundary = BlockPos.of(tag.getLong(MIN_BOUNDARY_NBT))
-			maxBoundary = BlockPos.of(tag.getLong(MAX_BOUNDARY_NBT))
+		if (tag.getLong(MIN_BOUNDARY_NBT).isPresent && tag.getLong(MAX_BOUNDARY_NBT).isPresent) {
+			minBoundary = BlockPos.of(tag.getLongOr(MIN_BOUNDARY_NBT, 0L))
+			maxBoundary = BlockPos.of(tag.getLongOr(MAX_BOUNDARY_NBT, 0L))
 		}
 
-		if (tag.contains(TARGET_POS_NBT)) {
-			targetPos = BlockPos.of(tag.getLong(TARGET_POS_NBT))
-		} else {
-			targetPos = null
-		}
+		targetPos = tag.getLong(TARGET_POS_NBT).map(BlockPos::of).orElse(null)
 
-		if (tag.contains(BOUNDARY_TYPE_NBT)) {
-			val bTypeString = tag.getString(BOUNDARY_TYPE_NBT)
+		if (tag.getString(BOUNDARY_TYPE_NBT).isPresent) {
+			val bTypeString = tag.getStringOr(BOUNDARY_TYPE_NBT, "")
 			boundaryType = BoundaryType.entries.firstOrNull { it.id == bTypeString }
 		}
 
-		val upgradePositionsTag = tag.getLongArray(UPGRADE_POSITIONS_NBT)
+		val upgradePositionsTag = tag.read(UPGRADE_POSITIONS_NBT, Codec.LONG.listOf()).orElseThrow()
 		upgradePositions.clear()
 		for (posLong in upgradePositionsTag) {
 			upgradePositions.add(BlockPos.of(posLong))
 		}
 
-		if (tag.hasUUID(FAKE_PLAYER_UUID_NBT)) {
-			fakePlayerUuid = tag.getUUID(FAKE_PLAYER_UUID_NBT)
-		}
+		tag.read(FAKE_PLAYER_UUID_NBT, UUIDUtil.CODEC).ifPresent { fakePlayerUuid = it }
 	}
 
 	companion object {
@@ -695,7 +693,7 @@ class EnderQuarryBlockEntity(
 			}
 		}
 
-		fun getEnergyCapability(quarry: EnderQuarryBlockEntity, direction: Direction?): IEnergyStorage {
+		fun getEnergyCapability(quarry: EnderQuarryBlockEntity, direction: Direction?): EnergyHandler {
 			return quarry.energyStorage
 		}
 	}

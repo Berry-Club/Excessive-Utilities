@@ -109,7 +109,6 @@ object ModCreativeModeTabs {
 					output.accept(blockItem)
 				}
 
-				output.accept(ModItems.BIOME_MARKER.get())
 				output.acceptAll(BiomeMarkerItem.getAllCrystals(displayContext.holders))
 			}
 			.build()

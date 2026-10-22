@@ -8,6 +8,8 @@ import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
@@ -29,10 +31,9 @@ class ChickenWingRingItem(properties: Properties) : Item(properties), ICurioItem
 
 	override fun inventoryTick(
 		stack: ItemStack,
-		level: Level,
+		level: ServerLevel,
 		entity: Entity,
-		slotId: Int,
-		isSelected: Boolean
+		slot: EquipmentSlot?
 	) {
 		tick(entity, stack)
 	}
@@ -99,7 +100,7 @@ class ChickenWingRingItem(properties: Properties) : Item(properties), ICurioItem
 		}
 
 		private fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {
-			val handler = GridPowerHandler.get(player.serverLevel()).getPlayerGrid(player)
+			val handler = GridPowerHandler.get(player.level()).getPlayerGrid(player)
 
 			val currentConsumers = handler.getConsumers()
 			val existing = currentConsumers
@@ -136,3 +137,9 @@ class ChickenWingRingItem(properties: Properties) : Item(properties), ICurioItem
 	}
 
 }
+
+
+
+
+
+

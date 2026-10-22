@@ -17,8 +17,9 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.world.level.block.state.BlockBehaviour
 
-class QedBlock : SimpleContainerBlock(Properties.ofFullCopy(Blocks.OBSIDIAN)), EntityBlock {
+class QedBlock(properties: BlockBehaviour.Properties) : SimpleContainerBlock(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return QedBlockEntity(pos, state)
@@ -46,10 +47,21 @@ class QedBlock : SimpleContainerBlock(Properties.ofFullCopy(Blocks.OBSIDIAN)), E
 
 		if (be is MenuProvider) {
 			player.openMenu(be)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -7,6 +7,8 @@
 	"render_type": "minecraft:solid",
 	"shade_quads": true,
 	"textures": {
+		"base": "excessive_utilities:block/spike/stone/base",
+		"side": "excessive_utilities:block/spike/stone/side",
 		"particle": "excessive_utilities:block/spike/stone/base"
 	}
 }

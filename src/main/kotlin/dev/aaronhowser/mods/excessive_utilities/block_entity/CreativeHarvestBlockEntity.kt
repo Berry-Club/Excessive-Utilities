@@ -10,6 +10,8 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.nbt.NbtUtils
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
@@ -63,25 +65,18 @@ class CreativeHarvestBlockEntity(
 		return level?.isClientSide.isTrue()
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		val blockStateTag = NbtUtils.writeBlockState(mimicBlockState)
-		tag.put(MIMIC_BLOCK_NBT, blockStateTag)
-
-		val stackTag = mimicStack.saveOptional(registries)
-		tag.put(MIMIC_STACK_NBT, stackTag)
+		tag.store(MIMIC_BLOCK_NBT, BlockState.CODEC, mimicBlockState)
+		tag.store(MIMIC_STACK_NBT, ItemStack.CODEC, mimicStack)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		val blockStateTag = tag.getCompound(MIMIC_BLOCK_NBT)
-		val readBLockState = NbtUtils.readBlockState(registries.lookupOrThrow(Registries.BLOCK), blockStateTag)
-		mimicBlockState = readBLockState
-
-		val stackTag = tag.getCompound(MIMIC_STACK_NBT)
-		mimicStack = ItemStack.parseOptional(registries, stackTag)
+		mimicBlockState = tag.read(MIMIC_BLOCK_NBT, BlockState.CODEC).orElse(Blocks.STONE.defaultBlockState())
+		mimicStack = tag.read(MIMIC_STACK_NBT, ItemStack.CODEC).orElse(ItemStack.EMPTY)
 	}
 
 	override fun onLoad() {

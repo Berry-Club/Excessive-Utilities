@@ -1,5 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
+
 import dev.aaronhowser.mods.excessive_utilities.block.base.GpDrainBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
@@ -22,19 +24,23 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.util.RandomSource
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.ScheduledTickAccess
 import net.neoforged.neoforge.capabilities.Capabilities
 
 
 class TransferNodeBlock(
 	val type: Type,
-	val isRetrieval: Boolean
+	val isRetrieval: Boolean,
+	properties: Properties
 ) : GpDrainBlock(
-	Properties.of()
+	properties
 		.strength(1.5f, 6f)
 		.requiresCorrectToolForDrops()
 		.noOcclusion()
@@ -65,11 +71,13 @@ class TransferNodeBlock(
 
 	override fun updateShape(
 		state: BlockState,
-		direction: Direction,
-		neighborState: BlockState,
-		level: LevelAccessor,
+		level: LevelReader,
+		 ticks: ScheduledTickAccess,
 		pos: BlockPos,
-		neighborPos: BlockPos
+		 directionToNeighbour: Direction,
+		 neighbourPos: BlockPos,
+		 neighbourState: BlockState,
+		 random: RandomSource
 	): BlockState {
 		if (level is Level) {
 			return updateConnections(level, pos, state)
@@ -89,12 +97,12 @@ class TransferNodeBlock(
 
 		if (be is FluidTransferNodeBlockEntity) {
 			player.openMenu(be) { it.writeBlockPos(pos) }
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		if (be is MenuProvider) {
 			player.openMenu(be)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS
@@ -125,17 +133,17 @@ class TransferNodeBlock(
 
 		when (type) {
 			Type.ITEM -> {
-				val hasItemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, direction.opposite) != null
+				val hasItemHandler = level.getCapability(Capabilities.Item.BLOCK, neighborPos, direction.opposite) != null
 				if (hasItemHandler) return true
 			}
 
 			Type.FLUID -> {
-				val hasFluidHandler = level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, direction.opposite) != null
+				val hasFluidHandler = level.getCapability(Capabilities.Fluid.BLOCK, neighborPos, direction.opposite) != null
 				if (hasFluidHandler) return true
 			}
 
 			Type.ENERGY -> {
-				val hasEnergyHandler = level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, direction.opposite) != null
+				val hasEnergyHandler = level.getCapability(Capabilities.Energy.BLOCK, neighborPos, direction.opposite) != null
 				return hasEnergyHandler
 			}
 		}
@@ -157,7 +165,7 @@ class TransferNodeBlock(
 	}
 
 	companion object {
-		val PLACED_ON: DirectionProperty = DirectionProperty.create("placed_on", Direction.entries)
+		val PLACED_ON: EnumProperty<Direction> = EnumProperty.create("placed_on", Direction::class.java)
 		val NORTH: BooleanProperty = BlockStateProperties.NORTH
 		val SOUTH: BooleanProperty = BlockStateProperties.SOUTH
 		val EAST: BooleanProperty = BlockStateProperties.EAST
@@ -222,3 +230,16 @@ class TransferNodeBlock(
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

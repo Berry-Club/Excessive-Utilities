@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.loot
 
-import dev.aaronhowser.mods.aaron.datagen.AaronLootTableDsl
+import dev.aaronhowser.mods.aaron.datagen.loot.AaronLootTableDsl
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -19,7 +19,7 @@ class OtherLootTableSubProvider(
 	val registries: HolderLookup.Provider
 ) : LootTableSubProvider {
 
-	override fun generate(output: BiConsumer<ResourceKey<LootTable>, LootTable.Builder?>) {
+	override fun generate(output: BiConsumer<ResourceKey<LootTable>, LootTable.Builder>) {
 
 		output.accept(
 			DROP_OF_EVIL,

@@ -9,13 +9,15 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Rarity
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 
-class SpeedUpgradeItem(properties: Properties) : Item(properties) {
+class SpeedUpgradeItem(properties: Properties) : Item(properties), TooltipItem {
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val stackSize = stack.count
@@ -23,7 +25,7 @@ class SpeedUpgradeItem(properties: Properties) : Item(properties) {
 		val gpCost = getGpCost(stackSize)
 		val formattedGpCost = "%.2f".format(gpCost)
 
-		tooltipComponents += ModMenuLang.GP_COST.toComponent(formattedGpCost)
+		builder.accept(ModMenuLang.GP_COST.toComponent(formattedGpCost))
 	}
 
 	companion object {
@@ -80,3 +82,9 @@ class SpeedUpgradeItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+

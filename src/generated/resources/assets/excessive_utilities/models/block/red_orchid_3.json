@@ -1,6 +1,5 @@
 {
   "parent": "minecraft:block/cross",
-  "render_type": "minecraft:cutout",
   "textures": {
     "cross": "excessive_utilities:block/red_orchid/3"
   }

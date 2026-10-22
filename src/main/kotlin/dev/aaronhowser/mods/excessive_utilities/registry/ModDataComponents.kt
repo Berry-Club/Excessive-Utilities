@@ -9,7 +9,7 @@ import net.minecraft.core.component.DataComponentType
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.network.codec.ByteBufCodecs
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.util.Unit
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.DyeColor
@@ -32,7 +32,7 @@ object ModDataComponents : AaronDataComponentRegistry() {
 	val AMOUNT_BLOCKS: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("amount_blocks")
 	val ENTITY_DATA: DeferredHolder<DataComponentType<*>, DataComponentType<CustomData>> =
-		register("entity_data", CustomData.CODEC, CustomData.STREAM_CODEC)
+		register("entity_data", CustomData.CODEC, ByteBufCodecs.COMPOUND_TAG.map(CustomData::of, CustomData::copyTag))
 	val ENTITY_TYPE: DeferredHolder<DataComponentType<*>, DataComponentType<Holder<EntityType<*>>>> =
 		registryHolder("entity_type", BuiltInRegistries.ENTITY_TYPE)
 	val ENERGY: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
@@ -69,8 +69,8 @@ object ModDataComponents : AaronDataComponentRegistry() {
 		register("angel_ring_type", AngelRingItem.Type.CODEC, AngelRingItem.Type.STREAM_CODEC)
 	val REMAINING_USES: DeferredHolder<DataComponentType<*>, DataComponentType<Int>> =
 		int("remaining_uses")
-	val CRAFTED_IN_MENU: DeferredHolder<DataComponentType<*>, DataComponentType<ResourceLocation>> =
-		register("crafted_in_menu", ResourceLocation.CODEC, ResourceLocation.STREAM_CODEC)
+	val CRAFTED_IN_MENU: DeferredHolder<DataComponentType<*>, DataComponentType<Identifier>> =
+		register("crafted_in_menu", Identifier.CODEC, Identifier.STREAM_CODEC)
 	val ENDER_FREQUENCY: DeferredHolder<DataComponentType<*>, DataComponentType<EnderFrequencyComponent>> =
 		register("ender_frequency", EnderFrequencyComponent.CODEC, EnderFrequencyComponent.STREAM_CODEC)
 

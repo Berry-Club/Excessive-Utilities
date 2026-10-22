@@ -13,8 +13,11 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
@@ -23,16 +26,19 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.component.Unbreakable
 import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemHandlerHelper
-import net.neoforged.neoforge.items.wrapper.InvWrapper
-import net.neoforged.neoforge.items.wrapper.RangedWrapper
+import net.neoforged.neoforge.transfer.DelegatingResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.RangedResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil
+import net.minecraft.util.Unit
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -79,10 +85,10 @@ class MechanicalMinerBlockEntity(
 		return fakePlayer
 	}
 
-	override fun getItemHandler(direction: Direction?): IItemHandler {
-		val inventoryHandler = RangedWrapper(InvWrapper(container), 0, INVENTORY_SIZE)
-		return object : IItemHandler by inventoryHandler {
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack = stack
+	override fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> {
+		val inventoryHandler = RangedResourceHandler.of(VanillaContainerWrapper.of(container), 0, INVENTORY_SIZE)
+		return object : DelegatingResourceHandler<ItemResource>(inventoryHandler) {
+			override fun insert(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int = 0
 		}
 	}
 
@@ -117,7 +123,9 @@ class MechanicalMinerBlockEntity(
 		if (!blockDestroyed) return
 
 		for (itemEntity in droppedItems) {
-			val remainder = ItemHandlerHelper.insertItemStacked(super.getItemHandler(null), itemEntity.item.copy(), false)
+			val stack = itemEntity.item.copy()
+			val accepted = ResourceHandlerUtil.insertStacking(super.getItemHandler(null), ItemResource.of(stack), stack.count, null)
+			val remainder = stack.copyWithCount(stack.count - accepted)
 			if (remainder.isEmpty) {
 				itemEntity.discard()
 			} else {
@@ -128,7 +136,7 @@ class MechanicalMinerBlockEntity(
 
 	private fun createMiningTool(level: ServerLevel): ItemStack {
 		val miningTool = Items.DIAMOND_PICKAXE.defaultInstance
-		miningTool.set(DataComponents.UNBREAKABLE, Unbreakable(true))
+		miningTool.set(DataComponents.UNBREAKABLE, Unit.INSTANCE)
 
 		val enchantedBook = container.getItem(ENCHANTMENT_SLOT)
 		if (!enchantedBook.isEmpty) {
@@ -145,16 +153,14 @@ class MechanicalMinerBlockEntity(
 		return MechanicalMinerMenu(containerId, playerInventory, container, menuData)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
-		tag.putUUID(FAKE_PLAYER_UUID_NBT, fakePlayerUuid)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		tag.putIntArray(FAKE_PLAYER_UUID_NBT, UUIDUtil.uuidToIntArray(fakePlayerUuid))
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		if (tag.hasUUID(FAKE_PLAYER_UUID_NBT)) {
-			fakePlayerUuid = tag.getUUID(FAKE_PLAYER_UUID_NBT)
-		}
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		fakePlayerUuid = tag.getIntArray(FAKE_PLAYER_UUID_NBT).filter { it.size == 4 }.map(UUIDUtil::uuidFromIntArray).orElse(fakePlayerUuid)
 	}
 
 	companion object {

@@ -7,11 +7,12 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 
-class WirelessFeBatteryBlock : Block(Properties.ofFullCopy(Blocks.REDSTONE_BLOCK)), EntityBlock {
+class WirelessFeBatteryBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return WirelessFeBatteryBlockEntity(pos, state)
@@ -25,3 +26,13 @@ class WirelessFeBatteryBlock : Block(Properties.ofFullCopy(Blocks.REDSTONE_BLOCK
 	}
 
 }
+
+
+
+
+
+
+
+
+
+

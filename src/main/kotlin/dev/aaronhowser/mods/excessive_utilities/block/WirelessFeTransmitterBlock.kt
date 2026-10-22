@@ -10,6 +10,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
@@ -19,7 +20,7 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
 //TODO: Direction block state property
-class WirelessFeTransmitterBlock : Block(Properties.ofFullCopy(Blocks.REDSTONE_BLOCK)), EntityBlock {
+class WirelessFeTransmitterBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return WirelessFeTransmitterBlockEntity(pos, state)
@@ -50,3 +51,13 @@ class WirelessFeTransmitterBlock : Block(Properties.ofFullCopy(Blocks.REDSTONE_B
 	}
 
 }
+
+
+
+
+
+
+
+
+
+

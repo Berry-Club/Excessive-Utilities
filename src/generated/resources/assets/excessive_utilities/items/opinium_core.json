@@ -1,0 +1,9 @@
+{
+  "model": {
+    "type": "minecraft:special",
+    "base": "excessive_utilities:item/opinium_core",
+    "model": {
+      "type": "excessive_utilities:opinium_core"
+    }
+  }
+}

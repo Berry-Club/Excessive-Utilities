@@ -7,6 +7,8 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import java.util.function.Supplier
@@ -45,7 +47,7 @@ object ModEntityTypes {
 			EntityType.Builder.of(entityFactory, category)
 				.sized(width, height)
 				.apply(builderModifier)
-				.build(name)
+				.build(ResourceKey.create(Registries.ENTITY_TYPE, ExcessiveUtilities.modResource(name)))
 		})
 	}
 

@@ -1,6 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.mechanical_miner
 
-import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
+import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.MechanicalMinerBlockEntity

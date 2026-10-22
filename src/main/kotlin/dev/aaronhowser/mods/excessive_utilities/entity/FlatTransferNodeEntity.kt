@@ -26,11 +26,15 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.AABB
+import net.minecraft.world.damagesource.DamageSource
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil
+import net.neoforged.neoforge.transfer.fluid.FluidResource
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 class FlatTransferNodeEntity(
 	entityType: EntityType<*>,
@@ -57,33 +61,35 @@ class FlatTransferNodeEntity(
 
 	private val container: SimpleContainer = FlatTransferNodeContainer()
 
-	val originItemHandler: IItemHandler?
+	val originItemHandler: ResourceHandler<ItemResource>?
 		get() = level()
 			.getCapability(
-				Capabilities.ItemHandler.BLOCK,
+				Capabilities.Item.BLOCK,
 				blockPosition(),
 				aiming
 			)
-	val targetItemHandler: IItemHandler?
+	val targetItemHandler: ResourceHandler<ItemResource>?
 		get() = level()
 			.getCapability(
-				Capabilities.ItemHandler.BLOCK,
+				Capabilities.Item.BLOCK,
 				blockPosition().relative(aiming),
 				aiming.opposite
 			)
 
-	val originFluidHandler: IFluidHandler?
+	val originFluidHandler: ResourceHandler<FluidResource>?
 		get() = level().getCapability(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			blockPosition(),
 			aiming
 		)
-	val targetFluidHandler: IFluidHandler?
+	val targetFluidHandler: ResourceHandler<FluidResource>?
 		get() = level().getCapability(
-			Capabilities.FluidHandler.BLOCK,
+			Capabilities.Fluid.BLOCK,
 			blockPosition().relative(aiming),
 			aiming.opposite
 		)
+
+    override fun hurtServer(level: ServerLevel, source: DamageSource, amount: Float): Boolean = false
 
 	override fun tick() {
 		super.tick()
@@ -136,79 +142,36 @@ class FlatTransferNodeEntity(
 		super.remove(reason)
 	}
 
-	private fun transferFluid(level: ServerLevel) {
-		val source = originFluidHandler ?: return
-		val target = targetFluidHandler ?: return
+    private fun transferFluid(level: ServerLevel) {
+        ResourceHandlerUtil.move(
+            originFluidHandler, targetFluidHandler, { true },
+            ServerConfig.CONFIG.flatFluidTransferNodeSpeed.get(), null
+        )
+    }
 
-		var amountToMove = ServerConfig.CONFIG.flatFluidTransferNodeSpeed.get()
-
-		for (i in 0 until source.tanks) {
-			val fluidToMove = source.getFluidInTank(i).copy()
-			if (fluidToMove.isEmpty) continue
-
-			val copy = fluidToMove.copyWithAmount(1000)
-			val splitCopy = copy.split(amountToMove)
-
-			val simulatedResult = target.fill(splitCopy, IFluidHandler.FluidAction.SIMULATE)
-
-			if (simulatedResult != 0) {
-				val actualResult = target.fill(splitCopy, IFluidHandler.FluidAction.EXECUTE)
-				source.drain(actualResult, IFluidHandler.FluidAction.EXECUTE)
-				amountToMove -= actualResult
-				if (amountToMove <= 0) return
-			}
-		}
-	}
-
-	private fun transferItem(level: ServerLevel) {
-		val source = originItemHandler ?: return
-		val target = targetItemHandler ?: return
-
-		var amountToMove = ServerConfig.CONFIG.flatItemTransferNodeSpeed.get()
-
-		for (i in 0 until source.slots) {
-			val simPull = source.extractItem(i, amountToMove, true)
-			if (simPull.isEmpty) continue
-
-			val stackToMove = simPull.copy()
-
-			val simulatedResult = ItemHandlerHelper.insertItemStacked(target, stackToMove, true)
-			val amountAccepted = stackToMove.count - simulatedResult.count
-
-			if (amountAccepted > 0) {
-				val extracted = source.extractItem(i, amountAccepted, false)
-				if (extracted.isEmpty) continue
-
-				val extractedCount = extracted.count
-				val remainder = ItemHandlerHelper.insertItemStacked(target, extracted, false)
-				val amountInserted = extractedCount - remainder.count
-
-				if (!remainder.isEmpty) {
-					source.insertItem(i, remainder, false)
-				}
-
-				amountToMove -= amountInserted
-				if (amountToMove <= 0) return
-			}
-		}
-	}
+    private fun transferItem(level: ServerLevel) {
+        ResourceHandlerUtil.moveStacking(
+            originItemHandler, targetItemHandler, { true },
+            ServerConfig.CONFIG.flatItemTransferNodeSpeed.get(), null
+        )
+    }
 
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
 		builder.define(IS_ITEM_NODE_DATA, true)
 		builder.define(AIMING_DATA, Direction.NORTH)
 	}
 
-	override fun addAdditionalSaveData(compound: CompoundTag) {
+	override fun addAdditionalSaveData(compound: ValueOutput) {
 		compound.putBoolean(IS_ITEM_NODE_TAG, isItemNode)
 		compound.putString(AIMING_TAG, aiming.serializedName)
-		ContainerHelper.saveAllItems(compound, container.items, registryAccess())
+		ContainerHelper.saveAllItems(compound, container.items)
 	}
 
-	override fun readAdditionalSaveData(compound: CompoundTag) {
-		isItemNode = compound.getBoolean(IS_ITEM_NODE_TAG)
-		val directionString = compound.getString(AIMING_TAG)
-		aiming = Direction.byName(directionString) ?: Direction.NORTH
-		ContainerHelper.loadAllItems(compound, container.items, registryAccess())
+	override fun readAdditionalSaveData(compound: ValueInput) {
+		isItemNode = compound.getBooleanOr(IS_ITEM_NODE_TAG, true)
+		val directionString = compound.getString(AIMING_TAG).orElseThrow()
+		aiming = requireNotNull(Direction.byName(directionString)) { "Invalid transfer node direction: $directionString" }
+		ContainerHelper.loadAllItems(compound, container.items)
 	}
 
 	override fun createMenu(containerId: Int, playerInventory: Inventory, player: Player): AbstractContainerMenu {
@@ -241,10 +204,10 @@ class FlatTransferNodeEntity(
 			if (getNodeAt(level, blockPos, direction) != null) return null
 
 			if (isItemNode) {
-				val itemHandlerThere = level.getCapability(Capabilities.ItemHandler.BLOCK, blockPos, direction)
+				val itemHandlerThere = level.getCapability(Capabilities.Item.BLOCK, blockPos, direction)
 				if (itemHandlerThere == null) return null
 			} else {
-				val fluidHandlerThere = level.getCapability(Capabilities.FluidHandler.BLOCK, blockPos, direction)
+				val fluidHandlerThere = level.getCapability(Capabilities.Fluid.BLOCK, blockPos, direction)
 				if (fluidHandlerThere == null) return null
 			}
 
@@ -287,7 +250,7 @@ class FlatTransferNodeEntity(
 
 			val node = getNodeAt(level, blockPos, direction) ?: return
 
-			node.kill()
+			node.kill(level as ServerLevel)
 			event.isCanceled = true
 		}
 	}

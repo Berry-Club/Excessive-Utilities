@@ -17,7 +17,7 @@ class UpdateControlsPacket(
 		KeyHandler.setIsHoldingSpace(context.player(), isHoldingSpace)
 	}
 
-	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload?> {
+	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload> {
 		return TYPE
 	}
 

@@ -15,6 +15,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.entity.item.ItemEntity
@@ -25,8 +27,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 class ItemTransferNodeBlockEntity(
 	pos: BlockPos,
@@ -47,8 +50,8 @@ class ItemTransferNodeBlockEntity(
 		return ItemFilterItem.passesFilter(filterStack, stack)
 	}
 
-	private fun getParentItemHandler(level: ServerLevel): IItemHandler? {
-		return level.getCapability(Capabilities.ItemHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
+	private fun getParentItemHandler(level: ServerLevel): ResourceHandler<ItemResource>? {
+		return level.getCapability(Capabilities.Item.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
 	override fun getBufferAmount(): Int = bufferContainer.getItem(0).count
@@ -74,19 +77,18 @@ class ItemTransferNodeBlockEntity(
 		if (itemHandlers.isEmpty()) return
 
 		for (handler in itemHandlers) {
-			val simulatedRemainder = ItemHandlerHelper.insertItemStacked(handler, stackInBuffer.copy(), true)
-			val amountAccepted = stackInBuffer.count - simulatedRemainder.count
+			val amountAccepted = ResourceHandlerUtil.insertStacking(handler, ItemResource.of(stackInBuffer), stackInBuffer.count, null)
 			if (amountAccepted <= 0) continue
 
-			val remainder = ItemHandlerHelper.insertItemStacked(handler, stackInBuffer, false)
-
 			if (!hasCreativeUpgrade()) {
+				val remainder = stackInBuffer.copy()
+				remainder.shrink(amountAccepted)
 				bufferContainer.setItem(0, remainder)
 			}
 
 			didWorkThisTick = true
 
-			if (remainder.isEmpty) break
+			if (bufferContainer.getItem(0).isEmpty) break
 		}
 	}
 
@@ -99,21 +101,18 @@ class ItemTransferNodeBlockEntity(
 		val amountToExtract = if (hasStackUpgrade()) 64 else 1
 
 		for (handler in itemHandlers) {
-			for (slot in 0 until handler.slots) {
-				val simExtract = handler.extractItem(slot, amountToExtract, true)
-				if (simExtract.isEmpty || !passesFilter(simExtract)) continue
-
-				val extracted = handler.extractItem(slot, amountToExtract, false)
-				bufferContainer.setItem(0, extracted)
+			val extracted = ResourceHandlerUtil.extractFirst(handler, { resource -> passesFilter(resource.toStack(amountToExtract)) }, amountToExtract, null)
+			if (extracted != null) {
+				bufferContainer.setItem(0, extracted.resource().toStack(extracted.amount()))
 				didWorkThisTick = true
 				return
 			}
 		}
 	}
 
-	private fun getItemHandlersAroundPing(level: ServerLevel): List<IItemHandler> {
+	private fun getItemHandlersAroundPing(level: ServerLevel): List<ResourceHandler<ItemResource>> {
 		return getCapabilitiesAroundPing(level) { neighborPos, side ->
-			level.getCapability(Capabilities.ItemHandler.BLOCK, neighborPos, side)
+			level.getCapability(Capabilities.Item.BLOCK, neighborPos, side)
 		}
 	}
 
@@ -156,11 +155,8 @@ class ItemTransferNodeBlockEntity(
 		val stackInBuffer = bufferContainer.getItem(0)
 		if (stackInBuffer.isEmpty) return
 
-		val inserted = ItemHandlerHelper.insertItemStacked(parentHandler, stackInBuffer, true)
-		val amountInserted = stackInBuffer.count - inserted.count
+		val amountInserted = ResourceHandlerUtil.insertStacking(parentHandler, ItemResource.of(stackInBuffer), stackInBuffer.count, null)
 		if (amountInserted <= 0) return
-
-		ItemHandlerHelper.insertItemStacked(parentHandler, stackInBuffer, false)
 
 		if (!hasCreativeUpgrade()) {
 			val newStack = stackInBuffer.copy()
@@ -250,7 +246,7 @@ class ItemTransferNodeBlockEntity(
 
 		val amountToExtract = if (hasStackUpgrade()) 64 else 1
 		val input = WorldInteractionItemRecipe.Input(onBlock, adjacentBlocks, blockBehind)
-		val output = recipe.assemble(input, level.registryAccess()).copyWithCount(amountToExtract)
+		val output = recipe.assemble(input).copyWithCount(amountToExtract)
 
 		val stackInBuffer = bufferContainer.getItem(0)
 		if (stackInBuffer.isEmpty) {
@@ -283,14 +279,10 @@ class ItemTransferNodeBlockEntity(
 		var amountToExtract = if (hasStackUpgrade()) 64 else 1
 
 		if (stackInBuffer.isEmpty) {
-			for (slot in 0 until parentHandler.slots) {
-				val simExtract = parentHandler.extractItem(slot, amountToExtract, true)
-				if (simExtract.isEmpty || !passesFilter(simExtract)) continue
-
-				val extracted = parentHandler.extractItem(slot, amountToExtract, false)
-				bufferContainer.setItem(0, extracted)
+			val extracted = ResourceHandlerUtil.extractFirst(parentHandler, { resource -> passesFilter(resource.toStack(amountToExtract)) }, amountToExtract, null)
+			if (extracted != null) {
+				bufferContainer.setItem(0, extracted.resource().toStack(extracted.amount()))
 				didWorkThisTick = true
-				break
 			}
 
 			return
@@ -298,16 +290,14 @@ class ItemTransferNodeBlockEntity(
 
 		amountToExtract = amountToExtract.coerceAtMost(stackInBuffer.maxStackSize - stackInBuffer.count)
 
-		for (slot in 0 until parentHandler.slots) {
-			val simExtract = parentHandler.extractItem(slot, amountToExtract, true)
-			if (simExtract.isEmpty || !ItemStack.isSameItemSameComponents(simExtract, stackInBuffer)) continue
-
-			val extracted = parentHandler.extractItem(slot, amountToExtract, false)
+		val extracted = ResourceHandlerUtil.extractFirst(parentHandler, { resource ->
+			ItemStack.isSameItemSameComponents(resource.toStack(amountToExtract), stackInBuffer)
+		}, amountToExtract, null)
+		if (extracted != null) {
 			val newStack = stackInBuffer.copy()
-			newStack.count += extracted.count
+			newStack.count += extracted.amount()
 			bufferContainer.setItem(0, newStack)
 			didWorkThisTick = true
-			break
 		}
 	}
 
@@ -322,27 +312,22 @@ class ItemTransferNodeBlockEntity(
 		)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		tag.saveItems(bufferContainer, registries)
+		tag.saveItems(bufferContainer)
 
 		if (!filterContainer.isEmpty) {
-			val filterTag = CompoundTag()
-			filterTag.saveItems(filterContainer, registries)
-			tag.put(FILTER_NBT, filterTag)
+			tag.child(FILTER_NBT).saveItems(filterContainer)
 		}
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		tag.loadItems(bufferContainer, registries)
+		tag.loadItems(bufferContainer)
 
-		if (tag.contains(FILTER_NBT)) {
-			val filterTag = tag.getCompound(FILTER_NBT)
-			filterTag.loadItems(filterContainer, registries)
-		}
+		tag.child(FILTER_NBT).ifPresent { it.loadItems(filterContainer) }
 	}
 
 	companion object {

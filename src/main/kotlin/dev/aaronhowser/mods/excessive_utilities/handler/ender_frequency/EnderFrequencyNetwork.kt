@@ -12,6 +12,8 @@ import net.minecraft.server.MinecraftServer
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.saveddata.SavedData
+import net.minecraft.util.datafix.DataFixTypes
+import net.minecraft.world.level.saveddata.SavedDataType
 
 class EnderFrequencyNetwork : SavedData() {
 
@@ -82,7 +84,7 @@ class EnderFrequencyNetwork : SavedData() {
 		return didTransfer
 	}
 
-	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = tag
+	fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag = tag
 
 	data class NetworkKey(
 		val frequency: EnderFrequencyComponent,
@@ -101,7 +103,12 @@ class EnderFrequencyNetwork : SavedData() {
 
 		fun get(server: MinecraftServer): EnderFrequencyNetwork {
 			val storage = server.overworld().dataStorage
-			return storage.computeIfAbsent(Factory(::EnderFrequencyNetwork, ::load), SAVED_DATA_NAME)
+			return storage.computeIfAbsent(SavedDataType(
+                dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities.modResource(SAVED_DATA_NAME),
+                ::EnderFrequencyNetwork,
+                CompoundTag.CODEC.xmap({ EnderFrequencyNetwork() }, { CompoundTag() }),
+                DataFixTypes.SAVED_DATA_COMMAND_STORAGE
+            ))
 		}
 	}
 }

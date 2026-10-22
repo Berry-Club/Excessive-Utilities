@@ -1,0 +1,76 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "excessive_utilities:item/compound_bow_pull_3"
+        },
+        "threshold": 1.0
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:range_dispatch",
+      "entries": [
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "excessive_utilities:item/compound_bow_pull_2"
+          },
+          "threshold": 0.9
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:range_dispatch",
+        "entries": [
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "excessive_utilities:item/compound_bow_pull_1"
+            },
+            "threshold": 0.7
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:range_dispatch",
+          "entries": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "excessive_utilities:item/compound_bow_pull_0"
+              },
+              "threshold": 0.5
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:range_dispatch",
+            "entries": [
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "excessive_utilities:item/compound_bow_pull_0"
+                },
+                "threshold": 1.0
+              }
+            ],
+            "fallback": {
+              "type": "minecraft:model",
+              "model": "excessive_utilities:item/compound_bow"
+            },
+            "predicate": "minecraft:pulling",
+            "property": "excessive_utilities:item_predicate"
+          },
+          "predicate": "minecraft:pull",
+          "property": "excessive_utilities:item_predicate"
+        },
+        "predicate": "minecraft:pull",
+        "property": "excessive_utilities:item_predicate"
+      },
+      "predicate": "minecraft:pull",
+      "property": "excessive_utilities:item_predicate"
+    },
+    "predicate": "minecraft:pull",
+    "property": "excessive_utilities:item_predicate"
+  }
+}

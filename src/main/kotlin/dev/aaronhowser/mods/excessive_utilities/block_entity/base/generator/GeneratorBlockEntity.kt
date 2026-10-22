@@ -8,6 +8,8 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.insertEnergy
+import dev.aaronhowser.mods.excessive_utilities.block_entity.extractEnergy
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
@@ -27,11 +29,15 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.energy.EnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandlerModifiable
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 abstract class GeneratorBlockEntity(
 	type: BlockEntityType<*>,
@@ -41,18 +47,16 @@ abstract class GeneratorBlockEntity(
 
 	abstract val generatorType: GeneratorType
 
-	protected open val energyStorage = EnergyStorage(1_000_000)
-	protected open val publicEnergyCapability: IEnergyStorage =
-		object : IEnergyStorage {
-			override fun receiveEnergy(amount: Int, simulate: Boolean): Int = 0
-			override fun extractEnergy(amount: Int, simulate: Boolean): Int = energyStorage.extractEnergy(amount, simulate)
-			override fun getEnergyStored(): Int = energyStorage.energyStored
-			override fun getMaxEnergyStored(): Int = energyStorage.maxEnergyStored
-			override fun canReceive(): Boolean = false
-			override fun canExtract(): Boolean = energyStorage.canExtract()
+	protected open val energyStorage = SimpleEnergyHandler(1_000_000)
+	protected open val publicEnergyCapability: EnergyHandler =
+		object : EnergyHandler {
+			override fun getAmountAsLong(): Long = energyStorage.getAmountAsLong()
+			override fun getCapacityAsLong(): Long = energyStorage.getCapacityAsLong()
+			override fun insert(amount: Int, transaction: TransactionContext): Int = 0
+			override fun extract(amount: Int, transaction: TransactionContext): Int = energyStorage.extract(amount, transaction)
 		}
 
-	open fun getEnergyCapability(direction: Direction?): IEnergyStorage = publicEnergyCapability
+	open fun getEnergyCapability(direction: Direction?): EnergyHandler = publicEnergyCapability
 
 	protected open val container: GeneratorContainer =
 		object : GeneratorContainer(this@GeneratorBlockEntity, amountInputs = 1) {
@@ -62,7 +66,7 @@ abstract class GeneratorBlockEntity(
 		}
 
 	override fun getContainers(): List<Container> = listOfNotNull(container)
-	open fun getItemHandler(direction: Direction?): IItemHandlerModifiable? = container.itemHandler
+	open fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource>? = container.itemHandler
 
 	protected open fun isValidInput(itemStack: ItemStack) = true
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = false
@@ -83,8 +87,8 @@ abstract class GeneratorBlockEntity(
 
 			override fun get(index: Int): Int {
 				return when (index) {
-					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
-					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
+					MAX_ENERGY_DATA_INDEX -> energyStorage.getCapacityAsInt()
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.getAmountAsInt()
 					BURN_TIME_REMAINING_DATA_INDEX -> burnTimeRemaining
 					else -> -1
 				}
@@ -142,17 +146,17 @@ abstract class GeneratorBlockEntity(
 	protected fun pushOutEnergy(level: ServerLevel) {
 		for (dir in Direction.entries) {
 			val energyCap = level.getCapability(
-				Capabilities.EnergyStorage.BLOCK,
+				Capabilities.Energy.BLOCK,
 				blockPos.relative(dir),
 				dir.opposite
 			) ?: continue
 
-			if (!energyCap.canReceive()) continue
+			if (energyCap.getAmountAsLong() >= energyCap.getCapacityAsLong()) continue
 
-			val energyToPush = energyStorage.energyStored
+			val energyToPush = energyStorage.getAmountAsInt()
 			if (energyToPush <= 0) continue
 
-			val pushed = energyCap.receiveEnergy(energyToPush, false)
+			val pushed = energyCap.insertEnergy(energyToPush, false)
 			if (pushed > 0) {
 				energyStorage.extractEnergy(pushed, false)
 				setChanged()
@@ -205,11 +209,11 @@ abstract class GeneratorBlockEntity(
 	 * @return true if it generated energy
 	 */
 	protected open fun generateEnergy(level: ServerLevel): Boolean {
-		val remainingCapacity = energyStorage.maxEnergyStored - energyStorage.energyStored
+		val remainingCapacity = energyStorage.getCapacityAsInt() - energyStorage.getAmountAsInt()
 		if (remainingCapacity <= 0) return false
 
 		val energyToGenerate = fePerTick.coerceAtMost(remainingCapacity)
-		energyStorage.receiveEnergy(energyToGenerate, false)
+		energyStorage.insertEnergy(energyToGenerate, false)
 
 		burnTimeRemaining--
 		setChanged()
@@ -224,22 +228,22 @@ abstract class GeneratorBlockEntity(
 		return SingleItemGeneratorMenu(containerId, playerInventory, container, containerData)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
 		tag.putInt(BURN_TIME_REMAINING_NBT, burnTimeRemaining)
 		tag.putInt(FE_PER_TICK_NBT, fePerTick)
-		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
-		tag.saveItems(container, registries)
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage)
+		tag.saveItems(container)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		burnTimeRemaining = tag.getInt(BURN_TIME_REMAINING_NBT)
-		fePerTick = tag.getInt(FE_PER_TICK_NBT)
-		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
-		tag.loadItems(container, registries)
+		burnTimeRemaining = tag.getIntOr(BURN_TIME_REMAINING_NBT, 0)
+		fePerTick = tag.getIntOr(FE_PER_TICK_NBT, 0)
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage)
+		tag.loadItems(container)
 	}
 
 	companion object {

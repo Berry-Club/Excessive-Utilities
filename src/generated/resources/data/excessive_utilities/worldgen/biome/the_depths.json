@@ -1,13 +1,13 @@
 {
-  "carvers": {
-    "air": "excessive_utilities:depths_cave"
+  "attributes": {
+    "minecraft:visual/fog_color": "#010101",
+    "minecraft:visual/sky_color": "#000000",
+    "minecraft:visual/water_fog_color": "#050533"
   },
+  "carvers": "excessive_utilities:depths_cave",
   "downfall": 0.0,
   "effects": {
-    "fog_color": 65793,
-    "sky_color": 0,
-    "water_color": 4159204,
-    "water_fog_color": 329011
+    "water_color": "#3f76e4"
   },
   "features": [
     [],

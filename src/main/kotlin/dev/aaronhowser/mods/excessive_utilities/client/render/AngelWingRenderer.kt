@@ -8,9 +8,11 @@ import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
 import net.minecraft.client.model.EntityModel
 import net.minecraft.client.model.HumanoidModel
-import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.RenderType
+import net.minecraft.client.renderer.SubmitNodeCollector
+import net.minecraft.client.renderer.rendertype.RenderTypes
 import net.minecraft.client.renderer.entity.RenderLayerParent
+import net.minecraft.client.renderer.entity.EntityRendererProvider
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState
 import net.minecraft.client.renderer.texture.OverlayTexture
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
@@ -20,32 +22,28 @@ import kotlin.math.cos
 
 class AngelWingRenderer : ICurioRenderer {
 
-	override fun <T : LivingEntity, M : EntityModel<T?>> render(
+	override fun <T : LivingEntityRenderState, M : EntityModel<in T>> render(
 		stack: ItemStack,
 		slotContext: SlotContext,
 		poseStack: PoseStack,
-		renderLayerParent: RenderLayerParent<T, M>,
-		renderTypeBuffer: MultiBufferSource,
+		submitNodeCollector: SubmitNodeCollector,
 		light: Int,
-		limbSwing: Float,
-		limbSwingAmount: Float,
-		partialTicks: Float,
-		ageInTicks: Float,
-		netHeadYaw: Float,
-		headPitch: Float
+		renderState: T,
+		renderLayerParent: RenderLayerParent<T, M>,
+		context: EntityRendererProvider.Context,
+		yRotation: Float,
+		xRotation: Float
 	) {
-		val entity = slotContext.entity
-		val wingType = entity.getData(ModAttachmentTypes.WINGS)
+		val wingType = slotContext.entity.getData(ModAttachmentTypes.WINGS)
 		if (wingType == AngelRingItem.Type.INVISIBLE) return
 
-		val parentModel = renderLayerParent.model as? HumanoidModel<*> ?: return
+		val parentModel = renderLayerParent.model
+		if (parentModel !is HumanoidModel<*>) return
 
 		val texture = wingType.textureLocation
-		val consumer = renderTypeBuffer.getBuffer(RenderType.entityCutoutNoCull(texture))
+		val flying = !slotContext.entity.onGround()
 
-		val flying = !entity.onGround()
-
-		val angleAmplitude = cos(ageInTicks / if (flying) 4 else 16) + 1
+		val angleAmplitude = cos(renderState.ageInTicks / if (flying) 4 else 16) + 1
 		val angle = 25f + angleAmplitude * if (flying) 20 else 8
 
 		poseStack.withPose {
@@ -55,24 +53,22 @@ class AngelWingRenderer : ICurioRenderer {
 
 			poseStack.withPose {
 				poseStack.mulPose(Axis.YP.rotationDegrees(angle))
-				renderQuad(poseStack, consumer, light, isFlipped = false)
+				submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(texture)) { pose, consumer -> renderQuad(pose, consumer, light, isFlipped = false) }
 			}
 
 			poseStack.withPose {
 				poseStack.mulPose(Axis.YP.rotationDegrees(-angle))
-				renderQuad(poseStack, consumer, light, isFlipped = true)
+				submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(texture)) { pose, consumer -> renderQuad(pose, consumer, light, isFlipped = true) }
 			}
 		}
 	}
 
 	private fun renderQuad(
-		poseStack: PoseStack,
+		pose: PoseStack.Pose,
 		vertexConsumer: VertexConsumer,
 		packedLight: Int,
 		isFlipped: Boolean
 	) {
-		val pose = poseStack.last()
-
 		val minX = if (isFlipped) 0f else -1f
 		val maxX = if (isFlipped) -1f else 0f
 

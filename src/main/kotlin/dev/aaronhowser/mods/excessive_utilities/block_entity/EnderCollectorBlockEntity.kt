@@ -7,6 +7,8 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
@@ -15,8 +17,9 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil
+import net.neoforged.neoforge.transfer.item.ItemResource
 
 class EnderCollectorBlockEntity(
 	pos: BlockPos,
@@ -54,8 +57,8 @@ class EnderCollectorBlockEntity(
 			val stack = itemEntity.item
 			val countBefore = stack.count
 
-			val remaining = ItemHandlerHelper.insertItemStacked(itemHandler, stack, false)
-			val countAfter = remaining.count
+			val accepted = ResourceHandlerUtil.insertStacking(itemHandler, ItemResource.of(stack), stack.count, null)
+			val countAfter = countBefore - accepted
 
 			if (countBefore == countAfter) continue
 
@@ -68,30 +71,30 @@ class EnderCollectorBlockEntity(
 				level.random.nextRange(0.6f, 3.4f)
 			)
 
-			if (remaining.isEmpty) {
+			if (countAfter <= 0) {
 				itemEntity.discard()
 			} else {
-				itemEntity.item = remaining
+				itemEntity.item = stack.copyWithCount(countAfter)
 			}
 		}
 	}
 
-	private fun getItemHandler(level: ServerLevel): IItemHandler? {
+	private fun getItemHandler(level: ServerLevel): ResourceHandler<ItemResource>? {
 		val facing = blockState.getValue(EnderCollectorBlock.FACING)
 		val targetPos = worldPosition.relative(facing.opposite)
-		return level.getCapability(Capabilities.ItemHandler.BLOCK, targetPos, facing)
+		return level.getCapability(Capabilities.Item.BLOCK, targetPos, facing)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
 		tag.putDouble(RADIUS_NBT, radius)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		radius = tag.getDouble(RADIUS_NBT)
+		radius = tag.getDoubleOr(RADIUS_NBT, 0.0)
 	}
 
 	companion object {

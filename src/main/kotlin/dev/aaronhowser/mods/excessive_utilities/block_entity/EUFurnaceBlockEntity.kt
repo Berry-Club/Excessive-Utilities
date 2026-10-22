@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.excessive_utilities.block.EUFurnaceBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SimpleMachineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
@@ -25,8 +26,9 @@ class EUFurnaceBlockEntity(
 	override fun isValidInput(stack: ItemStack): Boolean {
 		val level = level ?: return false
 
-		return level.recipeManager
-			.getRecipeFor(RecipeType.SMELTING, SingleRecipeInput(stack), level)
+		return ModRecipes.recipes(level)
+			.getRecipesFor(RecipeType.SMELTING, SingleRecipeInput(stack), level)
+			.findFirst()
 			.isPresent
 	}
 
@@ -51,8 +53,9 @@ class EUFurnaceBlockEntity(
 			}
 		}
 
-		val recipe = level.recipeManager
-			.getRecipeFor(RecipeType.SMELTING, input, level)
+		val recipe = ModRecipes.recipes(level)
+			.getRecipesFor(RecipeType.SMELTING, input, level)
+			.findFirst()
 			.getOrNull()
 
 		if (recipe == null) {

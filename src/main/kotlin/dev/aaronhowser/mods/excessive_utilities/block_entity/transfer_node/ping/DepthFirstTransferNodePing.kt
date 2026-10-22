@@ -39,10 +39,11 @@ class DepthFirstTransferNodePing(
 		while (path.size > 1) {
 			val previousPos = path.removeLast()
 			val nextPos = path.last()
-			val cameFrom = Direction.fromDelta(
+			val cameFrom = Direction.getNearest(
 				previousPos.x - nextPos.x,
 				previousPos.y - nextPos.y,
-				previousPos.z - nextPos.z
+				previousPos.z - nextPos.z,
+				homePlacedOnDirection
 			) ?: homePlacedOnDirection
 
 			move(nextPos, cameFrom)

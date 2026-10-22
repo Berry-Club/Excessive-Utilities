@@ -12,8 +12,8 @@ import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.items.ItemStackHandler
-import net.neoforged.neoforge.items.SlotItemHandler
+import net.minecraft.world.SimpleContainer
+import net.minecraft.world.inventory.Slot
 
 class ItemFilterMenu(
 	containerId: Int,
@@ -28,11 +28,13 @@ class ItemFilterMenu(
 	) : this(containerId, playerInventory, data.readEnum(InteractionHand::class.java))
 
 	private val filterItems =
-		object : ItemStackHandler(ItemFilterComponent.CONTAINER_SIZE) {
-			override fun onContentsChanged(slot: Int) {
-				val stackThere = getStackInSlot(slot)
+		object : SimpleContainer(ItemFilterComponent.CONTAINER_SIZE) {
+			override fun setChanged() {
+				super.setChanged()
 				val filterStack = getFilterStack()
-				ItemFilterItem.setStack(filterStack, slot, stackThere)
+				for (slot in 0 until ItemFilterComponent.CONTAINER_SIZE) {
+					ItemFilterItem.setStack(filterStack, slot, getItem(slot))
+				}
 			}
 		}
 
@@ -40,7 +42,7 @@ class ItemFilterMenu(
 		val filterStack = getFilterStack()
 		val container = ItemFilterItem.getFilterItems(filterStack)
 		for ((i, ghostStack) in container.withIndex()) {
-			filterItems.setStackInSlot(i, ghostStack)
+			filterItems.setItem(i, ghostStack)
 		}
 
 		addSlots(159)
@@ -60,7 +62,7 @@ class ItemFilterMenu(
 			val x = 53 + (i % 4) * 18
 			val y = 29 + (i / 4) * 18
 
-			val slot = object : SlotItemHandler(filterItems, i, x, y) {
+			val slot = object : Slot(filterItems, i, x, y) {
 				override fun mayPlace(stack: ItemStack): Boolean = true
 				override fun mayPickup(player: Player): Boolean = true
 				override fun getMaxStackSize(): Int = 1

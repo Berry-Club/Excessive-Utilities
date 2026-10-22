@@ -6,6 +6,8 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.block.state.BlockState
 
 class GpPanelBlockEntity(
@@ -25,20 +27,21 @@ class GpPanelBlockEntity(
 		}
 
 		val canSeeSky = level.canSeeSky(worldPosition.above())
-		val isProducing = canSeeSky && requiresDay == level.isDay
+		val isDay = level.gameTime % 24000L < 12000L
+		val isProducing = canSeeSky && requiresDay == isDay
 
 		if (!isProducing) return 0.0
 		return if (level.isRaining) amount * 0.95 else amount
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 		tag.putBoolean(REQUIRES_DAY_NBT, requiresDay)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		requiresDay = tag.getBoolean(REQUIRES_DAY_NBT)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		requiresDay = tag.getBooleanOr(REQUIRES_DAY_NBT, false)
 	}
 
 	companion object {

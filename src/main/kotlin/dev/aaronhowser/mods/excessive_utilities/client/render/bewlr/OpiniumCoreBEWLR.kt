@@ -1,163 +1,30 @@
 package dev.aaronhowser.mods.excessive_utilities.client.render.bewlr
-
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
+import com.mojang.serialization.MapCodec
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.client.Minecraft
-import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer
-import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.entity.ItemRenderer
-import net.minecraft.util.Mth
+import net.minecraft.client.renderer.SubmitNodeCollector
+import net.minecraft.client.renderer.item.ItemModelResolver
+import net.minecraft.client.renderer.item.ItemStackRenderState
+import net.minecraft.client.renderer.special.SpecialModelRenderer
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
-import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions
-
-class OpiniumCoreBEWLR : BlockEntityWithoutLevelRenderer(
-	Minecraft.getInstance().blockEntityRenderDispatcher,
-	Minecraft.getInstance().entityModels
-) {
-
-	override fun renderByItem(
-		stack: ItemStack,
-		displayContext: ItemDisplayContext,
-		poseStack: PoseStack,
-		buffer: MultiBufferSource,
-		packedLight: Int,
-		packedOverlay: Int
-	) {
-		val component = stack.get(ModDataComponents.OPINIUM_CORE_CONTENTS) ?: return
-
-		val center = component.getCenter()
-		val outer = component.getOuter()
-
-		val gameTime = AaronClientUtil.localLevel?.gameTime ?: 0
-		val time = gameTime + Minecraft.getInstance().timer.gameTimeDeltaTicks
-
-		renderInner(center, poseStack, buffer, displayContext, packedLight, packedOverlay, time)
-		renderOuters(outer, poseStack, buffer, displayContext, packedLight, packedOverlay, time)
-	}
-
-	companion object {
-		private val ITEM_RENDERER: ItemRenderer = Minecraft.getInstance().itemRenderer
-
-		private fun renderInner(
-			innerStack: ItemStack,
-			poseStack: PoseStack,
-			buffer: MultiBufferSource,
-			displayContext: ItemDisplayContext,
-			packedLight: Int,
-			packedOverlay: Int,
-			time: Float
-		) {
-			poseStack.withPose {
-				poseStack.translate(0.5, 0.5, 0.5)
-
-				val yRotPerTick = 4f
-				val yRot = Mth.wrapDegrees(time * yRotPerTick)
-				poseStack.mulPose(Axis.YP.rotationDegrees(yRot))
-
-				val xRotPerTick = 2f
-				val xRot = Mth.wrapDegrees(time * xRotPerTick)
-				poseStack.mulPose(Axis.XP.rotationDegrees(xRot))
-
-				val zRotPerTick = 1f
-				val zRot = Mth.wrapDegrees(time * zRotPerTick)
-				poseStack.mulPose(Axis.ZP.rotationDegrees(zRot))
-
-				poseStack.scale(0.5f, 0.5f, 0.5f)
-
-				ITEM_RENDERER.renderStatic(
-					innerStack,
-					displayContext,
-					packedLight,
-					packedOverlay,
-					poseStack,
-					buffer,
-					null,
-					0
-				)
-			}
-		}
-
-		private fun renderOuters(
-			outerStack: ItemStack,
-			poseStack: PoseStack,
-			buffer: MultiBufferSource,
-			displayContext: ItemDisplayContext,
-			packedLight: Int,
-			packedOverlay: Int,
-			time: Float
-		) {
-			poseStack.withPose {
-				poseStack.translate(0.5, 0.5, 0.5)
-
-				val yRotPerTick = 2f
-				val yRot = Mth.wrapDegrees(time * yRotPerTick)
-				poseStack.mulPose(Axis.YP.rotationDegrees(yRot))
-
-				val xRotPerTick = 2f
-				val xRot = Mth.wrapDegrees(time * xRotPerTick)
-				poseStack.mulPose(Axis.XP.rotationDegrees(xRot))
-
-				val zRotPerTick = 1f
-				val zRot = Mth.wrapDegrees(time * zRotPerTick)
-				poseStack.mulPose(Axis.ZP.rotationDegrees(zRot))
-
-				poseStack.withPose {
-					poseStack.translate(0.3, 0.0, 0.0)
-					renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
-				}
-
-				poseStack.withPose {
-					poseStack.translate(-0.3, 0.0, 0.0)
-					renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
-				}
-
-				poseStack.withPose {
-					poseStack.translate(0.0, 0.0, 0.3)
-					renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
-				}
-
-				poseStack.withPose {
-					poseStack.translate(0.0, 0.0, -0.3)
-					renderOuterShifted(outerStack, poseStack, buffer, displayContext, packedLight, packedOverlay)
-				}
-			}
-		}
-
-		private fun renderOuterShifted(
-			outerStack: ItemStack,
-			poseStack: PoseStack,
-			buffer: MultiBufferSource,
-			displayContext: ItemDisplayContext,
-			packedLight: Int,
-			packedOverlay: Int
-		) {
-			poseStack.withPose {
-				poseStack.scale(0.25f, 0.25f, 0.25f)
-
-				ITEM_RENDERER.renderStatic(
-					outerStack,
-					displayContext,
-					packedLight,
-					packedOverlay,
-					poseStack,
-					buffer,
-					null,
-					0
-				)
-			}
-		}
-	}
-
-	object ClientItemExtensions : IClientItemExtensions {
-		val BEWLR = OpiniumCoreBEWLR()
-
-		override fun getCustomRenderer(): BlockEntityWithoutLevelRenderer {
-			return BEWLR
-		}
-	}
-
+import org.joml.Vector3fc
+import java.util.function.Consumer
+class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
+ private val resolver: ItemModelResolver = Minecraft.getInstance().itemModelResolver
+ override fun extractArgument(stack: ItemStack)=stack.copy()
+ override fun getExtents(output: Consumer<Vector3fc>)=Unit
+ override fun submit(argument: ItemStack?, poseStack: PoseStack, collector: SubmitNodeCollector, lightCoords:Int, overlayCoords:Int, hasFoil:Boolean, outlineColor:Int) {
+  val stack=argument ?: return; val contents=stack.get(ModDataComponents.OPINIUM_CORE_CONTENTS) ?: return
+  val inner=ItemStackRenderState(); val outer=ItemStackRenderState()
+  resolver.updateForTopItem(inner,contents.getCenter(),ItemDisplayContext.NONE,null,null,0)
+  resolver.updateForTopItem(outer,contents.getOuter(),ItemDisplayContext.NONE,null,null,0)
+  val time=(AaronClientUtil.localLevel?.gameTime ?: 0L).toFloat()
+  poseStack.pushPose(); poseStack.translate(.5,.5,.5); poseStack.mulPose(Axis.YP.rotationDegrees(time*4f)); poseStack.mulPose(Axis.XP.rotationDegrees(time*2f)); poseStack.scale(.5f,.5f,.5f); inner.submit(poseStack,collector,lightCoords,overlayCoords,outlineColor); poseStack.popPose()
+  for (i in 0 until 8) { poseStack.pushPose(); poseStack.translate(.5,.5,.5); poseStack.mulPose(Axis.YP.rotationDegrees(i*45f+time*2f)); poseStack.translate(.3,0.0,0.0); poseStack.scale(.25f,.25f,.25f); outer.submit(poseStack,collector,lightCoords,overlayCoords,outlineColor); poseStack.popPose() }
+ }
+ data object Unbaked : SpecialModelRenderer.Unbaked<ItemStack> { val CODEC:MapCodec<Unbaked> = MapCodec.unit(Unbaked); override fun type()=CODEC; override fun bake(context:SpecialModelRenderer.BakingContext)=OpiniumCoreBEWLR() }
 }

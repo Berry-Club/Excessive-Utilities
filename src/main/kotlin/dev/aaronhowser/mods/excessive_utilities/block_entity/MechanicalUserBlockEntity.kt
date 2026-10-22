@@ -1,8 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
-import dev.aaronhowser.mods.aaron.fake_player.AttributeFakePlayer
-import dev.aaronhowser.mods.aaron.fake_player.BetterFakePlayerFactory
+import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.excessive_utilities.block.MechanicalInteractorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MechanicalInteractorBlockEntity
@@ -13,11 +12,13 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.UUIDUtil
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
@@ -31,7 +32,8 @@ import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.common.util.FakePlayer
-import net.neoforged.neoforge.items.ItemHandlerHelper
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil
+import net.neoforged.neoforge.transfer.item.ItemResource
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -131,11 +133,11 @@ class MechanicalUserBlockEntity(
 			fakePlayer.inventory.setItem(slot, container.getItem(slot).copy())
 		}
 
-		val facingVector = Vec3.atLowerCornerOf(facing.normal)
+		val facingVector = Vec3(facing.stepX.toDouble(), facing.stepY.toDouble(), facing.stepZ.toDouble())
 		val fakePlayerEyePosition = blockPos.center
 			.add(facingVector.scale(FAKE_PLAYER_FACE_OFFSET))
 
-		fakePlayer.inventory.selected = selectedSlot
+		fakePlayer.inventory.setSelectedSlot(selectedSlot)
 		fakePlayer.isShiftKeyDown = isSneaking
 		fakePlayer.setPos(fakePlayerEyePosition.subtract(0.0, fakePlayer.eyeHeight.toDouble(), 0.0))
 		fakePlayer.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos.center)
@@ -225,7 +227,7 @@ class MechanicalUserBlockEntity(
 			hitResult
 		)
 
-		if (itemResult == ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION) {
+		if (itemResult.consumesAction().not()) {
 			targetState.useWithoutItem(level, fakePlayer, hitResult)
 		}
 	}
@@ -262,7 +264,7 @@ class MechanicalUserBlockEntity(
 			fakePlayer.attack(targetEntity)
 		} else {
 			if (targetEntity.isEntity(ModEntityTypeTagsProvider.MECHANICAL_USER_RIGHT_CLICK_BLACKLIST)) return
-			fakePlayer.interactOn(targetEntity, InteractionHand.MAIN_HAND)
+			fakePlayer.interactOn(targetEntity, InteractionHand.MAIN_HAND, targetPos.center)
 		}
 	}
 
@@ -276,9 +278,16 @@ class MechanicalUserBlockEntity(
 			val stack = fakePlayer.inventory.getItem(slot)
 			if (stack.isEmpty) continue
 
-			val remainder = ItemHandlerHelper.insertItemStacked(super.getItemHandler(null), stack.copy(), false)
-			if (!remainder.isEmpty) {
-				fakePlayer.drop(remainder, false)
+			val toInsert = stack.copy()
+			val inserted = ResourceHandlerUtil.insertStacking(
+				super.getItemHandler(null),
+				ItemResource.of(toInsert),
+				toInsert.count,
+				null
+			)
+			if (inserted < toInsert.count) {
+				toInsert.shrink(inserted)
+				fakePlayer.drop(toInsert, false)
 			}
 		}
 
@@ -289,24 +298,25 @@ class MechanicalUserBlockEntity(
 		return MechanicalUserMenu(containerId, playerInventory, container, menuData)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 		tag.putInt(INTERACTION_MODE_NBT, interactionMode.ordinal)
 		tag.putBoolean(IS_LEFT_CLICK_NBT, isLeftClick)
 		tag.putBoolean(USE_UPPER_LEFT_SLOT_ONLY_NBT, useUpperLeftSlotOnly)
 		tag.putBoolean(SNEAKING_NBT, isSneaking)
-		tag.putUUID(FAKE_PLAYER_UUID_NBT, fakePlayerUuid)
+		tag.putIntArray(FAKE_PLAYER_UUID_NBT, UUIDUtil.uuidToIntArray(fakePlayerUuid))
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		interactionMode = InteractionMode.fromOrdinal(tag.getInt(INTERACTION_MODE_NBT))
-		isLeftClick = tag.getBoolean(IS_LEFT_CLICK_NBT)
-		useUpperLeftSlotOnly = tag.getBoolean(USE_UPPER_LEFT_SLOT_ONLY_NBT)
-		isSneaking = tag.getBoolean(SNEAKING_NBT)
-		if (tag.hasUUID(FAKE_PLAYER_UUID_NBT)) {
-			fakePlayerUuid = tag.getUUID(FAKE_PLAYER_UUID_NBT)
-		}
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		interactionMode = InteractionMode.fromOrdinal(tag.getIntOr(INTERACTION_MODE_NBT, 0))
+		isLeftClick = tag.getBooleanOr(IS_LEFT_CLICK_NBT, false)
+		useUpperLeftSlotOnly = tag.getBooleanOr(USE_UPPER_LEFT_SLOT_ONLY_NBT, false)
+		isSneaking = tag.getBooleanOr(SNEAKING_NBT, false)
+		fakePlayerUuid = tag.getIntArray(FAKE_PLAYER_UUID_NBT)
+			.filter { it.size == 4 }
+			.map(UUIDUtil::uuidFromIntArray)
+			.orElse(fakePlayerUuid)
 	}
 
 	companion object {
@@ -347,7 +357,7 @@ class MechanicalUserBlockEntity(
 	private class MechanicalUserFakePlayer(
 		level: ServerLevel,
 		gameProfile: GameProfile
-	) : AttributeFakePlayer(level, gameProfile) {
+	) : FakePlayer(level, gameProfile) {
 		override fun getAttackStrengthScale(adjustTicks: Float): Float = 1f
 	}
 

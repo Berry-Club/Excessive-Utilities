@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.recipe.machine
 
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.excessive_utilities.recipe.base.BlockStateIngredient
@@ -21,7 +22,7 @@ class WorldInteractionFluidRecipe(
 	val requiredAdjacentBlocks: List<BlockStateIngredient>,
 	val optionalRequiredBlockBehind: Optional<BlockStateIngredient>,
 	val output: FluidStack
-) : Recipe<WorldInteractionFluidRecipe.Input> {
+) : MachineRecipe<WorldInteractionFluidRecipe.Input> {
 
 	val requiredOnBlock: BlockStateIngredient? = optionalRequiredOnBlock.orElse(null)
 	val requiredBlockBehind: BlockStateIngredient? = optionalRequiredBlockBehind.orElse(null)
@@ -55,12 +56,12 @@ class WorldInteractionFluidRecipe(
 		return !(requiredBlockBehind != null && !requiredBlockBehind.test(input.blockBehind))
 	}
 
-	override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
-	override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
+	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
+	override fun assemble(input: Input): ItemStack = ItemStack.EMPTY
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.WORLD_INTERACTION_FLUID.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.WORLD_INTERACTION_FLUID.get()
+	override fun getSerializer(): RecipeSerializer<WorldInteractionFluidRecipe> = ModRecipeSerializers.WORLD_INTERACTION_FLUID.get()
+	override fun getType(): RecipeType<WorldInteractionFluidRecipe> = ModRecipeTypes.WORLD_INTERACTION_FLUID.get()
 
 	companion object {
 		fun getRecipe(
@@ -71,7 +72,7 @@ class WorldInteractionFluidRecipe(
 		): WorldInteractionFluidRecipe? {
 			val input = Input(onBlock, adjacentBlocks, blockBehind)
 
-			return getAllRecipes(level.recipeManager)
+			return getAllRecipes(dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				.firstOrNull { recipeHolder ->
 					recipeHolder.value.matches(input, level)
 				}
@@ -79,8 +80,8 @@ class WorldInteractionFluidRecipe(
 		}
 
 		// Sort recipes so the most specific ones are checked first
-		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<WorldInteractionFluidRecipe>> {
-			return recipeManager.getAllRecipesFor(ModRecipeTypes.WORLD_INTERACTION_FLUID.get())
+		fun getAllRecipes(recipeManager: RecipeMap): List<RecipeHolder<WorldInteractionFluidRecipe>> {
+			return recipeManager.byType(ModRecipeTypes.WORLD_INTERACTION_FLUID.get()).toList()
 				.sortedWith(compareByDescending<RecipeHolder<WorldInteractionFluidRecipe>> {
 					it.value.optionalRequiredOnBlock.isPresent
 				}.thenByDescending {
@@ -101,9 +102,7 @@ class WorldInteractionFluidRecipe(
 		override fun size(): Int = 0
 	}
 
-	class Serializer : RecipeSerializer<WorldInteractionFluidRecipe> {
-		override fun codec(): MapCodec<WorldInteractionFluidRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, WorldInteractionFluidRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<WorldInteractionFluidRecipe> =

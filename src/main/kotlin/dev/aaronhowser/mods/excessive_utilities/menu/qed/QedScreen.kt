@@ -4,19 +4,17 @@ import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.ProgressArrow
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 
 class QedScreen(
 	menu: QedMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<QedMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = TEAL_LABEL
+) : ExcessiveUtilitiesScreen<QedMenu>(menu, playerInventory, title, BACKGROUND) {
+	override val titleLabelSprite: Identifier = TEAL_LABEL
 
 	override fun baseInit() {
 		super.baseInit()
@@ -32,16 +30,16 @@ class QedScreen(
 		addRenderableWidget(progressArrow)
 	}
 
-	override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
-		super.renderLabels(guiGraphics, mouseX, mouseY)
+	override fun extractLabels(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
+		super.extractLabels(graphics, mouseX, mouseY)
 
 		val nearbyCrystals = menu.getAmountNearbyCrystals()
-		guiGraphics.drawString(
+		graphics.text(
 			font,
 			Component.literal(nearbyCrystals.toString() + "x"),
 			95,
 			30,
-			4210752,
+			LABEL_TEXT_COLOR,
 			false
 		)
 	}

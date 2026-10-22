@@ -8,6 +8,7 @@ import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.Vec3
+import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 
 class OilyEffect : MobEffect(
@@ -19,7 +20,7 @@ class OilyEffect : MobEffect(
 		return true
 	}
 
-	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+	override fun applyEffectTick(level: ServerLevel, livingEntity: LivingEntity, amplifier: Int): Boolean {
 		if (livingEntity is Player && !livingEntity.abilities.flying) {
 			if (livingEntity.level().isRainingAt(livingEntity.blockPosition())) {
 				livingEntity.addDeltaMovement(

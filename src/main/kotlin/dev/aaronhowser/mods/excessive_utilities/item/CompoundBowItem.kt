@@ -15,3 +15,7 @@ class CompoundBowItem(properties: Properties) : BowItem(properties) {
 	}
 
 }
+
+
+
+

@@ -29,8 +29,8 @@ class SingleItemFuelRecipe(
 		return ingredient.test(input.item())
 	}
 
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.SINGLE_ITEM_FUEL.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.SINGLE_ITEM_FUEL.get()
+	override fun getSerializer(): RecipeSerializer<SingleItemFuelRecipe> = ModRecipeSerializers.SINGLE_ITEM_FUEL.get()
+	override fun getType(): RecipeType<SingleItemFuelRecipe> = ModRecipeTypes.SINGLE_ITEM_FUEL.get()
 
 	companion object {
 		fun getRecipe(
@@ -40,22 +40,22 @@ class SingleItemFuelRecipe(
 		): SingleItemFuelRecipe? {
 			val input = SingleRecipeInput(stack)
 
-			return getAllRecipesOfType(type, level.recipeManager)
+			return getAllRecipesOfType(type, dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				.firstOrNull { it.value.matches(input, level) }
 				?.value
 		}
 
 		fun getAllRecipesOfType(
 			generatorType: GeneratorType,
-			recipeManager: RecipeManager
+			recipeManager: RecipeMap
 		): List<RecipeHolder<SingleItemFuelRecipe>> {
 			return getAllRecipes(recipeManager).filter { it.value().generatorType == generatorType }
 		}
 
 		fun getAllRecipes(
-			recipeManager: RecipeManager
+			recipeManager: RecipeMap
 		): List<RecipeHolder<SingleItemFuelRecipe>> {
-			return recipeManager.getAllRecipesFor(ModRecipeTypes.SINGLE_ITEM_FUEL.get())
+			return recipeManager.byType(ModRecipeTypes.SINGLE_ITEM_FUEL.get()).toList()
 		}
 	}
 
@@ -80,9 +80,7 @@ class SingleItemFuelRecipe(
 		}
 	}
 
-	class Serializer : RecipeSerializer<SingleItemFuelRecipe> {
-		override fun codec(): MapCodec<SingleItemFuelRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, SingleItemFuelRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<SingleItemFuelRecipe> =

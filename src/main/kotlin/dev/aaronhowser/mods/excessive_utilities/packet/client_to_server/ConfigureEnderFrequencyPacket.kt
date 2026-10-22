@@ -32,7 +32,7 @@ class ConfigureEnderFrequencyPacket(
 		stack.set(ModDataComponents.ENDER_FREQUENCY, frequency)
 	}
 
-	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload?> = TYPE
+	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload> = TYPE
 
 	companion object {
 		val TYPE: CustomPacketPayload.Type<ConfigureEnderFrequencyPacket> =

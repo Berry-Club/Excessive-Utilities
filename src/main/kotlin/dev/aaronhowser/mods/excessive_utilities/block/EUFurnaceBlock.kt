@@ -10,12 +10,13 @@ import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 
-class EUFurnaceBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+class EUFurnaceBlock(properties: Properties) : GpDrainBlock(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -39,8 +40,19 @@ class EUFurnaceBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)), E
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 		val LIT: BooleanProperty = BlockStateProperties.LIT
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

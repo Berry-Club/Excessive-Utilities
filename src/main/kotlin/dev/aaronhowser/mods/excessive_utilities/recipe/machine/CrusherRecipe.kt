@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.recipe.machine
 
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -20,18 +21,18 @@ class CrusherRecipe(
 	val secondaryChance: Float,
 	val ticks: Int,
 	val fePerTick: Int
-) : Recipe<SingleRecipeInput> {
+) : MachineRecipe<SingleRecipeInput> {
 
 	fun getPrimaryOutput(): ItemStack = primaryOutput.copy()
 	fun getSecondaryOutput(): ItemStack = secondaryOutput.copy()
 
 	override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
-	override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = primaryOutput.copy()
-	override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	override fun getResultItem(registries: HolderLookup.Provider): ItemStack = primaryOutput.copy()
+	override fun assemble(input: SingleRecipeInput): ItemStack = primaryOutput.copy()
+	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = primaryOutput.copy()
 
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.CRUSHER.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.CRUSHER.get()
+	override fun getSerializer(): RecipeSerializer<CrusherRecipe> = ModRecipeSerializers.CRUSHER.get()
+	override fun getType(): RecipeType<CrusherRecipe> = ModRecipeTypes.CRUSHER.get()
 
 	companion object {
 		const val DEFAULT_SECONDARY_CHANCE = 0f
@@ -42,20 +43,18 @@ class CrusherRecipe(
 			level: Level,
 			input: ItemStack
 		): RecipeHolder<CrusherRecipe>? {
-			return getAllRecipes(level.recipeManager)
+			return getAllRecipes(dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				.firstOrNull { recipeHolder ->
 					recipeHolder.value.matches(SingleRecipeInput(input), level)
 				}
 		}
 
-		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<CrusherRecipe>> {
-			return recipeManager.getAllRecipesFor(ModRecipeTypes.CRUSHER.get())
+		fun getAllRecipes(recipeManager: RecipeMap): List<RecipeHolder<CrusherRecipe>> {
+			return recipeManager.byType(ModRecipeTypes.CRUSHER.get()).toList()
 		}
 	}
 
-	class Serializer : RecipeSerializer<CrusherRecipe> {
-		override fun codec(): MapCodec<CrusherRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, CrusherRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<CrusherRecipe> =

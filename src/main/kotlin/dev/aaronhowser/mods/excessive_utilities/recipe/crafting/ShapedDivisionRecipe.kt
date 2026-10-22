@@ -18,10 +18,10 @@ import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
 class ShapedDivisionRecipe(
-	pattern: ShapedRecipePattern,
+	val pattern: ShapedRecipePattern,
 	val output: ItemStack,
 	val requiredInversion: Inversion
-) : ShapedRecipe("", CraftingBookCategory.MISC, pattern, output, false) {
+) : SpecialShapedRecipe(pattern, output) {
 
 	override fun matches(input: CraftingInput, level: Level): Boolean {
 		for (inputStack in input.items()) {
@@ -46,9 +46,7 @@ class ShapedDivisionRecipe(
 		for (i in list.indices) {
 			val stack = input.getItem(i)
 
-			if (stack.hasCraftingRemainingItem()) {
-				list[i] = stack.craftingRemainingItem
-			}
+			stack.craftingRemainder?.let { list[i] = it.create() }
 
 			if (stack.isItem(ModItems.DIVISION_SIGIL)) {
 				if (DivisionSigilItem.isInverted(stack)) {
@@ -70,11 +68,9 @@ class ShapedDivisionRecipe(
 	}
 
 	override fun isSpecial(): Boolean = true
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.SHAPED_DIVISION.get()
+	override fun getSerializer(): RecipeSerializer<ShapedDivisionRecipe> = ModRecipeSerializers.SHAPED_DIVISION.get()
 
-	class Serializer : RecipeSerializer<ShapedDivisionRecipe> {
-		override fun codec(): MapCodec<ShapedDivisionRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, ShapedDivisionRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<ShapedDivisionRecipe> =
@@ -83,7 +79,7 @@ class ShapedDivisionRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(ShapedDivisionRecipe::pattern),
-						ItemStack.STRICT_CODEC
+						ItemStack.CODEC
 							.fieldOf("result")
 							.forGetter(ShapedDivisionRecipe::output),
 						Inversion.CODEC

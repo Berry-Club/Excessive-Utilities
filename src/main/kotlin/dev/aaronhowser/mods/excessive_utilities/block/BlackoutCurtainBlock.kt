@@ -5,29 +5,16 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.IronBarsBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class BlackoutCurtainBlock : IronBarsBlock(
-	Properties.ofFullCopy(Blocks.BLACK_WOOL)
-		.noOcclusion()
-		.isValidSpawn(Blocks::never)
-		.isRedstoneConductor(Blocks::never)
-		.isSuffocating(Blocks::never)
-		.isViewBlocking(Blocks::never)
-) {
+class BlackoutCurtainBlock(properties: Properties) : IronBarsBlock(properties) {
 
 	override fun getCollisionShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		return Shapes.empty()
 	}
 
-	override fun propagatesSkylightDown(state: BlockState, reader: BlockGetter, pos: BlockPos): Boolean {
-		return false
-	}
-
-	override fun getLightBlock(state: BlockState, level: BlockGetter, pos: BlockPos): Int {
-		return level.maxLightLevel / 2
-	}
 
 }

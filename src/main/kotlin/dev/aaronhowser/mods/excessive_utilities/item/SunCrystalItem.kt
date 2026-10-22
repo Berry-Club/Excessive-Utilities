@@ -9,9 +9,10 @@ import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import java.awt.Color
 
-class SunCrystalItem(properties: Properties) : Item(properties) {
+class SunCrystalItem(properties: Properties) : Item(properties), TooltipItem {
 
 	override fun onEntityItemUpdate(stack: ItemStack, entity: ItemEntity): Boolean {
 		val level = entity.level()
@@ -20,7 +21,7 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 		val charge = stack.getOrDefault(ModDataComponents.CHARGE, 0)
 		if (charge >= MAX_CHARGE) return false
 
-		if (!level.isDay) return false
+		if (!level.isBrightOutside()) return false
 		if (!level.canSeeSky(entity.blockPosition())) return false
 
 		val newCharge = charge + 1
@@ -45,15 +46,16 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 		return (charge / MAX_CHARGE.toFloat() * 13).toInt()
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val charge = stack.getOrDefault(ModDataComponents.CHARGE, 0)
 		val percent = (charge / MAX_CHARGE.toFloat() * 100).toInt()
-		tooltipComponents += ModMenuLang.SOLAR_POWER.toComponent(percent)
+		builder.accept(ModMenuLang.SOLAR_POWER.toComponent(percent))
 	}
 
 	companion object {
@@ -87,3 +89,10 @@ class SunCrystalItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+
+

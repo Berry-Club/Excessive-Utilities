@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
+import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block_entity.generator.ItemAndFluidInputDataDrivenGeneratorBlockEntity

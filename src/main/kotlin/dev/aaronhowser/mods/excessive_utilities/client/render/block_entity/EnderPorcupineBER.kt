@@ -7,26 +7,35 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.block_entity.ender_porcupine.EnderPorcupineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
-import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
+import net.minecraft.client.renderer.state.level.CameraRenderState
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer
+import net.minecraft.world.phys.Vec3
 
 class EnderPorcupineBER(
 	val context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<EnderPorcupineBlockEntity> {
+) : BlockEntityRenderer<EnderPorcupineBlockEntity, LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>> {
+	override fun createRenderState() = LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>()
+	override fun extractRenderState(blockEntity: EnderPorcupineBlockEntity, state: LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
+		state.currentOffset = blockEntity.getCurrentOffset()
+		state.minimumOffset = blockEntity.minimumOffset
+		state.maximumOffset = blockEntity.maximumOffset
+	}
 
-	override fun render(
-		blockEntity: EnderPorcupineBlockEntity,
-		partialTick: Float,
+	override fun submit(
+		state: LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>,
 		poseStack: PoseStack,
-		bufferSource: MultiBufferSource,
-		packedLight: Int,
-		packedOverlay: Int
+		collector: SubmitNodeCollector,
+		camera: CameraRenderState
 	) {
 		val player = AaronClientUtil.localPlayer ?: return
 		if (!player.isHolding { it.isItem(ModItemTagsProvider.RENDER_ENDER_PORCUPINE_WHILE_HOLDING) }) return
 
-		val offset = blockEntity.getCurrentOffset()
+		val offset = state.currentOffset
 
 		val x = offset.x.toDouble()
 		val y = offset.y.toDouble()
@@ -41,8 +50,8 @@ class EnderPorcupineBER(
 			targetColor
 		)
 
-		val minOffset = blockEntity.minimumOffset
-		val maxOffset = blockEntity.maximumOffset
+		val minOffset = state.minimumOffset
+		val maxOffset = state.maximumOffset
 
 		val searchVolumeColor = ClientConfig.CONFIG.enderPorcupineSearchVolumeColor.get()
 

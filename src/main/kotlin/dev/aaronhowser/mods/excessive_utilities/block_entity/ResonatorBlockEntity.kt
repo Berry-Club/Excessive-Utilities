@@ -5,7 +5,6 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
@@ -17,6 +16,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
@@ -29,8 +30,11 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandlerModifiable
-import net.neoforged.neoforge.items.wrapper.InvWrapper
+import net.neoforged.neoforge.transfer.DelegatingResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class ResonatorBlockEntity(
 	pos: BlockPos,
@@ -53,15 +57,15 @@ class ResonatorBlockEntity(
 		return container.getItem(UPGRADE_SLOT).count
 	}
 
-	private val itemHandler: IItemHandlerModifiable =
-		object : InvWrapper(container) {
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-				if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
-				return super.extractItem(slot, amount, simulate)
+	private val itemHandler: ResourceHandler<ItemResource> =
+		object : DelegatingResourceHandler<ItemResource>(VanillaContainerWrapper.of(container)) {
+			override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
+				if (index != OUTPUT_SLOT) return 0
+				return getDelegate().extract(index, resource, amount, transaction)
 			}
 		}
 
-	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
+	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = itemHandler
 
 	private val containerData: ContainerData =
 		object : ContainerData {
@@ -142,19 +146,18 @@ class ResonatorBlockEntity(
 		return ResonatorMenu(containerId, playerInventory, container, containerData)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		tag.saveItems(container, registries)
+		tag.saveItems(container)
 		tag.putInt(PROGRESS_NBT, progress)
-		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		tag.loadItems(container, registries)
-		progress = tag.getInt(PROGRESS_NBT)
+		tag.loadItems(container)
+		progress = tag.getIntOr(PROGRESS_NBT, 0)
 	}
 
 	companion object {

@@ -8,24 +8,25 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.NonNullList
 import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.FluidUtil
+import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
-class FluidFilterItem(properties: Properties) : Item(properties) {
+class FluidFilterItem(properties: Properties) : Item(properties), TooltipItem {
 
 	override fun use(
 		level: Level,
 		player: Player,
 		usedHand: InteractionHand
-	): InteractionResultHolder<ItemStack?> {
+	): InteractionResult {
 		val usedStack = player.getItemInHand(usedHand)
 
 		if (level.isServerSide) {
@@ -37,19 +38,20 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 			player.openMenu(provider) { data -> data.writeEnum(usedHand) }
 		}
 
-		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val filterComponent = getFilterComponent(stack)
 		for (flag in filterComponent.flags) {
 			val component = flag.getMessage(true).withStyle(ChatFormatting.BLUE)
-			tooltipComponents.add(component)
+			builder.accept(component)
 		}
 
 		val filterStacks = filterComponent.getItems()
@@ -60,7 +62,7 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 			for (x in 0 until 4) {
 				val slot = y * 4 + x
 				val ghostStack = filterStacks.getOrNull(slot) ?: continue
-				val fluidStack = FluidUtil.getFluidContained(ghostStack).orElse(FluidStack.EMPTY)
+				val fluidStack = FluidUtil.getFirstStackContained(ghostStack)
 				if (!fluidStack.isEmpty) {
 					stacks.add(fluidStack)
 				}
@@ -77,7 +79,7 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 				}
 			}
 
-			tooltipComponents.add(component)
+			builder.accept(component)
 		}
 	}
 
@@ -114,3 +116,10 @@ class FluidFilterItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+
+

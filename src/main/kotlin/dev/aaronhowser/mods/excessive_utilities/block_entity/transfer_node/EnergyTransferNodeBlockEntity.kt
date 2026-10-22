@@ -3,32 +3,36 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.block_entity.insertEnergy
+import dev.aaronhowser.mods.excessive_utilities.block_entity.extractEnergy
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.energy.EnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
 
 class EnergyTransferNodeBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
 ) : TransferNodeBlockEntity(ModBlockEntityTypes.ENERGY_TRANSFER_NODE.get(), pos, blockState) {
 
-	private val bufferEnergyStorage: EnergyStorage = EnergyStorage(1_000_000)
+	private val bufferEnergyStorage: SimpleEnergyHandler = SimpleEnergyHandler(1_000_000)
 
-	private fun getParentEnergyStorage(level: ServerLevel): IEnergyStorage? {
-		return level.getCapability(Capabilities.EnergyStorage.BLOCK, placedOnPos, placedOnDirection.opposite)
+	private fun getParentSimpleEnergyHandler(level: ServerLevel): EnergyHandler? {
+		return level.getCapability(Capabilities.Energy.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
-	override fun getBufferAmount(): Int = bufferEnergyStorage.energyStored
+	override fun getBufferAmount(): Int = bufferEnergyStorage.getAmountAsInt()
 
 	override fun pullFromPingPos(level: ServerLevel) {
 		if (hasConfiguredReceiver()) return
@@ -36,7 +40,7 @@ class EnergyTransferNodeBlockEntity(
 		val neighborStorages = getEnergyStorageAroundPing(level)
 		if (neighborStorages.isEmpty()) return
 
-		val amountThatCanFit = bufferEnergyStorage.maxEnergyStored - bufferEnergyStorage.energyStored
+		val amountThatCanFit = bufferEnergyStorage.getCapacityAsInt() - bufferEnergyStorage.getAmountAsInt()
 		if (amountThatCanFit <= 0) return
 
 		val maxAmountToPull = getAmountPerTick()
@@ -49,18 +53,18 @@ class EnergyTransferNodeBlockEntity(
 			val actualExtracted = storage.extractEnergy(simulated, false)
 			if (actualExtracted <= 0) continue
 
-			bufferEnergyStorage.receiveEnergy(actualExtracted, false)
+			bufferEnergyStorage.insertEnergy(actualExtracted, false)
 			didWorkThisTick = true
 		}
 	}
 
 	override fun pushIntoParent(level: ServerLevel) {
-		val parentEnergyStorage = getParentEnergyStorage(level) ?: return
+		val parentEnergyStorage = getParentSimpleEnergyHandler(level) ?: return
 
-		val energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.energyStored, true)
+		val energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.getAmountAsInt(), true)
 		if (energyToPush <= 0) return
 
-		val actualAmountPushed = parentEnergyStorage.receiveEnergy(energyToPush, false)
+		val actualAmountPushed = parentEnergyStorage.insertEnergy(energyToPush, false)
 		if (!hasCreativeUpgrade()) {
 			bufferEnergyStorage.extractEnergy(actualAmountPushed, false)
 		}
@@ -68,14 +72,14 @@ class EnergyTransferNodeBlockEntity(
 		didWorkThisTick = true
 	}
 
-	private fun getEnergyStorageAroundPing(level: ServerLevel): List<IEnergyStorage> {
+	private fun getEnergyStorageAroundPing(level: ServerLevel): List<EnergyHandler> {
 		return getCapabilitiesAroundPing(level) { neighborPos, side ->
-			level.getCapability(Capabilities.EnergyStorage.BLOCK, neighborPos, side)
+			level.getCapability(Capabilities.Energy.BLOCK, neighborPos, side)
 		}
 	}
 
 	override fun pushIntoPingPos(level: ServerLevel) {
-		var energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.energyStored, true)
+		var energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.getAmountAsInt(), true)
 		if (energyToPush <= 0) return
 
 		visitEnderReceivers(level) { receiver ->
@@ -87,7 +91,7 @@ class EnergyTransferNodeBlockEntity(
 		if (energyToPush <= 0) return
 
 		for (storage in getEnergyStorageAroundPing(level)) {
-			val accepted = storage.receiveEnergy(energyToPush, false)
+			val accepted = storage.insertEnergy(energyToPush, false)
 			if (accepted <= 0) continue
 
 			if (!hasCreativeUpgrade()) {
@@ -102,9 +106,9 @@ class EnergyTransferNodeBlockEntity(
 	}
 
 	override fun pullFromParent(level: ServerLevel) {
-		val parentStorage = getParentEnergyStorage(level) ?: return
+		val parentStorage = getParentSimpleEnergyHandler(level) ?: return
 
-		val amountThatCanFit = bufferEnergyStorage.maxEnergyStored - bufferEnergyStorage.energyStored
+		val amountThatCanFit = bufferEnergyStorage.getCapacityAsInt() - bufferEnergyStorage.getAmountAsInt()
 		if (amountThatCanFit <= 0) return
 
 		val maxAmountToPull = getAmountPerTick()
@@ -117,7 +121,7 @@ class EnergyTransferNodeBlockEntity(
 		val actualExtracted = parentStorage.extractEnergy(simulated, false)
 		if (actualExtracted <= 0) return
 
-		bufferEnergyStorage.receiveEnergy(actualExtracted, false)
+		bufferEnergyStorage.insertEnergy(actualExtracted, false)
 		didWorkThisTick = true
 	}
 
@@ -129,14 +133,14 @@ class EnergyTransferNodeBlockEntity(
 
 	override fun getContainerData(index: Int): Int {
 		return when (index) {
-			STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.energyStored
-			MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.maxEnergyStored
+			STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.getAmountAsInt()
+			MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.getCapacityAsInt()
 			else -> super.getContainerData(index)
 		}
 	}
 
 	fun receiveEnderTransfer(maxAmount: Int): Int {
-		return bufferEnergyStorage.receiveEnergy(maxAmount, false)
+		return bufferEnergyStorage.insertEnergy(maxAmount, false)
 	}
 
 	private fun transferToEnderReceiver(
@@ -160,16 +164,16 @@ class EnergyTransferNodeBlockEntity(
 		return EnergyTransferNodeMenu(containerId, playerInventory, upgradeContainer, containerData)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		tag.saveEnergy(BUFFER_ENERGY_NBT, bufferEnergyStorage, registries)
+		tag.saveEnergy(BUFFER_ENERGY_NBT, bufferEnergyStorage)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		tag.loadEnergy(BUFFER_ENERGY_NBT, bufferEnergyStorage, registries)
+		tag.loadEnergy(BUFFER_ENERGY_NBT, bufferEnergyStorage)
 	}
 
 	companion object {

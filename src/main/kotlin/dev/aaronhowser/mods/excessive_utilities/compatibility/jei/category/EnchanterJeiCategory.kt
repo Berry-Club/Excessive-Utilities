@@ -3,21 +3,23 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.Items
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder
 
 class EnchanterJeiCategory(
-	recipeType: RecipeType<RecipeHolder<EnchanterRecipe>>,
+	recipeType: IRecipeType<RecipeHolder<EnchanterRecipe>>,
 	val guiHelper: IGuiHelper
 ) : AbstractRecipeCategory<RecipeHolder<EnchanterRecipe>>(
 	recipeType,
@@ -34,18 +36,18 @@ class EnchanterJeiCategory(
 		val rightInputSlot = builder.addInputSlot(33, 19)
 		val outputSlot = builder.addOutputSlot(90, 19)
 
-		val inputs = recipe.leftIngredient.items.map { it.copyWithCount(recipe.leftIngredient.count()) }
+		val inputs = recipe.leftIngredient.ingredient().getItemHolders().map { ItemStack(it, recipe.leftIngredient.count()) }.toList()
 		leftInputSlot
 			.addItemStacks(inputs)
 			.setStandardSlotBackground()
 
-		val rightInputs = recipe.rightIngredient.items.map { it.copyWithCount(recipe.rightIngredient.count()) }
+		val rightInputs = recipe.rightIngredient.ingredient().getItemHolders().map { ItemStack(it, recipe.rightIngredient.count()) }.toList()
 		rightInputSlot
 			.addItemStacks(rightInputs)
 			.setStandardSlotBackground()
 
 		outputSlot
-			.addItemStack(recipe.output)
+			.add(recipe.output)
 			.setOutputSlotBackground()
 	}
 
@@ -82,6 +84,6 @@ class EnchanterJeiCategory(
 		)
 	}
 
-	override fun getRegistryName(recipe: RecipeHolder<EnchanterRecipe>): ResourceLocation = recipe.id
+	override fun getIdentifier(recipe: RecipeHolder<EnchanterRecipe>): Identifier = recipe.id.identifier()
 
 }

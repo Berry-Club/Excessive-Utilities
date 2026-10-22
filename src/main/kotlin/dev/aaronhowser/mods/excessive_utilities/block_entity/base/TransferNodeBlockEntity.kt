@@ -20,6 +20,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -241,7 +243,7 @@ abstract class TransferNodeBlockEntity(
 
 	protected open fun spawnParticles(level: ServerLevel) {
 		TransferNodeParticlesPacket(ping.currentPingPos)
-			.messageAllPlayersTrackingChunk(level, ChunkPos(ping.currentPingPos))
+			.messageAllPlayersTrackingChunk(level, ChunkPos(ping.currentPingPos.x, ping.currentPingPos.z))
 	}
 
 	private fun pullerTick(level: ServerLevel) {
@@ -343,28 +345,23 @@ abstract class TransferNodeBlockEntity(
 
 	override fun getDisplayName(): Component = blockState.block.name
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
 		tag.putBoolean(IS_RETRIEVAL_NBT, isRetrieval)
 
 		if (!upgradeContainer.isEmpty) {
-			val upgradeTag = CompoundTag()
-			upgradeTag.saveItems(upgradeContainer, registries)
-			tag.put(UPGRADES_NBT, upgradeTag)
+			tag.child(UPGRADES_NBT).saveItems(upgradeContainer)
 		}
 
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		isRetrieval = tag.getBoolean(IS_RETRIEVAL_NBT)
+		isRetrieval = tag.getBooleanOr(IS_RETRIEVAL_NBT, false)
 
-		if (tag.contains(UPGRADES_NBT)) {
-			val upgradeTag = tag.getCompound(UPGRADES_NBT)
-			upgradeTag.loadItems(upgradeContainer, registries)
-		}
+		tag.child(UPGRADES_NBT).ifPresent { it.loadItems(upgradeContainer) }
 	}
 
 	companion object {

@@ -111,6 +111,7 @@ object ModPlacedFeatures {
 				configuredFeatures.getOrThrow(ModConfiguredFeatures.ENDER_LILY_PATCH),
 				listOf(
 					RarityFilter.onAverageOnceEvery(24),
+					CountPlacement.of(6),
 					InSquarePlacement.spread(),
 					HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
 					BiomeFilter.biome()

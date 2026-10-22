@@ -1,20 +1,21 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getUuidOrNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.handler.wireless_fe.WirelessFeNetworkHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.EnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import java.util.*
 
 class WirelessFeBatteryBlockEntity(
@@ -22,7 +23,7 @@ class WirelessFeBatteryBlockEntity(
 	blockState: BlockState
 ) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState) {
 
-	val energyStorage = EnergyStorage(15_000)
+	val energyStorage = SimpleEnergyHandler(15_000)
 	var ownerUuid: UUID? = null
 
 	override fun onLoad() {
@@ -52,20 +53,21 @@ class WirelessFeBatteryBlockEntity(
 		}
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
-		tag.putUuidIfNotNull(OWNER_UUID_NBT, ownerUuid)
-		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		if (ownerUuid != null) tag.putIntArray(OWNER_UUID_NBT, UUIDUtil.uuidToIntArray(ownerUuid!!))
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		ownerUuid = tag.getUuidOrNull(OWNER_UUID_NBT)
-		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+		val ownerInts = tag.getIntArray(OWNER_UUID_NBT).orElse(IntArray(0))
+		ownerUuid = if (ownerInts.size == 4) UUIDUtil.uuidFromIntArray(ownerInts) else null
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage)
 	}
 
-	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
+	fun getEnergyCapability(direction: Direction?): EnergyHandler = energyStorage
 
 	companion object {
 		const val OWNER_UUID_NBT = "OwnerUUID"

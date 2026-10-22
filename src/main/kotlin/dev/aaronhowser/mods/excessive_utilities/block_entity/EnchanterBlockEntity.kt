@@ -19,6 +19,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -32,25 +34,28 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.EnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.wrapper.InvWrapper
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.DelegatingResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class EnchanterBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
 ) : GpDrainBlockEntity(ModBlockEntityTypes.ENCHANTER.get(), pos, blockState), ContainerContainer, MenuProvider {
 
-	private val energyStorage = EnergyStorage(100_000)
-	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
+	private val energyStorage = SimpleEnergyHandler(100_000)
+	fun getEnergyCapability(direction: Direction?): EnergyHandler = energyStorage
 
 	private val container = EnchanterContainer()
 	override fun getContainers(): List<Container> = listOf(container)
 
-	private val itemHandler: IItemHandler = EnchanterItemHandler()
+	private val itemHandler: ResourceHandler<ItemResource> = EnchanterItemHandler()
 
-	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
+	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = itemHandler
 
 	override fun getGpUsage(): Double {
 		val isCrafting = recipeCache != null
@@ -104,7 +109,7 @@ class EnchanterBlockEntity(
 
 		if (currentEnchantingPower >= recipe.enchantingPower) {
 			for (i in 0 until speedUpgrades + 1) {
-				if (energyStorage.energyStored < fePerTick) break
+				if (energyStorage.getAmountAsInt() < fePerTick) break
 
 				progress++
 				energyStorage.extractEnergy(fePerTick, false)
@@ -216,8 +221,8 @@ class EnchanterBlockEntity(
 
 			override fun get(index: Int): Int {
 				return when (index) {
-					CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
-					MAX_ENERGY_DATA_INDEX -> energyStorage.maxEnergyStored
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.getAmountAsInt()
+					MAX_ENERGY_DATA_INDEX -> energyStorage.getCapacityAsInt()
 					PROGRESS_DATA_INDEX -> progress
 					MAX_PROGRESS_DATA_INDEX -> maxProgress
 					else -> -1
@@ -235,20 +240,20 @@ class EnchanterBlockEntity(
 		return EnchanterMenu(containerId, playerInventory, container, containerData)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		tag.saveEnergy(ENERGY_NBT, energyStorage, registries)
-		tag.saveItems(container, registries)
+		tag.saveEnergy(ENERGY_NBT, energyStorage)
+		tag.saveItems(container)
 		tag.putInt(PROGRESS_NBT, progress)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		tag.loadEnergy(ENERGY_NBT, energyStorage, registries)
-		tag.loadItems(container, registries)
-		progress = tag.getInt(PROGRESS_NBT)
+		tag.loadEnergy(ENERGY_NBT, energyStorage)
+		tag.loadItems(container)
+		progress = tag.getIntOr(PROGRESS_NBT, 0)
 	}
 
 	companion object {
@@ -268,11 +273,10 @@ class EnchanterBlockEntity(
 		const val MAX_PROGRESS_DATA_INDEX = 3
 	}
 
-	private inner class EnchanterItemHandler : InvWrapper(container) {
-
-		override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack {
-			if (slot != OUTPUT_SLOT) return ItemStack.EMPTY
-			return super.extractItem(slot, amount, simulate)
+	private inner class EnchanterItemHandler : DelegatingResourceHandler<ItemResource>(VanillaContainerWrapper.of(container)) {
+		override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
+			if (index != OUTPUT_SLOT) return 0
+			return getDelegate().extract(index, resource, amount, transaction)
 		}
 
 	}

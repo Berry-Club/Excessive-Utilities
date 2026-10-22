@@ -8,7 +8,7 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.world.item.ItemStack
@@ -18,7 +18,7 @@ import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.level.Level
 
 class PotionFuelJeiCategory(
-	recipeType: RecipeType<Recipe>,
+	recipeType: IRecipeType<Recipe>,
 	guiHelper: IGuiHelper
 ) : AbstractRecipeCategory<PotionFuelJeiCategory.Recipe>(
 	recipeType,
@@ -33,7 +33,7 @@ class PotionFuelJeiCategory(
 			.setStandardSlotBackground()
 
 		for (stack in recipe.stacks) {
-			itemInputSlot.addItemStack(stack)
+			itemInputSlot.add(stack)
 		}
 	}
 

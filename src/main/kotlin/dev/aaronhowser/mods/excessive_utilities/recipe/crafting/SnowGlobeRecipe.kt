@@ -13,9 +13,9 @@ import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
 class SnowGlobeRecipe(
-	pattern: ShapedRecipePattern,
+	val pattern: ShapedRecipePattern,
 	val output: ItemStack,
-) : ShapedRecipe("", CraftingBookCategory.MISC, pattern, output, false) {
+) : SpecialShapedRecipe(pattern, output) {
 
 	override fun matches(input: CraftingInput, level: Level): Boolean {
 		for (inputStack in input.items()) {
@@ -31,11 +31,9 @@ class SnowGlobeRecipe(
 	}
 
 	override fun isSpecial(): Boolean = true
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.SNOW_GLOBE.get()
+	override fun getSerializer(): RecipeSerializer<SnowGlobeRecipe> = ModRecipeSerializers.SNOW_GLOBE.get()
 
-	class Serializer : RecipeSerializer<SnowGlobeRecipe> {
-		override fun codec(): MapCodec<SnowGlobeRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, SnowGlobeRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<SnowGlobeRecipe> =
@@ -44,7 +42,7 @@ class SnowGlobeRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(SnowGlobeRecipe::pattern),
-						ItemStack.STRICT_CODEC
+						ItemStack.CODEC
 							.fieldOf("result")
 							.forGetter(SnowGlobeRecipe::output)
 					).apply(instance, ::SnowGlobeRecipe)

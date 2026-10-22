@@ -20,12 +20,14 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.entity.projectile.ThrowableProjectile
 import net.minecraft.world.item.ItemStack
+import net.minecraft.core.component.DataComponents
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.EntityHitResult
 import net.minecraft.world.phys.Vec3
+import net.minecraft.server.level.ServerLevel
 
 class MagicalBoomerangEntity(
 	entityType: EntityType<MagicalBoomerangEntity>,
@@ -37,8 +39,8 @@ class MagicalBoomerangEntity(
 		entity: LivingEntity,
 		boomerangStack: ItemStack
 	) : this(ModEntityTypes.MAGICAL_BOOMERANG.get(), level) {
-		owner = entity
-		enchantments = boomerangStack.enchantments
+		setOwner(entity)
+		enchantments = boomerangStack.getOrDefault(DataComponents.ENCHANTMENTS, ItemEnchantments.EMPTY)
 		setPos(entity.x, entity.eyeY - 0.1, entity.z)
 	}
 
@@ -48,8 +50,8 @@ class MagicalBoomerangEntity(
 	private fun getEnchantmentLevel(enchantment: ResourceKey<Enchantment>): Int {
 		val enchantmentHolder = level()
 			.registryAccess()
-			.registryOrThrow(Registries.ENCHANTMENT)
-			.getHolder(enchantment)
+			.lookupOrThrow(Registries.ENCHANTMENT)
+			.get(enchantment)
 			.orElse(null)
 			?: return 0
 
@@ -85,7 +87,7 @@ class MagicalBoomerangEntity(
 		if (kaboomerangLevel <= 0) return
 
 		level().explode(
-			owner,
+			getOwner(),
 			x, y, z,
 			kaboomerangLevel.toFloat(),
 			Level.ExplosionInteraction.NONE
@@ -97,24 +99,23 @@ class MagicalBoomerangEntity(
 		val hitEntity = result.entity
 		val wasReturning = isReturning
 
-		if (hitEntity != owner) {
+		if (hitEntity != getOwner()) {
 			isReturning = true
 		}
 
-		if (hitEntity == owner && hitEntity is Player) {
+		if (hitEntity == getOwner() && hitEntity is Player) {
 			enterInventory(hitEntity)
 		} else if (hitEntity is LivingEntity) {
 			hurtEntity(hitEntity)
 		}
 
-		if (!wasReturning && hitEntity != owner) {
+		if (!wasReturning && hitEntity != getOwner()) {
 			explode()
 		}
 	}
 
 	private fun enterInventory(owner: Player) {
-		val boomerangStack = owner.inventory
-			.items
+		val boomerangStack = (0 until owner.inventory.containerSize).map(owner.inventory::getItem)
 			.firstOrNull { it.isItem(ModItems.MAGICAL_BOOMERANG) && it.get(ModDataComponents.THROWN_BOOMERANG) == uuid }
 
 		boomerangStack?.remove(ModDataComponents.THROWN_BOOMERANG)
@@ -122,8 +123,10 @@ class MagicalBoomerangEntity(
 	}
 
 	private fun hurtEntity(target: LivingEntity) {
-		target.hurt(
-			damageSources().thrown(this, owner),
+		val serverLevel = level() as? ServerLevel ?: return
+		target.hurtServer(
+			serverLevel,
+			damageSources().thrown(this, getOwner()),
 			getDamage()
 		)
 
@@ -160,7 +163,7 @@ class MagicalBoomerangEntity(
 			BlockPos.containing(aabb.maxX, aabb.maxY, aabb.maxZ)
 		)
 
-		val owner = owner
+		val owner = getOwner()
 		val level = level()
 
 		for (pos in blockPosList) {
@@ -175,7 +178,7 @@ class MagicalBoomerangEntity(
 
 	private fun returnToOwner() {
 		if (!isReturning) return
-		val owner = owner ?: return
+		val owner = getOwner() ?: return
 		val targetPos = Vec3(owner.x, owner.eyeY - 0.4, owner.z)
 
 		val vecTo = position().vectorTo(targetPos)
@@ -205,7 +208,7 @@ class MagicalBoomerangEntity(
 
 	override fun canUsePortal(allowPassengers: Boolean): Boolean = false
 	override fun isInvulnerable(): Boolean = true
-	override fun isInvulnerableTo(source: DamageSource): Boolean = true
+	
 
 	override fun isNoGravity(): Boolean = true
 	override fun getDefaultGravity(): Double = 0.0

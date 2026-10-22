@@ -113,7 +113,8 @@
     },
     "fluid_level_floodedness": 0.0,
     "fluid_level_spread": 0.0,
-    "initial_density_without_jaggedness": {
+    "lava": 0.0,
+    "preliminary_surface_level": {
       "type": "minecraft:max",
       "argument1": {
         "type": "minecraft:max",
@@ -202,7 +203,6 @@
         }
       }
     },
-    "lava": 0.0,
     "ridges": 0.0,
     "temperature": 0.0,
     "vegetation": 0.0,

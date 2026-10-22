@@ -14,7 +14,7 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.Tag
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
@@ -24,6 +24,9 @@ import net.minecraft.world.level.block.CaveVines
 import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
 import net.minecraft.world.level.saveddata.SavedData
+import net.minecraft.nbt.ListTag
+import net.minecraft.util.datafix.DataFixTypes
+import net.minecraft.world.level.saveddata.SavedDataType
 
 class DepthsHandler : SavedData() {
 
@@ -33,7 +36,7 @@ class DepthsHandler : SavedData() {
 		val ddLevel = getDepthsLevel(originLevel)
 
 		val returnInfo = CompoundTag()
-		returnInfo.putString(FROM_DIM, originLevel.dimension().location().toString())
+		returnInfo.putString(FROM_DIM, originLevel.dimension().identifier().toString())
 		returnInfo.putLong(FROM_PORTAL_POS, originPortalPos.asLong())
 		entity.persistentData.put(PLAYER_RETURN_INFO, returnInfo)
 
@@ -112,7 +115,7 @@ class DepthsHandler : SavedData() {
 
 		if (!data.contains(PLAYER_RETURN_INFO)) {
 			val targetLevel = level.server.overworld()
-			val spawnPos = targetLevel.sharedSpawnPos
+			val spawnPos = targetLevel.respawnData.pos()
 
 			entity.teleportTo(
 				targetLevel,
@@ -122,26 +125,27 @@ class DepthsHandler : SavedData() {
 				emptySet(),
 				entity.yRot,
 				entity.xRot,
+			true
 			)
 
 			return
 		}
 
-		val returnInfo = data.getCompound(PLAYER_RETURN_INFO)
+		val returnInfo = data.getCompound(PLAYER_RETURN_INFO).orElseThrow()
 		val fromDimKey = ResourceKey.create(
 			Registries.DIMENSION,
-			ResourceLocation.parse(returnInfo.getString(FROM_DIM))
+			Identifier.parse(returnInfo.getString(FROM_DIM).orElseThrow())
 		)
 
 		val targetLevel = level.server.getLevel(fromDimKey) ?: return
-		val targetPortalPos = returnInfo.getLong(FROM_PORTAL_POS).toBlockPos()
+		val targetPortalPos = returnInfo.getLong(FROM_PORTAL_POS).orElseThrow().toBlockPos()
 
 		data.remove(PLAYER_RETURN_INFO)
 		teleportAbovePortal(entity, targetLevel, targetPortalPos)
 	}
 
-	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
-		val listTag = tag.getList(ROOMS_NBT, Tag.TAG_COMPOUND.toInt())
+	fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
+		val listTag = ListTag()
 
 		for (room in rooms) {
 			val roomTag = CompoundTag()
@@ -185,18 +189,19 @@ class DepthsHandler : SavedData() {
 				emptySet(),
 				entity.yRot,
 				entity.xRot,
+			true
 			)
 		}
 
 		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): DepthsHandler {
 			val data = DepthsHandler()
 
-			val listTag = tag.getList(ROOMS_NBT, Tag.TAG_COMPOUND.toInt())
+			val listTag = tag.getList(ROOMS_NBT).orElseThrow()
 			for (i in listTag.indices) {
-				val roomTag = listTag.getCompound(i)
+				val roomTag = listTag.getCompound(i).orElseThrow()
 
-				val originPortalPos = roomTag.getLong(ORIGIN_PORTAL_POS_NBT).toBlockPos()
-				val structureMin = roomTag.getLong(STRUCTURE_MIN_NBT).toBlockPos()
+				val originPortalPos = roomTag.getLong(ORIGIN_PORTAL_POS_NBT).orElseThrow().toBlockPos()
+				val structureMin = roomTag.getLong(STRUCTURE_MIN_NBT).orElseThrow().toBlockPos()
 
 				data.rooms.add(Room(originPortalPos, structureMin))
 			}
@@ -210,9 +215,16 @@ class DepthsHandler : SavedData() {
 			}
 
 			val storage = level.dataStorage
-			val factory = Factory(::DepthsHandler, ::load)
-
-			return storage.computeIfAbsent(factory, SAVED_DATA_NAME)
+			val type = SavedDataType(
+                dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities.modResource(SAVED_DATA_NAME),
+                ::DepthsHandler,
+                CompoundTag.CODEC.xmap(
+                    { tag -> load(tag, level.registryAccess()) },
+                    { data -> data.save(CompoundTag(), level.registryAccess()) }
+                ),
+                DataFixTypes.SAVED_DATA_COMMAND_STORAGE
+            )
+            return storage.computeIfAbsent(type)
 		}
 
 		private fun getDepthsLevel(level: ServerLevel): ServerLevel {
@@ -221,7 +233,7 @@ class DepthsHandler : SavedData() {
 
 		fun handleGrue(player: ServerPlayer) {
 			val interval = ServerConfig.CONFIG.deepDarkDamageInterval.get()
-			val level = player.serverLevel()
+			val level = player.level()
 			if (level.gameTime % interval != 0L) return
 
 			val lightLevel = level.getMaxLocalRawBrightness(player.blockPosition())
@@ -231,7 +243,7 @@ class DepthsHandler : SavedData() {
 			val damageAmount = ServerConfig.CONFIG.deepDarkDamageAmount.get().toFloat()
 			val damageSource = player.damageSources().source(ModDamageTypeProvider.DARKNESS)
 
-			player.hurt(damageSource, damageAmount)
+			player.hurtServer(level, damageSource, damageAmount)
 		}
 	}
 

@@ -37,7 +37,7 @@ object ModEnchantmentProvider {
 					1,
 					EquipmentSlotGroup.HAND
 				)
-			).build(BLADERANG.location())
+			).build(BLADERANG.identifier())
 		)
 
 
@@ -55,7 +55,7 @@ object ModEnchantmentProvider {
 				)
 			)
 				.exclusiveWith(enchantmentGetter.getOrThrow(ModEnchantmentTagsProvider.BOOMERANG_BLOCK_INTERACTION))
-				.build(BOOMEREAPERANG.location())
+				.build(BOOMEREAPERANG.identifier())
 		)
 
 		context.register(
@@ -70,7 +70,7 @@ object ModEnchantmentProvider {
 					1,
 					EquipmentSlotGroup.HAND
 				)
-			).build(BURNERANG.location())
+			).build(BURNERANG.identifier())
 		)
 
 		context.register(
@@ -87,7 +87,7 @@ object ModEnchantmentProvider {
 				)
 			)
 				.exclusiveWith(enchantmentGetter.getOrThrow(ModEnchantmentTagsProvider.BOOMERANG_BLOCK_INTERACTION))
-				.build(KABOOMERANG.location())
+				.build(KABOOMERANG.identifier())
 		)
 
 		context.register(
@@ -102,7 +102,7 @@ object ModEnchantmentProvider {
 					1,
 					EquipmentSlotGroup.HAND
 				)
-			).build(ZOOMERANG.location())
+			).build(ZOOMERANG.identifier())
 		)
 
 	}

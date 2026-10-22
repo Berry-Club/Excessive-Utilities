@@ -28,7 +28,7 @@ class NetherStarGeneratorBlockEntity(
 
 		val pos = blockPos
 		val radius = ServerConfig.CONFIG.netherStarGeneratorEffectRadius.get()
-		val aabb = AABB(pos).inflate(radius.toDouble())
+		val aabb = AABB(pos).inflate(radius)
 
 		val entities = level.getEntitiesOfClass(LivingEntity::class.java, aabb)
 

@@ -11,12 +11,12 @@ import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.ShovelItem
-import net.minecraft.world.item.component.Unbreakable
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.component.ItemAttributeModifiers
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.event.level.BlockDropsEvent
 
-class ErosionShovelItem(properties: Properties) : ShovelItem(UnstableTier, properties) {
+class ErosionShovelItem(properties: Properties) : Item(properties) {
 
 	override fun getDestroySpeed(stack: ItemStack, state: BlockState): Float {
 		return if (state.isBlock(ModBlockTagsProvider.EROSION_SHOVEL_TARGET)) {
@@ -29,20 +29,15 @@ class ErosionShovelItem(properties: Properties) : ShovelItem(UnstableTier, prope
 	companion object {
 		val DEFAULT_PROPERTIES: Properties = Properties()
 			.stacksTo(1)
-			.component(DataComponents.UNBREAKABLE, Unbreakable(false))
-			.setNoRepair()
-			.attributes(
-				createAttributes(UnstableTier, 1.5f, -3f)
-					.withModifierAdded(
-						Attributes.BLOCK_INTERACTION_RANGE,
-						AttributeModifier(
-							ExcessiveUtilities.modResource("erosion_shovel_range"),
-							4.0,
-							AttributeModifier.Operation.ADD_VALUE
-						),
-						EquipmentSlotGroup.MAINHAND
-					)
-			)
+			.durability(UnstableTier.durability())
+			.attributes(ItemAttributeModifiers.builder()
+				.add(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, UnstableTier.attackDamageBonus() + 1.5, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.add(Attributes.ATTACK_SPEED, AttributeModifier(Item.BASE_ATTACK_SPEED_ID, -3.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.add(
+				Attributes.BLOCK_INTERACTION_RANGE,
+				AttributeModifier(ExcessiveUtilities.modResource("erosion_shovel_range"), 4.0, AttributeModifier.Operation.ADD_VALUE),
+				EquipmentSlotGroup.MAINHAND
+			).build())
 
 		fun handleDropEvent(event: BlockDropsEvent) {
 			if (!event.tool.isItem(ModItems.EROSION_SHOVEL)) return
@@ -53,3 +48,7 @@ class ErosionShovelItem(properties: Properties) : ShovelItem(UnstableTier, prope
 	}
 
 }
+
+
+
+

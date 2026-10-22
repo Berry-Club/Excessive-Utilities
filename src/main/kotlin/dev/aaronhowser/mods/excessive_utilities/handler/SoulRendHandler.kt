@@ -6,7 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttributes
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.particles.ParticleTypes
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EquipmentSlotGroup
@@ -14,8 +14,9 @@ import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.Item.Properties
-import net.minecraft.world.item.SwordItem.createAttributes
-import net.minecraft.world.item.component.Unbreakable
+import net.minecraft.util.Unit
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.component.ItemAttributeModifiers
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 import java.util.*
 
@@ -24,10 +25,13 @@ object SoulRendHandler {
 	val KIKOKU_PROPERTIES: () -> Properties = {
 		Properties()
 			.stacksTo(1)
-			.setNoRepair()
-			.component(DataComponents.UNBREAKABLE, Unbreakable(false))
+			
+			.component(DataComponents.UNBREAKABLE, Unit.INSTANCE)
 			.attributes(
-				createAttributes(OpiniumTier, -1f, -2.4f)
+				ItemAttributeModifiers.builder()
+                    .add(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, (OpiniumTier.attackDamageBonus() - 1f).toDouble(), AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .add(Attributes.ATTACK_SPEED, AttributeModifier(Item.BASE_ATTACK_SPEED_ID, -2.4, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+                    .build()
 					.withModifierAdded(
 						ModAttributes.SOUL_RENDING,
 						AttributeModifier(
@@ -40,7 +44,7 @@ object SoulRendHandler {
 			)
 	}
 
-	private val SOUL_RENT_HEALTH: ResourceLocation = ExcessiveUtilities.modResource("soul_rent")
+	private val SOUL_RENT_HEALTH: Identifier = ExcessiveUtilities.modResource("soul_rent")
 
 	private const val SOUL_REND_COOLDOWN_TICKS = 20L
 	private val lastSoulRentTicks = WeakHashMap<LivingEntity, Long>()
@@ -71,7 +75,7 @@ object SoulRendHandler {
 		)
 
 		if (victim.getAttributeValue(Attributes.MAX_HEALTH) <= 0.0) {
-			victim.kill()
+			victim.kill(victim.level() as ServerLevel)
 		}
 
 		spawnSoulParticles(victim)

@@ -10,16 +10,18 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
+import net.minecraft.world.entity.InsideBlockEffectApplier
 import kotlin.math.abs
 
-class ConveyorBeltBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
+class ConveyorBeltBlock(properties: Properties) : Block(properties) {
 
 	init {
 		registerDefaultState(
@@ -41,7 +43,7 @@ class ConveyorBeltBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 		return SHAPE
 	}
 
-	override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity) {
+	override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity, effectApplier: InsideBlockEffectApplier, isPrecise: Boolean) {
 		if (entity.isCrouching) return
 
 		moveEntityUp(state, pos, entity)
@@ -50,7 +52,7 @@ class ConveyorBeltBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 		val SHAPE: VoxelShape = box(0.1, 0.1, 0.1, 15.9, 15.9, 15.9)
 
 		private fun moveEntityUp(state: BlockState, pos: BlockPos, entity: Entity) {
@@ -93,3 +95,14 @@ class ConveyorBeltBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+

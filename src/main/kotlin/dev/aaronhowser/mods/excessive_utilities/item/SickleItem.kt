@@ -47,39 +47,37 @@ class SickleItem(properties: Properties) : Item(properties) {
 	}
 
 	companion object {
-		fun getDefaultProperties(tier: Tier): Properties {
-			return Properties()
-				.component(
-					DataComponents.TOOL,
-					tier.createToolProperties(ModBlockTagsProvider.SICKLE_MINEABLE)
-				)
+		fun getDefaultProperties(tier: ToolMaterial): Properties {
+			return tier.applyToolProperties(Properties(), ModBlockTagsProvider.SICKLE_MINEABLE, 0f, -3f, 0f)
 				.component(
 					ModDataComponents.RADIUS.get(),
 					when (tier) {
-						Tiers.WOOD -> 1
-						Tiers.STONE -> 2
-						Tiers.GOLD -> 1
-						Tiers.IRON -> 3
-						Tiers.DIAMOND -> 4
-						Tiers.NETHERITE -> 5
+						ToolMaterial.WOOD -> 1
+						ToolMaterial.STONE -> 2
+						ToolMaterial.GOLD -> 1
+						ToolMaterial.IRON -> 3
+						ToolMaterial.DIAMOND -> 4
+						ToolMaterial.NETHERITE -> 5
 						else -> 1
 					}
 				)
 				.durability(
 					when (tier) {
-						Tiers.WOOD -> 531
-						Tiers.STONE -> 1179
-						Tiers.GOLD -> 288
-						Tiers.IRON -> 2250
-						Tiers.DIAMOND -> 14049
-						Tiers.NETHERITE -> 30074
-						else -> tier.uses
+						ToolMaterial.WOOD -> 531
+						ToolMaterial.STONE -> 1179
+						ToolMaterial.GOLD -> 288
+						ToolMaterial.IRON -> 2250
+						ToolMaterial.DIAMOND -> 14049
+						ToolMaterial.NETHERITE -> 30074
+						else -> tier.durability()
 					}
-				)
-				.attributes(
-					DiggerItem.createAttributes(tier, 0f, -3f)
 				)
 		}
 	}
 
 }
+
+
+
+
+

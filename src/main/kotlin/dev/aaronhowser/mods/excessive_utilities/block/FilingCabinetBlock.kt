@@ -17,10 +17,12 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
+import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.level.block.state.BlockBehaviour
 
-class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+class FilingCabinetBlock(properties: BlockBehaviour.Properties) : Block(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -42,15 +44,15 @@ class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Enti
 		return FilingCabinetBlockEntity(pos, state)
 	}
 
-	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
-		if (!state.isBlock(newState.block)) {
+	override fun affectNeighborsAfterRemoval(state: BlockState, level: ServerLevel, pos: BlockPos, movedByPiston: Boolean) {
+		if (true) {
 			val be = level.getBlockEntity(pos)
 			if (be is FilingCabinetBlockEntity) {
 				be.dropAllItems()
 			}
 		}
 
-		super.onRemove(state, level, pos, newState, movedByPiston)
+		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston)
 	}
 
 	override fun useWithoutItem(
@@ -65,7 +67,7 @@ class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Enti
 
 			if (blockEntity is FilingCabinetBlockEntity) {
 				val count = blockEntity.getItemCount()
-				player.displayClientMessage(Component.literal(count.toString()), false)
+				player.sendSystemMessage(Component.literal(count.toString()))
 			}
 		}
 
@@ -73,7 +75,19 @@ class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Enti
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

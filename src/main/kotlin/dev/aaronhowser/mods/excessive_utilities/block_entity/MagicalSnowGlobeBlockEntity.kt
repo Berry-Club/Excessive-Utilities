@@ -6,7 +6,10 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
+import net.minecraft.core.component.DataComponentGetter
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.nbt.NbtOps
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -28,38 +31,24 @@ class MagicalSnowGlobeBlockEntity(
 		components.set(ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS, progressComponent)
 	}
 
-	override fun applyImplicitComponents(componentInput: DataComponentInput) {
+	override fun applyImplicitComponents(componentInput: DataComponentGetter) {
 		progressComponent = componentInput.getOrDefault(
 			ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS,
 			MagicalSnowGlobeProgressComponent.DEFAULT
 		)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		val progressTag = MagicalSnowGlobeProgressComponent.CODEC
-			.encodeStart(NbtOps.INSTANCE, progressComponent)
-			.result()
-			.getOrNull()
-
-		if (progressTag != null) {
-			tag.put(PROGRESS_NBT, progressTag)
-		}
+		tag.store(PROGRESS_NBT, MagicalSnowGlobeProgressComponent.CODEC, progressComponent)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		val progressTag = tag.getCompound(PROGRESS_NBT)
-		val component = MagicalSnowGlobeProgressComponent.CODEC
-			.parse(NbtOps.INSTANCE, progressTag)
-			.result()
-			.getOrNull()
-
-		if (component != null) {
-			progressComponent = component
-		}
+		progressComponent = tag.read(PROGRESS_NBT, MagicalSnowGlobeProgressComponent.CODEC)
+			.orElse(MagicalSnowGlobeProgressComponent.DEFAULT)
 	}
 
 	companion object {

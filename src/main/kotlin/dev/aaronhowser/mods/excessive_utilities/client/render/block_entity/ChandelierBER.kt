@@ -6,22 +6,29 @@ import dev.aaronhowser.mods.aaron.client.render.AaronRenderUtil
 import dev.aaronhowser.mods.excessive_utilities.block_entity.ChandelierBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import net.minecraft.client.renderer.MultiBufferSource
+import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
+import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
+import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.world.phys.AABB
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer
+import net.minecraft.world.phys.Vec3
 
 class ChandelierBER(
 	val context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<ChandelierBlockEntity> {
+) : BlockEntityRenderer<ChandelierBlockEntity, LegacyBlockEntityRenderState<ChandelierBlockEntity>> {
+	 override fun createRenderState() = LegacyBlockEntityRenderState<ChandelierBlockEntity>()
+	 override fun extractRenderState(blockEntity: ChandelierBlockEntity, state: LegacyBlockEntityRenderState<ChandelierBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
+		state.blockPos = blockEntity.blockPos
+	}
 
-	override fun render(
-		blockEntity: ChandelierBlockEntity,
-		partialTick: Float,
+	override fun submit(
+		state: LegacyBlockEntityRenderState<ChandelierBlockEntity>,
 		poseStack: PoseStack,
-		bufferSource: MultiBufferSource,
-		packedLight: Int,
-		packedOverlay: Int
+		collector: SubmitNodeCollector,
+		camera: CameraRenderState
 	) {
 		val player = AaronClientUtil.localPlayer ?: return
 		if (!player.isHolding(ModBlocks.CHANDELIER.asItem())) return
@@ -52,14 +59,6 @@ class ChandelierBER(
 
 	override fun getRenderBoundingBox(blockEntity: ChandelierBlockEntity): AABB {
 		return AABB.INFINITE
-	}
-
-	override fun shouldRenderOffScreen(blockEntity: ChandelierBlockEntity): Boolean {
-		return true
-	}
-
-	override fun getViewDistance(): Int {
-		return Int.MAX_VALUE
 	}
 
 }

@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.recipe.machine
 
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
@@ -21,7 +22,7 @@ class EnchanterRecipe(
 	val ticks: Int,
 	val enchantingPower: Float,
 	private val result: ItemStack
-) : Recipe<EnchanterRecipe.Input> {
+) : MachineRecipe<EnchanterRecipe.Input> {
 
 	val output: ItemStack
 		get() = result.copy()
@@ -33,12 +34,12 @@ class EnchanterRecipe(
 		return leftIngredient.test(left) && rightIngredient.test(right)
 	}
 
-	override fun assemble(input: Input, registries: HolderLookup.Provider): ItemStack = result.copy()
-	override fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	override fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
+	override fun assemble(input: Input): ItemStack = result.copy()
+	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
 
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.ENCHANTER.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.ENCHANTER.get()
+	override fun getSerializer(): RecipeSerializer<EnchanterRecipe> = ModRecipeSerializers.ENCHANTER.get()
+	override fun getType(): RecipeType<EnchanterRecipe> = ModRecipeTypes.ENCHANTER.get()
 
 	companion object {
 		const val DEFAULT_ENCHANTING_POWER = 15f
@@ -48,14 +49,14 @@ class EnchanterRecipe(
 			leftInput: ItemStack,
 			rightInput: ItemStack
 		): RecipeHolder<EnchanterRecipe>? {
-			return getAllRecipes(level.recipeManager)
+			return getAllRecipes(dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				.firstOrNull { recipeHolder ->
 					recipeHolder.value.matches(Input(leftInput, rightInput), level)
 				}
 		}
 
-		fun getAllRecipes(recipeManager: RecipeManager): List<RecipeHolder<EnchanterRecipe>> {
-			return recipeManager.getAllRecipesFor(ModRecipeTypes.ENCHANTER.get())
+		fun getAllRecipes(recipeManager: RecipeMap): List<RecipeHolder<EnchanterRecipe>> {
+			return recipeManager.byType(ModRecipeTypes.ENCHANTER.get()).toList()
 		}
 	}
 
@@ -72,9 +73,7 @@ class EnchanterRecipe(
 		}
 	}
 
-	class Serializer : RecipeSerializer<EnchanterRecipe> {
-		override fun codec(): MapCodec<EnchanterRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, EnchanterRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<EnchanterRecipe> =

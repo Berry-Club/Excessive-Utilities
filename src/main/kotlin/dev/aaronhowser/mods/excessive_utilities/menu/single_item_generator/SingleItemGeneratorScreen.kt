@@ -11,9 +11,7 @@ class SingleItemGeneratorScreen(
 	menu: SingleItemGeneratorMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<SingleItemGeneratorMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
+) : ExcessiveUtilitiesScreen<SingleItemGeneratorMenu>(menu, playerInventory, title, BACKGROUND) {
 
 	override fun baseInit() {
 		super.baseInit()

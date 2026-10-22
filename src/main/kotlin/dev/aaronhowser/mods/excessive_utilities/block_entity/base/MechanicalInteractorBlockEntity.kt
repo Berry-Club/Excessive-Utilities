@@ -12,6 +12,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -20,9 +22,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
-import net.neoforged.neoforge.items.wrapper.InvWrapper
-import net.neoforged.neoforge.items.wrapper.RangedWrapper
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
+import net.neoforged.neoforge.transfer.RangedResourceHandler
 
 abstract class MechanicalInteractorBlockEntity(
 	type: BlockEntityType<*>,
@@ -33,7 +36,8 @@ abstract class MechanicalInteractorBlockEntity(
 
 	protected val container: ImprovedSimpleContainer = MechanicalInteractorContainer(containerSize)
 
-	private val itemHandler = RangedWrapper(InvWrapper(container), 0, INVENTORY_SIZE)
+	private val itemHandler: ResourceHandler<ItemResource> =
+		RangedResourceHandler.of(VanillaContainerWrapper.of(container), 0, INVENTORY_SIZE)
 
 	var redstoneMode = RedstoneMode.ALWAYS_ON
 		private set
@@ -51,7 +55,7 @@ abstract class MechanicalInteractorBlockEntity(
 
 	override fun getContainers(): List<Container> = listOf(container)
 
-	open fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
+	open fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = itemHandler
 
 	fun updateRedstoneState(powered: Boolean) {
 		if (powered && !isPowered && redstoneMode == RedstoneMode.ON_PULSE) {
@@ -102,22 +106,22 @@ abstract class MechanicalInteractorBlockEntity(
 
 	override fun getDisplayName(): Component = blockState.block.name
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
-		tag.saveItems(container, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		tag.saveItems(container)
 		tag.putInt(REDSTONE_MODE_NBT, redstoneMode.ordinal)
 		tag.putBoolean(POWERED_NBT, isPowered)
 		tag.putInt(PENDING_PULSES_NBT, pendingPulses)
 		tag.putInt(COOLDOWN_NBT, cooldown)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		tag.loadItems(container, registries)
-		redstoneMode = RedstoneMode.fromOrdinal(tag.getInt(REDSTONE_MODE_NBT))
-		isPowered = tag.getBoolean(POWERED_NBT)
-		pendingPulses = tag.getInt(PENDING_PULSES_NBT)
-		cooldown = tag.getInt(COOLDOWN_NBT)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		tag.loadItems(container)
+		redstoneMode = RedstoneMode.fromOrdinal(tag.getIntOr(REDSTONE_MODE_NBT, 0))
+		isPowered = tag.getBooleanOr(POWERED_NBT, false)
+		pendingPulses = tag.getIntOr(PENDING_PULSES_NBT, 0)
+		cooldown = tag.getIntOr(COOLDOWN_NBT, 0)
 	}
 
 	companion object {

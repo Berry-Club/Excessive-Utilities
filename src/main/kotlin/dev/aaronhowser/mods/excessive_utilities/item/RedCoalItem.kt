@@ -11,6 +11,7 @@ import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
@@ -20,16 +21,15 @@ import net.minecraft.world.level.block.entity.AbstractFurnaceBlockEntity
 class RedCoalItem(properties: Properties) : Item(properties) {
 
 	// Actually uses the mixin one below
-	override fun getBurnTime(itemStack: ItemStack, recipeType: RecipeType<*>?): Int {
+	fun getBurnTime(itemStack: ItemStack, recipeType: RecipeType<*>?): Int {
 		return 1600
 	}
 
 	override fun inventoryTick(
 		stack: ItemStack,
-		level: Level,
+		level: ServerLevel,
 		entity: Entity,
-		slotId: Int,
-		isSelected: Boolean
+		slot: EquipmentSlot?
 	) {
 		if (level.isServerSide) {
 			stack.set(ModDataComponents.OWNER, entity.uuid)
@@ -77,3 +77,8 @@ class RedCoalItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+

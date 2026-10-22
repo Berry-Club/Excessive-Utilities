@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.datamap
 
 import com.mojang.serialization.Codec
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.registryHolder
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
@@ -63,7 +62,7 @@ class InversionRitualEnemyWeight(
 				.filterIsInstance<EntityType<out Mob>>()
 
 			for (type in registry) {
-				val weight = type.registryHolder().getData(DATA_MAP)
+				val weight = BuiltInRegistries.ENTITY_TYPE.wrapAsHolder(type).getData(DATA_MAP)
 				if (weight != null) {
 					weights[type] = weight.weight
 				}
@@ -74,12 +73,12 @@ class InversionRitualEnemyWeight(
 	}
 
 	@Suppress("WRONG_TYPE_FOR_JAVA_OVERRIDE")
-	class ReloadListener : SimplePreparableReloadListener<Any?>() {
-		override fun prepare(resourceManager: ResourceManager, profiler: ProfilerFiller): Any? {
-			return null
+	class ReloadListener : SimplePreparableReloadListener<Unit>() {
+		override fun prepare(resourceManager: ResourceManager, profiler: ProfilerFiller): Unit {
+			return Unit
 		}
 
-		override fun apply(`object`: Any?, resourceManager: ResourceManager, profiler: ProfilerFiller) {
+		override fun apply(`object`: Unit, resourceManager: ResourceManager, profiler: ProfilerFiller) {
 			resetCache()
 		}
 	}

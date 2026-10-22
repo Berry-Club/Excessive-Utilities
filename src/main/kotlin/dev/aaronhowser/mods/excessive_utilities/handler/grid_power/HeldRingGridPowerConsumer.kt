@@ -16,16 +16,16 @@ abstract class HeldRingGridPowerConsumer(
 	override fun isStillValid(): Boolean {
 		if (!player.isAlive || player.isRemoved) return false
 
-		for (compartment in player.inventory.compartments) {
-			for (stack in compartment) {
-				if (stack === gpStack) return true
-			}
-		}
+		for (slot in 0 until player.inventory.containerSize) {
+            if (player.inventory.getItem(slot) === gpStack) return true
+        }
 
 		val curiosInventory = CuriosApi.getCuriosInventory(player).getOrNull() ?: return false
-		val wornCurios = curiosInventory.equippedCurios
-		for (slot in 0 until wornCurios.slots) {
-			if (wornCurios.getStackInSlot(slot) === gpStack) return true
+		for (handler in curiosInventory.curios.values) {
+			val stacks = handler.stacks
+			for (slot in 0 until stacks.slots) {
+				if (stacks.getStackInSlot(slot) === gpStack) return true
+			}
 		}
 
 		return false

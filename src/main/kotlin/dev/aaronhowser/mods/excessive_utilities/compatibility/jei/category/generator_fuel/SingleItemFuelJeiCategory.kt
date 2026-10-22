@@ -5,22 +5,24 @@ import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.RecipeType
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.RecipeHolder
+import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
 class SingleItemFuelJeiCategory(
 	generatorBlock: GeneratorBlock,
-	recipeType: RecipeType<RecipeHolder<SingleItemFuelRecipe>>,
+	recipeType: IRecipeType<RecipeHolder<SingleItemFuelRecipe>>,
 	guiHelper: IGuiHelper
 ) : AbstractRecipeCategory<RecipeHolder<SingleItemFuelRecipe>>(
 	recipeType,
@@ -36,7 +38,7 @@ class SingleItemFuelJeiCategory(
 		val inputSlot = builder.addInputSlot(9, 9)
 
 		inputSlot
-			.addItemStacks(recipe.ingredient.items.toList())
+			.addItemStacks(recipe.ingredient.getItemHolders().map(::ItemStack).toList())
 			.setStandardSlotBackground()
 	}
 
@@ -68,7 +70,7 @@ class SingleItemFuelJeiCategory(
 
 	}
 
-	override fun getRegistryName(recipe: RecipeHolder<SingleItemFuelRecipe>): ResourceLocation = recipe.id()
+	override fun getIdentifier(recipe: RecipeHolder<SingleItemFuelRecipe>): Identifier = recipe.id.identifier()
 
 	companion object {
 		fun registerCategory(registration: IRecipeCategoryRegistration) {
@@ -85,14 +87,14 @@ class SingleItemFuelJeiCategory(
 
 		fun registerRecipes(level: Level, registration: IRecipeRegistration) {
 			for ((generatorType, recipeType) in ModJeiPlugin.SINGLE_ITEM_FUELS) {
-				val recipes = SingleItemFuelRecipe.getAllRecipesOfType(generatorType, level.recipeManager)
+				val recipes = SingleItemFuelRecipe.getAllRecipesOfType(generatorType, dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				registration.addRecipes(recipeType, recipes)
 			}
 		}
 
 		fun registerCatalysts(registration: IRecipeCatalystRegistration) {
 			for ((generatorType, recipeType) in ModJeiPlugin.SINGLE_ITEM_FUELS) {
-				registration.addRecipeCatalyst(generatorType.deferredBlock.get(), recipeType)
+				registration.addCraftingStation(recipeType, generatorType.deferredBlock.get())
 			}
 		}
 

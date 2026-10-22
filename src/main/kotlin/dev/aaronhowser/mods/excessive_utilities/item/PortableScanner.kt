@@ -1,6 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
+import net.minecraft.util.ProblemReporter
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -9,25 +10,15 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
+import net.minecraft.world.level.storage.TagValueOutput
 
-//TODO: Open a menu instead
 class PortableScanner(properties: Properties) : Item(properties) {
-
-	override fun interactLivingEntity(
-		stack: ItemStack,
-		player: Player,
-		interactionTarget: LivingEntity,
-		usedHand: InteractionHand
-	): InteractionResult {
-		val entityTag = CompoundTag()
-		interactionTarget.save(entityTag)
-
-		for (key in entityTag.allKeys) {
-			val value = entityTag.get(key)
-
-			player.tell("$key: $value")
-		}
-
+	override fun interactLivingEntity(stack: ItemStack, player: Player, interactionTarget: LivingEntity, usedHand: InteractionHand): InteractionResult {
+		val reporter = ProblemReporter.Collector()
+		val output = TagValueOutput.createWithContext(reporter, interactionTarget.registryAccess())
+		interactionTarget.save(output)
+		val tag: CompoundTag = output.buildResult()
+		for (key in tag.keySet()) player.tell("$key: ${tag.get(key)}")
 		return InteractionResult.SUCCESS
 	}
 
@@ -35,23 +26,15 @@ class PortableScanner(properties: Properties) : Item(properties) {
 		val player = context.player ?: return InteractionResult.PASS
 		val level = context.level
 		if (level.isClientSide) return InteractionResult.SUCCESS
-
 		val blockPos = context.clickedPos
-		val blockState = level.getBlockState(blockPos)
-
-		player.tell(blockState.toString())
-
-		val blockEntity = level.getBlockEntity(blockPos)
-		if (blockEntity != null) {
-			val tag = blockEntity.saveWithoutMetadata(level.registryAccess())
-			for (key in tag.allKeys) {
-				val value = tag.get(key)
-
-				player.tell("$key: $value")
-			}
+		player.tell(level.getBlockState(blockPos).toString())
+		level.getBlockEntity(blockPos)?.let { blockEntity ->
+			val reporter = ProblemReporter.Collector()
+			val output = TagValueOutput.createWithContext(reporter, level.registryAccess())
+			blockEntity.saveWithoutMetadata(output)
+			val tag: CompoundTag = output.buildResult()
+			for (key in tag.keySet()) player.tell("$key: ${tag.get(key)}")
 		}
-
 		return InteractionResult.SUCCESS
 	}
-
 }
