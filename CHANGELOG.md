@@ -3,6 +3,7 @@
 ### Fixed
 
 - The Healing Axe now works when in either hand, not only the mainhand (#96)
+- Fix the Crusher's completion percentage being multiplied by 100 (#94)
 
 # 1.11.0
 
