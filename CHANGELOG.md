@@ -1,3 +1,9 @@
+# 1.11.1
+
+### Fixed
+
+- The Healing Axe now works when in either hand, not only the mainhand (#96)
+
 # 1.11.0
 
 ### Changed
