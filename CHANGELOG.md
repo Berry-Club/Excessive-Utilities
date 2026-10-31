@@ -1,9 +1,20 @@
 # 1.11.1
 
+### Added
+
+- `/excessive-utilities last-millennium` command (#92)
+	- `/excessive-utilities last-millennium query <opional-player>`
+		- Prints the ChunkPos of the player's TLM home
+	- `/excessive-utilities last-millennium assign <optional-player> <optional-chunkpos>`
+		- Sets the player's TLM home to that chunk
+		- `<optional-chunkpos>` is two integers of the ChunkPos
+			- If left out, it uses the command-runner's current chunk (only if they're in TLM)
+
 ### Fixed
 
 - The Healing Axe now works when in either hand, not only the mainhand (#96)
 - Fix the Crusher's completion percentage being multiplied by 100 (#94)
+- Fixed The Last Millennium saving unsafely (#92)
 
 # 1.11.0
 

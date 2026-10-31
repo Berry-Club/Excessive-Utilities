@@ -29,6 +29,7 @@ class LastMillenniumHandler : SavedData() {
 
 	fun teleportIntoDimension(entity: Entity, target: UUID) {
 		val level = entity.level() as? ServerLevel ?: return
+		val chunkPos = getChunk(target)
 
 		val data = entity.persistentData
 		val returnInfo = CompoundTag()
@@ -37,7 +38,6 @@ class LastMillenniumHandler : SavedData() {
 		data.put(PLAYER_RETURN_INFO, returnInfo)
 
 		val targetLevel = getLastMillenniumLevel(level)
-		val chunkPos = getChunk(target)
 
 		placeStructureIfNeeded(targetLevel, chunkPos)
 
@@ -132,12 +132,55 @@ class LastMillenniumHandler : SavedData() {
 			return existing
 		}
 
-		val nextIndex = playerChunks.size
-		val (x, y) = AaronUtil.getGridSpiralPos(nextIndex)
-		val chunksBetween = ServerConfig.CONFIG.tlmChunkDistance.get()
-		val chunkPos = ChunkPos(x * chunksBetween, y * chunksBetween)
+		val chunkPos = getNextAvailableChunk()
 		playerChunks[uuid] = chunkPos
+		setDirty()
 		return chunkPos
+	}
+
+	fun getAssignedChunk(uuid: UUID): ChunkPos? {
+		return playerChunks[uuid]
+	}
+
+	fun getPlayerAtChunk(chunkPos: ChunkPos): UUID? {
+		for ((playerUuid, assignedChunk) in playerChunks) {
+			if (assignedChunk == chunkPos) return playerUuid
+		}
+
+		return null
+	}
+
+	fun assignChunk(uuid: UUID, chunkPos: ChunkPos): Boolean {
+		val assignedPlayer = getPlayerAtChunk(chunkPos)
+		if (assignedPlayer != null && assignedPlayer != uuid) return false
+
+		if (playerChunks[uuid] == chunkPos) return true
+
+		playerChunks[uuid] = chunkPos
+		setDirty()
+		return true
+	}
+
+	fun restoreChunk(uuid: UUID, chunkPos: ChunkPos): Boolean {
+		val existingChunk = playerChunks[uuid]
+		if (existingChunk != null) return existingChunk == chunkPos
+
+		return assignChunk(uuid, chunkPos)
+	}
+
+	private fun getNextAvailableChunk(): ChunkPos {
+		val chunksBetween = ServerConfig.CONFIG.tlmChunkDistance.get()
+		val occupiedChunks = playerChunks.values.toSet()
+		var nextIndex = 0
+
+		while (true) {
+			val (x, y) = AaronUtil.getGridSpiralPos(nextIndex)
+			val chunkPos = ChunkPos(x * chunksBetween, y * chunksBetween)
+
+			if (!occupiedChunks.contains(chunkPos)) return chunkPos
+
+			nextIndex++
+		}
 	}
 
 	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {

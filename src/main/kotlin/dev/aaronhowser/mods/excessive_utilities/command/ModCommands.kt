@@ -14,6 +14,7 @@ object ModCommands {
 		dispatcher.register(
 			Commands.literal("excessive-utilities")
 				.then(GridPowerCommand.register())
+				.then(LastMillenniumCommand.register())
 				.then(SetCursedCommand.register())
 		)
 	}

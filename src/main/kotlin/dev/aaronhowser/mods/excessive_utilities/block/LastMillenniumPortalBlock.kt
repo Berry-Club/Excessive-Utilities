@@ -1,6 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.block_entity.LastMillenniumPortalBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.handler.LastMillenniumHandler
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerLevel
@@ -40,6 +43,24 @@ class LastMillenniumPortalBlock : Block(
 		if (level.dimension() == LastMillenniumHandler.LEVEL_KEY) {
 			handler.returnFromDimension(player)
 		} else {
+			var assignedChunk = handler.getAssignedChunk(blockEntity.owner)
+			val cachedChunk = blockEntity.destinationChunk
+
+			if (assignedChunk == null && cachedChunk != null) {
+				val wasRestored = handler.restoreChunk(blockEntity.owner, cachedChunk)
+				if (!wasRestored) {
+					player.status(ModMessageLang.TLM_DESTINATION_CONFLICT.toComponent())
+					return InteractionResult.FAIL
+				}
+
+				assignedChunk = cachedChunk
+			}
+
+			if (assignedChunk == null) {
+				assignedChunk = handler.getChunk(blockEntity.owner)
+			}
+
+			blockEntity.setDestinationChunk(assignedChunk)
 			handler.teleportIntoDimension(player, blockEntity.owner)
 		}
 
@@ -67,7 +88,7 @@ class LastMillenniumPortalBlock : Block(
 		if (placer != null && level is ServerLevel) {
 			val blockEntity = level.getBlockEntity(pos)
 			if (blockEntity is LastMillenniumPortalBlockEntity) {
-				blockEntity.owner = placer.uuid
+				blockEntity.setOwner(placer.uuid)
 			}
 		}
 	}

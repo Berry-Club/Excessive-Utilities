@@ -32,6 +32,14 @@ object ModMessageLang {
 	const val GRID_MEMBER_REMOVED = "message.excessive_utilities.grid.kick.removed"
 	const val GRID_REMOVED = "message.excessive_utilities.grid.kick.received"
 
+	const val TLM_QUERY = "message.excessive_utilities.tlm.query"
+	const val TLM_QUERY_NONE = "message.excessive_utilities.tlm.query.none"
+	const val TLM_ASSIGN_SUCCESS = "message.excessive_utilities.tlm.assign.success"
+	const val TLM_ASSIGN_WRONG_DIMENSION = "message.excessive_utilities.tlm.assign.wrong_dimension"
+	const val TLM_ASSIGN_OCCUPIED = "message.excessive_utilities.tlm.assign.occupied"
+	const val TLM_SINGLE_PLAYER = "message.excessive_utilities.tlm.single_player"
+	const val TLM_DESTINATION_CONFLICT = "message.excessive_utilities.tlm.destination_conflict"
+
 	const val DIVISION_OVERWORLD_ONLY = "message.excessive_utilities.division.overworld_only"
 	const val DIVISION_SEE_SKY = "message.excessive_utilities.division.see_sky"
 	const val DIVISION_REDSTONE = "message.excessive_utilities.division.redstone"
@@ -89,6 +97,14 @@ object ModMessageLang {
 			add(GRID_KICK_FAILED, "You cannot remove that player from the grid.")
 			add(GRID_MEMBER_REMOVED, "Removed %s from the grid.")
 			add(GRID_REMOVED, "You were removed from %s's grid.")
+
+			add(TLM_QUERY, "%s is assigned to chunk %d, %d in The Last Millennium.")
+			add(TLM_QUERY_NONE, "%s does not have a Last Millennium destination.")
+			add(TLM_ASSIGN_SUCCESS, "Assigned %s to Last Millennium chunk %d, %d.")
+			add(TLM_ASSIGN_WRONG_DIMENSION, "This command must be run by a player in The Last Millennium.")
+			add(TLM_ASSIGN_OCCUPIED, "Last Millennium chunk %d, %d is already assigned to %s.")
+			add(TLM_SINGLE_PLAYER, "You must specify exactly one player.")
+			add(TLM_DESTINATION_CONFLICT, "This portal's saved destination conflicts with another player's assignment. Ask an operator to repair it.")
 
 			add(DIVISION_OVERWORLD_ONLY, "You can only activate the Division Sigil in the Overworld!")
 			add(DIVISION_SEE_SKY, "The Enchanting Table must be able to see the sky.")
