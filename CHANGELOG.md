@@ -28,7 +28,7 @@
 - Fix the Crusher's completion percentage being multiplied by 100 (#94)
 - Fixed The Last Millennium saving unsafely (#92)
 - Fixed the Ender Quarry upgrade item tag referencing itself (#90)
-- Marked machines etc as Clearable, to prevent an item dupe (98)
+- Marked machines etc as Clearable, to prevent an item dupe (#98)
 
 # 1.11.0
 
