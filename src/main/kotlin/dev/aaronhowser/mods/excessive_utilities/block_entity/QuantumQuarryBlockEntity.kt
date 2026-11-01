@@ -319,15 +319,15 @@ class QuantumQuarryBlockEntity(
 		discardTarget(quarryLevel)
 
 		val filteredBiome = getBiomeFilter().get(ModDataComponents.BIOME)
-		val dimension = if (filteredBiome == null) {
+		val miningDimension = if (filteredBiome == null) {
 			getDimensionForLevel(quarryLevel)
 		} else {
 			getDimensionForBiome(filteredBiome)
 		}
 
-		val targetBiome = filteredBiome ?: chooseRandomTargetBiome(quarryLevel, dimension) ?: return
+		val targetBiome = filteredBiome ?: chooseRandomTargetBiome(quarryLevel, miningDimension) ?: return
 		val biomeKey = targetBiome.key ?: return
-		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey) ?: return
+		val miningDimensionLevel = quarryLevel.server.getLevel(miningDimension.levelKey) ?: return
 
 		var attempts = 0
 		while (attempts < MAX_TARGET_CLAIM_ATTEMPTS) {
@@ -336,16 +336,16 @@ class QuantumQuarryBlockEntity(
 				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE)
 			)
 
-			if (QuantumQuarryBiomeSource.claim(dimension, nextChunkPos, fakePlayerUuid, targetBiome)) {
+			if (QuantumQuarryBiomeSource.claim(miningDimension, nextChunkPos, fakePlayerUuid, targetBiome)) {
 				targetChunk = nextChunkPos
 				targetBlockPos = BlockPos(
 					nextChunkPos.minBlockX,
 					miningDimensionLevel.maxBuildHeight - 1,
 					nextChunkPos.minBlockZ
 				)
-				targetDimension = dimension
+				targetDimension = miningDimension
 				targetBiomeKey = biomeKey
-				addTargetTicket(miningDimensionLevel, dimension, nextChunkPos)
+				addTargetTicket(miningDimensionLevel, miningDimension, nextChunkPos)
 				setChanged()
 				return
 			}
@@ -383,11 +383,13 @@ class QuantumQuarryBlockEntity(
 	}
 
 	private fun getDimensionForBiome(biome: Holder<Biome>): QuantumQuarryDimension {
-		if (biome.isHolder(QuantumQuarryDimension.NETHER.biomeTag)) return QuantumQuarryDimension.NETHER
-		if (biome.isHolder(QuantumQuarryDimension.END.biomeTag)) return QuantumQuarryDimension.END
-		if (biome.isHolder(Biomes.THE_VOID)) return QuantumQuarryDimension.END
+		return when {
+			biome.isHolder(QuantumQuarryDimension.NETHER.biomeTag) -> QuantumQuarryDimension.NETHER
+			biome.isHolder(QuantumQuarryDimension.END.biomeTag)
+					|| biome.isHolder(Biomes.THE_VOID) -> QuantumQuarryDimension.END
 
-		return QuantumQuarryDimension.OVERWORLD
+			else -> QuantumQuarryDimension.OVERWORLD
+		}
 	}
 
 	private fun activateTarget(quarryLevel: ServerLevel): ServerLevel? {
