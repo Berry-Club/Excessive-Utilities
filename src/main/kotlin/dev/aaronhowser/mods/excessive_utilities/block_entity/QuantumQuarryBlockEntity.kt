@@ -48,6 +48,7 @@ import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
@@ -317,9 +318,15 @@ class QuantumQuarryBlockEntity(
 	private fun targetNewChunk(quarryLevel: ServerLevel) {
 		discardTarget(quarryLevel)
 
-		val targetBiome = chooseTargetBiome(quarryLevel) ?: return
+		val filteredBiome = getBiomeFilter().get(ModDataComponents.BIOME)
+		val dimension = if (filteredBiome == null) {
+			getDimensionForLevel(quarryLevel)
+		} else {
+			getDimensionForBiome(filteredBiome)
+		}
+
+		val targetBiome = filteredBiome ?: chooseRandomTargetBiome(quarryLevel, dimension) ?: return
 		val biomeKey = targetBiome.key ?: return
-		val dimension = getDimensionForBiome(targetBiome)
 		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey) ?: return
 
 		var attempts = 0
@@ -347,34 +354,38 @@ class QuantumQuarryBlockEntity(
 		}
 	}
 
-	private fun chooseTargetBiome(quarryLevel: ServerLevel): Holder<Biome>? {
-		val filteredBiome = getBiomeFilter().get(ModDataComponents.BIOME)
-		if (filteredBiome != null) return filteredBiome
-
+	private fun chooseRandomTargetBiome(
+		quarryLevel: ServerLevel,
+		dimension: QuantumQuarryDimension
+	): Holder<Biome>? {
 		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
 		val choices = mutableListOf<Holder<Biome>>()
-		val seenBiomes = mutableSetOf<ResourceKey<Biome>>()
+		val biomeTag = biomeRegistry.getTag(dimension.biomeTag)
+		if (biomeTag.isEmpty) return null
 
-		for (dimension in QuantumQuarryDimension.entries) {
-			val biomeTag = biomeRegistry.getTag(dimension.biomeTag)
-			if (biomeTag.isEmpty) continue
+		for (biome in biomeTag.get()) {
+			if (biome.isHolder(ModBiomeTagsProvider.BIOME_MARKER_BLACKLIST)) continue
+			if (biome.isHolder(ModBiomeTagsProvider.QUANTUM_QUARRY_RANDOM_BLACKLIST)) continue
 
-			for (biome in biomeTag.get()) {
-				val biomeKey = biome.key ?: continue
-				if (biome.isHolder(ModBiomeTagsProvider.BIOME_MARKER_BLACKLIST)) continue
-				if (!seenBiomes.add(biomeKey)) continue
-
-				choices.add(biome)
-			}
+			choices.add(biome)
 		}
 
 		if (choices.isEmpty()) return null
 		return choices[quarryLevel.random.nextInt(choices.size)]
 	}
 
+	private fun getDimensionForLevel(level: ServerLevel): QuantumQuarryDimension {
+		return when (level.dimension()) {
+			Level.NETHER -> QuantumQuarryDimension.NETHER
+			Level.END -> QuantumQuarryDimension.END
+			else -> QuantumQuarryDimension.OVERWORLD
+		}
+	}
+
 	private fun getDimensionForBiome(biome: Holder<Biome>): QuantumQuarryDimension {
 		if (biome.isHolder(QuantumQuarryDimension.NETHER.biomeTag)) return QuantumQuarryDimension.NETHER
 		if (biome.isHolder(QuantumQuarryDimension.END.biomeTag)) return QuantumQuarryDimension.END
+		if (biome.isHolder(Biomes.THE_VOID)) return QuantumQuarryDimension.END
 
 		return QuantumQuarryDimension.OVERWORLD
 	}

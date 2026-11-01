@@ -8,6 +8,7 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.BiomeTagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
@@ -20,6 +21,8 @@ class ModBiomeTagsProvider(
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BIOME_MARKER_BLACKLIST)
+		tag(QUANTUM_QUARRY_RANDOM_BLACKLIST)
+			.add(Biomes.THE_VOID)
 		tag(Tags.Biomes.IS_OVERWORLD)
 			.add(ModBiomes.THE_DEPTHS)
 	}
@@ -30,6 +33,7 @@ class ModBiomeTagsProvider(
 		}
 
 		val BIOME_MARKER_BLACKLIST = create("biome_marker_blacklist")
+		val QUANTUM_QUARRY_RANDOM_BLACKLIST = create("quantum_quarry_random_blacklist")
 
 	}
 

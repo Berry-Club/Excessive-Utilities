@@ -13,7 +13,7 @@
 ### Changed
 
 - Overhauled the Quantum Quarry to generate and discard a fresh chunk for every mining cycle instead of permanently expanding the world save (#97)
-	- Without a Biome Marker, each chunk selects a random Overworld, Nether, or End biome
+	- Without a Biome Marker, each chunk selects a random biome appropriate for the dimension containing the quarry
 	- Biome Markers now generate terrain appropriate for the marked biome, including modded biomes that use the standard dimension biome tags
 	- Server owners are encouraged to delete `<world>/dimensions/excessive_utilities/quantum_quarry` to reclaim disk space
 - The Quantum Quarry is also now much more stable in general

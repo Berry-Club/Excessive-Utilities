@@ -1,3 +1,4 @@
-// 1.21.1	2026-06-21T20:41:54.0780945	Tags for minecraft:worldgen/biome mod id excessive_utilities
+// 1.21.1	2026-11-01T06:51:01.7667567	Tags for minecraft:worldgen/biome mod id excessive_utilities
 238dedfbf433af403e30677a03eb4d2a6c27a866 data/c/tags/worldgen/biome/is_overworld.json
 35133e95f1c8fdd7a1c21afcc231fc0bffefb9a8 data/excessive_utilities/tags/worldgen/biome/biome_marker_blacklist.json
+378840c455ad2277df61b86384bba36f3ec8b253 data/excessive_utilities/tags/worldgen/biome/quantum_quarry_random_blacklist.json
