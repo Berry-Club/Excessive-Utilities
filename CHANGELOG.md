@@ -10,6 +10,14 @@
 		- `<optional-chunkpos>` is two integers of the ChunkPos
 			- If left out, it uses the command-runner's current chunk (only if they're in TLM)
 
+### Changed
+
+- Overhauled the Quantum Quarry to generate and discard a fresh chunk for every mining cycle instead of permanently expanding the world save (#97)
+	- Without a Biome Marker, each chunk selects a random Overworld, Nether, or End biome
+	- Biome Markers now generate terrain appropriate for the marked biome, including modded biomes that use the standard dimension biome tags
+	- Server owners are encouraged to delete `<world>/dimensions/excessive_utilities/quantum_quarry` to reclaim disk space
+- The Quantum Quarry is also now much more stable in general
+
 ### Fixed
 
 - The Healing Axe now works when in either hand, not only the mainhand (#96)

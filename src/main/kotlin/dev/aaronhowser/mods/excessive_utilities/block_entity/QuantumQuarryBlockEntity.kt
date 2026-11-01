@@ -14,6 +14,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MachineWithBuffer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBiomeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -24,10 +25,13 @@ import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQ
 import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryDimension
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.ResourceKey
+import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.TicketType
 import net.minecraft.util.Mth
@@ -43,6 +47,7 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
@@ -76,9 +81,15 @@ class QuantumQuarryBlockEntity(
 	private var targetChunk: ChunkPos? = null
 	private var targetBlockPos: BlockPos? = null
 	private var targetDimension: QuantumQuarryDimension? = null
+	private var targetBiomeKey: ResourceKey<Biome>? = null
+
 	private var activeTicketChunk: ChunkPos? = null
 	private var activeTicketDimension: QuantumQuarryDimension? = null
+
+	private var biomeFilterChanged = false
+	private var loadingAdditionalData = false
 	private var hasLegacyForcedTarget = false
+
 	private var amountBlocksBroken: Int = 0
 
 	private fun getItemFilter(): ItemStack = upgradesContainer.getItem(ITEM_FILTER_SLOT_INDEX)
@@ -104,7 +115,12 @@ class QuantumQuarryBlockEntity(
 		val hasSignal = actuatorPositions.any { pos -> quarryLevel.hasNeighborSignal(pos) }
 		if (hasSignal) return
 
-		if (targetChunk == null || targetBlockPos == null || targetDimension == null) {
+		if (biomeFilterChanged) {
+			biomeFilterChanged = false
+			discardTarget(quarryLevel)
+		}
+
+		if (targetChunk == null || targetBlockPos == null || targetDimension == null || targetBiomeKey == null) {
 			targetNewChunk(quarryLevel)
 		}
 
@@ -301,11 +317,10 @@ class QuantumQuarryBlockEntity(
 	private fun targetNewChunk(quarryLevel: ServerLevel) {
 		discardTarget(quarryLevel)
 
-		val dimensions = QuantumQuarryDimension.entries
-		val dimension = dimensions[quarryLevel.random.nextInt(dimensions.size)]
+		val targetBiome = chooseTargetBiome(quarryLevel) ?: return
+		val biomeKey = targetBiome.key ?: return
+		val dimension = getDimensionForBiome(targetBiome)
 		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey) ?: return
-		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
-		val fallbackBiome = biomeRegistry.getHolder(dimension.fallbackBiome).orElse(null) ?: return
 
 		var attempts = 0
 		while (attempts < MAX_TARGET_CLAIM_ATTEMPTS) {
@@ -314,7 +329,7 @@ class QuantumQuarryBlockEntity(
 				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE)
 			)
 
-			if (QuantumQuarryBiomeSource.claim(dimension, nextChunkPos, fakePlayerUuid, fallbackBiome)) {
+			if (QuantumQuarryBiomeSource.claim(dimension, nextChunkPos, fakePlayerUuid, targetBiome)) {
 				targetChunk = nextChunkPos
 				targetBlockPos = BlockPos(
 					nextChunkPos.minBlockX,
@@ -322,6 +337,7 @@ class QuantumQuarryBlockEntity(
 					nextChunkPos.minBlockZ
 				)
 				targetDimension = dimension
+				targetBiomeKey = biomeKey
 				addTargetTicket(miningDimensionLevel, dimension, nextChunkPos)
 				setChanged()
 				return
@@ -331,17 +347,53 @@ class QuantumQuarryBlockEntity(
 		}
 	}
 
+	private fun chooseTargetBiome(quarryLevel: ServerLevel): Holder<Biome>? {
+		val filteredBiome = getBiomeFilter().get(ModDataComponents.BIOME)
+		if (filteredBiome != null) return filteredBiome
+
+		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
+		val choices = mutableListOf<Holder<Biome>>()
+		val seenBiomes = mutableSetOf<ResourceKey<Biome>>()
+
+		for (dimension in QuantumQuarryDimension.entries) {
+			val biomeTag = biomeRegistry.getTag(dimension.biomeTag)
+			if (biomeTag.isEmpty) continue
+
+			for (biome in biomeTag.get()) {
+				val biomeKey = biome.key ?: continue
+				if (biome.isHolder(ModBiomeTagsProvider.BIOME_MARKER_BLACKLIST)) continue
+				if (!seenBiomes.add(biomeKey)) continue
+
+				choices.add(biome)
+			}
+		}
+
+		if (choices.isEmpty()) return null
+		return choices[quarryLevel.random.nextInt(choices.size)]
+	}
+
+	private fun getDimensionForBiome(biome: Holder<Biome>): QuantumQuarryDimension {
+		if (biome.isHolder(QuantumQuarryDimension.NETHER.biomeTag)) return QuantumQuarryDimension.NETHER
+		if (biome.isHolder(QuantumQuarryDimension.END.biomeTag)) return QuantumQuarryDimension.END
+
+		return QuantumQuarryDimension.OVERWORLD
+	}
+
 	private fun activateTarget(quarryLevel: ServerLevel): ServerLevel? {
 		val chunkPos = targetChunk ?: return null
 		val dimension = targetDimension ?: return null
+		val biomeKey = targetBiomeKey ?: return null
 		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey) ?: return null
-		if (activeTicketChunk == chunkPos && activeTicketDimension == dimension) return miningDimensionLevel
+
+		if (activeTicketChunk == chunkPos && activeTicketDimension == dimension) {
+			return miningDimensionLevel
+		}
 
 		releaseTargetTicket(quarryLevel)
 
 		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
-		val fallbackBiome = biomeRegistry.getHolder(dimension.fallbackBiome).orElse(null) ?: return null
-		if (!QuantumQuarryBiomeSource.claim(dimension, chunkPos, fakePlayerUuid, fallbackBiome)) {
+		val biome = biomeRegistry.getHolder(biomeKey).orElse(null) ?: return null
+		if (!QuantumQuarryBiomeSource.claim(dimension, chunkPos, fakePlayerUuid, biome)) {
 			discardTarget(quarryLevel)
 			return null
 		}
@@ -389,6 +441,7 @@ class QuantumQuarryBlockEntity(
 		targetChunk = null
 		targetBlockPos = null
 		targetDimension = null
+		targetBiomeKey = null
 		setChanged()
 	}
 
@@ -457,6 +510,11 @@ class QuantumQuarryBlockEntity(
 			tag.putString(TARGET_DIMENSION_NBT, dimension.serializedName)
 		}
 
+		val biomeKey = targetBiomeKey
+		if (biomeKey != null) {
+			tag.putString(TARGET_BIOME_NBT, biomeKey.location().toString())
+		}
+
 		tag.putInt(AMOUNT_BLOCKS_BROKEN_NBT, amountBlocksBroken)
 		tag.putUUID(FAKE_PLAYER_UUID_NBT, fakePlayerUuid)
 		tag.putBoolean(TARGET_USES_REGION_TICKET_NBT, !hasLegacyForcedTarget)
@@ -464,6 +522,7 @@ class QuantumQuarryBlockEntity(
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
 		super.loadAdditional(tag, registries)
+		loadingAdditionalData = true
 
 		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
 
@@ -485,8 +544,13 @@ class QuantumQuarryBlockEntity(
 
 		if (tag.contains(TARGET_DIMENSION_NBT)) {
 			targetDimension = QuantumQuarryDimension.fromSerializedName(tag.getString(TARGET_DIMENSION_NBT))
-		} else if (targetChunk != null) {
-			targetDimension = QuantumQuarryDimension.OVERWORLD
+		}
+
+		if (tag.contains(TARGET_BIOME_NBT)) {
+			val biomeId = ResourceLocation.tryParse(tag.getString(TARGET_BIOME_NBT))
+			if (biomeId != null) {
+				targetBiomeKey = ResourceKey.create(Registries.BIOME, biomeId)
+			}
 		}
 
 		amountBlocksBroken = tag.getInt(AMOUNT_BLOCKS_BROKEN_NBT)
@@ -498,6 +562,8 @@ class QuantumQuarryBlockEntity(
 		hasLegacyForcedTarget = targetChunk != null && !tag.getBoolean(TARGET_USES_REGION_TICKET_NBT)
 		activeTicketChunk = null
 		activeTicketDimension = null
+		biomeFilterChanged = false
+		loadingAdditionalData = false
 	}
 
 	override fun getDisplayName(): Component = blockState.block.name
@@ -510,6 +576,7 @@ class QuantumQuarryBlockEntity(
 		const val TARGET_CHUNK_POS_NBT = "TargetChunkPos"
 		const val TARGET_BLOCK_POS_NBT = "TargetBlockPos"
 		const val TARGET_DIMENSION_NBT = "TargetDimension"
+		const val TARGET_BIOME_NBT = "TargetBiome"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
 		const val BUFFER_CONTAINER_NBT = "Buffer"
 		const val UPGRADE_CONTAINER_NBT = "Upgrades"
@@ -576,14 +643,12 @@ class QuantumQuarryBlockEntity(
 
 		private fun getTargetBiomeId(): Int {
 			val level = level
-			val targetPos = targetBlockPos
-			val dimension = targetDimension
-			if (targetPos == null || dimension == null || level !is ServerLevel) return 0
+			val biomeKey = targetBiomeKey
+			if (biomeKey == null || level !is ServerLevel) return 0
 
-			val miningDimension = level.server.getLevel(dimension.levelKey) ?: return 0
-			val biome = miningDimension.getBiome(targetPos)
-			val registry = miningDimension.registryAccess().registryOrThrow(Registries.BIOME)
-			return registry.getId(biome.value())
+			val registry = level.registryAccess().registryOrThrow(Registries.BIOME)
+			val biome = registry.get(biomeKey) ?: return 0
+			return registry.getId(biome)
 		}
 
 	}
@@ -600,13 +665,20 @@ class QuantumQuarryBlockEntity(
 		}
 
 		override fun setItem(index: Int, stack: ItemStack) {
+			val previousBiome = if (index == BIOME_FILTER_SLOT_INDEX) {
+				getItem(index).get(ModDataComponents.BIOME)
+			} else {
+				null
+			}
+
 			super.setItem(index, stack)
 
-			if (index == BIOME_FILTER_SLOT_INDEX && stack.isNotEmpty()) {
-				val level = level
-				if (level is ServerLevel) {
-					targetNewChunk(level)
-				}
+			if (index != BIOME_FILTER_SLOT_INDEX || loadingAdditionalData) return
+
+			val currentBiome = stack.get(ModDataComponents.BIOME)
+			if (previousBiome != currentBiome) {
+				biomeFilterChanged = true
+				setChanged()
 			}
 		}
 
