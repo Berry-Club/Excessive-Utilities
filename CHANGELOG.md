@@ -12,8 +12,8 @@
 
 ### Changed
 
-- Overhauled the Quantum Quarry to generate and discard a fresh chunk for every mining cycle instead of permanently expanding the world save (#97)
-	- Without a Biome Marker, each chunk selects a random biome appropriate for the dimension the QQ is in
+- Overhauled the Quantum Quarry to generate chunks with the specified biome, rather than searching a copy of the Overworld for that biome (#97)
+	- Without a Biome Marker, it uses a random biome from the dimension the QQ is in
 	- It now uses 3 new dimensions that are not saved to disk
 		- Server owners are encouraged to delete `<world>/dimensions/excessive_utilities/quantum_quarry` to reclaim disk space
 - The Quantum Quarry will not randomly target biomes with the `#excessive_utilities:quantum_quarry_random_blacklist` biome tag
