@@ -413,7 +413,7 @@ class ModItemTagsProvider(
 				ModBlocks.CREATIVE_MILL.asItem()
 			)
 
-		copy(ModBlockTagsProvider.ENDER_QUARRY_PART, ENDER_QUARRY_UPGRADE)
+		copy(ModBlockTagsProvider.ENDER_QUARRY_UPGRADE, ENDER_QUARRY_UPGRADE)
 	}
 
 	companion object {
