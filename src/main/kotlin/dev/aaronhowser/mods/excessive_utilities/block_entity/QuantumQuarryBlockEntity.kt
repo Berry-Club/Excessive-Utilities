@@ -176,7 +176,7 @@ class QuantumQuarryBlockEntity(
 			}
 		}
 
-		targetScansRemainingThisTick = MAX_TARGET_SCANS_PER_TICK
+		targetScansRemainingThisTick = 4096
 
 		while (progressThroughBlock >= 1.0) {
 			val target = getMineableTarget(miningDimensionLevel) ?: return
@@ -330,7 +330,7 @@ class QuantumQuarryBlockEntity(
 		val miningDimensionLevel = quarryLevel.server.getLevel(miningDimension.levelKey) ?: return
 
 		var attempts = 0
-		while (attempts < MAX_TARGET_CLAIM_ATTEMPTS) {
+		while (attempts < 100) {
 			val nextChunkPos = ChunkPos(
 				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE),
 				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE)
@@ -611,9 +611,7 @@ class QuantumQuarryBlockEntity(
 		const val AMOUNT_BLOCKS_BROKEN_DATA_INDEX = 5
 		const val BIOME_ID_DATA_INDEX = 6
 
-		const val MAX_TARGET_SCANS_PER_TICK = 4096
 		const val MAX_TARGET_COORDINATE = 100_000
-		const val MAX_TARGET_CLAIM_ATTEMPTS = 100
 		const val QUARRY_TICKET_RADIUS = 2
 
 		val QUARRY_TICKET_TYPE: TicketType<UUID> = TicketType.create(
