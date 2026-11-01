@@ -29,6 +29,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.TicketType
 import net.minecraft.util.Mth
 import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
@@ -74,6 +75,8 @@ class QuantumQuarryBlockEntity(
 
 	private var targetChunk: ChunkPos? = null
 	private var targetBlockPos: BlockPos? = null
+	private var activeTicketChunk: ChunkPos? = null
+	private var hasLegacyForcedTarget = false
 	private var amountBlocksBroken: Int = 0
 
 	private fun getItemFilter(): ItemStack = upgradesContainer.getItem(ITEM_FILTER_SLOT_INDEX)
@@ -83,6 +86,10 @@ class QuantumQuarryBlockEntity(
 	private val actuatorPositions: List<BlockPos> = Direction.entries.map { direction -> this.blockPos.relative(direction) }
 
 	private fun serverTick(quarryLevel: ServerLevel, miningDimensionLevel: ServerLevel) {
+		if (hasLegacyForcedTarget) {
+			removeLegacyForcedTarget(miningDimensionLevel)
+		}
+
 		if (!hasActuators()) return
 
 		if (fakePlayer?.get() == null) {
@@ -99,6 +106,7 @@ class QuantumQuarryBlockEntity(
 			targetNewChunk(miningDimensionLevel)
 		}
 
+		activateTarget(miningDimensionLevel)
 		progressMine(miningDimensionLevel)
 	}
 
@@ -289,10 +297,7 @@ class QuantumQuarryBlockEntity(
 	}
 
 	private fun targetNewChunk(miningDimensionLevel: ServerLevel) {
-		val previousChunk = targetChunk
-		if (previousChunk != null) {
-			miningDimensionLevel.setChunkForced(previousChunk.x, previousChunk.z, false)
-		}
+		releaseTargetTicket(miningDimensionLevel)
 
 		var nextChunkPos = ChunkPos(
 			miningDimensionLevel.random.nextInt(-100_000, 100_000),
@@ -323,7 +328,50 @@ class QuantumQuarryBlockEntity(
 			miningDimensionLevel.maxBuildHeight - 1,
 			nextChunkPos.minBlockZ
 		)
-		miningDimensionLevel.setChunkForced(nextChunkPos.x, nextChunkPos.z, true)
+		addTargetTicket(miningDimensionLevel, nextChunkPos)
+		setChanged()
+	}
+
+	private fun activateTarget(miningDimensionLevel: ServerLevel) {
+		val chunkPos = targetChunk ?: return
+		if (activeTicketChunk == chunkPos) return
+
+		releaseTargetTicket(miningDimensionLevel)
+		addTargetTicket(miningDimensionLevel, chunkPos)
+	}
+
+	private fun addTargetTicket(miningDimensionLevel: ServerLevel, chunkPos: ChunkPos) {
+		miningDimensionLevel.chunkSource.addRegionTicket(
+			QUARRY_TICKET_TYPE,
+			chunkPos,
+			QUARRY_TICKET_RADIUS,
+			fakePlayerUuid
+		)
+
+		activeTicketChunk = chunkPos
+	}
+
+	private fun releaseTargetTicket(miningDimensionLevel: ServerLevel) {
+		val chunkPos = activeTicketChunk ?: return
+
+		miningDimensionLevel.chunkSource.removeRegionTicket(
+			QUARRY_TICKET_TYPE,
+			chunkPos,
+			QUARRY_TICKET_RADIUS,
+			fakePlayerUuid
+		)
+
+		activeTicketChunk = null
+	}
+
+	private fun removeLegacyForcedTarget(miningDimensionLevel: ServerLevel) {
+		hasLegacyForcedTarget = false
+
+		val chunkPos = targetChunk
+		if (chunkPos != null) {
+			miningDimensionLevel.setChunkForced(chunkPos.x, chunkPos.z, false)
+		}
+
 		setChanged()
 	}
 
@@ -342,8 +390,13 @@ class QuantumQuarryBlockEntity(
 	}
 
 	override fun setRemoved() {
+		val quarryLevel = level as? ServerLevel
+		val miningDimensionLevel = quarryLevel?.server?.getLevel(LEVEL_KEY)
+		if (miningDimensionLevel != null) {
+			releaseTargetTicket(miningDimensionLevel)
+		}
+
 		super.setRemoved()
-		setChunkForced(level, targetChunk, false)
 	}
 
 	private val containerData: ContainerData = QuantumQuarryContainerData()
@@ -373,6 +426,7 @@ class QuantumQuarryBlockEntity(
 
 		tag.putInt(AMOUNT_BLOCKS_BROKEN_NBT, amountBlocksBroken)
 		tag.putUUID(FAKE_PLAYER_UUID_NBT, fakePlayerUuid)
+		tag.putBoolean(TARGET_USES_REGION_TICKET_NBT, !hasLegacyForcedTarget)
 	}
 
 	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
@@ -401,6 +455,9 @@ class QuantumQuarryBlockEntity(
 		if (tag.hasUUID(FAKE_PLAYER_UUID_NBT)) {
 			fakePlayerUuid = tag.getUUID(FAKE_PLAYER_UUID_NBT)
 		}
+
+		hasLegacyForcedTarget = targetChunk != null && !tag.getBoolean(TARGET_USES_REGION_TICKET_NBT)
+		activeTicketChunk = null
 	}
 
 	override fun getDisplayName(): Component = blockState.block.name
@@ -417,6 +474,7 @@ class QuantumQuarryBlockEntity(
 		const val UPGRADE_CONTAINER_NBT = "Upgrades"
 		const val AMOUNT_BLOCKS_BROKEN_NBT = "AmountBlocksBroken"
 		const val FAKE_PLAYER_UUID_NBT = "FakePlayerUuid"
+		const val TARGET_USES_REGION_TICKET_NBT = "TargetUsesRegionTicket"
 
 		const val UPGRADE_CONTAINER_SIZE = 3
 		const val ITEM_FILTER_SLOT_INDEX = 0
@@ -433,6 +491,12 @@ class QuantumQuarryBlockEntity(
 		const val BIOME_ID_DATA_INDEX = 6
 
 		const val MAX_TARGET_SCANS_PER_TICK = 4096
+		const val QUARRY_TICKET_RADIUS = 2
+
+		val QUARRY_TICKET_TYPE: TicketType<UUID> = TicketType.create(
+			"excessive_utilities:quantum_quarry",
+			Comparator.naturalOrder()
+		)
 
 		val LEVEL_KEY: ResourceKey<Level> =
 			ResourceKey.create(Registries.DIMENSION, ExcessiveUtilities.modResource("quantum_quarry"))
@@ -450,12 +514,6 @@ class QuantumQuarryBlockEntity(
 
 				blockEntity.serverTick(level, miningDimensionLevel)
 			}
-		}
-
-		private fun setChunkForced(quarryLevel: Level?, chunkPos: ChunkPos?, forced: Boolean) {
-			if (quarryLevel !is ServerLevel || chunkPos == null) return
-			val miningLevel = quarryLevel.server.getLevel(LEVEL_KEY) ?: return
-			miningLevel.setChunkForced(chunkPos.x, chunkPos.z, forced)
 		}
 	}
 
