@@ -11,6 +11,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Clearable
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.energy.EnergyStorage
@@ -20,10 +21,15 @@ import java.util.*
 class WirelessFeBatteryBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState) {
+) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState), Clearable {
 
 	val energyStorage = EnergyStorage(15_000)
 	var ownerUuid: UUID? = null
+
+	override fun clearContent() {
+		energyStorage.extractEnergy(energyStorage.energyStored, false)
+		setChanged()
+	}
 
 	override fun onLoad() {
 		super.onLoad()

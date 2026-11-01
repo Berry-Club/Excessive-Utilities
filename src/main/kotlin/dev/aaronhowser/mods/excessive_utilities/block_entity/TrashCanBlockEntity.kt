@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
+import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -8,6 +9,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
+import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
@@ -22,7 +24,7 @@ import net.neoforged.neoforge.items.IItemHandler
 class TrashCanBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.TRASH_CAN.get(), pos, state), MenuProvider {
+) : BlockEntity(ModBlockEntityTypes.TRASH_CAN.get(), pos, state), ContainerContainer, MenuProvider {
 
 	var isChest: Boolean = false
 		set(value) {
@@ -32,6 +34,8 @@ class TrashCanBlockEntity(
 
 	private val filterContainer = ImprovedSimpleContainer(this, 1)
 	val filterStack: ItemStack get() = filterContainer.getItem(FILTER_SLOT)
+
+	override fun getContainers(): List<Container> = listOf(filterContainer)
 
 	private val itemHandler: IItemHandler =
 		object : IItemHandler {

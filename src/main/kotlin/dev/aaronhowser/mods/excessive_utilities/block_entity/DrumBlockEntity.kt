@@ -12,6 +12,7 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentMap
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.Clearable
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockAndTintGetter
 import net.minecraft.world.level.block.state.BlockState
@@ -22,7 +23,7 @@ import java.util.function.IntSupplier
 class DrumBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : SyncingBlockEntity(ModBlockEntityTypes.DRUM.get(), pos, blockState) {
+) : SyncingBlockEntity(ModBlockEntityTypes.DRUM.get(), pos, blockState), Clearable {
 
 	override val syncImmediately: Boolean = true
 
@@ -44,6 +45,10 @@ class DrumBlockEntity(
 				setChanged()
 			}
 		}
+
+	override fun clearContent() {
+		tank.drain(Int.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE)
+	}
 
 	override fun applyImplicitComponents(componentInput: DataComponentInput) {
 		val tankComponent = componentInput.get(ModDataComponents.TANK)

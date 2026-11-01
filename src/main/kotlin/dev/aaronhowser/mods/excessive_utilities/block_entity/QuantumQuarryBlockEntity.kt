@@ -76,6 +76,11 @@ class QuantumQuarryBlockEntity(
 
 	override fun getContainers(): List<Container> = listOf(bufferContainer, upgradesContainer)
 
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.energyStored, false)
+	}
+
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 	private var fakePlayerUuid = UUID.randomUUID()
 

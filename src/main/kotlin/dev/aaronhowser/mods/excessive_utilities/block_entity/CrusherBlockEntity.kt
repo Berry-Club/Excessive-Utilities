@@ -49,6 +49,11 @@ class CrusherBlockEntity(
 	private val container = CrusherContainer()
 	override fun getContainers(): List<Container> = listOf(container)
 
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.energyStored, false)
+	}
+
 	private val itemHandler: IItemHandler = CrusherItemHandler()
 
 	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler

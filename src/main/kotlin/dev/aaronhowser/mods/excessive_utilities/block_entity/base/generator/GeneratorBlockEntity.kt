@@ -64,6 +64,11 @@ abstract class GeneratorBlockEntity(
 	override fun getContainers(): List<Container> = listOfNotNull(container)
 	open fun getItemHandler(direction: Direction?): IItemHandlerModifiable? = container.itemHandler
 
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.energyStored, false)
+	}
+
 	protected open fun isValidInput(itemStack: ItemStack) = true
 	protected open fun isValidSecondaryInput(itemStack: ItemStack) = false
 	protected open fun isValidUpgrade(itemStack: ItemStack): Boolean {

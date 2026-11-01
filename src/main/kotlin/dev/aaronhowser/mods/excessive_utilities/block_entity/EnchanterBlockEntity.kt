@@ -49,6 +49,11 @@ class EnchanterBlockEntity(
 	private val container = EnchanterContainer()
 	override fun getContainers(): List<Container> = listOf(container)
 
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.energyStored, false)
+	}
+
 	private val itemHandler: IItemHandler = EnchanterItemHandler()
 
 	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler

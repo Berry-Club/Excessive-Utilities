@@ -73,6 +73,11 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 	override fun getContainers(): List<Container> = listOf(container)
 	fun getItemHandler(direction: Direction?): IItemHandlerModifiable = itemHandler
 
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.energyStored, false)
+	}
+
 	override fun getGpUsage(): Double {
 		val level = level ?: return 0.0
 		val hasRecipe = getRecipe(level) != null
