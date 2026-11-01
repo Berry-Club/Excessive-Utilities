@@ -20,6 +20,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryBiomeSource
 import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryDimension
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
@@ -298,44 +299,36 @@ class QuantumQuarryBlockEntity(
 	}
 
 	private fun targetNewChunk(quarryLevel: ServerLevel) {
-		releaseTargetTicket(quarryLevel)
+		discardTarget(quarryLevel)
 
 		val dimensions = QuantumQuarryDimension.entries
 		val dimension = dimensions[quarryLevel.random.nextInt(dimensions.size)]
 		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey) ?: return
+		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
+		val fallbackBiome = biomeRegistry.getHolder(dimension.fallbackBiome).orElse(null) ?: return
 
-		var nextChunkPos = ChunkPos(
-			miningDimensionLevel.random.nextInt(-100_000, 100_000),
-			miningDimensionLevel.random.nextInt(-100_000, 100_000)
-		)
+		var attempts = 0
+		while (attempts < MAX_TARGET_CLAIM_ATTEMPTS) {
+			val nextChunkPos = ChunkPos(
+				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE),
+				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE)
+			)
 
-		val filteredBiome = getBiomeFilter().get(ModDataComponents.BIOME)
-		if (filteredBiome != null) {
-			val referencePos = nextChunkPos.getBlockAt(8, 0, 8)
-			val nearestBiome = miningDimensionLevel
-				.findClosestBiome3d(
-					{ holder -> holder.isHolder(filteredBiome) },
-					referencePos,
-					20_000,
-					32,
-					64
+			if (QuantumQuarryBiomeSource.claim(dimension, nextChunkPos, fakePlayerUuid, fallbackBiome)) {
+				targetChunk = nextChunkPos
+				targetBlockPos = BlockPos(
+					nextChunkPos.minBlockX,
+					miningDimensionLevel.maxBuildHeight - 1,
+					nextChunkPos.minBlockZ
 				)
-
-			if (nearestBiome != null) {
-				val biomePos = nearestBiome.first
-				nextChunkPos = ChunkPos(biomePos)
+				targetDimension = dimension
+				addTargetTicket(miningDimensionLevel, dimension, nextChunkPos)
+				setChanged()
+				return
 			}
-		}
 
-		targetChunk = nextChunkPos
-		targetBlockPos = BlockPos(
-			nextChunkPos.minBlockX,
-			miningDimensionLevel.maxBuildHeight - 1,
-			nextChunkPos.minBlockZ
-		)
-		targetDimension = dimension
-		addTargetTicket(miningDimensionLevel, dimension, nextChunkPos)
-		setChanged()
+			attempts++
+		}
 	}
 
 	private fun activateTarget(quarryLevel: ServerLevel): ServerLevel? {
@@ -345,6 +338,14 @@ class QuantumQuarryBlockEntity(
 		if (activeTicketChunk == chunkPos && activeTicketDimension == dimension) return miningDimensionLevel
 
 		releaseTargetTicket(quarryLevel)
+
+		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
+		val fallbackBiome = biomeRegistry.getHolder(dimension.fallbackBiome).orElse(null) ?: return null
+		if (!QuantumQuarryBiomeSource.claim(dimension, chunkPos, fakePlayerUuid, fallbackBiome)) {
+			discardTarget(quarryLevel)
+			return null
+		}
+
 		addTargetTicket(miningDimensionLevel, dimension, chunkPos)
 		return miningDimensionLevel
 	}
@@ -377,8 +378,18 @@ class QuantumQuarryBlockEntity(
 			fakePlayerUuid
 		)
 
+		QuantumQuarryBiomeSource.release(dimension, chunkPos, fakePlayerUuid)
 		activeTicketChunk = null
 		activeTicketDimension = null
+	}
+
+	private fun discardTarget(quarryLevel: ServerLevel) {
+		releaseTargetTicket(quarryLevel)
+
+		targetChunk = null
+		targetBlockPos = null
+		targetDimension = null
+		setChanged()
 	}
 
 	private fun removeLegacyForcedTarget(quarryLevel: ServerLevel) {
@@ -390,7 +401,7 @@ class QuantumQuarryBlockEntity(
 			miningDimensionLevel.setChunkForced(chunkPos.x, chunkPos.z, false)
 		}
 
-		setChanged()
+		discardTarget(quarryLevel)
 	}
 
 	private fun initFakePlayer() {
@@ -521,6 +532,8 @@ class QuantumQuarryBlockEntity(
 		const val BIOME_ID_DATA_INDEX = 6
 
 		const val MAX_TARGET_SCANS_PER_TICK = 4096
+		const val MAX_TARGET_COORDINATE = 100_000
+		const val MAX_TARGET_CLAIM_ATTEMPTS = 100
 		const val QUARRY_TICKET_RADIUS = 2
 
 		val QUARRY_TICKET_TYPE: TicketType<UUID> = TicketType.create(
