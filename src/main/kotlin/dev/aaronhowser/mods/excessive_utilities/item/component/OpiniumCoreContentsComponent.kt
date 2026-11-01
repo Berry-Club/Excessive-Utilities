@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.item.component
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
@@ -31,8 +32,8 @@ data class OpiniumCoreContentsComponent(
 		if (this === other) return true
 		if (other !is OpiniumCoreContentsComponent) return false
 
-		if (!ItemStack.isSameItemSameComponents(center, other.center)) return false
-		if (!ItemStack.isSameItemSameComponents(outer, other.outer)) return false
+		if (!center.isSameItemSameComponents(other.center)) return false
+		if (!outer.isSameItemSameComponents(other.outer)) return false
 
 		if (name != other.name) return false
 

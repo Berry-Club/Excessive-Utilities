@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.putUuidIfNotNull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
@@ -130,7 +131,7 @@ class ResonatorBlockEntity(
 		if (stackInOutput.isEmpty) return recipe
 
 		val recipeOutput = recipe.getResultItem(level.registryAccess()).copy()
-		val outputCanFit = ItemStack.isSameItemSameComponents(stackInOutput, recipeOutput)
+		val outputCanFit = stackInOutput.isSameItemSameComponents(recipeOutput)
 				&& stackInOutput.count + recipeOutput.count <= stackInOutput.maxStackSize
 
 		return if (outputCanFit) recipe else null

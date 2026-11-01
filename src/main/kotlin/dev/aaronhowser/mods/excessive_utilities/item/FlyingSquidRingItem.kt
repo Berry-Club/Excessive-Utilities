@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
@@ -100,7 +101,7 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties), ICurioItem
 			val currentConsumers = handler.getConsumers()
 			val existing = currentConsumers
 				.filterIsInstance<GridPowerContribution.HeldItem>()
-				.firstOrNull { ItemStack.isSameItemSameComponents(it.gpStack, ringStack) }
+				.firstOrNull { it.gpStack.isSameItemSameComponents(ringStack) }
 
 			if (existing != null) {
 				return existing

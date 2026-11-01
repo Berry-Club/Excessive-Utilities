@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
@@ -87,7 +88,7 @@ class QedBlockEntity(
 			if (stackInOutput.isEmpty) {
 				container.setItem(OUTPUT_SLOT, newOutput)
 			} else {
-				if (!ItemStack.isSameItemSameComponents(stackInOutput, newOutput)) {
+				if (!stackInOutput.isSameItemSameComponents(newOutput)) {
 					break
 				}
 
@@ -136,7 +137,7 @@ class QedBlockEntity(
 		if (amountCanBeAdded <= 0) return false
 
 		val newOutput = recipe.getResultItem(level.registryAccess())
-		if (!ItemStack.isSameItemSameComponents(stackInOutput, newOutput)) return false
+		if (!stackInOutput.isSameItemSameComponents(newOutput)) return false
 
 		return newOutput.count <= amountCanBeAdded
 	}

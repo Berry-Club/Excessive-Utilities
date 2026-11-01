@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.base
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
@@ -156,7 +157,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 			if (stackInOutput.isEmpty) {
 				container.setItem(OUTPUT_SLOT, newOutput)
 			} else {
-				if (!ItemStack.isSameItemSameComponents(stackInOutput, newOutput)) {
+				if (!stackInOutput.isSameItemSameComponents(newOutput)) {
 					break
 				}
 
@@ -182,7 +183,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		if (amountCanBeAdded <= 0) return false
 
 		val newOutput = recipe.value.getResultItem(level.registryAccess())
-		if (!ItemStack.isSameItemSameComponents(stackInOutput, newOutput)) return false
+		if (!stackInOutput.isSameItemSameComponents(newOutput)) return false
 
 		return newOutput.count <= amountCanBeAdded
 	}
