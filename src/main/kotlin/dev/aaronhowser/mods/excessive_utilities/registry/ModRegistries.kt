@@ -21,7 +21,8 @@ object ModRegistries {
 			ModPotions.POTION_REGISTRY,
 			ModFeatures.FEATURE_REGISTRY,
 			ModAttributes.ATTRIBUTE_REGISTRY,
-			ModParticleTypes.PARTICLE_TYPE_REGISTRY
+			ModParticleTypes.PARTICLE_TYPE_REGISTRY,
+			ModBiomeSources.BIOME_SOURCE_REGISTRY
 		)
 
 		for (registry in registries) {

@@ -1,7 +1,9 @@
-// 1.21.1	2026-08-22T17:03:09.8796454	Registries
+// 1.21.1	2026-10-31T10:17:58.3468839	Registries
 e64a6caecb65685b417149d423a9bd66e0d98e35 data/excessive_utilities/damage_type/darkness.json
 c7653945d8ab22823b09863f2c5e7d4c3874578e data/excessive_utilities/damage_type/doom.json
-877bd9be3bfb61b205649d191710f2500792461b data/excessive_utilities/dimension/quantum_quarry.json
+8173cfdbeb73e5b1dfc232292cebf417b90a9878 data/excessive_utilities/dimension/quantum_quarry.json
+68dc8396b05af4177eb52b5e5c3fca1b1fb5c7bc data/excessive_utilities/dimension/quantum_quarry_end.json
+322e3f9433c1c86cde9d04dfccf4c06450cea1b7 data/excessive_utilities/dimension/quantum_quarry_nether.json
 46cc38371f4bce096b53afd7a7b817032de61eae data/excessive_utilities/dimension/the_depths.json
 9c6be711453ceaeb41fb2c13bcf251cfeb2bec77 data/excessive_utilities/dimension/the_last_millennium.json
 67eff453b02ae013eece7caa3919eed795af0cc6 data/excessive_utilities/dimension_type/the_depths.json

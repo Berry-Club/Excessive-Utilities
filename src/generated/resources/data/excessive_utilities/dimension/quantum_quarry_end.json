@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:the_end",
+  "generator": {
+    "type": "minecraft:noise",
+    "biome_source": {
+      "type": "excessive_utilities:quantum_quarry",
+      "biomes": "#minecraft:is_end",
+      "dimension": "end",
+      "fallback_biome": "minecraft:the_end"
+    },
+    "settings": "minecraft:end"
+  }
+}

@@ -1,15 +1,14 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen
 
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
+import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryBiomeSource
+import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryDimension
 import net.minecraft.core.HolderSet
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.biome.FixedBiomeSource
-import net.minecraft.world.level.biome.MultiNoiseBiomeSource
-import net.minecraft.world.level.biome.MultiNoiseBiomeSourceParameterLists
-import net.minecraft.world.level.dimension.BuiltinDimensionTypes
 import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.levelgen.FlatLevelSource
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
@@ -19,9 +18,7 @@ import java.util.*
 
 object ModLevelStems {
 
-	val QUANTUM_QUARRY: ResourceKey<LevelStem> =
-		rk("quantum_quarry")
-	val THE_LAST_MILLENNIUM: ResourceKey<LevelStem> =
+	val THE_LAST_MILLENNIUM =
 		rk("the_last_millennium")
 	val THE_DEPTHS =
 		rk(DepthsDimConstants.NAME)
@@ -33,29 +30,26 @@ object ModLevelStems {
 		val noiseSettingsLookup =
 			context.lookup(Registries.NOISE_SETTINGS)
 
-		val multiNoiseLookup =
-			context.lookup(Registries.MULTI_NOISE_BIOME_SOURCE_PARAMETER_LIST)
-
-		val overworldBiomeSource =
-			MultiNoiseBiomeSource.createFromPreset(
-				multiNoiseLookup.getOrThrow(MultiNoiseBiomeSourceParameterLists.OVERWORLD)
-			)
-
-		val chunkGenerator =
-			NoiseBasedChunkGenerator(
-				overworldBiomeSource,
-				noiseSettingsLookup.getOrThrow(NoiseGeneratorSettings.OVERWORLD)
-			)
-
-		context.register(
-			QUANTUM_QUARRY,
-			LevelStem(
-				dimensionTypeLookup.getOrThrow(BuiltinDimensionTypes.OVERWORLD),
-				chunkGenerator
-			)
-		)
-
 		val biomeLookup = context.lookup(Registries.BIOME)
+
+		for (dimension in QuantumQuarryDimension.entries) {
+			val biomeSource = QuantumQuarryBiomeSource(
+				dimension,
+				biomeLookup.getOrThrow(dimension.biomeTag),
+				biomeLookup.getOrThrow(dimension.fallbackBiome)
+			)
+
+			context.register(
+				dimension.levelStemKey,
+				LevelStem(
+					dimensionTypeLookup.getOrThrow(dimension.dimensionType),
+					NoiseBasedChunkGenerator(
+						biomeSource,
+						noiseSettingsLookup.getOrThrow(dimension.noiseSettings)
+					)
+				)
+			)
+		}
 
 		val tlmSettings = FlatLevelGeneratorSettings(
 			Optional.of(HolderSet.direct()),
