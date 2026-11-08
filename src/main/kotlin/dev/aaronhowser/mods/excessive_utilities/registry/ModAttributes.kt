@@ -14,7 +14,7 @@ object ModAttributes {
 		DeferredRegister.create(BuiltInRegistries.ATTRIBUTE, ExcessiveUtilities.MOD_ID)
 
 	val SOUL_RENDING: DeferredHolder<Attribute, RangedAttribute> =
-		register("soul_rending", 0.0, 0.0, Double.MAX_VALUE)
+		register("soul_rending", 0.0, 0.0, 1_000_000.0)
 
 	@Suppress("SameParameterValue")
 	private fun register(

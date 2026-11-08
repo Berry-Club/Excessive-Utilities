@@ -23,6 +23,8 @@
 	- Currently only includes the Void biome
 	- Biome Markers ignore this tag
 - The Quantum Quarry is also now much more stable in general
+- The Soul Rending attribute now has a max of 1,000,000
+	- Doesn't really matter but looks better
 
 ### Fixed
 
