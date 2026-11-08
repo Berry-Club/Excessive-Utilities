@@ -41,8 +41,8 @@ data class OpiniumCoreContentsComponent(
 	}
 
 	override fun hashCode(): Int {
-		var result = center.hashCode()
-		result = 31 * result + outer.hashCode()
+		var result = ItemStack.hashItemAndComponents(center)
+		result = 31 * result + ItemStack.hashItemAndComponents(outer)
 		result = 31 * result + name.hashCode()
 		return result
 	}
