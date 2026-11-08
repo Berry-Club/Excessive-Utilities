@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.HeldRingGridPowerConsumer
@@ -53,7 +54,7 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties), ICurioItem
 				addGpConsumer(entity, stack)
 			}
 
-			if (entity is Player && canPlayerUse(entity)) {
+			if (entity is Player && canPlayerUse(entity) && !isGridOverloaded(entity)) {
 				flyUp(entity, stack)
 			} else {
 				recharge(stack)
@@ -93,6 +94,18 @@ class FlyingSquidRingItem(properties: Properties) : Item(properties), ICurioItem
 					&& !player.onGround()
 					&& !player.isPassenger
 					&& !player.abilities.flying
+		}
+
+		private fun isGridOverloaded(player: Player): Boolean {
+			if (player.level().isClientSide) {
+				return ClientGridPower.isOverloaded
+			}
+
+			if (player !is ServerPlayer) return false
+
+			return GridPowerHandler
+				.get(player.serverLevel())
+				.isOverloaded(player.uuid)
 		}
 
 		private fun addGpConsumer(player: ServerPlayer, ringStack: ItemStack): GridPowerContribution.HeldItem {

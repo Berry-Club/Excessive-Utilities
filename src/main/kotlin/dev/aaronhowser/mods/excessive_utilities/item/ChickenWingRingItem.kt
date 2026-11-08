@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerContribution
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.HeldRingGridPowerConsumer
@@ -61,7 +62,7 @@ class ChickenWingRingItem(properties: Properties) : Item(properties), ICurioItem
 				addGpConsumer(entity, stack)
 			}
 
-			if (entity is Player && canPlayerUse(entity)) {
+			if (entity is Player && canPlayerUse(entity) && !isGridOverloaded(entity)) {
 				val movement = entity.deltaMovement
 				val dy = movement.y
 				if (dy >= 0) return
@@ -77,6 +78,18 @@ class ChickenWingRingItem(properties: Properties) : Item(properties), ICurioItem
 			} else {
 				recharge(stack)
 			}
+		}
+
+		private fun isGridOverloaded(player: Player): Boolean {
+			if (player.level().isClientSide) {
+				return ClientGridPower.isOverloaded
+			}
+
+			if (player !is ServerPlayer) return false
+
+			return GridPowerHandler
+				.get(player.serverLevel())
+				.isOverloaded(player.uuid)
 		}
 
 		private fun drainCharge(stack: ItemStack): Boolean {

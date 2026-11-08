@@ -37,6 +37,7 @@
 - Marked machines etc as Clearable, to prevent an item dupe (98)
 - Hopefully fixed Opinium Cores being confused about what tier they are, in AE2 etc (#85)
 	- It was using the hashcodes of the itemstack objects, which were different per identical itemstack
+- Fixed the Squid and Chicken Rings working while the grid is overloaded (#99)
 
 # 1.11.0
 
