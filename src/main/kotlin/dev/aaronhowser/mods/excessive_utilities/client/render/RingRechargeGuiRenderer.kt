@@ -7,9 +7,7 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.client.DeltaTracker
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.network.chat.Component
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.item.ItemStack
 import top.theillusivec4.curios.api.CuriosApi
@@ -18,8 +16,9 @@ import kotlin.jvm.optionals.getOrNull
 object RingRechargeGuiRenderer {
 
 	val LAYER_NAME: ResourceLocation = ExcessiveUtilities.modResource("ring_recharge_gui_layer")
+	private val JUMP_BAR_BACKGROUND: ResourceLocation = ResourceLocation.withDefaultNamespace("hud/jump_bar_background")
+	private val JUMP_BAR_PROGRESS: ResourceLocation = ResourceLocation.withDefaultNamespace("hud/jump_bar_progress")
 
-	//TODO: Render with horse jump bar or whatever instead
 	fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
 		val player = AaronClientUtil.localPlayer ?: return
 
@@ -57,14 +56,24 @@ object RingRechargeGuiRenderer {
 
 		if (charge >= maxCharge) return
 
-		val component = Component.literal("$charge / $maxCharge")
+		val left = guiGraphics.guiWidth() / 2 - 91
+		val top = guiGraphics.guiHeight() - 49
+		val progressWidth = (charge.toFloat() / maxCharge * 183).toInt()
 
-		guiGraphics.drawString(
-			Minecraft.getInstance().font,
-			component,
-			guiGraphics.guiWidth() / 2 + 5,
-			guiGraphics.guiHeight() / 2 + 5,
-			0xFFFFFF
+		guiGraphics.blitSprite(JUMP_BAR_BACKGROUND, left, top, 182, 5)
+
+		if (progressWidth <= 0) return
+
+		guiGraphics.blitSprite(
+			JUMP_BAR_PROGRESS,
+			182,
+			5,
+			0,
+			0,
+			left,
+			top,
+			progressWidth,
+			5
 		)
 	}
 
