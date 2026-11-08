@@ -20,7 +20,8 @@
   },
   "result": {
     "components": {
-      "excessive_utilities:countdown": 200
+      "excessive_utilities:countdown": 200,
+      "minecraft:max_stack_size": 1
     },
     "count": 1,
     "id": "excessive_utilities:unstable_ingot"

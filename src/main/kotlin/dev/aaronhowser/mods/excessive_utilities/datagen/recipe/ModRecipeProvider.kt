@@ -2745,12 +2745,10 @@ class ModRecipeProvider(
 				}
 		}
 
-		division(
-			ModItems.UNSTABLE_INGOT.withComponent(
-				ModDataComponents.COUNTDOWN.get(),
-				UnstableIngotItem.MAX_COUNTDOWN
-			)
-		)
+		val unstableIngot = ModItems.UNSTABLE_INGOT.withComponent(DataComponents.MAX_STACK_SIZE, 1)
+		unstableIngot.set(ModDataComponents.COUNTDOWN, UnstableIngotItem.MAX_COUNTDOWN)
+
+		division(unstableIngot)
 			.pattern(
 				"I",
 				"S",

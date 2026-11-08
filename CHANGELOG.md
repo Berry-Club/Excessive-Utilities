@@ -12,6 +12,8 @@
 
 ### Changed
 
+- Mobius "Unstable/Stable" Ingots can now stack to 64 (#88)
+	- Rather, the default is now 64, and unstable ones have the component to stack to 1
 - Overhauled the Quantum Quarry to generate chunks with the specified biome, rather than searching a copy of the Overworld for that biome (#97)
 	- Without a Biome Marker, it uses a random biome from the dimension the QQ is in
 	- It now uses 3 new dimensions that are not saved to disk

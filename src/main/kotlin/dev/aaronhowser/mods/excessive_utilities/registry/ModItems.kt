@@ -70,7 +70,7 @@ object ModItems : AaronItemRegistry() {
 	val DIVISION_SIGIL: DeferredItem<DivisionSigilItem> =
 		register("division_sigil", ::DivisionSigilItem, DivisionSigilItem::defaultProperties)
 	val UNSTABLE_INGOT: DeferredItem<UnstableIngotItem> =
-		register("unstable_ingot", ::UnstableIngotItem, PROPERTIES_SINGLE_STACK)
+		register("unstable_ingot", ::UnstableIngotItem)
 	val SEMI_UNSTABLE_NUGGET: DeferredItem<Item> =
 		basic("semi_unstable_nugget")
 	val OPINIUM_CORE: DeferredItem<OpiniumCoreItem> =
