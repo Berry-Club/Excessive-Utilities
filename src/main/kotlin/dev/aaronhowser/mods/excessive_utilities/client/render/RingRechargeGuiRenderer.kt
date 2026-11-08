@@ -16,8 +16,8 @@ import kotlin.jvm.optionals.getOrNull
 object RingRechargeGuiRenderer {
 
 	val LAYER_NAME: ResourceLocation = ExcessiveUtilities.modResource("ring_recharge_gui_layer")
-	private val JUMP_BAR_BACKGROUND: ResourceLocation = ResourceLocation.withDefaultNamespace("hud/jump_bar_background")
-	private val JUMP_BAR_PROGRESS: ResourceLocation = ResourceLocation.withDefaultNamespace("hud/jump_bar_progress")
+	private val JUMP_BAR_BACKGROUND: ResourceLocation = ExcessiveUtilities.modResource("hud/jump_bar_background")
+	private val JUMP_BAR_PROGRESS: ResourceLocation = ExcessiveUtilities.modResource("hud/jump_bar_progress")
 
 	fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
 		val player = AaronClientUtil.localPlayer ?: return
