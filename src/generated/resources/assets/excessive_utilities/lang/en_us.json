@@ -38,6 +38,7 @@
   "advancements.excessive_utilities.unstable_tool.desc": "Make any Unstable tool",
   "advancements.excessive_utilities.unstable_tool.title": "Useful for More Than Just Eating!",
   "attribute.name.excessive_utilities.soul_rending": "Soul Rending",
+  "attribute.name.excessive_utilities.soul_rending.desc": "After attacking, the target loses this amount from their maximum health. Their max health is regained with time.",
   "biome.c.is_magical": "Magical",
   "biome.c.is_plains": "Plains",
   "biome.c.is_sandy": "Sandy",

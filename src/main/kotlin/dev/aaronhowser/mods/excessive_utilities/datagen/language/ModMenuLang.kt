@@ -49,6 +49,7 @@ object ModMenuLang {
 	const val LASSO_ENTITY_WITH_NAME = "tooltip.excessive_utilities.lasso.entity_with_name"
 	const val DEMON_CRAFTING = "container.excessive_utilities.demon_crafting"
 	const val SOUL_RENDING = "attribute.name.excessive_utilities.soul_rending"
+	const val SOUL_RENDING_DESC = "attribute.name.excessive_utilities.soul_rending.desc"
 	const val WARDENS_WAKE = "tooltip.excessive_utilities.wardens_wake"
 	const val NOT_YET_IMPLEMENTED = "tooltip.excessive_utilities.not_yet_implented"
 	const val ENDER_FREQUENCY_NAME = "menu.excessive_utilities.ender_frequency.name"
@@ -135,6 +136,7 @@ object ModMenuLang {
 			add(ATHENA_COMPATIBLE, "Install Athena for connected textures!")
 			add(DEMON_CRAFTING, "Get by throwing the Golden form into Lava while in the Nether!")
 			add(SOUL_RENDING, "Soul Rending")
+			add(SOUL_RENDING_DESC, "After attacking, the target loses this amount from their maximum health. Their max health is regained with time.")
 			add(WARDENS_WAKE, "Left behind by a Warden that's given up")
 			add(NOT_YET_IMPLEMENTED, "Not Yet Implemented")
 			add(ENDER_FREQUENCY_NAME, "Frequency Name")
