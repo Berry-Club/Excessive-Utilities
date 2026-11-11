@@ -34,7 +34,7 @@
 - Fix the Crusher's completion percentage being multiplied by 100 (#94)
 - Fixed The Last Millennium saving unsafely (#92)
 - Fixed the Ender Quarry upgrade item tag referencing itself (#90)
-- Marked machines etc as Clearable, to prevent an item dupe (98)
+- Marked machines etc as Clearable, to prevent an item dupe (#98)
 - Hopefully fixed Opinium Cores being confused about what tier they are, in AE2 etc (#85)
 	- It was using the hashcodes of the itemstack objects, which were different per identical itemstack
 - Fixed the Squid and Chicken Rings working while the grid is overloaded (#99)
