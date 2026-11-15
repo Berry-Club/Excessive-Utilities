@@ -1,24 +1,80 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
+import com.mojang.math.Quadrant
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDyeName
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block.*
+import dev.aaronhowser.mods.excessive_utilities.client.item.ItemColorSource
+import dev.aaronhowser.mods.excessive_utilities.client.render.bewlr.ManualMillBEWLR
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
+import net.minecraft.client.data.models.BlockModelGenerators
+import net.minecraft.client.data.models.ItemModelGenerators
+import net.minecraft.client.data.models.ModelProvider
+import net.minecraft.client.data.models.MultiVariant
+import net.minecraft.client.data.models.blockstates.ConditionBuilder
+import net.minecraft.client.data.models.blockstates.MultiPartGenerator
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator
+import net.minecraft.client.data.models.blockstates.PropertyDispatch
+import net.minecraft.client.data.models.model.ItemModelUtils
+import net.minecraft.client.data.models.model.ModelInstance
+import net.minecraft.client.data.models.model.TextureMapping
+import net.minecraft.client.data.models.model.TextureSlot
+import net.minecraft.client.renderer.block.dispatch.Variant
+import net.minecraft.client.resources.model.sprite.Material
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
+import net.minecraft.resources.Identifier
+import net.minecraft.util.random.WeightedList
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.CrossCollisionBlock
 import net.minecraft.world.level.block.RedstoneLampBlock
+import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.properties.BlockStateProperties
+import net.minecraft.world.level.block.state.properties.Property
+import net.neoforged.neoforge.client.model.generators.template.ElementBuilder as NeoForgeElementBuilder
+import net.neoforged.neoforge.client.model.generators.template.ExtendedModelTemplateBuilder
+import net.neoforged.neoforge.client.model.generators.template.FaceBuilder as NeoForgeFaceBuilder
+import net.neoforged.neoforge.client.model.generators.template.RotationBuilder as NeoForgeRotationBuilder
+import net.neoforged.neoforge.client.model.generators.template.TransformVecBuilder
+import java.util.function.BiConsumer
+import java.util.stream.Stream
 
 class ModBlockStateProvider(
 	output: PackOutput
-) : BlockStateProvider(output, ExcessiveUtilities.MOD_ID) {
+) : ModelProvider(output, ExcessiveUtilities.MOD_ID) {
 
-	override fun registerStatesAndModels() {
+	private lateinit var blockModels: BlockModelGenerators
+	private lateinit var itemModels: ItemModelGenerators
+	private val generatedModels = linkedMapOf<Identifier, GeneratedModel>()
+	private val generatedBlockStates = mutableSetOf<Block>()
+	private val blockModelFiles = ModelCollection("block")
+	private val itemModelFiles = ModelCollection("item")
+
+	override fun getKnownBlocks(): Stream<out Holder<Block>> {
+		return BuiltInRegistries.BLOCK
+			.listElements()
+			.filter { holder -> holder.value() in generatedBlockStates }
+	}
+
+	override fun registerModels(blockModels: BlockModelGenerators, itemModels: ItemModelGenerators) {
+		this.blockModels = blockModels
+		this.itemModels = itemModels
+
+		registerStatesAndModels()
+		ModItemModelProvider(itemModels).registerModels()
+		registerGeneratedBlockItemModels()
+
+		for (model in generatedModels.values) {
+			model.create(blockModels.modelOutput)
+		}
+	}
+
+	private fun registerStatesAndModels() {
 		singleTextureBlocks()
 		singleTextureCutout()
 		blackoutCurtain()
@@ -888,7 +944,7 @@ class ModBlockStateProvider(
 			.addModel()
 			.end()
 
-		fun addArms(connectionType: TransferPipeBlock.ConnectionType, model: BlockModelBuilder) {
+		fun addArms(connectionType: TransferPipeBlock.ConnectionType, model: GeneratedModel) {
 			builder
 				.part()
 				.modelFile(model)
@@ -1054,7 +1110,6 @@ class ModBlockStateProvider(
 
 		models()
 			.withExistingParent(templateName, mcLoc("block/block"))
-			.texture("particle", "#node")
 
 			.element {
 				from(6f, 6f, 6f)
@@ -1408,7 +1463,7 @@ class ModBlockStateProvider(
 		val numbers = modLoc("block/redstone_lantern/numbers")
 
 		val name = name(block)
-		val models = mutableListOf<BlockModelBuilder>()
+		val models = mutableListOf<GeneratedModel>()
 
 		for (i in RedstoneLanternBlock.POWER.possibleValues) {
 			val model = models()
@@ -1917,7 +1972,7 @@ class ModBlockStateProvider(
 
 		itemModels()
 			.getBuilder(name(block))
-			.parent(ModelFile.UncheckedModelFile("block/block"))
+			.parent(ModelFile(modLoc("block/${name(block)}")))
 			.transforms {
 				transform(ItemDisplayContext.GUI) {
 					rotation(30f, 225f, 0f)
@@ -3484,6 +3539,558 @@ class ModBlockStateProvider(
 				.renderType("cutout")
 
 			simpleBlockItem(block, model)
+		}
+	}
+
+	private fun models(): ModelCollection = blockModelFiles
+
+	private fun itemModels(): ModelCollection = itemModelFiles
+
+	private fun registerGeneratedBlockItemModels() {
+		for ((location, model) in generatedModels) {
+			if (!location.path.startsWith("item/")) continue
+
+			val itemIdentifier = location.withPath(location.path.removePrefix("item/"))
+			if (!BuiltInRegistries.ITEM.containsKey(itemIdentifier)) continue
+
+			val item = BuiltInRegistries.ITEM.getValue(itemIdentifier)
+			val path = itemIdentifier.path
+			val itemModel = when {
+				path == "manual_mill" -> ItemModelUtils.composite(
+					ItemModelUtils.plainModel(model.location),
+					ItemModelUtils.specialModel(model.location, ManualMillBEWLR.Unbaked)
+				)
+
+				path.endsWith("_drum") || path.contains("lapis_caelestis") -> ItemModelUtils.tintedModel(
+					model.location,
+					ItemColorSource(0),
+					ItemColorSource(1),
+					ItemColorSource(2)
+				)
+
+				else -> ItemModelUtils.plainModel(model.location)
+			}
+
+			itemModels.itemModelOutput.accept(item, itemModel)
+		}
+	}
+
+	private fun modLoc(path: String): Identifier {
+		return Identifier.fromNamespaceAndPath(ExcessiveUtilities.MOD_ID, path)
+	}
+
+	private fun mcLoc(path: String): Identifier = Identifier.withDefaultNamespace(path)
+
+	private fun getVariantBuilder(block: Block): VariantBuilder = VariantBuilder(block)
+
+	private fun getMultipartBuilder(block: Block): MultipartBuilder {
+		generatedBlockStates.add(block)
+		val generator = MultiPartGenerator.multiPart(block)
+		blockModels.blockStateOutput.accept(generator)
+		return MultipartBuilder(generator)
+	}
+
+	private fun cubeAll(block: Block): GeneratedModel {
+		val identifier = BuiltInRegistries.BLOCK.getKey(block)
+		return models().cubeAll(identifier.path, identifier.withPrefix("block/"))
+	}
+
+	private fun simpleBlock(block: Block, model: ModelFile) {
+		generatedBlockStates.add(block)
+		blockModels.blockStateOutput.accept(
+			BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(model.location))
+		)
+	}
+
+	private fun simpleBlockItem(block: Block, model: ModelFile) {
+		val identifier = BuiltInRegistries.BLOCK.getKey(block)
+		itemModels().getBuilder(identifier.path).parent(model)
+	}
+
+	private fun simpleBlockWithItem(block: Block, model: ModelFile) {
+		simpleBlock(block, model)
+		simpleBlockItem(block, model)
+	}
+
+	private fun directionalBlock(block: Block, model: ModelFile) {
+		getVariantBuilder(block).forAllStates { state ->
+			val facing = state.getValue(BlockStateProperties.FACING)
+			ConfiguredModel.builder()
+				.modelFile(model)
+				.rotationX(
+					when (facing) {
+						Direction.DOWN -> 180
+						Direction.UP -> 0
+						else -> 90
+					}
+				)
+				.rotationY(
+					when (facing) {
+						Direction.EAST -> 90
+						Direction.SOUTH -> 180
+						Direction.WEST -> 270
+						else -> 0
+					}
+				)
+				.build()
+		}
+	}
+
+	private open class ModelFile(val location: Identifier)
+
+	private inner class GeneratedModel(location: Identifier) : ModelFile(location) {
+		private val template = ExtendedModelTemplateBuilder.builder()
+		private val textures = TextureMapping()
+		private val requiredSlots = mutableSetOf<TextureSlot>()
+		private var hasParent = false
+		private var hasElements = false
+		private var forceTranslucent = false
+
+		fun parent(model: ModelFile): GeneratedModel {
+			template.parent(model.location)
+			hasParent = true
+			return this
+		}
+
+		fun texture(key: String, texture: Identifier): GeneratedModel {
+			val slot = textureSlot(key)
+			textures.put(slot, Material(texture))
+			if (requiredSlots.add(slot)) {
+				template.requiredTextureSlot(slot)
+			}
+			return this
+		}
+
+		fun particle(texture: Identifier): GeneratedModel = texture("particle", texture)
+
+		fun renderType(type: String): GeneratedModel {
+			when (type) {
+				"cutout" -> Unit
+				"translucent" -> forceTranslucent = true
+				else -> error("Unsupported model render type: $type")
+			}
+			return this
+		}
+
+		fun element(block: ElementBuilder.() -> Unit): GeneratedModel {
+			template.element { element -> ElementBuilder(element).block() }
+			hasElements = true
+			return this
+		}
+
+		fun transforms(block: TransformBuilder.() -> Unit): GeneratedModel {
+			TransformBuilder(template).block()
+			return this
+		}
+
+		fun create(output: BiConsumer<Identifier, ModelInstance>) {
+			check(hasParent || hasElements) { "Model $location has no parent or geometry" }
+			if (forceTranslucent) {
+				textures.forceAllTranslucent()
+			}
+			template.build().create(location, textures, output)
+		}
+	}
+
+	private class ElementBuilder(private val builder: NeoForgeElementBuilder) {
+		fun from(x: Float, y: Float, z: Float): ElementBuilder {
+			builder.from(x, y, z)
+			return this
+		}
+
+		fun to(x: Float, y: Float, z: Float): ElementBuilder {
+			builder.to(x, y, z)
+			return this
+		}
+
+		fun shade(shade: Boolean): ElementBuilder {
+			builder.shade(shade)
+			return this
+		}
+
+		fun emissivity(block: Int, sky: Int): ElementBuilder {
+			builder.lightEmission(maxOf(block, sky))
+			return this
+		}
+
+		fun allFaces(block: (Direction, FaceBuilder) -> Unit): ElementBuilder {
+			builder.allFaces { direction, face -> block(direction, FaceBuilder(face)) }
+			return this
+		}
+
+		fun allFacesExcept(block: (Direction, FaceBuilder) -> Unit, excluded: Set<Direction>): ElementBuilder {
+			builder.allFacesExcept(
+				{ direction, face -> block(direction, FaceBuilder(face)) },
+				excluded
+			)
+			return this
+		}
+
+		fun face(direction: Direction, block: FaceBuilder.() -> Unit): ElementBuilder {
+			builder.face(direction) { face -> FaceBuilder(face).block() }
+			return this
+		}
+
+		fun rotation(): RotationBuilder = RotationBuilder(this, builder)
+	}
+
+	private class RotationBuilder(
+		private val element: ElementBuilder,
+		private val elementBuilder: NeoForgeElementBuilder
+	) {
+		private var origin: Triple<Float, Float, Float>? = null
+		private var axis: Direction.Axis? = null
+		private var angle = 0f
+
+		fun origin(x: Float, y: Float, z: Float): RotationBuilder {
+			origin = Triple(x, y, z)
+			return this
+		}
+
+		fun axis(axis: Direction.Axis): RotationBuilder {
+			this.axis = axis
+			return this
+		}
+
+		fun angle(angle: Float): RotationBuilder {
+			this.angle = angle
+			return this
+		}
+
+		fun end(): ElementBuilder {
+			val finishedOrigin = checkNotNull(origin) { "Model element rotation has no origin" }
+			val finishedAxis = checkNotNull(axis) { "Model element rotation has no axis" }
+			elementBuilder.rotation { rotation ->
+				rotation.origin(finishedOrigin.first, finishedOrigin.second, finishedOrigin.third)
+					.singleAxis(finishedAxis, angle)
+			}
+			return element
+		}
+	}
+
+	private class FaceBuilder(private val builder: NeoForgeFaceBuilder) {
+		fun texture(texture: String): FaceBuilder {
+			builder.texture(textureSlot(texture.removePrefix("#")))
+			return this
+		}
+
+		fun uvs(u1: Float, v1: Float, u2: Float, v2: Float): FaceBuilder {
+			builder.uvs(u1, v1, u2, v2)
+			return this
+		}
+
+		fun cullface(direction: Direction): FaceBuilder {
+			builder.cullface(direction)
+			return this
+		}
+
+		fun tintindex(index: Int): FaceBuilder {
+			builder.tintindex(index)
+			return this
+		}
+
+		fun rotation(rotation: ModelBuilder.FaceRotation): FaceBuilder {
+			builder.rotation(rotation.quadrant)
+			return this
+		}
+
+		fun emissivity(block: Int, sky: Int): FaceBuilder {
+			builder.lightEmission(maxOf(block, sky))
+			return this
+		}
+	}
+
+	private class TransformBuilder(private val builder: ExtendedModelTemplateBuilder) {
+		fun transform(context: ItemDisplayContext, block: Transform.() -> Unit) {
+			builder.transform(context) { transform -> Transform(transform).block() }
+		}
+	}
+
+	private class Transform(private val builder: TransformVecBuilder) {
+		fun rotation(x: Float, y: Float, z: Float): Transform {
+			builder.rotation(x, y, z)
+			return this
+		}
+
+		fun translation(x: Float, y: Float, z: Float): Transform {
+			builder.translation(x, y, z)
+			return this
+		}
+
+		fun scale(scale: Float): Transform = scale(scale, scale, scale)
+
+		fun scale(x: Float, y: Float, z: Float): Transform {
+			builder.scale(x, y, z)
+			return this
+		}
+	}
+
+	private object ModelBuilder {
+		enum class FaceRotation(val quadrant: Quadrant) {
+			ZERO(Quadrant.R0),
+			CLOCKWISE_90(Quadrant.R90),
+			UPSIDE_DOWN(Quadrant.R180),
+			COUNTERCLOCKWISE_90(Quadrant.R270)
+		}
+	}
+
+	private inner class ModelCollection(private val folder: String) {
+		fun getBuilder(name: String): GeneratedModel {
+			val identifier = if (':' in name) Identifier.parse(name) else modLoc(name)
+			val location = identifier.withPrefix("$folder/")
+			return generatedModels.getOrPut(location) { GeneratedModel(location) }
+		}
+
+		fun getExistingFile(identifier: Identifier): ModelFile = ModelFile(identifier)
+
+		fun withExistingParent(name: String, parent: Identifier): GeneratedModel {
+			return getBuilder(name).parent(ModelFile(parent))
+		}
+
+		fun withExistingParent(name: String, parent: String): GeneratedModel {
+			return withExistingParent(name, Identifier.parse(parent))
+		}
+
+		private fun template(name: String, parent: String, textures: Map<String, Identifier>): GeneratedModel {
+			val model = withExistingParent(name, mcLoc("block/$parent"))
+			for ((slot, texture) in textures) {
+				model.texture(slot, texture)
+			}
+			return model
+		}
+
+		fun cubeAll(name: String, all: Identifier): GeneratedModel {
+			return template(name, "cube_all", mapOf("all" to all))
+		}
+
+		fun cubeBottomTop(name: String, side: Identifier, bottom: Identifier, top: Identifier): GeneratedModel {
+			return template(name, "cube_bottom_top", mapOf("side" to side, "bottom" to bottom, "top" to top))
+		}
+
+		fun cubeTop(name: String, side: Identifier, top: Identifier): GeneratedModel {
+			return template(name, "cube_top", mapOf("side" to side, "top" to top))
+		}
+
+		fun cube(
+			name: String,
+			down: Identifier,
+			up: Identifier,
+			north: Identifier,
+			south: Identifier,
+			east: Identifier,
+			west: Identifier
+		): GeneratedModel {
+			return template(
+				name,
+				"cube",
+				mapOf("down" to down, "up" to up, "north" to north, "south" to south, "east" to east, "west" to west)
+			)
+		}
+
+		fun orientable(name: String, side: Identifier, front: Identifier, top: Identifier): GeneratedModel {
+			return template(name, "orientable", mapOf("side" to side, "front" to front, "top" to top))
+		}
+
+		fun orientableWithBottom(
+			name: String,
+			side: Identifier,
+			front: Identifier,
+			bottom: Identifier,
+			top: Identifier
+		): GeneratedModel {
+			return template(
+				name,
+				"orientable_with_bottom",
+				mapOf("side" to side, "front" to front, "bottom" to bottom, "top" to top)
+			)
+		}
+
+		fun cross(name: String, cross: Identifier): GeneratedModel {
+			return template(name, "cross", mapOf("cross" to cross))
+		}
+	}
+
+	private class ConfiguredModel private constructor(val variant: Variant) {
+		class Builder {
+			private lateinit var model: ModelFile
+			private var rotationX = Quadrant.R0
+			private var rotationY = Quadrant.R0
+
+			fun modelFile(model: ModelFile): Builder {
+				this.model = model
+				return this
+			}
+
+			fun rotationX(degrees: Int): Builder {
+				rotationX = quadrant(degrees)
+				return this
+			}
+
+			fun rotationY(degrees: Int): Builder {
+				rotationY = quadrant(degrees)
+				return this
+			}
+
+			fun build(): Array<ConfiguredModel> {
+				check(::model.isInitialized) { "Blockstate variant has no model" }
+				return arrayOf(ConfiguredModel(Variant(model.location).withXRot(rotationX).withYRot(rotationY)))
+			}
+		}
+
+		companion object {
+			fun builder(): Builder = Builder()
+		}
+	}
+
+	private inner class VariantBuilder(private val block: Block) {
+		fun forAllStates(models: (BlockState) -> Array<ConfiguredModel>) {
+			generatedBlockStates.add(block)
+			val properties = block.stateDefinition.properties.toList()
+			if (properties.isEmpty()) {
+				blockModels.blockStateOutput.accept(
+					BlockModelGenerators.createSimpleBlock(block, models(block.defaultBlockState()).toMultiVariant())
+				)
+				return
+			}
+
+			val dispatch = propertyDispatch(properties)
+			for (state in block.stateDefinition.possibleStates) {
+				select(dispatch, properties, state, models(state).toMultiVariant())
+			}
+			blockModels.blockStateOutput.accept(MultiVariantGenerator.dispatch(block).with(dispatch))
+		}
+	}
+
+	private class MultipartBuilder(private val generator: MultiPartGenerator) {
+		fun part(): Part = Part(this)
+
+		class Part(private val parent: MultipartBuilder) {
+			private val conditions = ConditionBuilder()
+			private val configuredModel = ConfiguredModel.builder()
+			private var hasConditions = false
+			private var model: MultiVariant? = null
+
+			fun modelFile(file: ModelFile): Part {
+				configuredModel.modelFile(file)
+				return this
+			}
+
+			fun rotationX(degrees: Int): Part {
+				configuredModel.rotationX(degrees)
+				return this
+			}
+
+			fun rotationY(degrees: Int): Part {
+				configuredModel.rotationY(degrees)
+				return this
+			}
+
+			fun addModel(): Part {
+				model = configuredModelsToMultiVariant(configuredModel.build())
+				return this
+			}
+
+			fun <T : Comparable<T>> condition(property: Property<T>, value: T): Part {
+				conditions.term(property, value)
+				hasConditions = true
+				return this
+			}
+
+			fun end(): MultipartBuilder {
+				val finishedModel = checkNotNull(model) { "Multipart part has no model" }
+				if (hasConditions) {
+					parent.generator.with(conditions, finishedModel)
+				} else {
+					parent.generator.with(finishedModel)
+				}
+				return parent
+			}
+		}
+	}
+
+	private fun Array<ConfiguredModel>.toMultiVariant(): MultiVariant {
+		return configuredModelsToMultiVariant(this)
+	}
+
+	@Suppress("UNCHECKED_CAST")
+	private fun propertyDispatch(properties: List<Property<*>>): PropertyDispatch<MultiVariant> {
+		val typed = properties.map { it as Property<Comparable<Any>> }
+		return when (typed.size) {
+			1 -> PropertyDispatch.initial(typed[0])
+			2 -> PropertyDispatch.initial(typed[0], typed[1])
+			3 -> PropertyDispatch.initial(typed[0], typed[1], typed[2])
+			4 -> PropertyDispatch.initial(typed[0], typed[1], typed[2], typed[3])
+			5 -> PropertyDispatch.initial(typed[0], typed[1], typed[2], typed[3], typed[4])
+			else -> error("Datagen does not support ${typed.size} blockstate properties for this block")
+		}
+	}
+
+	@Suppress("UNCHECKED_CAST")
+	private fun select(
+		dispatch: PropertyDispatch<MultiVariant>,
+		properties: List<Property<*>>,
+		state: BlockState,
+		model: MultiVariant
+	) {
+		val typed = properties.map { it as Property<Comparable<Any>> }
+		val values = typed.map { state.getValue(it) }
+		when (dispatch) {
+			is PropertyDispatch.C1<*, *> -> (dispatch as PropertyDispatch.C1<MultiVariant, Comparable<Any>>).select(values[0], model)
+			is PropertyDispatch.C2<*, *, *> -> (dispatch as PropertyDispatch.C2<MultiVariant, Comparable<Any>, Comparable<Any>>).select(values[0], values[1], model)
+			is PropertyDispatch.C3<*, *, *, *> -> (dispatch as PropertyDispatch.C3<MultiVariant, Comparable<Any>, Comparable<Any>, Comparable<Any>>).select(values[0], values[1], values[2], model)
+			is PropertyDispatch.C4<*, *, *, *, *> -> (dispatch as PropertyDispatch.C4<MultiVariant, Comparable<Any>, Comparable<Any>, Comparable<Any>, Comparable<Any>>).select(values[0], values[1], values[2], values[3], model)
+			is PropertyDispatch.C5<*, *, *, *, *, *> -> (dispatch as PropertyDispatch.C5<MultiVariant, Comparable<Any>, Comparable<Any>, Comparable<Any>, Comparable<Any>, Comparable<Any>>).select(values[0], values[1], values[2], values[3], values[4], model)
+		}
+	}
+
+	private companion object {
+		fun textureSlot(name: String): TextureSlot {
+			return when (name) {
+				"all" -> TextureSlot.ALL
+				"particle" -> TextureSlot.PARTICLE
+				"texture" -> TextureSlot.TEXTURE
+				"layer0" -> TextureSlot.LAYER0
+				"layer1" -> TextureSlot.LAYER1
+				"layer2" -> TextureSlot.LAYER2
+				"side" -> TextureSlot.SIDE
+				"front" -> TextureSlot.FRONT
+				"back" -> TextureSlot.BACK
+				"top" -> TextureSlot.TOP
+				"bottom" -> TextureSlot.BOTTOM
+				"down" -> TextureSlot.DOWN
+				"up" -> TextureSlot.UP
+				"north" -> TextureSlot.NORTH
+				"south" -> TextureSlot.SOUTH
+				"east" -> TextureSlot.EAST
+				"west" -> TextureSlot.WEST
+				"cross" -> TextureSlot.CROSS
+				"pane" -> TextureSlot.PANE
+				"edge" -> TextureSlot.EDGE
+				else -> TextureSlot.create(name)
+			}
+		}
+
+		fun configuredModelsToMultiVariant(models: Array<ConfiguredModel>): MultiVariant {
+			check(models.isNotEmpty()) { "A blockstate must have at least one model" }
+			if (models.size == 1) {
+				return MultiVariant(WeightedList.of(models.single().variant))
+			}
+
+			val variants = WeightedList.builder<Variant>()
+			for (configuredModel in models) {
+				variants.add(configuredModel.variant)
+			}
+			return MultiVariant(variants.build())
+		}
+
+		fun quadrant(degrees: Int): Quadrant {
+			return when (Math.floorMod(degrees, 360)) {
+				0 -> Quadrant.R0
+				90 -> Quadrant.R90
+				180 -> Quadrant.R180
+				270 -> Quadrant.R270
+				else -> error("Invalid model rotation: $degrees")
+			}
 		}
 	}
 

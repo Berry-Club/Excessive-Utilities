@@ -5,97 +5,55 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#bottom",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            16.0
-          ]
+          "texture": "#bottom"
         },
         "east": {
           "cullface": "east",
-          "texture": "#side",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            16.0
-          ]
+          "texture": "#side"
         },
         "north": {
           "cullface": "north",
-          "texture": "#side",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            16.0
-          ]
+          "texture": "#side"
         },
         "south": {
           "cullface": "south",
-          "texture": "#side",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            16.0
-          ]
+          "texture": "#side"
         },
         "up": {
           "cullface": "up",
-          "texture": "#top",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            16.0
-          ]
+          "texture": "#top"
         },
         "west": {
           "cullface": "west",
-          "texture": "#side",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            16.0
-          ]
+          "texture": "#side"
         }
       },
       "from": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "to": [
-        16.0,
-        16.0,
-        16.0
+        16,
+        16,
+        16
       ]
     },
     {
       "faces": {
         "north": {
-          "texture": "#overlay",
-          "uv": [
-            0.0,
-            0.0,
-            16.0,
-            16.0
-          ]
+          "texture": "#overlay"
         }
       },
       "from": [
-        0.0,
-        0.0,
-        0.0
+        0,
+        0,
+        0
       ],
       "to": [
-        16.0,
-        16.0,
-        16.0
+        16,
+        16,
+        16
       ]
     }
   ],

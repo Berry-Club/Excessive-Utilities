@@ -5,8 +5,7 @@
       "y": 90
     },
     "facing=north": {
-      "model": "excessive_utilities:block/advanced_filing_cabinet",
-      "y": 0
+      "model": "excessive_utilities:block/advanced_filing_cabinet"
     },
     "facing=south": {
       "model": "excessive_utilities:block/advanced_filing_cabinet",

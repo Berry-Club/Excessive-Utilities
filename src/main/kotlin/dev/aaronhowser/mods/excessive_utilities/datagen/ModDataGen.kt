@@ -8,7 +8,6 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModLanguageProv
 import dev.aaronhowser.mods.excessive_utilities.datagen.loot.ModGlobalLootModifierProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.loot.ModLootTableProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModBlockStateProvider
-import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.*
 import net.minecraft.core.RegistrySetBuilder
@@ -53,14 +52,7 @@ object ModDataGen {
 
 		val lookupWithDatapack = datapackRegistrySets.registryProvider
 
-		generator.addProvider(
-			true,
-			ModItemModelProvider(output)
-		)
-		generator.addProvider(
-			true,
-			ModBlockStateProvider(output)
-		)
+		generator.addProvider(true, ModBlockStateProvider(output))
 
 		generator.addProvider(
 			true,

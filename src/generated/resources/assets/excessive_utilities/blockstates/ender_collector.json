@@ -1,14 +1,10 @@
 {
   "variants": {
     "facing=down,powered=false": {
-      "model": "excessive_utilities:block/ender_collector",
-      "x": 0,
-      "y": 0
+      "model": "excessive_utilities:block/ender_collector"
     },
     "facing=down,powered=true": {
-      "model": "excessive_utilities:block/ender_collector_disabled",
-      "x": 0,
-      "y": 0
+      "model": "excessive_utilities:block/ender_collector_disabled"
     },
     "facing=east,powered=false": {
       "model": "excessive_utilities:block/ender_collector",
@@ -22,13 +18,11 @@
     },
     "facing=north,powered=false": {
       "model": "excessive_utilities:block/ender_collector",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "facing=north,powered=true": {
       "model": "excessive_utilities:block/ender_collector_disabled",
-      "x": 90,
-      "y": 0
+      "x": 90
     },
     "facing=south,powered=false": {
       "model": "excessive_utilities:block/ender_collector",
@@ -41,14 +35,10 @@
       "y": 180
     },
     "facing=up,powered=false": {
-      "model": "excessive_utilities:block/ender_collector",
-      "x": 0,
-      "y": 0
+      "model": "excessive_utilities:block/ender_collector"
     },
     "facing=up,powered=true": {
-      "model": "excessive_utilities:block/ender_collector_disabled",
-      "x": 0,
-      "y": 0
+      "model": "excessive_utilities:block/ender_collector_disabled"
     },
     "facing=west,powered=false": {
       "model": "excessive_utilities:block/ender_collector",

@@ -9,12 +9,10 @@
       "y": 90
     },
     "facing=north,lit=false": {
-      "model": "excessive_utilities:block/survivalist_generator_off",
-      "y": 0
+      "model": "excessive_utilities:block/survivalist_generator_off"
     },
     "facing=north,lit=true": {
-      "model": "excessive_utilities:block/survivalist_generator_on",
-      "y": 0
+      "model": "excessive_utilities:block/survivalist_generator_on"
     },
     "facing=south,lit=false": {
       "model": "excessive_utilities:block/survivalist_generator_off",

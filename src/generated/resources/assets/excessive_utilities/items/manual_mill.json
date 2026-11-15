@@ -4,11 +4,11 @@
     "models": [
       {
         "type": "minecraft:model",
-        "model": "excessive_utilities:item/manual_mill_body"
+        "model": "excessive_utilities:item/manual_mill"
       },
       {
         "type": "minecraft:special",
-        "base": "excessive_utilities:item/manual_mill_body",
+        "base": "excessive_utilities:item/manual_mill",
         "model": {
           "type": "excessive_utilities:manual_mill"
         }
