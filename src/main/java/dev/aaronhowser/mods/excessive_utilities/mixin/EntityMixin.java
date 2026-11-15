@@ -14,7 +14,7 @@ public abstract class EntityMixin {
 			method = "playSound(Lnet/minecraft/sounds/SoundEvent;FF)V",
 			at = @At("HEAD"),
 			argsOnly = true,
-			ordinal = 1
+			name = "pitch"
 	)
 	private float eu$lowerCursedMobSoundPitch(float pitch) {
 		Entity entity = (Entity) (Object) this;
