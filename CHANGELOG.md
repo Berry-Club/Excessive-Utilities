@@ -1,5 +1,7 @@
 # 1.12.0
 
+## Updated to 26.1 with a PR from TheonlyTazz (#93)
+
 ### Added
 
 - `/excessive-utilities last-millennium` command (#92)
