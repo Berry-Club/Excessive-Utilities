@@ -13,11 +13,10 @@ import org.objectweb.asm.Opcodes;
 public class AnvilMenuMixin {
 
 	@Redirect(
-			method = "createResult",
+			method = "createResultInternal",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/world/entity/player/Player;hasInfiniteMaterials()Z",
-					ordinal = 1
+					target = "Lnet/minecraft/world/entity/player/Player;hasInfiniteMaterials()Z"
 			)
 	)
 	private boolean eu$disableTooExpensiveForTaggedItems(Player player) {
