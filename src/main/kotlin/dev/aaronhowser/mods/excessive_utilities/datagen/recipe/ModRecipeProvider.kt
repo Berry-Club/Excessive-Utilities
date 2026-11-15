@@ -20,14 +20,12 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.Si
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import net.minecraft.advancements.Criterion
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.data.recipes.ShapedRecipeBuilder
@@ -67,26 +65,6 @@ class ModRecipeProvider(
 
 	private fun ItemLike.stack(count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): ItemStackTemplate {
 		return ItemStackTemplate(asItem(), count, components)
-	}
-
-	private fun shapedRecipe(
-		output: ItemStackTemplate,
-		patterns: List<String>,
-		definitions: Map<Char, Ingredient>,
-		unlockedByName: String = "has_log",
-		unlockedByCriterion: Criterion<*> = has(ItemTags.LOGS)
-	): ShapedRecipeBuilder {
-		val builder = shaped(RecipeCategory.MISC, output)
-
-		for (pattern in patterns) {
-			builder.pattern(pattern)
-		}
-
-		for ((symbol, ingredient) in definitions) {
-			builder.define(symbol, ingredient)
-		}
-
-		return builder.unlockedBy(unlockedByName, unlockedByCriterion)
 	}
 
 	class Runner(
