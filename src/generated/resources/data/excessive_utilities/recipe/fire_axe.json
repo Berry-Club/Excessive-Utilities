@@ -3,27 +3,23 @@
   "category": "misc",
   "key": {
     "O": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:opinium_core_contents": {
           "center": {
-            "count": 1,
             "id": "minecraft:iron_ingot"
           },
           "name": {
             "translate": "item.excessive_utilities.opinium_core.perfected"
           },
           "outer": {
-            "count": 1,
             "id": "minecraft:nether_star"
           }
         }
       },
       "items": "excessive_utilities:opinium_core"
     },
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "S": "#c:rods/wooden"
   },
   "pattern": [
     "OO",
@@ -31,7 +27,6 @@
     " S"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:fire_axe"
   }
 }

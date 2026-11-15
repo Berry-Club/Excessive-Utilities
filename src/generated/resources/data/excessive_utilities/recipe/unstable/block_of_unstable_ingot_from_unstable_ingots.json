@@ -2,9 +2,7 @@
   "type": "excessive_utilities:shaped_unstable",
   "pattern": {
     "key": {
-      "I": {
-        "item": "excessive_utilities:unstable_ingot"
-      }
+      "I": "excessive_utilities:unstable_ingot"
     },
     "pattern": [
       "III",
@@ -13,7 +11,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:block_of_unstable_ingot"
   },
   "stability": "stable"

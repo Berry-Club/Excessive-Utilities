@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "tag": "c:glass_blocks/colorless"
-    },
-    {
-      "tag": "c:glass_blocks/colorless"
-    },
-    {
-      "tag": "c:dusts/glowstone"
-    }
+    "#c:glass_blocks/colorless",
+    "#c:glass_blocks/colorless",
+    "#c:dusts/glowstone"
   ],
   "result": {
     "count": 2,

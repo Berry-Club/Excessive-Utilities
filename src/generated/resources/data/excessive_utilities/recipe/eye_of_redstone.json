@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "tag": "c:ender_pearls"
-    },
-    {
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    }
+    "minecraft:ender_pearl",
+    "#c:dusts/redstone",
+    "excessive_utilities:resonating_redstone_crystal"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:eye_of_redstone"
   }
 }

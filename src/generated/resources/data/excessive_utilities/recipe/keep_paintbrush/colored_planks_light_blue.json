@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/light_blue"
-      },
-      "I": {
-        "tag": "minecraft:planks"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/light_blue",
+      "I": "#minecraft:planks",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

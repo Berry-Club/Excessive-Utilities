@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/pink"
-      },
-      "I": {
-        "tag": "c:cobblestones/normal"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/pink",
+      "I": "#c:cobblestones/normal",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

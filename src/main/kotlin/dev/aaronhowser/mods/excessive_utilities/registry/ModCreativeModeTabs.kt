@@ -16,9 +16,11 @@ import net.minecraft.network.chat.Component
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.CreativeModeTab
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
+import java.util.Optional
 import java.util.function.Supplier
 
 object ModCreativeModeTabs {
@@ -52,15 +54,15 @@ object ModCreativeModeTabs {
 						}
 
 						var funnyTier = OpiniumCoreContentsComponent(
-							Items.NETHERITE_BLOCK.defaultInstance,
-							Items.DIAMOND_BLOCK.defaultInstance,
+							Optional.of(ItemStackTemplate(Items.NETHERITE_BLOCK, 1)),
+							Optional.of(ItemStackTemplate(Items.DIAMOND_BLOCK, 1)),
 							Component.literal("Haha")
 						)
 
 						for (i in 0 until 2) {
 							funnyTier = OpiniumCoreContentsComponent(
-								funnyTier.getStack(),
-								funnyTier.getStack(),
+								Optional.of(ItemStackTemplate.fromNonEmptyStack(funnyTier.getStack())),
+								Optional.of(ItemStackTemplate.fromNonEmptyStack(funnyTier.getStack())),
 								Component.literal("Test Opinium Core Please Ignore")
 							)
 						}

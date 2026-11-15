@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:ender_eye"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    }
+    "E": "minecraft:ender_eye",
+    "I": "#c:ingots/iron",
+    "R": "#c:dusts/redstone"
   },
   "pattern": [
     "III",
@@ -18,7 +12,6 @@
     "III"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:portable_scanner"
   }
 }

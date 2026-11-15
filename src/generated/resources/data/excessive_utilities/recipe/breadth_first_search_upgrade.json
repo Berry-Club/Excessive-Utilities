@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "item": "excessive_utilities:depth_first_search_upgrade"
-    },
-    "R": {
-      "tag": "c:storage_blocks/redstone"
-    },
-    "S": {
-      "tag": "excessive_utilities:speed_upgrades"
-    }
+    "D": "excessive_utilities:depth_first_search_upgrade",
+    "R": "#c:storage_blocks/redstone",
+    "S": "#excessive_utilities:speed_upgrades"
   },
   "pattern": [
     "RRR",
@@ -18,7 +12,6 @@
     "RRR"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:breadth_first_search_upgrade"
   }
 }

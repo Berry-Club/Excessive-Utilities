@@ -11,14 +11,15 @@ import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
+import java.util.Optional
 
 class CrusherRecipeBuilder(
 	val ingredient: Ingredient,
-	val primaryOutput: ItemStack,
-	val secondaryOutput: ItemStack = ItemStack.EMPTY,
+	val primaryOutput: ItemStackTemplate,
+	val secondaryOutput: ItemStackTemplate? = null,
 	val secondaryChance: Float = CrusherRecipe.DEFAULT_SECONDARY_CHANCE,
 	val ticks: Int = CrusherRecipe.DEFAULT_TICKS,
 	val fePerTick: Int = CrusherRecipe.DEFAULT_FE_PER_TICK
@@ -32,7 +33,7 @@ class CrusherRecipeBuilder(
 	}
 
 	override fun group(p0: String?): RecipeBuilder = error("Unsupported")
-	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(primaryOutput.item))
+	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(primaryOutput.item.value()))
 
 	override fun save(recipeOutput: RecipeOutput, recipeKey: ResourceKey<Recipe<*>>) {
 		val originalId = recipeKey.identifier()
@@ -57,7 +58,7 @@ class CrusherRecipeBuilder(
 			advancement.addCriterion(criterion.key, criterion.value)
 		}
 
-		val recipe = CrusherRecipe(ingredient, primaryOutput, secondaryOutput, secondaryChance, ticks, fePerTick)
+		val recipe = CrusherRecipe(ingredient, primaryOutput, Optional.ofNullable(secondaryOutput), secondaryChance, ticks, fePerTick)
 
 		recipeOutput.accept(ResourceKey.create(Registries.RECIPE, id), recipe, advancement.build(id.withPrefix("recipes/")))
 	}

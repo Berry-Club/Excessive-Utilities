@@ -2,24 +2,12 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "tag": "c:dyes/magenta"
-    },
-    {
-      "tag": "c:dyes/purple"
-    },
-    {
-      "tag": "c:stones"
-    },
-    {
-      "tag": "c:stones"
-    },
-    {
-      "tag": "c:stones"
-    },
-    {
-      "tag": "c:stones"
-    }
+    "#c:dyes/magenta",
+    "#c:dyes/purple",
+    "#c:stones",
+    "#c:stones",
+    "#c:stones",
+    "#c:stones"
   ],
   "result": {
     "count": 4,

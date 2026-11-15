@@ -4,6 +4,6 @@
   "fe_per_tick": 100,
   "ingredient": {
     "amount": 1,
-    "tag": "c:lava"
+    "ingredient": "#c:lava"
   }
 }

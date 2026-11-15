@@ -8,14 +8,12 @@
             "components": {
               "excessive_utilities:opinium_core_contents": {
                 "center": {
-                  "count": 1,
                   "id": "minecraft:iron_ingot"
                 },
                 "name": {
                   "translate": "item.excessive_utilities.opinium_core.perfected"
                 },
                 "outer": {
-                  "count": 1,
                   "id": "minecraft:nether_star"
                 }
               }
@@ -35,19 +33,16 @@
       "components": {
         "excessive_utilities:opinium_core_contents": {
           "center": {
-            "count": 1,
             "id": "minecraft:iron_ingot"
           },
           "name": {
             "translate": "item.excessive_utilities.opinium_core.perfected"
           },
           "outer": {
-            "count": 1,
             "id": "minecraft:nether_star"
           }
         }
       },
-      "count": 1,
       "id": "excessive_utilities:opinium_core"
     },
     "title": {

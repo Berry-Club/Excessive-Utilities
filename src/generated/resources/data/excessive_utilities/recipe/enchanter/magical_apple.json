@@ -3,9 +3,7 @@
   "fe_per_tick": 10,
   "left": {
     "count": 16,
-    "ingredient": {
-      "item": "minecraft:apple"
-    }
+    "ingredient": "minecraft:apple"
   },
   "output": {
     "count": 16,
@@ -13,9 +11,7 @@
   },
   "right": {
     "count": 1,
-    "ingredient": {
-      "tag": "c:gems/lapis"
-    }
+    "ingredient": "#c:gems/lapis"
   },
   "ticks": 1600
 }

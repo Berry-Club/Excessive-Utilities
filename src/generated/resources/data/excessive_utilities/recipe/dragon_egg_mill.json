@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "excessive_utilities:redstone_gear"
-    },
-    "I": {
-      "item": "excessive_utilities:eye_of_redstone"
-    },
-    "N": {
-      "item": "minecraft:nether_star"
-    },
-    "S": {
-      "item": "excessive_utilities:stoneburnt"
-    }
+    "G": "excessive_utilities:redstone_gear",
+    "I": "excessive_utilities:eye_of_redstone",
+    "N": "minecraft:nether_star",
+    "S": "excessive_utilities:stoneburnt"
   },
   "pattern": [
     "SGS",
@@ -21,7 +13,6 @@
     "SIS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:dragon_egg_mill"
   }
 }

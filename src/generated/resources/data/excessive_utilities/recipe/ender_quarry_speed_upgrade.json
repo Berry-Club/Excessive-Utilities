@@ -2,30 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "excessive_utilities:ender_quarry_upgrade_base"
-    },
+    "B": "excessive_utilities:ender_quarry_upgrade_base",
     "P": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "minecraft:enchantments": {
-          "levels": {
-            "minecraft:efficiency": 1
-          }
+          "minecraft:efficiency": 1
         }
       },
       "items": "minecraft:diamond_pickaxe"
     },
-    "S": {
-      "item": "excessive_utilities:speed_upgrade"
-    }
+    "S": "excessive_utilities:speed_upgrade"
   },
   "pattern": [
     " P ",
     "SBS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_quarry_speed_upgrade"
   }
 }

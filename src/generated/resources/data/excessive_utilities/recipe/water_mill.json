@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "excessive_utilities:redstone_gear"
-    },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    },
-    "S": {
-      "item": "excessive_utilities:stoneburnt"
-    }
+    "G": "excessive_utilities:redstone_gear",
+    "R": "excessive_utilities:resonating_redstone_crystal",
+    "S": "excessive_utilities:stoneburnt"
   },
   "pattern": [
     "SSS",
@@ -18,7 +12,6 @@
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:water_mill"
   }
 }

@@ -3,15 +3,9 @@
   "crystal_ticks": 300,
   "pattern": {
     "key": {
-      "E": {
-        "tag": "c:ender_pearls"
-      },
-      "M": {
-        "tag": "c:gems/emerald"
-      },
-      "N": {
-        "item": "excessive_utilities:item_transfer_node"
-      }
+      "E": "minecraft:ender_pearl",
+      "M": "#c:gems/emerald",
+      "N": "excessive_utilities:item_transfer_node"
     },
     "pattern": [
       " E ",
@@ -20,7 +14,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:item_retrieval_node"
   }
 }

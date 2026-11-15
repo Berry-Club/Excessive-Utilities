@@ -12,7 +12,7 @@ import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.Recipe
 import java.util.*
 
@@ -20,12 +20,12 @@ class WorldInteractionItemRecipeBuilder(
 	val requiredOnBlock: BlockStateIngredient?,
 	val requiredAdjacentBlocks: List<BlockStateIngredient>,
 	val requiredBlockBehind: BlockStateIngredient?,
-	val output: ItemStack
+	val output: ItemStackTemplate
 ) : RecipeBuilder {
 
 	override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = error("Unsupported")
 	override fun group(groupName: String?): RecipeBuilder = error("Unsupported")
-	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(output.item))
+	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(output.item.value()))
 
 	override fun save(recipeOutput: RecipeOutput, recipeKey: ResourceKey<Recipe<*>>) {
 		val id = recipeKey.identifier()

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:compressed_dirt_8"
-    }
+    "excessive_utilities:compressed_dirt_8"
   ],
   "result": {
     "count": 9,

@@ -6,5 +6,6 @@
       "loot_table_id": "minecraft:chests/stronghold_crossing"
     }
   ],
+  "priority": 1,
   "table": "excessive_utilities:structure/division_sigils/stronghold_corridor"
 }

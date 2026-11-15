@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:block_of_demon_metal"
-    }
+    "excessive_utilities:block_of_demon_metal"
   ],
   "result": {
     "count": 9,

@@ -9,13 +9,14 @@ import net.minecraft.core.NonNullList
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.ShapedRecipePattern
 
 class DamageGlassCutterRecipe(
 	val pattern: ShapedRecipePattern,
-	val output: ItemStack,
+	val output: ItemStackTemplate,
 ) : SpecialShapedRecipe(pattern, output) {
 
 	override fun getRemainingItems(input: CraftingInput): NonNullList<ItemStack> {
@@ -52,7 +53,7 @@ class DamageGlassCutterRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(DamageGlassCutterRecipe::pattern),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("result")
 							.forGetter(DamageGlassCutterRecipe::output)
 					).apply(instance, ::DamageGlassCutterRecipe)
@@ -61,7 +62,7 @@ class DamageGlassCutterRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, DamageGlassCutterRecipe> =
 				StreamCodec.composite(
 					ShapedRecipePattern.STREAM_CODEC, DamageGlassCutterRecipe::pattern,
-					ItemStack.STREAM_CODEC, DamageGlassCutterRecipe::output,
+					ItemStackTemplate.STREAM_CODEC, DamageGlassCutterRecipe::output,
 					::DamageGlassCutterRecipe
 				)
 		}

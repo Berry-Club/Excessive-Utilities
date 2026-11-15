@@ -5,6 +5,7 @@
       "bonus_rolls": 0.0,
       "conditions": [
         {
+          "clock": "minecraft:overworld",
           "condition": "minecraft:time_check",
           "value": {
             "max": 23000.0,

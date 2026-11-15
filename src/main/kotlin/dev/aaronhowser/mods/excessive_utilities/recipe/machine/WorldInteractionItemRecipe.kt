@@ -11,6 +11,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
@@ -20,7 +21,7 @@ class WorldInteractionItemRecipe(
 	val optionalRequiredOnBlock: Optional<BlockStateIngredient>,
 	val requiredAdjacentBlocks: List<BlockStateIngredient>,
 	val optionalRequiredBlockBehind: Optional<BlockStateIngredient>,
-	val output: ItemStack
+	val output: ItemStackTemplate
 ) : MachineRecipe<WorldInteractionItemRecipe.Input> {
 
 	val requiredOnBlock: BlockStateIngredient? = optionalRequiredOnBlock.orElse(null)
@@ -56,8 +57,8 @@ class WorldInteractionItemRecipe(
 	}
 
 	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	override fun assemble(input: Input): ItemStack = output.copy()
-	fun getResultItem(registries: HolderLookup.Provider): ItemStack = output
+	override fun assemble(input: Input): ItemStack = output.create()
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = output.create()
 
 	override fun getSerializer(): RecipeSerializer<WorldInteractionItemRecipe> = ModRecipeSerializers.WORLD_INTERACTION_ITEM.get()
 	override fun getType(): RecipeType<WorldInteractionItemRecipe> = ModRecipeTypes.WORLD_INTERACTION_ITEM.get()
@@ -116,7 +117,7 @@ class WorldInteractionItemRecipe(
 						BlockStateIngredient.CODEC
 							.optionalFieldOf("behind")
 							.forGetter(WorldInteractionItemRecipe::optionalRequiredBlockBehind),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("output")
 							.forGetter(WorldInteractionItemRecipe::output)
 					).apply(instance, ::WorldInteractionItemRecipe)
@@ -127,7 +128,7 @@ class WorldInteractionItemRecipe(
 					ByteBufCodecs.optional(BlockStateIngredient.STREAM_CODEC), WorldInteractionItemRecipe::optionalRequiredOnBlock,
 					BlockStateIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), WorldInteractionItemRecipe::requiredAdjacentBlocks,
 					ByteBufCodecs.optional(BlockStateIngredient.STREAM_CODEC), WorldInteractionItemRecipe::optionalRequiredBlockBehind,
-					ItemStack.STREAM_CODEC, WorldInteractionItemRecipe::output,
+					ItemStackTemplate.STREAM_CODEC, WorldInteractionItemRecipe::output,
 					::WorldInteractionItemRecipe
 				)
 		}

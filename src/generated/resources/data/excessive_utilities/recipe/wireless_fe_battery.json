@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:storage_blocks/redstone"
-    },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    },
-    "S": {
-      "item": "excessive_utilities:stoneburnt"
-    }
+    "B": "#c:storage_blocks/redstone",
+    "R": "excessive_utilities:resonating_redstone_crystal",
+    "S": "excessive_utilities:stoneburnt"
   },
   "pattern": [
     "SSS",
@@ -18,7 +12,6 @@
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:wireless_fe_battery"
   }
 }

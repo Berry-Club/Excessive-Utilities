@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:tinted_glass"
-    },
-    "M": {
-      "item": "excessive_utilities:moon_stone"
-    }
+    "G": "minecraft:tinted_glass",
+    "M": "excessive_utilities:moon_stone"
   },
   "pattern": [
     "GGG",

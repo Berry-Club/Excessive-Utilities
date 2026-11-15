@@ -1,15 +1,12 @@
 {
   "values": {
     "#c:ingots/gold": {
-      "count": 1,
       "id": "excessive_utilities:demon_ingot"
     },
     "#c:nuggets/gold": {
-      "count": 1,
       "id": "excessive_utilities:demon_nugget"
     },
     "#c:storage_blocks/gold": {
-      "count": 1,
       "id": "excessive_utilities:block_of_demon_metal"
     }
   }

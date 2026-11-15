@@ -3,7 +3,5 @@
   "duration": 400,
   "fe_per_tick": 100,
   "generator_type": "death",
-  "ingredient": {
-    "item": "minecraft:skeleton_skull"
-  }
+  "ingredient": "minecraft:skeleton_skull"
 }

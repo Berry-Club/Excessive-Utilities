@@ -9,16 +9,20 @@
           "weight": 43046721
         },
         {
-          "type": "aaron:item_stack",
-          "item_stack": {
-            "components": {
-              "minecraft:lore": [
-                "{\"translate\":\"tooltip.excessive_utilities.soul_of_a_forgotten_deity\"}"
-              ]
-            },
-            "count": 1,
-            "id": "excessive_utilities:soul_fragment"
-          }
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "components": {
+                "minecraft:lore": [
+                  {
+                    "translate": "tooltip.excessive_utilities.soul_of_a_forgotten_deity"
+                  }
+                ]
+              },
+              "function": "minecraft:set_components"
+            }
+          ],
+          "name": "excessive_utilities:soul_fragment"
         }
       ],
       "rolls": 1.0

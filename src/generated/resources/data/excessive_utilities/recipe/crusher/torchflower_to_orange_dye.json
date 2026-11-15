@@ -1,8 +1,6 @@
 {
   "type": "excessive_utilities:crusher",
-  "ingredient": {
-    "item": "minecraft:torchflower"
-  },
+  "ingredient": "minecraft:torchflower",
   "primary_output": {
     "count": 2,
     "id": "minecraft:orange_dye"

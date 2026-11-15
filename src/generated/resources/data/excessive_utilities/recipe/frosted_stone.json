@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "I": {
-      "item": "minecraft:ice"
-    },
-    "S": {
-      "tag": "c:stones"
-    }
+    "I": "minecraft:ice",
+    "S": "#c:stones"
   },
   "pattern": [
     " I ",

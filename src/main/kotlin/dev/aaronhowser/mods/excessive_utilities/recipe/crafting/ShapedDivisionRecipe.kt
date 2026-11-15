@@ -14,6 +14,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.ShapedRecipePattern
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level
 
 class ShapedDivisionRecipe(
 	val pattern: ShapedRecipePattern,
-	val output: ItemStack,
+	val output: ItemStackTemplate,
 	val requiredInversion: Inversion
 ) : SpecialShapedRecipe(pattern, output) {
 
@@ -81,7 +82,7 @@ class ShapedDivisionRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(ShapedDivisionRecipe::pattern),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("result")
 							.forGetter(ShapedDivisionRecipe::output),
 						Inversion.CODEC
@@ -93,7 +94,7 @@ class ShapedDivisionRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, ShapedDivisionRecipe> =
 				StreamCodec.composite(
 					ShapedRecipePattern.STREAM_CODEC, ShapedDivisionRecipe::pattern,
-					ItemStack.STREAM_CODEC, ShapedDivisionRecipe::output,
+					ItemStackTemplate.STREAM_CODEC, ShapedDivisionRecipe::output,
 					Inversion.STREAM_CODEC, ShapedDivisionRecipe::requiredInversion,
 					::ShapedDivisionRecipe
 				)

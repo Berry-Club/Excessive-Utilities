@@ -15,17 +15,20 @@ import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidStackTemplate
 import java.util.*
 
 class WorldInteractionFluidRecipe(
 	val optionalRequiredOnBlock: Optional<BlockStateIngredient>,
 	val requiredAdjacentBlocks: List<BlockStateIngredient>,
 	val optionalRequiredBlockBehind: Optional<BlockStateIngredient>,
-	val output: FluidStack
+	private val outputTemplate: FluidStackTemplate
 ) : MachineRecipe<WorldInteractionFluidRecipe.Input> {
 
 	val requiredOnBlock: BlockStateIngredient? = optionalRequiredOnBlock.orElse(null)
 	val requiredBlockBehind: BlockStateIngredient? = optionalRequiredBlockBehind.orElse(null)
+	val output: FluidStack
+		get() = outputTemplate.create()
 
 	override fun matches(input: Input, level: Level): Boolean {
 		if (requiredOnBlock != null && !requiredOnBlock.test(input.onBlock)) {
@@ -117,9 +120,9 @@ class WorldInteractionFluidRecipe(
 						BlockStateIngredient.CODEC
 							.optionalFieldOf("behind")
 							.forGetter(WorldInteractionFluidRecipe::optionalRequiredBlockBehind),
-						FluidStack.CODEC
+						FluidStackTemplate.CODEC
 							.fieldOf("output")
-							.forGetter(WorldInteractionFluidRecipe::output)
+							.forGetter(WorldInteractionFluidRecipe::outputTemplate)
 					).apply(instance, ::WorldInteractionFluidRecipe)
 				}
 
@@ -128,7 +131,7 @@ class WorldInteractionFluidRecipe(
 					ByteBufCodecs.optional(BlockStateIngredient.STREAM_CODEC), WorldInteractionFluidRecipe::optionalRequiredOnBlock,
 					BlockStateIngredient.STREAM_CODEC.apply(ByteBufCodecs.list()), WorldInteractionFluidRecipe::requiredAdjacentBlocks,
 					ByteBufCodecs.optional(BlockStateIngredient.STREAM_CODEC), WorldInteractionFluidRecipe::optionalRequiredBlockBehind,
-					FluidStack.STREAM_CODEC, WorldInteractionFluidRecipe::output,
+					FluidStackTemplate.STREAM_CODEC, WorldInteractionFluidRecipe::outputTemplate,
 					::WorldInteractionFluidRecipe
 				)
 		}

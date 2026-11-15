@@ -3,7 +3,5 @@
   "duration": 10,
   "fe_per_tick": 40,
   "generator_type": "pink",
-  "ingredient": {
-    "tag": "c:dyed/pink"
-  }
+  "ingredient": "#c:dyed/pink"
 }

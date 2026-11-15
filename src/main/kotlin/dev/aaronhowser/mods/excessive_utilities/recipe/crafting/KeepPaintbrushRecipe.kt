@@ -9,13 +9,14 @@ import net.minecraft.core.NonNullList
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.ShapedRecipePattern
 
 class KeepPaintbrushRecipe(
 	val pattern: ShapedRecipePattern,
-	val output: ItemStack,
+	val output: ItemStackTemplate,
 ) : SpecialShapedRecipe(pattern, output) {
 
 	override fun getRemainingItems(input: CraftingInput): NonNullList<ItemStack> {
@@ -46,7 +47,7 @@ class KeepPaintbrushRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(KeepPaintbrushRecipe::pattern),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("result")
 							.forGetter(KeepPaintbrushRecipe::output)
 					).apply(instance, ::KeepPaintbrushRecipe)
@@ -55,7 +56,7 @@ class KeepPaintbrushRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, KeepPaintbrushRecipe> =
 				StreamCodec.composite(
 					ShapedRecipePattern.STREAM_CODEC, KeepPaintbrushRecipe::pattern,
-					ItemStack.STREAM_CODEC, KeepPaintbrushRecipe::output,
+					ItemStackTemplate.STREAM_CODEC, KeepPaintbrushRecipe::output,
 					::KeepPaintbrushRecipe
 				)
 		}

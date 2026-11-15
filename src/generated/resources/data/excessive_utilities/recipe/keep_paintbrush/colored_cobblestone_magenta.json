@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/magenta"
-      },
-      "I": {
-        "tag": "c:cobblestones/normal"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/magenta",
+      "I": "#c:cobblestones/normal",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

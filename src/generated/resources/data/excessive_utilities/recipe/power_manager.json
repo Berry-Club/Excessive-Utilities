@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    },
-    "S": {
-      "tag": "c:stones"
-    }
+    "R": "excessive_utilities:resonating_redstone_crystal",
+    "S": "#c:stones"
   },
   "pattern": [
     " R",
@@ -15,7 +11,6 @@
     "SS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:power_manager"
   }
 }

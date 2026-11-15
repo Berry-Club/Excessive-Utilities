@@ -1,11 +1,8 @@
 {
   "type": "excessive_utilities:resonator",
   "gp_cost": 8.0,
-  "ingredient": {
-    "tag": "minecraft:coals"
-  },
+  "ingredient": "#minecraft:coals",
   "output": {
-    "count": 1,
     "id": "excessive_utilities:red_coal"
   }
 }

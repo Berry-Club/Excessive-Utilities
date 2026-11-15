@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "tag": "c:fences/nether_brick"
-    },
-    "G": {
-      "item": "excessive_utilities:redstone_gear"
-    },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    },
-    "S": {
-      "item": "excessive_utilities:stoneburnt"
-    }
+    "F": "#c:fences/nether_brick",
+    "G": "excessive_utilities:redstone_gear",
+    "R": "excessive_utilities:resonating_redstone_crystal",
+    "S": "excessive_utilities:stoneburnt"
   },
   "pattern": [
     "SRS",
@@ -21,7 +13,6 @@
     "SFS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:fire_mill"
   }
 }

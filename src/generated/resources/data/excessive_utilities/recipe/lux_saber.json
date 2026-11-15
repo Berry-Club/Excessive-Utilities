@@ -3,21 +3,15 @@
   "category": "misc",
   "key": {
     "C": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:charge": 600
       },
       "items": "excessive_utilities:sun_crystal"
     },
-    "E": {
-      "item": "excessive_utilities:evil_infused_iron_ingot"
-    },
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    }
+    "E": "excessive_utilities:evil_infused_iron_ingot",
+    "G": "#c:glass_blocks",
+    "R": "excessive_utilities:resonating_redstone_crystal"
   },
   "pattern": [
     "EGE",
@@ -25,7 +19,6 @@
     "ERE"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:lux_saber"
   }
 }

@@ -10,16 +10,17 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
 class ResonatorRecipe(
 	val ingredient: Ingredient,
-	val result: ItemStack,
+	val result: ItemStackTemplate,
 	val gpCost: Double
 ) : dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe<SingleRecipeInput> {
-	override fun assemble(input: SingleRecipeInput): ItemStack = result.copy()
-	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
+	override fun assemble(input: SingleRecipeInput): ItemStack = result.create()
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.create()
 	override fun getSerializer(): RecipeSerializer<ResonatorRecipe> = ModRecipeSerializers.RESONATOR.get()
 	override fun getType(): RecipeType<ResonatorRecipe> = ModRecipeTypes.RESONATOR.get()
 
@@ -37,7 +38,7 @@ class ResonatorRecipe(
 						Ingredient.CODEC
 							.fieldOf("ingredient")
 							.forGetter(ResonatorRecipe::ingredient),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("output")
 							.forGetter(ResonatorRecipe::result),
 						Codec.DOUBLE
@@ -49,7 +50,7 @@ class ResonatorRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, ResonatorRecipe> =
 				StreamCodec.composite(
 					Ingredient.CONTENTS_STREAM_CODEC, ResonatorRecipe::ingredient,
-					ItemStack.STREAM_CODEC, ResonatorRecipe::result,
+					ItemStackTemplate.STREAM_CODEC, ResonatorRecipe::result,
 					ByteBufCodecs.DOUBLE, ResonatorRecipe::gpCost,
 					::ResonatorRecipe
 				)

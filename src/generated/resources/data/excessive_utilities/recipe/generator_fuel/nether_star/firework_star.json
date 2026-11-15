@@ -3,7 +3,5 @@
   "duration": 20,
   "fe_per_tick": 20,
   "generator_type": "nether_star",
-  "ingredient": {
-    "item": "minecraft:firework_star"
-  }
+  "ingredient": "minecraft:firework_star"
 }

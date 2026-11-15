@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:evil_infused_iron_ingot"
-    }
+    "excessive_utilities:evil_infused_iron_ingot"
   ],
   "result": {
     "count": 9,

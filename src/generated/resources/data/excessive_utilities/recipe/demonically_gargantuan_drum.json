@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "item": "excessive_utilities:demon_ingot"
-    },
-    "R": {
-      "item": "excessive_utilities:reinforced_large_drum"
-    },
-    "T": {
-      "item": "excessive_utilities:tesseract"
-    }
+    "D": "excessive_utilities:demon_ingot",
+    "R": "excessive_utilities:reinforced_large_drum",
+    "T": "excessive_utilities:tesseract"
   },
   "pattern": [
     "DTD",
@@ -18,7 +12,6 @@
     "DTD"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:demonically_gargantuan_drum"
   }
 }

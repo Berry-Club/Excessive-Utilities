@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "M": {
-      "item": "excessive_utilities:moon_stone"
-    }
+    "G": "#c:glass_blocks",
+    "M": "excessive_utilities:moon_stone"
   },
   "pattern": [
     "GGG",

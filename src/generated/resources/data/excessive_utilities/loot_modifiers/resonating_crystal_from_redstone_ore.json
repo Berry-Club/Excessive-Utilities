@@ -10,5 +10,6 @@
       "condition": "minecraft:block_state_property"
     }
   ],
+  "priority": 1,
   "table": "excessive_utilities:block/resonating_redstone_crystal"
 }

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:bowl"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "M": {
-      "item": "minecraft:bone_meal"
-    }
+    "B": "minecraft:bowl",
+    "I": "#c:ingots/iron",
+    "M": "minecraft:bone_meal"
   },
   "pattern": [
     "IM ",
@@ -18,7 +12,6 @@
     " I "
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:watering_can"
   }
 }

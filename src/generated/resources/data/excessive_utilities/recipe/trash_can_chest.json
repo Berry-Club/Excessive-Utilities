@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:trash_can"
-    },
-    {
-      "tag": "c:chests/wooden"
-    },
-    {
-      "tag": "c:dusts/redstone"
-    }
+    "excessive_utilities:trash_can",
+    "#c:chests/wooden",
+    "#c:dusts/redstone"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:trash_can_chest"
   }
 }

@@ -12,13 +12,13 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.util.Mth
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.neoforged.neoforge.common.crafting.SizedIngredient
 
 class EnchanterRecipeBuilder(
-	private val result: ItemStack
+	private val result: ItemStackTemplate
 ) : RecipeBuilder {
 
 	private var leftIngredient: Ingredient? = null
@@ -84,7 +84,7 @@ class EnchanterRecipeBuilder(
 		error("Unsupported")
 	}
 
-	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(result.item))
+	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(result.item.value()))
 
 	override fun save(recipeOutput: RecipeOutput, recipeKey: ResourceKey<Recipe<*>>) {
 		val originalId = recipeKey.identifier()

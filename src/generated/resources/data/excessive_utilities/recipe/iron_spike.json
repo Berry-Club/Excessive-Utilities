@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:storage_blocks/iron"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "item": "minecraft:iron_sword"
-    }
+    "B": "#c:storage_blocks/iron",
+    "I": "#c:ingots/iron",
+    "S": "minecraft:iron_sword"
   },
   "pattern": [
     " S ",

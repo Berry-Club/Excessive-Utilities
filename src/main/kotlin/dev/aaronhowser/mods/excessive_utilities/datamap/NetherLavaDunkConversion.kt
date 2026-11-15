@@ -9,18 +9,18 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.FluidTags
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import net.neoforged.neoforge.registries.datamaps.DataMapType
 
 class NetherLavaDunkConversion(
-	val output: ItemStack
+	val output: ItemStackTemplate
 ) {
 
 	companion object {
 		val CODEC: Codec<NetherLavaDunkConversion> =
-			ItemStack.CODEC.xmap(::NetherLavaDunkConversion, NetherLavaDunkConversion::output)
+			ItemStackTemplate.CODEC.xmap(::NetherLavaDunkConversion, NetherLavaDunkConversion::output)
 
 		val DATA_MAP: DataMapType<Item, NetherLavaDunkConversion> =
 			DataMapType
@@ -46,7 +46,7 @@ class NetherLavaDunkConversion(
 			val fluidState = level.getFluidState(pos)
 			if (fluidState.isFluid(FluidTags.LAVA)) {
 				val count = item.count
-				val demonStack = output.copyWithCount(count)
+				val demonStack = output.withCount(count).create()
 
 				itemEntity.item = demonStack
 				itemEntity.deltaMovement = Vec3.ZERO

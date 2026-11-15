@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
@@ -11,22 +10,22 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.Recipe
 import net.minecraft.world.item.crafting.ShapedRecipePattern
 import net.minecraft.world.level.ItemLike
 
 class SpecialShapedRecipeBuilder(
-	val output: ItemStack
+	val output: ItemStackTemplate
 ) : RecipeBuilder {
 
 	constructor(
 		output: ItemLike
-	) : this(output.getDefaultInstance())
+	) : this(ItemStackTemplate(output.asItem()))
 
 	private var type: String? = null
-	private var factory: ((ShapedRecipePattern, ItemStack) -> dev.aaronhowser.mods.excessive_utilities.recipe.crafting.SpecialShapedRecipe)? = null
+	private var factory: ((ShapedRecipePattern, ItemStackTemplate) -> dev.aaronhowser.mods.excessive_utilities.recipe.crafting.SpecialShapedRecipe)? = null
 
 	private val rows = mutableListOf<String>()
 	private val key = mutableMapOf<Char, Ingredient>()
@@ -34,7 +33,7 @@ class SpecialShapedRecipeBuilder(
 
 	fun type(
 		type: String,
-		factory: (ShapedRecipePattern, ItemStack) -> dev.aaronhowser.mods.excessive_utilities.recipe.crafting.SpecialShapedRecipe
+		factory: (ShapedRecipePattern, ItemStackTemplate) -> dev.aaronhowser.mods.excessive_utilities.recipe.crafting.SpecialShapedRecipe
 	): SpecialShapedRecipeBuilder {
 		this.type = type
 		this.factory = factory
@@ -64,7 +63,7 @@ class SpecialShapedRecipeBuilder(
 
 	override fun group(groupName: String?): RecipeBuilder = error("Not supported")
 
-	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(output.item))
+	override fun defaultId(): ResourceKey<Recipe<*>> = ResourceKey.create(Registries.RECIPE, BuiltInRegistries.ITEM.getKey(output.item.value()))
 
 	override fun save(recipeOutput: RecipeOutput, recipeKey: ResourceKey<Recipe<*>>) {
 		val originalId = recipeKey.identifier()

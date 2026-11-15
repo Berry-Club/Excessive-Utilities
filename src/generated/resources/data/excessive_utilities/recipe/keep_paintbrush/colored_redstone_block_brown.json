@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/brown"
-      },
-      "I": {
-        "tag": "c:storage_blocks/redstone"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/brown",
+      "I": "#c:storage_blocks/redstone",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

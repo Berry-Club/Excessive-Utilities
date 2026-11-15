@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "tag": "c:storage_blocks/diamond"
-    },
-    "Q": {
-      "item": "excessive_utilities:compressed_cobblestone_4"
-    },
-    "T": {
-      "item": "excessive_utilities:compressed_cobblestone_3"
-    }
+    "D": "#c:storage_blocks/diamond",
+    "Q": "excessive_utilities:compressed_cobblestone_4",
+    "T": "excessive_utilities:compressed_cobblestone_3"
   },
   "pattern": [
     "TQT",
@@ -18,7 +12,6 @@
     "TQT"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:bedrockium_ingot"
   }
 }

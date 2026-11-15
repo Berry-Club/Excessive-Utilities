@@ -6,7 +6,6 @@
   "behind": "minecraft:water",
   "on": "c:stones",
   "output": {
-    "count": 1,
     "id": "minecraft:stone"
   }
 }

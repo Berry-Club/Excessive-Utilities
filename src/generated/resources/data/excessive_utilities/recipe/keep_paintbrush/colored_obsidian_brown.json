@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/brown"
-      },
-      "I": {
-        "tag": "c:obsidians/normal"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/brown",
+      "I": "#c:obsidians/normal",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

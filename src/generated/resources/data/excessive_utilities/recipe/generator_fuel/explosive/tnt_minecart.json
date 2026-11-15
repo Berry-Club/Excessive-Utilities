@@ -3,7 +3,5 @@
   "duration": 3200,
   "fe_per_tick": 200,
   "generator_type": "explosive",
-  "ingredient": {
-    "item": "minecraft:tnt_minecart"
-  }
+  "ingredient": "minecraft:tnt_minecart"
 }

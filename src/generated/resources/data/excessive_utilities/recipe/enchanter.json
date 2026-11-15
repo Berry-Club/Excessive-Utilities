@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "tag": "c:gems/diamond"
-    },
-    "E": {
-      "item": "minecraft:enchanted_book"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "M": {
-      "item": "excessive_utilities:machine_block"
-    }
+    "D": "#c:gems/diamond",
+    "E": "minecraft:enchanted_book",
+    "I": "#c:ingots/iron",
+    "M": "excessive_utilities:machine_block"
   },
   "pattern": [
     " E ",
@@ -21,7 +13,6 @@
     "III"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:enchanter"
   }
 }

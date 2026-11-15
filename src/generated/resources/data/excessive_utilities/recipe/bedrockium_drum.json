@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "minecraft:stone_buttons"
-    },
-    "D": {
-      "item": "excessive_utilities:bedrockium_ingot"
-    },
-    "R": {
-      "item": "excessive_utilities:demonically_gargantuan_drum"
-    }
+    "B": "#minecraft:stone_buttons",
+    "D": "excessive_utilities:bedrockium_ingot",
+    "R": "excessive_utilities:demonically_gargantuan_drum"
   },
   "pattern": [
     "DBD",
@@ -18,7 +12,6 @@
     "DBD"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:bedrockium_drum"
   }
 }

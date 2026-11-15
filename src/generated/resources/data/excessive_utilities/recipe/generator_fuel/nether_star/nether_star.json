@@ -3,7 +3,5 @@
   "duration": 2400,
   "fe_per_tick": 4000,
   "generator_type": "nether_star",
-  "ingredient": {
-    "item": "minecraft:nether_star"
-  }
+  "ingredient": "minecraft:nether_star"
 }

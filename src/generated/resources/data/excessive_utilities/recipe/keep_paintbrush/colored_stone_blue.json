@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/blue"
-      },
-      "I": {
-        "tag": "c:stones"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/blue",
+      "I": "#c:stones",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

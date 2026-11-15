@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "minecraft:observer"
-    },
-    {
-      "tag": "c:dusts/redstone"
-    },
-    {
-      "item": "minecraft:spider_eye"
-    }
+    "minecraft:observer",
+    "#c:dusts/redstone",
+    "minecraft:spider_eye"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:scanner"
   }
 }

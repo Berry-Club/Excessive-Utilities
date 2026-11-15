@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/cyan"
-      },
-      "I": {
-        "tag": "c:brick_blocks"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/cyan",
+      "I": "#c:brick_blocks",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

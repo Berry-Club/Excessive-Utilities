@@ -3,7 +3,5 @@
   "duration": 360,
   "fe_per_tick": 40,
   "generator_type": "frosty",
-  "ingredient": {
-    "item": "minecraft:packed_ice"
-  }
+  "ingredient": "minecraft:packed_ice"
 }

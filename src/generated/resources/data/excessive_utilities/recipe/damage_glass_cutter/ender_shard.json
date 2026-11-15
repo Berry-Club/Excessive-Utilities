@@ -2,12 +2,8 @@
   "type": "excessive_utilities:damage_glass_cutter",
   "pattern": {
     "key": {
-      "C": {
-        "item": "excessive_utilities:glass_cutter"
-      },
-      "P": {
-        "tag": "c:ender_pearls"
-      }
+      "C": "excessive_utilities:glass_cutter",
+      "P": "minecraft:ender_pearl"
     },
     "pattern": [
       "P",

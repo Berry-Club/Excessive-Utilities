@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "minecraft:stone_button"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "tag": "c:rods/wooden"
-    }
+    "B": "minecraft:stone_button",
+    "I": "#c:ingots/iron",
+    "S": "#c:rods/wooden"
   },
   "pattern": [
     "  I",
@@ -18,7 +12,6 @@
     "S  "
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:trowel"
   }
 }

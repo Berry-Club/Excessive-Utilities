@@ -2,26 +2,14 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "minecraft:iron_block"
-    },
-    "B": {
-      "item": "minecraft:gold_block"
-    },
+    "A": "minecraft:iron_block",
+    "B": "minecraft:gold_block",
     "O": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:opinium_core_contents": {
-          "center": {
-            "count": 1,
-            "id": "minecraft:iron_block"
-          },
           "name": {
             "translate": "item.excessive_utilities.opinium_core.pathetic"
-          },
-          "outer": {
-            "count": 1,
-            "id": "excessive_utilities:red_coal"
           }
         }
       },
@@ -37,19 +25,16 @@
     "components": {
       "excessive_utilities:opinium_core_contents": {
         "center": {
-          "count": 1,
           "id": "minecraft:gold_block"
         },
         "name": {
           "translate": "item.excessive_utilities.opinium_core.mediocre"
         },
         "outer": {
-          "count": 1,
           "id": "minecraft:iron_block"
         }
       }
     },
-    "count": 1,
     "id": "excessive_utilities:opinium_core"
   }
 }

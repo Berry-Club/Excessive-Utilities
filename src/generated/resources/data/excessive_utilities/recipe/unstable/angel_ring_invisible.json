@@ -3,31 +3,23 @@
   "pattern": {
     "key": {
       "B": {
-        "type": "neoforge:components",
+        "neoforge:ingredient_type": "neoforge:components",
         "components": {
           "excessive_utilities:entity_type": "minecraft:bat"
         },
         "items": "excessive_utilities:golden_lasso"
       },
-      "G": {
-        "tag": "c:glass_blocks"
-      },
+      "G": "#c:glass_blocks",
       "H": {
-        "type": "neoforge:components",
+        "neoforge:ingredient_type": "neoforge:components",
         "components": {
           "excessive_utilities:entity_type": "minecraft:ghast"
         },
         "items": "excessive_utilities:cursed_lasso"
       },
-      "I": {
-        "tag": "c:ingots/gold"
-      },
-      "S": {
-        "item": "excessive_utilities:ring_of_the_flying_squid"
-      },
-      "U": {
-        "item": "excessive_utilities:unstable_ingot"
-      }
+      "I": "#c:ingots/gold",
+      "S": "excessive_utilities:ring_of_the_flying_squid",
+      "U": "excessive_utilities:unstable_ingot"
     },
     "pattern": [
       "GIG",
@@ -36,7 +28,9 @@
     ]
   },
   "result": {
-    "count": 1,
+    "components": {
+      "excessive_utilities:angel_ring_type": "invisible"
+    },
     "id": "excessive_utilities:angel_ring"
   }
 }

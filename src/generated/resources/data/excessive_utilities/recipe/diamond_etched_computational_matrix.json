@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "tag": "c:gems/diamond"
-    },
-    "O": {
-      "item": "excessive_utilities:ender_infused_obsidian"
-    },
-    "Q": {
-      "item": "excessive_utilities:quartzburnt"
-    }
+    "D": "#c:gems/diamond",
+    "O": "excessive_utilities:ender_infused_obsidian",
+    "Q": "excessive_utilities:quartzburnt"
   },
   "pattern": [
     "QDQ",
@@ -18,7 +12,6 @@
     "QDQ"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:diamond_etched_computational_matrix"
   }
 }

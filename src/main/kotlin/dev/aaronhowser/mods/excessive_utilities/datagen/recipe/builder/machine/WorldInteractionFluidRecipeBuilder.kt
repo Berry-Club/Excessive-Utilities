@@ -12,14 +12,14 @@ import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.crafting.Recipe
-import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidStackTemplate
 import java.util.*
 
 class WorldInteractionFluidRecipeBuilder(
 	val requiredOnBlock: BlockStateIngredient?,
 	val requiredAdjacentBlocks: List<BlockStateIngredient>,
 	val requiredBlockBehind: BlockStateIngredient?,
-	val output: FluidStack
+	val output: FluidStackTemplate
 ) : RecipeBuilder {
 
 	override fun unlockedBy(name: String, criterion: Criterion<*>): RecipeBuilder = error("Unsupported")

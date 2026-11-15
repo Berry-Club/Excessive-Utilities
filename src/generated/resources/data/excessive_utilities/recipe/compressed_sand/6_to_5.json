@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:compressed_sand_6"
-    }
+    "excessive_utilities:compressed_sand_6"
   ],
   "result": {
     "count": 9,

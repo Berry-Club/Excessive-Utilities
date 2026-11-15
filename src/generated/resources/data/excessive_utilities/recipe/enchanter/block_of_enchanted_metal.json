@@ -3,19 +3,14 @@
   "fe_per_tick": 40,
   "left": {
     "count": 1,
-    "ingredient": {
-      "tag": "c:storage_blocks/gold"
-    }
+    "ingredient": "#c:storage_blocks/gold"
   },
   "output": {
-    "count": 1,
     "id": "excessive_utilities:block_of_enchanted_metal"
   },
   "right": {
     "count": 9,
-    "ingredient": {
-      "tag": "c:gems/lapis"
-    }
+    "ingredient": "#c:gems/lapis"
   },
   "ticks": 600
 }

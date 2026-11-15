@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "tag": "c:gems/emerald"
-    },
-    "N": {
-      "tag": "c:ender_pearls"
-    },
-    "P": {
-      "tag": "minecraft:planks"
-    }
+    "E": "#c:gems/emerald",
+    "N": "minecraft:ender_pearl",
+    "P": "#minecraft:planks"
   },
   "pattern": [
     "EPE",
@@ -18,7 +12,6 @@
     "EPE"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:peaceful_table"
   }
 }

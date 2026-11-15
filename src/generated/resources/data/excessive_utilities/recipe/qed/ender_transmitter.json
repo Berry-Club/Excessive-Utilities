@@ -3,15 +3,9 @@
   "crystal_ticks": 300,
   "pattern": {
     "key": {
-      "E": {
-        "tag": "c:ender_pearls"
-      },
-      "Q": {
-        "tag": "c:gems/quartz"
-      },
-      "T": {
-        "item": "minecraft:redstone_torch"
-      }
+      "E": "minecraft:ender_pearl",
+      "Q": "#c:gems/quartz",
+      "T": "minecraft:redstone_torch"
     },
     "pattern": [
       "ETE",
@@ -20,7 +14,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_transmitter"
   }
 }

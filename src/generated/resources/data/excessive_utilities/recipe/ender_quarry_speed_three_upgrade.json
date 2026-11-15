@@ -3,29 +3,22 @@
   "category": "misc",
   "key": {
     "P": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "minecraft:enchantments": {
-          "levels": {
-            "minecraft:efficiency": 5
-          }
+          "minecraft:efficiency": 5
         }
       },
       "items": "minecraft:diamond_pickaxe"
     },
-    "S": {
-      "item": "excessive_utilities:stack_upgrade"
-    },
-    "U": {
-      "item": "excessive_utilities:ender_quarry_speed_two_upgrade"
-    }
+    "S": "excessive_utilities:stack_upgrade",
+    "U": "excessive_utilities:ender_quarry_speed_two_upgrade"
   },
   "pattern": [
     "P P",
     "SUS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_quarry_speed_three_upgrade"
   }
 }

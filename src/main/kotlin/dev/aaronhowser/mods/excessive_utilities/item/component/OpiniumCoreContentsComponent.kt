@@ -2,59 +2,51 @@ package dev.aaronhowser.mods.excessive_utilities.item.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModItemLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
+import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
+import java.util.Optional
 
 data class OpiniumCoreContentsComponent(
-	private val center: ItemStack,
-	private val outer: ItemStack,
+	private val center: Optional<ItemStackTemplate>,
+	private val outer: Optional<ItemStackTemplate>,
 	val name: Component
 ) {
 
-	fun getStack(): ItemStack = ModItems.OPINIUM_CORE
-		.withComponent(ModDataComponents.OPINIUM_CORE_CONTENTS.get(), this)
+	fun getStack(): ItemStack = getStackTemplate().create()
 
-	fun getCenter(): ItemStack = center.copy()
-	fun getOuter(): ItemStack = outer.copy()
+	fun getStackTemplate(): ItemStackTemplate {
+		val components = DataComponentPatch.builder()
+			.set(ModDataComponents.OPINIUM_CORE_CONTENTS.get(), this)
+			.build()
 
-	override fun equals(other: Any?): Boolean {
-		if (this === other) return true
-		if (other !is OpiniumCoreContentsComponent) return false
-
-		if (!center.isSameItemSameComponents(other.center)) return false
-		if (!outer.isSameItemSameComponents(other.outer)) return false
-
-		if (name != other.name) return false
-
-		return true
+		return ItemStackTemplate(ModItems.OPINIUM_CORE.get(), 1, components)
 	}
 
-	override fun hashCode(): Int {
-		var result = ItemStack.hashItemAndComponents(center)
-		result = 31 * result + ItemStack.hashItemAndComponents(outer)
-		result = 31 * result + name.hashCode()
-		return result
-	}
+	fun getCenter(): ItemStack = center.map(ItemStackTemplate::create).orElse(ItemStack.EMPTY)
+	fun getOuter(): ItemStack = outer.map(ItemStackTemplate::create).orElse(ItemStack.EMPTY)
+	fun getCenterTemplate(): ItemStackTemplate? = center.orElse(null)
+	fun getOuterTemplate(): ItemStackTemplate? = outer.orElse(null)
 
 	companion object {
 		val CODEC: Codec<OpiniumCoreContentsComponent> =
 			RecordCodecBuilder.create { instance ->
 				instance.group(
-					ItemStack.CODEC
-						.fieldOf("center")
+					ItemStackTemplate.CODEC
+						.optionalFieldOf("center")
 						.forGetter(OpiniumCoreContentsComponent::center),
-					ItemStack.CODEC
-						.fieldOf("outer")
+					ItemStackTemplate.CODEC
+						.optionalFieldOf("outer")
 						.forGetter(OpiniumCoreContentsComponent::outer),
 					ComponentSerialization.CODEC
 						.fieldOf("name")
@@ -64,8 +56,8 @@ data class OpiniumCoreContentsComponent(
 
 		val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, OpiniumCoreContentsComponent> =
 			StreamCodec.composite(
-				ItemStack.STREAM_CODEC, OpiniumCoreContentsComponent::center,
-				ItemStack.STREAM_CODEC, OpiniumCoreContentsComponent::outer,
+				ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC), OpiniumCoreContentsComponent::center,
+				ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC), OpiniumCoreContentsComponent::outer,
 				ComponentSerialization.STREAM_CODEC, OpiniumCoreContentsComponent::name,
 				::OpiniumCoreContentsComponent
 			)
@@ -79,56 +71,56 @@ data class OpiniumCoreContentsComponent(
 		}
 
 		fun pathetic() = OpiniumCoreContentsComponent(
-			ItemStack.EMPTY,
-			ItemStack.EMPTY,
+			Optional.empty(),
+			Optional.empty(),
 			ModItemLang.OPINIUM_CORE_PATHETIC.toComponent()
 		)
 
 		fun mediocre() = OpiniumCoreContentsComponent(
-			Items.GOLD_BLOCK.defaultInstance,
-			Items.IRON_BLOCK.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.GOLD_BLOCK, 1)),
+			Optional.of(ItemStackTemplate(Items.IRON_BLOCK, 1)),
 			ModItemLang.OPINIUM_CORE_MEDIOCRE.toComponent()
 		)
 
 		fun passable() = OpiniumCoreContentsComponent(
-			Items.DIAMOND_BLOCK.defaultInstance,
-			Items.GOLD_BLOCK.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.DIAMOND_BLOCK, 1)),
+			Optional.of(ItemStackTemplate(Items.GOLD_BLOCK, 1)),
 			ModItemLang.OPINIUM_CORE_PASSABLE.toComponent()
 		)
 
 		fun decent() = OpiniumCoreContentsComponent(
-			Items.EMERALD_BLOCK.defaultInstance,
-			Items.DIAMOND_BLOCK.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.EMERALD_BLOCK, 1)),
+			Optional.of(ItemStackTemplate(Items.DIAMOND_BLOCK, 1)),
 			ModItemLang.OPINIUM_CORE_DECENT.toComponent()
 		)
 
 		fun good() = OpiniumCoreContentsComponent(
-			Items.CHORUS_FLOWER.defaultInstance,
-			Items.EMERALD_BLOCK.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.CHORUS_FLOWER, 1)),
+			Optional.of(ItemStackTemplate(Items.EMERALD_BLOCK, 1)),
 			ModItemLang.OPINIUM_CORE_GOOD.toComponent()
 		)
 
 		fun damnGood() = OpiniumCoreContentsComponent(
-			Items.EXPERIENCE_BOTTLE.defaultInstance,
-			Items.CHORUS_FLOWER.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.EXPERIENCE_BOTTLE, 1)),
+			Optional.of(ItemStackTemplate(Items.CHORUS_FLOWER, 1)),
 			ModItemLang.OPINIUM_CORE_DAMN_GOOD.toComponent()
 		)
 
 		fun amazing() = OpiniumCoreContentsComponent(
-			Items.ELYTRA.defaultInstance,
-			Items.EXPERIENCE_BOTTLE.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.ELYTRA, 1)),
+			Optional.of(ItemStackTemplate(Items.EXPERIENCE_BOTTLE, 1)),
 			ModItemLang.OPINIUM_CORE_AMAZING.toComponent()
 		)
 
 		fun inspiring() = OpiniumCoreContentsComponent(
-			Items.NETHER_STAR.defaultInstance,
-			Items.ELYTRA.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.NETHER_STAR, 1)),
+			Optional.of(ItemStackTemplate(Items.ELYTRA, 1)),
 			ModItemLang.OPINIUM_CORE_INSPIRING.toComponent()
 		)
 
 		fun perfected() = OpiniumCoreContentsComponent(
-			Items.IRON_INGOT.defaultInstance,
-			Items.NETHER_STAR.defaultInstance,
+			Optional.of(ItemStackTemplate(Items.IRON_INGOT, 1)),
+			Optional.of(ItemStackTemplate(Items.NETHER_STAR, 1)),
 			ModItemLang.OPINIUM_CORE_PERFECTED.toComponent()
 		)
 	}

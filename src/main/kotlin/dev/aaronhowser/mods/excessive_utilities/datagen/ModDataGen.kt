@@ -56,7 +56,7 @@ object ModDataGen {
 
 		generator.addProvider(
 			true,
-			ModRecipeProvider(output, lookupProvider)
+			ModRecipeProvider.Runner(output, lookupProvider)
 		)
 
 		generator.addProvider(

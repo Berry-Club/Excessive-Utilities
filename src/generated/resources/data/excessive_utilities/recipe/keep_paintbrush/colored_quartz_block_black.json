@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/black"
-      },
-      "I": {
-        "tag": "c:storage_blocks/quartz"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/black",
+      "I": "#c:storage_blocks/quartz",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

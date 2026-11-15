@@ -2,20 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "item": "excessive_utilities:chicken_wing_ring"
-    },
-    "D": {
-      "tag": "c:gems/diamond"
-    },
-    "E": {
-      "tag": "c:ender_pearls"
-    },
-    "I": {
-      "item": "minecraft:ink_sac"
-    },
+    "C": "excessive_utilities:chicken_wing_ring",
+    "D": "#c:gems/diamond",
+    "E": "minecraft:ender_pearl",
+    "I": "minecraft:ink_sac",
     "L": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:entity_type": "minecraft:squid"
       },
@@ -28,7 +20,6 @@
     "IDI"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ring_of_the_flying_squid"
   }
 }

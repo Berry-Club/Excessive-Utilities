@@ -2,25 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "minecraft:emerald_block"
-    },
-    "B": {
-      "item": "minecraft:chorus_flower"
-    },
+    "A": "minecraft:emerald_block",
+    "B": "minecraft:chorus_flower",
     "O": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:opinium_core_contents": {
           "center": {
-            "count": 1,
             "id": "minecraft:emerald_block"
           },
           "name": {
             "translate": "item.excessive_utilities.opinium_core.decent"
           },
           "outer": {
-            "count": 1,
             "id": "minecraft:diamond_block"
           }
         }
@@ -37,19 +31,16 @@
     "components": {
       "excessive_utilities:opinium_core_contents": {
         "center": {
-          "count": 1,
           "id": "minecraft:chorus_flower"
         },
         "name": {
           "translate": "item.excessive_utilities.opinium_core.good"
         },
         "outer": {
-          "count": 1,
           "id": "minecraft:emerald_block"
         }
       }
     },
-    "count": 1,
     "id": "excessive_utilities:opinium_core"
   }
 }

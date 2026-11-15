@@ -2,16 +2,13 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "tag": "c:gravels"
-    }
+    "G": "#c:gravels"
   },
   "pattern": [
     "GG",
     "GG"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:gravel_bricks"
   }
 }

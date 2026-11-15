@@ -2,12 +2,8 @@
   "type": "excessive_utilities:shaped_unstable",
   "pattern": {
     "key": {
-      "I": {
-        "item": "excessive_utilities:unstable_ingot"
-      },
-      "O": {
-        "tag": "c:obsidians/normal"
-      }
+      "I": "excessive_utilities:unstable_ingot",
+      "O": "#c:obsidians/normal"
     },
     "pattern": [
       "II",
@@ -16,7 +12,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:healing_axe"
   }
 }

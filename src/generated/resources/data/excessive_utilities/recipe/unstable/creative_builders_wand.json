@@ -2,12 +2,8 @@
   "type": "excessive_utilities:shaped_unstable",
   "pattern": {
     "key": {
-      "I": {
-        "item": "excessive_utilities:unstable_ingot"
-      },
-      "W": {
-        "item": "excessive_utilities:magical_wood"
-      }
+      "I": "excessive_utilities:unstable_ingot",
+      "W": "excessive_utilities:magical_wood"
     },
     "pattern": [
       "I",
@@ -16,7 +12,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:creative_builders_wand"
   },
   "stability": "stable"

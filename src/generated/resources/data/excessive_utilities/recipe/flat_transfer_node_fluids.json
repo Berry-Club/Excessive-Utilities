@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "tag": "minecraft:anvil"
-    },
-    "N": {
-      "item": "excessive_utilities:fluid_transfer_node"
-    }
+    "A": "#minecraft:anvil",
+    "N": "excessive_utilities:fluid_transfer_node"
   },
   "pattern": [
     "A",

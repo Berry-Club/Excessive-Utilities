@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "excessive_utilities:thickened_glass"
-    }
+    "G": "excessive_utilities:thickened_glass"
   },
   "pattern": [
     "GG",

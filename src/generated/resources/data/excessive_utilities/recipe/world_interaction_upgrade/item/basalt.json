@@ -6,7 +6,6 @@
   ],
   "on": "minecraft:soul_soil",
   "output": {
-    "count": 1,
     "id": "minecraft:basalt"
   }
 }

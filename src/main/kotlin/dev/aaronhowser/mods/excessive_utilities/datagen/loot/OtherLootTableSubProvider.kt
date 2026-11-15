@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.loot
 
 import dev.aaronhowser.mods.aaron.datagen.loot.AaronLootTableDsl
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
@@ -13,6 +12,7 @@ import net.minecraft.data.loot.LootTableSubProvider
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.item.component.ItemLore
 import net.minecraft.world.level.storage.loot.LootTable
+import net.minecraft.world.level.storage.loot.functions.SetComponentsFunction
 import java.util.function.BiConsumer
 
 class OtherLootTableSubProvider(
@@ -36,11 +36,8 @@ class OtherLootTableSubProvider(
 			}
 		)
 
-		val forgottenSoul = ModItems.SOUL_FRAGMENT.withComponent(
-			DataComponents.LORE,
-			ItemLore(
-				listOf(ModMenuLang.SOUL_OF_A_FORGOTTEN_DEITY.toComponent())
-			)
+		val forgottenSoulLore = ItemLore(
+			listOf(ModMenuLang.SOUL_OF_A_FORGOTTEN_DEITY.toComponent())
 		)
 
 		output.accept(
@@ -48,7 +45,9 @@ class OtherLootTableSubProvider(
 			AaronLootTableDsl.table {
 				pool {
 					empty(43_046_721)
-					stack(forgottenSoul, 1)
+					item(ModItems.SOUL_FRAGMENT, 1) {
+						apply(SetComponentsFunction.setComponent(DataComponents.LORE, forgottenSoulLore))
+					}
 				}
 			}
 		)
@@ -58,7 +57,9 @@ class OtherLootTableSubProvider(
 			AaronLootTableDsl.table {
 				pool {
 					empty(43_046_721)
-					stack(forgottenSoul, 10)
+					item(ModItems.SOUL_FRAGMENT, 10) {
+						apply(SetComponentsFunction.setComponent(DataComponents.LORE, forgottenSoulLore))
+					}
 				}
 			}
 		)

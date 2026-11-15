@@ -3,29 +3,22 @@
   "category": "misc",
   "key": {
     "P": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "minecraft:enchantments": {
-          "levels": {
-            "minecraft:fortune": 1
-          }
+          "minecraft:fortune": 1
         }
       },
       "items": "minecraft:diamond_pickaxe"
     },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "U": {
-      "item": "excessive_utilities:ender_quarry_fortune_two_upgrade"
-    }
+    "R": "#c:dusts/redstone",
+    "U": "excessive_utilities:ender_quarry_fortune_two_upgrade"
   },
   "pattern": [
     "P P",
     "RUR"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_quarry_fortune_three_upgrade"
   }
 }

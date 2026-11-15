@@ -3,19 +3,14 @@
   "fe_per_tick": 4,
   "left": {
     "count": 1,
-    "ingredient": {
-      "tag": "c:bookshelves"
-    }
+    "ingredient": "#c:bookshelves"
   },
   "output": {
-    "count": 1,
     "id": "excessive_utilities:magical_wood"
   },
   "right": {
     "count": 1,
-    "ingredient": {
-      "tag": "c:gems/lapis"
-    }
+    "ingredient": "#c:gems/lapis"
   },
   "ticks": 1600
 }

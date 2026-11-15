@@ -3,12 +3,8 @@
   "crystal_ticks": 300,
   "pattern": {
     "key": {
-      "O": {
-        "item": "excessive_utilities:ender_infused_obsidian"
-      },
-      "Q": {
-        "item": "excessive_utilities:quartzburnt"
-      }
+      "O": "excessive_utilities:ender_infused_obsidian",
+      "Q": "excessive_utilities:quartzburnt"
     },
     "pattern": [
       " O ",
@@ -17,7 +13,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_quarry_upgrade_base"
   }
 }

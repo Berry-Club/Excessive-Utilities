@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "tag": "c:ingots/gold"
-    },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    },
-    "S": {
-      "item": "excessive_utilities:stoneburnt"
-    }
+    "G": "#c:ingots/gold",
+    "R": "excessive_utilities:resonating_redstone_crystal",
+    "S": "excessive_utilities:stoneburnt"
   },
   "pattern": [
     "SSS",
@@ -18,7 +12,6 @@
     "SGS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:lava_mill"
   }
 }

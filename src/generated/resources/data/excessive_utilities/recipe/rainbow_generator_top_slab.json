@@ -2,33 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "1": {
-      "item": "excessive_utilities:culinary_generator"
-    },
-    "2": {
-      "item": "excessive_utilities:death_generator"
-    },
-    "3": {
-      "item": "excessive_utilities:halitosis_generator"
-    },
-    "4": {
-      "item": "excessive_utilities:disenchantment_generator"
-    },
-    "5": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    },
-    "6": {
-      "item": "excessive_utilities:ender_generator"
-    },
-    "7": {
-      "item": "excessive_utilities:furnace_generator"
-    },
-    "8": {
-      "item": "excessive_utilities:frosty_generator"
-    },
-    "9": {
-      "item": "excessive_utilities:magmatic_generator"
-    }
+    "1": "excessive_utilities:culinary_generator",
+    "2": "excessive_utilities:death_generator",
+    "3": "excessive_utilities:halitosis_generator",
+    "4": "excessive_utilities:disenchantment_generator",
+    "5": "excessive_utilities:resonating_redstone_crystal",
+    "6": "excessive_utilities:ender_generator",
+    "7": "excessive_utilities:furnace_generator",
+    "8": "excessive_utilities:frosty_generator",
+    "9": "excessive_utilities:magmatic_generator"
   },
   "pattern": [
     "123",
@@ -36,7 +18,6 @@
     "789"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:rainbow_generator_top_slab"
   }
 }

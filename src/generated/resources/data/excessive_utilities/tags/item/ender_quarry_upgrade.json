@@ -1,5 +1,7 @@
 {
   "values": [
+    "excessive_utilities:ender_quarry",
+    "excessive_utilities:ender_quarry_upgrade_base",
     "excessive_utilities:ender_quarry_fortune_upgrade",
     "excessive_utilities:ender_quarry_fortune_two_upgrade",
     "excessive_utilities:ender_quarry_fortune_three_upgrade",

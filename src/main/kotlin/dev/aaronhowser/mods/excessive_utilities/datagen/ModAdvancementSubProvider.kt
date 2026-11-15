@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 
 import dev.aaronhowser.mods.aaron.datagen.AaronAdvancementSubProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withoutComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.worldgen.DepthsDimConstants
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModAdvancementLang
@@ -20,10 +19,12 @@ import net.minecraft.advancements.criterion.ChangeDimensionTrigger
 import net.minecraft.advancements.criterion.DataComponentMatchers
 import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.component.DataComponentExactPredicate
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.tags.ItemTags
+import net.minecraft.world.item.ItemStackTemplate
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -147,9 +148,14 @@ class ModAdvancementSubProvider(
 		val perfect = advancement()
 			.parent(root)
 			.display(
-				OpiniumCoreContentsComponent.perfected().getStack(),
+				OpiniumCoreContentsComponent.perfected().getStackTemplate(),
 				ModAdvancementLang.PERFECT_OPINIUM_TITLE.toComponent(),
-				ModAdvancementLang.PERFECT_OPINIUM_DESC.toComponent()
+				ModAdvancementLang.PERFECT_OPINIUM_DESC.toComponent(),
+				null,
+				AdvancementType.TASK,
+				true,
+				true,
+				false
 			)
 			.addCriterion(
 				"has_perfected_opinium_core",
@@ -267,9 +273,20 @@ class ModAdvancementSubProvider(
 		val invertSigil = advancement()
 			.parent(activateSigil)
 			.display(
-				ModItems.DIVISION_SIGIL.withoutComponent(ModDataComponents.REMAINING_USES.get()),
+				ItemStackTemplate(
+					ModItems.DIVISION_SIGIL.get(),
+					1,
+					DataComponentPatch.builder()
+						.remove(ModDataComponents.REMAINING_USES.get())
+						.build()
+				),
 				ModAdvancementLang.INVERT_SIGIL_TITLE.toComponent(),
 				ModAdvancementLang.INVERT_SIGIL_DESC.toComponent(),
+				null,
+				AdvancementType.TASK,
+				true,
+				true,
+				false
 			)
 			.addImpossibleCriterion()
 			.save(INVERT_SIGIL)
@@ -277,9 +294,14 @@ class ModAdvancementSubProvider(
 		val angelRing = advancement()
 			.parent(activateSigil)
 			.display(
-				AngelRingItem.Type.FEATHER.getStack(),
+				AngelRingItem.Type.FEATHER.getStackTemplate(),
 				ModAdvancementLang.ANGEL_RING_TITLE.toComponent(),
-				ModAdvancementLang.ANGEL_RING_DESC.toComponent()
+				ModAdvancementLang.ANGEL_RING_DESC.toComponent(),
+				null,
+				AdvancementType.TASK,
+				true,
+				true,
+				false
 			)
 			.has(ModItems.ANGEL_RING)
 			.save(ANGEL_RING)

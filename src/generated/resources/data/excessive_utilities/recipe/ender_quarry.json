@@ -2,24 +2,12 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "item": "excessive_utilities:ender_core"
-    },
-    "D": {
-      "item": "excessive_utilities:diamond_etched_computational_matrix"
-    },
-    "O": {
-      "item": "excessive_utilities:ender_infused_obsidian"
-    },
-    "P": {
-      "item": "excessive_utilities:ender_thermic_pump"
-    },
-    "S": {
-      "tag": "minecraft:saplings"
-    },
-    "X": {
-      "item": "minecraft:diamond_pickaxe"
-    }
+    "C": "excessive_utilities:ender_core",
+    "D": "excessive_utilities:diamond_etched_computational_matrix",
+    "O": "excessive_utilities:ender_infused_obsidian",
+    "P": "excessive_utilities:ender_thermic_pump",
+    "S": "#minecraft:saplings",
+    "X": "minecraft:diamond_pickaxe"
   },
   "pattern": [
     "OSO",
@@ -27,7 +15,6 @@
     "PXP"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_quarry"
   }
 }

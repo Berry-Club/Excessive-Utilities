@@ -2,15 +2,9 @@
   "type": "excessive_utilities:shaped_unstable",
   "pattern": {
     "key": {
-      "4": {
-        "item": "excessive_utilities:compressed_cobblestone_4"
-      },
-      "I": {
-        "item": "excessive_utilities:unstable_ingot"
-      },
-      "W": {
-        "item": "excessive_utilities:wardens_wake"
-      }
+      "4": "excessive_utilities:compressed_cobblestone_4",
+      "I": "excessive_utilities:unstable_ingot",
+      "W": "excessive_utilities:wardens_wake"
     },
     "pattern": [
       "4I4",
@@ -19,7 +13,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:depths_portal"
   }
 }

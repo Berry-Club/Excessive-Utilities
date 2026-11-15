@@ -12,10 +12,10 @@ import net.minecraft.world.level.Level
 /** Shared shape matching for the special crafting recipes. */
 abstract class SpecialShapedRecipe(
 	private val shape: ShapedRecipePattern,
-	private val resultStack: ItemStack
+	private val result: ItemStackTemplate
 ) : CraftingRecipe {
 	override fun matches(input: CraftingInput, level: Level): Boolean = shape.matches(input)
-	override fun assemble(input: CraftingInput): ItemStack = resultStack.copy()
+	override fun assemble(input: CraftingInput): ItemStack = result.create()
 	override fun showNotification(): Boolean = false
 	override fun group(): String = ""
 	override fun category(): CraftingBookCategory = CraftingBookCategory.MISC
@@ -24,7 +24,7 @@ abstract class SpecialShapedRecipe(
 		ShapedCraftingRecipeDisplay(
 			shape.width(), shape.height(),
 			shape.ingredients().map { it.map(Ingredient::display).orElse(SlotDisplay.Empty.INSTANCE) },
-			SlotDisplay.ItemStackSlotDisplay(ItemStackTemplate.fromNonEmptyStack(resultStack)),
+			SlotDisplay.ItemStackSlotDisplay(result),
 			SlotDisplay.ItemSlotDisplay(Items.CRAFTING_TABLE)
 		)
 	)

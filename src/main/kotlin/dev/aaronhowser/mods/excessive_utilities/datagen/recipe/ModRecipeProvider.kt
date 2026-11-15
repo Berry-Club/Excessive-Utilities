@@ -2,9 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.datagen.recipe
 
 import dev.aaronhowser.mods.aaron.datagen.AaronRecipeProvider
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.asIngredient
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withCount
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.crafting.SpecialShapedRecipeBuilder
 import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.builder.machine.*
@@ -23,11 +20,14 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.Si
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import net.minecraft.advancements.Criterion
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
+import net.minecraft.data.recipes.RecipeCategory
 import net.minecraft.data.recipes.RecipeOutput
 import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.data.recipes.ShapedRecipeBuilder
@@ -40,30 +40,69 @@ import net.minecraft.world.entity.EntityType
 import net.minecraft.world.item.DyeColor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.alchemy.PotionContents
 import net.minecraft.world.item.alchemy.Potions
 import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.enchantment.Enchantment
 import net.minecraft.world.item.enchantment.Enchantments
+import net.minecraft.world.item.enchantment.ItemEnchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.common.Tags
-import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.FluidStackTemplate
 import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import net.neoforged.neoforge.registries.DeferredBlock
 import java.util.concurrent.CompletableFuture
 
-class ModRecipeProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : RecipeProvider.Runner(output, lookupProvider) {
-	override fun getName(): String = "Excessive Utilities recipes"
-	override fun createRecipeProvider(registries: HolderLookup.Provider, output: RecipeOutput): RecipeProvider = Content(registries, output)
-}
-
-private class Content(registries: HolderLookup.Provider, output: RecipeOutput) : AaronRecipeProvider(registries, output) {
+class ModRecipeProvider(
+	registries: HolderLookup.Provider,
+	output: RecipeOutput
+) : AaronRecipeProvider(registries, output) {
 
 	private fun modLoc(name: String) = ExcessiveUtilities.modResource(name).toString()
+
+	private fun ItemLike.stack(count: Int = 1, components: DataComponentPatch = DataComponentPatch.EMPTY): ItemStackTemplate {
+		return ItemStackTemplate(asItem(), count, components)
+	}
+
+	private fun shapedRecipe(
+		output: ItemStackTemplate,
+		patterns: List<String>,
+		definitions: Map<Char, Ingredient>,
+		unlockedByName: String = "has_log",
+		unlockedByCriterion: Criterion<*> = has(ItemTags.LOGS)
+	): ShapedRecipeBuilder {
+		val builder = shaped(RecipeCategory.MISC, output)
+
+		for (pattern in patterns) {
+			builder.pattern(pattern)
+		}
+
+		for ((symbol, ingredient) in definitions) {
+			builder.define(symbol, ingredient)
+		}
+
+		return builder.unlockedBy(unlockedByName, unlockedByCriterion)
+	}
+
+	class Runner(
+		output: PackOutput,
+		lookupProvider: CompletableFuture<HolderLookup.Provider>
+	) : RecipeProvider.Runner(output, lookupProvider) {
+
+		override fun getName(): String = "Excessive Utilities recipes"
+
+		override fun createRecipeProvider(
+			registries: HolderLookup.Provider,
+			output: RecipeOutput
+		): RecipeProvider {
+			return ModRecipeProvider(registries, output)
+		}
+	}
 
 	override fun buildRecipes() {
 		val recipeOutput = output
@@ -111,16 +150,16 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			val inputComponent = cores[i - 1]
 			val outputComponent = core
 
-			val center = core.getCenter()
-			val outer = core.getOuter()
+			val center = core.getCenterTemplate()!!
+			val outer = core.getOuterTemplate()!!
 
 			shapedRecipe(
-				outputComponent.getStack(),
+				outputComponent.getStackTemplate(),
 				" O ,ABA, O ".split(","),
 				mapOf(
 					'O' to ingredient(inputComponent),
-					'A' to outer.asIngredient(),
-					'B' to center.asIngredient()
+					'A' to outer.item.value().asIngredient(),
+					'B' to center.item.value().asIngredient()
 				)
 			).save(recipeOutput, modLoc(recipeName))
 		}
@@ -179,7 +218,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.SWIRLING_GLASS.toStack(5),
+			ModBlocks.SWIRLING_GLASS.stack(5),
 			" G ,GGG, G ".split(","),
 			mapOf(
 				'G' to ModBlocks.THICKENED_GLASS.asIngredient()
@@ -256,7 +295,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.BLACKOUT_CURTAIN.toStack(12),
+			ModBlocks.BLACKOUT_CURTAIN.stack(12),
 			"WW,WW,WW".split(","),
 			mapOf(
 				'W' to ItemTags.WOOL.asIngredient()
@@ -264,7 +303,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.ENDER_CORE.toStack(),
+			ModBlocks.ENDER_CORE.stack(),
 			"WEW,EIE,WEW".split(","),
 			mapOf(
 				'W' to ModBlocks.MAGICAL_WOOD.asIngredient(),
@@ -308,7 +347,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.EDGED_STONE_BRICKS.toStack(9),
+			ModBlocks.EDGED_STONE_BRICKS.stack(9),
 			"SBS,BBB,SBS".split(","),
 			mapOf(
 				'S' to Tags.Items.STONES.asIngredient(),
@@ -317,7 +356,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.ENDER_SAND_ALLOY.toStack(4),
+			ModBlocks.ENDER_SAND_ALLOY.stack(4),
 			"ES,SE".split(","),
 			mapOf(
 				'E' to Items.END_STONE.asIngredient(),
@@ -326,7 +365,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.FROSTED_STONE.toStack(5),
+			ModBlocks.FROSTED_STONE.stack(5),
 			" I ,ISI, I ".split(","),
 			mapOf(
 				'I' to Items.ICE.asIngredient(),
@@ -335,7 +374,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.GLASS_BRICKS.toStack(4),
+			ModBlocks.GLASS_BRICKS.stack(4),
 			"GG,GG".split(","),
 			mapOf(
 				'G' to ModBlocks.THICKENED_GLASS.asIngredient()
@@ -351,7 +390,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.GRAVEL_ROAD.toStack(8),
+			ModBlocks.GRAVEL_ROAD.stack(8),
 			"SGS,GGG,SGS".split(","),
 			mapOf(
 				'S' to Items.STONE_BRICK_SLAB.asIngredient(),
@@ -360,7 +399,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.DIAGONAL_WOOD.toStack(5),
+			ModBlocks.DIAGONAL_WOOD.stack(5),
 			"SP,PS".split(","),
 			mapOf(
 				'S' to ItemTags.WOODEN_STAIRS.asIngredient(),
@@ -378,7 +417,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.HEART_GLASS.toStack(6),
+			ModBlocks.HEART_GLASS.stack(6),
 			"GPG,GGG, G ".split(","),
 			mapOf(
 				'G' to ModBlocks.THICKENED_GLASS.asIngredient(),
@@ -387,7 +426,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.OBSIDIAN_GLASS.toStack(4),
+			ModBlocks.OBSIDIAN_GLASS.stack(4),
 			"GOG,O O,GOG".split(","),
 			mapOf(
 				'G' to ModBlocks.THICKENED_GLASS.asIngredient(),
@@ -396,7 +435,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.REINFORCED_DARK_GLASS.toStack(4),
+			ModBlocks.REINFORCED_DARK_GLASS.stack(4),
 			"GOG,O O,GOG".split(","),
 			mapOf(
 				'G' to Blocks.TINTED_GLASS.asIngredient(),
@@ -455,7 +494,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.ENDER_INFUSED_OBSIDIAN.toStack(4),
+			ModBlocks.ENDER_INFUSED_OBSIDIAN.stack(4),
 			" O ,OEO, O ".split(","),
 			mapOf(
 				'O' to Tags.Items.OBSIDIANS_NORMAL.asIngredient(),
@@ -464,7 +503,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.QED.toStack(),
+			ModBlocks.QED.stack(),
 			"ECE,ODO,OOO".split(","),
 			mapOf(
 				'E' to Items.ENDER_EYE.asIngredient(),
@@ -475,7 +514,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		)
 
 		shapedRecipe(
-			ModBlocks.ENDER_FLUX_CRYSTAL.toStack(),
+			ModBlocks.ENDER_FLUX_CRYSTAL.stack(),
 			" E , O ,OOO".split(","),
 			mapOf(
 				'E' to Items.ENDER_EYE.asIngredient(),
@@ -484,7 +523,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.CONVEYOR_BELT.toStack(8),
+			ModBlocks.CONVEYOR_BELT.stack(8),
 			"RRR,IDI,RRR".split(","),
 			mapOf(
 				'R' to Items.RAIL.asIngredient(),
@@ -494,7 +533,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.toStack(),
+			ModBlocks.DIAMOND_ETCHED_COMPUTATIONAL_MATRIX.stack(),
 			"QDQ,DOD,QDQ".split(","),
 			mapOf(
 				'Q' to ModBlocks.QUARTZBURNT.asIngredient(),
@@ -504,7 +543,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.CHANDELIER.toStack(),
+			ModBlocks.CHANDELIER.stack(),
 			"GDG,TTT, T ".split(","),
 			mapOf(
 				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
@@ -514,7 +553,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModItems.MAGICAL_SNOW_GLOBE.toStack(),
+			ModItems.MAGICAL_SNOW_GLOBE.stack(),
 			"GSN,DLA,EW ".split(","),
 			mapOf(
 				'G' to Tags.Items.GLASS_BLOCKS.asIngredient(),
@@ -529,7 +568,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModItems.BUILDERS_WAND.toStack(),
+			ModItems.BUILDERS_WAND.stack(),
 			"  G, W ,W  ".split(","),
 			mapOf(
 				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
@@ -538,7 +577,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModItems.DESTRUCTION_WAND.toStack(),
+			ModItems.DESTRUCTION_WAND.stack(),
 			" GG, WG,W  ".split(","),
 			mapOf(
 				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
@@ -547,7 +586,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.TRASH_CAN.toStack(),
+			ModBlocks.TRASH_CAN.stack(),
 			"SSS,CHC,CCC".split(","),
 			mapOf(
 				'S' to Tags.Items.STONES.asIngredient(),
@@ -557,7 +596,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.TRASH_CAN_FLUID.toStack(),
+			ModBlocks.TRASH_CAN_FLUID.stack(),
 			"SSS,CBC,CCC".split(","),
 			mapOf(
 				'S' to Tags.Items.STONES.asIngredient(),
@@ -567,7 +606,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.TRASH_CAN_ENERGY.toStack(),
+			ModBlocks.TRASH_CAN_ENERGY.stack(),
 			"SSS,CRC,CCC".split(","),
 			mapOf(
 				'S' to Tags.Items.STONES.asIngredient(),
@@ -577,7 +616,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModItems.ANGEL_BLOCK.toStack(),
+			ModItems.ANGEL_BLOCK.stack(),
 			" G ,FOF".split(","),
 			mapOf(
 				'G' to Tags.Items.INGOTS_GOLD.asIngredient(),
@@ -587,7 +626,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.SOLAR_PANEL.toStack(3),
+			ModBlocks.SOLAR_PANEL.stack(3),
 			"LLL,PRP".split(","),
 			mapOf(
 				'L' to Tags.Items.GEMS_LAPIS.asIngredient(),
@@ -597,7 +636,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.LUNAR_PANEL.toStack(3),
+			ModBlocks.LUNAR_PANEL.stack(3),
 			"LLL,PRP".split(","),
 			mapOf(
 				'L' to ModItems.LUNAR_REACTIVE_DUST.asIngredient(),
@@ -607,7 +646,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.LAVA_MILL.toStack(),
+			ModBlocks.LAVA_MILL.stack(),
 			"SSS,SRS,SGS".split(","),
 			mapOf(
 				'S' to ModBlocks.STONEBURNT.asIngredient(),
@@ -617,7 +656,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.WATER_MILL.toStack(),
+			ModBlocks.WATER_MILL.stack(),
 			"SSS,GRG,SSS".split(","),
 			mapOf(
 				'S' to ModBlocks.STONEBURNT.asIngredient(),
@@ -627,7 +666,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.WIND_MILL.toStack(),
+			ModBlocks.WIND_MILL.stack(),
 			"SSS, GR,SSS".split(","),
 			mapOf(
 				'S' to ModBlocks.STONEBURNT.asIngredient(),
@@ -637,7 +676,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.FIRE_MILL.toStack(),
+			ModBlocks.FIRE_MILL.stack(),
 			"SRS,SGS,SFS".split(","),
 			mapOf(
 				'S' to ModBlocks.STONEBURNT.asIngredient(),
@@ -648,7 +687,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.MANUAL_MILL.toStack(),
+			ModBlocks.MANUAL_MILL.stack(),
 			" G ,SRS".split(","),
 			mapOf(
 				'G' to ModItems.REDSTONE_GEAR.asIngredient(),
@@ -658,7 +697,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.DRAGON_EGG_MILL.toStack(),
+			ModBlocks.DRAGON_EGG_MILL.stack(),
 			"SGS,NGN,SIS".split(","),
 			mapOf(
 				'S' to ModBlocks.STONEBURNT.asIngredient(),
@@ -669,7 +708,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.REDSTONE_CLOCK.toStack(),
+			ModBlocks.REDSTONE_CLOCK.stack(),
 			"SRS,RTR,SRS".split(","),
 			mapOf(
 				'S' to Tags.Items.STONES.asIngredient(),
@@ -679,7 +718,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModItems.GLASS_CUTTER.toStack(),
+			ModItems.GLASS_CUTTER.stack(),
 			"  I, SI,I  ".split(","),
 			mapOf(
 				'I' to Tags.Items.INGOTS_IRON.asIngredient(),
@@ -688,7 +727,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModBlocks.RESONATOR.toStack(),
+			ModBlocks.RESONATOR.stack(),
 			"DCD,IRI,III".split(","),
 			mapOf(
 				'D' to Tags.Items.DUSTS_REDSTONE.asIngredient(),
@@ -699,7 +738,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		).save(recipeOutput)
 
 		shapedRecipe(
-			ModItems.REDSTONE_GEAR.toStack(),
+			ModItems.REDSTONE_GEAR.stack(),
 			" T ,TPT, T ".split(","),
 			mapOf(
 				'T' to Items.REDSTONE_TORCH.asIngredient(),
@@ -1264,7 +1303,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('G', ModBlocks.MAGICAL_SNOW_GLOBE.asIngredient())
 			.save(recipeOutput)
 
-		SpecialShapedRecipeBuilder(ModItems.ENDER_SHARD.toStack(8))
+		SpecialShapedRecipeBuilder(ModItems.ENDER_SHARD.stack(8))
 			.type("damage_glass_cutter", ::DamageGlassCutterRecipe)
 			.pattern("P", "C")
 			.define('P', Items.ENDER_PEARL.asIngredient())
@@ -1521,14 +1560,13 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		val enchantments = holderLookup.lookup(Registries.ENCHANTMENT).get()
 
 		fun enchantedItemIngredient(item: ItemLike, vararg enchants: Pair<ResourceKey<Enchantment>, Int>): Ingredient {
-			val stack = item.getDefaultInstance()
+			val enchantmentComponent = ItemEnchantments.Mutable(ItemEnchantments.EMPTY)
 
 			for ((enchant, level) in enchants) {
-				stack.enchant(enchantments.getOrThrow(enchant), level)
+				enchantmentComponent.set(enchantments.getOrThrow(enchant), level)
 			}
 
-			val component = stack.get(DataComponents.ENCHANTMENTS)!!
-			return item.asIngredient(DataComponents.ENCHANTMENTS, component)
+			return item.asIngredient(DataComponents.ENCHANTMENTS, enchantmentComponent.toImmutable())
 		}
 
 		shapedRecipe(
@@ -1624,7 +1662,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				output: DeferredBlock<*>,
 				ingredient: Ingredient,
 			) {
-				SpecialShapedRecipeBuilder(output.toStack(7))
+				SpecialShapedRecipeBuilder(output.stack(7))
 					.type("keep_paintbrush", ::KeepPaintbrushRecipe)
 					.pattern(
 						"III",
@@ -1950,37 +1988,37 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 	}
 
 	private fun buildEnchanterRecipes(recipeOutput: RecipeOutput) {
-		EnchanterRecipeBuilder(ModBlocks.MAGICAL_WOOD.toStack())
+		EnchanterRecipeBuilder(ModBlocks.MAGICAL_WOOD.stack())
 			.left(Tags.Items.BOOKSHELVES.asIngredient())
 			.right(Tags.Items.GEMS_LAPIS.asIngredient())
 			.costAndDuration(64_00, 80 * 20)
 			.save(recipeOutput)
 
-		EnchanterRecipeBuilder(ModBlocks.BLOCK_OF_ENCHANTED_METAL.toStack())
+		EnchanterRecipeBuilder(ModBlocks.BLOCK_OF_ENCHANTED_METAL.stack())
 			.left(Tags.Items.STORAGE_BLOCKS_GOLD.asIngredient())
 			.right(Tags.Items.GEMS_LAPIS.asIngredient(), 9)
 			.costAndDuration(24_000, 20 * 30)
 			.save(recipeOutput)
 
-		EnchanterRecipeBuilder(ModItems.ENCHANTED_INGOT.toStack())
+		EnchanterRecipeBuilder(ModItems.ENCHANTED_INGOT.stack())
 			.left(Tags.Items.INGOTS_GOLD.asIngredient())
 			.right(Tags.Items.GEMS_LAPIS.asIngredient())
 			.costAndDuration(8_000, 20 * 10)
 			.save(recipeOutput)
 
-		EnchanterRecipeBuilder(ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.toStack(8))
+		EnchanterRecipeBuilder(ModBlocks.BLOCK_OF_EVIL_INFUSED_IRON.stack(8))
 			.left(Tags.Items.STORAGE_BLOCKS_IRON.asIngredient(), 8)
 			.right(Items.NETHER_STAR.asIngredient())
 			.costAndDuration(192_000, 20 * 240)
 			.save(recipeOutput)
 
-		EnchanterRecipeBuilder(ModItems.EVIL_INFUSED_IRON_INGOT.toStack(8))
+		EnchanterRecipeBuilder(ModItems.EVIL_INFUSED_IRON_INGOT.stack(8))
 			.left(Tags.Items.INGOTS_IRON.asIngredient(), 8)
 			.right(Items.NETHER_STAR.asIngredient())
 			.costAndDuration(64_000, 20 * 20)
 			.save(recipeOutput)
 
-		EnchanterRecipeBuilder(ModItems.MAGICAL_APPLE.toStack(16))
+		EnchanterRecipeBuilder(ModItems.MAGICAL_APPLE.stack(16))
 			.left(Items.APPLE.asIngredient(), 16)
 			.right(Tags.Items.GEMS_LAPIS.asIngredient())
 			.costAndDuration(16_000, 20 * 80)
@@ -1991,49 +2029,49 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 	private fun buildResonatorRecipes(recipeOutput: RecipeOutput) {
 		ResonatorRecipeBuilder(
 			ModBlocks.POLISHED_STONE.asIngredient(),
-			ModBlocks.STONEBURNT.toStack(),
+			ModBlocks.STONEBURNT.stack(),
 			8.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(
 			Blocks.QUARTZ_BLOCK.asIngredient(),
-			ModBlocks.QUARTZBURNT.toStack(),
+			ModBlocks.QUARTZBURNT.stack(),
 			8.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(
 			ModBlocks.STONEBURNT.asIngredient(),
-			ModBlocks.RAINBOW_STONE.toStack(),
+			ModBlocks.RAINBOW_STONE.stack(),
 			64.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(
 			Tags.Items.GEMS_LAPIS.asIngredient(),
-			ModItems.LUNAR_REACTIVE_DUST.toStack(),
+			ModItems.LUNAR_REACTIVE_DUST.stack(),
 			16.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(
 			ItemTags.COALS.asIngredient(),
-			ModItems.RED_COAL.toStack(),
+			ModItems.RED_COAL.stack(),
 			8.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(
 			Blocks.LIGHT_WEIGHTED_PRESSURE_PLATE.asIngredient(),
-			ModItems.UPGRADE_BASE.toStack(),
+			ModItems.UPGRADE_BASE.stack(),
 			8.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(
 			Blocks.IRON_BARS.asIngredient(),
-			ModItems.HEATING_COIL.toStack(),
+			ModItems.HEATING_COIL.stack(),
 			16.0
 		).save(recipeOutput)
 
 		ResonatorRecipeBuilder(
 			ModBlocks.THICKENED_GLASS.asIngredient(),
-			ModBlocks.REDSTONE_GLASS.toStack(),
+			ModBlocks.REDSTONE_GLASS.stack(),
 			1.0
 		).save(recipeOutput)
 
@@ -2175,7 +2213,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 	}
 
 	private fun buildQedRecipes(recipeOutput: RecipeOutput) {
-		QedRecipeBuilder(ModBlocks.ITEM_RETRIEVAL_NODE.toStack())
+		QedRecipeBuilder(ModBlocks.ITEM_RETRIEVAL_NODE.stack())
 			.pattern(
 				" E ",
 				"NMN",
@@ -2186,7 +2224,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('M', Tags.Items.GEMS_EMERALD.asIngredient())
 			.save(recipeOutput)
 
-		QedRecipeBuilder(ModBlocks.FLUID_RETRIEVAL_NODE.toStack())
+		QedRecipeBuilder(ModBlocks.FLUID_RETRIEVAL_NODE.stack())
 			.pattern(
 				" E ",
 				"NDN",
@@ -2197,7 +2235,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('D', Tags.Items.GEMS_DIAMOND.asIngredient())
 			.save(recipeOutput)
 
-		QedRecipeBuilder(ModBlocks.ENERGY_RETRIEVAL_NODE.toStack())
+		QedRecipeBuilder(ModBlocks.ENERGY_RETRIEVAL_NODE.stack())
 			.pattern(
 				" E ",
 				"NRN",
@@ -2208,7 +2246,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('R', Tags.Items.DUSTS_REDSTONE.asIngredient())
 			.save(recipeOutput)
 
-		QedRecipeBuilder(ModItems.ENDER_TRANSMITTER.toStack())
+		QedRecipeBuilder(ModItems.ENDER_TRANSMITTER.stack())
 			.pattern(
 				"ETE",
 				"QEQ",
@@ -2219,7 +2257,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('Q', Tags.Items.GEMS_QUARTZ.asIngredient())
 			.save(recipeOutput)
 
-		QedRecipeBuilder(ModItems.ENDER_RECEIVER.toStack())
+		QedRecipeBuilder(ModItems.ENDER_RECEIVER.stack())
 			.pattern(
 				"ERE",
 				"QEQ",
@@ -2230,7 +2268,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('Q', Tags.Items.GEMS_QUARTZ.asIngredient())
 			.save(recipeOutput)
 
-		QedRecipeBuilder(ModBlocks.ENDER_QUARRY_UPGRADE_BASE.toStack())
+		QedRecipeBuilder(ModBlocks.ENDER_QUARRY_UPGRADE_BASE.stack())
 			.pattern(
 				" O ",
 				"OQO",
@@ -2240,7 +2278,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('Q', ModBlocks.QUARTZBURNT.asIngredient())
 			.save(recipeOutput)
 
-		QedRecipeBuilder(ModBlocks.MAGNUM_TORCH.toStack())
+		QedRecipeBuilder(ModBlocks.MAGNUM_TORCH.stack())
 			.pattern(
 				"RCH",
 				"CLC",
@@ -2248,17 +2286,17 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			)
 			.define(
 				'R',
-				PotionContents.createItemStack(Items.POTION, Potions.STRONG_REGENERATION).asIngredient()
+				Items.POTION.asIngredient(DataComponents.POTION_CONTENTS, PotionContents(Potions.STRONG_REGENERATION))
 			)
 			.define(
 				'H',
-				PotionContents.createItemStack(Items.POTION, Potions.STRONG_HEALING).asIngredient()
+				Items.POTION.asIngredient(DataComponents.POTION_CONTENTS, PotionContents(Potions.STRONG_HEALING))
 			)
 			.define('C', ModBlocks.CHANDELIER.asIngredient())
 			.define('L', ItemTags.LOGS.asIngredient())
 			.save(recipeOutput)
 
-		QedRecipeBuilder(ModBlocks.ENDER_MARKER.toStack())
+		QedRecipeBuilder(ModBlocks.ENDER_MARKER.stack())
 			.pattern(
 				"E",
 				"O",
@@ -2276,10 +2314,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				ingredient,
 				fePerTick,
 				duration
-			).save(
-				recipeOutput,
-				ResourceKey.create(Registries.RECIPE, ExcessiveUtilities.modResource(name))
-			)
+			).save(ExcessiveUtilities.modResource(name))
 		}
 
 		fun ender(name: String, ingredient: Ingredient, fePerTick: Int, duration: Int) = singleItem(name, SingleItemFuelRecipe.GeneratorType.ENDER, ingredient, fePerTick, duration)
@@ -2323,7 +2358,8 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		frosty("snow", Items.SNOW.asIngredient(), 40, 3) // 3 seconds
 
 		fun magmatic(name: String, ingredient: SizedFluidIngredient, fePerTick: Int, duration: Int) {
-			MagmaticFuelRecipeBuilder(ingredient, fePerTick, duration).save(recipeOutput, modLoc(name))
+			MagmaticFuelRecipeBuilder(ingredient, fePerTick, duration)
+				.save(ExcessiveUtilities.modResource(name))
 		}
 
 		magmatic("lavas", SizedFluidIngredient(FluidIngredient.of(registries.lookupOrThrow(Registries.FLUID).getOrThrow(Tags.Fluids.LAVA)), 1), 100, 1) // 100,000 FE per bucket
@@ -2335,7 +2371,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				fluidIngredient,
 				fePerTick,
 				duration
-			).save(recipeOutput, modLoc(name))
+			).save(ExcessiveUtilities.modResource(name))
 		}
 
 		fun slimy(name: String, ingredient: Ingredient, fluidIngredient: SizedFluidIngredient, fePerTick: Int, duration: Int) = itemFluid(name, ItemAndFluidFuelRecipe.GeneratorType.SLIMY, ingredient, fluidIngredient, fePerTick, duration)
@@ -2367,7 +2403,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				BlockStateIngredient(Blocks.LAVA)
 			),
 			requiredBlockBehind = null,
-			output = Items.COBBLESTONE.asItem().defaultInstance
+			output = Items.COBBLESTONE.stack()
 		).save(recipeOutput, modLoc("cobblestone"))
 
 		WorldInteractionItemRecipeBuilder(
@@ -2377,7 +2413,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				BlockStateIngredient(Blocks.LAVA)
 			),
 			requiredBlockBehind = null,
-			output = Items.BASALT.asItem().defaultInstance
+			output = Items.BASALT.stack()
 		).save(recipeOutput, modLoc("basalt"))
 
 		WorldInteractionItemRecipeBuilder(
@@ -2386,7 +2422,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				BlockStateIngredient(Blocks.LAVA)
 			),
 			requiredBlockBehind = BlockStateIngredient(Blocks.WATER),
-			output = Items.STONE.asItem().defaultInstance
+			output = Items.STONE.stack()
 		).save(recipeOutput, modLoc("stone"))
 
 		WorldInteractionFluidRecipeBuilder(
@@ -2396,16 +2432,16 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				BlockStateIngredient(Blocks.WATER),
 			),
 			requiredBlockBehind = null,
-			output = FluidStack(Fluids.WATER, 1)
-		).save(recipeOutput, modLoc("water"))
+			output = FluidStackTemplate(Fluids.WATER, 1)
+		).save(ExcessiveUtilities.modResource("water"))
 
 	}
 
 	private fun buildCrusherRecipes(recipeOutput: RecipeOutput) {
 		fun recipe(
 			ingredient: Ingredient,
-			primaryOutput: ItemStack,
-			secondaryOutput: ItemStack = ItemStack.EMPTY,
+			primaryOutput: ItemStackTemplate,
+			secondaryOutput: ItemStackTemplate? = null,
 			secondaryChance: Float = 0f,
 			name: String = ""
 		) {
@@ -2413,7 +2449,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			if (name.isNotEmpty()) {
 				builder.save(recipeOutput, modLoc(name))
 			} else {
-				val itemId = BuiltInRegistries.ITEM.getKey(primaryOutput.item)
+				val itemId = BuiltInRegistries.ITEM.getKey(primaryOutput.item.value())
 				val location = modLoc("${itemId.namespace}/${itemId.path}")
 				builder.save(recipeOutput, location)
 			}
@@ -2421,87 +2457,87 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 
 		recipe(
 			Tags.Items.ORES_DIAMOND.asIngredient(),
-			Items.DIAMOND.defaultInstance,
-			Items.DIAMOND.withCount(3),
+			Items.DIAMOND.stack(),
+			Items.DIAMOND.stack(3),
 			0.2f
 		)
 
 		recipe(
 			Tags.Items.ORES_EMERALD.asIngredient(),
-			Items.EMERALD.defaultInstance,
-			Items.EMERALD.withCount(3),
+			Items.EMERALD.stack(),
+			Items.EMERALD.stack(3),
 			0.2f
 		)
 
 		recipe(
 			Tags.Items.ORES_QUARTZ.asIngredient(),
-			Items.QUARTZ.defaultInstance,
-			Items.QUARTZ.withCount(3),
+			Items.QUARTZ.stack(),
+			Items.QUARTZ.stack(3),
 			0.2f
 		)
 
 		recipe(
 			Tags.Items.ORES_GOLD.asIngredient(),
-			Items.RAW_GOLD.withCount(2),
-			Items.RAW_IRON.defaultInstance,
+			Items.RAW_GOLD.stack(2),
+			Items.RAW_IRON.stack(),
 			0.1f
 		)
 
 		recipe(
 			Tags.Items.ORES_IRON.asIngredient(),
-			Items.RAW_IRON.withCount(2),
-			Items.RAW_GOLD.defaultInstance,
+			Items.RAW_IRON.stack(2),
+			Items.RAW_GOLD.stack(),
 			0.1f
 		)
 
 		recipe(
 			Tags.Items.ORES_REDSTONE.asIngredient(),
-			Items.REDSTONE.withCount(8)
+			Items.REDSTONE.stack(8)
 		)
 
 		recipe(
 			Tags.Items.ORES_LAPIS.asIngredient(),
-			Items.LAPIS_LAZULI.withCount(8)
+			Items.LAPIS_LAZULI.stack(8)
 		)
 
 		recipe(
 			Tags.Items.ORES_COAL.asIngredient(),
-			Items.COAL.withCount(4)
+			Items.COAL.stack(4)
 		)
 
 		recipe(
 			Items.GLOWSTONE.asIngredient(),
-			Items.GLOWSTONE_DUST.withCount(4)
+			Items.GLOWSTONE_DUST.stack(4)
 		)
 
 		recipe(
 			Tags.Items.COBBLESTONES.asIngredient(),
-			Items.GRAVEL.defaultInstance,
-			Items.SAND.defaultInstance,
+			Items.GRAVEL.stack(),
+			Items.SAND.stack(),
 			0.1f
 		)
 
 		recipe(
 			Tags.Items.GRAVELS.asIngredient(),
-			Items.SAND.defaultInstance,
+			Items.SAND.stack(),
 		)
 
 		recipe(
 			Tags.Items.RODS_BLAZE.asIngredient(),
-			Items.BLAZE_POWDER.withCount(2),
-			Items.BLAZE_ROD.defaultInstance,
+			Items.BLAZE_POWDER.stack(2),
+			Items.BLAZE_ROD.stack(),
 			0.4f
 		)
 
 		recipe(
 			Tags.Items.BONES.asIngredient(),
-			Items.BONE_MEAL.withCount(3),
-			Items.BONE.defaultInstance,
+			Items.BONE_MEAL.stack(3),
+			Items.BONE.stack(),
 			0.5f
 		)
 
-		fun flower(flower: Item, dye: Item, name: String) = recipe(flower.asIngredient(), dye.withCount(2), name = name)
-		fun tallFlower(flower: Item, dye: Item, name: String) = recipe(flower.asIngredient(), dye.withCount(4), name = name)
+		fun flower(flower: Item, dye: Item, name: String) = recipe(flower.asIngredient(), dye.stack(2), name = name)
+		fun tallFlower(flower: Item, dye: Item, name: String) = recipe(flower.asIngredient(), dye.stack(4), name = name)
 
 		flower(Items.LILY_OF_THE_VALLEY, Items.WHITE_DYE, "lily_of_the_valley_to_white_dye")
 		flower(Items.AZURE_BLUET, Items.LIGHT_GRAY_DYE, "azure_bluet_to_light_gray_dye")
@@ -2525,7 +2561,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		tallFlower(Items.PEONY, Items.PINK_DYE, "peony_to_pink_dye")
 		flower(Items.PINK_TULIP, Items.PINK_DYE, "pink_tulip_to_pink_dye")
 
-		fun carpet(carpet: Item, dye: Item, name: String) = recipe(carpet.asIngredient(), Items.STRING.withCount(3), dye.defaultInstance, 0.1f, name)
+		fun carpet(carpet: Item, dye: Item, name: String) = recipe(carpet.asIngredient(), Items.STRING.stack(3), dye.stack(), 0.1f, name)
 
 		carpet(Items.WHITE_CARPET, Items.WHITE_DYE, "white_carpet")
 		carpet(Items.LIGHT_GRAY_CARPET, Items.LIGHT_GRAY_DYE, "light_gray_carpet")
@@ -2545,7 +2581,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 	private fun buildUnstableRecipes(recipeOutput: RecipeOutput) {
 
 		fun unstable(
-			output: ItemStack,
+			output: ItemStackTemplate,
 			type: ShapedUnstableRecipe.Stability = ShapedUnstableRecipe.Stability.EITHER
 		): SpecialShapedRecipeBuilder {
 			return SpecialShapedRecipeBuilder(output)
@@ -2558,7 +2594,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			output: ItemLike,
 			stability: ShapedUnstableRecipe.Stability = ShapedUnstableRecipe.Stability.EITHER
 		): SpecialShapedRecipeBuilder {
-			return unstable(output.asItem().defaultInstance, stability)
+			return unstable(output.stack(), stability)
 		}
 
 		unstable(ModItems.CREATIVE_BUILDERS_WAND, ShapedUnstableRecipe.Stability.STABLE)
@@ -2581,7 +2617,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('W', ModBlocks.MAGICAL_WOOD.asIngredient())
 			.save(recipeOutput)
 
-		unstable(ModItems.MOON_STONE.withCount(9))
+		unstable(ModItems.MOON_STONE.stack(9))
 			.pattern(
 				"LLL",
 				"LIL",
@@ -2615,7 +2651,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			val bricks = ModBlocks.getColoredBricks(color)
 			val lapisCaelestis = ModBlocks.getLapisCaelestis(color)
 
-			unstable(lapisCaelestis.toStack(4))
+			unstable(lapisCaelestis.stack(4))
 				.pattern(
 					"LLL",
 					"LIL",
@@ -2627,7 +2663,12 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 		}
 
 		fun angelRing(type: AngelRingItem.Type, base: Ingredient) {
-			unstable(type.getStack())
+			val components = DataComponentPatch.builder()
+				.set(ModDataComponents.ANGEL_RING_TYPE.get(), type)
+				.build()
+			val ring = ModItems.ANGEL_RING.stack(components = components)
+
+			unstable(ring)
 				.pattern(
 					"GIG",
 					"ISI",
@@ -2652,7 +2693,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 				.save(recipeOutput, ExcessiveUtilities.modResource("angel_ring_${type.id}").toString())
 
 			shapedRecipe(
-				type.getStack(),
+				ring,
 				"CR,C ".split(","),
 				mapOf(
 					'C' to base,
@@ -2736,15 +2777,18 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('E', Items.ENDER_EYE.asIngredient())
 			.save(recipeOutput)
 
-		fun division(output: ItemStack, inversion: ShapedDivisionRecipe.Inversion = ShapedDivisionRecipe.Inversion.EITHER): SpecialShapedRecipeBuilder {
+		fun division(output: ItemStackTemplate, inversion: ShapedDivisionRecipe.Inversion = ShapedDivisionRecipe.Inversion.EITHER): SpecialShapedRecipeBuilder {
 			return SpecialShapedRecipeBuilder(output)
 				.type("division") { a, b ->
 					ShapedDivisionRecipe(a, b, inversion)
 				}
 		}
 
-		val unstableIngot = ModItems.UNSTABLE_INGOT.withComponent(DataComponents.MAX_STACK_SIZE, 1)
-		unstableIngot.set(ModDataComponents.COUNTDOWN, UnstableIngotItem.MAX_COUNTDOWN)
+		val unstableIngotComponents = DataComponentPatch.builder()
+			.set(DataComponents.MAX_STACK_SIZE, 1)
+			.set(ModDataComponents.COUNTDOWN.get(), UnstableIngotItem.MAX_COUNTDOWN)
+			.build()
+		val unstableIngot = ModItems.UNSTABLE_INGOT.stack(components = unstableIngotComponents)
 
 		division(unstableIngot)
 			.pattern(
@@ -2757,7 +2801,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 			.define('D', Tags.Items.GEMS_DIAMOND.asIngredient())
 			.save(recipeOutput)
 
-		division(ModItems.SEMI_UNSTABLE_NUGGET.getDefaultInstance(), ShapedDivisionRecipe.Inversion.INVERTED)
+		division(ModItems.SEMI_UNSTABLE_NUGGET.stack(), ShapedDivisionRecipe.Inversion.INVERTED)
 			.pattern(
 				"N",
 				"S",

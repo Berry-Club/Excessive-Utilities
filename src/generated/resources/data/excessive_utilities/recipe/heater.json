@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:climograph_base_unit"
-    },
-    {
-      "item": "minecraft:lava_bucket"
-    },
-    {
-      "item": "minecraft:lava_bucket"
-    }
+    "excessive_utilities:climograph_base_unit",
+    "minecraft:lava_bucket",
+    "minecraft:lava_bucket"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:heater"
   }
 }

@@ -12,6 +12,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.ShapedRecipePattern
@@ -19,7 +20,7 @@ import net.minecraft.world.level.Level
 
 class ShapedUnstableRecipe(
 	val pattern: ShapedRecipePattern,
-	val output: ItemStack,
+	val output: ItemStackTemplate,
 	val requiredStability: Stability,
 ) : SpecialShapedRecipe(pattern, output) {
 
@@ -49,7 +50,7 @@ class ShapedUnstableRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(ShapedUnstableRecipe::pattern),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("result")
 							.forGetter(ShapedUnstableRecipe::output),
 						Stability.CODEC
@@ -61,7 +62,7 @@ class ShapedUnstableRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, ShapedUnstableRecipe> =
 				StreamCodec.composite(
 					ShapedRecipePattern.STREAM_CODEC, ShapedUnstableRecipe::pattern,
-					ItemStack.STREAM_CODEC, ShapedUnstableRecipe::output,
+					ItemStackTemplate.STREAM_CODEC, ShapedUnstableRecipe::output,
 					Stability.STREAM_CODEC, ShapedUnstableRecipe::requiredStability,
 					::ShapedUnstableRecipe
 				)

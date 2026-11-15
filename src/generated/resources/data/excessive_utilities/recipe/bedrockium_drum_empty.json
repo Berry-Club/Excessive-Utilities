@@ -2,12 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:bedrockium_drum"
-    }
+    "excessive_utilities:bedrockium_drum"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:bedrockium_drum"
   }
 }

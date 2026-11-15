@@ -2,19 +2,17 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "tag": "c:glass_blocks"
-    },
-    "R": {
-      "item": "excessive_utilities:angel_ring"
-    }
+    "C": "#c:glass_blocks",
+    "R": "excessive_utilities:angel_ring"
   },
   "pattern": [
     "CR",
     "C "
   ],
   "result": {
-    "count": 1,
+    "components": {
+      "excessive_utilities:angel_ring_type": "invisible"
+    },
     "id": "excessive_utilities:angel_ring"
   }
 }

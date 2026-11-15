@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.excessive_utilities.datamap.InversionRitualEnemyWeight
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
 import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
@@ -10,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.entity.EntityType
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.level.block.Blocks
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.common.data.DataMapProvider
@@ -25,17 +25,17 @@ class ModDataMapProvider(
 		builder(NetherLavaDunkConversion.DATA_MAP)
 			.add(
 				Tags.Items.INGOTS_GOLD,
-				NetherLavaDunkConversion(ModItems.DEMON_INGOT.getDefaultInstance()),
+				NetherLavaDunkConversion(ItemStackTemplate(ModItems.DEMON_INGOT.get(), 1)),
 				false
 			)
 			.add(
 				Tags.Items.STORAGE_BLOCKS_GOLD,
-				NetherLavaDunkConversion(ModItems.BLOCK_OF_DEMON_METAL.getDefaultInstance()),
+				NetherLavaDunkConversion(ItemStackTemplate(ModItems.BLOCK_OF_DEMON_METAL.get(), 1)),
 				false
 			)
 			.add(
 				Tags.Items.NUGGETS_GOLD,
-				NetherLavaDunkConversion(ModItems.DEMON_NUGGET.getDefaultInstance()),
+				NetherLavaDunkConversion(ItemStackTemplate(ModItems.DEMON_NUGGET.get(), 1)),
 				false
 			)
 

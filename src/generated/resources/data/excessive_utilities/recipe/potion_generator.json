@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:rods/blaze"
-    },
-    "M": {
-      "item": "excessive_utilities:furnace_generator"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "S": {
-      "item": "minecraft:brewing_stand"
-    }
+    "B": "#c:rods/blaze",
+    "M": "excessive_utilities:furnace_generator",
+    "R": "#c:dusts/redstone",
+    "S": "minecraft:brewing_stand"
   },
   "pattern": [
     "BBB",
@@ -21,7 +13,6 @@
     "RMR"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:potion_generator"
   }
 }

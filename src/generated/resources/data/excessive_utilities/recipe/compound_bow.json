@@ -2,31 +2,25 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
+    "I": "#c:ingots/iron",
     "O": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:opinium_core_contents": {
           "center": {
-            "count": 1,
             "id": "minecraft:iron_ingot"
           },
           "name": {
             "translate": "item.excessive_utilities.opinium_core.perfected"
           },
           "outer": {
-            "count": 1,
             "id": "minecraft:nether_star"
           }
         }
       },
       "items": "excessive_utilities:opinium_core"
     },
-    "S": {
-      "tag": "c:strings"
-    }
+    "S": "#c:strings"
   },
   "pattern": [
     " OS",
@@ -34,7 +28,6 @@
     " OS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:compound_bow"
   }
 }

@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "excessive_utilities:enchanted_ingot"
-    }
+    "P": "excessive_utilities:enchanted_ingot"
   },
   "pattern": [
     "PPP",
@@ -12,7 +10,6 @@
     "PPP"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:block_of_enchanted_metal"
   }
 }

@@ -4,7 +4,6 @@ import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent
 import dev.aaronhowser.mods.aaron.serialization.AaronExtraStreamCodecs
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
@@ -14,6 +13,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import io.netty.buffer.ByteBuf
+import net.minecraft.core.component.DataComponentPatch
 import net.minecraft.network.chat.Component
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.resources.Identifier
@@ -24,6 +24,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.level.Level
@@ -148,7 +149,15 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem, Tool
 		val textureLocation: Identifier = ExcessiveUtilities.modResource("textures/entity/angel_wing/$id.png")
 
 		override fun getSerializedName(): String = id
-		fun getStack(): ItemStack = ModItems.ANGEL_RING.withComponent(ModDataComponents.ANGEL_RING_TYPE.get(), this)
+		fun getStack(): ItemStack = getStackTemplate().create()
+
+		fun getStackTemplate(): ItemStackTemplate {
+			val components = DataComponentPatch.builder()
+				.set(ModDataComponents.ANGEL_RING_TYPE.get(), this)
+				.build()
+
+			return ItemStackTemplate(ModItems.ANGEL_RING.get(), 1, components)
+		}
 
 		companion object {
 			val CODEC: Codec<Type> = StringRepresentable.fromValues { entries.toTypedArray() }

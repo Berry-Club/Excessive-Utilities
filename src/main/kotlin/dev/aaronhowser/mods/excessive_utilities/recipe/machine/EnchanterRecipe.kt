@@ -11,6 +11,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 import net.neoforged.neoforge.common.crafting.SizedIngredient
@@ -21,11 +22,11 @@ class EnchanterRecipe(
 	val fePerTick: Int,
 	val ticks: Int,
 	val enchantingPower: Float,
-	private val result: ItemStack
+	private val result: ItemStackTemplate
 ) : MachineRecipe<EnchanterRecipe.Input> {
 
 	val output: ItemStack
-		get() = result.copy()
+		get() = result.create()
 
 	override fun matches(input: Input, level: Level): Boolean {
 		val left = input.left
@@ -34,9 +35,9 @@ class EnchanterRecipe(
 		return leftIngredient.test(left) && rightIngredient.test(right)
 	}
 
-	override fun assemble(input: Input): ItemStack = result.copy()
+	override fun assemble(input: Input): ItemStack = result.create()
 	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.create()
 
 	override fun getSerializer(): RecipeSerializer<EnchanterRecipe> = ModRecipeSerializers.ENCHANTER.get()
 	override fun getType(): RecipeType<EnchanterRecipe> = ModRecipeTypes.ENCHANTER.get()
@@ -94,7 +95,7 @@ class EnchanterRecipe(
 						Codec.FLOAT
 							.optionalFieldOf("enchanting_power", DEFAULT_ENCHANTING_POWER)
 							.forGetter(EnchanterRecipe::enchantingPower),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("output")
 							.forGetter(EnchanterRecipe::result)
 					).apply(instance, ::EnchanterRecipe)
@@ -107,7 +108,7 @@ class EnchanterRecipe(
 					ByteBufCodecs.VAR_INT, EnchanterRecipe::fePerTick,
 					ByteBufCodecs.VAR_INT, EnchanterRecipe::ticks,
 					ByteBufCodecs.FLOAT, EnchanterRecipe::enchantingPower,
-					ItemStack.STREAM_CODEC, EnchanterRecipe::result,
+					ItemStackTemplate.STREAM_CODEC, EnchanterRecipe::result,
 					::EnchanterRecipe
 				)
 		}

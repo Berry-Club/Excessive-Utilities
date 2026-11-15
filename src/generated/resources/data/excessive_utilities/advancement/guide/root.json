@@ -18,7 +18,6 @@
       "translate": "advancements.excessive_utilities.root.desc"
     },
     "icon": {
-      "count": 1,
       "id": "excessive_utilities:angel_block"
     },
     "show_toast": false,

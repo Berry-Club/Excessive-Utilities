@@ -3,9 +3,7 @@
   "fe_per_tick": 160,
   "left": {
     "count": 8,
-    "ingredient": {
-      "tag": "c:ingots/iron"
-    }
+    "ingredient": "#c:ingots/iron"
   },
   "output": {
     "count": 8,
@@ -13,9 +11,7 @@
   },
   "right": {
     "count": 1,
-    "ingredient": {
-      "item": "minecraft:nether_star"
-    }
+    "ingredient": "minecraft:nether_star"
   },
   "ticks": 400
 }

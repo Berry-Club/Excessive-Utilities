@@ -1,8 +1,6 @@
 {
   "type": "excessive_utilities:crusher",
-  "ingredient": {
-    "item": "minecraft:glowstone"
-  },
+  "ingredient": "minecraft:glowstone",
   "primary_output": {
     "count": 4,
     "id": "minecraft:glowstone_dust"

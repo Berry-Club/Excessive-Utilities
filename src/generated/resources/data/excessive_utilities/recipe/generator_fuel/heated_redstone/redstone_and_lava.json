@@ -4,10 +4,8 @@
   "fe_per_tick": 3200,
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:lava"
+    "ingredient": "#c:lava"
   },
   "generator_type": "heated_redstone",
-  "item_ingredient": {
-    "tag": "c:dusts/redstone"
-  }
+  "item_ingredient": "#c:dusts/redstone"
 }

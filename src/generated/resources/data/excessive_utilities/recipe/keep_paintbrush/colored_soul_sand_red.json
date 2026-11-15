@@ -2,15 +2,9 @@
   "type": "excessive_utilities:keep_paintbrush",
   "pattern": {
     "key": {
-      "D": {
-        "tag": "c:dyes/red"
-      },
-      "I": {
-        "tag": "c:soul_sands"
-      },
-      "P": {
-        "item": "excessive_utilities:paintbrush"
-      }
+      "D": "#c:dyes/red",
+      "I": "#c:soul_sands",
+      "P": "excessive_utilities:paintbrush"
     },
     "pattern": [
       "III",

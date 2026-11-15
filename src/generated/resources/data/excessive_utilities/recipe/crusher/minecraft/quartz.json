@@ -1,10 +1,7 @@
 {
   "type": "excessive_utilities:crusher",
-  "ingredient": {
-    "tag": "c:ores/quartz"
-  },
+  "ingredient": "#c:ores/quartz",
   "primary_output": {
-    "count": 1,
     "id": "minecraft:quartz"
   },
   "secondary_chance": 0.2,

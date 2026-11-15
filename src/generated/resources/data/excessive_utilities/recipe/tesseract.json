@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "tag": "c:ender_pearls"
-    },
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "R": {
-      "tag": "c:rods/blaze"
-    }
+    "E": "minecraft:ender_pearl",
+    "G": "#c:glass_blocks",
+    "R": "#c:rods/blaze"
   },
   "pattern": [
     "ERE",
@@ -18,7 +12,6 @@
     "ERE"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:tesseract"
   }
 }

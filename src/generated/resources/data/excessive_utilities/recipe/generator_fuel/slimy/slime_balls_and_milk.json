@@ -4,10 +4,8 @@
   "fe_per_tick": 10,
   "fluid_ingredient": {
     "amount": 250,
-    "tag": "c:milk"
+    "ingredient": "#c:milk"
   },
   "generator_type": "slimy",
-  "item_ingredient": {
-    "tag": "c:slime_balls"
-  }
+  "item_ingredient": "#c:slime_balls"
 }

@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "excessive_utilities:thickened_glass"
-    },
-    "M": {
-      "item": "excessive_utilities:moon_stone"
-    }
+    "G": "excessive_utilities:thickened_glass",
+    "M": "excessive_utilities:moon_stone"
   },
   "pattern": [
     "GGG",

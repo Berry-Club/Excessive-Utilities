@@ -3,7 +3,5 @@
   "duration": 400,
   "fe_per_tick": 20,
   "generator_type": "death",
-  "ingredient": {
-    "item": "minecraft:rotten_flesh"
-  }
+  "ingredient": "minecraft:rotten_flesh"
 }

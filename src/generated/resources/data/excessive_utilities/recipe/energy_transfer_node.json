@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:storage_blocks/redstone"
-    },
-    "G": {
-      "tag": "c:ingots/gold"
-    },
-    "P": {
-      "item": "excessive_utilities:transfer_pipe"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    }
+    "B": "#c:storage_blocks/redstone",
+    "G": "#c:ingots/gold",
+    "P": "excessive_utilities:transfer_pipe",
+    "R": "#c:dusts/redstone"
   },
   "pattern": [
     "RPR",

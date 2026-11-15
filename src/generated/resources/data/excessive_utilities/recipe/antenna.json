@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "minecraft:end_rod"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "S": {
-      "tag": "minecraft:saplings"
-    }
+    "E": "minecraft:end_rod",
+    "I": "#c:ingots/iron",
+    "S": "#minecraft:saplings"
   },
   "pattern": [
     "E E",
@@ -18,7 +12,6 @@
     " I "
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:antenna"
   }
 }

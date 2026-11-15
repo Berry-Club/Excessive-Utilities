@@ -2,12 +2,8 @@
   "type": "excessive_utilities:shaped_unstable",
   "pattern": {
     "key": {
-      "A": {
-        "item": "excessive_utilities:angel_block"
-      },
-      "I": {
-        "item": "excessive_utilities:unstable_ingot"
-      }
+      "A": "excessive_utilities:angel_block",
+      "I": "excessive_utilities:unstable_ingot"
     },
     "pattern": [
       "AI",
@@ -15,7 +11,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:precision_shears"
   }
 }

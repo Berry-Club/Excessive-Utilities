@@ -3,7 +3,5 @@
   "duration": 3240,
   "fe_per_tick": 40,
   "generator_type": "frosty",
-  "ingredient": {
-    "item": "minecraft:blue_ice"
-  }
+  "ingredient": "minecraft:blue_ice"
 }

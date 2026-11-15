@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "tag": "c:ingots/gold"
-    },
-    "L": {
-      "item": "minecraft:lava_bucket"
-    },
-    "M": {
-      "item": "excessive_utilities:machine_block"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    }
+    "G": "#c:ingots/gold",
+    "L": "minecraft:lava_bucket",
+    "M": "excessive_utilities:machine_block",
+    "R": "#c:dusts/redstone"
   },
   "pattern": [
     "GGG",
@@ -21,7 +13,6 @@
     "RMR"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:magmatic_generator"
   }
 }

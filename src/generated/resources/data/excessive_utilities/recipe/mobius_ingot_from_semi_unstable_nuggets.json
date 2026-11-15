@@ -2,36 +2,17 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    },
-    {
-      "item": "excessive_utilities:semi_unstable_nugget"
-    }
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget",
+    "excessive_utilities:semi_unstable_nugget"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:unstable_ingot"
   }
 }

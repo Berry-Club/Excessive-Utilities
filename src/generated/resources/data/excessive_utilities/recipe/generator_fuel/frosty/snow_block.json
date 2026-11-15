@@ -3,7 +3,5 @@
   "duration": 20,
   "fe_per_tick": 40,
   "generator_type": "frosty",
-  "ingredient": {
-    "item": "minecraft:snow_block"
-  }
+  "ingredient": "minecraft:snow_block"
 }

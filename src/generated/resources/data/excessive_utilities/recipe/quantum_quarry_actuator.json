@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "D": {
-      "item": "minecraft:diamond_pickaxe"
-    },
-    "E": {
-      "tag": "c:end_stones"
-    },
-    "R": {
-      "item": "minecraft:end_rod"
-    },
-    "S": {
-      "item": "excessive_utilities:stoneburnt"
-    }
+    "D": "minecraft:diamond_pickaxe",
+    "E": "#c:end_stones",
+    "R": "minecraft:end_rod",
+    "S": "excessive_utilities:stoneburnt"
   },
   "pattern": [
     "ERE",
@@ -21,7 +13,6 @@
     "SSS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:quantum_quarry_actuator"
   }
 }

@@ -9,5 +9,6 @@
       }
     }
   ],
+  "priority": 1,
   "table": "excessive_utilities:entity/drop_of_evil"
 }

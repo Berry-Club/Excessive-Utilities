@@ -3,15 +3,9 @@
   "crystal_ticks": 300,
   "pattern": {
     "key": {
-      "E": {
-        "tag": "c:ender_pearls"
-      },
-      "N": {
-        "item": "excessive_utilities:energy_transfer_node"
-      },
-      "R": {
-        "tag": "c:dusts/redstone"
-      }
+      "E": "minecraft:ender_pearl",
+      "N": "excessive_utilities:energy_transfer_node",
+      "R": "#c:dusts/redstone"
     },
     "pattern": [
       " E ",
@@ -20,7 +14,6 @@
     ]
   },
   "result": {
-    "count": 1,
     "id": "excessive_utilities:energy_retrieval_node"
   }
 }

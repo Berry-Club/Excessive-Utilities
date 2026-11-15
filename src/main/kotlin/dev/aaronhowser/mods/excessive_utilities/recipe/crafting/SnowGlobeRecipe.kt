@@ -9,6 +9,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.CraftingInput
 import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.ShapedRecipePattern
@@ -16,7 +17,7 @@ import net.minecraft.world.level.Level
 
 class SnowGlobeRecipe(
 	val pattern: ShapedRecipePattern,
-	val output: ItemStack,
+	val output: ItemStackTemplate,
 ) : SpecialShapedRecipe(pattern, output) {
 
 	override fun matches(input: CraftingInput, level: Level): Boolean {
@@ -44,7 +45,7 @@ class SnowGlobeRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(SnowGlobeRecipe::pattern),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("result")
 							.forGetter(SnowGlobeRecipe::output)
 					).apply(instance, ::SnowGlobeRecipe)
@@ -53,7 +54,7 @@ class SnowGlobeRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, SnowGlobeRecipe> =
 				StreamCodec.composite(
 					ShapedRecipePattern.STREAM_CODEC, SnowGlobeRecipe::pattern,
-					ItemStack.STREAM_CODEC, SnowGlobeRecipe::output,
+					ItemStackTemplate.STREAM_CODEC, SnowGlobeRecipe::output,
 					::SnowGlobeRecipe
 				)
 		}

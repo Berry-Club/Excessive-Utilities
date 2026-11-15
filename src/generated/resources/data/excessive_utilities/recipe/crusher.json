@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "I": {
-      "tag": "c:ingots/iron"
-    },
-    "M": {
-      "item": "excessive_utilities:machine_block"
-    },
-    "P": {
-      "tag": "c:pistons"
-    }
+    "I": "#c:ingots/iron",
+    "M": "excessive_utilities:machine_block",
+    "P": "#c:pistons"
   },
   "pattern": [
     "IPI",
@@ -18,7 +12,6 @@
     "IPI"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:crusher"
   }
 }

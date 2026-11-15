@@ -2,30 +2,23 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "item": "excessive_utilities:ender_quarry_upgrade_base"
-    },
+    "B": "excessive_utilities:ender_quarry_upgrade_base",
     "P": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "minecraft:enchantments": {
-          "levels": {
-            "minecraft:fortune": 1
-          }
+          "minecraft:fortune": 1
         }
       },
       "items": "minecraft:iron_pickaxe"
     },
-    "R": {
-      "tag": "c:dusts/redstone"
-    }
+    "R": "#c:dusts/redstone"
   },
   "pattern": [
     " P ",
     "RBR"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_quarry_fortune_upgrade"
   }
 }

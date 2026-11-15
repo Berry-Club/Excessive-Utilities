@@ -11,25 +11,27 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
+import java.util.Optional
 
 class CrusherRecipe(
 	val ingredient: Ingredient,
-	private val primaryOutput: ItemStack,
-	private val secondaryOutput: ItemStack,
+	private val primaryOutput: ItemStackTemplate,
+	private val secondaryOutput: Optional<ItemStackTemplate>,
 	val secondaryChance: Float,
 	val ticks: Int,
 	val fePerTick: Int
 ) : MachineRecipe<SingleRecipeInput> {
 
-	fun getPrimaryOutput(): ItemStack = primaryOutput.copy()
-	fun getSecondaryOutput(): ItemStack = secondaryOutput.copy()
+	fun getPrimaryOutput(): ItemStack = primaryOutput.create()
+	fun getSecondaryOutput(): ItemStack = secondaryOutput.map(ItemStackTemplate::create).orElse(ItemStack.EMPTY)
 
 	override fun matches(input: SingleRecipeInput, level: Level): Boolean = ingredient.test(input.item())
-	override fun assemble(input: SingleRecipeInput): ItemStack = primaryOutput.copy()
+	override fun assemble(input: SingleRecipeInput): ItemStack = primaryOutput.create()
 	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	fun getResultItem(registries: HolderLookup.Provider): ItemStack = primaryOutput.copy()
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = primaryOutput.create()
 
 	override fun getSerializer(): RecipeSerializer<CrusherRecipe> = ModRecipeSerializers.CRUSHER.get()
 	override fun getType(): RecipeType<CrusherRecipe> = ModRecipeTypes.CRUSHER.get()
@@ -63,11 +65,11 @@ class CrusherRecipe(
 						Ingredient.CODEC
 							.fieldOf("ingredient")
 							.forGetter(CrusherRecipe::ingredient),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("primary_output")
 							.forGetter(CrusherRecipe::primaryOutput),
-						ItemStack.CODEC
-							.optionalFieldOf("secondary_output", ItemStack.EMPTY)
+						ItemStackTemplate.CODEC
+							.optionalFieldOf("secondary_output")
 							.forGetter(CrusherRecipe::secondaryOutput),
 						Codec.FLOAT
 							.optionalFieldOf("secondary_chance", DEFAULT_SECONDARY_CHANCE)
@@ -84,8 +86,8 @@ class CrusherRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, CrusherRecipe> =
 				StreamCodec.composite(
 					Ingredient.CONTENTS_STREAM_CODEC, CrusherRecipe::ingredient,
-					ItemStack.STREAM_CODEC, CrusherRecipe::primaryOutput,
-					ItemStack.OPTIONAL_STREAM_CODEC, CrusherRecipe::secondaryOutput,
+					ItemStackTemplate.STREAM_CODEC, CrusherRecipe::primaryOutput,
+					ByteBufCodecs.optional(ItemStackTemplate.STREAM_CODEC), CrusherRecipe::secondaryOutput,
 					ByteBufCodecs.FLOAT, CrusherRecipe::secondaryChance,
 					ByteBufCodecs.INT, CrusherRecipe::ticks,
 					ByteBufCodecs.INT, CrusherRecipe::fePerTick,

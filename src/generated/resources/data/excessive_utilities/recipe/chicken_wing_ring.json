@@ -2,22 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "tag": "c:feathers"
-    },
-    "I": {
-      "tag": "c:ingots/iron"
-    },
+    "F": "#c:feathers",
+    "I": "#c:ingots/iron",
     "L": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:entity_type": "minecraft:chicken"
       },
       "items": "excessive_utilities:golden_lasso"
     },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    }
+    "R": "excessive_utilities:resonating_redstone_crystal"
   },
   "pattern": [
     "FIF",
@@ -25,7 +19,6 @@
     "RIR"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:chicken_wing_ring"
   }
 }

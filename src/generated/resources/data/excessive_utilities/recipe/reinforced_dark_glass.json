@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "minecraft:tinted_glass"
-    },
-    "O": {
-      "tag": "c:obsidians/normal"
-    }
+    "G": "minecraft:tinted_glass",
+    "O": "#c:obsidians/normal"
   },
   "pattern": [
     "GOG",

@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:storage_blocks/netherite"
-    },
-    "I": {
-      "tag": "c:ingots/netherite"
-    },
-    "S": {
-      "item": "minecraft:netherite_sword"
-    }
+    "B": "#c:storage_blocks/netherite",
+    "I": "#c:ingots/netherite",
+    "S": "minecraft:netherite_sword"
   },
   "pattern": [
     " S ",

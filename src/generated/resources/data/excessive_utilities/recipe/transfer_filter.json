@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "F": {
-      "item": "excessive_utilities:item_filter"
-    },
-    "P": {
-      "item": "excessive_utilities:transfer_pipe"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "S": {
-      "tag": "c:stones"
-    }
+    "F": "excessive_utilities:item_filter",
+    "P": "excessive_utilities:transfer_pipe",
+    "R": "#c:dusts/redstone",
+    "S": "#c:stones"
   },
   "pattern": [
     "RFR",

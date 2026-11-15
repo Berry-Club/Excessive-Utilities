@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "L": {
-      "tag": "c:gems/lapis"
-    },
-    "P": {
-      "item": "excessive_utilities:polished_stone"
-    },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    }
+    "L": "#c:gems/lapis",
+    "P": "excessive_utilities:polished_stone",
+    "R": "excessive_utilities:resonating_redstone_crystal"
   },
   "pattern": [
     "LLL",

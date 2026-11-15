@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:storage_blocks/redstone"
-    },
-    "M": {
-      "item": "excessive_utilities:magmatic_generator"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    }
+    "B": "#c:storage_blocks/redstone",
+    "M": "excessive_utilities:magmatic_generator",
+    "R": "#c:dusts/redstone"
   },
   "pattern": [
     "RRR",
@@ -18,7 +12,6 @@
     "RMR"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:heated_redstone_generator"
   }
 }

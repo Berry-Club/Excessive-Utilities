@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "excessive_utilities:thickened_glass"
-    },
-    "P": {
-      "tag": "c:dyes/pink"
-    }
+    "G": "excessive_utilities:thickened_glass",
+    "P": "#c:dyes/pink"
   },
   "pattern": [
     "GPG",

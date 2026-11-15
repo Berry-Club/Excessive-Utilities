@@ -2,18 +2,11 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:upgrade_base"
-    },
-    {
-      "tag": "c:ingots/gold"
-    },
-    {
-      "tag": "c:gems/diamond"
-    }
+    "excessive_utilities:upgrade_base",
+    "#c:ingots/gold",
+    "#c:gems/diamond"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:stack_upgrade"
   }
 }

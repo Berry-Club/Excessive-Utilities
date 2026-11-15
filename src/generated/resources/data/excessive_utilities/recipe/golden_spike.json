@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:storage_blocks/gold"
-    },
-    "I": {
-      "tag": "c:ingots/gold"
-    },
-    "S": {
-      "item": "minecraft:golden_sword"
-    }
+    "B": "#c:storage_blocks/gold",
+    "I": "#c:ingots/gold",
+    "S": "minecraft:golden_sword"
   },
   "pattern": [
     " S ",

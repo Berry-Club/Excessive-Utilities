@@ -2,18 +2,10 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "tag": "c:stones"
-    },
-    {
-      "tag": "c:stones"
-    },
-    {
-      "item": "minecraft:stone_bricks"
-    },
-    {
-      "item": "minecraft:stone_bricks"
-    }
+    "#c:stones",
+    "#c:stones",
+    "minecraft:stone_bricks",
+    "minecraft:stone_bricks"
   ],
   "result": {
     "count": 4,

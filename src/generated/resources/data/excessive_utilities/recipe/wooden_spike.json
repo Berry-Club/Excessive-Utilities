@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "minecraft:logs"
-    },
-    "I": {
-      "tag": "minecraft:planks"
-    },
-    "S": {
-      "item": "minecraft:wooden_sword"
-    }
+    "B": "#minecraft:logs",
+    "I": "#minecraft:planks",
+    "S": "minecraft:wooden_sword"
   },
   "pattern": [
     " S ",

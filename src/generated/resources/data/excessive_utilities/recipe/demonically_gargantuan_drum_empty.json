@@ -2,12 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:demonically_gargantuan_drum"
-    }
+    "excessive_utilities:demonically_gargantuan_drum"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:demonically_gargantuan_drum"
   }
 }

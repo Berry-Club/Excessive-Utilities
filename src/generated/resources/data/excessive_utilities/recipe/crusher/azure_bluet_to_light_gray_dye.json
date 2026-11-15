@@ -1,8 +1,6 @@
 {
   "type": "excessive_utilities:crusher",
-  "ingredient": {
-    "item": "minecraft:azure_bluet"
-  },
+  "ingredient": "minecraft:azure_bluet",
   "primary_output": {
     "count": 2,
     "id": "minecraft:light_gray_dye"

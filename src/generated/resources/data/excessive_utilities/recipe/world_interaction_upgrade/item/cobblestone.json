@@ -6,7 +6,6 @@
   ],
   "on": "c:cobblestones",
   "output": {
-    "count": 1,
     "id": "minecraft:cobblestone"
   }
 }

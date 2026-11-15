@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "B": {
-      "tag": "c:storage_blocks/diamond"
-    },
-    "I": {
-      "tag": "c:gems/diamond"
-    },
-    "S": {
-      "item": "minecraft:diamond_sword"
-    }
+    "B": "#c:storage_blocks/diamond",
+    "I": "#c:gems/diamond",
+    "S": "minecraft:diamond_sword"
   },
   "pattern": [
     " S ",

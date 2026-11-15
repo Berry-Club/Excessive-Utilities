@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "tag": "c:glass_blocks"
-    },
-    "R": {
-      "tag": "c:dusts/redstone"
-    },
-    "S": {
-      "item": "minecraft:stone_slab"
-    }
+    "G": "#c:glass_blocks",
+    "R": "#c:dusts/redstone",
+    "S": "minecraft:stone_slab"
   },
   "pattern": [
     "SSS",

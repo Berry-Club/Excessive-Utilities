@@ -2,12 +2,8 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "tag": "minecraft:planks"
-    },
-    "T": {
-      "item": "minecraft:redstone_torch"
-    }
+    "P": "#minecraft:planks",
+    "T": "minecraft:redstone_torch"
   },
   "pattern": [
     " T ",
@@ -15,7 +11,6 @@
     " T "
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:redstone_gear"
   }
 }

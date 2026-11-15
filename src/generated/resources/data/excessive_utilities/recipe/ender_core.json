@@ -2,15 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "E": {
-      "item": "excessive_utilities:ender_infused_obsidian"
-    },
-    "I": {
-      "item": "minecraft:ender_eye"
-    },
-    "W": {
-      "item": "excessive_utilities:magical_wood"
-    }
+    "E": "excessive_utilities:ender_infused_obsidian",
+    "I": "minecraft:ender_eye",
+    "W": "excessive_utilities:magical_wood"
   },
   "pattern": [
     "WEW",
@@ -18,7 +12,6 @@
     "WEW"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:ender_core"
   }
 }

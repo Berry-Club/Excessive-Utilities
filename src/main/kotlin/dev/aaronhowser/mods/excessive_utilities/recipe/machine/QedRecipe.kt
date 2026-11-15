@@ -11,19 +11,20 @@ import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ItemStackTemplate
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
 
 class QedRecipe(
 	val pattern: ShapedRecipePattern,
-	val result: ItemStack,
+	val result: ItemStackTemplate,
 	val crystalTicks: Int
 ) : MachineRecipe<CraftingInput> {
 
 	override fun matches(input: CraftingInput, level: Level): Boolean = pattern.matches(input)
-	override fun assemble(input: CraftingInput): ItemStack = result.copy()
+	override fun assemble(input: CraftingInput): ItemStack = result.create()
 	fun canCraftInDimensions(width: Int, height: Int): Boolean = true
-	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.create()
 	override fun getSerializer(): RecipeSerializer<QedRecipe> = ModRecipeSerializers.QED.get()
 	override fun getType(): RecipeType<QedRecipe> = ModRecipeTypes.QED.get()
 
@@ -49,7 +50,7 @@ class QedRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(QedRecipe::pattern),
-						ItemStack.CODEC
+						ItemStackTemplate.CODEC
 							.fieldOf("result")
 							.forGetter(QedRecipe::result),
 						Codec.INT
@@ -61,7 +62,7 @@ class QedRecipe(
 			val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, QedRecipe> =
 				StreamCodec.composite(
 					ShapedRecipePattern.STREAM_CODEC, QedRecipe::pattern,
-					ItemStack.STREAM_CODEC, QedRecipe::result,
+					ItemStackTemplate.STREAM_CODEC, QedRecipe::result,
 					ByteBufCodecs.VAR_INT, QedRecipe::crystalTicks,
 					::QedRecipe
 				)

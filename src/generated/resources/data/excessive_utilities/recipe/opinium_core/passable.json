@@ -2,25 +2,19 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "A": {
-      "item": "minecraft:gold_block"
-    },
-    "B": {
-      "item": "minecraft:diamond_block"
-    },
+    "A": "minecraft:gold_block",
+    "B": "minecraft:diamond_block",
     "O": {
-      "type": "neoforge:components",
+      "neoforge:ingredient_type": "neoforge:components",
       "components": {
         "excessive_utilities:opinium_core_contents": {
           "center": {
-            "count": 1,
             "id": "minecraft:gold_block"
           },
           "name": {
             "translate": "item.excessive_utilities.opinium_core.mediocre"
           },
           "outer": {
-            "count": 1,
             "id": "minecraft:iron_block"
           }
         }
@@ -37,19 +31,16 @@
     "components": {
       "excessive_utilities:opinium_core_contents": {
         "center": {
-          "count": 1,
           "id": "minecraft:diamond_block"
         },
         "name": {
           "translate": "item.excessive_utilities.opinium_core.passable"
         },
         "outer": {
-          "count": 1,
           "id": "minecraft:gold_block"
         }
       }
     },
-    "count": 1,
     "id": "excessive_utilities:opinium_core"
   }
 }

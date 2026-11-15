@@ -2,12 +2,9 @@
   "type": "minecraft:crafting_shapeless",
   "category": "misc",
   "ingredients": [
-    {
-      "item": "excessive_utilities:thickened_glass"
-    }
+    "excessive_utilities:thickened_glass"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:square_glass"
   }
 }

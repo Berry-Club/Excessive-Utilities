@@ -2,9 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "P": {
-      "item": "excessive_utilities:evil_infused_iron_nugget"
-    }
+    "P": "excessive_utilities:evil_infused_iron_nugget"
   },
   "pattern": [
     "PPP",
@@ -12,7 +10,6 @@
     "PPP"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:evil_infused_iron_ingot"
   }
 }

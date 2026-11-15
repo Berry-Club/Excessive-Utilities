@@ -17,7 +17,6 @@
       "translate": "advancements.excessive_utilities.ender_quarry.upgrade.desc"
     },
     "icon": {
-      "count": 1,
       "id": "excessive_utilities:ender_quarry_speed_two_upgrade"
     },
     "title": {

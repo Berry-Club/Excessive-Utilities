@@ -2,22 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "G": {
-      "item": "excessive_utilities:redstone_gear"
-    },
-    "R": {
-      "item": "excessive_utilities:resonating_redstone_crystal"
-    },
-    "S": {
-      "item": "excessive_utilities:polished_stone"
-    }
+    "G": "excessive_utilities:redstone_gear",
+    "R": "excessive_utilities:resonating_redstone_crystal",
+    "S": "excessive_utilities:polished_stone"
   },
   "pattern": [
     " G ",
     "SRS"
   ],
   "result": {
-    "count": 1,
     "id": "excessive_utilities:manual_mill"
   }
 }
