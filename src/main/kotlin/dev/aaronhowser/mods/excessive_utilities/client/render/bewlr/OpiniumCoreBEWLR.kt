@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.client.render.bewlr
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
@@ -11,12 +12,15 @@ import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.item.ItemModelResolver
 import net.minecraft.client.renderer.item.ItemStackRenderState
 import net.minecraft.client.renderer.special.SpecialModelRenderer
+import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.item.ItemStack
 import org.joml.Vector3fc
 import java.util.function.Consumer
 
-class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
+class OpiniumCoreBEWLR(
+	private val displayContext: ItemDisplayContext
+) : SpecialModelRenderer<ItemStack> {
 
 	private val itemModelResolver: ItemModelResolver = Minecraft.getInstance().itemModelResolver
 	private val centerRenderState = ItemStackRenderState()
@@ -40,7 +44,7 @@ class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
 		itemModelResolver.updateForTopItem(
 			centerRenderState,
 			contents.getCenter(),
-			ItemDisplayContext.NONE,
+			displayContext,
 			AaronClientUtil.localLevel,
 			null,
 			0
@@ -49,13 +53,18 @@ class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
 		itemModelResolver.updateForTopItem(
 			outerRenderState,
 			contents.getOuter(),
-			ItemDisplayContext.NONE,
+			displayContext,
 			AaronClientUtil.localLevel,
 			null,
 			0
 		)
 
-		val time = (AaronClientUtil.localLevel?.gameTime ?: 0L).toFloat()
+		val gameTime = AaronClientUtil.localLevel?.gameTime ?: 0L
+		val partialTick = Minecraft
+			.getInstance()
+			.deltaTracker
+			.getGameTimeDeltaPartialTick(false)
+		val time = gameTime + partialTick
 
 		renderCenter(poseStack, collector, lightCoords, overlayCoords, outlineColor, time)
 		renderOuterItems(poseStack, collector, lightCoords, overlayCoords, outlineColor, time)
@@ -71,8 +80,9 @@ class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
 	) {
 		poseStack.withPose {
 			poseStack.translate(0.5, 0.5, 0.5)
-			poseStack.mulPose(Axis.YP.rotationDegrees(time * 4f))
-			poseStack.mulPose(Axis.XP.rotationDegrees(time * 2f))
+			poseStack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(time * 4f)))
+			poseStack.mulPose(Axis.XP.rotationDegrees(Mth.wrapDegrees(time * 2f)))
+			poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.wrapDegrees(time)))
 			poseStack.scale(0.5f, 0.5f, 0.5f)
 
 			centerRenderState.submit(
@@ -93,12 +103,15 @@ class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
 		outlineColor: Int,
 		time: Float
 	) {
-		for (index in 0 until OUTER_ITEM_COUNT) {
-			poseStack.withPose {
+		poseStack.withPose {
+			poseStack.translate(0.5, 0.5, 0.5)
+			poseStack.mulPose(Axis.YP.rotationDegrees(Mth.wrapDegrees(time * 2f)))
+			poseStack.mulPose(Axis.XP.rotationDegrees(Mth.wrapDegrees(time * 2f)))
+			poseStack.mulPose(Axis.ZP.rotationDegrees(Mth.wrapDegrees(time)))
 
-				poseStack.translate(0.5, 0.5, 0.5)
-				poseStack.mulPose(Axis.YP.rotationDegrees(index * 90f + time * 2f))
-				poseStack.translate(0.3, 0.0, 0.0)
+			for (index in 0 until OUTER_ITEM_COUNT) {
+				poseStack.pushPose()
+				translateOuterItem(poseStack, index)
 				poseStack.scale(0.25f, 0.25f, 0.25f)
 
 				outerRenderState.submit(
@@ -109,14 +122,36 @@ class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
 					outlineColor
 				)
 
+				poseStack.popPose()
 			}
 		}
 	}
 
-	data object Unbaked : SpecialModelRenderer.Unbaked<ItemStack> {
-		val CODEC: MapCodec<Unbaked> = MapCodec.unit(Unbaked)
+	private fun translateOuterItem(poseStack: PoseStack, index: Int) {
+		when (index) {
+			0 -> poseStack.translate(0.3, 0.0, 0.0)
+			1 -> poseStack.translate(-0.3, 0.0, 0.0)
+			2 -> poseStack.translate(0.0, 0.0, 0.3)
+			3 -> poseStack.translate(0.0, 0.0, -0.3)
+		}
+	}
+
+	data class Unbaked(
+		val displayContext: ItemDisplayContext = ItemDisplayContext.NONE
+	) : SpecialModelRenderer.Unbaked<ItemStack> {
+
+		companion object {
+			val CODEC: MapCodec<Unbaked> = RecordCodecBuilder.mapCodec { instance ->
+				instance.group(
+					ItemDisplayContext.CODEC
+						.optionalFieldOf("display_context", ItemDisplayContext.NONE)
+						.forGetter(Unbaked::displayContext)
+				).apply(instance, ::Unbaked)
+			}
+		}
+
 		override fun type() = CODEC
-		override fun bake(context: SpecialModelRenderer.BakingContext) = OpiniumCoreBEWLR()
+		override fun bake(context: SpecialModelRenderer.BakingContext) = OpiniumCoreBEWLR(displayContext)
 	}
 
 	companion object {

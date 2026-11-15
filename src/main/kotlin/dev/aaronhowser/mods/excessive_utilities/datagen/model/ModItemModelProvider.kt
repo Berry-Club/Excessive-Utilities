@@ -261,10 +261,11 @@ class ModItemModelProvider(
 	}
 
 	private fun bewlrs() {
-		val bewlrItems = listOf(
-			ModItems.OPINIUM_CORE.get(),
-			ModItems.TESSERACT.get()
-		)
+		val opiniumCore = ModItems.OPINIUM_CORE.get()
+		getBuilder(getName(opiniumCore))
+		handledItems.add(opiniumCore)
+
+		val bewlrItems = listOf(ModItems.TESSERACT.get())
 
 		for (item in bewlrItems) {
 			val name = getName(item)

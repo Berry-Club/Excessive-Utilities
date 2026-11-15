@@ -310,12 +310,17 @@ abstract class JsonResourceProvider(private val output: PackOutput, protected va
 
 	private fun itemDefinition(model: JsonModelBuilder): JsonObject {
 		if (model.location.path in setOf("item/opinium_core", "item/tesseract", "item/manual_mill")) {
-			fun special(gui: Boolean, baseModel: String = model.location.toString()): JsonObject = JsonObject().apply {
+			fun special(
+				gui: Boolean,
+				baseModel: String = model.location.toString(),
+				displayContext: ItemDisplayContext? = null
+			): JsonObject = JsonObject().apply {
 				addProperty("type", "minecraft:special")
 				addProperty("base", baseModel)
 				add("model", JsonObject().apply {
 					addProperty("type", "${ExcessiveUtilities.MOD_ID}:${model.location.path.removePrefix("item/")}")
 					if (model.location.path == "item/tesseract") addProperty("gui", gui)
+					if (displayContext != null) addProperty("display_context", displayContext.serializedName)
 				})
 			}
 			if (model.location.path == "item/manual_mill") {
@@ -327,6 +332,24 @@ abstract class JsonResourceProvider(private val output: PackOutput, protected va
 					})
 				}
 			}
+			if (model.location.path == "item/opinium_core") {
+				return JsonObject().apply {
+					addProperty("type", "minecraft:select")
+					addProperty("property", "minecraft:display_context")
+					add("cases", JsonArray().apply {
+						for (displayContext in ItemDisplayContext.entries) {
+							if (displayContext == ItemDisplayContext.NONE) continue
+
+							add(JsonObject().apply {
+								addProperty("when", displayContext.serializedName)
+								add("model", special(false, displayContext = displayContext))
+							})
+						}
+					})
+					add("fallback", special(false, displayContext = ItemDisplayContext.NONE))
+				}
+			}
+
 			if (model.location.path != "item/tesseract") return special(false)
 			return JsonObject().apply {
 				addProperty("type", "minecraft:select")
