@@ -14,10 +14,11 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.biome.Biome
 
-class BiomeMarkerItem(properties: Properties) : Item(properties) {
+class BiomeMarkerItem(properties: Properties) : Item(properties), TooltipItem {
 
 	override fun useOn(context: UseOnContext): InteractionResult {
 		val level = context.level
@@ -30,10 +31,11 @@ class BiomeMarkerItem(properties: Properties) : Item(properties) {
 		return InteractionResult.SUCCESS
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val biomeHolder = stack.get(ModDataComponents.BIOME) ?: return
@@ -41,7 +43,7 @@ class BiomeMarkerItem(properties: Properties) : Item(properties) {
 
 		val component = AaronClientUtil.getBiomeDisplay(biomeKey).withStyle(ChatFormatting.GRAY)
 
-		tooltipComponents.add(component)
+		builder.accept(component)
 	}
 
 	companion object {
@@ -64,3 +66,9 @@ class BiomeMarkerItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+

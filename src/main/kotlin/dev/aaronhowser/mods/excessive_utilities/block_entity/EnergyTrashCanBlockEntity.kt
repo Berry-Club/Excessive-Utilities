@@ -5,24 +5,22 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class EnergyTrashCanBlockEntity(
 	pos: BlockPos,
 	state: BlockState
 ) : BlockEntity(ModBlockEntityTypes.ENERGY_TRASH_CAN.get(), pos, state) {
 
-	private val energyStorage: IEnergyStorage =
-		object : IEnergyStorage {
-			override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = toReceive
-			override fun extractEnergy(toExtract: Int, simulate: Boolean): Int = 0
-			override fun getEnergyStored(): Int = 0
-			override fun getMaxEnergyStored(): Int = Int.MAX_VALUE
-			override fun canExtract(): Boolean = false
-			override fun canReceive(): Boolean = true
+	private val energyStorage: EnergyHandler =
+		object : SimpleEnergyHandler(Int.MAX_VALUE) {
+			override fun insert(amount: Int, transaction: TransactionContext): Int = amount
+			override fun extract(amount: Int, transaction: TransactionContext): Int = 0
 		}
 
-	fun getEnergyStorage(direction: Direction?): IEnergyStorage = energyStorage
+	fun getEnergyStorage(direction: Direction?): EnergyHandler = energyStorage
 
 
 }

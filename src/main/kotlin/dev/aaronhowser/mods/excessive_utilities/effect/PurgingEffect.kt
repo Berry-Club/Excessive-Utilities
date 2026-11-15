@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModMobEffectTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModParticleTypes
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
@@ -18,7 +19,7 @@ class PurgingEffect : MobEffect(
 
 	override fun shouldApplyEffectTickThisTick(duration: Int, amplifier: Int): Boolean = true
 
-	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+	override fun applyEffectTick(level: ServerLevel, livingEntity: LivingEntity, amplifier: Int): Boolean {
 		if (livingEntity.isClientSide) {
 			spawnVomitParticles(livingEntity, amplifier)
 			return true

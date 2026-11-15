@@ -21,7 +21,7 @@ object ModAttachmentTypes {
 			"soul_debt",
 			AttachmentType
 				.builder(::SoulDebt)
-				.serialize(SoulDebt.CODEC)
+				.serialize(SoulDebt.CODEC.fieldOf("value"))
 				.sync(SoulDebt.STREAM_CODEC)
 				.copyOnDeath()
 				.build()
@@ -32,7 +32,7 @@ object ModAttachmentTypes {
 			"is_cursed",
 			AttachmentType
 				.builder(Supplier { false })
-				.serialize(Codec.BOOL)
+				.serialize(Codec.BOOL.fieldOf("value"))
 				.sync(ByteBufCodecs.BOOL)
 				.build()
 		)
@@ -46,7 +46,7 @@ object ModAttachmentTypes {
 				.build()
 		)
 
-	private fun <T> register(name: String, type: AttachmentType<T>): DeferredHolder<AttachmentType<*>, AttachmentType<T>> {
+	private fun <T : Any> register(name: String, type: AttachmentType<T>): DeferredHolder<AttachmentType<*>, AttachmentType<T>> {
 		return ATTACHMENT_TYPE_REGISTRY.register(name, Supplier { type })
 	}
 

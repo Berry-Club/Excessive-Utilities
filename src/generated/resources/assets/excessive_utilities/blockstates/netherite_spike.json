@@ -2,7 +2,8 @@
   "variants": {
     "facing=down": {
       "model": "excessive_utilities:block/netherite_spike",
-      "x": 180
+      "x": 180,
+      "y": 0
     },
     "facing=east": {
       "model": "excessive_utilities:block/netherite_spike",
@@ -11,7 +12,8 @@
     },
     "facing=north": {
       "model": "excessive_utilities:block/netherite_spike",
-      "x": 90
+      "x": 90,
+      "y": 0
     },
     "facing=south": {
       "model": "excessive_utilities:block/netherite_spike",
@@ -19,7 +21,9 @@
       "y": 180
     },
     "facing=up": {
-      "model": "excessive_utilities:block/netherite_spike"
+      "model": "excessive_utilities:block/netherite_spike",
+      "x": 0,
+      "y": 0
     },
     "facing=west": {
       "model": "excessive_utilities:block/netherite_spike",

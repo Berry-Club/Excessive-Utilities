@@ -1,0 +1,18 @@
+{
+  "model": {
+    "type": "minecraft:composite",
+    "models": [
+      {
+        "type": "minecraft:model",
+        "model": "excessive_utilities:item/manual_mill_body"
+      },
+      {
+        "type": "minecraft:special",
+        "base": "excessive_utilities:item/manual_mill_body",
+        "model": {
+          "type": "excessive_utilities:manual_mill"
+        }
+      }
+    ]
+  }
+}

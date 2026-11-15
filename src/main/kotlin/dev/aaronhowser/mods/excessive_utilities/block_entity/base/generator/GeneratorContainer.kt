@@ -5,7 +5,11 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
-import net.neoforged.neoforge.items.wrapper.InvWrapper
+import net.neoforged.neoforge.transfer.DelegatingResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 open class GeneratorContainer(
 	blockEntity: BlockEntity,
@@ -32,9 +36,10 @@ open class GeneratorContainer(
 		return upgradeStack.count + 1
 	}
 
-	open val itemHandler: InvWrapper =
-		object : InvWrapper(this) {
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = ItemStack.EMPTY
+	open val itemHandler: ResourceHandler<ItemResource> =
+		object : DelegatingResourceHandler<ItemResource>(VanillaContainerWrapper.of(this)) {
+			override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int = 0
+			override fun extract(resource: ItemResource, amount: Int, transaction: TransactionContext): Int = 0
 		}
 
 	companion object {

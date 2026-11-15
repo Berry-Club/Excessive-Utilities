@@ -1,7 +1,7 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.single_slot
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
+import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer

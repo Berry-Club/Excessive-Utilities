@@ -17,7 +17,7 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.phys.BlockHitResult
 import net.neoforged.neoforge.event.EventHooks
-import net.neoforged.neoforge.event.level.BlockEvent
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent
 
 class DestructionWandItem(properties: Properties) : Item(properties) {
 
@@ -30,7 +30,7 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 
 		private var isWandActive = false
 
-		fun handleBreakBlockEvent(event: BlockEvent.BreakEvent) {
+		fun handleBreakBlockEvent(event: BreakBlockEvent) {
 			if (isWandActive) return
 
 			val player = event.player
@@ -101,27 +101,14 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 				}
 
 				if (player.isCreative) {
-					val shouldRemove = stateThere.onDestroyedByPlayer(level, pos, player, false, level.getFluidState(pos))
-					if (shouldRemove) {
-						stateThere.block.destroy(level, pos, stateThere)
-						playSound()
-					}
-
+					if (level.destroyBlock(pos, false, player, 512)) playSound()
 					continue
 				}
 
 				usedStack.mineBlock(level, stateThere, pos, player)
 
 				val canHarvest = stateThere.canHarvestBlock(level, pos, player)
-				val shouldRemove = stateThere.onDestroyedByPlayer(level, pos, player, canHarvest, level.getFluidState(pos))
-				if (shouldRemove) {
-					stateThere.block.destroy(level, pos, stateThere)
-					playSound()
-				}
-
-				if (canHarvest && shouldRemove) {
-					stateThere.block.playerDestroy(level, player, pos, stateThere, null, usedStack)
-				}
+				if (level.destroyBlock(pos, canHarvest, player, 512)) playSound()
 
 				if (usedStack.isEmpty && !stackBeforeBreaking.isEmpty) {
 					EventHooks.onPlayerDestroyItem(player, stackBeforeBreaking, InteractionHand.MAIN_HAND)
@@ -147,7 +134,7 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 						Direction.Axis.Y -> listOf(Direction.NORTH, Direction.SOUTH, Direction.EAST, Direction.WEST)
 						Direction.Axis.X -> listOf(Direction.UP, Direction.DOWN, Direction.NORTH, Direction.SOUTH)
 						else -> listOf(Direction.UP, Direction.DOWN, Direction.EAST, Direction.WEST)
-					}.map(Direction::getNormal)
+					}.map { it.unitVec3i }
 				}
 
 			val walker = BlockWalker
@@ -171,3 +158,7 @@ class DestructionWandItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+

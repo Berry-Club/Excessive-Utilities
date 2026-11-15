@@ -5,7 +5,8 @@
       "y": 90
     },
     "facing=north": {
-      "model": "excessive_utilities:block/slightly_larger_chest"
+      "model": "excessive_utilities:block/slightly_larger_chest",
+      "y": 0
     },
     "facing=south": {
       "model": "excessive_utilities:block/slightly_larger_chest",

@@ -5,12 +5,11 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpSourceBlockE
 import dev.aaronhowser.mods.excessive_utilities.block_entity.mill.LavaMillBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 
-class LavaMillBlock : GpSourceBlock(Properties.ofFullCopy(Blocks.STONE)) {
+class LavaMillBlock(properties: Properties) : GpSourceBlock(properties) {
 
 	override fun getBlockEntityType(): BlockEntityType<out GpSourceBlockEntity> {
 		return ModBlockEntityTypes.LAVA_MILL.get()

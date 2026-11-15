@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
-import dev.aaronhowser.mods.aaron.container.ExtractOnlyInvWrapper
+import dev.aaronhowser.mods.aaron.container.ExtractOnlyResourceHandler
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isHolder
@@ -17,23 +17,18 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBiomeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
-import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import dev.aaronhowser.mods.excessive_utilities.registry.*
 import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryBiomeSource
 import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryDimension
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.registries.Registries
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
-import net.minecraft.server.level.TicketType
 import net.minecraft.util.Mth
 import net.minecraft.world.Container
 import net.minecraft.world.MenuProvider
@@ -51,14 +46,17 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.energy.EnergyStorage
-import net.neoforged.neoforge.energy.IEnergyStorage
-import net.neoforged.neoforge.items.IItemHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -67,18 +65,18 @@ class QuantumQuarryBlockEntity(
 	state: BlockState
 ) : BlockEntity(ModBlockEntityTypes.QUANTUM_QUARRY.get(), pos, state), ContainerContainer, MachineWithBuffer, MenuProvider {
 
-	private val energyStorage = EnergyStorage(1_000_000)
-	fun getEnergyCapability(direction: Direction?): IEnergyStorage = energyStorage
+	private val energyStorage = SimpleEnergyHandler(1_000_000)
+	fun getEnergyCapability(direction: Direction?): EnergyHandler = energyStorage
 
 	private val bufferContainer: ImprovedSimpleContainer = ImprovedSimpleContainer(this, 27)
-	private val bufferItemHandler: ExtractOnlyInvWrapper = ExtractOnlyInvWrapper(bufferContainer)
+	private val bufferItemHandler: ResourceHandler<ItemResource> = ExtractOnlyResourceHandler(bufferContainer)
 	private val upgradesContainer: ImprovedSimpleContainer = QuantumQuarryUpgradeContainer()
 
 	override fun getContainers(): List<Container> = listOf(bufferContainer, upgradesContainer)
 
 	override fun clearContent() {
-		super<ContainerContainer>.clearContent()
-		energyStorage.extractEnergy(energyStorage.energyStored, false)
+		super.clearContent()
+		energyStorage.extractEnergy(energyStorage.amountAsInt, false)
 	}
 
 	private var fakePlayer: WeakReference<FakePlayer>? = null
@@ -144,15 +142,15 @@ class QuantumQuarryBlockEntity(
 		return true
 	}
 
-	override fun collectReceivingItemHandlers(level: ServerLevel): Collection<IItemHandler> {
-		val adjacentItemHandlers = mutableSetOf<IItemHandler>()
+	override fun collectReceivingItemHandlers(level: ServerLevel): Collection<ResourceHandler<ItemResource>> {
+		val adjacentItemHandlers = mutableSetOf<ResourceHandler<ItemResource>>()
 
 		for (actuatorPos in actuatorPositions) {
 			for (direction in Direction.entries) {
 				val adjacentPos = actuatorPos.relative(direction)
 				if (adjacentPos == blockPos) continue
 
-				val itemHandler = level.getCapability(Capabilities.ItemHandler.BLOCK, adjacentPos, direction.opposite)
+				val itemHandler = level.getCapability(Capabilities.Item.BLOCK, adjacentPos, direction.opposite)
 				if (itemHandler != null) adjacentItemHandlers.add(itemHandler)
 			}
 		}
@@ -166,7 +164,7 @@ class QuantumQuarryBlockEntity(
 
 	private fun progressMine(miningDimensionLevel: ServerLevel) {
 		val fePerBlock = ServerConfig.CONFIG.quantumQuarryFePerBlock.get()
-		if (energyStorage.energyStored < fePerBlock) return
+		if (energyStorage.amountAsInt < fePerBlock) return
 
 		val blocksPerTick = ServerConfig.CONFIG.quantumQuarryBlocksPerTick.get()
 		progressThroughBlock += blocksPerTick
@@ -174,8 +172,8 @@ class QuantumQuarryBlockEntity(
 		val enchantedBook = getEnchantedBook()
 		if (enchantedBook.isNotEmpty()) {
 			val storedEnchants = EnchantmentHelper.getEnchantmentsForCrafting(enchantedBook)
-			val enchantmentLookup = miningDimensionLevel.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
-			val efficiencyLevel = storedEnchants.getLevel(enchantmentLookup.getHolderOrThrow(Enchantments.EFFICIENCY))
+			val enchantmentLookup = miningDimensionLevel.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
+			val efficiencyLevel = storedEnchants.getLevel(enchantmentLookup.getOrThrow(Enchantments.EFFICIENCY))
 			if (efficiencyLevel > 0) {
 				progressThroughBlock *= 1.0 + (efficiencyLevel * 0.25)
 			}
@@ -268,11 +266,11 @@ class QuantumQuarryBlockEntity(
 
 		val xBounds = currentChunk.minBlockX..currentChunk.maxBlockX
 		val zBounds = currentChunk.minBlockZ..currentChunk.maxBlockZ
-		val topY = miningDimensionLevel.maxBuildHeight - 1
+		val topY = miningDimensionLevel.maxY
 
 		fun moveNextPos(currentPos: BlockPos.MutableBlockPos): Boolean {
 			when {
-				currentPos.y > miningDimensionLevel.minBuildHeight -> {
+				currentPos.y > miningDimensionLevel.minY -> {
 					currentPos.move(Direction.DOWN)
 				}
 
@@ -345,7 +343,7 @@ class QuantumQuarryBlockEntity(
 				targetChunk = nextChunkPos
 				targetBlockPos = BlockPos(
 					nextChunkPos.minBlockX,
-					miningDimensionLevel.maxBuildHeight - 1,
+					miningDimensionLevel.maxY,
 					nextChunkPos.minBlockZ
 				)
 				targetDimension = miningDimension
@@ -363,12 +361,11 @@ class QuantumQuarryBlockEntity(
 		quarryLevel: ServerLevel,
 		dimension: QuantumQuarryDimension
 	): Holder<Biome>? {
-		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
+		val biomeRegistry = quarryLevel.registryAccess().lookupOrThrow(Registries.BIOME)
 		val choices = mutableListOf<Holder<Biome>>()
-		val biomeTag = biomeRegistry.getTag(dimension.biomeTag)
-		if (biomeTag.isEmpty) return null
+		val biomeTag = biomeRegistry.get(dimension.biomeTag).orElse(null) ?: return null
 
-		for (biome in biomeTag.get()) {
+		for (biome in biomeTag) {
 			if (biome.isHolder(ModBiomeTagsProvider.BIOME_MARKER_BLACKLIST)) continue
 			if (biome.isHolder(ModBiomeTagsProvider.QUANTUM_QUARRY_RANDOM_BLACKLIST)) continue
 
@@ -409,8 +406,8 @@ class QuantumQuarryBlockEntity(
 
 		releaseTargetTicket(quarryLevel)
 
-		val biomeRegistry = quarryLevel.registryAccess().registryOrThrow(Registries.BIOME)
-		val biome = biomeRegistry.getHolder(biomeKey).orElse(null) ?: return null
+		val biomeRegistry = quarryLevel.registryAccess().lookupOrThrow(Registries.BIOME)
+		val biome = biomeRegistry.get(biomeKey).orElse(null) ?: return null
 		if (!QuantumQuarryBiomeSource.claim(dimension, chunkPos, fakePlayerUuid, biome)) {
 			discardTarget(quarryLevel)
 			return null
@@ -425,11 +422,10 @@ class QuantumQuarryBlockEntity(
 		dimension: QuantumQuarryDimension,
 		chunkPos: ChunkPos
 	) {
-		miningDimensionLevel.chunkSource.addRegionTicket(
-			QUARRY_TICKET_TYPE,
+		miningDimensionLevel.chunkSource.addTicketWithRadius(
+			ModTicketTypes.QUANTUM_QUARRY.get(),
 			chunkPos,
-			QUARRY_TICKET_RADIUS,
-			fakePlayerUuid
+			QUARRY_TICKET_RADIUS
 		)
 
 		activeTicketChunk = chunkPos
@@ -441,11 +437,10 @@ class QuantumQuarryBlockEntity(
 		val dimension = activeTicketDimension ?: return
 		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey)
 
-		miningDimensionLevel?.chunkSource?.removeRegionTicket(
-			QUARRY_TICKET_TYPE,
+		miningDimensionLevel?.chunkSource?.removeTicketWithRadius(
+			ModTicketTypes.QUANTUM_QUARRY.get(),
 			chunkPos,
-			QUARRY_TICKET_RADIUS,
-			fakePlayerUuid
+			QUARRY_TICKET_RADIUS
 		)
 
 		QuantumQuarryBiomeSource.release(dimension, chunkPos, fakePlayerUuid)
@@ -500,22 +495,18 @@ class QuantumQuarryBlockEntity(
 
 	private val containerData: ContainerData = QuantumQuarryContainerData()
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+		tag.saveEnergy(STORED_ENERGY_NBT, energyStorage)
 
-		val bufferTag = CompoundTag()
-		bufferTag.saveItems(bufferContainer, registries)
-		tag.put(BUFFER_CONTAINER_NBT, bufferTag)
+		tag.child(BUFFER_CONTAINER_NBT).saveItems(bufferContainer)
 
-		val upgradesTag = CompoundTag()
-		upgradesTag.saveItems(upgradesContainer, registries)
-		tag.put(UPGRADE_CONTAINER_NBT, upgradesTag)
+		tag.child(UPGRADE_CONTAINER_NBT).saveItems(upgradesContainer)
 
 		val chunkPos = targetChunk
 		if (chunkPos != null) {
-			tag.putLong(TARGET_CHUNK_POS_NBT, chunkPos.toLong())
+			tag.putLong(TARGET_CHUNK_POS_NBT, chunkPos.pack())
 		}
 
 		val blockPos = targetBlockPos
@@ -530,54 +521,50 @@ class QuantumQuarryBlockEntity(
 
 		val biomeKey = targetBiomeKey
 		if (biomeKey != null) {
-			tag.putString(TARGET_BIOME_NBT, biomeKey.location().toString())
+			tag.putString(TARGET_BIOME_NBT, biomeKey.identifier().toString())
 		}
 
 		tag.putInt(AMOUNT_BLOCKS_BROKEN_NBT, amountBlocksBroken)
-		tag.putUUID(FAKE_PLAYER_UUID_NBT, fakePlayerUuid)
+		tag.store(FAKE_PLAYER_UUID_NBT, UUIDUtil.CODEC, fakePlayerUuid)
 		tag.putBoolean(TARGET_USES_REGION_TICKET_NBT, !hasLegacyForcedTarget)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 		loadingAdditionalData = true
 
-		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage, registries)
+		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage)
 
-		val bufferTag = tag.getCompound(BUFFER_CONTAINER_NBT)
-		bufferTag.loadItems(bufferContainer, registries)
+		tag.child(BUFFER_CONTAINER_NBT).ifPresent { it.loadItems(bufferContainer) }
 
-		val upgradesTag = tag.getCompound(UPGRADE_CONTAINER_NBT)
-		upgradesTag.loadItems(upgradesContainer, registries)
+		tag.child(UPGRADE_CONTAINER_NBT).ifPresent { it.loadItems(upgradesContainer) }
 
-		if (tag.contains(TARGET_CHUNK_POS_NBT)) {
-			val chunkPosLong = tag.getLong(TARGET_CHUNK_POS_NBT)
-			targetChunk = ChunkPos(chunkPosLong)
+		if (tag.getLong(TARGET_CHUNK_POS_NBT).isPresent) {
+			val chunkPosLong = tag.getLongOr(TARGET_CHUNK_POS_NBT, 0L)
+			targetChunk = ChunkPos.unpack(chunkPosLong)
 		}
 
-		if (tag.contains(TARGET_BLOCK_POS_NBT)) {
-			val blockPosLong = tag.getLong(TARGET_BLOCK_POS_NBT)
+		if (tag.getLong(TARGET_BLOCK_POS_NBT).isPresent) {
+			val blockPosLong = tag.getLongOr(TARGET_BLOCK_POS_NBT, 0L)
 			targetBlockPos = BlockPos.of(blockPosLong)
 		}
 
-		if (tag.contains(TARGET_DIMENSION_NBT)) {
-			targetDimension = QuantumQuarryDimension.fromSerializedName(tag.getString(TARGET_DIMENSION_NBT))
+		if (tag.getString(TARGET_DIMENSION_NBT).isPresent) {
+			targetDimension = QuantumQuarryDimension.fromSerializedName(tag.getStringOr(TARGET_DIMENSION_NBT, ""))
 		}
 
-		if (tag.contains(TARGET_BIOME_NBT)) {
-			val biomeId = ResourceLocation.tryParse(tag.getString(TARGET_BIOME_NBT))
+		if (tag.getString(TARGET_BIOME_NBT).isPresent) {
+			val biomeId = Identifier.tryParse(tag.getStringOr(TARGET_BIOME_NBT, ""))
 			if (biomeId != null) {
 				targetBiomeKey = ResourceKey.create(Registries.BIOME, biomeId)
 			}
 		}
 
-		amountBlocksBroken = tag.getInt(AMOUNT_BLOCKS_BROKEN_NBT)
+		amountBlocksBroken = tag.getIntOr(AMOUNT_BLOCKS_BROKEN_NBT, 0)
 
-		if (tag.hasUUID(FAKE_PLAYER_UUID_NBT)) {
-			fakePlayerUuid = tag.getUUID(FAKE_PLAYER_UUID_NBT)
-		}
+		tag.read(FAKE_PLAYER_UUID_NBT, UUIDUtil.CODEC).ifPresent { fakePlayerUuid = it }
 
-		hasLegacyForcedTarget = targetChunk != null && !tag.getBoolean(TARGET_USES_REGION_TICKET_NBT)
+		hasLegacyForcedTarget = targetChunk != null && !tag.getBooleanOr(TARGET_USES_REGION_TICKET_NBT, false)
 		activeTicketChunk = null
 		activeTicketDimension = null
 		biomeFilterChanged = false
@@ -619,11 +606,6 @@ class QuantumQuarryBlockEntity(
 		const val MAX_TARGET_COORDINATE = 100_000
 		const val QUARRY_TICKET_RADIUS = 2
 
-		val QUARRY_TICKET_TYPE: TicketType<UUID> = TicketType.create(
-			"excessive_utilities:quantum_quarry",
-			Comparator.naturalOrder()
-		)
-
 		fun tick(
 			level: Level,
 			blockPos: BlockPos,
@@ -640,7 +622,7 @@ class QuantumQuarryBlockEntity(
 
 		override fun get(index: Int): Int {
 			return when (index) {
-				CURRENT_ENERGY_DATA_INDEX -> energyStorage.energyStored
+				CURRENT_ENERGY_DATA_INDEX -> energyStorage.amountAsInt
 				TARGET_X_DATA_INDEX -> targetBlockPos?.x ?: 0
 				TARGET_Y_DATA_INDEX -> targetBlockPos?.y ?: 0
 				TARGET_Z_DATA_INDEX -> targetBlockPos?.z ?: 0
@@ -662,9 +644,9 @@ class QuantumQuarryBlockEntity(
 			val biomeKey = targetBiomeKey
 			if (biomeKey == null || level !is ServerLevel) return 0
 
-			val registry = level.registryAccess().registryOrThrow(Registries.BIOME)
-			val biome = registry.get(biomeKey) ?: return 0
-			return registry.getId(biome)
+			val registry = level.registryAccess().lookupOrThrow(Registries.BIOME)
+			val biome = registry.get(biomeKey).orElse(null) ?: return 0
+			return registry.getId(biome.value())
 		}
 
 	}

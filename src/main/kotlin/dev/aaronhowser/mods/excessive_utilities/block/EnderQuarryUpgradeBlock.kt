@@ -8,12 +8,13 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.ScheduledTickAccess
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
@@ -23,8 +24,9 @@ import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
 class EnderQuarryUpgradeBlock(
-	val type: EnderQuarryUpgradeType
-) : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)), EntityBlock {
+	val type: EnderQuarryUpgradeType,
+	properties: Properties
+) : Block(properties), EntityBlock {
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		return SHAPE
@@ -67,11 +69,13 @@ class EnderQuarryUpgradeBlock(
 
 	override fun updateShape(
 		state: BlockState,
-		direction: Direction,
-		neighborState: BlockState,
-		level: LevelAccessor,
+		level: LevelReader,
+		ticks: ScheduledTickAccess,
 		pos: BlockPos,
-		neighborPos: BlockPos
+		directionToNeighbour: Direction,
+		neighbourPos: BlockPos,
+		neighbourState: BlockState,
+		random: RandomSource
 	): BlockState {
 		return if (canSurvive(state, level, pos)) {
 			state

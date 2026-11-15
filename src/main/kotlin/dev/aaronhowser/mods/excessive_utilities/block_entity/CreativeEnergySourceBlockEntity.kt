@@ -8,32 +8,30 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.energy.IEnergyStorage
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class CreativeEnergySourceBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
 ) : BlockEntity(ModBlockEntityTypes.CREATIVE_ENERGY_SOURCE.get(), pos, blockState) {
 
-	val energyStorage: IEnergyStorage =
-		object : IEnergyStorage {
-			override fun receiveEnergy(toReceive: Int, simulate: Boolean): Int = 0
-			override fun extractEnergy(toExtract: Int, simulate: Boolean): Int = toExtract
-			override fun getEnergyStored(): Int = Int.MAX_VALUE
-			override fun getMaxEnergyStored(): Int = Int.MAX_VALUE
-			override fun canExtract(): Boolean = true
-			override fun canReceive(): Boolean = false
+	val energyStorage: EnergyHandler =
+		object : SimpleEnergyHandler(Int.MAX_VALUE) {
+			override fun insert(amount: Int, transaction: TransactionContext): Int = 0
+			override fun extract(amount: Int, transaction: TransactionContext): Int = amount
 		}
 
 	private fun serverTick(level: ServerLevel) {
 		for (dir in Direction.entries) {
 			val energyCap = level.getCapability(
-				Capabilities.EnergyStorage.BLOCK,
+				Capabilities.Energy.BLOCK,
 				blockPos.relative(dir),
 				dir.opposite
 			) ?: continue
 
-			energyCap.receiveEnergy(Int.MAX_VALUE, false)
+			energyCap.insertEnergy(Int.MAX_VALUE, false)
 		}
 	}
 
@@ -49,7 +47,7 @@ class CreativeEnergySourceBlockEntity(
 			}
 		}
 
-		fun getEnergyCapability(source: CreativeEnergySourceBlockEntity, direction: Direction?): IEnergyStorage {
+		fun getEnergyCapability(source: CreativeEnergySourceBlockEntity, direction: Direction?): EnergyHandler {
 			return source.energyStorage
 		}
 	}

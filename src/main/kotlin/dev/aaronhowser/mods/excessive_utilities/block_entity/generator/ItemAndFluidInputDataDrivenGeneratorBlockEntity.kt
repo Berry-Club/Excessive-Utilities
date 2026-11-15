@@ -1,10 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.ItemAndFluidInputDataDrivenGeneratorType
 import dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator.ItemFluidGeneratorMenu
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.ItemAndFluidFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
@@ -22,9 +24,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.fluid.FluidResource
 
 open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,
@@ -35,11 +39,11 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 
 	override val generatorType: GeneratorType = specificType.baseGeneratorType
 
-	val tank: FluidTank =
-		object : FluidTank(4_000) {
+	val tank: ConfigurableFluidTank =
+		object : ConfigurableFluidTank(4_000) {
 			override fun isFluidValid(stack: FluidStack): Boolean {
 				val level = level ?: return false
-				return ItemAndFluidFuelRecipe.isValidFluid(stack, specificType.fuelRecipeType, level.recipeManager)
+				return ItemAndFluidFuelRecipe.isValidFluid(stack, specificType.fuelRecipeType, ModRecipes.recipes(level))
 			}
 
 			override fun onContentsChanged() {
@@ -53,7 +57,7 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 
 	override fun clearContent() {
 		super.clearContent()
-		tank.drain(Int.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE)
+		tank.drain(Int.MAX_VALUE)
 	}
 
 	protected fun getRecipe(itemStack: ItemStack, fluidStack: FluidStack): ItemAndFluidFuelRecipe? {
@@ -63,7 +67,7 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 
 	override fun isValidInput(itemStack: ItemStack): Boolean {
 		val level = level ?: return false
-		return ItemAndFluidFuelRecipe.isValidItem(itemStack, specificType.fuelRecipeType, level.recipeManager)
+		return ItemAndFluidFuelRecipe.isValidItem(itemStack, specificType.fuelRecipeType, ModRecipes.recipes(level))
 	}
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
@@ -77,7 +81,7 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 		burnTimeRemaining = recipe.duration
 
 		inputItemStack.shrink(1)
-		tank.drain(recipe.fluidIngredient.amount(), IFluidHandler.FluidAction.EXECUTE)
+		tank.drain(recipe.fluidIngredient.amount())
 		setChanged()
 
 		return true
@@ -87,22 +91,23 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 		return ItemFluidGeneratorMenu(containerId, playerInventory, container, containerData, this)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		tank.writeToNBT(registries, tag)
+		tag.store(TANK_NBT, FluidStack.OPTIONAL_CODEC, tank.fluid)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		tank.readFromNBT(registries, tag)
+		tag.read(TANK_NBT, FluidStack.OPTIONAL_CODEC).ifPresent(tank::setFluid)
 	}
 
 	override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveWithoutMetadata(registries)
 	override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 
 	companion object {
+		const val TANK_NBT = "Tank"
 		fun slimy(pos: BlockPos, state: BlockState) = ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 			type = ModBlockEntityTypes.SLIMY_GENERATOR.get(),
 			specificType = ItemAndFluidInputDataDrivenGeneratorType.SLIMY,
@@ -117,7 +122,7 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 			blockState = state
 		)
 
-		fun getFluidCapability(blockEntity: ItemAndFluidInputDataDrivenGeneratorBlockEntity, direction: Direction?): IFluidHandler {
+		fun getFluidCapability(blockEntity: ItemAndFluidInputDataDrivenGeneratorBlockEntity, direction: Direction?): ResourceHandler<FluidResource> {
 			return blockEntity.tank
 		}
 	}

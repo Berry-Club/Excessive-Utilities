@@ -5,59 +5,100 @@
       "faces": {
         "down": {
           "cullface": "down",
-          "texture": "#bottom"
+          "texture": "#bottom",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "east": {
           "cullface": "east",
-          "texture": "#side"
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "north": {
           "cullface": "north",
-          "texture": "#side"
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "south": {
           "cullface": "south",
-          "texture": "#side"
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "up": {
           "cullface": "up",
-          "texture": "#top"
+          "texture": "#top",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         },
         "west": {
           "cullface": "west",
-          "texture": "#side"
+          "texture": "#side",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         }
       },
       "from": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "to": [
-        16,
-        16,
-        16
+        16.0,
+        16.0,
+        16.0
       ]
     },
     {
       "faces": {
         "north": {
-          "texture": "#overlay"
+          "texture": "#overlay",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
         }
       },
       "from": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "to": [
-        16,
-        16,
-        16
+        16.0,
+        16.0,
+        16.0
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
   "textures": {
     "bottom": "excessive_utilities:block/machine_block/bottom",
     "overlay": "excessive_utilities:block/furnace/off",

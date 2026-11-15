@@ -6,12 +6,13 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.QuantumQuarryBlockE
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelAccessor
 import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.ScheduledTickAccess
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
@@ -19,10 +20,10 @@ import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
 
-class QuantumQuarryActuatorBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)), EntityBlock {
+class QuantumQuarryActuatorBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -74,11 +75,13 @@ class QuantumQuarryActuatorBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN))
 
 	override fun updateShape(
 		state: BlockState,
-		direction: Direction,
-		neighborState: BlockState,
-		level: LevelAccessor,
+		level: LevelReader,
+		ticks: ScheduledTickAccess,
 		pos: BlockPos,
-		neighborPos: BlockPos
+		directionToNeighbour: Direction,
+		neighbourPos: BlockPos,
+		neighbourState: BlockState,
+		random: RandomSource
 	): BlockState {
 		return if (canSurvive(state, level, pos)) {
 			state
@@ -101,11 +104,11 @@ class QuantumQuarryActuatorBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN))
 			player.openMenu(blockEntity)
 		}
 
-		return InteractionResult.sidedSuccess(level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.FACING
 	}
 
 }

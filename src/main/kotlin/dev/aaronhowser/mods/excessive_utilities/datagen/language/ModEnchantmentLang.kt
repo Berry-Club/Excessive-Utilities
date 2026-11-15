@@ -8,7 +8,7 @@ object ModEnchantmentLang {
 
 	fun add(provider: ModLanguageProvider) {
 		fun addEnchantment(enchantment: ResourceKey<Enchantment>, value: String) {
-			val location = enchantment.location()
+			val location = enchantment.identifier()
 			val key = StringBuilder()
 				.append("enchantment.")
 				.append(location.namespace)

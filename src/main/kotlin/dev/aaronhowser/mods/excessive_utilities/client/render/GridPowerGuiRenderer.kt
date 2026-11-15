@@ -13,14 +13,14 @@ import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPow
 import net.minecraft.ChatFormatting
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.GuiGraphics
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.client.gui.GuiGraphicsExtractor
+import net.minecraft.resources.Identifier
 
 object GridPowerGuiRenderer {
 
-	val LAYER_NAME: ResourceLocation = ExcessiveUtilities.modResource("grid_power_gui_layer")
+	val LAYER_NAME: Identifier = ExcessiveUtilities.modResource("grid_power_gui_layer")
 
-	fun render(guiGraphics: GuiGraphics, deltaTracker: DeltaTracker) {
+	fun render(guiGraphics: GuiGraphicsExtractor, deltaTracker: DeltaTracker) {
 		val player = AaronClientUtil.localPlayer ?: return
 
 		if (!player.isHolding { it.isItem(ModItemTagsProvider.RENDER_GP_WHILE_HOLDING) }) {
@@ -40,12 +40,12 @@ object GridPowerGuiRenderer {
 			component.withStyle(ChatFormatting.RED)
 		}
 
-		guiGraphics.drawString(
+		guiGraphics.text(
 			Minecraft.getInstance().font,
 			component,
 			guiGraphics.guiWidth() / 2 + 5,
 			guiGraphics.guiHeight() / 2 + 5,
-			0xFFFFFF
+			0xFFFFFFFF.toInt()
 		)
 	}
 

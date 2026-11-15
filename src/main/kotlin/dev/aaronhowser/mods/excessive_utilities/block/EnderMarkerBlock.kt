@@ -11,14 +11,12 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import org.joml.Vector3f
 
-class EnderMarkerBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
+class EnderMarkerBlock(properties: Properties) : Block(properties) {
 
 	override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape {
 		return SHAPE
@@ -55,7 +53,7 @@ class EnderMarkerBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
 
 		if (otherPositions.isEmpty()) return InteractionResult.PASS
 
-		val particle = DustParticleOptions(Vector3f(1f, 0f, 0f), 1f)
+		val particle = DustParticleOptions(0xFF0000, 1f)
 
 		val y = pos.y + 0.8
 

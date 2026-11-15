@@ -9,18 +9,21 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
+import net.minecraft.nbt.ListTag
+import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.ResourceLocation
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
 import net.minecraft.world.level.saveddata.SavedData
+import net.minecraft.world.level.saveddata.SavedDataType
 import java.util.*
 
 class LastMillenniumHandler : SavedData() {
@@ -33,7 +36,7 @@ class LastMillenniumHandler : SavedData() {
 
 		val data = entity.persistentData
 		val returnInfo = CompoundTag()
-		returnInfo.putString(FROM_DIM, level.dimension().location().toString())
+		returnInfo.putString(FROM_DIM, level.dimension().identifier().toString())
 		returnInfo.putLong(FROM_POS, entity.blockPosition().asLong())
 		data.put(PLAYER_RETURN_INFO, returnInfo)
 
@@ -51,6 +54,7 @@ class LastMillenniumHandler : SavedData() {
 			emptySet(),
 			entity.yRot,
 			entity.xRot,
+			true
 		)
 	}
 
@@ -80,7 +84,7 @@ class LastMillenniumHandler : SavedData() {
 
 		if (!data.contains(PLAYER_RETURN_INFO)) {
 			val targetLevel = level.server.overworld()
-			val spawnPos = targetLevel.sharedSpawnPos
+			val spawnPos = targetLevel.respawnData.pos()
 
 			entity.teleportTo(
 				targetLevel,
@@ -90,19 +94,20 @@ class LastMillenniumHandler : SavedData() {
 				emptySet(),
 				entity.yRot,
 				entity.xRot,
+				true
 			)
 
 			return
 		}
 
-		val returnInfo = data.getCompound(PLAYER_RETURN_INFO)
+		val returnInfo = data.getCompound(PLAYER_RETURN_INFO).orElseThrow()
 
-		val fromDimString = returnInfo.getString(FROM_DIM)
-		val fromPosLong = returnInfo.getLong(FROM_POS)
+		val fromDimString = returnInfo.getString(FROM_DIM).orElseThrow()
+		val fromPosLong = returnInfo.getLong(FROM_POS).orElseThrow()
 
 		val fromDimKey = ResourceKey.create(
 			Registries.DIMENSION,
-			ResourceLocation.parse(fromDimString)
+			Identifier.parse(fromDimString)
 		)
 
 		val fromPos = fromPosLong.toBlockPos()
@@ -119,6 +124,7 @@ class LastMillenniumHandler : SavedData() {
 			emptySet(),
 			entity.yRot,
 			entity.xRot,
+			true
 		)
 	}
 
@@ -183,13 +189,13 @@ class LastMillenniumHandler : SavedData() {
 		}
 	}
 
-	override fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
-		val listTag = tag.getList(CHUNK_LIST_NBT, Tag.TAG_COMPOUND.toInt())
+	fun save(tag: CompoundTag, registries: HolderLookup.Provider): CompoundTag {
+		val listTag = ListTag()
 
 		for ((uuid, chunkPos) in playerChunks) {
 			val chunkTag = CompoundTag()
-			chunkTag.putUUID(PLAYER_NBT, uuid)
-			chunkTag.putLong(CHUNK_NBT, chunkPos.toLong())
+			chunkTag.store(PLAYER_NBT, UUIDUtil.CODEC, uuid)
+			chunkTag.putLong(CHUNK_NBT, chunkPos.pack())
 			listTag.add(chunkTag)
 		}
 
@@ -216,12 +222,12 @@ class LastMillenniumHandler : SavedData() {
 		private fun load(tag: CompoundTag, provider: HolderLookup.Provider): LastMillenniumHandler {
 			val data = LastMillenniumHandler()
 
-			val listTag = tag.getList(CHUNK_LIST_NBT, Tag.TAG_COMPOUND.toInt())
+			val listTag = tag.getList(CHUNK_LIST_NBT).orElseThrow()
 			for (i in listTag.indices) {
-				val coordinateTag = listTag.getCompound(i)
+				val coordinateTag = listTag.getCompound(i).orElseThrow()
 
-				val uuid = coordinateTag.getUUID(PLAYER_NBT)
-				val chunkLong = coordinateTag.getLong(CHUNK_NBT)
+				val uuid = coordinateTag.read(PLAYER_NBT, UUIDUtil.CODEC).orElseThrow()
+				val chunkLong = coordinateTag.getLong(CHUNK_NBT).orElseThrow()
 				val chunkPos = chunkLong.toChunkPos()
 
 				data.playerChunks[uuid] = chunkPos
@@ -236,9 +242,16 @@ class LastMillenniumHandler : SavedData() {
 			}
 
 			val storage = level.dataStorage
-			val factory = Factory(::LastMillenniumHandler, ::load)
-
-			return storage.computeIfAbsent(factory, SAVED_DATA_NAME)
+			val type = SavedDataType(
+				ExcessiveUtilities.modResource(SAVED_DATA_NAME),
+				::LastMillenniumHandler,
+				CompoundTag.CODEC.xmap(
+					{ tag -> load(tag, level.registryAccess()) },
+					{ data -> data.save(CompoundTag(), level.registryAccess()) }
+				),
+				DataFixTypes.SAVED_DATA_COMMAND_STORAGE
+			)
+			return storage.computeIfAbsent(type)
 		}
 
 		fun getLastMillenniumLevel(level: ServerLevel): ServerLevel {

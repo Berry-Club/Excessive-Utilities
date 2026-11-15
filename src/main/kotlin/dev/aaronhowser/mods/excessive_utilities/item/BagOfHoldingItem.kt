@@ -6,7 +6,7 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.item.ItemEntity
@@ -17,12 +17,13 @@ import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.ItemUtils
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.level.Level
 import java.util.*
 
-class BagOfHoldingItem(properties: Properties) : Item(properties) {
+class BagOfHoldingItem(properties: Properties) : Item(properties), TooltipItem {
 
-	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
+	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResult {
 		val usedStack = player.getItemInHand(usedHand)
 
 		if (level is ServerLevel) {
@@ -43,7 +44,7 @@ class BagOfHoldingItem(properties: Properties) : Item(properties) {
 			player.openMenu(menuProvider)
 		}
 
-		return InteractionResultHolder.sidedSuccess(usedStack, level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
 	override fun onDestroyed(itemEntity: ItemEntity, damageSource: DamageSource) {
@@ -51,21 +52,22 @@ class BagOfHoldingItem(properties: Properties) : Item(properties) {
 		if (level is ServerLevel) {
 			val bagId = itemEntity.item.get(ModDataComponents.BAG_OF_HOLDING_ID) ?: return
 			val items = BagOfHoldingHandler.get(level).removeBag(bagId)
-			ItemUtils.onContainerDestroyed(itemEntity, items)
+			ItemUtils.onContainerDestroyed(itemEntity, items.stream())
 		}
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		if (!tooltipFlag.hasShiftDown()) return
 
 		val bagId = stack.get(ModDataComponents.BAG_OF_HOLDING_ID)
 		if (bagId != null) {
-			tooltipComponents.add(Component.literal(bagId.toString()))
+			builder.accept(Component.literal(bagId.toString()))
 		}
 	}
 
@@ -86,3 +88,11 @@ class BagOfHoldingItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+
+
+

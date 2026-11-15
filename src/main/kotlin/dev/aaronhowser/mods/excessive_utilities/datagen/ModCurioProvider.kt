@@ -3,17 +3,15 @@ package dev.aaronhowser.mods.excessive_utilities.datagen
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import top.theillusivec4.curios.api.CuriosDataProvider
 import java.util.concurrent.CompletableFuture
 
 class ModCurioProvider(
 	output: PackOutput,
-	fileHelper: ExistingFileHelper,
 	registries: CompletableFuture<HolderLookup.Provider>
-) : CuriosDataProvider(ExcessiveUtilities.MOD_ID, output, fileHelper, registries) {
+) : CuriosDataProvider(ExcessiveUtilities.MOD_ID, output, registries) {
 
-	override fun generate(registries: HolderLookup.Provider, fileHelper: ExistingFileHelper) {
+	override fun generate(registries: HolderLookup.Provider) {
 		createEntities(PLAYERS_RULE)
 			.addPlayer()
 			.addSlots(RING_SLOT)

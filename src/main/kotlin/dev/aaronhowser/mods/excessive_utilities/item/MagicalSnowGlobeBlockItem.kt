@@ -9,22 +9,23 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.level.Level
+import net.minecraft.world.item.component.TooltipDisplay
 
-class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MAGICAL_SNOW_GLOBE.get(), properties) {
+class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MAGICAL_SNOW_GLOBE.get(), properties), TooltipItem {
 
 	override fun inventoryTick(
 		stack: ItemStack,
-		level: Level,
+		level: ServerLevel,
 		entity: Entity,
-		slotId: Int,
-		isSelected: Boolean
+		slot: EquipmentSlot?
 	) {
 		if (level.gameTime % 200 != 0L) return
 		val progress = stack.get(ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS) ?: return
@@ -42,23 +43,24 @@ class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MA
 		)
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		val progress = stack.get(ModDataComponents.MAGICAL_SNOW_GLOBE_PROGRESS) ?: return
 
-		tooltipComponents += ModMenuLang.SNOW_GLOBE_TOOLTIP_1.toComponent().withStyle(ChatFormatting.AQUA)
-		tooltipComponents += ModMenuLang.SNOW_GLOBE_TOOLTIP_2.toComponent().withStyle(ChatFormatting.AQUA)
+		builder.accept(ModMenuLang.SNOW_GLOBE_TOOLTIP_1.toComponent().withStyle(ChatFormatting.AQUA))
+		builder.accept(ModMenuLang.SNOW_GLOBE_TOOLTIP_2.toComponent().withStyle(ChatFormatting.AQUA))
 
 		if (progress.isComplete) {
-			tooltipComponents += ModMenuLang.SNOW_GLOBE_READY.toGrayComponent()
+			builder.accept(ModMenuLang.SNOW_GLOBE_READY.toGrayComponent())
 			return
 		}
 
-		tooltipComponents += ModMenuLang.SNOW_GLOBE_INSTRUCTIONS.toGrayComponent(progress.amountRequired)
+		builder.accept(ModMenuLang.SNOW_GLOBE_INSTRUCTIONS.toGrayComponent(progress.amountRequired))
 
 		for ((biomeTag, found) in progress.biomes) {
 			val name = ModMenuLang.biomeTagLangKey(biomeTag).toComponent()
@@ -71,7 +73,7 @@ class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MA
 
 			val component = Component.literal("- ").append(name)
 
-			tooltipComponents += component
+			builder.accept(component)
 		}
 	}
 

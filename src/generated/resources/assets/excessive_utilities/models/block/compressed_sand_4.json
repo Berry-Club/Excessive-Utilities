@@ -29,14 +29,14 @@
         }
       },
       "from": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "to": [
-        16,
-        16,
-        16
+        16.0,
+        16.0,
+        16.0
       ]
     },
     {
@@ -67,18 +67,17 @@
         }
       },
       "from": [
-        0,
-        0,
-        0
+        0.0,
+        0.0,
+        0.0
       ],
       "to": [
-        16,
-        16,
-        16
+        16.0,
+        16.0,
+        16.0
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
   "textures": {
     "overlay": "excessive_utilities:block/compressed/4",
     "particle": "minecraft:block/sand",

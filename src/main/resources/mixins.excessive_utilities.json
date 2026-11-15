@@ -2,19 +2,9 @@
 	"required": true,
 	"minVersion": "0.8",
 	"package": "dev.aaronhowser.mods.excessive_utilities.mixin",
-	"mixins": [
-		"AbstractFurnaceBlockEntityMixin",
-		"AnvilMenuMixin",
-		"DiggingMixin",
-		"EntityMixin",
-		"IOWorkerMixin",
-		"LevelMixin"
-	],
+	"mixins": ["AbstractFurnaceBlockEntityMixin", "AnvilMenuMixin", "DiggingMixin", "EntityMixin", "IOWorkerMixin", "LevelMixin"],
 	"injectors": {
 		"defaultRequire": 1
 	},
-	"client": [
-		"AnvilScreenMixin",
-		"LivingEntityRendererMixin"
-	]
+	"client": ["AnvilScreenMixin", "LivingEntityRendererMixin"]
 }

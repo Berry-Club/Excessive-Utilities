@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.InsideBlockEffectApplier
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
@@ -13,7 +14,7 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
@@ -39,7 +40,7 @@ class SpikeBlock(
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.clickedFace)
 	}
@@ -55,15 +56,11 @@ class SpikeBlock(
 		}
 	}
 
-	override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity) {
+	override fun entityInside(state: BlockState, level: Level, pos: BlockPos, entity: Entity, effectApplier: InsideBlockEffectApplier, isPrecise: Boolean) {
 		if (entity !is LivingEntity || level !is ServerLevel || level.gameTime % 10 != 0L) return
 
 		if (!canKill && entity.health <= damagePerHit) {
 			return
-		}
-
-		if (dropsExperience) {
-			entity.lastHurtByPlayerTime = 100
 		}
 
 		if (killsAsPlayer) {
@@ -72,14 +69,14 @@ class SpikeBlock(
 				GameProfile(UUID.fromString("21b80106-00e9-4bf0-b903-3a1caf2da923"), "EU_SpikeBlock_Killer")
 			)
 
-			entity.hurt(level.damageSources().playerAttack(fakePlayer), damagePerHit)
+			entity.hurtServer(level, level.damageSources().playerAttack(fakePlayer), damagePerHit)
 		} else {
-			entity.hurt(level.damageSources().cactus(), damagePerHit)
+			entity.hurtServer(level, level.damageSources().cactus(), damagePerHit)
 		}
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.FACING
 
 		val UP_SHAPE: VoxelShape = createShape(Direction.UP)
 		val DOWN_SHAPE: VoxelShape = createShape(Direction.DOWN)

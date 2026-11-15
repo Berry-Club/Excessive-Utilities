@@ -63,9 +63,7 @@
         1.01,
         1.01
       ],
-      "neoforge_data": {
-        "block_light": 15
-      },
+      "light_emission": 15,
       "to": [
         14.99,
         14.99,
@@ -94,14 +92,14 @@
         }
       },
       "from": [
-        1,
-        1,
-        1
+        1.0,
+        1.0,
+        1.0
       ],
       "to": [
-        15,
-        15,
-        15
+        15.0,
+        15.0,
+        15.0
       ]
     },
     {
@@ -243,7 +241,6 @@
       ]
     }
   ],
-  "render_type": "minecraft:cutout",
   "textures": {
     "base": "excessive_utilities:block/redstone_lantern/base",
     "numbers": "excessive_utilities:block/redstone_lantern/numbers",

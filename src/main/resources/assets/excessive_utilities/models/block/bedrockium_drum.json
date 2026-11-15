@@ -7,6 +7,9 @@
 	"flip_v": true,
 	"render_type": "cutout",
 	"textures": {
+		"center": "excessive_utilities:block/drum/center_colored",
+		"stripe": "excessive_utilities:block/drum/bedrockium/center",
+		"top": "excessive_utilities:block/drum/bedrockium/top",
 		"particle": "excessive_utilities:block/drum/bedrockium/top"
 	}
 }

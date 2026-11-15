@@ -1,8 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.datagen.model
 
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.override
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.transform
-import dev.aaronhowser.mods.aaron.misc.AaronDsls.transforms
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.item.AngelRingItem
 import dev.aaronhowser.mods.excessive_utilities.item.EntityLassoItem
@@ -14,19 +11,16 @@ import net.minecraft.data.PackOutput
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemDisplayContext
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider
-import net.neoforged.neoforge.client.model.generators.ModelFile
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 
 class ModItemModelProvider(
-	output: PackOutput,
-	existingFileHelper: ExistingFileHelper
-) : ItemModelProvider(output, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	output: PackOutput
+) : ItemModelProvider(output, ExcessiveUtilities.MOD_ID) {
 
 	private val handledItems: MutableSet<Item> = mutableSetOf()
 
 	override fun registerModels() {
+		handledItems.clear()
+		existingItemModel(ModItems.KIKOKU.get(), modLoc("item/kikoku"))
 		lassos()
 		unstableItems()
 		bewlrs()
@@ -276,7 +270,7 @@ class ModItemModelProvider(
 			val name = getName(item)
 
 			getBuilder(name)
-				.parent(ModelFile.UncheckedModelFile("builtin/entity"))
+				.parent(ModelFile.UncheckedModelFile("block/block"))
 
 			handledItems.add(item)
 		}

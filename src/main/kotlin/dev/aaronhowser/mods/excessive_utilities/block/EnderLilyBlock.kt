@@ -12,14 +12,13 @@ import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.RandomSource
 import net.minecraft.world.level.*
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.neoforged.neoforge.common.Tags
 import kotlin.jvm.optionals.getOrDefault
 
-class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
+class EnderLilyBlock(properties: Properties) : CropBlock(properties) {
 
 	override fun getBaseSeedId(): ItemLike = ModItems.ENDER_LILY.get()
 
@@ -75,7 +74,7 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 					|| stateThere.getOptionalValue(BlockStateProperties.MOISTURE).getOrDefault(0) > 0
 
 			if (shouldTeleport) {
-				val success = teleportAway(level, pos, state)
+				val success = (level as? LevelAccessor)?.let { teleportAway(it, pos, state) } ?: false
 				if (success) {
 					return
 				}
@@ -86,26 +85,28 @@ class EnderLilyBlock : CropBlock(Properties.ofFullCopy(Blocks.WHEAT)) {
 
 	override fun updateShape(
 		state: BlockState,
-		facing: Direction,
-		facingState: BlockState,
-		level: LevelAccessor,
-		currentPos: BlockPos,
-		facingPos: BlockPos
+		level: LevelReader,
+		ticks: ScheduledTickAccess,
+		pos: BlockPos,
+		directionToNeighbour: Direction,
+		neighbourPos: BlockPos,
+		neighbourState: BlockState,
+		random: RandomSource
 	): BlockState {
 		if (ServerConfig.CONFIG.funnyEnderLilyTeleporting.get()) {
-			val shouldTeleportAway = level.getFluidState(facingPos).isFluid(Tags.Fluids.WATER)
-					|| facingState.getOptionalValue(BlockStateProperties.WATERLOGGED).getOrDefault(false)
-					|| facingState.getOptionalValue(BlockStateProperties.MOISTURE).getOrDefault(0) > 0
+			val shouldTeleportAway = level.getFluidState(neighbourPos).isFluid(Tags.Fluids.WATER)
+					|| neighbourState.getOptionalValue(BlockStateProperties.WATERLOGGED).getOrDefault(false)
+					|| neighbourState.getOptionalValue(BlockStateProperties.MOISTURE).getOrDefault(0) > 0
 
 			if (shouldTeleportAway) {
-				val success = teleportAway(level, currentPos, state)
+				val success = (level as? LevelAccessor)?.let { teleportAway(it, pos, state) } ?: false
 				if (success) {
 					return state
 				}
 			}
 		}
 
-		return super.updateShape(state, facing, facingState, level, currentPos, facingPos)
+		return super.updateShape(state, level, ticks, pos, directionToNeighbour, neighbourPos, neighbourState, random)
 	}
 
 	companion object {

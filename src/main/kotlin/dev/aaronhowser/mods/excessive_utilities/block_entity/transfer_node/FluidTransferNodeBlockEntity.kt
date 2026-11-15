@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
@@ -13,8 +14,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.entity.player.Inventory
@@ -22,10 +21,14 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandlerUtil
+import net.neoforged.neoforge.transfer.fluid.FluidResource
+import net.neoforged.neoforge.transfer.transaction.Transaction
 
 class FluidTransferNodeBlockEntity(
 	pos: BlockPos,
@@ -33,7 +36,7 @@ class FluidTransferNodeBlockEntity(
 ) : TransferNodeBlockEntity(ModBlockEntityTypes.FLUID_TRANSFER_NODE.get(), pos, blockState) {
 
 	private val bufferTank =
-		object : FluidTank(TANK_SIZE) {
+		object : ConfigurableFluidTank(TANK_SIZE) {
 			override fun onContentsChanged() {
 				this@FluidTransferNodeBlockEntity.setChanged()
 			}
@@ -47,7 +50,7 @@ class FluidTransferNodeBlockEntity(
 
 	override fun clearContent() {
 		super.clearContent()
-		bufferTank.drain(Int.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE)
+		bufferTank.drain(Int.MAX_VALUE)
 	}
 
 	private fun passesFilter(stack: ItemStack): Boolean {
@@ -57,159 +60,82 @@ class FluidTransferNodeBlockEntity(
 		return ItemFilterItem.passesFilter(filterStack, stack)
 	}
 
-	private fun getParentFluidHandler(level: ServerLevel): IFluidHandler? {
-		return level.getCapability(Capabilities.FluidHandler.BLOCK, placedOnPos, placedOnDirection.opposite)
+	private fun getParentFluidHandler(level: ServerLevel): ResourceHandler<FluidResource>? {
+		return level.getCapability(Capabilities.Fluid.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
 	override fun getBufferAmount(): Int = bufferTank.fluidAmount
 
 	override fun pushIntoPingPos(level: ServerLevel) {
-		val fluidInBuffer = bufferTank.fluid
-		if (fluidInBuffer.isEmpty) return
-
+		if (bufferTank.isEmpty) return
 		if (hasConfiguredTransmitter()) {
-			val remaining = fluidInBuffer.copy()
-			visitEnderReceivers(level) { receiver ->
-				transferToEnderReceiver(receiver, remaining)
-			}
-
-			if (bufferTank.isEmpty) return
+			val remaining = bufferTank.fluid
+			visitEnderReceivers(level) { receiver -> transferToEnderReceiver(receiver, remaining) }
 		}
+		for (handler in getFluidHandlersAroundPing(level)) {
+			if (bufferTank.isEmpty) break
+			if (pushBuffer(handler) > 0) didWorkThisTick = true
+		}
+	}
 
-		val fluidHandlers = getFluidHandlersAroundPing(level)
-		if (fluidHandlers.isEmpty()) return
-
-		for (handler in fluidHandlers) {
-			val amountInserted = handler.fill(fluidInBuffer, IFluidHandler.FluidAction.EXECUTE)
-			if (amountInserted <= 0) continue
-
-			if (!hasCreativeUpgrade()) {
-				bufferTank.drain(amountInserted, IFluidHandler.FluidAction.EXECUTE)
-			}
-
-			didWorkThisTick = true
+	private fun pushBuffer(handler: ResourceHandler<FluidResource>): Int {
+		if (bufferTank.isEmpty) return 0
+		if (!hasCreativeUpgrade()) return ResourceHandlerUtil.move(bufferTank, handler, { true }, bufferTank.fluidAmount, null)
+		return Transaction.openRoot().use { transaction ->
+			val inserted = handler.insert(bufferTank.getResource(0), bufferTank.fluidAmount, transaction)
+			transaction.commit()
+			inserted
 		}
 	}
 
 	override fun pullFromPingPos(level: ServerLevel) {
 		if (hasConfiguredReceiver()) return
-
-		val fluidHandlers = getFluidHandlersAroundPing(level)
-		if (fluidHandlers.isEmpty()) return
-
-		val amountInBuffer = bufferTank.fluidAmount
-		val amountThatCanFit = bufferTank.capacity - amountInBuffer
-		if (amountThatCanFit <= 0) return
-
 		val maxAmount = if (hasStackUpgrade()) 1_000 else 200
-		val amountToExtract = amountThatCanFit.coerceAtMost(maxAmount)
-
-		val filterStack = filterContainer.getItem(0)
-
-		for (handler in fluidHandlers) {
-			val simulated = handler.drain(amountToExtract, IFluidHandler.FluidAction.SIMULATE)
-			if (simulated.isEmpty) continue
-
-			if (filterStack.isItem(ModItems.FLUID_FILTER)) {
-				val passesFilter = FluidFilterItem.passesFilter(filterStack, simulated)
-				if (!passesFilter) continue
+		val filter = filterContainer.getItem(0)
+		for (handler in getFluidHandlersAroundPing(level)) {
+			val moved = ResourceHandlerUtil.move(
+				handler, bufferTank,
+				{ resource -> !filter.isItem(ModItems.FLUID_FILTER) || FluidFilterItem.passesFilter(filter, resource.toStack(1)) }, maxAmount, null
+			)
+			if (moved > 0) {
+				didWorkThisTick = true; return
 			}
-
-			val actualExtracted = handler.drain(amountToExtract, IFluidHandler.FluidAction.EXECUTE)
-			if (actualExtracted.isEmpty) continue
-
-			if (filterStack.isItem(ModItems.FLUID_FILTER)) {
-				val passesFilter = FluidFilterItem.passesFilter(filterStack, actualExtracted)
-				if (!passesFilter) continue
-			}
-
-			bufferTank.fill(actualExtracted, IFluidHandler.FluidAction.EXECUTE)
-			didWorkThisTick = true
-			return
 		}
 	}
 
-	private fun getFluidHandlersAroundPing(level: ServerLevel): List<IFluidHandler> {
+	private fun getFluidHandlersAroundPing(level: ServerLevel): List<ResourceHandler<FluidResource>> {
 		return getCapabilitiesAroundPing(level) { neighborPos, side ->
-			level.getCapability(Capabilities.FluidHandler.BLOCK, neighborPos, side)
+			level.getCapability(Capabilities.Fluid.BLOCK, neighborPos, side)
 		}
 	}
 
 	fun receiveEnderTransfer(stack: FluidStack): Int {
 		val filterStack = filterContainer.getItem(0)
 		if (filterStack.isItem(ModItems.FLUID_FILTER) && !FluidFilterItem.passesFilter(filterStack, stack)) return 0
-		return bufferTank.fill(stack, IFluidHandler.FluidAction.EXECUTE)
+		return bufferTank.fill(stack)
 	}
 
-	private fun transferToEnderReceiver(
-		receiver: TransferNodeBlockEntity,
-		remaining: FluidStack
-	): Boolean {
-		if (remaining.isEmpty) return false
-		if (receiver !is FluidTransferNodeBlockEntity) return false
-
-		val accepted = receiver.receiveEnderTransfer(remaining)
-		if (accepted <= 0) return false
-
-		if (!hasCreativeUpgrade()) {
-			bufferTank.drain(accepted, IFluidHandler.FluidAction.EXECUTE)
-			remaining.shrink(accepted)
-		}
-
+	private fun transferToEnderReceiver(receiver: TransferNodeBlockEntity, remaining: FluidStack): Boolean {
+		if (receiver !is FluidTransferNodeBlockEntity || bufferTank.isEmpty) return false
+		val filter = receiver.filterContainer.getItem(0)
+		if (filter.isItem(ModItems.FLUID_FILTER) && !FluidFilterItem.passesFilter(filter, bufferTank.fluid)) return false
+		val accepted = pushBuffer(receiver.bufferTank)
+		if (accepted == 0) return false
+		if (!hasCreativeUpgrade()) remaining.shrink(accepted)
 		didWorkThisTick = true
 		return true
 	}
 
 	override fun pushIntoParent(level: ServerLevel) {
-		val parentHandler = getParentFluidHandler(level) ?: return
-
-		val fluidInBuffer = bufferTank.fluid
-		if (fluidInBuffer.isEmpty) return
-
-		val amountToInsert = parentHandler.fill(fluidInBuffer, IFluidHandler.FluidAction.SIMULATE)
-		if (amountToInsert <= 0) return
-
-		val actualAmountInserted = parentHandler.fill(fluidInBuffer, IFluidHandler.FluidAction.EXECUTE)
-		if (actualAmountInserted <= 0) return
-
-		if (!hasCreativeUpgrade()) {
-			bufferTank.drain(actualAmountInserted, IFluidHandler.FluidAction.EXECUTE)
-		}
-
-		didWorkThisTick = true
+		val parent = getParentFluidHandler(level) ?: return
+		if (pushBuffer(parent) > 0) didWorkThisTick = true
 	}
 
 	override fun pullFromParent(level: ServerLevel) {
 		if (worldInteraction(level)) return
-
-		val parentHandler = getParentFluidHandler(level) ?: return
-
-		val amountThatCanFit = bufferTank.capacity - bufferTank.fluidAmount
-		if (amountThatCanFit <= 0) return
-
-		val maxAmount = if (hasStackUpgrade()) 1_000 else 200
-		val amountToExtract = amountThatCanFit.coerceAtMost(maxAmount)
-		if (amountToExtract <= 0) return
-
-		val fluidInBuffer = bufferTank.fluid
-
-		for (tankIndex in 0 until parentHandler.tanks) {
-			val simulated = parentHandler.drain(amountToExtract, IFluidHandler.FluidAction.SIMULATE)
-			if (simulated.isEmpty) continue
-
-			val canExtract = fluidInBuffer.isEmpty || FluidStack.isSameFluidSameComponents(fluidInBuffer, simulated)
-			if (!canExtract) continue
-
-			val actualExtracted = parentHandler.drain(amountToExtract, IFluidHandler.FluidAction.EXECUTE)
-			if (actualExtracted.isEmpty) continue
-
-			val canDefinitelyExtract = fluidInBuffer.isEmpty || FluidStack.isSameFluidSameComponents(fluidInBuffer, actualExtracted)
-			if (!canDefinitelyExtract) continue
-
-			bufferTank.fill(actualExtracted, IFluidHandler.FluidAction.EXECUTE)
-			didWorkThisTick = true
-			return
-		}
+		val parent = getParentFluidHandler(level) ?: return
+		val moved = ResourceHandlerUtil.move(parent, bufferTank, { true }, if (hasStackUpgrade()) 1_000 else 200, null)
+		if (moved > 0) didWorkThisTick = true
 	}
 
 	private fun worldInteraction(level: ServerLevel): Boolean {
@@ -237,20 +163,18 @@ class FluidTransferNodeBlockEntity(
 
 		val fluidInBuffer = bufferTank.fluid
 		if (fluidInBuffer.isEmpty) {
-			bufferTank.fill(output, IFluidHandler.FluidAction.EXECUTE)
+			bufferTank.fill(output)
 			didWorkThisTick = true
 			return true
 		}
 
 		if (!FluidStack.isSameFluidSameComponents(fluidInBuffer, output)) return false
 
-		val amountThatFits = bufferTank.capacity - bufferTank.fluidAmount
+		val amountThatFits = bufferTank.tankCapacity - bufferTank.fluidAmount
 		val amountToAdd = output.amount.coerceAtMost(amountThatFits)
 		if (amountToAdd <= 0) return false
 
-		val newStack = fluidInBuffer.copy()
-		newStack.grow(amountToAdd)
-		bufferTank.fill(newStack, IFluidHandler.FluidAction.EXECUTE)
+		bufferTank.fill(output.copyWithAmount(amountToAdd))
 		didWorkThisTick = true
 		return true
 	}
@@ -266,30 +190,22 @@ class FluidTransferNodeBlockEntity(
 		)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
-		val bufferTag = CompoundTag()
-		bufferTank.writeToNBT(registries, bufferTag)
-		tag.put(BUFFER_NBT, bufferTag)
+		tag.store(BUFFER_NBT, FluidStack.OPTIONAL_CODEC, bufferTank.fluid)
 
 		if (!filterContainer.isEmpty) {
-			val filterTag = CompoundTag()
-			filterTag.saveItems(filterContainer, registries)
-			tag.put(FILTER_NBT, filterTag)
+			tag.child(FILTER_NBT).saveItems(filterContainer)
 		}
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		val bufferTag = tag.getCompound(BUFFER_NBT)
-		bufferTank.readFromNBT(registries, bufferTag)
+		tag.read(BUFFER_NBT, FluidStack.OPTIONAL_CODEC).ifPresent(bufferTank::setFluid)
 
-		if (tag.contains(FILTER_NBT)) {
-			val filterTag = tag.getCompound(FILTER_NBT)
-			filterTag.loadItems(filterContainer, registries)
-		}
+		tag.child(FILTER_NBT).ifPresent { it.loadItems(filterContainer) }
 	}
 
 	companion object {

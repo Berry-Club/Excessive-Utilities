@@ -6,17 +6,15 @@ import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.EnergyBar
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.ProgressArrow
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 
 class EnchanterScreen(
 	menu: EnchanterMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<EnchanterMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = LABEL
+) : ExcessiveUtilitiesScreen<EnchanterMenu>(menu, playerInventory, title, BACKGROUND) {
+	override val titleLabelSprite: Identifier = LABEL
 
 	override fun baseInit() {
 		super.baseInit()
@@ -46,7 +44,7 @@ class EnchanterScreen(
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/enchanter.png"), 176, 180)
 		val PROGRESS_ARROW_TEXTURE = ExcessiveUtilities.modResource("enchanter_arrow_right")
 
-		val LABEL: ResourceLocation =
+		val LABEL: Identifier =
 			ExcessiveUtilities.modResource("label/enchanter")
 	}
 

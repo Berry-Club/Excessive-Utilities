@@ -65,7 +65,7 @@ object GridPowerCommand : AaronCommandHelper {
 
 	private fun invite(source: CommandSourceStack, invitedPlayer: ServerPlayer): Int {
 		val inviter = source.playerOrException
-		val handler = GridPowerHandler.get(inviter.serverLevel())
+		val handler = GridPowerHandler.get(inviter.level())
 		val result = handler.invite(inviter.uuid, invitedPlayer.uuid)
 
 		when (result.status) {
@@ -108,7 +108,7 @@ object GridPowerCommand : AaronCommandHelper {
 
 	private fun accept(source: CommandSourceStack): Int {
 		val player = source.playerOrException
-		val handler = GridPowerHandler.get(player.serverLevel())
+		val handler = GridPowerHandler.get(player.level())
 		val result = handler.acceptInvitation(player.uuid)
 
 		if (!result.isSuccess) {
@@ -134,7 +134,7 @@ object GridPowerCommand : AaronCommandHelper {
 
 	private fun decline(source: CommandSourceStack): Int {
 		val player = source.playerOrException
-		val handler = GridPowerHandler.get(player.serverLevel())
+		val handler = GridPowerHandler.get(player.level())
 		val result = handler.declineInvitation(player.uuid)
 
 		if (!result.isSuccess) {
@@ -150,7 +150,7 @@ object GridPowerCommand : AaronCommandHelper {
 
 	private fun leave(source: CommandSourceStack): Int {
 		val player = source.playerOrException
-		val handler = GridPowerHandler.get(player.serverLevel())
+		val handler = GridPowerHandler.get(player.level())
 		val result = handler.leaveGroup(player.uuid)
 
 		if (!result.isSuccess) {
@@ -164,7 +164,7 @@ object GridPowerCommand : AaronCommandHelper {
 
 	private fun members(source: CommandSourceStack): Int {
 		val player = source.playerOrException
-		val handler = GridPowerHandler.get(player.serverLevel())
+		val handler = GridPowerHandler.get(player.level())
 		val memberUuids = handler.getMemberUuids(player.uuid)
 			.sortedBy { getPlayerName(source, it).string }
 		val memberNames = ComponentUtils.formatList(memberUuids) { getPlayerName(source, it) }
@@ -178,7 +178,7 @@ object GridPowerCommand : AaronCommandHelper {
 
 	private fun kick(source: CommandSourceStack, memberName: String): Int {
 		val owner = source.playerOrException
-		val handler = GridPowerHandler.get(owner.serverLevel())
+		val handler = GridPowerHandler.get(owner.level())
 		val memberUuid = findMemberUuid(source, memberName)
 
 		if (memberUuid == null) {
@@ -219,7 +219,7 @@ object GridPowerCommand : AaronCommandHelper {
 		builder: SuggestionsBuilder
 	): CompletableFuture<Suggestions> {
 		val player = source.player ?: return builder.buildFuture()
-		val handler = GridPowerHandler.get(player.serverLevel())
+		val handler = GridPowerHandler.get(player.level())
 		if (!handler.canInvite(player.uuid)) return builder.buildFuture()
 
 		val currentMemberUuids = handler.getMemberUuids(player.uuid)
@@ -240,7 +240,7 @@ object GridPowerCommand : AaronCommandHelper {
 		builder: SuggestionsBuilder
 	): CompletableFuture<Suggestions> {
 		val player = source.player ?: return builder.buildFuture()
-		val handler = GridPowerHandler.get(player.serverLevel())
+		val handler = GridPowerHandler.get(player.level())
 		if (!handler.isGroupOwner(player.uuid)) return builder.buildFuture()
 
 		val names = mutableListOf<String>()
@@ -255,7 +255,7 @@ object GridPowerCommand : AaronCommandHelper {
 
 	private fun findMemberUuid(source: CommandSourceStack, memberName: String): UUID? {
 		val player = source.playerOrException
-		val handler = GridPowerHandler.get(player.serverLevel())
+		val handler = GridPowerHandler.get(player.level())
 
 		for (memberUuid in handler.getMemberUuids(player.uuid)) {
 			if (memberUuid.toString().equals(memberName, ignoreCase = true)) return memberUuid
@@ -278,11 +278,11 @@ object GridPowerCommand : AaronCommandHelper {
 	}
 
 	private fun getProfileName(source: CommandSourceStack, playerUuid: UUID): String? {
-		val profileCache = source.server.profileCache ?: return null
-		return profileCache.get(playerUuid).orElse(null)?.name
+		val profileCache = source.server.services().nameToIdCache()
+		return profileCache.get(playerUuid).orElse(null)?.name()
 	}
 
 	private fun getPlayerName(player: ServerPlayer): Component {
-		return player.displayName ?: player.name
+		return player.displayName
 	}
 }

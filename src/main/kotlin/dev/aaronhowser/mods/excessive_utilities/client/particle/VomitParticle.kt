@@ -2,8 +2,11 @@ package dev.aaronhowser.mods.excessive_utilities.client.particle
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.client.particle.*
+import net.minecraft.client.particle.ParticleProvider
+import net.minecraft.client.particle.SingleQuadParticle
+import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.util.RandomSource
 
 class VomitParticle(
 	level: ClientLevel,
@@ -14,7 +17,7 @@ class VomitParticle(
 	ySpeed: Double,
 	zSpeed: Double,
 	sprites: SpriteSet
-) : TextureSheetParticle(level, x, y, z, xSpeed, ySpeed, zSpeed) {
+) : SingleQuadParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites.get(level.random)) {
 
 	init {
 		xd = xSpeed
@@ -33,12 +36,11 @@ class VomitParticle(
 		)
 
 		setAlpha(0.9f)
-		pickSprite(sprites)
 	}
 
-	override fun getRenderType(): ParticleRenderType = ParticleRenderType.PARTICLE_SHEET_TRANSLUCENT
+	override fun getLayer(): Layer = Layer.TRANSLUCENT
 
-	class Provider(private val sprites: SpriteSet) : ParticleProvider<SimpleParticleType> {
+	class Provider(private val sprites: SpriteSet) : ParticleProvider.Sprite<SimpleParticleType> {
 		override fun createParticle(
 			type: SimpleParticleType,
 			level: ClientLevel,
@@ -47,8 +49,9 @@ class VomitParticle(
 			z: Double,
 			xSpeed: Double,
 			ySpeed: Double,
-			zSpeed: Double
-		): Particle {
+			zSpeed: Double,
+			random: RandomSource
+		): SingleQuadParticle {
 			return VomitParticle(level, x, y, z, xSpeed, ySpeed, zSpeed, sprites)
 		}
 	}

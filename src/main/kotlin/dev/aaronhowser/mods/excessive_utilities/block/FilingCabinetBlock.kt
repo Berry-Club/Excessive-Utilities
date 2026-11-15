@@ -1,26 +1,25 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.block_entity.FilingCabinetBlockEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.network.chat.Component
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
 
-class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+class FilingCabinetBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -33,7 +32,7 @@ class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Enti
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -42,15 +41,15 @@ class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Enti
 		return FilingCabinetBlockEntity(pos, state)
 	}
 
-	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
-		if (!state.isBlock(newState.block)) {
+	override fun affectNeighborsAfterRemoval(state: BlockState, level: ServerLevel, pos: BlockPos, movedByPiston: Boolean) {
+		if (true) {
 			val be = level.getBlockEntity(pos)
 			if (be is FilingCabinetBlockEntity) {
 				be.dropAllItems()
 			}
 		}
 
-		super.onRemove(state, level, pos, newState, movedByPiston)
+		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston)
 	}
 
 	override fun useWithoutItem(
@@ -65,7 +64,7 @@ class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Enti
 
 			if (blockEntity is FilingCabinetBlockEntity) {
 				val count = blockEntity.getItemCount()
-				player.displayClientMessage(Component.literal(count.toString()), false)
+				player.sendSystemMessage(Component.literal(count.toString()))
 			}
 		}
 
@@ -73,7 +72,7 @@ class FilingCabinetBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Enti
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 	}
 
 }

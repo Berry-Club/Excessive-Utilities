@@ -10,9 +10,7 @@ class SingleSlotScreen(
 	menu: SingleSlotMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<SingleSlotMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
+) : ExcessiveUtilitiesScreen<SingleSlotMenu>(menu, playerInventory, title, BACKGROUND) {
 
 	companion object {
 		val BACKGROUND = ScreenBackground(ExcessiveUtilities.modResource("textures/gui/single_slot.png"), 176, 166)

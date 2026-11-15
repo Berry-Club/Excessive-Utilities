@@ -16,13 +16,14 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
-import net.minecraft.advancements.critereon.ChangeDimensionTrigger
-import net.minecraft.advancements.critereon.ItemPredicate
+import net.minecraft.advancements.criterion.ChangeDimensionTrigger
+import net.minecraft.advancements.criterion.DataComponentMatchers
+import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentPredicate
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.core.component.DataComponentExactPredicate
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.Identifier
 import net.minecraft.tags.ItemTags
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 import java.util.function.Consumer
 
@@ -33,17 +34,17 @@ class ModAdvancementSubProvider(
 
 	override fun generate(
 		registries: HolderLookup.Provider,
-		saver: Consumer<AdvancementHolder>,
-		existingFileHelper: ExistingFileHelper
+		saver: Consumer<AdvancementHolder>
 	) {
-		fun Advancement.Builder.save(id: ResourceLocation) = save(saver, id, existingFileHelper)
+		fun Advancement.Builder.save(id: Identifier) = save(saver, id.toString())
+		val itemLookup = registries.lookupOrThrow(Registries.ITEM)
 
 		val root = advancement()
 			.display(
 				ModItems.ANGEL_BLOCK.get(),
 				ModAdvancementLang.ROOT_TITLE.toComponent(),
 				ModAdvancementLang.ROOT_DESC.toComponent(),
-				ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+				Identifier.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
 				AdvancementType.TASK,
 				false,
 				false,
@@ -53,7 +54,7 @@ class ModAdvancementSubProvider(
 				"has_wood",
 				hasItems(
 					ItemPredicate.Builder.item()
-						.of(ItemTags.LOGS)
+						.of(itemLookup, ItemTags.LOGS)
 				)
 			)
 			.save(ROOT)
@@ -69,7 +70,7 @@ class ModAdvancementSubProvider(
 				"has_gp_producer",
 				hasItems(
 					ItemPredicate.Builder.item()
-						.of(ModItemTagsProvider.GP_PRODUCER)
+						.of(itemLookup, ModItemTagsProvider.GP_PRODUCER)
 				)
 			)
 			.save(GP_PRODUCERS)
@@ -138,7 +139,7 @@ class ModAdvancementSubProvider(
 				"has_ender_quarry_upgrade",
 				hasItems(
 					ItemPredicate.Builder.item()
-						.of(ModItemTagsProvider.ENDER_QUARRY_UPGRADE)
+						.of(itemLookup, ModItemTagsProvider.ENDER_QUARRY_UPGRADE)
 				)
 			)
 			.save(ENDER_QUARRY_UPGRADE)
@@ -154,12 +155,14 @@ class ModAdvancementSubProvider(
 				"has_perfected_opinium_core",
 				hasItems(
 					ItemPredicate.Builder.item()
-						.of(ModItems.OPINIUM_CORE)
-						.hasComponents(
-							DataComponentPredicate.builder()
-								.expect(
-									ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-									OpiniumCoreContentsComponent.perfected()
+						.of(itemLookup, ModItems.OPINIUM_CORE)
+						.withComponents(
+							DataComponentMatchers.Builder.components()
+								.exact(
+									DataComponentExactPredicate.expect(
+										ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
+										OpiniumCoreContentsComponent.perfected()
+									)
 								)
 								.build()
 						)
@@ -310,7 +313,7 @@ class ModAdvancementSubProvider(
 	}
 
 	companion object {
-		private fun guide(path: String): ResourceLocation = ExcessiveUtilities.modResource("guide/$path")
+		private fun guide(path: String): Identifier = ExcessiveUtilities.modResource("guide/$path")
 
 		val ROOT = guide("root")
 		val GP_PRODUCERS = guide("gp_producers")

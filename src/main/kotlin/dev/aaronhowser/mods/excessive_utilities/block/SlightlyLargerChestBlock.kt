@@ -11,16 +11,15 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
 
-class SlightlyLargerChestBlock : SimpleContainerBlock(Properties.ofFullCopy(Blocks.CHEST)), EntityBlock {
+class SlightlyLargerChestBlock(properties: Properties) : SimpleContainerBlock(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -33,7 +32,7 @@ class SlightlyLargerChestBlock : SimpleContainerBlock(Properties.ofFullCopy(Bloc
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -46,24 +45,24 @@ class SlightlyLargerChestBlock : SimpleContainerBlock(Properties.ofFullCopy(Bloc
 		val be = level.getBlockEntity(pos)
 		if (be is MenuProvider) {
 			player.openMenu(be)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS
 	}
 
 	override fun hasAnalogOutputSignal(state: BlockState): Boolean = true
-	override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos): Int {
+	override fun getAnalogOutputSignal(state: BlockState, level: Level, pos: BlockPos, direction: Direction): Int {
 		val be = level.getBlockEntity(pos)
 		if (be is SlightlyLargerChestBlockEntity) {
 			return AbstractContainerMenu.getRedstoneSignalFromContainer(be.container)
 		}
 
-		return super.getAnalogOutputSignal(state, level, pos)
+		return super.getAnalogOutputSignal(state, level, pos, direction)
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 	}
 
 }

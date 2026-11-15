@@ -8,6 +8,7 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModAttachmentTypes
 import net.minecraft.core.particles.ParticleTypes
+import net.minecraft.util.context.ContextKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
@@ -17,6 +18,9 @@ object CurseHandler {
 
 	val ATTACK_ATTRIBUTE_MODIFIER = ExcessiveUtilities.modResource("cursed_attack")
 	val SPEED_ATTRIBUTE_MODIFIER = ExcessiveUtilities.modResource("cursed_speed")
+
+	@JvmField
+	val IS_CURSED = ContextKey<Boolean>(ExcessiveUtilities.modResource("is_cursed"))
 
 	fun isCursed(entity: Entity): Boolean = entity.getData(ModAttachmentTypes.IS_CURSED)
 

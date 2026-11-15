@@ -1,47 +1,30 @@
 package dev.aaronhowser.mods.excessive_utilities.mixin;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.llamalad7.mixinextras.sugar.Local;
 import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler;
-import net.minecraft.client.model.EntityModel;
-import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 
 @Mixin(LivingEntityRenderer.class)
 public abstract class LivingEntityRendererMixin {
 
-	@Redirect(
-			method = "render(Lnet/minecraft/world/entity/LivingEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",
+	@ModifyArg(
+			method = "submit*",
 			at = @At(
 					value = "INVOKE",
-					target = "Lnet/minecraft/client/model/EntityModel;renderToBuffer(Lcom/mojang/blaze3d/vertex/PoseStack;Lcom/mojang/blaze3d/vertex/VertexConsumer;III)V"
-			)
+					target = "Lnet/minecraft/client/renderer/SubmitNodeCollector;submitModel(Lnet/minecraft/client/model/Model;Ljava/lang/Object;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/rendertype/RenderType;IIILnet/minecraft/client/renderer/texture/TextureAtlasSprite;ILnet/minecraft/client/renderer/feature/ModelFeatureRenderer$CrumblingOverlay;)V"
+			),
+			index = 6
 	)
-	private void eu$tintCursedEntity(
-			EntityModel<LivingEntity> model,
-			PoseStack poseStack,
-			VertexConsumer vertexConsumer,
-			int packedLight,
-			int packedOverlay,
+	private int excessiveUtilities$tintCursedEntity(
 			int color,
-			LivingEntity entity,
-			float entityYaw,
-			float partialTick,
-			PoseStack originalPoseStack,
-			MultiBufferSource bufferSource,
-			int originalPackedLight
+			@Local(argsOnly = true, name = "state") LivingEntityRenderState state
 	) {
-		model.renderToBuffer(
-				poseStack,
-				vertexConsumer,
-				packedLight,
-				packedOverlay,
-				CurseHandler.INSTANCE.isCursed(entity) ? CurseHandler.darkenColor(color) : color
-		);
+		return state.getRenderDataOrDefault(CurseHandler.IS_CURSED, false)
+				? CurseHandler.darkenColor(color)
+				: color;
 	}
-
 }

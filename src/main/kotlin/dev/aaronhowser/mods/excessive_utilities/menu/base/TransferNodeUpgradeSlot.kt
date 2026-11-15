@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.base
 
-import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.world.Container

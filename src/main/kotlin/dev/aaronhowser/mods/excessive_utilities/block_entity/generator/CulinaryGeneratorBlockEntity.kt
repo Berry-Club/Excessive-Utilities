@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.Gene
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
@@ -18,8 +19,8 @@ class CulinaryGeneratorBlockEntity(
 	override val generatorType: GeneratorType = GeneratorType.CULINARY
 
 	override fun isValidInput(itemStack: ItemStack): Boolean {
-		val foodValue = itemStack.getFoodProperties(null)
-		return foodValue != null && (foodValue.nutrition > 0 || foodValue.saturation > 0f)
+		val foodValue = itemStack.get(DataComponents.FOOD)
+		return foodValue != null && (foodValue.nutrition() > 0 || foodValue.saturation() > 0f)
 	}
 
 	override fun tryStartBurning(level: ServerLevel): Boolean {
@@ -42,10 +43,10 @@ class CulinaryGeneratorBlockEntity(
 
 	companion object {
 		fun getFeValues(itemStack: ItemStack): Pair<Int, Int> {
-			val foodProperties = itemStack.getFoodProperties(null) ?: return Pair(0, 0)
+			val foodProperties = itemStack.get(DataComponents.FOOD) ?: return Pair(0, 0)
 
-			val nutrition = foodProperties.nutrition
-			val saturation = foodProperties.saturation
+			val nutrition = foodProperties.nutrition()
+			val saturation = foodProperties.saturation()
 
 			var feTotal = nutrition * saturation * 8000
 			var fePerTick = nutrition * 8

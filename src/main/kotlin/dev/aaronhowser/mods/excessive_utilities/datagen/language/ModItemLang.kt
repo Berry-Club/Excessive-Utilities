@@ -128,7 +128,7 @@ object ModItemLang {
 				potionName: String,
 				potion: DeferredHolder<Potion, Potion>
 			) {
-				val effectName = ExcessiveUtilities.MOD_ID + "." + potion.unwrapKey().get().location().path
+				val effectName = ExcessiveUtilities.MOD_ID + "." + potion.unwrapKey().get().identifier().path
 
 				add("item.minecraft.tipped_arrow.effect.$effectName", "Arrow of $potionName")
 				add("item.minecraft.potion.effect.$effectName", "Potion of $potionName")

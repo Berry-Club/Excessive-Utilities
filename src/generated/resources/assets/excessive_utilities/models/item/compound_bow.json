@@ -3,9 +3,9 @@
   "display": {
     "firstperson_lefthand": {
       "rotation": [
-        0,
-        90,
-        -25
+        0.0,
+        90.0,
+        -25.0
       ],
       "scale": [
         0.68,
@@ -20,9 +20,9 @@
     },
     "firstperson_righthand": {
       "rotation": [
-        0,
-        -90,
-        25
+        0.0,
+        -90.0,
+        25.0
       ],
       "scale": [
         0.68,
@@ -37,9 +37,9 @@
     },
     "thirdperson_lefthand": {
       "rotation": [
-        -80,
-        -280,
-        40
+        -80.0,
+        -280.0,
+        40.0
       ],
       "scale": [
         0.9,
@@ -47,16 +47,16 @@
         0.9
       ],
       "translation": [
-        -1,
-        -2,
+        -1.0,
+        -2.0,
         2.5
       ]
     },
     "thirdperson_righthand": {
       "rotation": [
-        -80,
-        260,
-        -40
+        -80.0,
+        260.0,
+        -40.0
       ],
       "scale": [
         0.9,
@@ -64,44 +64,12 @@
         0.9
       ],
       "translation": [
-        -1,
-        -2,
+        -1.0,
+        -2.0,
         2.5
       ]
     }
   },
-  "overrides": [
-    {
-      "model": "excessive_utilities:item/compound_bow_pull_0",
-      "predicate": {
-        "minecraft:pulling": 1.0
-      }
-    },
-    {
-      "model": "excessive_utilities:item/compound_bow_pull_0",
-      "predicate": {
-        "minecraft:pull": 0.5
-      }
-    },
-    {
-      "model": "excessive_utilities:item/compound_bow_pull_1",
-      "predicate": {
-        "minecraft:pull": 0.7
-      }
-    },
-    {
-      "model": "excessive_utilities:item/compound_bow_pull_2",
-      "predicate": {
-        "minecraft:pull": 0.9
-      }
-    },
-    {
-      "model": "excessive_utilities:item/compound_bow_pull_3",
-      "predicate": {
-        "minecraft:pull": 1.0
-      }
-    }
-  ],
   "textures": {
     "layer0": "excessive_utilities:item/compound_bow/base"
   }

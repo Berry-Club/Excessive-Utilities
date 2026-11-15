@@ -5,10 +5,10 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.EnderQuarryUpg
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 
 class EnderQuarryUpgradeBlockEntity(
 	pos: BlockPos,
@@ -45,8 +45,8 @@ class EnderQuarryUpgradeBlockEntity(
 		return null
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 
 		tag.putString(UPGRADE_TYPE_TAG, upgradeType.id)
 		val pos = parentBlock
@@ -55,13 +55,11 @@ class EnderQuarryUpgradeBlockEntity(
 		}
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
 
-		upgradeType = EnderQuarryUpgradeType.valueOf(tag.getString(UPGRADE_TYPE_TAG))
-		if (tag.contains(PARENT_POS_TAG)) {
-			parentBlock = BlockPos.of(tag.getLong(PARENT_POS_TAG))
-		}
+		upgradeType = EnderQuarryUpgradeType.valueOf(tag.getStringOr(UPGRADE_TYPE_TAG, EnderQuarryUpgradeType.NONE.id))
+		tag.getLong(PARENT_POS_TAG).ifPresent { parentBlock = BlockPos.of(it) }
 	}
 
 	companion object {

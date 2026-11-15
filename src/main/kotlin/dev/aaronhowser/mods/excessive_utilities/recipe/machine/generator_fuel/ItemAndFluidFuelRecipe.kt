@@ -32,19 +32,19 @@ class ItemAndFluidFuelRecipe(
 		val itemStack = input.getItem(0)
 		if (!itemIngredient.isEmpty && !itemIngredient.test(itemStack)) return false
 
-		if (fluidIngredient.fluids.isEmpty()) return true
+		if (fluidIngredient.ingredient().fluids().isEmpty()) return true
 		val fluidStack = input.getFluid()
 		return fluidIngredient.test(fluidStack)
 	}
 
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.ITEM_AND_FLUID_FUEL.get()
-	override fun getType(): RecipeType<*> = ModRecipeTypes.ITEM_AND_FLUID_FUEL.get()
+	override fun getSerializer(): RecipeSerializer<ItemAndFluidFuelRecipe> = ModRecipeSerializers.ITEM_AND_FLUID_FUEL.get()
+	override fun getType(): RecipeType<ItemAndFluidFuelRecipe> = ModRecipeTypes.ITEM_AND_FLUID_FUEL.get()
 
 	companion object {
 		fun isValidFluid(
 			fluidStack: FluidStack,
 			generatorType: GeneratorType,
-			recipeManager: RecipeManager,
+			recipeManager: RecipeMap,
 		): Boolean {
 			return getAllRecipesOfType(generatorType, recipeManager)
 				.any { it.value.fluidIngredient.test(fluidStack.copyWithAmount(99999)) }
@@ -53,7 +53,7 @@ class ItemAndFluidFuelRecipe(
 		fun isValidItem(
 			itemStack: ItemStack,
 			generatorType: GeneratorType,
-			recipeManager: RecipeManager,
+			recipeManager: RecipeMap,
 		): Boolean {
 			return getAllRecipesOfType(generatorType, recipeManager)
 				.any { it.value.itemIngredient.test(itemStack) }
@@ -67,23 +67,23 @@ class ItemAndFluidFuelRecipe(
 		): ItemAndFluidFuelRecipe? {
 			val input = Input(itemStack, fluidStack)
 
-			return getAllRecipesOfType(type, level.recipeManager)
+			return getAllRecipesOfType(type, dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes.recipes(level))
 				.firstOrNull { it.value.matches(input, level) }
 				?.value
 		}
 
 		fun getAllRecipesOfType(
 			generatorType: GeneratorType,
-			recipeManager: RecipeManager
+			recipeManager: RecipeMap
 		): List<RecipeHolder<ItemAndFluidFuelRecipe>> {
 			return getAllRecipes(recipeManager).filter { it.value().generatorType == generatorType }
 		}
 
 
 		fun getAllRecipes(
-			recipeManager: RecipeManager
+			recipeManager: RecipeMap
 		): List<RecipeHolder<ItemAndFluidFuelRecipe>> {
-			return recipeManager.getAllRecipesFor(ModRecipeTypes.ITEM_AND_FLUID_FUEL.get())
+			return recipeManager.byType(ModRecipeTypes.ITEM_AND_FLUID_FUEL.get()).toList()
 		}
 	}
 
@@ -112,9 +112,7 @@ class ItemAndFluidFuelRecipe(
 		override fun size(): Int = 1
 	}
 
-	class Serializer : RecipeSerializer<ItemAndFluidFuelRecipe> {
-		override fun codec(): MapCodec<ItemAndFluidFuelRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, ItemAndFluidFuelRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<ItemAndFluidFuelRecipe> =
@@ -126,7 +124,7 @@ class ItemAndFluidFuelRecipe(
 						Ingredient.CODEC
 							.fieldOf("item_ingredient")
 							.forGetter(ItemAndFluidFuelRecipe::itemIngredient),
-						SizedFluidIngredient.FLAT_CODEC
+						SizedFluidIngredient.CODEC
 							.fieldOf("fluid_ingredient")
 							.forGetter(ItemAndFluidFuelRecipe::fluidIngredient),
 						Codec.INT

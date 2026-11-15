@@ -1,13 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.flat_transfer_node
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.aaron.menu.components.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
+import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.network.FriendlyByteBuf
 import net.minecraft.world.Container
 import net.minecraft.world.SimpleContainer
-import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 
@@ -34,7 +33,7 @@ class FlatTransferNodeMenu(
 	override fun stillValid(player: Player): Boolean {
 		return filterEntity.isAlive
 				&& filterContainer.stillValid(player)
-				&& player.canInteractWithEntity(filterEntity, player.getAttributeValue(Attributes.ENTITY_INTERACTION_RANGE))
+				&& player.isWithinEntityInteractionRange(filterEntity, player.entityInteractionRange())
 	}
 
 	companion object {

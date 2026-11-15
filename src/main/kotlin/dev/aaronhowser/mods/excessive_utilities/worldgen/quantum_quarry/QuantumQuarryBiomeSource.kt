@@ -5,7 +5,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBiomeSources
 import net.minecraft.core.Holder
 import net.minecraft.core.HolderSet
-import net.minecraft.core.QuartPos
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.BiomeSource
@@ -25,7 +24,7 @@ class QuantumQuarryBiomeSource(
 	override fun collectPossibleBiomes(): Stream<Holder<Biome>> = allowedBiomes.stream()
 
 	override fun getNoiseBiome(x: Int, y: Int, z: Int, sampler: Climate.Sampler): Holder<Biome> {
-		val chunkPosLong = ChunkPos.asLong(x shr 2, z shr 2)
+		val chunkPosLong = ChunkPos.pack(x shr 2, z shr 2)
 		val assignment = assignments.getValue(dimension)[chunkPosLong]
 
 		return assignment?.biome ?: fallbackBiome
@@ -64,20 +63,20 @@ class QuantumQuarryBiomeSource(
 		): Boolean {
 			val dimensionAssignments = assignments.getValue(dimension)
 			val assignment = Assignment(owner, biome)
-			val existing = dimensionAssignments.putIfAbsent(chunkPos.toLong(), assignment) ?: return true
+			val existing = dimensionAssignments.putIfAbsent(chunkPos.pack(), assignment) ?: return true
 
 			if (existing.owner != owner) return false
 
-			dimensionAssignments[chunkPos.toLong()] = assignment
+			dimensionAssignments[chunkPos.pack()] = assignment
 			return true
 		}
 
 		fun release(dimension: QuantumQuarryDimension, chunkPos: ChunkPos, owner: UUID) {
 			val dimensionAssignments = assignments.getValue(dimension)
-			val existing = dimensionAssignments[chunkPos.toLong()] ?: return
+			val existing = dimensionAssignments[chunkPos.pack()] ?: return
 			if (existing.owner != owner) return
 
-			dimensionAssignments.remove(chunkPos.toLong(), existing)
+			dimensionAssignments.remove(chunkPos.pack(), existing)
 		}
 	}
 

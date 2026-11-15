@@ -30,7 +30,7 @@ class DeathGeneratorBlockEntity(
 
 		val pos = blockPos
 		val radius = ServerConfig.CONFIG.deathGeneratorEffectRadius.get()
-		val aabb = AABB(pos).inflate(radius.toDouble())
+		val aabb = AABB(pos).inflate(radius)
 
 		val entities = level.getEntitiesOfClass(LivingEntity::class.java, aabb)
 

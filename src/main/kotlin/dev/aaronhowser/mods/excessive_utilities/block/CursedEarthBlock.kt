@@ -27,7 +27,7 @@ import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.event.EventHooks
 import kotlin.jvm.optionals.getOrNull
 
-class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
+class CursedEarthBlock(properties: Properties) : Block(properties) {
 
 	init {
 		registerDefaultState(
@@ -45,7 +45,7 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 	// Slow spreading and mob spawning
 	override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
 		if (ServerConfig.CONFIG.cursedEarthBurnInDay.get()
-			&& level.isDay
+			&& level.isBrightOutside
 			&& level.canSeeSky(pos.above())
 			&& level.getBlockState(pos.above()).canBeReplaced()
 		) {
@@ -147,20 +147,20 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 		val canSpawn = SpawnPlacements.checkSpawnRules(
 			type,
 			level,
-			MobSpawnType.NATURAL,
+			EntitySpawnReason.NATURAL,
 			pos,
 			random
 		)
 
 		if (!canSpawn) return null
 
-		val mob = type.create(level) as? Mob ?: return null
+		val mob = type.create(level, EntitySpawnReason.NATURAL) as? Mob ?: return null
 
 		EventHooks.finalizeMobSpawn(
 			mob,
 			level,
 			level.getCurrentDifficultyAt(pos),
-			MobSpawnType.NATURAL,
+			EntitySpawnReason.NATURAL,
 			null
 		)
 
@@ -216,9 +216,7 @@ class CursedEarthBlock : Block(Properties.ofFullCopy(Blocks.GRASS_BLOCK)) {
 		if (!isTargetValid) return false
 
 		val posAbove = targetPos.above()
-		val lightBlockingAbove = level
-			.getBlockState(posAbove)
-			.getLightBlock(level, posAbove)
+		val lightBlockingAbove = level.getBlockState(posAbove).lightDampening
 
 		if (lightBlockingAbove > 2) return false
 

@@ -6,6 +6,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDamageTypeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
@@ -19,7 +20,7 @@ class DoomEffect : MobEffect(
 		return true
 	}
 
-	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+	override fun applyEffectTick(level: ServerLevel, livingEntity: LivingEntity, amplifier: Int): Boolean {
 		if (livingEntity.isClientSide || livingEntity.isDeadOrDying) return true
 
 		if (livingEntity.hasInfiniteMaterials()) {
@@ -38,7 +39,7 @@ class DoomEffect : MobEffect(
 		}
 
 		if (remainingDuration <= 1) {
-			livingEntity.hurt(livingEntity.damageSources().source(ModDamageTypeProvider.DOOM), Float.MAX_VALUE)
+			livingEntity.hurtServer(level, livingEntity.damageSources().source(ModDamageTypeProvider.DOOM), Float.MAX_VALUE)
 		}
 
 		return true

@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.effect
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isDamageSource
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.DamageTypeTags
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
@@ -19,7 +20,7 @@ class OilyEffect : MobEffect(
 		return true
 	}
 
-	override fun applyEffectTick(livingEntity: LivingEntity, amplifier: Int): Boolean {
+	override fun applyEffectTick(level: ServerLevel, livingEntity: LivingEntity, amplifier: Int): Boolean {
 		if (livingEntity is Player && !livingEntity.abilities.flying) {
 			if (livingEntity.level().isRainingAt(livingEntity.blockPosition())) {
 				livingEntity.addDeltaMovement(

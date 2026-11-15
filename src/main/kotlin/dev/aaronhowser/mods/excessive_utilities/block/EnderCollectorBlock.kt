@@ -13,7 +13,6 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
@@ -22,12 +21,13 @@ import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.redstone.Orientation
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class EnderCollectorBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), EntityBlock {
+class EnderCollectorBlock(properties: Properties) : Block(properties), EntityBlock {
 
 
 	init {
@@ -42,13 +42,13 @@ class EnderCollectorBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Ent
 		builder.add(POWERED, FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(POWERED, context.level.hasNeighborSignal(context.clickedPos))
 			.setValue(FACING, context.clickedFace)
 	}
 
-	override fun neighborChanged(state: BlockState, level: Level, pos: BlockPos, neighborBlock: Block, neighborPos: BlockPos, movedByPiston: Boolean) {
+	override fun neighborChanged(state: BlockState, level: Level, pos: BlockPos, neighborBlock: Block, orientation: Orientation?, movedByPiston: Boolean) {
 		val wasPowered = state.getValue(POWERED)
 		val shouldBePowered = level.hasNeighborSignal(pos)
 
@@ -102,7 +102,7 @@ class EnderCollectorBlock : Block(Properties.ofFullCopy(Blocks.IRON_BLOCK)), Ent
 
 	companion object {
 		val POWERED: BooleanProperty = BlockStateProperties.POWERED
-		val FACING: DirectionProperty = BlockStateProperties.FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.FACING
 
 		val SHAPE_Y: VoxelShape = box(1.0, 0.0, 1.0, 15.0, 16.0, 15.0)
 		val SHAPE_X: VoxelShape = box(0.0, 1.0, 1.0, 16.0, 15.0, 15.0)

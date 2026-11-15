@@ -15,7 +15,7 @@ class TransferNodeParticlesPacket(
 	val position: BlockPos
 ) : AaronPacket() {
 
-	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload?> {
+	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload> {
 		return TYPE
 	}
 

@@ -6,14 +6,12 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.DamageTypeTagsProvider
 import net.minecraft.tags.DamageTypeTags
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModDamageTypeTagsProvider(
 	output: PackOutput,
-	lookupProvider: CompletableFuture<HolderLookup.Provider>,
-	existingFileHelper: ExistingFileHelper
-) : DamageTypeTagsProvider(output, lookupProvider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	lookupProvider: CompletableFuture<HolderLookup.Provider>
+) : DamageTypeTagsProvider(output, lookupProvider, ExcessiveUtilities.MOD_ID) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(DamageTypeTags.NO_ANGER)

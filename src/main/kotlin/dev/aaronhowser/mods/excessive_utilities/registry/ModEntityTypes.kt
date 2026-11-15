@@ -4,6 +4,8 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import dev.aaronhowser.mods.excessive_utilities.entity.MagicalBoomerangEntity
 import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
+import net.minecraft.resources.ResourceKey
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.MobCategory
@@ -45,7 +47,7 @@ object ModEntityTypes {
 			EntityType.Builder.of(entityFactory, category)
 				.sized(width, height)
 				.apply(builderModifier)
-				.build(name)
+				.build(ResourceKey.create(Registries.ENTITY_TYPE, ExcessiveUtilities.modResource(name)))
 		})
 	}
 

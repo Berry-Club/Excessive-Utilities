@@ -15,12 +15,17 @@ import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilInversion
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
+import net.minecraft.network.protocol.game.ClientboundSoundPacket
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.*
+import net.minecraft.world.entity.monster.Ghast
+import net.minecraft.world.entity.monster.Phantom
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.Heightmap
@@ -98,10 +103,11 @@ class InversionRitualActor(
 		}
 
 		for (player in getPlayersInArea()) {
-			player.playNotifySound(
-				SoundEvents.WITHER_SPAWN,
-				SoundSource.PLAYERS,
-				1f, 1f
+			(player as ServerPlayer).connection.send(
+				ClientboundSoundPacket(
+					Holder.direct(SoundEvents.WITHER_SPAWN), SoundSource.PLAYERS,
+					player.x, player.y, player.z, 1f, 1f, player.random.nextLong()
+				)
 			)
 		}
 
@@ -130,14 +136,14 @@ class InversionRitualActor(
 	private fun spawnMonster(player: Player) {
 		val serverLevel = level as? ServerLevel ?: return
 		val monsterType = InversionRitualEnemyWeight.getRandomType(player.random) ?: return
-		val mob = monsterType.create(serverLevel) ?: return
+		val mob = monsterType.create(serverLevel, EntitySpawnReason.EVENT) ?: return
 
 		val spawnPos = findMobSpawnLocation(
 			player,
-			isFlyingMob = mob is FlyingMob
+			isFlyingMob = mob is Ghast || mob is Phantom
 		) ?: return
 
-		mob.moveTo(
+		mob.snapTo(
 			spawnPos.x + 0.5,
 			spawnPos.y.toDouble(),
 			spawnPos.z + 0.5,
@@ -151,7 +157,7 @@ class InversionRitualActor(
 			mob,
 			serverLevel,
 			serverLevel.getCurrentDifficultyAt(spawnPos),
-			MobSpawnType.EVENT,
+			EntitySpawnReason.EVENT,
 			null
 		)
 
@@ -159,7 +165,7 @@ class InversionRitualActor(
 		CurseHandler.setCursed(mob, value = true)
 
 		if (mob is NeutralMob) {
-			mob.persistentAngerTarget = player.uuid
+			mob.persistentAngerTarget = EntityReference.of(player)
 			mob.startPersistentAngerTimer()
 		}
 
@@ -186,8 +192,8 @@ class InversionRitualActor(
 		val z = random.nextRange(spawnArea.minZ, spawnArea.maxZ).roundToInt()
 
 		if (isFlyingMob) {
-			val minY = max(level.minBuildHeight + 1, player.blockY + 12)
-			val maxY = min(level.maxBuildHeight - 2, player.blockY + 32)
+			val minY = max(level.minY + 1, player.blockY + 12)
+			val maxY = min((level.maxY + 1) - 2, player.blockY + 32)
 			if (minY > maxY) return null
 
 			val pos = BlockPos(x, random.nextRange(minY, maxY), z)
@@ -205,7 +211,7 @@ class InversionRitualActor(
 
 		val mutablePos = heightmapPos.mutable()
 
-		while (mutablePos.y > level.minBuildHeight && canSpawnGroundMobAt(mutablePos)) {
+		while (mutablePos.y > level.minY && canSpawnGroundMobAt(mutablePos)) {
 			mutablePos.move(Direction.DOWN)
 		}
 
@@ -259,10 +265,11 @@ class InversionRitualActor(
 
 		for (player in getPlayersInArea()) {
 			player.status("$monstersKilled/$requiredKills")
-			player.playNotifySound(
-				sound,
-				SoundSource.PLAYERS,
-				1f, pitch
+			(player as ServerPlayer).connection.send(
+				ClientboundSoundPacket(
+					Holder.direct(sound), SoundSource.PLAYERS,
+					player.x, player.y, player.z, 1f, pitch, player.random.nextLong()
+				)
 			)
 		}
 

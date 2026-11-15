@@ -6,20 +6,20 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.item.DiggerItem
+import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.item.Tiers
+import net.minecraft.world.item.ToolMaterial
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.event.level.BlockDropsEvent
 
-class GlassCutterItem(properties: Properties) : DiggerItem(Tiers.IRON, ModBlockTagsProvider.GLASS_CUTTER_MINEABLE, properties) {
+class GlassCutterItem(properties: Properties) : Item(properties) {
 
 	companion object {
 		val DEFAULT_PROPERTIES: Properties =
 			Properties()
-				.attributes(createAttributes(Tiers.IRON, 1.5f, -3f))
+				.durability(ToolMaterial.IRON.durability())
 
 		fun handleDropEvent(event: BlockDropsEvent) {
 			if (event.isCanceled) return
@@ -34,10 +34,10 @@ class GlassCutterItem(properties: Properties) : DiggerItem(Tiers.IRON, ModBlockT
 			val level = event.level
 
 			val fakeTool = Items.NETHERITE_PICKAXE.defaultInstance
-			val enchantments = level.registryAccess().registryOrThrow(Registries.ENCHANTMENT)
+			val enchantments = level.registryAccess().lookupOrThrow(Registries.ENCHANTMENT)
 
 			fakeTool.enchant(
-				enchantments.getHolderOrThrow(Enchantments.SILK_TOUCH),
+				enchantments.getOrThrow(Enchantments.SILK_TOUCH),
 				1
 			)
 
@@ -60,3 +60,8 @@ class GlassCutterItem(properties: Properties) : DiggerItem(Tiers.IRON, ModBlockT
 	}
 
 }
+
+
+
+
+

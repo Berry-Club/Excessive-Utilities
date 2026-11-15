@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.menu.single_fluid_generator.SingleFluidGeneratorMenu
@@ -18,9 +19,11 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
-import net.neoforged.neoforge.fluids.capability.IFluidHandler
-import net.neoforged.neoforge.fluids.capability.templates.FluidTank
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.fluid.FluidResource
 
 class MagmaticGeneratorBlockEntity(
 	pos: BlockPos,
@@ -29,8 +32,8 @@ class MagmaticGeneratorBlockEntity(
 
 	override val generatorType: GeneratorType = GeneratorType.MAGMATIC
 
-	val tank: FluidTank =
-		object : FluidTank(1_000_000) {
+	val tank: ConfigurableFluidTank =
+		object : ConfigurableFluidTank(1_000_000) {
 			override fun isFluidValid(stack: FluidStack): Boolean {
 				val level = level ?: return false
 				val recipe = MagmaticFuelRecipe.getRecipe(level, stack)
@@ -48,7 +51,7 @@ class MagmaticGeneratorBlockEntity(
 
 	override fun clearContent() {
 		super.clearContent()
-		tank.drain(Int.MAX_VALUE, IFluidHandler.FluidAction.EXECUTE)
+		tank.drain(Int.MAX_VALUE)
 	}
 
 	fun getRecipe(): MagmaticFuelRecipe? {
@@ -67,7 +70,7 @@ class MagmaticGeneratorBlockEntity(
 		fePerTick = recipe.fePerTick
 		burnTimeRemaining = recipe.duration
 
-		tank.drain(recipe.fluidIngredient.amount(), IFluidHandler.FluidAction.EXECUTE)
+		tank.drain(recipe.fluidIngredient.amount())
 		setChanged()
 
 		return true
@@ -77,21 +80,22 @@ class MagmaticGeneratorBlockEntity(
 		return SingleFluidGeneratorMenu(containerId, playerInventory, container, containerData, this)
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
-		tank.writeToNBT(registries, tag)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		tag.store(TANK_NBT, FluidStack.OPTIONAL_CODEC, tank.fluid)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		tank.readFromNBT(registries, tag)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		tag.read(TANK_NBT, FluidStack.OPTIONAL_CODEC).ifPresent(tank::setFluid)
 	}
 
 	override fun getUpdateTag(registries: HolderLookup.Provider): CompoundTag = saveWithoutMetadata(registries)
 	override fun getUpdatePacket(): Packet<ClientGamePacketListener> = ClientboundBlockEntityDataPacket.create(this)
 
 	companion object {
-		fun getFluidCapability(blockEntity: MagmaticGeneratorBlockEntity, direction: Direction?): IFluidHandler {
+		const val TANK_NBT = "Tank"
+		fun getFluidCapability(blockEntity: MagmaticGeneratorBlockEntity, direction: Direction?): ResourceHandler<FluidResource> {
 			return blockEntity.tank
 		}
 	}

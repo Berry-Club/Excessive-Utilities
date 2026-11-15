@@ -17,10 +17,11 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.block.Blocks
 
-class DivisionSigilItem(properties: Properties) : Item(properties) {
+class DivisionSigilItem(properties: Properties) : Item(properties), TooltipItem {
 
 	override fun useOn(context: UseOnContext): InteractionResult {
 		val level = context.level
@@ -50,19 +51,20 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 		return isInverted(stack)
 	}
 
-	override fun appendHoverText(
+	override fun appendTooltip(
 		stack: ItemStack,
 		context: TooltipContext,
-		tooltipComponents: MutableList<Component>,
+		display: TooltipDisplay,
+		builder: java.util.function.Consumer<Component>,
 		tooltipFlag: TooltipFlag
 	) {
 		if (isInverted(stack)) {
-			tooltipComponents += ModMenuLang.INFINITE_USES.toComponent()
+			builder.accept(ModMenuLang.INFINITE_USES.toComponent())
 			return
 		}
 
 		val remainingUses = stack.getOrDefault(ModDataComponents.REMAINING_USES, 0)
-		tooltipComponents += ModMenuLang.REMAINING_USES.toComponent(remainingUses)
+		builder.accept(ModMenuLang.REMAINING_USES.toComponent(remainingUses))
 	}
 
 	override fun isBarVisible(stack: ItemStack): Boolean {
@@ -127,3 +129,9 @@ class DivisionSigilItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+
+

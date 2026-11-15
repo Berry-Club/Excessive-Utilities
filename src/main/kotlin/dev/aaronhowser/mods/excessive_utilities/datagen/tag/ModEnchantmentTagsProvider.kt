@@ -8,14 +8,12 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.EnchantmentTagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.enchantment.Enchantment
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModEnchantmentTagsProvider(
 	output: PackOutput,
-	lookupProvider: CompletableFuture<HolderLookup.Provider>,
-	existingFileHelper: ExistingFileHelper
-) : EnchantmentTagsProvider(output, lookupProvider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	lookupProvider: CompletableFuture<HolderLookup.Provider>
+) : EnchantmentTagsProvider(output, lookupProvider, ExcessiveUtilities.MOD_ID) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
 		tag(BOOMERANG_BLOCK_INTERACTION)

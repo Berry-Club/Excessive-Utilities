@@ -4,7 +4,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
-import net.minecraft.world.InteractionResultHolder
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
@@ -32,7 +31,7 @@ class AngelBlockItem(properties: Properties) : BlockItem(ModBlocks.ANGEL_BLOCK.g
 		return place(placeContext)
 	}
 
-	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack> {
+	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResult {
 		val posToPlace = getPositionToPlace(player)
 		val placeContext = BlockPlaceContext(
 			level,
@@ -42,7 +41,7 @@ class AngelBlockItem(properties: Properties) : BlockItem(ModBlocks.ANGEL_BLOCK.g
 			BlockHitResult(posToPlace, player.direction, BlockPos.containing(posToPlace), true)
 		)
 
-		return InteractionResultHolder(place(placeContext), player.getItemInHand(usedHand))
+		return place(placeContext)
 	}
 
 	companion object {
@@ -66,3 +65,9 @@ class AngelBlockItem(properties: Properties) : BlockItem(ModBlocks.ANGEL_BLOCK.g
 	}
 
 }
+
+
+
+
+
+

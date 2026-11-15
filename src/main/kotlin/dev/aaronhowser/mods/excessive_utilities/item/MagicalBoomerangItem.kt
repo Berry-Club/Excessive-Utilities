@@ -6,8 +6,9 @@ import dev.aaronhowser.mods.excessive_utilities.entity.MagicalBoomerangEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
@@ -20,10 +21,10 @@ class MagicalBoomerangItem(properties: Properties) : Item(properties) {
 		level: Level,
 		player: Player,
 		usedHand: InteractionHand
-	): InteractionResultHolder<ItemStack> {
+	): InteractionResult {
 		val stack = player.getItemInHand(usedHand)
 
-		if (stack.has(ModDataComponents.THROWN_BOOMERANG)) return InteractionResultHolder.fail(stack)
+		if (stack.has(ModDataComponents.THROWN_BOOMERANG)) return InteractionResult.FAIL
 
 		if (level.isServerSide) {
 			val boomerang = MagicalBoomerangEntity(level, player, stack)
@@ -32,23 +33,20 @@ class MagicalBoomerangItem(properties: Properties) : Item(properties) {
 			stack.set(ModDataComponents.THROWN_BOOMERANG, boomerang.uuid)
 		}
 
-		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
 	override fun inventoryTick(
 		stack: ItemStack,
-		level: Level,
+		level: ServerLevel,
 		entity: Entity,
-		slotId: Int,
-		isSelected: Boolean
+		slot: EquipmentSlot?
 	) {
-		if (level is ServerLevel) {
-			val boomerangId = stack.get(ModDataComponents.THROWN_BOOMERANG) ?: return
-			val boomerangEntity = level.getEntity(boomerangId)
+		val boomerangId = stack.get(ModDataComponents.THROWN_BOOMERANG) ?: return
+		val boomerangEntity = level.getEntity(boomerangId)
 
-			if (boomerangEntity == null) {
-				stack.remove(ModDataComponents.THROWN_BOOMERANG)
-			}
+		if (boomerangEntity == null) {
+			stack.remove(ModDataComponents.THROWN_BOOMERANG)
 		}
 	}
 
@@ -66,3 +64,8 @@ class MagicalBoomerangItem(properties: Properties) : Item(properties) {
 	}
 
 }
+
+
+
+
+

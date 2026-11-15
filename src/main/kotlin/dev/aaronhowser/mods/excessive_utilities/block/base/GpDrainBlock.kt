@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base
 
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
@@ -45,22 +45,22 @@ abstract class GpDrainBlock(
 		)
 	}
 
-	override fun onRemove(state: BlockState, level: Level, pos: BlockPos, newState: BlockState, movedByPiston: Boolean) {
-		if (!state.isBlock(newState.block)) {
+	override fun affectNeighborsAfterRemoval(state: BlockState, level: ServerLevel, pos: BlockPos, movedByPiston: Boolean) {
+		if (true) {
 			val be = level.getBlockEntity(pos)
 			if (be is ContainerContainer) {
 				be.dropContents(level, pos)
 			}
 		}
 
-		super.onRemove(state, level, pos, newState, movedByPiston)
+		super.affectNeighborsAfterRemoval(state, level, pos, movedByPiston)
 	}
 
 	override fun useWithoutItem(state: BlockState, level: Level, pos: BlockPos, player: Player, hitResult: BlockHitResult): InteractionResult {
 		val be = level.getBlockEntity(pos)
 		if (be is MenuProvider) {
 			player.openMenu(be)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS

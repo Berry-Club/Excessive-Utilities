@@ -7,19 +7,17 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.ClientGridPower
 import dev.aaronhowser.mods.excessive_utilities.menu.ExcessiveUtilitiesScreen
 import dev.aaronhowser.mods.excessive_utilities.menu.base.components.ProgressArrow
-import net.minecraft.client.gui.GuiGraphics
+import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.network.chat.Component
-import net.minecraft.resources.ResourceLocation
+import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 
 class ResonatorScreen(
 	menu: ResonatorMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<ResonatorMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
-	override val titleLabelSprite: ResourceLocation = DARK_RED_LABEL
+) : ExcessiveUtilitiesScreen<ResonatorMenu>(menu, playerInventory, title, BACKGROUND) {
+	override val titleLabelSprite: Identifier = DARK_RED_LABEL
 
 	override fun baseInit() {
 		super.baseInit()
@@ -36,17 +34,17 @@ class ResonatorScreen(
 		addRenderableWidget(progressArrow)
 	}
 
-	override fun renderLabels(guiGraphics: GuiGraphics, mouseX: Int, mouseY: Int) {
-		super.renderLabels(guiGraphics, mouseX, mouseY)
+	override fun extractLabels(graphics: GuiGraphicsExtractor, mouseX: Int, mouseY: Int) {
+		super.extractLabels(graphics, mouseX, mouseY)
 
 		val gpUsage = ClientGridPower.format(menu.getGpUsage())
 
-		guiGraphics.drawString(
+		graphics.text(
 			font,
 			ModMenuLang.GP.toComponent(gpUsage),
 			71,
 			20,
-			4210752,
+			LABEL_TEXT_COLOR,
 			false
 		)
 	}

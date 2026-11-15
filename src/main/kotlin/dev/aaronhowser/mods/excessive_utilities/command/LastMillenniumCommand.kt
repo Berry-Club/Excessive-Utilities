@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.command
 
-import com.mojang.authlib.GameProfile
 import com.mojang.brigadier.arguments.IntegerArgumentType
 import com.mojang.brigadier.builder.ArgumentBuilder
 import com.mojang.brigadier.context.CommandContext
@@ -9,8 +8,10 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.handler.LastMillenniumHandler
 import net.minecraft.commands.CommandSourceStack
+import net.minecraft.commands.Commands
 import net.minecraft.commands.arguments.GameProfileArgument
 import net.minecraft.network.chat.Component
+import net.minecraft.server.players.NameAndId
 import net.minecraft.world.level.ChunkPos
 import java.util.*
 
@@ -22,11 +23,11 @@ object LastMillenniumCommand : AaronCommandHelper {
 
 	fun register(): ArgumentBuilder<CommandSourceStack, *> {
 		return literal("last-millennium") {
-			requires { it.hasPermission(2) }
+			requires(Commands.hasPermission(Commands.LEVEL_GAMEMASTERS))
 
 			thenLiteral("query") {
 				executes {
-					query(it.source, it.source.playerOrException.gameProfile)
+					query(it.source, it.source.playerOrException.nameAndId())
 				}
 
 				thenArgument(PLAYER, GameProfileArgument.gameProfile()) {
@@ -39,7 +40,7 @@ object LastMillenniumCommand : AaronCommandHelper {
 
 			thenLiteral("assign") {
 				executes {
-					assign(it.source, it.source.playerOrException.gameProfile, chunkPos = null)
+					assign(it.source, it.source.playerOrException.nameAndId(), chunkPos = null)
 				}
 
 				thenArgument(PLAYER, GameProfileArgument.gameProfile()) {
@@ -61,7 +62,7 @@ object LastMillenniumCommand : AaronCommandHelper {
 				thenArgument(CHUNK_X, IntegerArgumentType.integer()) {
 					thenArgument(CHUNK_Z, IntegerArgumentType.integer()) {
 						executes {
-							assign(it.source, it.source.playerOrException.gameProfile, getChunkPos(it))
+							assign(it.source, it.source.playerOrException.nameAndId(), getChunkPos(it))
 						}
 					}
 				}
@@ -71,7 +72,7 @@ object LastMillenniumCommand : AaronCommandHelper {
 
 	private fun query(
 		source: CommandSourceStack,
-		profile: GameProfile?
+		profile: NameAndId?
 	): Int {
 		if (profile == null) return 0
 
@@ -91,7 +92,7 @@ object LastMillenniumCommand : AaronCommandHelper {
 		return 1
 	}
 
-	private fun assign(source: CommandSourceStack, profile: GameProfile?, chunkPos: ChunkPos?): Int {
+	private fun assign(source: CommandSourceStack, profile: NameAndId?, chunkPos: ChunkPos?): Int {
 		if (profile == null) return 0
 
 		val destinationChunk = if (chunkPos == null) {
@@ -101,7 +102,7 @@ object LastMillenniumCommand : AaronCommandHelper {
 				return 0
 			}
 
-			ChunkPos(player.blockPosition())
+			ChunkPos.containing(player.blockPosition())
 		} else {
 			chunkPos
 		}
@@ -141,26 +142,22 @@ object LastMillenniumCommand : AaronCommandHelper {
 		return ChunkPos(chunkX, chunkZ)
 	}
 
-	private fun getSingleProfile(source: CommandSourceStack, profiles: Collection<GameProfile>): GameProfile? {
+	private fun getSingleProfile(source: CommandSourceStack, profiles: Collection<NameAndId>): NameAndId? {
 		if (profiles.size == 1) return profiles.first()
 
 		source.sendFailure(ModMessageLang.TLM_SINGLE_PLAYER.toComponent())
 		return null
 	}
 
-	private fun getPlayerName(profile: GameProfile): Component {
-		val name = profile.name
-		if (name != null) return Component.literal(name)
-
-		return Component.literal(profile.id.toString())
+	private fun getPlayerName(profile: NameAndId): Component {
+		return Component.literal(profile.name)
 	}
 
 	private fun getPlayerName(source: CommandSourceStack, playerUuid: UUID): Component {
 		val onlinePlayer = source.server.playerList.getPlayer(playerUuid)
-		if (onlinePlayer != null) return onlinePlayer.displayName ?: onlinePlayer.name
+		if (onlinePlayer != null) return onlinePlayer.displayName
 
-		val profileCache = source.server.profileCache
-		val profile = profileCache?.get(playerUuid)?.orElse(null)
+		val profile = source.server.services().nameToIdCache().get(playerUuid).orElse(null)
 		if (profile != null) return getPlayerName(profile)
 
 		return Component.literal(playerUuid.toString())

@@ -16,12 +16,4 @@ object DivisionSigilSubtypeInterpreter : ISubtypeInterpreter<ItemStack> {
 		}
 	}
 
-	@Deprecated("Deprecated in Java")
-	override fun getLegacyStringSubtypeInfo(ingredient: ItemStack, context: UidContext): String {
-		return if (DivisionSigilItem.isInverted(ingredient)) {
-			"inverted"
-		} else {
-			ingredient.getOrDefault(ModDataComponents.REMAINING_USES, 0).toString()
-		}
-	}
 }

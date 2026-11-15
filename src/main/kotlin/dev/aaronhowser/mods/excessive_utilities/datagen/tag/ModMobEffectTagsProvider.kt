@@ -8,18 +8,16 @@ import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.TagsProvider
 import net.minecraft.tags.TagKey
 import net.minecraft.world.effect.MobEffect
-import net.neoforged.neoforge.common.data.ExistingFileHelper
 import java.util.concurrent.CompletableFuture
 
 class ModMobEffectTagsProvider(
 	output: PackOutput,
-	provider: CompletableFuture<HolderLookup.Provider>,
-	existingFileHelper: ExistingFileHelper
-) : TagsProvider<MobEffect>(output, Registries.MOB_EFFECT, provider, ExcessiveUtilities.MOD_ID, existingFileHelper) {
+	provider: CompletableFuture<HolderLookup.Provider>
+) : TagsProvider<MobEffect>(output, Registries.MOB_EFFECT, provider, ExcessiveUtilities.MOD_ID) {
 
 	override fun addTags(provider: HolderLookup.Provider) {
-		tag(PURGING_BLACKLIST)
-			.add(ModMobEffects.PURGING.key!!)
+		getOrCreateRawBuilder(PURGING_BLACKLIST)
+			.addElement(ModMobEffects.PURGING.id)
 	}
 
 	companion object {

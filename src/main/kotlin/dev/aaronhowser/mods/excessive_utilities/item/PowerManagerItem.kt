@@ -5,10 +5,9 @@ import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHand
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 
 // TODO: Make this a menu instead
@@ -18,7 +17,7 @@ class PowerManagerItem(properties: Properties) : Item(properties) {
 		level: Level,
 		player: Player,
 		usedHand: InteractionHand
-	): InteractionResultHolder<ItemStack> {
+	): InteractionResult {
 		val stack = player.getItemInHand(usedHand)
 
 		if (level is ServerLevel) {
@@ -56,7 +55,7 @@ class PowerManagerItem(properties: Properties) : Item(properties) {
 
 		}
 
-		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
 }

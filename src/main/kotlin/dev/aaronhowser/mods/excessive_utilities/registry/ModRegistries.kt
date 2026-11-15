@@ -22,7 +22,8 @@ object ModRegistries {
 			ModFeatures.FEATURE_REGISTRY,
 			ModAttributes.ATTRIBUTE_REGISTRY,
 			ModParticleTypes.PARTICLE_TYPE_REGISTRY,
-			ModBiomeSources.BIOME_SOURCE_REGISTRY
+			ModBiomeSources.BIOME_SOURCE_REGISTRY,
+			ModTicketTypes.TICKET_TYPE_REGISTRY
 		)
 
 		for (registry in registries) {

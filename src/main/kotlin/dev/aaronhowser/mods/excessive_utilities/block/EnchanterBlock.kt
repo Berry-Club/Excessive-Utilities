@@ -11,16 +11,15 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 
-class EnchanterBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
+class EnchanterBlock(properties: Properties) : GpDrainBlock(properties) {
 
 	init {
 		registerDefaultState(
@@ -34,7 +33,7 @@ class EnchanterBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 		builder.add(FACING, ENABLED)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -67,7 +66,7 @@ class EnchanterBlock : GpDrainBlock(Properties.ofFullCopy(Blocks.IRON_BLOCK)) {
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.HORIZONTAL_FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.HORIZONTAL_FACING
 		val ENABLED: BooleanProperty = BlockStateProperties.ENABLED
 	}
 

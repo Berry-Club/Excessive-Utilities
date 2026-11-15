@@ -41,16 +41,6 @@ open class SemiPermeableGlassBlock(
 	class Dark(
 		isInverted: Boolean,
 		properties: Properties = Properties.ofFullCopy(Blocks.GLASS)
-	) : SemiPermeableGlassBlock(isInverted, properties) {
-
-		override fun propagatesSkylightDown(state: BlockState, level: BlockGetter, pos: BlockPos): Boolean {
-			return false
-		}
-
-		override fun getLightBlock(state: BlockState, level: BlockGetter, pos: BlockPos): Int {
-			return level.maxLightLevel
-		}
-
-	}
+	) : SemiPermeableGlassBlock(isInverted, properties)
 
 }

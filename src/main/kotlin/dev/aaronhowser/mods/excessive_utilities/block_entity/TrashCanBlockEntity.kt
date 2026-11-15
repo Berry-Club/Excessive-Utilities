@@ -6,8 +6,6 @@ import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
@@ -19,7 +17,11 @@ import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.items.IItemHandler
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.item.ItemResource
+import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
 class TrashCanBlockEntity(
 	pos: BlockPos,
@@ -37,24 +39,21 @@ class TrashCanBlockEntity(
 
 	override fun getContainers(): List<Container> = listOf(filterContainer)
 
-	private val itemHandler: IItemHandler =
-		object : IItemHandler {
-			override fun getSlots(): Int = 27
-			override fun getStackInSlot(slot: Int): ItemStack = ItemStack.EMPTY
-			override fun extractItem(slot: Int, amount: Int, simulate: Boolean): ItemStack = ItemStack.EMPTY
-			override fun getSlotLimit(slot: Int): Int = 64
-			override fun isItemValid(slot: Int, stack: ItemStack): Boolean = true
-
-			override fun insertItem(slot: Int, stack: ItemStack, simulate: Boolean): ItemStack {
-				return if (passesFilter(stack)) {
-					ItemStack.EMPTY
-				} else {
-					stack
-				}
+	private val itemHandler: ResourceHandler<ItemResource> =
+		object : ResourceHandler<ItemResource> {
+			override fun size(): Int = 27
+			override fun getResource(index: Int): ItemResource = ItemResource.EMPTY
+			override fun getAmountAsLong(index: Int): Long = 0
+			override fun getCapacityAsLong(index: Int, resource: ItemResource): Long = 64
+			override fun isValid(index: Int, resource: ItemResource): Boolean = true
+			override fun insert(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
+				return if (resource.isEmpty || !passesFilter(resource.toStack())) 0 else amount
 			}
+
+			override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int = 0
 		}
 
-	fun getItemHandler(direction: Direction?): IItemHandler = itemHandler
+	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = itemHandler
 
 	fun passesFilter(stack: ItemStack): Boolean {
 		if (filterStack.isEmpty) return true
@@ -74,16 +73,16 @@ class TrashCanBlockEntity(
 		}
 	}
 
-	override fun saveAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.saveAdditional(tag, registries)
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
 		tag.putBoolean(IS_CHEST_TAG, isChest)
-		ContainerHelper.saveAllItems(tag, filterContainer.items, registries)
+		ContainerHelper.saveAllItems(tag, filterContainer.items)
 	}
 
-	override fun loadAdditional(tag: CompoundTag, registries: HolderLookup.Provider) {
-		super.loadAdditional(tag, registries)
-		isChest = tag.getBoolean(IS_CHEST_TAG)
-		ContainerHelper.loadAllItems(tag, filterContainer.items, registries)
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		isChest = tag.getBooleanOr(IS_CHEST_TAG, false)
+		ContainerHelper.loadAllItems(tag, filterContainer.items)
 	}
 
 	companion object {

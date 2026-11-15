@@ -13,9 +13,7 @@ class SingleFluidGeneratorScreen(
 	menu: SingleFluidGeneratorMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<SingleFluidGeneratorMenu>(menu, playerInventory, title) {
-
-	override val background: ScreenBackground = BACKGROUND
+) : ExcessiveUtilitiesScreen<SingleFluidGeneratorMenu>(menu, playerInventory, title, BACKGROUND) {
 
 	override fun baseInit() {
 		super.baseInit()
@@ -31,7 +29,7 @@ class SingleFluidGeneratorScreen(
 		val fluidBar = FluidBar(
 			x = leftPos + 69,
 			y = topPos + 40,
-			capacityGetter = { menu.blockEntity?.tank?.capacity ?: 0 },
+			capacityGetter = { menu.blockEntity?.tank?.tankCapacity ?: 0 },
 			fluidGetter = { menu.blockEntity?.tank?.fluid ?: FluidStack.EMPTY },
 			font = font
 		)

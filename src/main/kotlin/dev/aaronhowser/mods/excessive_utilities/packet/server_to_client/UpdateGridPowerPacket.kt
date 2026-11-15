@@ -14,7 +14,7 @@ class UpdateGridPowerPacket(
 	val usage: Double
 ) : AaronPacket() {
 
-	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload?> {
+	override fun type(): CustomPacketPayload.Type<out CustomPacketPayload> {
 		return TYPE
 	}
 

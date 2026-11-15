@@ -1,0 +1,104 @@
+{
+  "model": {
+    "type": "minecraft:range_dispatch",
+    "entries": [
+      {
+        "model": {
+          "type": "minecraft:model",
+          "model": "excessive_utilities:item/ender_shard_8"
+        },
+        "threshold": 8.0
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:range_dispatch",
+      "entries": [
+        {
+          "model": {
+            "type": "minecraft:model",
+            "model": "excessive_utilities:item/ender_shard_7"
+          },
+          "threshold": 7.0
+        }
+      ],
+      "fallback": {
+        "type": "minecraft:range_dispatch",
+        "entries": [
+          {
+            "model": {
+              "type": "minecraft:model",
+              "model": "excessive_utilities:item/ender_shard_6"
+            },
+            "threshold": 6.0
+          }
+        ],
+        "fallback": {
+          "type": "minecraft:range_dispatch",
+          "entries": [
+            {
+              "model": {
+                "type": "minecraft:model",
+                "model": "excessive_utilities:item/ender_shard_5"
+              },
+              "threshold": 5.0
+            }
+          ],
+          "fallback": {
+            "type": "minecraft:range_dispatch",
+            "entries": [
+              {
+                "model": {
+                  "type": "minecraft:model",
+                  "model": "excessive_utilities:item/ender_shard_4"
+                },
+                "threshold": 4.0
+              }
+            ],
+            "fallback": {
+              "type": "minecraft:range_dispatch",
+              "entries": [
+                {
+                  "model": {
+                    "type": "minecraft:model",
+                    "model": "excessive_utilities:item/ender_shard_3"
+                  },
+                  "threshold": 3.0
+                }
+              ],
+              "fallback": {
+                "type": "minecraft:range_dispatch",
+                "entries": [
+                  {
+                    "model": {
+                      "type": "minecraft:model",
+                      "model": "excessive_utilities:item/ender_shard_2"
+                    },
+                    "threshold": 2.0
+                  }
+                ],
+                "fallback": {
+                  "type": "minecraft:model",
+                  "model": "excessive_utilities:item/ender_shard"
+                },
+                "predicate": "excessive_utilities:ender_shard_count",
+                "property": "excessive_utilities:item_predicate"
+              },
+              "predicate": "excessive_utilities:ender_shard_count",
+              "property": "excessive_utilities:item_predicate"
+            },
+            "predicate": "excessive_utilities:ender_shard_count",
+            "property": "excessive_utilities:item_predicate"
+          },
+          "predicate": "excessive_utilities:ender_shard_count",
+          "property": "excessive_utilities:item_predicate"
+        },
+        "predicate": "excessive_utilities:ender_shard_count",
+        "property": "excessive_utilities:item_predicate"
+      },
+      "predicate": "excessive_utilities:ender_shard_count",
+      "property": "excessive_utilities:item_predicate"
+    },
+    "predicate": "excessive_utilities:ender_shard_count",
+    "property": "excessive_utilities:item_predicate"
+  }
+}

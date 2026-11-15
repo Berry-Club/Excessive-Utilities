@@ -8,21 +8,22 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.world.InteractionHand
-import net.minecraft.world.InteractionResultHolder
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.SimpleMenuProvider
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.MenuConstructor
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.level.Level
 
 class EnderFrequencyItem(
 	val role: Role,
 	properties: Properties
-) : Item(properties) {
+) : Item(properties), TooltipItem {
 
-	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResultHolder<ItemStack?> {
+	override fun use(level: Level, player: Player, usedHand: InteractionHand): InteractionResult {
 		val stack = player.getItemInHand(usedHand)
 
 		if (level.isServerSide) {
@@ -35,13 +36,13 @@ class EnderFrequencyItem(
 			}
 		}
 
-		return InteractionResultHolder.sidedSuccess(stack, level.isClientSide)
+		return InteractionResult.SUCCESS
 	}
 
-	override fun appendHoverText(stack: ItemStack, context: TooltipContext, tooltip: MutableList<Component>, flag: TooltipFlag) {
+	override fun appendTooltip(stack: ItemStack, context: TooltipContext, display: TooltipDisplay, builder: java.util.function.Consumer<Component>, tooltipFlag: TooltipFlag) {
 		val frequency = stack.get(ModDataComponents.ENDER_FREQUENCY) ?: return
-		tooltip.add(Component.literal(frequency.name).withStyle(ChatFormatting.LIGHT_PURPLE))
-		tooltip.add(
+		builder.accept(Component.literal(frequency.name).withStyle(ChatFormatting.LIGHT_PURPLE))
+		builder.accept(
 			if (frequency.isPrivate) {
 				ModMenuLang.ENDER_FREQUENCY_PRIVATE_TOOLTIP
 			} else {
@@ -55,3 +56,10 @@ class EnderFrequencyItem(
 		RECEIVER
 	}
 }
+
+
+
+
+
+
+

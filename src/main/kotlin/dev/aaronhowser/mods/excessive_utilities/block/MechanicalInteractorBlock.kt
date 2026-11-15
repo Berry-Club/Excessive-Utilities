@@ -13,7 +13,6 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
@@ -21,13 +20,15 @@ import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.redstone.Orientation
 import net.minecraft.world.phys.BlockHitResult
 
 class MechanicalInteractorBlock(
 	private val blockEntityFactory: (BlockPos, BlockState) -> MechanicalInteractorBlockEntity,
-	private val blockEntityType: () -> BlockEntityType<out MechanicalInteractorBlockEntity>
-) : SimpleContainerBlock(Properties.ofFullCopy(Blocks.DISPENSER)), EntityBlock {
+	private val blockEntityType: () -> BlockEntityType<out MechanicalInteractorBlockEntity>,
+	properties: Properties
+) : SimpleContainerBlock(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -58,7 +59,7 @@ class MechanicalInteractorBlock(
 		}
 	}
 
-	override fun <T : BlockEntity?> getTicker(
+	override fun <T : BlockEntity> getTicker(
 		level: Level,
 		state: BlockState,
 		blockEntityType: BlockEntityType<T>
@@ -75,10 +76,10 @@ class MechanicalInteractorBlock(
 		level: Level,
 		pos: BlockPos,
 		neighborBlock: Block,
-		neighborPos: BlockPos,
+		orientation: Orientation?,
 		movedByPiston: Boolean
 	) {
-		super.neighborChanged(state, level, pos, neighborBlock, neighborPos, movedByPiston)
+		super.neighborChanged(state, level, pos, neighborBlock, orientation, movedByPiston)
 
 		val blockEntity = level.getBlockEntity(pos)
 		if (blockEntity is MechanicalInteractorBlockEntity) {
@@ -96,14 +97,14 @@ class MechanicalInteractorBlock(
 		val blockEntity = level.getBlockEntity(pos)
 		if (blockEntity is MenuProvider) {
 			player.openMenu(blockEntity)
-			return InteractionResult.sidedSuccess(level.isClientSide)
+			return InteractionResult.SUCCESS
 		}
 
 		return InteractionResult.PASS
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.FACING
 	}
 
 }

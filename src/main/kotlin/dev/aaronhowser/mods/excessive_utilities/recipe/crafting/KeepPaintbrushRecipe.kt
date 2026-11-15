@@ -9,12 +9,14 @@ import net.minecraft.core.NonNullList
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.item.crafting.*
+import net.minecraft.world.item.crafting.CraftingInput
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.ShapedRecipePattern
 
 class KeepPaintbrushRecipe(
-	pattern: ShapedRecipePattern,
+	val pattern: ShapedRecipePattern,
 	val output: ItemStack,
-) : ShapedRecipe("", CraftingBookCategory.MISC, pattern, output, false) {
+) : SpecialShapedRecipe(pattern, output) {
 
 	override fun getRemainingItems(input: CraftingInput): NonNullList<ItemStack> {
 		val list = NonNullList.withSize(input.size(), ItemStack.EMPTY)
@@ -22,9 +24,7 @@ class KeepPaintbrushRecipe(
 		for (i in list.indices) {
 			val stack = input.getItem(i)
 
-			if (stack.hasCraftingRemainingItem()) {
-				list[i] = stack.craftingRemainingItem
-			}
+			stack.craftingRemainder?.let { list[i] = it.create() }
 
 			if (stack.isItem(ModItems.PAINTBRUSH)) {
 				list[i] = stack.copy()
@@ -35,11 +35,9 @@ class KeepPaintbrushRecipe(
 	}
 
 	override fun isSpecial(): Boolean = true
-	override fun getSerializer(): RecipeSerializer<*> = ModRecipeSerializers.KEEP_PAINTBRUSH.get()
+	override fun getSerializer(): RecipeSerializer<KeepPaintbrushRecipe> = ModRecipeSerializers.KEEP_PAINTBRUSH.get()
 
-	class Serializer : RecipeSerializer<KeepPaintbrushRecipe> {
-		override fun codec(): MapCodec<KeepPaintbrushRecipe> = CODEC
-		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, KeepPaintbrushRecipe> = STREAM_CODEC
+	class Serializer {
 
 		companion object {
 			val CODEC: MapCodec<KeepPaintbrushRecipe> =
@@ -48,7 +46,7 @@ class KeepPaintbrushRecipe(
 						ShapedRecipePattern.MAP_CODEC
 							.fieldOf("pattern")
 							.forGetter(KeepPaintbrushRecipe::pattern),
-						ItemStack.STRICT_CODEC
+						ItemStack.CODEC
 							.fieldOf("result")
 							.forGetter(KeepPaintbrushRecipe::output)
 					).apply(instance, ::KeepPaintbrushRecipe)

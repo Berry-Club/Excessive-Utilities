@@ -1,0 +1,27 @@
+{
+  "model": {
+    "type": "minecraft:select",
+    "cases": [
+      {
+        "model": {
+          "type": "minecraft:special",
+          "base": "excessive_utilities:item/tesseract",
+          "model": {
+            "type": "excessive_utilities:tesseract",
+            "gui": true
+          }
+        },
+        "when": "gui"
+      }
+    ],
+    "fallback": {
+      "type": "minecraft:special",
+      "base": "excessive_utilities:item/tesseract",
+      "model": {
+        "type": "excessive_utilities:tesseract",
+        "gui": false
+      }
+    },
+    "property": "minecraft:display_context"
+  }
+}

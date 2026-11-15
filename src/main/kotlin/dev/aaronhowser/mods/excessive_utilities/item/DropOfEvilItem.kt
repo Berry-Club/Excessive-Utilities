@@ -43,7 +43,7 @@ class DropOfEvilItem(properties: Properties) : Item(properties) {
 			if (blockEntity !is SpawnerBlockEntity) return
 
 			val stack = ModBlocks.RESTURBED_MOB_SPAWNER.toStack()
-			blockEntity.saveToItem(stack, level.registryAccess())
+
 
 			level.removeBlock(pos, false)
 

@@ -5,16 +5,15 @@ import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
-import net.minecraft.world.level.block.state.properties.DirectionProperty
+import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
 
-class EnderFluxCrystalBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
+class EnderFluxCrystalBlock(properties: Properties) : Block(properties) {
 
 	init {
 		registerDefaultState(
@@ -27,7 +26,7 @@ class EnderFluxCrystalBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.clickedFace)
 	}
@@ -44,7 +43,7 @@ class EnderFluxCrystalBlock : Block(Properties.ofFullCopy(Blocks.OBSIDIAN)) {
 	}
 
 	companion object {
-		val FACING: DirectionProperty = BlockStateProperties.FACING
+		val FACING: EnumProperty<Direction> = BlockStateProperties.FACING
 
 		private val BOTTOM_WIDTH_BOUNDS = 1.0 to 15.0
 		private val BOTTOM_HEIGHT_BOUNDS = 0.0 to 7.0

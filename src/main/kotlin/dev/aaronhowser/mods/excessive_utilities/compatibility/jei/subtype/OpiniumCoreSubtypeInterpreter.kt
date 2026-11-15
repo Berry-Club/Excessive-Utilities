@@ -11,10 +11,4 @@ object OpiniumCoreSubtypeInterpreter : ISubtypeInterpreter<ItemStack> {
 		return ingredient.get(ModDataComponents.OPINIUM_CORE_CONTENTS)?.name
 	}
 
-	@Deprecated("Deprecated in Java")
-	override fun getLegacyStringSubtypeInfo(ingredient: ItemStack, context: UidContext): String {
-		val contents = ingredient.get(ModDataComponents.OPINIUM_CORE_CONTENTS) ?: return ""
-		return contents.toString()
-	}
-
 }
