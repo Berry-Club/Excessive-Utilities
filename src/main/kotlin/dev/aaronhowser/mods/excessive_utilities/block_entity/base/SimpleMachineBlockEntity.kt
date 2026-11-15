@@ -8,14 +8,12 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
-import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.block_entity.extractEnergy
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.menu.simple_machine.SimpleMachineMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -30,15 +28,15 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.SingleRecipeInput
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.properties.Property
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
-import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.DelegatingResourceHandler
-import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.RangedResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
@@ -62,8 +60,8 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 
 			override fun get(index: Int): Int {
 				return when (index) {
-					CURRENT_ENERGY_DATA_INDEX -> energyStorage.getAmountAsInt()
-					MAX_ENERGY_DATA_INDEX -> energyStorage.getCapacityAsInt()
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.amountAsInt
+					MAX_ENERGY_DATA_INDEX -> energyStorage.capacityAsInt
 					PROGRESS_DATA_INDEX -> progress
 					MAX_PROGRESS_DATA_INDEX -> maxProgress
 					else -> -1
@@ -80,8 +78,8 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 	fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource> = itemHandler
 
 	override fun clearContent() {
-		super<ContainerContainer>.clearContent()
-		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+		super.clearContent()
+		energyStorage.extractEnergy(energyStorage.amountAsInt, false)
 	}
 
 	override fun getGpUsage(): Double {
@@ -144,7 +142,7 @@ abstract class SimpleMachineBlockEntity<T : Recipe<SingleRecipeInput>>(
 		}
 
 		val feRequired = getFePerTick(recipe)
-		if (energyStorage.getAmountAsInt() < feRequired) {
+		if (energyStorage.amountAsInt < feRequired) {
 			return
 		}
 

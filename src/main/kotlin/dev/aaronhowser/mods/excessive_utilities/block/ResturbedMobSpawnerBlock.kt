@@ -6,15 +6,14 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
 
-class ResturbedMobSpawnerBlock(properties: BlockBehaviour.Properties) : Block(properties), EntityBlock {
+class ResturbedMobSpawnerBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return ResturbedMobSpawnerBlockEntity(pos, state)
@@ -30,14 +29,3 @@ class ResturbedMobSpawnerBlock(properties: BlockBehaviour.Properties) : Block(pr
 
 
 }
-
-
-
-
-
-
-
-
-
-
-

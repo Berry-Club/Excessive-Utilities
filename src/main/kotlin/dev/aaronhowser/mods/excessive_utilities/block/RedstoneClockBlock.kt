@@ -10,8 +10,6 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.SignalGetter
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -32,7 +30,7 @@ class RedstoneClockBlock(properties: Properties) : Block(properties) {
 		builder.add(POWERED, ENABLED)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(POWERED, context.level.hasNeighborSignal(context.clickedPos))
 	}
@@ -84,13 +82,3 @@ class RedstoneClockBlock(properties: Properties) : Block(properties) {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

@@ -21,7 +21,7 @@ class SunCrystalItem(properties: Properties) : Item(properties), TooltipItem {
 		val charge = stack.getOrDefault(ModDataComponents.CHARGE, 0)
 		if (charge >= MAX_CHARGE) return false
 
-		if (!level.isBrightOutside()) return false
+		if (!level.isBrightOutside) return false
 		if (!level.canSeeSky(entity.blockPosition())) return false
 
 		val newCharge = charge + 1
@@ -89,10 +89,3 @@ class SunCrystalItem(properties: Properties) : Item(properties), TooltipItem {
 	}
 
 }
-
-
-
-
-
-
-

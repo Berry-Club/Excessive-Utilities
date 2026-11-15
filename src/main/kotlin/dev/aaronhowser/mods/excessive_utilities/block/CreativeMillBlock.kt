@@ -5,13 +5,12 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpSourceBlockE
 import dev.aaronhowser.mods.excessive_utilities.block_entity.mill.CreativeMillBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityType
-import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.BlockBehaviour
+import net.minecraft.world.level.block.state.BlockState
 
-class CreativeMillBlock(properties: BlockBehaviour.Properties) : GpSourceBlock(properties) {
+class CreativeMillBlock(properties: Properties) : GpSourceBlock(properties) {
 
 	override fun getBlockEntityType(): BlockEntityType<out GpSourceBlockEntity> {
 		return ModBlockEntityTypes.CREATIVE_MILL.get()
@@ -22,13 +21,3 @@ class CreativeMillBlock(properties: BlockBehaviour.Properties) : GpSourceBlock(p
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

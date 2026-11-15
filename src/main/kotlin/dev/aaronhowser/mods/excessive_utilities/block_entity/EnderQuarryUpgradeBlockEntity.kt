@@ -5,12 +5,10 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.EnderQuarryUpg
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 
 class EnderQuarryUpgradeBlockEntity(
 	pos: BlockPos,

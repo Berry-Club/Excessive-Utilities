@@ -13,9 +13,9 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.recipe.ModRecipeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.*
 import net.minecraft.core.RegistrySetBuilder
 import net.minecraft.core.registries.Registries
+import net.minecraft.data.advancements.AdvancementProvider
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.minecraft.data.advancements.AdvancementProvider
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider
 import net.neoforged.neoforge.data.event.GatherDataEvent
 import net.neoforged.neoforge.registries.NeoForgeRegistries

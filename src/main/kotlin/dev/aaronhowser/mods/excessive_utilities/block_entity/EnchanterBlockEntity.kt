@@ -18,10 +18,6 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -35,10 +31,12 @@ import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
-import net.neoforged.neoforge.transfer.energy.EnergyHandler
-import net.neoforged.neoforge.transfer.ResourceHandler
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.DelegatingResourceHandler
+import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.item.VanillaContainerWrapper
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
@@ -55,8 +53,8 @@ class EnchanterBlockEntity(
 	override fun getContainers(): List<Container> = listOf(container)
 
 	override fun clearContent() {
-		super<ContainerContainer>.clearContent()
-		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+		super.clearContent()
+		energyStorage.extractEnergy(energyStorage.amountAsInt, false)
 	}
 
 	private val itemHandler: ResourceHandler<ItemResource> = EnchanterItemHandler()
@@ -115,7 +113,7 @@ class EnchanterBlockEntity(
 
 		if (currentEnchantingPower >= recipe.enchantingPower) {
 			for (i in 0 until speedUpgrades + 1) {
-				if (energyStorage.getAmountAsInt() < fePerTick) break
+				if (energyStorage.amountAsInt < fePerTick) break
 
 				progress++
 				energyStorage.extractEnergy(fePerTick, false)
@@ -227,8 +225,8 @@ class EnchanterBlockEntity(
 
 			override fun get(index: Int): Int {
 				return when (index) {
-					CURRENT_ENERGY_DATA_INDEX -> energyStorage.getAmountAsInt()
-					MAX_ENERGY_DATA_INDEX -> energyStorage.getCapacityAsInt()
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.amountAsInt
+					MAX_ENERGY_DATA_INDEX -> energyStorage.capacityAsInt
 					PROGRESS_DATA_INDEX -> progress
 					MAX_PROGRESS_DATA_INDEX -> maxProgress
 					else -> -1

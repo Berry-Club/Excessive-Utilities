@@ -12,21 +12,22 @@ import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemDisplayContext
 
 class MagicalBoomerangEntityRenderer(context: EntityRendererProvider.Context) :
-    EntityRenderer<MagicalBoomerangEntity, ItemEntityRenderState>(context) {
-    private val itemModelResolver = context.itemModelResolver
-    private val boomerangStack by lazy { ModItems.MAGICAL_BOOMERANG.get().defaultInstance }
-    override fun createRenderState() = ItemEntityRenderState()
-    override fun extractRenderState(entity: MagicalBoomerangEntity, state: ItemEntityRenderState, partialTick: Float) {
-        super.extractRenderState(entity, state, partialTick)
-        itemModelResolver.updateForNonLiving(state.item, boomerangStack, ItemDisplayContext.GROUND, entity)
-        state.rotation = Mth.wrapDegrees((entity.tickCount + partialTick) * 20f)
-    }
-    override fun submit(state: ItemEntityRenderState, poseStack: PoseStack, collector: SubmitNodeCollector, camera: CameraRenderState) {
-        super.submit(state, poseStack, collector, camera)
-        poseStack.pushPose()
-        poseStack.mulPose(Axis.YP.rotationDegrees(state.rotation))
-        poseStack.mulPose(Axis.XP.rotationDegrees(90f))
-        state.item.submit(poseStack, collector, state.lightCoords, 0, state.outlineColor)
-        poseStack.popPose()
-    }
+	EntityRenderer<MagicalBoomerangEntity, ItemEntityRenderState>(context) {
+	private val itemModelResolver = context.itemModelResolver
+	private val boomerangStack by lazy { ModItems.MAGICAL_BOOMERANG.get().defaultInstance }
+	override fun createRenderState() = ItemEntityRenderState()
+	override fun extractRenderState(entity: MagicalBoomerangEntity, state: ItemEntityRenderState, partialTick: Float) {
+		super.extractRenderState(entity, state, partialTick)
+		itemModelResolver.updateForNonLiving(state.item, boomerangStack, ItemDisplayContext.GROUND, entity)
+		state.rotation = Mth.wrapDegrees((entity.tickCount + partialTick) * 20f)
+	}
+
+	override fun submit(state: ItemEntityRenderState, poseStack: PoseStack, collector: SubmitNodeCollector, camera: CameraRenderState) {
+		super.submit(state, poseStack, collector, camera)
+		poseStack.pushPose()
+		poseStack.mulPose(Axis.YP.rotationDegrees(state.rotation))
+		poseStack.mulPose(Axis.XP.rotationDegrees(90f))
+		state.item.submit(poseStack, collector, state.lightCoords, 0, state.outlineColor)
+		poseStack.popPose()
+	}
 }

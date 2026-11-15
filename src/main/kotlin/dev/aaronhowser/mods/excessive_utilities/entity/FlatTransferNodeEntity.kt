@@ -12,12 +12,12 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.syncher.EntityDataAccessor
 import net.minecraft.network.syncher.EntityDataSerializers
 import net.minecraft.network.syncher.SynchedEntityData
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.*
+import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.player.Inventory
@@ -25,10 +25,9 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
-import net.minecraft.world.phys.AABB
-import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
+import net.minecraft.world.phys.AABB
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.transfer.ResourceHandler
@@ -89,7 +88,7 @@ class FlatTransferNodeEntity(
 			aiming.opposite
 		)
 
-    override fun hurtServer(level: ServerLevel, source: DamageSource, amount: Float): Boolean = false
+	override fun hurtServer(level: ServerLevel, source: DamageSource, amount: Float): Boolean = false
 
 	override fun tick() {
 		super.tick()
@@ -142,19 +141,19 @@ class FlatTransferNodeEntity(
 		super.remove(reason)
 	}
 
-    private fun transferFluid(level: ServerLevel) {
-        ResourceHandlerUtil.move(
-            originFluidHandler, targetFluidHandler, { true },
-            ServerConfig.CONFIG.flatFluidTransferNodeSpeed.get(), null
-        )
-    }
+	private fun transferFluid(level: ServerLevel) {
+		ResourceHandlerUtil.move(
+			originFluidHandler, targetFluidHandler, { true },
+			ServerConfig.CONFIG.flatFluidTransferNodeSpeed.get(), null
+		)
+	}
 
-    private fun transferItem(level: ServerLevel) {
-        ResourceHandlerUtil.moveStacking(
-            originItemHandler, targetItemHandler, { true },
-            ServerConfig.CONFIG.flatItemTransferNodeSpeed.get(), null
-        )
-    }
+	private fun transferItem(level: ServerLevel) {
+		ResourceHandlerUtil.moveStacking(
+			originItemHandler, targetItemHandler, { true },
+			ServerConfig.CONFIG.flatItemTransferNodeSpeed.get(), null
+		)
+	}
 
 	override fun defineSynchedData(builder: SynchedEntityData.Builder) {
 		builder.define(IS_ITEM_NODE_DATA, true)

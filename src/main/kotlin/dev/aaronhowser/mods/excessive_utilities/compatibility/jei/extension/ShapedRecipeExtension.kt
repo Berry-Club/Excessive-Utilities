@@ -5,11 +5,11 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.ingredient.ICraftingGridHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.category.extensions.vanilla.crafting.ICraftingCategoryExtension
-import net.minecraft.world.item.crafting.display.SlotDisplay
+import net.minecraft.world.item.crafting.CraftingRecipe
+import net.minecraft.world.item.crafting.Ingredient
 import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.crafting.ShapedRecipe
-import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.world.item.crafting.CraftingRecipe
+import net.minecraft.world.item.crafting.display.SlotDisplay
 
 class ShapedRecipeExtension<T : CraftingRecipe> : ICraftingCategoryExtension<T> {
 

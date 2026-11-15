@@ -11,9 +11,9 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
@@ -21,9 +21,8 @@ import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.world.level.block.state.BlockBehaviour
 
-class CreativeChestBlock(properties: BlockBehaviour.Properties) : SimpleContainerBlock(properties), EntityBlock {
+class CreativeChestBlock(properties: Properties) : SimpleContainerBlock(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -36,7 +35,7 @@ class CreativeChestBlock(properties: BlockBehaviour.Properties) : SimpleContaine
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -66,15 +65,3 @@ class CreativeChestBlock(properties: BlockBehaviour.Properties) : SimpleContaine
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

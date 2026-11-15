@@ -11,9 +11,9 @@ class EnderPorcupineSimpleEnergyHandler(
 
 	private fun getTarget(): EnergyHandler? = porcupine.findTargetEnergyHandler(direction)
 
-	override fun getAmountAsLong(): Long = getTarget()?.getAmountAsLong() ?: 0L
+	override fun getAmountAsLong(): Long = getTarget()?.amountAsLong ?: 0L
 
-	override fun getCapacityAsLong(): Long = getTarget()?.getCapacityAsLong() ?: 0L
+	override fun getCapacityAsLong(): Long = getTarget()?.capacityAsLong ?: 0L
 
 	override fun insert(amount: Int, transaction: TransactionContext): Int {
 		return getTarget()?.insert(amount, transaction) ?: 0

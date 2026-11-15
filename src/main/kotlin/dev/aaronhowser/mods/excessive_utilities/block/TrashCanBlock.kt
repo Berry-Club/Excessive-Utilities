@@ -1,7 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-
 import dev.aaronhowser.mods.excessive_utilities.block_entity.EnergyTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.FluidTrashCanBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.TrashCanBlockEntity
@@ -15,7 +13,6 @@ import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
@@ -43,7 +40,7 @@ class TrashCanBlock(
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -118,16 +115,3 @@ class TrashCanBlock(
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

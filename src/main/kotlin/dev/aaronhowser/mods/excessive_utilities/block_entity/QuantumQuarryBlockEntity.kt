@@ -17,19 +17,14 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBiomeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
-import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
-import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import dev.aaronhowser.mods.excessive_utilities.registry.ModTicketTypes
+import dev.aaronhowser.mods.excessive_utilities.registry.*
 import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryBiomeSource
 import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryDimension
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.registries.Registries
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
@@ -51,15 +46,16 @@ import net.minecraft.world.level.biome.Biome
 import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
-import net.minecraft.core.UUIDUtil
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
-import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import net.neoforged.neoforge.transfer.item.ItemResource
 import java.lang.ref.WeakReference
 import java.util.*
@@ -79,8 +75,8 @@ class QuantumQuarryBlockEntity(
 	override fun getContainers(): List<Container> = listOf(bufferContainer, upgradesContainer)
 
 	override fun clearContent() {
-		super<ContainerContainer>.clearContent()
-		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+		super.clearContent()
+		energyStorage.extractEnergy(energyStorage.amountAsInt, false)
 	}
 
 	private var fakePlayer: WeakReference<FakePlayer>? = null
@@ -168,7 +164,7 @@ class QuantumQuarryBlockEntity(
 
 	private fun progressMine(miningDimensionLevel: ServerLevel) {
 		val fePerBlock = ServerConfig.CONFIG.quantumQuarryFePerBlock.get()
-		if (energyStorage.getAmountAsInt() < fePerBlock) return
+		if (energyStorage.amountAsInt < fePerBlock) return
 
 		val blocksPerTick = ServerConfig.CONFIG.quantumQuarryBlocksPerTick.get()
 		progressThroughBlock += blocksPerTick
@@ -626,7 +622,7 @@ class QuantumQuarryBlockEntity(
 
 		override fun get(index: Int): Int {
 			return when (index) {
-				CURRENT_ENERGY_DATA_INDEX -> energyStorage.getAmountAsInt()
+				CURRENT_ENERGY_DATA_INDEX -> energyStorage.amountAsInt
 				TARGET_X_DATA_INDEX -> targetBlockPos?.x ?: 0
 				TARGET_Y_DATA_INDEX -> targetBlockPos?.y ?: 0
 				TARGET_Z_DATA_INDEX -> targetBlockPos?.z ?: 0

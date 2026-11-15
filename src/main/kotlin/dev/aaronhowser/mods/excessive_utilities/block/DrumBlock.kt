@@ -11,14 +11,14 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.transfer.fluid.FluidUtil
 
-class DrumBlock(properties: BlockBehaviour.Properties) : Block(properties), EntityBlock {
+class DrumBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return DrumBlockEntity(pos, state)
@@ -46,15 +46,3 @@ class DrumBlock(properties: BlockBehaviour.Properties) : Block(properties), Enti
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

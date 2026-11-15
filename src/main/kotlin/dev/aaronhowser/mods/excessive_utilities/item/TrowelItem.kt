@@ -6,8 +6,8 @@ import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.registries.Registries
 import net.minecraft.world.entity.item.ItemEntity
-import net.minecraft.world.item.Items
 import net.minecraft.world.item.Item
+import net.minecraft.world.item.Items
 import net.minecraft.world.item.ToolMaterial
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.storage.loot.LootParams
@@ -60,8 +60,3 @@ class TrowelItem(properties: Properties) : Item(properties) {
 	}
 
 }
-
-
-
-
-

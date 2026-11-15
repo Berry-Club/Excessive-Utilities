@@ -80,20 +80,20 @@ object ModItems : AaronItemRegistry() {
 	// Tools
 
 	val WOODEN_SICKLE: DeferredItem<SickleItem> =
-	register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.WOOD) }
+		register("wooden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.WOOD) }
 	val STONE_SICKLE: DeferredItem<SickleItem> =
-	register("stone_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.STONE) }
+		register("stone_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.STONE) }
 	val IRON_SICKLE: DeferredItem<SickleItem> =
-	register("iron_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.IRON) }
+		register("iron_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.IRON) }
 
 	//	val COPPER_SICKLE: DeferredItem<SickleItem> =
 //		register("copper_sickle", ::SickleItem) { SickleItem.getDefaultProperties(Tiers.IRON) }
 	val GOLDEN_SICKLE: DeferredItem<SickleItem> =
-	register("golden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.GOLD) }
+		register("golden_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.GOLD) }
 	val DIAMOND_SICKLE: DeferredItem<SickleItem> =
-	register("diamond_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.DIAMOND) }
+		register("diamond_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.DIAMOND) }
 	val NETHERITE_SICKLE: DeferredItem<SickleItem> =
-	register("netherite_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.NETHERITE) }
+		register("netherite_sickle", ::SickleItem) { SickleItem.getDefaultProperties(ToolMaterial.NETHERITE) }
 	val DESTRUCTION_PICKAXE: DeferredItem<DestructionPickaxeItem> =
 		register("destruction_pickaxe", ::DestructionPickaxeItem, DestructionPickaxeItem.DEFAULT_PROPERTIES)
 	val EROSION_SHOVEL: DeferredItem<ErosionShovelItem> =

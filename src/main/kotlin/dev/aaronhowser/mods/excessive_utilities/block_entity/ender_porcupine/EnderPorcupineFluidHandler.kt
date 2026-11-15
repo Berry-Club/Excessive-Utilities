@@ -6,6 +6,6 @@ import net.neoforged.neoforge.transfer.fluid.FluidResource
 
 /** Resolves the remote endpoint on every access so moved targets never retain stale inventories. */
 class EnderPorcupineFluidHandler(porcupine: EnderPorcupineBlockEntity, direction: Direction?) :
-    DelegatingResourceHandler<FluidResource>({
-        requireNotNull(porcupine.findTargetFluidHandler(direction)) { "Ender Porcupine fluid endpoint is unavailable" }
-    })
+	DelegatingResourceHandler<FluidResource>({
+		requireNotNull(porcupine.findTargetFluidHandler(direction)) { "Ender Porcupine fluid endpoint is unavailable" }
+	})

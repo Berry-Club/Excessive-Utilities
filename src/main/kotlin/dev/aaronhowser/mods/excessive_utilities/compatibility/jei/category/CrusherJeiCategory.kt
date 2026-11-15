@@ -1,18 +1,18 @@
 package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
+import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
+import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 
 class CrusherJeiCategory(
 	recipeType: IRecipeType<RecipeHolder<CrusherRecipe>>,

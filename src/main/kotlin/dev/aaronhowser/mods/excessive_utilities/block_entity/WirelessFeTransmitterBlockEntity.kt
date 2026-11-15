@@ -47,9 +47,9 @@ class WirelessFeTransmitterBlockEntity(
 		val fePerTick = ServerConfig.CONFIG.wirelessFeTransmitterRate.get()
 
 		for (destination in destinationCache) {
-			if (networkEnergy.getAmountAsInt() <= 0) break
+			if (networkEnergy.amountAsInt <= 0) break
 
-			val maxAmount = minOf(fePerTick, networkEnergy.getAmountAsInt())
+			val maxAmount = minOf(fePerTick, networkEnergy.amountAsInt)
 			val actualAmount = destination.insertEnergy(maxAmount, true)
 
 			if (actualAmount > 0) {
@@ -87,7 +87,7 @@ class WirelessFeTransmitterBlockEntity(
 					dir
 				)
 
-				if (energyHandler != null && energyHandler.getAmountAsLong() < energyHandler.getCapacityAsLong()) {
+				if (energyHandler != null && energyHandler.amountAsLong < energyHandler.capacityAsLong) {
 					destinationCache.add(energyHandler)
 					continue@posLoop
 				}

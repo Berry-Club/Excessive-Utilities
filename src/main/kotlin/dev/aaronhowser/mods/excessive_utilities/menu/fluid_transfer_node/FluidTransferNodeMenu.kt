@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.fluid_transfer_node
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node.FluidTransferNodeBlockEntity
+import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.menu.base.TransferNodeUpgradeSlot
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMenuTypes
 import net.minecraft.network.FriendlyByteBuf

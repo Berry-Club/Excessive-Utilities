@@ -7,8 +7,8 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.It
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.MagmaticFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.Recipe
+import net.minecraft.world.item.crafting.RecipeSerializer
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 

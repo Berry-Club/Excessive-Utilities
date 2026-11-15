@@ -12,11 +12,12 @@ import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.core.registries.Registries
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.ResourceKey
+import net.minecraft.nbt.ListTag
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
@@ -24,8 +25,6 @@ import net.minecraft.world.level.block.CaveVines
 import net.minecraft.world.level.levelgen.structure.BoundingBox
 import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings
 import net.minecraft.world.level.saveddata.SavedData
-import net.minecraft.nbt.ListTag
-import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.level.saveddata.SavedDataType
 
 class DepthsHandler : SavedData() {
@@ -125,7 +124,7 @@ class DepthsHandler : SavedData() {
 				emptySet(),
 				entity.yRot,
 				entity.xRot,
-			true
+				true
 			)
 
 			return
@@ -189,7 +188,7 @@ class DepthsHandler : SavedData() {
 				emptySet(),
 				entity.yRot,
 				entity.xRot,
-			true
+				true
 			)
 		}
 
@@ -216,15 +215,15 @@ class DepthsHandler : SavedData() {
 
 			val storage = level.dataStorage
 			val type = SavedDataType(
-                dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities.modResource(SAVED_DATA_NAME),
-                ::DepthsHandler,
-                CompoundTag.CODEC.xmap(
-                    { tag -> load(tag, level.registryAccess()) },
-                    { data -> data.save(CompoundTag(), level.registryAccess()) }
-                ),
-                DataFixTypes.SAVED_DATA_COMMAND_STORAGE
-            )
-            return storage.computeIfAbsent(type)
+				ExcessiveUtilities.modResource(SAVED_DATA_NAME),
+				::DepthsHandler,
+				CompoundTag.CODEC.xmap(
+					{ tag -> load(tag, level.registryAccess()) },
+					{ data -> data.save(CompoundTag(), level.registryAccess()) }
+				),
+				DataFixTypes.SAVED_DATA_COMMAND_STORAGE
+			)
+			return storage.computeIfAbsent(type)
 		}
 
 		private fun getDepthsLevel(level: ServerLevel): ServerLevel {

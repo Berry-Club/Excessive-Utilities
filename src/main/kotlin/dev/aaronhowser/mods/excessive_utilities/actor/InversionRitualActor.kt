@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.actor
 
-import net.minecraft.server.level.ServerPlayer
 import dev.aaronhowser.mods.aaron.actor.LevelActor
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
@@ -16,22 +15,22 @@ import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.division_sigil.DivisionSigilInversion
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.core.Holder
+import net.minecraft.network.protocol.game.ClientboundSoundPacket
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvent
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.*
+import net.minecraft.world.entity.monster.Ghast
+import net.minecraft.world.entity.monster.Phantom
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.levelgen.Heightmap
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
-import net.minecraft.core.Holder
-import net.minecraft.network.protocol.game.ClientboundSoundPacket
-import net.minecraft.world.entity.EntityReference
-import net.minecraft.world.entity.monster.Ghast
-import net.minecraft.world.entity.monster.Phantom
 import net.neoforged.neoforge.event.EventHooks
 import net.neoforged.neoforge.event.entity.living.LivingDeathEvent
 import java.util.*
@@ -105,11 +104,11 @@ class InversionRitualActor(
 
 		for (player in getPlayersInArea()) {
 			(player as ServerPlayer).connection.send(
-                ClientboundSoundPacket(
-                    Holder.direct(SoundEvents.WITHER_SPAWN), SoundSource.PLAYERS,
-                    player.x, player.y, player.z, 1f, 1f, player.random.nextLong()
-                )
-            )
+				ClientboundSoundPacket(
+					Holder.direct(SoundEvents.WITHER_SPAWN), SoundSource.PLAYERS,
+					player.x, player.y, player.z, 1f, 1f, player.random.nextLong()
+				)
+			)
 		}
 
 		ExcessiveUtilities.LOGGER.info("InversionRitualActor discarded ${entitiesToRemove.size} entities")
@@ -266,10 +265,12 @@ class InversionRitualActor(
 
 		for (player in getPlayersInArea()) {
 			player.status("$monstersKilled/$requiredKills")
-			(player as ServerPlayer).connection.send(ClientboundSoundPacket(
-                Holder.direct(sound), SoundSource.PLAYERS,
-                player.x, player.y, player.z, 1f, pitch, player.random.nextLong()
-            ))
+			(player as ServerPlayer).connection.send(
+				ClientboundSoundPacket(
+					Holder.direct(sound), SoundSource.PLAYERS,
+					player.x, player.y, player.z, 1f, pitch, player.random.nextLong()
+				)
+			)
 		}
 
 		if (monstersKilled >= requiredKills) {

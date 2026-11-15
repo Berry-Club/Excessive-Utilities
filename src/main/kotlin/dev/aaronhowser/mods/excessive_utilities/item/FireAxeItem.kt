@@ -5,9 +5,7 @@ import dev.aaronhowser.mods.aaron.block_walker.WalkType
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.tier.OpiniumTier
-import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.Item
@@ -52,7 +50,3 @@ class FireAxeItem(properties: Properties) : Item(properties) {
 	}
 
 }
-
-
-
-

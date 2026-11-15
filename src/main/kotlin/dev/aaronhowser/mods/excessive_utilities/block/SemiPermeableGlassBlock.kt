@@ -41,20 +41,6 @@ open class SemiPermeableGlassBlock(
 	class Dark(
 		isInverted: Boolean,
 		properties: Properties = Properties.ofFullCopy(Blocks.GLASS)
-	) : SemiPermeableGlassBlock(isInverted, properties) {
-
-
-	}
+	) : SemiPermeableGlassBlock(isInverted, properties)
 
 }
-
-
-
-
-
-
-
-
-
-
-

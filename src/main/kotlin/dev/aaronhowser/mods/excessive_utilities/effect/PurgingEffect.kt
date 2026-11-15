@@ -6,11 +6,11 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModMobEffectTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModParticleTypes
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
-import net.minecraft.server.level.ServerLevel
 
 class PurgingEffect : MobEffect(
 	MobEffectCategory.HARMFUL,

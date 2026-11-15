@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
+import net.minecraft.util.RandomSource
 import net.minecraft.util.StringRepresentable
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -12,8 +13,10 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.LevelReader
+import net.minecraft.world.level.ScheduledTickAccess
 import net.minecraft.world.level.block.Block
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.EnumProperty
@@ -21,14 +24,10 @@ import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.util.RandomSource
-import net.minecraft.world.level.LevelReader
-import net.minecraft.world.level.ScheduledTickAccess
-import net.minecraft.world.level.block.state.BlockBehaviour
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.Tags
 
-class TransferPipeBlock(properties: BlockBehaviour.Properties) : Block(properties) {
+class TransferPipeBlock(properties: Properties) : Block(properties) {
 
 	init {
 		registerDefaultState(
@@ -53,12 +52,12 @@ class TransferPipeBlock(properties: BlockBehaviour.Properties) : Block(propertie
 	override fun updateShape(
 		state: BlockState,
 		level: LevelReader,
-		 ticks: ScheduledTickAccess,
+		ticks: ScheduledTickAccess,
 		pos: BlockPos,
-		 directionToNeighbour: Direction,
-		 neighbourPos: BlockPos,
-		 neighbourState: BlockState,
-		 random: RandomSource
+		directionToNeighbour: Direction,
+		neighbourPos: BlockPos,
+		neighbourState: BlockState,
+		random: RandomSource
 	): BlockState {
 		if (level is Level) {
 			return updateConnections(level, pos, state)
@@ -209,16 +208,3 @@ class TransferPipeBlock(properties: BlockBehaviour.Properties) : Block(propertie
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

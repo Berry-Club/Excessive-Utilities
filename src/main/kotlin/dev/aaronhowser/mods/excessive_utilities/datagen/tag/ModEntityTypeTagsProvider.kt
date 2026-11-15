@@ -6,7 +6,6 @@ import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.tags.EntityTypeTagsProvider
 import net.minecraft.resources.Identifier
-import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.TagKey
 import net.minecraft.world.entity.EntityType
 import java.util.concurrent.CompletableFuture
@@ -33,8 +32,8 @@ class ModEntityTypeTagsProvider(
 		tag(INVERSION_RITUAL_DESPAWN_ON_START)
 			.add(EntityType.ENDERMAN)
 
-        getOrCreateRawBuilder(DEATH_GENERATOR_DOOM_BLACKLIST)
-            .addOptionalElement(Identifier.fromNamespaceAndPath("mekanism", "robit"))
+		getOrCreateRawBuilder(DEATH_GENERATOR_DOOM_BLACKLIST)
+			.addOptionalElement(Identifier.fromNamespaceAndPath("mekanism", "robit"))
 	}
 
 	companion object {

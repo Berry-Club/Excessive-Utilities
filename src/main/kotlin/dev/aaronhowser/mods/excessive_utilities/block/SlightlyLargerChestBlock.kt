@@ -11,17 +11,16 @@ import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.level.block.state.BlockBehaviour
 
-class SlightlyLargerChestBlock(properties: BlockBehaviour.Properties) : SimpleContainerBlock(properties), EntityBlock {
+class SlightlyLargerChestBlock(properties: Properties) : SimpleContainerBlock(properties), EntityBlock {
 
 	init {
 		registerDefaultState(
@@ -34,7 +33,7 @@ class SlightlyLargerChestBlock(properties: BlockBehaviour.Properties) : SimpleCo
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -68,16 +67,3 @@ class SlightlyLargerChestBlock(properties: BlockBehaviour.Properties) : SimpleCo
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

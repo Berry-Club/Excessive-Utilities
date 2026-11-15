@@ -3,23 +3,21 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block_entity.insertEnergy
 import dev.aaronhowser.mods.excessive_utilities.block_entity.extractEnergy
+import dev.aaronhowser.mods.excessive_utilities.block_entity.insertEnergy
 import dev.aaronhowser.mods.excessive_utilities.menu.energy_transfer_node.EnergyTransferNodeMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.player.Inventory
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 
 class EnergyTransferNodeBlockEntity(
 	pos: BlockPos,
@@ -30,14 +28,14 @@ class EnergyTransferNodeBlockEntity(
 
 	override fun clearContent() {
 		super.clearContent()
-		bufferEnergyStorage.extractEnergy(bufferEnergyStorage.getAmountAsInt(), false)
+		bufferEnergyStorage.extractEnergy(bufferEnergyStorage.amountAsInt, false)
 	}
 
 	private fun getParentSimpleEnergyHandler(level: ServerLevel): EnergyHandler? {
 		return level.getCapability(Capabilities.Energy.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}
 
-	override fun getBufferAmount(): Int = bufferEnergyStorage.getAmountAsInt()
+	override fun getBufferAmount(): Int = bufferEnergyStorage.amountAsInt
 
 	override fun pullFromPingPos(level: ServerLevel) {
 		if (hasConfiguredReceiver()) return
@@ -45,7 +43,7 @@ class EnergyTransferNodeBlockEntity(
 		val neighborStorages = getEnergyStorageAroundPing(level)
 		if (neighborStorages.isEmpty()) return
 
-		val amountThatCanFit = bufferEnergyStorage.getCapacityAsInt() - bufferEnergyStorage.getAmountAsInt()
+		val amountThatCanFit = bufferEnergyStorage.capacityAsInt - bufferEnergyStorage.amountAsInt
 		if (amountThatCanFit <= 0) return
 
 		val maxAmountToPull = getAmountPerTick()
@@ -66,7 +64,7 @@ class EnergyTransferNodeBlockEntity(
 	override fun pushIntoParent(level: ServerLevel) {
 		val parentEnergyStorage = getParentSimpleEnergyHandler(level) ?: return
 
-		val energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.getAmountAsInt(), true)
+		val energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.amountAsInt, true)
 		if (energyToPush <= 0) return
 
 		val actualAmountPushed = parentEnergyStorage.insertEnergy(energyToPush, false)
@@ -84,7 +82,7 @@ class EnergyTransferNodeBlockEntity(
 	}
 
 	override fun pushIntoPingPos(level: ServerLevel) {
-		var energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.getAmountAsInt(), true)
+		var energyToPush = bufferEnergyStorage.extractEnergy(bufferEnergyStorage.amountAsInt, true)
 		if (energyToPush <= 0) return
 
 		visitEnderReceivers(level) { receiver ->
@@ -113,7 +111,7 @@ class EnergyTransferNodeBlockEntity(
 	override fun pullFromParent(level: ServerLevel) {
 		val parentStorage = getParentSimpleEnergyHandler(level) ?: return
 
-		val amountThatCanFit = bufferEnergyStorage.getCapacityAsInt() - bufferEnergyStorage.getAmountAsInt()
+		val amountThatCanFit = bufferEnergyStorage.capacityAsInt - bufferEnergyStorage.amountAsInt
 		if (amountThatCanFit <= 0) return
 
 		val maxAmountToPull = getAmountPerTick()
@@ -138,8 +136,8 @@ class EnergyTransferNodeBlockEntity(
 
 	override fun getContainerData(index: Int): Int {
 		return when (index) {
-			STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.getAmountAsInt()
-			MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.getCapacityAsInt()
+			STORED_ENERGY_DATA_INDEX -> bufferEnergyStorage.amountAsInt
+			MAX_ENERGY_DATA_INDEX -> bufferEnergyStorage.capacityAsInt
 			else -> super.getContainerData(index)
 		}
 	}

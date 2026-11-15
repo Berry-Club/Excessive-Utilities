@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponents
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.loot.BlockLootSubProvider
+import net.minecraft.world.clock.WorldClocks
 import net.minecraft.world.flag.FeatureFlags
 import net.minecraft.world.item.Items
 import net.minecraft.world.item.enchantment.Enchantment
@@ -24,12 +25,11 @@ import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.storage.loot.IntRange
 import net.minecraft.world.level.storage.loot.LootPool
 import net.minecraft.world.level.storage.loot.functions.CopyComponentsFunction
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.minecraft.world.level.storage.loot.predicates.BonusLevelTableCondition
 import net.minecraft.world.level.storage.loot.predicates.LocationCheck
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.predicates.TimeCheck
-import net.minecraft.world.clock.WorldClocks
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.registries.DeferredHolder
 
@@ -189,7 +189,7 @@ class ModBlockLootTablesSubProvider(
 							LocationPredicate.Builder.location()
 								.setBlock(
 									BlockPredicate.Builder.block()
-									.of(registries.lookupOrThrow(Registries.BLOCK), Tags.Blocks.END_STONES)
+										.of(registries.lookupOrThrow(Registries.BLOCK), Tags.Blocks.END_STONES)
 								),
 							BlockPos(0, -1, 0)
 						)

@@ -5,6 +5,6 @@ import net.minecraft.client.renderer.item.ItemStackRenderState
 import net.minecraft.core.Direction
 
 class CreativeHarvestRenderState : BlockEntityRenderState() {
-    val item = ItemStackRenderState()
-    val directions = mutableListOf<Pair<Direction, Int>>()
+	val item = ItemStackRenderState()
+	val directions = mutableListOf<Pair<Direction, Int>>()
 }

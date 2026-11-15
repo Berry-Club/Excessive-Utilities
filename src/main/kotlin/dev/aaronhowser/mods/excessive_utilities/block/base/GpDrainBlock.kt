@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.block.base
 
 import dev.aaronhowser.mods.aaron.container.ContainerContainer
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.LivingEntity
@@ -18,7 +18,6 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.server.level.ServerLevel
 
 abstract class GpDrainBlock(
 	properties: Properties,
@@ -68,13 +67,3 @@ abstract class GpDrainBlock(
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

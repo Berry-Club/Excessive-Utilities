@@ -6,10 +6,10 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.datagen.datapack.ModDamageTypeProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.registry.ModMobEffects
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.server.level.ServerLevel
 
 class DoomEffect : MobEffect(
 	MobEffectCategory.HARMFUL,

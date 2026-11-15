@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.recipe.machine
 
-import dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe
 import com.mojang.serialization.Codec
 import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
 import net.minecraft.core.HolderLookup

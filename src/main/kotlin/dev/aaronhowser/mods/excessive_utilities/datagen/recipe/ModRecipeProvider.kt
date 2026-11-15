@@ -29,9 +29,10 @@ import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
 import net.minecraft.data.recipes.RecipeOutput
+import net.minecraft.data.recipes.RecipeProvider
 import net.minecraft.data.recipes.ShapedRecipeBuilder
-import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.Identifier
+import net.minecraft.resources.ResourceKey
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.util.Unit
@@ -48,17 +49,16 @@ import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ItemLike
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.material.Fluids
-import net.minecraft.data.recipes.RecipeProvider
 import net.neoforged.neoforge.common.Tags
 import net.neoforged.neoforge.fluids.FluidStack
+import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import net.neoforged.neoforge.fluids.crafting.SizedFluidIngredient
 import net.neoforged.neoforge.registries.DeferredBlock
-import net.neoforged.neoforge.fluids.crafting.FluidIngredient
 import java.util.concurrent.CompletableFuture
 
 class ModRecipeProvider(output: PackOutput, lookupProvider: CompletableFuture<HolderLookup.Provider>) : RecipeProvider.Runner(output, lookupProvider) {
-    override fun getName(): String = "Excessive Utilities recipes"
-    override fun createRecipeProvider(registries: HolderLookup.Provider, output: RecipeOutput): RecipeProvider = Content(registries, output)
+	override fun getName(): String = "Excessive Utilities recipes"
+	override fun createRecipeProvider(registries: HolderLookup.Provider, output: RecipeOutput): RecipeProvider = Content(registries, output)
 }
 
 private class Content(registries: HolderLookup.Provider, output: RecipeOutput) : AaronRecipeProvider(registries, output) {
@@ -66,8 +66,8 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 	private fun modLoc(name: String) = ExcessiveUtilities.modResource(name).toString()
 
 	override fun buildRecipes() {
-        val recipeOutput = output
-        val holderLookup = registries
+		val recipeOutput = output
+		val holderLookup = registries
 		buildGeneratorFuelRecipes(recipeOutput)
 		buildShapedRecipes(recipeOutput, holderLookup)
 		buildShapelessRecipes(recipeOutput)
@@ -2171,7 +2171,7 @@ private class Content(registries: HolderLookup.Provider, output: RecipeOutput) :
 	}
 
 	private fun buildSmeltingRecipes(recipeOutput: RecipeOutput) {
-		smeltingResultFromBase( ModBlocks.THICKENED_GLASS, ModBlocks.SANDY_GLASS)
+		smeltingResultFromBase(ModBlocks.THICKENED_GLASS, ModBlocks.SANDY_GLASS)
 	}
 
 	private fun buildQedRecipes(recipeOutput: RecipeOutput) {

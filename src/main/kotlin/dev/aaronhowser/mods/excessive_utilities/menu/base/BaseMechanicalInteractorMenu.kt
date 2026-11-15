@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.menu.base
 
 import dev.aaronhowser.mods.aaron.menu.MenuWithButtons
 import dev.aaronhowser.mods.aaron.menu.MenuWithInventory
-import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextEnum
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.prevEnum

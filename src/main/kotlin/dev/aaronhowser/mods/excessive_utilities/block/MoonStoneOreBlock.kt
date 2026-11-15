@@ -23,7 +23,7 @@ class MoonStoneOreBlock(properties: Properties) : Block(properties) {
 		builder.add(VISIBLE)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(VISIBLE, shouldBeVisible(context.level))
 	}
@@ -43,17 +43,7 @@ class MoonStoneOreBlock(properties: Properties) : Block(properties) {
 
 	companion object {
 		val VISIBLE: BooleanProperty = BooleanProperty.create("visible")
-		fun shouldBeVisible(level: Level) = level.isDarkOutside()
+		fun shouldBeVisible(level: Level) = level.isDarkOutside
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

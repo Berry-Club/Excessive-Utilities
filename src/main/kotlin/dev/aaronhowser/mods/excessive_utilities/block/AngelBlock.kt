@@ -4,8 +4,6 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isBlock
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-import net.minecraft.world.level.material.MapColor
 import net.neoforged.neoforge.event.level.BlockDropsEvent
 
 class AngelBlock(properties: Properties) : Block(properties) {
@@ -31,13 +29,3 @@ class AngelBlock(properties: Properties) : Block(properties) {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

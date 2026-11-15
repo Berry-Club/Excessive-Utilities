@@ -1,6 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
-import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.actor.InversionRitualActor
@@ -45,12 +44,8 @@ import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.fml.event.config.ModConfigEvent
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent
-import net.neoforged.neoforge.event.AddServerReloadListenersEvent
-import net.neoforged.neoforge.event.AnvilUpdateEvent
-import net.neoforged.neoforge.event.RegisterCommandsEvent
-import net.neoforged.neoforge.event.RegisterTooltipAppendersEvent
 import net.neoforged.neoforge.common.tooltip.TooltipLocation
-import net.neoforged.neoforge.event.VanillaGameEvent
+import net.neoforged.neoforge.event.*
 import net.neoforged.neoforge.event.brewing.RegisterBrewingRecipesEvent
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent
 import net.neoforged.neoforge.event.entity.living.*
@@ -58,14 +53,12 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent
 import net.neoforged.neoforge.event.furnace.FurnaceFuelBurnTimeEvent
 import net.neoforged.neoforge.event.level.BlockDropsEvent
-import net.neoforged.neoforge.event.level.BlockEvent
+import net.neoforged.neoforge.event.level.block.BreakBlockEvent
 import net.neoforged.neoforge.event.tick.EntityTickEvent
 import net.neoforged.neoforge.event.tick.PlayerTickEvent
 import net.neoforged.neoforge.event.tick.ServerTickEvent
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
 import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent
-import net.neoforged.neoforge.event.OnDatapackSyncEvent
-import net.neoforged.neoforge.event.level.block.BreakBlockEvent
 import kotlin.jvm.optionals.getOrNull
 
 
@@ -434,7 +427,7 @@ object CommonEvents {
 			)
 
 			event.output = output
-			event.setXpCost(operationCost.coerceAtMost(40L).toInt())
+			event.xpCost = operationCost.coerceAtMost(40L).toInt()
 		}
 	}
 
@@ -491,10 +484,10 @@ object CommonEvents {
 		}
 	}
 
-    @SubscribeEvent
-    fun syncRecipes(event: OnDatapackSyncEvent) {
-        event.sendRecipes(ModRecipeTypes.RECIPE_TYPES_REGISTRY.entries.map { it.get() })
-    }
+	@SubscribeEvent
+	fun syncRecipes(event: OnDatapackSyncEvent) {
+		event.sendRecipes(ModRecipeTypes.RECIPE_TYPES_REGISTRY.entries.map { it.get() })
+	}
 
 	@SubscribeEvent
 	fun onRegisterCommandsEvent(event: RegisterCommandsEvent) {

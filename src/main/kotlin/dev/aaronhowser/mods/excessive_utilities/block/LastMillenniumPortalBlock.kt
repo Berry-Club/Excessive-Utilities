@@ -14,11 +14,9 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.phys.BlockHitResult
 
 class LastMillenniumPortalBlock(properties: Properties) : Block(properties), EntityBlock {
@@ -88,8 +86,6 @@ class LastMillenniumPortalBlock(properties: Properties) : Block(properties), Ent
 		}
 	}
 
-	companion object {
-
-	}
+	companion object
 
 }

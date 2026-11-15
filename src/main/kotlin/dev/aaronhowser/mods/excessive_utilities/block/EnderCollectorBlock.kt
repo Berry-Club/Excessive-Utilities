@@ -13,8 +13,6 @@ import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
@@ -24,10 +22,10 @@ import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.block.state.properties.EnumProperty
+import net.minecraft.world.level.redstone.Orientation
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.world.level.redstone.Orientation
 
 class EnderCollectorBlock(properties: Properties) : Block(properties), EntityBlock {
 
@@ -44,7 +42,7 @@ class EnderCollectorBlock(properties: Properties) : Block(properties), EntityBlo
 		builder.add(POWERED, FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(POWERED, context.level.hasNeighborSignal(context.clickedPos))
 			.setValue(FACING, context.clickedFace)
@@ -112,14 +110,3 @@ class EnderCollectorBlock(properties: Properties) : Block(properties), EntityBlo
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

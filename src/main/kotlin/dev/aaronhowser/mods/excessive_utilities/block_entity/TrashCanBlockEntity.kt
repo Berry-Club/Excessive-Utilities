@@ -6,10 +6,6 @@ import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
 import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
@@ -21,6 +17,8 @@ import net.minecraft.world.inventory.ChestMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
@@ -49,7 +47,7 @@ class TrashCanBlockEntity(
 			override fun getCapacityAsLong(index: Int, resource: ItemResource): Long = 64
 			override fun isValid(index: Int, resource: ItemResource): Boolean = true
 			override fun insert(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
-				return if (resource.isEmpty() || !passesFilter(resource.toStack())) 0 else amount
+				return if (resource.isEmpty || !passesFilter(resource.toStack())) 0 else amount
 			}
 
 			override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int = 0

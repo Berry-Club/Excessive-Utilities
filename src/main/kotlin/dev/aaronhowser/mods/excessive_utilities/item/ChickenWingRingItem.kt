@@ -8,14 +8,13 @@ import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.GridPowerHand
 import dev.aaronhowser.mods.excessive_utilities.handler.grid_power.HeldRingGridPowerConsumer
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.KeyHandler
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.Entity
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
 import top.theillusivec4.curios.api.SlotContext
 import top.theillusivec4.curios.api.type.capability.ICurioItem

@@ -4,11 +4,9 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpSourceBlockE
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.minecraft.world.level.block.state.BlockState
 
 class GpPanelBlockEntity(
 	pos: BlockPos,

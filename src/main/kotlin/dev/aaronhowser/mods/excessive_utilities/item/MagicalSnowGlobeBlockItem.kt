@@ -9,16 +9,15 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.ChatFormatting
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.Style
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.entity.Entity
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
 import net.minecraft.world.item.component.TooltipDisplay
-import net.minecraft.world.level.Level
 
 class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MAGICAL_SNOW_GLOBE.get(), properties), TooltipItem {
 
@@ -90,10 +89,3 @@ class MagicalSnowGlobeBlockItem(properties: Properties) : BlockItem(ModBlocks.MA
 	}
 
 }
-
-
-
-
-
-
-

@@ -6,7 +6,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModFeatures
 import net.minecraft.core.registries.Registries
 import net.minecraft.data.worldgen.BootstrapContext
-import net.minecraft.data.worldgen.placement.PlacementUtils
 import net.minecraft.resources.ResourceKey
 import net.minecraft.world.level.block.CropBlock
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature

@@ -5,16 +5,15 @@ import net.minecraft.advancements.AdvancementRequirements
 import net.minecraft.advancements.AdvancementRewards
 import net.minecraft.advancements.Criterion
 import net.minecraft.advancements.criterion.RecipeUnlockedTrigger
+import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.core.registries.Registries
 import net.minecraft.data.recipes.RecipeBuilder
 import net.minecraft.data.recipes.RecipeOutput
-import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
-import net.minecraft.world.item.crafting.Recipe
-import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.Ingredient
-import net.minecraft.core.registries.BuiltInRegistries
+import net.minecraft.world.item.crafting.Recipe
 
 class CrusherRecipeBuilder(
 	val ingredient: Ingredient,

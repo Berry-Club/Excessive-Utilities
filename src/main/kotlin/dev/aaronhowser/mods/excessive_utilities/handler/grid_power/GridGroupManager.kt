@@ -1,9 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.handler.grid_power
 
+import net.minecraft.core.UUIDUtil
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
-import net.minecraft.nbt.Tag
-import net.minecraft.core.UUIDUtil
 import java.util.*
 
 class GridGroupManager(

@@ -10,8 +10,8 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level

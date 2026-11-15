@@ -1,12 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.ClipContext
 import net.minecraft.world.phys.HitResult
-import net.minecraft.server.level.ServerLevel
 import kotlin.math.abs
 
 class GravityEffect : MobEffect(

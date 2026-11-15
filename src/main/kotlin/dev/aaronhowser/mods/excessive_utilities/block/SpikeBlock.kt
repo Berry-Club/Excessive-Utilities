@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.Entity
+import net.minecraft.world.entity.InsideBlockEffectApplier
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.BlockGetter
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.state.properties.EnumProperty
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
 import net.minecraft.world.phys.shapes.VoxelShape
-import net.minecraft.world.entity.InsideBlockEffectApplier
 import net.neoforged.neoforge.common.util.FakePlayerFactory
 import java.util.*
 
@@ -40,7 +40,7 @@ class SpikeBlock(
 		builder.add(FACING)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.clickedFace)
 	}
@@ -120,14 +120,3 @@ class SpikeBlock(
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

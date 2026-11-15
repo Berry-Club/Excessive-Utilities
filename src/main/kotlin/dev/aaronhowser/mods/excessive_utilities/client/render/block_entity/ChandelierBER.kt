@@ -10,16 +10,16 @@ import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
+import net.minecraft.client.renderer.feature.ModelFeatureRenderer
 import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.world.phys.AABB
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer
 import net.minecraft.world.phys.Vec3
 
 class ChandelierBER(
 	val context: BlockEntityRendererProvider.Context
 ) : BlockEntityRenderer<ChandelierBlockEntity, LegacyBlockEntityRenderState<ChandelierBlockEntity>> {
-	 override fun createRenderState() = LegacyBlockEntityRenderState<ChandelierBlockEntity>()
-	 override fun extractRenderState(blockEntity: ChandelierBlockEntity, state: LegacyBlockEntityRenderState<ChandelierBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+	override fun createRenderState() = LegacyBlockEntityRenderState<ChandelierBlockEntity>()
+	override fun extractRenderState(blockEntity: ChandelierBlockEntity, state: LegacyBlockEntityRenderState<ChandelierBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
 		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
 		state.blockPos = blockEntity.blockPos
 	}

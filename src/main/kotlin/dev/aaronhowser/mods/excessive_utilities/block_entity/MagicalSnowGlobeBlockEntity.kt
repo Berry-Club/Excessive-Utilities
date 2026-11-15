@@ -4,16 +4,12 @@ import dev.aaronhowser.mods.excessive_utilities.item.component.MagicalSnowGlobeP
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.DataComponentMap
 import net.minecraft.core.component.DataComponentGetter
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
-import net.minecraft.nbt.NbtOps
+import net.minecraft.core.component.DataComponentMap
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import kotlin.jvm.optionals.getOrNull
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 
 class MagicalSnowGlobeBlockEntity(
 	pos: BlockPos,

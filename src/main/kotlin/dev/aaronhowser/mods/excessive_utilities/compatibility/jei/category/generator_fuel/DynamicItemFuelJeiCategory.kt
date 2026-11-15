@@ -12,6 +12,7 @@ import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import mezz.jei.api.runtime.IIngredientManager
@@ -19,7 +20,6 @@ import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.level.Level
-import mezz.jei.api.recipe.types.IRecipeType
 
 // For fuels that aren't based on actual recipes, but based off some property of the itemstack
 class DynamicItemFuelJeiCategory(

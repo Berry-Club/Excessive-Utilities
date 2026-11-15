@@ -2,7 +2,6 @@ package dev.aaronhowser.mods.excessive_utilities.item.component
 
 import com.mojang.serialization.Codec
 import com.mojang.serialization.codecs.RecordCodecBuilder
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getDefaultInstance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.withComponent

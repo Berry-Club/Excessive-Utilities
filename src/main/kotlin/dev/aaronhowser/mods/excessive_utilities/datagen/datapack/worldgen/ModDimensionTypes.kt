@@ -15,7 +15,7 @@ import net.minecraft.world.level.CardinalLighting
 import net.minecraft.world.level.dimension.DimensionType
 import net.minecraft.world.timeline.Timeline
 import net.neoforged.neoforge.common.world.NeoForgeEnvironmentAttributes
-import java.util.Optional
+import java.util.*
 
 object ModDimensionTypes {
 	val THE_LAST_MILLENNIUM: ResourceKey<DimensionType> = rk("the_last_millennium")
@@ -25,23 +25,23 @@ object ModDimensionTypes {
 		val clocks = context.lookup(Registries.WORLD_CLOCK)
 		val timelines = HolderSet.empty<Timeline>()
 		val lastMillenniumAttributes = EnvironmentAttributeMap.builder()
-            .set(EnvironmentAttributes.SUN_ANGLE, 180f)
-            .set(EnvironmentAttributes.MOON_ANGLE, 360f)
-            .set(EnvironmentAttributes.STAR_ANGLE, 180f)
-            .set(EnvironmentAttributes.STAR_BRIGHTNESS, 0.5f)
-            .set(EnvironmentAttributes.SKY_LIGHT_LEVEL, 4f)
-            .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.24f)
+			.set(EnvironmentAttributes.SUN_ANGLE, 180f)
+			.set(EnvironmentAttributes.MOON_ANGLE, 360f)
+			.set(EnvironmentAttributes.STAR_ANGLE, 180f)
+			.set(EnvironmentAttributes.STAR_BRIGHTNESS, 0.5f)
+			.set(EnvironmentAttributes.SKY_LIGHT_LEVEL, 4f)
+			.set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.24f)
 			.set(EnvironmentAttributes.BED_RULE, BedRule.CAN_SLEEP_WHEN_DARK)
 			.set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, true)
 			.set(NeoForgeEnvironmentAttributes.CUSTOM_SKYBOX, ExcessiveUtilities.modResource("the_last_millennium"))
 			.build()
 		val depthsAttributes = EnvironmentAttributeMap.builder()
-            .set(EnvironmentAttributes.SUN_ANGLE, 180f)
-            .set(EnvironmentAttributes.MOON_ANGLE, 360f)
-            .set(EnvironmentAttributes.STAR_ANGLE, 180f)
-            .set(EnvironmentAttributes.STAR_BRIGHTNESS, 0.5f)
-            .set(EnvironmentAttributes.SKY_LIGHT_LEVEL, 4f)
-            .set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.24f)
+			.set(EnvironmentAttributes.SUN_ANGLE, 180f)
+			.set(EnvironmentAttributes.MOON_ANGLE, 360f)
+			.set(EnvironmentAttributes.STAR_ANGLE, 180f)
+			.set(EnvironmentAttributes.STAR_BRIGHTNESS, 0.5f)
+			.set(EnvironmentAttributes.SKY_LIGHT_LEVEL, 4f)
+			.set(EnvironmentAttributes.SKY_LIGHT_FACTOR, 0.24f)
 			.set(EnvironmentAttributes.BED_RULE, BedRule.EXPLODES)
 			.set(EnvironmentAttributes.RESPAWN_ANCHOR_WORKS, true)
 			.build()

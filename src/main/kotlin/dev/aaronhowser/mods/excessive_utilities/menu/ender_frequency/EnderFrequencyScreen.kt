@@ -1,7 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.ender_frequency
 
 import dev.aaronhowser.mods.aaron.menu.textures.ScreenBackground
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang

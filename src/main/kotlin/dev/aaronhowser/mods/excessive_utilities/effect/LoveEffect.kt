@@ -1,10 +1,10 @@
 package dev.aaronhowser.mods.excessive_utilities.effect
 
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.animal.Animal
-import net.minecraft.server.level.ServerLevel
 
 class LoveEffect : MobEffect(
 	MobEffectCategory.BENEFICIAL,

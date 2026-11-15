@@ -1,19 +1,18 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity.generator
 
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorContainer
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.ItemAndFluidInputDataDrivenGeneratorType
 import dev.aaronhowser.mods.excessive_utilities.menu.item_fluid_generator.ItemFluidGeneratorMenu
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.ItemAndFluidFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
-import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.protocol.Packet
 import net.minecraft.network.protocol.game.ClientGamePacketListener
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket
@@ -25,10 +24,11 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.fluid.FluidResource
-import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ConfigurableFluidTank
 
 open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 	type: BlockEntityType<*>,

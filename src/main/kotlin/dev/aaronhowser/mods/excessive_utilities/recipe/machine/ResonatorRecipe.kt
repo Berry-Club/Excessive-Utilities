@@ -5,23 +5,23 @@ import com.mojang.serialization.MapCodec
 import com.mojang.serialization.codecs.RecordCodecBuilder
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeSerializers
 import dev.aaronhowser.mods.excessive_utilities.registry.ModRecipeTypes
+import net.minecraft.core.HolderLookup
 import net.minecraft.network.RegistryFriendlyByteBuf
 import net.minecraft.network.codec.ByteBufCodecs
 import net.minecraft.network.codec.StreamCodec
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.*
 import net.minecraft.world.level.Level
-import net.minecraft.core.HolderLookup
 
 class ResonatorRecipe(
 	val ingredient: Ingredient,
 	val result: ItemStack,
 	val gpCost: Double
 ) : dev.aaronhowser.mods.excessive_utilities.recipe.base.MachineRecipe<SingleRecipeInput> {
-    override fun assemble(input: SingleRecipeInput): ItemStack = result.copy()
-    fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
-    override fun getSerializer(): RecipeSerializer<ResonatorRecipe> = ModRecipeSerializers.RESONATOR.get()
-    override fun getType(): RecipeType<ResonatorRecipe> = ModRecipeTypes.RESONATOR.get()
+	override fun assemble(input: SingleRecipeInput): ItemStack = result.copy()
+	fun getResultItem(registries: HolderLookup.Provider): ItemStack = result.copy()
+	override fun getSerializer(): RecipeSerializer<ResonatorRecipe> = ModRecipeSerializers.RESONATOR.get()
+	override fun getType(): RecipeType<ResonatorRecipe> = ModRecipeTypes.RESONATOR.get()
 
 
 	override fun matches(input: SingleRecipeInput, level: Level): Boolean {

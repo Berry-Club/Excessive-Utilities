@@ -5,10 +5,10 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.Gene
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorType
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
+import net.minecraft.core.component.DataComponents
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.item.ItemStack
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.level.block.state.BlockState
 
 class CulinaryGeneratorBlockEntity(

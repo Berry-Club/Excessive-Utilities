@@ -3,8 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.client.render
 import com.mojang.blaze3d.vertex.PoseStack
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
 import dev.aaronhowser.mods.aaron.client.render.AaronRenderUtil
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getPovResult
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toVec3
 import dev.aaronhowser.mods.excessive_utilities.item.BuildersWandItem
 import dev.aaronhowser.mods.excessive_utilities.item.DestructionWandItem

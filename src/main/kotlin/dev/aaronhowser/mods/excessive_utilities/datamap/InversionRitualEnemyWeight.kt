@@ -74,8 +74,8 @@ class InversionRitualEnemyWeight(
 
 	@Suppress("WRONG_TYPE_FOR_JAVA_OVERRIDE")
 	class ReloadListener : SimplePreparableReloadListener<Unit>() {
-		override fun prepare(resourceManager: ResourceManager, profiler: ProfilerFiller): Unit {
-			return Unit
+		override fun prepare(resourceManager: ResourceManager, profiler: ProfilerFiller) {
+			return
 		}
 
 		override fun apply(`object`: Unit, resourceManager: ResourceManager, profiler: ProfilerFiller) {

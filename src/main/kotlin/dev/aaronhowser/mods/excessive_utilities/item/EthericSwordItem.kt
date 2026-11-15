@@ -9,11 +9,9 @@ import dev.aaronhowser.mods.excessive_utilities.attachment.SoulDebt
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMessageLang
 import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
-import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Item
 import net.minecraft.world.level.Level
 
@@ -48,7 +46,3 @@ class EthericSwordItem(properties: Properties) : Item(properties) {
 	}
 
 }
-
-
-
-

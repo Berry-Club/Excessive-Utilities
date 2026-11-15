@@ -4,10 +4,11 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isServerSide
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBlockTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.core.BlockPos
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.item.*
+import net.minecraft.world.item.Item
+import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.ToolMaterial
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.state.BlockState
 
@@ -76,8 +77,3 @@ class SickleItem(properties: Properties) : Item(properties) {
 	}
 
 }
-
-
-
-
-

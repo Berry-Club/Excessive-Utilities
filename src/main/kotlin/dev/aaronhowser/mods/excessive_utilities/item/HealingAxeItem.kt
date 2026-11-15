@@ -5,10 +5,9 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
-import net.minecraft.core.component.DataComponents
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.EntityTypeTags
 import net.minecraft.world.entity.Entity
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.LivingEntity
@@ -16,8 +15,8 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
-import net.minecraft.world.item.component.ItemAttributeModifiers
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.component.ItemAttributeModifiers
 
 class HealingAxeItem(properties: Properties) : Item(properties) {
 
@@ -59,12 +58,14 @@ class HealingAxeItem(properties: Properties) : Item(properties) {
 		val DEFAULT_PROPERTIES: Properties = Properties()
 			.stacksTo(1)
 			.durability(UnstableTier.durability())
-			.attributes(ItemAttributeModifiers.builder()
-				.add(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, UnstableTier.attackDamageBonus() + 5.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.add(Attributes.ATTACK_SPEED, AttributeModifier(Item.BASE_ATTACK_SPEED_ID, -3.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.add(Attributes.ENTITY_INTERACTION_RANGE, AttributeModifier(ExcessiveUtilities.modResource("healing_axe_range"), 4.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.add(Attributes.BLOCK_INTERACTION_RANGE, AttributeModifier(ExcessiveUtilities.modResource("healing_axe_range"), 4.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.build())
+			.attributes(
+				ItemAttributeModifiers.builder()
+					.add(Attributes.ATTACK_DAMAGE, AttributeModifier(BASE_ATTACK_DAMAGE_ID, UnstableTier.attackDamageBonus() + 5.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+					.add(Attributes.ATTACK_SPEED, AttributeModifier(BASE_ATTACK_SPEED_ID, -3.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+					.add(Attributes.ENTITY_INTERACTION_RANGE, AttributeModifier(ExcessiveUtilities.modResource("healing_axe_range"), 4.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+					.add(Attributes.BLOCK_INTERACTION_RANGE, AttributeModifier(ExcessiveUtilities.modResource("healing_axe_range"), 4.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+					.build()
+			)
 	}
 
 }

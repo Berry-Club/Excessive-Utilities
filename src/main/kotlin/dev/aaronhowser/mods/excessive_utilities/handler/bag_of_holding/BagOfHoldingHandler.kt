@@ -3,11 +3,10 @@ package dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding
 import net.minecraft.core.HolderLookup
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
-import net.minecraft.nbt.Tag
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.saveddata.SavedData
-import net.minecraft.util.datafix.DataFixTypes
 import net.minecraft.world.level.saveddata.SavedDataType
 import java.util.*
 
@@ -70,15 +69,15 @@ class BagOfHoldingHandler : SavedData() {
 
 			val storage = level.dataStorage
 			val type = SavedDataType(
-                dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities.modResource(SAVED_DATA_NAME),
-                ::BagOfHoldingHandler,
-                CompoundTag.CODEC.xmap(
-                    { tag -> load(tag, level.registryAccess()) },
-                    { data -> data.save(CompoundTag(), level.registryAccess()) }
-                ),
-                DataFixTypes.SAVED_DATA_COMMAND_STORAGE
-            )
-            return storage.computeIfAbsent(type)
+				dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities.modResource(SAVED_DATA_NAME),
+				::BagOfHoldingHandler,
+				CompoundTag.CODEC.xmap(
+					{ tag -> load(tag, level.registryAccess()) },
+					{ data -> data.save(CompoundTag(), level.registryAccess()) }
+				),
+				DataFixTypes.SAVED_DATA_COMMAND_STORAGE
+			)
+			return storage.computeIfAbsent(type)
 		}
 
 	}

@@ -11,9 +11,9 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
 import net.minecraft.world.entity.Entity
-import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.entity.EquipmentSlot
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.player.Player
@@ -189,10 +189,3 @@ class UnstableIngotItem(properties: Properties) : Item(properties), TooltipItem 
 	}
 
 }
-
-
-
-
-
-
-

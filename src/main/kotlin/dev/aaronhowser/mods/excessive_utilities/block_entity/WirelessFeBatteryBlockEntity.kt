@@ -7,16 +7,14 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.UUIDUtil
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Clearable
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import java.util.*
 
 class WirelessFeBatteryBlockEntity(
@@ -28,7 +26,7 @@ class WirelessFeBatteryBlockEntity(
 	var ownerUuid: UUID? = null
 
 	override fun clearContent() {
-		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+		energyStorage.extractEnergy(energyStorage.amountAsInt, false)
 		setChanged()
 	}
 

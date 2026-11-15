@@ -12,7 +12,6 @@ import net.minecraft.world.level.biome.FixedBiomeSource
 import net.minecraft.world.level.dimension.LevelStem
 import net.minecraft.world.level.levelgen.FlatLevelSource
 import net.minecraft.world.level.levelgen.NoiseBasedChunkGenerator
-import net.minecraft.world.level.levelgen.NoiseGeneratorSettings
 import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings
 import java.util.*
 

@@ -1,7 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-
 import net.minecraft.world.level.block.Block
 import java.util.*
 import kotlin.math.pow
@@ -16,17 +14,3 @@ class CompressedBlock(
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

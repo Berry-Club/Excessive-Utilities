@@ -17,11 +17,10 @@ import net.minecraft.advancements.Advancement
 import net.minecraft.advancements.AdvancementHolder
 import net.minecraft.advancements.AdvancementType
 import net.minecraft.advancements.criterion.ChangeDimensionTrigger
+import net.minecraft.advancements.criterion.DataComponentMatchers
 import net.minecraft.advancements.criterion.ItemPredicate
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.component.predicates.DataComponentPredicate
 import net.minecraft.core.component.DataComponentExactPredicate
-import net.minecraft.advancements.criterion.DataComponentMatchers
 import net.minecraft.core.registries.Registries
 import net.minecraft.resources.Identifier
 import net.minecraft.tags.ItemTags
@@ -55,7 +54,7 @@ class ModAdvancementSubProvider(
 				"has_wood",
 				hasItems(
 					ItemPredicate.Builder.item()
-					.of(itemLookup, ItemTags.LOGS)
+						.of(itemLookup, ItemTags.LOGS)
 				)
 			)
 			.save(ROOT)
@@ -71,7 +70,7 @@ class ModAdvancementSubProvider(
 				"has_gp_producer",
 				hasItems(
 					ItemPredicate.Builder.item()
-					.of(itemLookup, ModItemTagsProvider.GP_PRODUCER)
+						.of(itemLookup, ModItemTagsProvider.GP_PRODUCER)
 				)
 			)
 			.save(GP_PRODUCERS)
@@ -140,7 +139,7 @@ class ModAdvancementSubProvider(
 				"has_ender_quarry_upgrade",
 				hasItems(
 					ItemPredicate.Builder.item()
-					.of(itemLookup, ModItemTagsProvider.ENDER_QUARRY_UPGRADE)
+						.of(itemLookup, ModItemTagsProvider.ENDER_QUARRY_UPGRADE)
 				)
 			)
 			.save(ENDER_QUARRY_UPGRADE)
@@ -156,13 +155,15 @@ class ModAdvancementSubProvider(
 				"has_perfected_opinium_core",
 				hasItems(
 					ItemPredicate.Builder.item()
-					.of(itemLookup, ModItems.OPINIUM_CORE)
+						.of(itemLookup, ModItems.OPINIUM_CORE)
 						.withComponents(
 							DataComponentMatchers.Builder.components()
-								.exact(DataComponentExactPredicate.expect(
-									ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
-									OpiniumCoreContentsComponent.perfected()
-								))
+								.exact(
+									DataComponentExactPredicate.expect(
+										ModDataComponents.OPINIUM_CORE_CONTENTS.get(),
+										OpiniumCoreContentsComponent.perfected()
+									)
+								)
 								.build()
 						)
 				)

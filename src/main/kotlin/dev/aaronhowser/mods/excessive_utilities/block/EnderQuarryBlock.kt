@@ -10,16 +10,15 @@ import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.world.level.block.state.BlockBehaviour
 
-class EnderQuarryBlock(properties: BlockBehaviour.Properties) : SimpleContainerBlock(properties), EntityBlock {
+class EnderQuarryBlock(properties: Properties) : SimpleContainerBlock(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return EnderQuarryBlockEntity(pos, state)
@@ -55,13 +54,3 @@ class EnderQuarryBlock(properties: BlockBehaviour.Properties) : SimpleContainerB
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

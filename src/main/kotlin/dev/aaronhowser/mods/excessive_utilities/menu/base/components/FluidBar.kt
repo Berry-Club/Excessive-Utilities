@@ -1,15 +1,11 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.base.components
 
+import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Font
 import net.minecraft.client.gui.GuiGraphicsExtractor
-import net.minecraft.client.renderer.RenderPipelines
-import net.minecraft.client.renderer.texture.TextureAtlas
 import net.minecraft.client.gui.components.AbstractWidget
 import net.minecraft.client.gui.narration.NarrationElementOutput
-import net.minecraft.client.Minecraft
-import net.minecraft.core.registries.BuiltInRegistries
-import net.minecraft.data.AtlasIds
-import net.minecraft.resources.Identifier
+import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.network.chat.Component
 import net.minecraft.util.Mth
 import net.neoforged.neoforge.fluids.FluidStack
@@ -49,9 +45,9 @@ class FluidBar(
 		width: Int,
 		height: Int
 	) {
-        val model = Minecraft.getInstance().modelManager.fluidStateModelSet.get(fluid.fluid.defaultFluidState())
-        val sprite = model.stillMaterial().sprite()
-        val color = model.fluidTintSource()?.colorAsStack(fluid) ?: -1
+		val model = Minecraft.getInstance().modelManager.fluidStateModelSet.get(fluid.fluid.defaultFluidState())
+		val sprite = model.stillMaterial().sprite()
+		val color = model.fluidTintSource()?.colorAsStack(fluid) ?: -1
 
 		guiGraphics.enableScissor(x, y, x + width, y + height)
 		val tileSize = 16

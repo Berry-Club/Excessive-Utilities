@@ -5,8 +5,8 @@ import dev.aaronhowser.mods.excessive_utilities.datamap.InversionRitualEnemyWeig
 import dev.aaronhowser.mods.excessive_utilities.datamap.NetherLavaDunkConversion
 import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.data.PackOutput
 import net.minecraft.tags.BlockTags
 import net.minecraft.world.entity.EntityType

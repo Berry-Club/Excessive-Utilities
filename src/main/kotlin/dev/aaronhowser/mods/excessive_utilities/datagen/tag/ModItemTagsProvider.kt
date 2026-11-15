@@ -5,16 +5,14 @@ import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.HolderLookup
-import net.minecraft.core.registries.Registries
 import net.minecraft.data.PackOutput
-import net.neoforged.neoforge.common.data.ItemTagsProvider
 import net.minecraft.resources.Identifier
 import net.minecraft.tags.ItemTags
 import net.minecraft.tags.TagKey
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.Items
-import net.minecraft.world.level.block.Block
 import net.neoforged.neoforge.common.Tags
+import net.neoforged.neoforge.common.data.ItemTagsProvider
 import java.util.concurrent.CompletableFuture
 
 class ModItemTagsProvider(

@@ -24,19 +24,19 @@ object ModBlocks : AaronBlockRegistry() {
 	// Functional
 
 	val ANGEL_BLOCK: DeferredBlock<AngelBlock> =
-	registerBlockWithoutItem("angel_block", ::AngelBlock, properties = { BlockBehaviour.Properties.of().strength(0f, 1200f).mapColor(MapColor.COLOR_BLACK) })
+		registerBlockWithoutItem("angel_block", ::AngelBlock, properties = { BlockBehaviour.Properties.of().strength(0f, 1200f).mapColor(MapColor.COLOR_BLACK) })
 	val BLACKOUT_CURTAIN: DeferredBlock<BlackoutCurtainBlock> =
-	registerBlock("blackout_curtain", ::BlackoutCurtainBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_WOOL).noOcclusion().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never).isSuffocating(Blocks::never).isViewBlocking(Blocks::never) })
+		registerBlock("blackout_curtain", ::BlackoutCurtainBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.BLACK_WOOL).noOcclusion().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never).isSuffocating(Blocks::never).isViewBlocking(Blocks::never) })
 	val CONVEYOR_BELT: DeferredBlock<ConveyorBeltBlock> =
-	registerBlock("conveyor_belt", ::ConveyorBeltBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
+		registerBlock("conveyor_belt", ::ConveyorBeltBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val MAGICAL_WOOD: DeferredBlock<MagicalWoodBlock> =
-	registerBlock("magical_wood", ::MagicalWoodBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
+		registerBlock("magical_wood", ::MagicalWoodBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 	val ENDER_CORE: DeferredBlock<EnderCoreBlock> =
-	registerBlock("ender_core", ::EnderCoreBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
+		registerBlock("ender_core", ::EnderCoreBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 	val DEPTHS_PORTAL: DeferredBlock<DepthsPortalBLock> =
-	registerBlock("depths_portal", ::DepthsPortalBLock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("depths_portal", ::DepthsPortalBLock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val LAST_MILLENNIUM_PORTAL: DeferredBlock<LastMillenniumPortalBlock> =
-	registerBlock("last_millennium_portal", ::LastMillenniumPortalBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
+		registerBlock("last_millennium_portal", ::LastMillenniumPortalBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val MOON_STONE_ORE: DeferredBlock<MoonStoneOreBlock> =
 		registerBlock("moon_stone_ore", ::MoonStoneOreBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_ORE) })
 	val DEEPSLATE_MOON_STONE_ORE: DeferredBlock<MoonStoneOreBlock> =
@@ -45,35 +45,35 @@ object ModBlocks : AaronBlockRegistry() {
 	// Misc block entities
 
 	val SOUND_MUFFLER: DeferredBlock<SoundMufflerBlock> =
-	registerBlock("sound_muffler", ::SoundMufflerBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL) })
+		registerBlock("sound_muffler", ::SoundMufflerBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.WHITE_WOOL) })
 	val PEACEFUL_TABLE: DeferredBlock<PeacefulTableBlock> =
-	registerBlock("peaceful_table", ::PeacefulTableBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE) })
+		registerBlock("peaceful_table", ::PeacefulTableBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.CRAFTING_TABLE) })
 	val CHANDELIER: DeferredBlock<ChandelierBlock> =
-	registerBlock("chandelier", ::ChandelierBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.TORCH) })
+		registerBlock("chandelier", ::ChandelierBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.TORCH) })
 	val MAGNUM_TORCH: DeferredBlock<MagnumTorchBlock> =
-	registerBlock("magnum_torch", ::MagnumTorchBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).lightLevel { 14 } })
+		registerBlock("magnum_torch", ::MagnumTorchBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS).lightLevel { 14 } })
 	val CURSED_EARTH: DeferredBlock<CursedEarthBlock> =
-	registerBlock("cursed_earth", ::CursedEarthBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK) })
+		registerBlock("cursed_earth", ::CursedEarthBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.GRASS_BLOCK) })
 	val ENDER_COLLECTOR: DeferredBlock<EnderCollectorBlock> =
-	registerBlock("ender_collector", ::EnderCollectorBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
+		registerBlock("ender_collector", ::EnderCollectorBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val TRADING_POST =
 		basicBlock("trading_post")
 	val ENDER_PORCUPINE: DeferredBlock<EnderPorcupineBlock> =
-	registerBlock("ender_porcupine", ::EnderPorcupineBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("ender_porcupine", ::EnderPorcupineBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val MAGICAL_SNOW_GLOBE: DeferredBlock<MagicalSnowGlobeBlock> =
-	registerBlockWithoutItem("magical_snow_globe", ::MagicalSnowGlobeBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS) })
+		registerBlockWithoutItem("magical_snow_globe", ::MagicalSnowGlobeBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS) })
 	val RESTURBED_MOB_SPAWNER: DeferredBlock<ResturbedMobSpawnerBlock> =
-	registerBlock("resturbed_mob_spawner", ::ResturbedMobSpawnerBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.SPAWNER) })
+		registerBlock("resturbed_mob_spawner", ::ResturbedMobSpawnerBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.SPAWNER) })
 	val CREATIVE_HARVEST: DeferredBlock<CreativeHarvestBlock> =
-	registerBlock("creative_harvest", ::CreativeHarvestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("creative_harvest", ::CreativeHarvestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 
 	// Crops
 
 	//TODO: Spawn both in loot
 	val RED_ORCHID: DeferredBlock<RedOrchidBlock> =
-	registerBlockWithoutItem("red_orchid", ::RedOrchidBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT) })
+		registerBlockWithoutItem("red_orchid", ::RedOrchidBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT) })
 	val ENDER_LILY: DeferredBlock<EnderLilyBlock> =
-	registerBlockWithoutItem("ender_lily", ::EnderLilyBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT) })
+		registerBlockWithoutItem("ender_lily", ::EnderLilyBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT) })
 
 	// Redstone stuff
 
@@ -88,34 +88,34 @@ object ModBlocks : AaronBlockRegistry() {
 			MechanicalInteractorBlock(::MechanicalUserBlockEntity, ModBlockEntityTypes.MECHANICAL_USER::get, properties)
 		}, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val REDSTONE_CLOCK: DeferredBlock<RedstoneClockBlock> =
-	registerBlock("redstone_clock", ::RedstoneClockBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("redstone_clock", ::RedstoneClockBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val SCANNER =
 		basicBlock("scanner")
 
 	// Other FE Stuff
 
 	val WIRELESS_FE_BATTERY: DeferredBlock<WirelessFeBatteryBlock> =
-	registerBlock("wireless_fe_battery", ::WirelessFeBatteryBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_BLOCK) })
+		registerBlock("wireless_fe_battery", ::WirelessFeBatteryBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_BLOCK) })
 	val WIRELESS_FE_TRANSMITTER: DeferredBlock<WirelessFeTransmitterBlock> =
-	registerBlock("wireless_fe_transmitter", ::WirelessFeTransmitterBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_BLOCK) })
+		registerBlock("wireless_fe_transmitter", ::WirelessFeTransmitterBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_BLOCK) })
 
 	// Machines
 	val RESONATOR: DeferredBlock<ResonatorBlock> =
-	registerBlock("resonator", ::ResonatorBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.COAL_BLOCK) })
+		registerBlock("resonator", ::ResonatorBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.COAL_BLOCK) })
 	val ENDER_THERMIC_PUMP =
 		basicBlock("ender_thermic_pump")
 	val QED: DeferredBlock<QedBlock> =
-	registerBlock("qed", ::QedBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
+		registerBlock("qed", ::QedBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 	val ENDER_FLUX_CRYSTAL: DeferredBlock<EnderFluxCrystalBlock> =
-	registerBlock("ender_flux_crystal", ::EnderFluxCrystalBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
+		registerBlock("ender_flux_crystal", ::EnderFluxCrystalBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 	val MACHINE_BLOCK: DeferredBlock<Block> =
 		basicCopiedBlock("machine_block", Blocks.STONE)
 	val CRUSHER: DeferredBlock<CrusherBlock> =
-	registerBlock("crusher", ::CrusherBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("crusher", ::CrusherBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val FURNACE: DeferredBlock<EUFurnaceBlock> =
-	registerBlock("furnace", ::EUFurnaceBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
+		registerBlock("furnace", ::EUFurnaceBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val ENCHANTER: DeferredBlock<EnchanterBlock> =
-	registerBlock("enchanter", ::EnchanterBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
+		registerBlock("enchanter", ::EnchanterBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val QUANTUM_QUARRY: DeferredBlock<QuantumQuarryBlock> =
 		registerBlock("quantum_quarry", ::QuantumQuarryBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 	val QUANTUM_QUARRY_ACTUATOR: DeferredBlock<QuantumQuarryActuatorBlock> =
@@ -123,7 +123,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val ENDER_QUARRY: DeferredBlock<EnderQuarryBlock> =
 		registerBlock("ender_quarry", ::EnderQuarryBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 	val ENDER_MARKER: DeferredBlock<EnderMarkerBlock> =
-	registerBlock("ender_marker", ::EnderMarkerBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
+		registerBlock("ender_marker", ::EnderMarkerBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 
 	// Upgrades
 
@@ -215,15 +215,15 @@ object ModBlocks : AaronBlockRegistry() {
 	// Storage
 
 	val SLIGHTLY_LARGER_CHEST: DeferredBlock<SlightlyLargerChestBlock> =
-	registerBlock("slightly_larger_chest", ::SlightlyLargerChestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.CHEST) })
+		registerBlock("slightly_larger_chest", ::SlightlyLargerChestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.CHEST) })
 	val MINI_CHEST: DeferredBlock<MiniChestBlock> =
-	registerBlock("mini_chest", ::MiniChestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.CHEST) })
+		registerBlock("mini_chest", ::MiniChestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.CHEST) })
 	val PLAYER_CHEST =
 		basicBlock("player_chest")
 	val FILING_CABINET: DeferredBlock<FilingCabinetBlock> =
-	registerBlock("filing_cabinet", ::FilingCabinetBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
+		registerBlock("filing_cabinet", ::FilingCabinetBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val ADVANCED_FILING_CABINET: DeferredBlock<FilingCabinetBlock> =
-	registerBlock("advanced_filing_cabinet", ::FilingCabinetBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
+		registerBlock("advanced_filing_cabinet", ::FilingCabinetBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val STONE_DRUM: DeferredBlock<DrumBlock> =
 		registerBlock("stone_drum", ::DrumBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val IRON_DRUM: DeferredBlock<DrumBlock> =
@@ -237,7 +237,7 @@ object ModBlocks : AaronBlockRegistry() {
 	val CREATIVE_DRUM: DeferredBlock<DrumBlock> =
 		registerBlock("creative_drum", ::DrumBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK) })
 	val CREATIVE_CHEST: DeferredBlock<CreativeChestBlock> =
-	registerBlock("creative_chest", ::CreativeChestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("creative_chest", ::CreativeChestBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val TRASH_CAN: DeferredBlock<TrashCanBlock> =
 		registerBlock("trash_can", { properties -> TrashCanBlock(TrashCanBlock.Type.ITEM, properties) })
 	val TRASH_CAN_ENERGY: DeferredBlock<TrashCanBlock> =
@@ -250,7 +250,7 @@ object ModBlocks : AaronBlockRegistry() {
 	// Transfer
 
 	val TRANSFER_PIPE: DeferredBlock<TransferPipeBlock> =
-	registerBlock("transfer_pipe", ::TransferPipeBlock, properties = { BlockBehaviour.Properties.of().strength(0.5f).noOcclusion() })
+		registerBlock("transfer_pipe", ::TransferPipeBlock, properties = { BlockBehaviour.Properties.of().strength(0.5f).noOcclusion() })
 
 	//TODO
 //	val RATIONING_PIPE: DeferredBlock<TransferPipeBlock> =
@@ -279,7 +279,7 @@ object ModBlocks : AaronBlockRegistry() {
 	// FE Generators
 
 	val CREATIVE_ENERGY_SOURCE: DeferredBlock<CreativeEnergySourceBlock> =
-	registerBlock("creative_energy_source", ::CreativeEnergySourceBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("creative_energy_source", ::CreativeEnergySourceBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val SURVIVALIST_GENERATOR: DeferredBlock<GeneratorBlock> =
 		registerBlock("survivalist_generator", { properties -> GeneratorBlock({ ModBlockEntityTypes.SURVIVALIST_GENERATOR.get() }, properties) })
 	val FURNACE_GENERATOR: DeferredBlock<GeneratorBlock> =
@@ -322,23 +322,23 @@ object ModBlocks : AaronBlockRegistry() {
 	// GP Generators
 
 	val MANUAL_MILL: DeferredBlock<ManualMillBlock> =
-	registerBlock("manual_mill", ::ManualMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion() })
+		registerBlock("manual_mill", ::ManualMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion() })
 	val WATER_MILL: DeferredBlock<WaterMillBlock> =
-	registerBlock("water_mill", ::WaterMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("water_mill", ::WaterMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val WIND_MILL: DeferredBlock<WindMillBlock> =
-	registerBlock("wind_mill", ::WindMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion() })
+		registerBlock("wind_mill", ::WindMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion() })
 	val FIRE_MILL: DeferredBlock<FireMillBlock> =
-	registerBlock("fire_mill", ::FireMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion() })
+		registerBlock("fire_mill", ::FireMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion() })
 	val LAVA_MILL: DeferredBlock<LavaMillBlock> =
-	registerBlock("lava_mill", ::LavaMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("lava_mill", ::LavaMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val SOLAR_PANEL: DeferredBlock<GpPanelBlock> =
 		registerBlock("solar_panel", { properties -> GpPanelBlock(requiresDay = true, properties = properties) })
 	val LUNAR_PANEL: DeferredBlock<GpPanelBlock> =
 		registerBlock("lunar_panel", { properties -> GpPanelBlock(requiresDay = false, properties = properties) })
 	val DRAGON_EGG_MILL: DeferredBlock<DragonEggMillBlock> =
-	registerBlock("dragon_egg_mill", ::DragonEggMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
+		registerBlock("dragon_egg_mill", ::DragonEggMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.STONE) })
 	val CREATIVE_MILL: DeferredBlock<CreativeMillBlock> =
-	registerBlock("creative_mill", ::CreativeMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
+		registerBlock("creative_mill", ::CreativeMillBlock, properties = { BlockBehaviour.Properties.ofFullCopy(Blocks.OBSIDIAN) })
 
 	// Terraformer
 
@@ -597,10 +597,3 @@ object ModBlocks : AaronBlockRegistry() {
 	// - Analog Crafter (Added to vanilla)
 
 }
-
-
-
-
-
-
-

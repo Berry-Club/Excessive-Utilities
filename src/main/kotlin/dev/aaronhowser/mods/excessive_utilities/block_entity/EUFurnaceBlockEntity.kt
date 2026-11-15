@@ -3,8 +3,8 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity
 import dev.aaronhowser.mods.excessive_utilities.block.EUFurnaceBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.SimpleMachineBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
-import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
+import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.crafting.RecipeHolder

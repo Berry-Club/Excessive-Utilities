@@ -1,9 +1,9 @@
 package dev.aaronhowser.mods.excessive_utilities.menu.bag_of_holding
 
 import dev.aaronhowser.mods.aaron.menu.HeldItemMenu
-import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding.BagOfHolding
 import dev.aaronhowser.mods.excessive_utilities.item.BagOfHoldingItem
+import dev.aaronhowser.mods.excessive_utilities.menu.base.ContainerSlot
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.entity.player.Inventory
@@ -55,7 +55,7 @@ class BagOfHoldingMenu(
 		val clickedSlot = slots.getOrNull(clickedSlotIndex)
 		if (clickedSlot == null || !clickedSlot.hasItem()) return ItemStack.EMPTY
 
-		if (clickedSlot.container === playerInventory && clickedSlot.slotIndex == playerInventory.getSelectedSlot()) {
+		if (clickedSlot.container === playerInventory && clickedSlot.slotIndex == playerInventory.selectedSlot) {
 			return ItemStack.EMPTY
 		}
 

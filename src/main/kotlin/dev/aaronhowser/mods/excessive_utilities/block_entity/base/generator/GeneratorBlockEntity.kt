@@ -8,16 +8,14 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.GpDrainBlockEntity
-import dev.aaronhowser.mods.excessive_utilities.block_entity.insertEnergy
 import dev.aaronhowser.mods.excessive_utilities.block_entity.extractEnergy
+import dev.aaronhowser.mods.excessive_utilities.block_entity.insertEnergy
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.handler.rainbow_generator.RainbowGeneratorHandler
 import dev.aaronhowser.mods.excessive_utilities.item.SpeedUpgradeItem
 import dev.aaronhowser.mods.excessive_utilities.menu.single_item_generator.SingleItemGeneratorMenu
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.network.chat.Component
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
@@ -29,13 +27,13 @@ import net.minecraft.world.inventory.ContainerData
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntityType
+import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
-import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.capabilities.Capabilities
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
-import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.TransactionContext
 
@@ -50,8 +48,8 @@ abstract class GeneratorBlockEntity(
 	protected open val energyStorage = SimpleEnergyHandler(1_000_000)
 	protected open val publicEnergyCapability: EnergyHandler =
 		object : EnergyHandler {
-			override fun getAmountAsLong(): Long = energyStorage.getAmountAsLong()
-			override fun getCapacityAsLong(): Long = energyStorage.getCapacityAsLong()
+			override fun getAmountAsLong(): Long = energyStorage.amountAsLong
+			override fun getCapacityAsLong(): Long = energyStorage.capacityAsLong
 			override fun insert(amount: Int, transaction: TransactionContext): Int = 0
 			override fun extract(amount: Int, transaction: TransactionContext): Int = energyStorage.extract(amount, transaction)
 		}
@@ -69,8 +67,8 @@ abstract class GeneratorBlockEntity(
 	open fun getItemHandler(direction: Direction?): ResourceHandler<ItemResource>? = container.itemHandler
 
 	override fun clearContent() {
-		super<ContainerContainer>.clearContent()
-		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+		super.clearContent()
+		energyStorage.extractEnergy(energyStorage.amountAsInt, false)
 	}
 
 	protected open fun isValidInput(itemStack: ItemStack) = true
@@ -92,8 +90,8 @@ abstract class GeneratorBlockEntity(
 
 			override fun get(index: Int): Int {
 				return when (index) {
-					MAX_ENERGY_DATA_INDEX -> energyStorage.getCapacityAsInt()
-					CURRENT_ENERGY_DATA_INDEX -> energyStorage.getAmountAsInt()
+					MAX_ENERGY_DATA_INDEX -> energyStorage.capacityAsInt
+					CURRENT_ENERGY_DATA_INDEX -> energyStorage.amountAsInt
 					BURN_TIME_REMAINING_DATA_INDEX -> burnTimeRemaining
 					else -> -1
 				}
@@ -156,9 +154,9 @@ abstract class GeneratorBlockEntity(
 				dir.opposite
 			) ?: continue
 
-			if (energyCap.getAmountAsLong() >= energyCap.getCapacityAsLong()) continue
+			if (energyCap.amountAsLong >= energyCap.capacityAsLong) continue
 
-			val energyToPush = energyStorage.getAmountAsInt()
+			val energyToPush = energyStorage.amountAsInt
 			if (energyToPush <= 0) continue
 
 			val pushed = energyCap.insertEnergy(energyToPush, false)
@@ -214,7 +212,7 @@ abstract class GeneratorBlockEntity(
 	 * @return true if it generated energy
 	 */
 	protected open fun generateEnergy(level: ServerLevel): Boolean {
-		val remainingCapacity = energyStorage.getCapacityAsInt() - energyStorage.getAmountAsInt()
+		val remainingCapacity = energyStorage.capacityAsInt - energyStorage.amountAsInt
 		if (remainingCapacity <= 0) return false
 
 		val energyToGenerate = fePerTick.coerceAtMost(remainingCapacity)

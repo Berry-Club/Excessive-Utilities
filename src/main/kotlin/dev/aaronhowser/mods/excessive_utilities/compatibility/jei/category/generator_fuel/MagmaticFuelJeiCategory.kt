@@ -8,8 +8,8 @@ import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
+import mezz.jei.api.recipe.types.IRecipeType
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.crafting.RecipeHolder
 

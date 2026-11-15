@@ -3,21 +3,21 @@ package dev.aaronhowser.mods.excessive_utilities.compatibility.jei.category.gene
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.block.GeneratorBlock
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.ModJeiPlugin
+import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
-import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.getItemHolders
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder
 import mezz.jei.api.gui.widgets.IRecipeExtrasBuilder
 import mezz.jei.api.helpers.IGuiHelper
 import mezz.jei.api.recipe.IFocusGroup
-import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.recipe.category.AbstractRecipeCategory
+import mezz.jei.api.recipe.types.IRecipeType
 import mezz.jei.api.registration.IRecipeCatalystRegistration
 import mezz.jei.api.registration.IRecipeCategoryRegistration
 import mezz.jei.api.registration.IRecipeRegistration
 import net.minecraft.resources.Identifier
-import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.item.ItemStack
+import net.minecraft.world.item.crafting.RecipeHolder
 import net.minecraft.world.level.Level
 
 class SingleItemFuelJeiCategory(

@@ -11,7 +11,6 @@ import net.minecraft.network.chat.Component
 import net.minecraft.resources.Identifier
 import net.minecraft.world.entity.player.Inventory
 import java.text.DecimalFormat
-import kotlin.jvm.optionals.getOrNull
 
 class QuantumQuarryScreen(
 	menu: QuantumQuarryMenu,

@@ -1,8 +1,8 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
-import net.minecraft.util.ProblemReporter
 import net.minecraft.nbt.CompoundTag
+import net.minecraft.util.ProblemReporter
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.LivingEntity

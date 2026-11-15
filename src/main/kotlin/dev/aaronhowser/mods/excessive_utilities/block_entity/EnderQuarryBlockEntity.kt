@@ -18,12 +18,8 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.registries.Registries
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
-import net.minecraft.nbt.LongArrayTag
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.Mth
@@ -37,15 +33,16 @@ import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.FenceBlock
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
-import net.minecraft.core.UUIDUtil
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.common.util.FakePlayer
 import net.neoforged.neoforge.common.util.FakePlayerFactory
-import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
-import net.neoforged.neoforge.transfer.energy.EnergyHandler
 import net.neoforged.neoforge.transfer.ResourceHandler
+import net.neoforged.neoforge.transfer.energy.EnergyHandler
+import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
 import net.neoforged.neoforge.transfer.item.ItemResource
 import java.lang.ref.WeakReference
 import java.util.*
@@ -67,8 +64,8 @@ class EnderQuarryBlockEntity(
 	override fun getContainers(): List<ImprovedSimpleContainer> = listOf(bufferContainer)
 
 	override fun clearContent() {
-		super<ContainerContainer>.clearContent()
-		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+		super.clearContent()
+		energyStorage.extractEnergy(energyStorage.amountAsInt, false)
 	}
 
 	private var fakePlayer: WeakReference<FakePlayer>? = null
@@ -178,7 +175,7 @@ class EnderQuarryBlockEntity(
 			fePerBlock *= upgrade.feMultiplierGetter.asDouble
 		}
 
-		if (energyStorage.getAmountAsInt() < fePerBlock) return
+		if (energyStorage.amountAsInt < fePerBlock) return
 
 		var blocksPerTick = ServerConfig.CONFIG.enderQuarryBlocksPerTick.get()
 

@@ -3,7 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.datamap.ReversingHoeConversion
 import dev.aaronhowser.mods.excessive_utilities.item.tier.UnstableTier
-import net.minecraft.core.component.DataComponents
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.EquipmentSlotGroup
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
@@ -53,18 +52,16 @@ class ReversingHoeItem(properties: Properties) : Item(properties) {
 		val DEFAULT_PROPERTIES: Properties = Properties()
 			.stacksTo(1)
 			.durability(UnstableTier.durability())
-			.attributes(ItemAttributeModifiers.builder()
-				.add(Attributes.ATTACK_DAMAGE, AttributeModifier(Item.BASE_ATTACK_DAMAGE_ID, UnstableTier.attackDamageBonus() - 3.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.add(Attributes.ATTACK_SPEED, AttributeModifier(Item.BASE_ATTACK_SPEED_ID, 0.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.add(
-				Attributes.BLOCK_INTERACTION_RANGE,
-				AttributeModifier(ExcessiveUtilities.modResource("reversing_hoe_range"), 4.0, AttributeModifier.Operation.ADD_VALUE),
-				EquipmentSlotGroup.MAINHAND
-			).build())
+			.attributes(
+				ItemAttributeModifiers.builder()
+					.add(Attributes.ATTACK_DAMAGE, AttributeModifier(BASE_ATTACK_DAMAGE_ID, UnstableTier.attackDamageBonus() - 3.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+					.add(Attributes.ATTACK_SPEED, AttributeModifier(BASE_ATTACK_SPEED_ID, 0.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+					.add(
+						Attributes.BLOCK_INTERACTION_RANGE,
+						AttributeModifier(ExcessiveUtilities.modResource("reversing_hoe_range"), 4.0, AttributeModifier.Operation.ADD_VALUE),
+						EquipmentSlotGroup.MAINHAND
+					).build()
+			)
 	}
 
 }
-
-
-
-

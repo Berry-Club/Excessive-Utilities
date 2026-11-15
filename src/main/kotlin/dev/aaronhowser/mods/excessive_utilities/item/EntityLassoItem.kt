@@ -3,7 +3,6 @@ package dev.aaronhowser.mods.excessive_utilities.item
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.getMinimalTag
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isClientSide
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isEntity
-
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.status
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toGrayComponent
@@ -15,29 +14,25 @@ import net.minecraft.ChatFormatting
 import net.minecraft.core.BlockPos
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.registries.Registries
+import net.minecraft.nbt.NbtOps
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.ComponentSerialization
 import net.minecraft.resources.Identifier
-import net.minecraft.nbt.NbtOps
+import net.minecraft.util.ProblemReporter
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.damagesource.DamageSource
-import net.minecraft.world.entity.Entity
-import net.minecraft.world.entity.EntitySpawnReason
-import net.minecraft.world.entity.LivingEntity
-import net.minecraft.world.entity.Mob
-import net.minecraft.world.entity.OwnableEntity
+import net.minecraft.world.entity.*
 import net.minecraft.world.entity.item.ItemEntity
 import net.minecraft.world.entity.monster.Enemy
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.TooltipFlag
-import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.item.component.CustomData
+import net.minecraft.world.item.component.TooltipDisplay
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.Level
-import net.minecraft.util.ProblemReporter
 import net.minecraft.world.level.storage.TagValueInput
 import net.neoforged.neoforge.common.Tags
 
@@ -204,14 +199,3 @@ class EntityLassoItem(
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

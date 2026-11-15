@@ -2,7 +2,9 @@ package dev.aaronhowser.mods.excessive_utilities.client.particle
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.nextRange
 import net.minecraft.client.multiplayer.ClientLevel
-import net.minecraft.client.particle.*
+import net.minecraft.client.particle.ParticleProvider
+import net.minecraft.client.particle.SingleQuadParticle
+import net.minecraft.client.particle.SpriteSet
 import net.minecraft.core.particles.SimpleParticleType
 import net.minecraft.util.RandomSource
 
@@ -36,7 +38,7 @@ class VomitParticle(
 		setAlpha(0.9f)
 	}
 
-	override fun getLayer(): SingleQuadParticle.Layer = SingleQuadParticle.Layer.TRANSLUCENT
+	override fun getLayer(): Layer = Layer.TRANSLUCENT
 
 	class Provider(private val sprites: SpriteSet) : ParticleProvider.Sprite<SimpleParticleType> {
 		override fun createParticle(

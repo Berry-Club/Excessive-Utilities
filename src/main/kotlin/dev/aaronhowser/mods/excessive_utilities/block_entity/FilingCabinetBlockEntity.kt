@@ -5,26 +5,17 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import net.minecraft.core.BlockPos
-import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.component.DataComponentPatch
-import net.minecraft.core.registries.Registries
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
-import net.minecraft.nbt.ListTag
-import net.minecraft.nbt.NbtOps
-import net.minecraft.nbt.Tag
-import net.minecraft.resources.RegistryOps
-import net.minecraft.resources.ResourceKey
-import net.minecraft.resources.Identifier
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.Clearable
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.item.ItemResource
 import net.neoforged.neoforge.transfer.transaction.SnapshotJournal
@@ -83,34 +74,34 @@ class FilingCabinetBlockEntity(
 		setChanged()
 	}
 
-    override fun saveAdditional(tag: ValueOutput) {
-        super.saveAdditional(tag)
-        val item = storedItem ?: return
-        tag.store(ITEM_NBT, Item.CODEC, BuiltInRegistries.ITEM.wrapAsHolder(item))
-        val entries = tag.childrenList(ENTRIES_NBT)
-        for ((data, count) in storedEntries) {
-            require(count > 0) { "Filing Cabinet contains a non-positive item count" }
-            entries.addChild().apply {
-                putInt(COUNT_NBT, count)
-                store(DATA_NBT, DataComponentPatch.CODEC, data)
-            }
-        }
-    }
+	override fun saveAdditional(tag: ValueOutput) {
+		super.saveAdditional(tag)
+		val item = storedItem ?: return
+		tag.store(ITEM_NBT, Item.CODEC, BuiltInRegistries.ITEM.wrapAsHolder(item))
+		val entries = tag.childrenList(ENTRIES_NBT)
+		for ((data, count) in storedEntries) {
+			require(count > 0) { "Filing Cabinet contains a non-positive item count" }
+			entries.addChild().apply {
+				putInt(COUNT_NBT, count)
+				store(DATA_NBT, DataComponentPatch.CODEC, data)
+			}
+		}
+	}
 
-    override fun loadAdditional(tag: ValueInput) {
-        super.loadAdditional(tag)
-        storedItem = null
-        storedEntries.clear()
-        val item = tag.read(ITEM_NBT, Item.CODEC).orElse(null) ?: return
-        val entries = tag.childrenList(ENTRIES_NBT).orElseThrow()
-        for (entry in entries) {
-            val count = entry.getInt(COUNT_NBT).orElseThrow()
-            require(count > 0) { "Invalid Filing Cabinet item count: $count" }
-            val data = entry.read(DATA_NBT, DataComponentPatch.CODEC).orElseThrow()
-            storedEntries[data] = Math.addExact(storedEntries.getOrDefault(data, 0), count)
-        }
-        if (storedEntries.isNotEmpty()) storedItem = item.value()
-    }
+	override fun loadAdditional(tag: ValueInput) {
+		super.loadAdditional(tag)
+		storedItem = null
+		storedEntries.clear()
+		val item = tag.read(ITEM_NBT, Item.CODEC).orElse(null) ?: return
+		val entries = tag.childrenList(ENTRIES_NBT).orElseThrow()
+		for (entry in entries) {
+			val count = entry.getInt(COUNT_NBT).orElseThrow()
+			require(count > 0) { "Invalid Filing Cabinet item count: $count" }
+			val data = entry.read(DATA_NBT, DataComponentPatch.CODEC).orElseThrow()
+			storedEntries[data] = Math.addExact(storedEntries.getOrDefault(data, 0), count)
+		}
+		if (storedEntries.isNotEmpty()) storedItem = item.value()
+	}
 
 	companion object {
 		const val ITEM_NBT = "StoredItem"
@@ -135,7 +126,10 @@ class FilingCabinetBlockEntity(
 			storedEntries.clear()
 			storedEntries.putAll(snapshot.entries)
 		}
-		override fun onRootCommit(originalState: FilingSnapshot) { setChanged() }
+
+		override fun onRootCommit(originalState: FilingSnapshot) {
+			setChanged()
+		}
 
 		override fun size(): Int = getMaxAmount()
 
@@ -158,10 +152,10 @@ class FilingCabinetBlockEntity(
 		override fun getCapacityAsLong(index: Int, resource: ItemResource): Long = 64
 
 		override fun isValid(index: Int, resource: ItemResource): Boolean =
-			index in 0 until size() && (resource.isEmpty() || storedItem == null || resource.toStack().item == storedItem)
+			index in 0 until size() && (resource.isEmpty || storedItem == null || resource.toStack().item == storedItem)
 
 		override fun insert(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
-			if (!isValid(index, resource) || resource.isEmpty() || amount <= 0) return 0
+			if (!isValid(index, resource) || resource.isEmpty || amount <= 0) return 0
 			val stack = resource.toStack(amount)
 
 			val item = storedItem
@@ -206,14 +200,14 @@ class FilingCabinetBlockEntity(
 			updateSnapshots(transaction)
 			val newCount = amountStored - amountToRemove
 
-				if (newCount <= 0) {
-					storedEntries.remove(data)
-					if (storedEntries.isEmpty()) {
-						storedItem = null
-					}
-				} else {
-					storedEntries[data] = newCount
+			if (newCount <= 0) {
+				storedEntries.remove(data)
+				if (storedEntries.isEmpty()) {
+					storedItem = null
 				}
+			} else {
+				storedEntries[data] = newCount
+			}
 
 			return amountToRemove
 		}

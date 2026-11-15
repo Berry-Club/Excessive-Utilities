@@ -15,6 +15,7 @@ import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.AngelR
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.DivisionSigilSubtypeInterpreter
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.LassoSubtypeInterpreter
 import dev.aaronhowser.mods.excessive_utilities.compatibility.jei.subtype.OpiniumCoreSubtypeInterpreter
+import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
 import dev.aaronhowser.mods.excessive_utilities.recipe.crafting.*
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.CrusherRecipe
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.EnchanterRecipe
@@ -25,7 +26,6 @@ import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.Ma
 import dev.aaronhowser.mods.excessive_utilities.recipe.machine.generator_fuel.SingleItemFuelRecipe
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
-import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
 import mezz.jei.api.IModPlugin
 import mezz.jei.api.JeiPlugin
 import mezz.jei.api.constants.RecipeTypes

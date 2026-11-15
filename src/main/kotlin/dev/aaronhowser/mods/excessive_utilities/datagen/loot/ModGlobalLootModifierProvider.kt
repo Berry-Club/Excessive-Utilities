@@ -15,8 +15,8 @@ import net.minecraft.world.level.storage.loot.BuiltInLootTables
 import net.minecraft.world.level.storage.loot.LootContext
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition
 import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition
-import net.neoforged.neoforge.common.data.GlobalLootModifierProvider
 import net.neoforged.neoforge.common.conditions.ICondition
+import net.neoforged.neoforge.common.data.GlobalLootModifierProvider
 import net.neoforged.neoforge.common.loot.AddTableLootModifier
 import net.neoforged.neoforge.common.loot.LootTableIdCondition
 import java.util.concurrent.CompletableFuture
@@ -42,8 +42,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.RESONATING_REDSTONE_CRYSTAL
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -62,8 +61,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.DROP_OF_EVIL
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -79,8 +77,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.SOUL_FRAGMENT
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -104,8 +101,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.SOUL_FRAGMENT_KIKOKU
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -116,8 +112,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.DIVISION_SIGIL_STRONGHOLD_CROSSING
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -128,8 +123,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.DIVISION_SIGIL_STRONGHOLD_CORRIDOR
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -140,8 +134,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.DIVISION_SIGIL_MINESHAFT
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -152,8 +145,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.DIVISION_SIGIL_DUNGEON
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 		add(
@@ -164,8 +156,7 @@ class ModGlobalLootModifierProvider(
 				),
 				1,
 				OtherLootTableSubProvider.DIVISION_SIGIL_DESERT_TEMPLE
-			)
-			, *noConditions
+			), *noConditions
 		)
 
 	}

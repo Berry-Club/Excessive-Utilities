@@ -4,27 +4,22 @@ import dev.aaronhowser.mods.excessive_utilities.block_entity.CreativeHarvestBloc
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.util.RandomSource
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.BlockGetter
-import net.minecraft.world.level.Level
-import net.minecraft.world.level.LevelAccessor
+import net.minecraft.world.level.*
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EntityBlock
 import net.minecraft.world.level.block.entity.BlockEntity
+import net.minecraft.world.level.block.state.BlockBehaviour
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
 import net.minecraft.world.phys.BlockHitResult
-import net.minecraft.util.RandomSource
-import net.minecraft.world.level.LevelReader
-import net.minecraft.world.level.ScheduledTickAccess
-import net.minecraft.world.level.block.state.BlockBehaviour
 
-class CreativeHarvestBlock(properties: BlockBehaviour.Properties) : Block(properties), EntityBlock {
+class CreativeHarvestBlock(properties: Properties) : Block(properties), EntityBlock {
 
 	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return CreativeHarvestBlockEntity(pos, state)
@@ -97,12 +92,12 @@ class CreativeHarvestBlock(properties: BlockBehaviour.Properties) : Block(proper
 	override fun updateShape(
 		state: BlockState,
 		level: LevelReader,
-		 ticks: ScheduledTickAccess,
+		ticks: ScheduledTickAccess,
 		pos: BlockPos,
-		 directionToNeighbour: Direction,
-		 neighbourPos: BlockPos,
-		 neighbourState: BlockState,
-		 random: RandomSource
+		directionToNeighbour: Direction,
+		neighbourPos: BlockPos,
+		neighbourState: BlockState,
+		random: RandomSource
 	): BlockState {
 		val be = level.getBlockEntity(pos)
 		if (be is CreativeHarvestBlockEntity && level is LevelAccessor) {
@@ -113,15 +108,3 @@ class CreativeHarvestBlock(properties: BlockBehaviour.Properties) : Block(proper
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-

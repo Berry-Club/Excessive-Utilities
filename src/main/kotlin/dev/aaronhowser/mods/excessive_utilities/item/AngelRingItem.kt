@@ -1,7 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.item
 
-import net.minecraft.server.level.ServerLevel
-
 import com.mojang.serialization.Codec
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isTrue
@@ -202,11 +200,3 @@ class AngelRingItem(properties: Properties) : Item(properties), ICurioItem, Tool
 	}
 
 }
-
-
-
-
-
-
-
-

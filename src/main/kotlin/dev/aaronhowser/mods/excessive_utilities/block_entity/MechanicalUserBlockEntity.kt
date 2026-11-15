@@ -11,11 +11,7 @@ import dev.aaronhowser.mods.excessive_utilities.menu.mechanical_user.MechanicalU
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.commands.arguments.EntityAnchorArgument
 import net.minecraft.core.BlockPos
-import net.minecraft.core.HolderLookup
 import net.minecraft.core.UUIDUtil
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.InteractionHand
 import net.minecraft.world.InteractionResult
@@ -28,6 +24,8 @@ import net.minecraft.world.item.BlockItem
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.context.UseOnContext
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.Vec3
@@ -137,7 +135,7 @@ class MechanicalUserBlockEntity(
 		val fakePlayerEyePosition = blockPos.center
 			.add(facingVector.scale(FAKE_PLAYER_FACE_OFFSET))
 
-		fakePlayer.inventory.setSelectedSlot(selectedSlot)
+		fakePlayer.inventory.selectedSlot = selectedSlot
 		fakePlayer.isShiftKeyDown = isSneaking
 		fakePlayer.setPos(fakePlayerEyePosition.subtract(0.0, fakePlayer.eyeHeight.toDouble(), 0.0))
 		fakePlayer.lookAt(EntityAnchorArgument.Anchor.EYES, targetPos.center)

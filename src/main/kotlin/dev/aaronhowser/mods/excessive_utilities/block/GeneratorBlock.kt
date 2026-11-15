@@ -1,7 +1,5 @@
 package dev.aaronhowser.mods.excessive_utilities.block
 
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
-
 import dev.aaronhowser.mods.aaron.block.SimpleContainerBlock
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.tell
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.generator.GeneratorBlockEntity
@@ -53,7 +51,7 @@ class GeneratorBlock(
 		builder.add(FACING, LIT)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -65,7 +63,7 @@ class GeneratorBlock(
 		}
 	}
 
-	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity? {
+	override fun newBlockEntity(pos: BlockPos, state: BlockState): BlockEntity {
 		return beTypeGetter().create(pos, state)
 	}
 
@@ -160,18 +158,3 @@ class GeneratorBlock(
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

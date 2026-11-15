@@ -6,10 +6,8 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.Direction
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
@@ -29,7 +27,7 @@ class CrusherBlock(properties: Properties) : GpDrainBlock(properties) {
 		builder.add(FACING, ENABLED)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -44,14 +42,3 @@ class CrusherBlock(properties: Properties) : GpDrainBlock(properties) {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

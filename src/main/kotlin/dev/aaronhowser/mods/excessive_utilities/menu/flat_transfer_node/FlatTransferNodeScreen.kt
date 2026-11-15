@@ -11,8 +11,10 @@ class FlatTransferNodeScreen(
 	menu: FlatTransferNodeMenu,
 	playerInventory: Inventory,
 	title: Component
-) : ExcessiveUtilitiesScreen<FlatTransferNodeMenu>(menu, playerInventory, title,
-	if (menu.isItemNode()) ITEM_BACKGROUND else FLUID_BACKGROUND) {
+) : ExcessiveUtilitiesScreen<FlatTransferNodeMenu>(
+	menu, playerInventory, title,
+	if (menu.isItemNode()) ITEM_BACKGROUND else FLUID_BACKGROUND
+) {
 	override val titleLabelSprite: Identifier =
 		if (menu.isItemNode()) RED_LABEL else BLUE_LABEL
 

@@ -16,12 +16,10 @@ import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.BlockTags
 import net.minecraft.util.RandomSource
 import net.minecraft.world.entity.*
-import net.minecraft.world.entity.EntitySpawnReason
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.LevelReader
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.Blocks
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.IntegerProperty
@@ -47,7 +45,7 @@ class CursedEarthBlock(properties: Properties) : Block(properties) {
 	// Slow spreading and mob spawning
 	override fun randomTick(state: BlockState, level: ServerLevel, pos: BlockPos, random: RandomSource) {
 		if (ServerConfig.CONFIG.cursedEarthBurnInDay.get()
-			&& level.isBrightOutside()
+			&& level.isBrightOutside
 			&& level.canSeeSky(pos.above())
 			&& level.getBlockState(pos.above()).canBeReplaced()
 		) {
@@ -218,7 +216,7 @@ class CursedEarthBlock(properties: Properties) : Block(properties) {
 		if (!isTargetValid) return false
 
 		val posAbove = targetPos.above()
-		val lightBlockingAbove = level.getBlockState(posAbove).getLightDampening()
+		val lightBlockingAbove = level.getBlockState(posAbove).lightDampening
 
 		if (lightBlockingAbove > 2) return false
 
@@ -332,16 +330,3 @@ class CursedEarthBlock(properties: Properties) : Block(properties) {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

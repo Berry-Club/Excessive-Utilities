@@ -11,11 +11,9 @@ import net.minecraft.util.RandomSource
 import net.minecraft.world.item.context.BlockPlaceContext
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
-import net.minecraft.world.level.block.Blocks
 import net.minecraft.world.level.block.EnchantingTableBlock
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.BlockBehaviour.Properties
 import net.minecraft.world.level.block.state.StateDefinition
 import net.minecraft.world.level.block.state.properties.BlockStateProperties
 import net.minecraft.world.level.block.state.properties.BooleanProperty
@@ -35,7 +33,7 @@ class EnchanterBlock(properties: Properties) : GpDrainBlock(properties) {
 		builder.add(FACING, ENABLED)
 	}
 
-	override fun getStateForPlacement(context: BlockPlaceContext): BlockState? {
+	override fun getStateForPlacement(context: BlockPlaceContext): BlockState {
 		return defaultBlockState()
 			.setValue(FACING, context.horizontalDirection.opposite)
 	}
@@ -73,14 +71,3 @@ class EnchanterBlock(properties: Properties) : GpDrainBlock(properties) {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-

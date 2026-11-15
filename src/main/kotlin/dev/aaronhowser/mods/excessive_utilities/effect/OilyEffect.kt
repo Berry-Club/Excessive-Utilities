@@ -2,13 +2,13 @@ package dev.aaronhowser.mods.excessive_utilities.effect
 
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isDamageSource
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import net.minecraft.server.level.ServerLevel
 import net.minecraft.tags.DamageTypeTags
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.phys.Vec3
-import net.minecraft.server.level.ServerLevel
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent
 
 class OilyEffect : MobEffect(

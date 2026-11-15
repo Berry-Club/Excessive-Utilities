@@ -1,14 +1,12 @@
 package dev.aaronhowser.mods.excessive_utilities.handler.bag_of_holding
 
-import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.item.BagOfHoldingItem
 import net.minecraft.core.HolderLookup
+import net.minecraft.core.UUIDUtil
 import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.ContainerHelper
+import net.minecraft.nbt.NbtOps
 import net.minecraft.world.SimpleContainer
 import net.minecraft.world.item.ItemStack
-import net.minecraft.core.UUIDUtil
-import net.minecraft.nbt.NbtOps
 import java.util.*
 
 class BagOfHolding(
@@ -54,8 +52,8 @@ class BagOfHolding(
 			val bag = BagOfHolding(bagUUID, onChanged)
 
 			val items = tag.read("Items", ItemStack.OPTIONAL_CODEC.listOf(), registries.createSerializationContext(NbtOps.INSTANCE)).orElseThrow()
-            require(items.size == SLOT_COUNT) { "Invalid bag inventory size: ${items.size}" }
-            items.forEachIndexed { slot, stack -> bag.container.setItem(slot, stack) }
+			require(items.size == SLOT_COUNT) { "Invalid bag inventory size: ${items.size}" }
+			items.forEachIndexed { slot, stack -> bag.container.setItem(slot, stack) }
 
 			return bag
 		}

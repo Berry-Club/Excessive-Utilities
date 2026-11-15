@@ -5,10 +5,10 @@ import com.mojang.brigadier.builder.ArgumentBuilder
 import dev.aaronhowser.mods.aaron.command.AaronCommandHelper
 import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
 import net.minecraft.commands.CommandSourceStack
+import net.minecraft.commands.Commands
 import net.minecraft.commands.arguments.EntityArgument
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.LivingEntity
-import net.minecraft.commands.Commands
 
 object SetCursedCommand : AaronCommandHelper {
 

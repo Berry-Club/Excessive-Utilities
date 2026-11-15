@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
+import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ConfigurableFluidTank
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
@@ -13,10 +14,6 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.world.Container
 import net.minecraft.world.entity.player.Inventory
@@ -24,13 +21,14 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.inventory.AbstractContainerMenu
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.transfer.ResourceHandler
 import net.neoforged.neoforge.transfer.ResourceHandlerUtil
 import net.neoforged.neoforge.transfer.fluid.FluidResource
 import net.neoforged.neoforge.transfer.transaction.Transaction
-import dev.aaronhowser.mods.excessive_utilities.block_entity.base.ConfigurableFluidTank
 
 class FluidTransferNodeBlockEntity(
 	pos: BlockPos,
@@ -68,38 +66,42 @@ class FluidTransferNodeBlockEntity(
 
 	override fun getBufferAmount(): Int = bufferTank.fluidAmount
 
-    override fun pushIntoPingPos(level: ServerLevel) {
-        if (bufferTank.isEmpty) return
-        if (hasConfiguredTransmitter()) {
-            val remaining = bufferTank.fluid
-            visitEnderReceivers(level) { receiver -> transferToEnderReceiver(receiver, remaining) }
-        }
-        for (handler in getFluidHandlersAroundPing(level)) {
-            if (bufferTank.isEmpty) break
-            if (pushBuffer(handler) > 0) didWorkThisTick = true
-        }
-    }
+	override fun pushIntoPingPos(level: ServerLevel) {
+		if (bufferTank.isEmpty) return
+		if (hasConfiguredTransmitter()) {
+			val remaining = bufferTank.fluid
+			visitEnderReceivers(level) { receiver -> transferToEnderReceiver(receiver, remaining) }
+		}
+		for (handler in getFluidHandlersAroundPing(level)) {
+			if (bufferTank.isEmpty) break
+			if (pushBuffer(handler) > 0) didWorkThisTick = true
+		}
+	}
 
-    private fun pushBuffer(handler: ResourceHandler<FluidResource>): Int {
-        if (bufferTank.isEmpty) return 0
-        if (!hasCreativeUpgrade()) return ResourceHandlerUtil.move(bufferTank, handler, { true }, bufferTank.fluidAmount, null)
-        return Transaction.openRoot().use { transaction ->
-            val inserted = handler.insert(bufferTank.getResource(0), bufferTank.fluidAmount, transaction)
-            transaction.commit()
-            inserted
-        }
-    }
+	private fun pushBuffer(handler: ResourceHandler<FluidResource>): Int {
+		if (bufferTank.isEmpty) return 0
+		if (!hasCreativeUpgrade()) return ResourceHandlerUtil.move(bufferTank, handler, { true }, bufferTank.fluidAmount, null)
+		return Transaction.openRoot().use { transaction ->
+			val inserted = handler.insert(bufferTank.getResource(0), bufferTank.fluidAmount, transaction)
+			transaction.commit()
+			inserted
+		}
+	}
 
-    override fun pullFromPingPos(level: ServerLevel) {
-        if (hasConfiguredReceiver()) return
-        val maxAmount = if (hasStackUpgrade()) 1_000 else 200
-        val filter = filterContainer.getItem(0)
-        for (handler in getFluidHandlersAroundPing(level)) {
-            val moved = ResourceHandlerUtil.move(handler, bufferTank,
-                { resource -> !filter.isItem(ModItems.FLUID_FILTER) || FluidFilterItem.passesFilter(filter, resource.toStack(1)) }, maxAmount, null)
-            if (moved > 0) { didWorkThisTick = true; return }
-        }
-    }
+	override fun pullFromPingPos(level: ServerLevel) {
+		if (hasConfiguredReceiver()) return
+		val maxAmount = if (hasStackUpgrade()) 1_000 else 200
+		val filter = filterContainer.getItem(0)
+		for (handler in getFluidHandlersAroundPing(level)) {
+			val moved = ResourceHandlerUtil.move(
+				handler, bufferTank,
+				{ resource -> !filter.isItem(ModItems.FLUID_FILTER) || FluidFilterItem.passesFilter(filter, resource.toStack(1)) }, maxAmount, null
+			)
+			if (moved > 0) {
+				didWorkThisTick = true; return
+			}
+		}
+	}
 
 	private fun getFluidHandlersAroundPing(level: ServerLevel): List<ResourceHandler<FluidResource>> {
 		return getCapabilitiesAroundPing(level) { neighborPos, side ->
@@ -113,28 +115,28 @@ class FluidTransferNodeBlockEntity(
 		return bufferTank.fill(stack)
 	}
 
-    private fun transferToEnderReceiver(receiver: TransferNodeBlockEntity, remaining: FluidStack): Boolean {
-        if (receiver !is FluidTransferNodeBlockEntity || bufferTank.isEmpty) return false
-        val filter = receiver.filterContainer.getItem(0)
-        if (filter.isItem(ModItems.FLUID_FILTER) && !FluidFilterItem.passesFilter(filter, bufferTank.fluid)) return false
-        val accepted = pushBuffer(receiver.bufferTank)
-        if (accepted == 0) return false
-        if (!hasCreativeUpgrade()) remaining.shrink(accepted)
-        didWorkThisTick = true
-        return true
-    }
+	private fun transferToEnderReceiver(receiver: TransferNodeBlockEntity, remaining: FluidStack): Boolean {
+		if (receiver !is FluidTransferNodeBlockEntity || bufferTank.isEmpty) return false
+		val filter = receiver.filterContainer.getItem(0)
+		if (filter.isItem(ModItems.FLUID_FILTER) && !FluidFilterItem.passesFilter(filter, bufferTank.fluid)) return false
+		val accepted = pushBuffer(receiver.bufferTank)
+		if (accepted == 0) return false
+		if (!hasCreativeUpgrade()) remaining.shrink(accepted)
+		didWorkThisTick = true
+		return true
+	}
 
-    override fun pushIntoParent(level: ServerLevel) {
-        val parent = getParentFluidHandler(level) ?: return
-        if (pushBuffer(parent) > 0) didWorkThisTick = true
-    }
+	override fun pushIntoParent(level: ServerLevel) {
+		val parent = getParentFluidHandler(level) ?: return
+		if (pushBuffer(parent) > 0) didWorkThisTick = true
+	}
 
-    override fun pullFromParent(level: ServerLevel) {
-        if (worldInteraction(level)) return
-        val parent = getParentFluidHandler(level) ?: return
-        val moved = ResourceHandlerUtil.move(parent, bufferTank, { true }, if (hasStackUpgrade()) 1_000 else 200, null)
-        if (moved > 0) didWorkThisTick = true
-    }
+	override fun pullFromParent(level: ServerLevel) {
+		if (worldInteraction(level)) return
+		val parent = getParentFluidHandler(level) ?: return
+		val moved = ResourceHandlerUtil.move(parent, bufferTank, { true }, if (hasStackUpgrade()) 1_000 else 200, null)
+		if (moved > 0) didWorkThisTick = true
+	}
 
 	private fun worldInteraction(level: ServerLevel): Boolean {
 		val hasUpgrade = upgradeContainer.countItem(ModItems.WORLD_INTERACTION_UPGRADE.get()) > 0
