@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
 import com.mojang.serialization.MapCodec
 import dev.aaronhowser.mods.aaron.client.AaronClientUtil
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.SubmitNodeCollector
@@ -16,20 +17,99 @@ import org.joml.Vector3fc
 import java.util.function.Consumer
 
 class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
-	private val resolver: ItemModelResolver = Minecraft.getInstance().itemModelResolver
-	override fun extractArgument(stack: ItemStack) = stack.copy()
-	override fun getExtents(output: Consumer<Vector3fc>) = Unit
-	override fun submit(argument: ItemStack?, poseStack: PoseStack, collector: SubmitNodeCollector, lightCoords: Int, overlayCoords: Int, hasFoil: Boolean, outlineColor: Int) {
+
+	private val itemModelResolver: ItemModelResolver = Minecraft.getInstance().itemModelResolver
+	private val centerRenderState = ItemStackRenderState()
+	private val outerRenderState = ItemStackRenderState()
+
+	override fun extractArgument(stack: ItemStack): ItemStack = stack.copy()
+	override fun getExtents(output: Consumer<Vector3fc>) {}
+
+	override fun submit(
+		argument: ItemStack?,
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		lightCoords: Int,
+		overlayCoords: Int,
+		hasFoil: Boolean,
+		outlineColor: Int
+	) {
 		val stack = argument ?: return
 		val contents = stack.get(ModDataComponents.OPINIUM_CORE_CONTENTS) ?: return
-		val inner = ItemStackRenderState()
-		val outer = ItemStackRenderState()
-		resolver.updateForTopItem(inner, contents.getCenter(), ItemDisplayContext.NONE, null, null, 0)
-		resolver.updateForTopItem(outer, contents.getOuter(), ItemDisplayContext.NONE, null, null, 0)
+
+		itemModelResolver.updateForTopItem(
+			centerRenderState,
+			contents.getCenter(),
+			ItemDisplayContext.NONE,
+			AaronClientUtil.localLevel,
+			null,
+			0
+		)
+
+		itemModelResolver.updateForTopItem(
+			outerRenderState,
+			contents.getOuter(),
+			ItemDisplayContext.NONE,
+			AaronClientUtil.localLevel,
+			null,
+			0
+		)
+
 		val time = (AaronClientUtil.localLevel?.gameTime ?: 0L).toFloat()
-		poseStack.pushPose(); poseStack.translate(.5, .5, .5); poseStack.mulPose(Axis.YP.rotationDegrees(time * 4f)); poseStack.mulPose(Axis.XP.rotationDegrees(time * 2f)); poseStack.scale(.5f, .5f, .5f); inner.submit(poseStack, collector, lightCoords, overlayCoords, outlineColor); poseStack.popPose()
-		for (i in 0 until 8) {
-			poseStack.pushPose(); poseStack.translate(.5, .5, .5); poseStack.mulPose(Axis.YP.rotationDegrees(i * 45f + time * 2f)); poseStack.translate(.3, 0.0, 0.0); poseStack.scale(.25f, .25f, .25f); outer.submit(poseStack, collector, lightCoords, overlayCoords, outlineColor); poseStack.popPose()
+
+		renderCenter(poseStack, collector, lightCoords, overlayCoords, outlineColor, time)
+		renderOuterItems(poseStack, collector, lightCoords, overlayCoords, outlineColor, time)
+	}
+
+	private fun renderCenter(
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		lightCoords: Int,
+		overlayCoords: Int,
+		outlineColor: Int,
+		time: Float
+	) {
+		poseStack.withPose {
+			poseStack.translate(0.5, 0.5, 0.5)
+			poseStack.mulPose(Axis.YP.rotationDegrees(time * 4f))
+			poseStack.mulPose(Axis.XP.rotationDegrees(time * 2f))
+			poseStack.scale(0.5f, 0.5f, 0.5f)
+
+			centerRenderState.submit(
+				poseStack,
+				collector,
+				lightCoords,
+				overlayCoords,
+				outlineColor
+			)
+		}
+	}
+
+	private fun renderOuterItems(
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		lightCoords: Int,
+		overlayCoords: Int,
+		outlineColor: Int,
+		time: Float
+	) {
+		for (index in 0 until OUTER_ITEM_COUNT) {
+			poseStack.withPose {
+
+				poseStack.translate(0.5, 0.5, 0.5)
+				poseStack.mulPose(Axis.YP.rotationDegrees(index * 90f + time * 2f))
+				poseStack.translate(0.3, 0.0, 0.0)
+				poseStack.scale(0.25f, 0.25f, 0.25f)
+
+				outerRenderState.submit(
+					poseStack,
+					collector,
+					lightCoords,
+					overlayCoords,
+					outlineColor
+				)
+
+			}
 		}
 	}
 
@@ -37,5 +117,9 @@ class OpiniumCoreBEWLR : SpecialModelRenderer<ItemStack> {
 		val CODEC: MapCodec<Unbaked> = MapCodec.unit(Unbaked)
 		override fun type() = CODEC
 		override fun bake(context: SpecialModelRenderer.BakingContext) = OpiniumCoreBEWLR()
+	}
+
+	companion object {
+		private const val OUTER_ITEM_COUNT = 4
 	}
 }
