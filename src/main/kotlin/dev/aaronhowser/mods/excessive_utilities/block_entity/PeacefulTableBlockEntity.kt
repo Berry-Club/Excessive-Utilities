@@ -2,7 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity
 
 import com.mojang.authlib.GameProfile
 import com.mojang.datafixers.util.Either
-import dev.aaronhowser.mods.aaron.entity.BetterFakePlayerFactory
+import dev.aaronhowser.mods.aaron.fake_player.BetterFakePlayerFactory
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronUtil
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
@@ -10,12 +10,10 @@ import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.core.Holder
-import net.minecraft.core.HolderLookup
+import net.minecraft.core.UUIDUtil
 import net.minecraft.core.registries.Registries
-import net.minecraft.nbt.CompoundTag
-import net.minecraft.world.level.storage.ValueInput
-import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.tags.ItemTags
 import net.minecraft.world.Difficulty
 import net.minecraft.world.DifficultyInstance
 import net.minecraft.world.InteractionHand
@@ -24,11 +22,12 @@ import net.minecraft.world.entity.ai.attributes.Attribute
 import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.item.ItemStack
-import net.minecraft.tags.ItemTags
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.storage.ValueInput
+import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.world.level.storage.loot.LootParams
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams
@@ -41,7 +40,6 @@ import net.neoforged.neoforge.transfer.ResourceHandlerUtil
 import net.neoforged.neoforge.transfer.item.ItemResource
 import java.lang.ref.WeakReference
 import java.util.*
-import net.minecraft.core.UUIDUtil
 import kotlin.jvm.optionals.getOrNull
 import kotlin.math.max
 import kotlin.math.min
@@ -279,7 +277,7 @@ class PeacefulTableBlockEntity(
 				var multiplyTotal = 0.0
 
 				for (entry in attributeModifiers) {
-				if (entry.attribute == Attributes.ATTACK_DAMAGE && entry.slot == EquipmentSlotGroup.MAINHAND) {
+					if (entry.attribute == Attributes.ATTACK_DAMAGE && entry.slot == EquipmentSlotGroup.MAINHAND) {
 						val modifier = entry.modifier
 						when (modifier.operation) {
 							AttributeModifier.Operation.ADD_VALUE -> baseAmount += modifier.amount
