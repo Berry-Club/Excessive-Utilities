@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
+import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -10,6 +11,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
+import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
@@ -26,7 +28,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 class TrashCanBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.TRASH_CAN.get(), pos, state), MenuProvider {
+) : BlockEntity(ModBlockEntityTypes.TRASH_CAN.get(), pos, state), ContainerContainer, MenuProvider {
 
 	var isChest: Boolean = false
 		set(value) {
@@ -37,6 +39,8 @@ class TrashCanBlockEntity(
 	private val filterContainer = ImprovedSimpleContainer(this, 1)
 	val filterStack: ItemStack get() = filterContainer.getItem(FILTER_SLOT)
 
+	override fun getContainers(): List<Container> = listOf(filterContainer)
+
 	private val itemHandler: ResourceHandler<ItemResource> =
 		object : ResourceHandler<ItemResource> {
 			override fun size(): Int = 27
@@ -45,8 +49,9 @@ class TrashCanBlockEntity(
 			override fun getCapacityAsLong(index: Int, resource: ItemResource): Long = 64
 			override fun isValid(index: Int, resource: ItemResource): Boolean = true
 			override fun insert(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int {
-			return if (resource.isEmpty() || !passesFilter(resource.toStack())) 0 else amount
-		}
+				return if (resource.isEmpty() || !passesFilter(resource.toStack())) 0 else amount
+			}
+
 			override fun extract(index: Int, resource: ItemResource, amount: Int, transaction: TransactionContext): Int = 0
 		}
 

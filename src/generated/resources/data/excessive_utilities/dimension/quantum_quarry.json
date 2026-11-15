@@ -3,8 +3,10 @@
   "generator": {
     "type": "minecraft:noise",
     "biome_source": {
-      "type": "minecraft:multi_noise",
-      "preset": "minecraft:overworld"
+      "type": "excessive_utilities:quantum_quarry",
+      "biomes": "#minecraft:is_overworld",
+      "dimension": "overworld",
+      "fallback_biome": "minecraft:plains"
     },
     "settings": "minecraft:overworld"
   }

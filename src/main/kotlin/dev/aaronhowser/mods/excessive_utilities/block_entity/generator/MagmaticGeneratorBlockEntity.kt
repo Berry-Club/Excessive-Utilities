@@ -49,6 +49,11 @@ class MagmaticGeneratorBlockEntity(
 			}
 		}
 
+	override fun clearContent() {
+		super.clearContent()
+		tank.drain(Int.MAX_VALUE)
+	}
+
 	fun getRecipe(): MagmaticFuelRecipe? {
 		val level = level ?: return null
 		return MagmaticFuelRecipe.getRecipe(level, tank.fluid)

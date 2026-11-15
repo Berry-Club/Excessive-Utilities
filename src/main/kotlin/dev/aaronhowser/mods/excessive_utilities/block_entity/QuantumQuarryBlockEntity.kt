@@ -12,23 +12,26 @@ import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
-import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.MachineWithBuffer
 import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
+import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModBiomeTagsProvider
 import dev.aaronhowser.mods.excessive_utilities.item.ItemFilterItem
 import dev.aaronhowser.mods.excessive_utilities.menu.quantum_quarry.QuantumQuarryMenu
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlocks
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
+import dev.aaronhowser.mods.excessive_utilities.registry.ModTicketTypes
+import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryBiomeSource
+import dev.aaronhowser.mods.excessive_utilities.worldgen.quantum_quarry.QuantumQuarryDimension
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
-import net.minecraft.core.HolderLookup
+import net.minecraft.core.Holder
 import net.minecraft.core.registries.Registries
-import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
+import net.minecraft.resources.Identifier
 import net.minecraft.resources.ResourceKey
 import net.minecraft.server.level.ServerLevel
 import net.minecraft.util.Mth
@@ -44,6 +47,8 @@ import net.minecraft.world.item.enchantment.EnchantmentHelper
 import net.minecraft.world.item.enchantment.Enchantments
 import net.minecraft.world.level.ChunkPos
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.biome.Biome
+import net.minecraft.world.level.biome.Biomes
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.minecraft.world.level.storage.loot.LootParams
@@ -73,11 +78,26 @@ class QuantumQuarryBlockEntity(
 
 	override fun getContainers(): List<Container> = listOf(bufferContainer, upgradesContainer)
 
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+	}
+
 	private var fakePlayer: WeakReference<FakePlayer>? = null
 	private var fakePlayerUuid = UUID.randomUUID()
 
 	private var targetChunk: ChunkPos? = null
 	private var targetBlockPos: BlockPos? = null
+	private var targetDimension: QuantumQuarryDimension? = null
+	private var targetBiomeKey: ResourceKey<Biome>? = null
+
+	private var activeTicketChunk: ChunkPos? = null
+	private var activeTicketDimension: QuantumQuarryDimension? = null
+
+	private var biomeFilterChanged = false
+	private var loadingAdditionalData = false
+	private var hasLegacyForcedTarget = false
+
 	private var amountBlocksBroken: Int = 0
 
 	private fun getItemFilter(): ItemStack = upgradesContainer.getItem(ITEM_FILTER_SLOT_INDEX)
@@ -86,7 +106,11 @@ class QuantumQuarryBlockEntity(
 
 	private val actuatorPositions: List<BlockPos> = Direction.entries.map { direction -> this.blockPos.relative(direction) }
 
-	private fun serverTick(quarryLevel: ServerLevel, miningDimensionLevel: ServerLevel) {
+	private fun serverTick(quarryLevel: ServerLevel) {
+		if (hasLegacyForcedTarget) {
+			removeLegacyForcedTarget(quarryLevel)
+		}
+
 		if (!hasActuators()) return
 
 		if (fakePlayer?.get() == null) {
@@ -99,10 +123,16 @@ class QuantumQuarryBlockEntity(
 		val hasSignal = actuatorPositions.any { pos -> quarryLevel.hasNeighborSignal(pos) }
 		if (hasSignal) return
 
-		if (targetChunk == null || targetBlockPos == null) {
-			targetNewChunk(miningDimensionLevel)
+		if (biomeFilterChanged) {
+			biomeFilterChanged = false
+			discardTarget(quarryLevel)
 		}
 
+		if (targetChunk == null || targetBlockPos == null || targetDimension == null || targetBiomeKey == null) {
+			targetNewChunk(quarryLevel)
+		}
+
+		val miningDimensionLevel = activateTarget(quarryLevel) ?: return
 		progressMine(miningDimensionLevel)
 	}
 
@@ -153,7 +183,7 @@ class QuantumQuarryBlockEntity(
 			}
 		}
 
-		targetScansRemainingThisTick = MAX_TARGET_SCANS_PER_TICK
+		targetScansRemainingThisTick = 4096
 
 		while (progressThroughBlock >= 1.0) {
 			val target = getMineableTarget(miningDimensionLevel) ?: return
@@ -292,43 +322,156 @@ class QuantumQuarryBlockEntity(
 		return false
 	}
 
-	private fun targetNewChunk(miningDimensionLevel: ServerLevel) {
-		val previousChunk = targetChunk
-		if (previousChunk != null) {
-			miningDimensionLevel.setChunkForced(previousChunk.x, previousChunk.z, false)
-		}
-
-		var nextChunkPos = ChunkPos(
-			miningDimensionLevel.random.nextInt(-100_000, 100_000),
-			miningDimensionLevel.random.nextInt(-100_000, 100_000)
-		)
+	private fun targetNewChunk(quarryLevel: ServerLevel) {
+		discardTarget(quarryLevel)
 
 		val filteredBiome = getBiomeFilter().get(ModDataComponents.BIOME)
-		if (filteredBiome != null) {
-			val referencePos = nextChunkPos.getBlockAt(8, 0, 8)
-			val nearestBiome = miningDimensionLevel
-				.findClosestBiome3d(
-					{ holder -> holder.isHolder(filteredBiome) },
-					referencePos,
-					20_000,
-					32,
-					64
-				)
-
-			if (nearestBiome != null) {
-				val biomePos = nearestBiome.first
-				nextChunkPos = ChunkPos.containing(biomePos)
-			}
+		val miningDimension = if (filteredBiome == null) {
+			getDimensionForLevel(quarryLevel)
+		} else {
+			getDimensionForBiome(filteredBiome)
 		}
 
-		targetChunk = nextChunkPos
-		targetBlockPos = BlockPos(
-			nextChunkPos.minBlockX,
-			miningDimensionLevel.maxY,
-			nextChunkPos.minBlockZ
+		val targetBiome = filteredBiome ?: chooseRandomTargetBiome(quarryLevel, miningDimension) ?: return
+		val biomeKey = targetBiome.key ?: return
+		val miningDimensionLevel = quarryLevel.server.getLevel(miningDimension.levelKey) ?: return
+
+		var attempts = 0
+		while (attempts < 100) {
+			val nextChunkPos = ChunkPos(
+				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE),
+				miningDimensionLevel.random.nextInt(-MAX_TARGET_COORDINATE, MAX_TARGET_COORDINATE)
+			)
+
+			if (QuantumQuarryBiomeSource.claim(miningDimension, nextChunkPos, fakePlayerUuid, targetBiome)) {
+				targetChunk = nextChunkPos
+				targetBlockPos = BlockPos(
+					nextChunkPos.minBlockX,
+					miningDimensionLevel.maxY,
+					nextChunkPos.minBlockZ
+				)
+				targetDimension = miningDimension
+				targetBiomeKey = biomeKey
+				addTargetTicket(miningDimensionLevel, miningDimension, nextChunkPos)
+				setChanged()
+				return
+			}
+
+			attempts++
+		}
+	}
+
+	private fun chooseRandomTargetBiome(
+		quarryLevel: ServerLevel,
+		dimension: QuantumQuarryDimension
+	): Holder<Biome>? {
+		val biomeRegistry = quarryLevel.registryAccess().lookupOrThrow(Registries.BIOME)
+		val choices = mutableListOf<Holder<Biome>>()
+		val biomeTag = biomeRegistry.get(dimension.biomeTag).orElse(null) ?: return null
+
+		for (biome in biomeTag) {
+			if (biome.isHolder(ModBiomeTagsProvider.BIOME_MARKER_BLACKLIST)) continue
+			if (biome.isHolder(ModBiomeTagsProvider.QUANTUM_QUARRY_RANDOM_BLACKLIST)) continue
+
+			choices.add(biome)
+		}
+
+		if (choices.isEmpty()) return null
+		return choices[quarryLevel.random.nextInt(choices.size)]
+	}
+
+	private fun getDimensionForLevel(level: ServerLevel): QuantumQuarryDimension {
+		return when (level.dimension()) {
+			Level.NETHER -> QuantumQuarryDimension.NETHER
+			Level.END -> QuantumQuarryDimension.END
+			else -> QuantumQuarryDimension.OVERWORLD
+		}
+	}
+
+	private fun getDimensionForBiome(biome: Holder<Biome>): QuantumQuarryDimension {
+		return when {
+			biome.isHolder(QuantumQuarryDimension.NETHER.biomeTag) -> QuantumQuarryDimension.NETHER
+			biome.isHolder(QuantumQuarryDimension.END.biomeTag)
+					|| biome.isHolder(Biomes.THE_VOID) -> QuantumQuarryDimension.END
+
+			else -> QuantumQuarryDimension.OVERWORLD
+		}
+	}
+
+	private fun activateTarget(quarryLevel: ServerLevel): ServerLevel? {
+		val chunkPos = targetChunk ?: return null
+		val dimension = targetDimension ?: return null
+		val biomeKey = targetBiomeKey ?: return null
+		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey) ?: return null
+
+		if (activeTicketChunk == chunkPos && activeTicketDimension == dimension) {
+			return miningDimensionLevel
+		}
+
+		releaseTargetTicket(quarryLevel)
+
+		val biomeRegistry = quarryLevel.registryAccess().lookupOrThrow(Registries.BIOME)
+		val biome = biomeRegistry.get(biomeKey).orElse(null) ?: return null
+		if (!QuantumQuarryBiomeSource.claim(dimension, chunkPos, fakePlayerUuid, biome)) {
+			discardTarget(quarryLevel)
+			return null
+		}
+
+		addTargetTicket(miningDimensionLevel, dimension, chunkPos)
+		return miningDimensionLevel
+	}
+
+	private fun addTargetTicket(
+		miningDimensionLevel: ServerLevel,
+		dimension: QuantumQuarryDimension,
+		chunkPos: ChunkPos
+	) {
+		miningDimensionLevel.chunkSource.addTicketWithRadius(
+			ModTicketTypes.QUANTUM_QUARRY.get(),
+			chunkPos,
+			QUARRY_TICKET_RADIUS
 		)
-		miningDimensionLevel.setChunkForced(nextChunkPos.x, nextChunkPos.z, true)
+
+		activeTicketChunk = chunkPos
+		activeTicketDimension = dimension
+	}
+
+	private fun releaseTargetTicket(quarryLevel: ServerLevel) {
+		val chunkPos = activeTicketChunk ?: return
+		val dimension = activeTicketDimension ?: return
+		val miningDimensionLevel = quarryLevel.server.getLevel(dimension.levelKey)
+
+		miningDimensionLevel?.chunkSource?.removeTicketWithRadius(
+			ModTicketTypes.QUANTUM_QUARRY.get(),
+			chunkPos,
+			QUARRY_TICKET_RADIUS
+		)
+
+		QuantumQuarryBiomeSource.release(dimension, chunkPos, fakePlayerUuid)
+		activeTicketChunk = null
+		activeTicketDimension = null
+	}
+
+	private fun discardTarget(quarryLevel: ServerLevel) {
+		releaseTargetTicket(quarryLevel)
+
+		targetChunk = null
+		targetBlockPos = null
+		targetDimension = null
+		targetBiomeKey = null
 		setChanged()
+	}
+
+	private fun removeLegacyForcedTarget(quarryLevel: ServerLevel) {
+		hasLegacyForcedTarget = false
+
+		val chunkPos = targetChunk
+		val miningDimensionLevel = quarryLevel.server.getLevel(QuantumQuarryDimension.OVERWORLD.levelKey)
+		if (chunkPos != null && miningDimensionLevel != null) {
+			miningDimensionLevel.setChunkForced(chunkPos.x, chunkPos.z, false)
+		}
+
+		discardTarget(quarryLevel)
 	}
 
 	private fun initFakePlayer() {
@@ -346,8 +489,12 @@ class QuantumQuarryBlockEntity(
 	}
 
 	override fun setRemoved() {
+		val quarryLevel = level as? ServerLevel
+		if (quarryLevel != null) {
+			releaseTargetTicket(quarryLevel)
+		}
+
 		super.setRemoved()
-		setChunkForced(level, targetChunk, false)
 	}
 
 	private val containerData: ContainerData = QuantumQuarryContainerData()
@@ -371,12 +518,24 @@ class QuantumQuarryBlockEntity(
 			tag.putLong(TARGET_BLOCK_POS_NBT, blockPos.asLong())
 		}
 
+		val dimension = targetDimension
+		if (dimension != null) {
+			tag.putString(TARGET_DIMENSION_NBT, dimension.serializedName)
+		}
+
+		val biomeKey = targetBiomeKey
+		if (biomeKey != null) {
+			tag.putString(TARGET_BIOME_NBT, biomeKey.identifier().toString())
+		}
+
 		tag.putInt(AMOUNT_BLOCKS_BROKEN_NBT, amountBlocksBroken)
 		tag.store(FAKE_PLAYER_UUID_NBT, UUIDUtil.CODEC, fakePlayerUuid)
+		tag.putBoolean(TARGET_USES_REGION_TICKET_NBT, !hasLegacyForcedTarget)
 	}
 
 	override fun loadAdditional(tag: ValueInput) {
 		super.loadAdditional(tag)
+		loadingAdditionalData = true
 
 		tag.loadEnergy(STORED_ENERGY_NBT, energyStorage)
 
@@ -394,9 +553,26 @@ class QuantumQuarryBlockEntity(
 			targetBlockPos = BlockPos.of(blockPosLong)
 		}
 
+		if (tag.getString(TARGET_DIMENSION_NBT).isPresent) {
+			targetDimension = QuantumQuarryDimension.fromSerializedName(tag.getStringOr(TARGET_DIMENSION_NBT, ""))
+		}
+
+		if (tag.getString(TARGET_BIOME_NBT).isPresent) {
+			val biomeId = Identifier.tryParse(tag.getStringOr(TARGET_BIOME_NBT, ""))
+			if (biomeId != null) {
+				targetBiomeKey = ResourceKey.create(Registries.BIOME, biomeId)
+			}
+		}
+
 		amountBlocksBroken = tag.getIntOr(AMOUNT_BLOCKS_BROKEN_NBT, 0)
 
 		tag.read(FAKE_PLAYER_UUID_NBT, UUIDUtil.CODEC).ifPresent { fakePlayerUuid = it }
+
+		hasLegacyForcedTarget = targetChunk != null && !tag.getBooleanOr(TARGET_USES_REGION_TICKET_NBT, false)
+		activeTicketChunk = null
+		activeTicketDimension = null
+		biomeFilterChanged = false
+		loadingAdditionalData = false
 	}
 
 	override fun getDisplayName(): Component = blockState.block.name
@@ -408,11 +584,14 @@ class QuantumQuarryBlockEntity(
 	companion object {
 		const val TARGET_CHUNK_POS_NBT = "TargetChunkPos"
 		const val TARGET_BLOCK_POS_NBT = "TargetBlockPos"
+		const val TARGET_DIMENSION_NBT = "TargetDimension"
+		const val TARGET_BIOME_NBT = "TargetBiome"
 		const val STORED_ENERGY_NBT = "StoredEnergy"
 		const val BUFFER_CONTAINER_NBT = "Buffer"
 		const val UPGRADE_CONTAINER_NBT = "Upgrades"
 		const val AMOUNT_BLOCKS_BROKEN_NBT = "AmountBlocksBroken"
 		const val FAKE_PLAYER_UUID_NBT = "FakePlayerUuid"
+		const val TARGET_USES_REGION_TICKET_NBT = "TargetUsesRegionTicket"
 
 		const val UPGRADE_CONTAINER_SIZE = 3
 		const val ITEM_FILTER_SLOT_INDEX = 0
@@ -428,10 +607,8 @@ class QuantumQuarryBlockEntity(
 		const val AMOUNT_BLOCKS_BROKEN_DATA_INDEX = 5
 		const val BIOME_ID_DATA_INDEX = 6
 
-		const val MAX_TARGET_SCANS_PER_TICK = 4096
-
-		val LEVEL_KEY: ResourceKey<Level> =
-			ResourceKey.create(Registries.DIMENSION, ExcessiveUtilities.modResource("quantum_quarry"))
+		const val MAX_TARGET_COORDINATE = 100_000
+		const val QUARRY_TICKET_RADIUS = 2
 
 		fun tick(
 			level: Level,
@@ -440,18 +617,8 @@ class QuantumQuarryBlockEntity(
 			blockEntity: QuantumQuarryBlockEntity
 		) {
 			if (level is ServerLevel) {
-				val miningDimensionLevel = level.server
-					.getLevel(LEVEL_KEY)
-					?: return
-
-				blockEntity.serverTick(level, miningDimensionLevel)
+				blockEntity.serverTick(level)
 			}
-		}
-
-		private fun setChunkForced(quarryLevel: Level?, chunkPos: ChunkPos?, forced: Boolean) {
-			if (quarryLevel !is ServerLevel || chunkPos == null) return
-			val miningLevel = quarryLevel.server.getLevel(LEVEL_KEY) ?: return
-			miningLevel.setChunkForced(chunkPos.x, chunkPos.z, forced)
 		}
 	}
 
@@ -478,12 +645,11 @@ class QuantumQuarryBlockEntity(
 
 		private fun getTargetBiomeId(): Int {
 			val level = level
-			val targetPos = targetBlockPos
-			if (targetPos == null || level !is ServerLevel) return 0
+			val biomeKey = targetBiomeKey
+			if (biomeKey == null || level !is ServerLevel) return 0
 
-			val miningDimension = level.server.getLevel(LEVEL_KEY) ?: return 0
-			val biome = miningDimension.getBiome(targetPos)
-			val registry = miningDimension.registryAccess().lookupOrThrow(Registries.BIOME)
+			val registry = level.registryAccess().lookupOrThrow(Registries.BIOME)
+			val biome = registry.get(biomeKey).orElse(null) ?: return 0
 			return registry.getId(biome.value())
 		}
 
@@ -501,16 +667,20 @@ class QuantumQuarryBlockEntity(
 		}
 
 		override fun setItem(index: Int, stack: ItemStack) {
+			val previousBiome = if (index == BIOME_FILTER_SLOT_INDEX) {
+				getItem(index).get(ModDataComponents.BIOME)
+			} else {
+				null
+			}
+
 			super.setItem(index, stack)
 
-			if (index == BIOME_FILTER_SLOT_INDEX && stack.isNotEmpty()) {
-				val level = level
-				if (level is ServerLevel) {
-					val miningDimLevel = level.server.getLevel(LEVEL_KEY)
-					if (miningDimLevel != null) {
-						targetNewChunk(miningDimLevel)
-					}
-				}
+			if (index != BIOME_FILTER_SLOT_INDEX || loadingAdditionalData) return
+
+			val currentBiome = stack.get(ModDataComponents.BIOME)
+			if (previousBiome != currentBiome) {
+				biomeFilterChanged = true
+				setChanged()
 			}
 		}
 

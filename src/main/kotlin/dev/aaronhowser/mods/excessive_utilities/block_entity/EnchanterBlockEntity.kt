@@ -4,6 +4,7 @@ import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
@@ -52,6 +53,11 @@ class EnchanterBlockEntity(
 
 	private val container = EnchanterContainer()
 	override fun getContainers(): List<Container> = listOf(container)
+
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+	}
 
 	private val itemHandler: ResourceHandler<ItemResource> = EnchanterItemHandler()
 
@@ -178,7 +184,7 @@ class EnchanterBlockEntity(
 			val stackInOutput = container.getItem(OUTPUT_SLOT)
 			val recipeOutput = recipe.value.getResultItem(level.registryAccess())
 
-			if (stackInOutput.isNotEmpty() && ItemStack.isSameItemSameComponents(stackInOutput, recipeOutput)) {
+			if (stackInOutput.isNotEmpty() && stackInOutput.isSameItemSameComponents(recipeOutput)) {
 				val canFit = stackInOutput.count + recipeOutput.count <= stackInOutput.maxStackSize
 				if (!canFit) recipe = null
 			}

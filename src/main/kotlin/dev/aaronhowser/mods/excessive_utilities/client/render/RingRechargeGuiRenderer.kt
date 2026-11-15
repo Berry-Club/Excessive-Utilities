@@ -7,9 +7,8 @@ import dev.aaronhowser.mods.excessive_utilities.config.ServerConfig
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.client.DeltaTracker
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiGraphicsExtractor
-import net.minecraft.network.chat.Component
+import net.minecraft.client.renderer.RenderPipelines
 import net.minecraft.resources.Identifier
 import net.minecraft.world.item.ItemStack
 import top.theillusivec4.curios.api.CuriosApi
@@ -18,8 +17,9 @@ import kotlin.jvm.optionals.getOrNull
 object RingRechargeGuiRenderer {
 
 	val LAYER_NAME: Identifier = ExcessiveUtilities.modResource("ring_recharge_gui_layer")
+	private val JUMP_BAR_BACKGROUND: Identifier = ExcessiveUtilities.modResource("hud/jump_bar_background")
+	private val JUMP_BAR_PROGRESS: Identifier = ExcessiveUtilities.modResource("hud/jump_bar_progress")
 
-	//TODO: Render with horse jump bar or whatever instead
 	fun render(guiGraphics: GuiGraphicsExtractor, deltaTracker: DeltaTracker) {
 		val player = AaronClientUtil.localPlayer ?: return
 
@@ -56,17 +56,34 @@ object RingRechargeGuiRenderer {
 		}
 
 		val charge = ringStack.getOrDefault(ModDataComponents.CHARGE, 0)
-
 		if (charge >= maxCharge) return
 
-		val component = Component.literal("$charge / $maxCharge")
+		val left = guiGraphics.guiWidth() / 2 - 91
+		val top = guiGraphics.guiHeight() - 49
+		val progressWidth = (charge.toFloat() / maxCharge * 183).toInt()
 
-		guiGraphics.text(
-			Minecraft.getInstance().font,
-			component,
-			guiGraphics.guiWidth() / 2 + 5,
-			guiGraphics.guiHeight() / 2 + 5,
-			0xFFFFFFFF.toInt()
+		guiGraphics.blitSprite(
+			RenderPipelines.GUI_TEXTURED,
+			JUMP_BAR_BACKGROUND,
+			left,
+			top,
+			182,
+			5
+		)
+
+		if (progressWidth <= 0) return
+
+		guiGraphics.blitSprite(
+			RenderPipelines.GUI_TEXTURED,
+			JUMP_BAR_PROGRESS,
+			182,
+			5,
+			0,
+			0,
+			left,
+			top,
+			progressWidth,
+			5
 		)
 	}
 

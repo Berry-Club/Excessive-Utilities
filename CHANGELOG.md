@@ -1,3 +1,44 @@
+# 1.12.0
+
+### Added
+
+- `/excessive-utilities last-millennium` command (#92)
+	- `/excessive-utilities last-millennium query <opional-player>`
+		- Prints the ChunkPos of the player's TLM home
+	- `/excessive-utilities last-millennium assign <optional-player> <optional-chunkpos>`
+		- Sets the player's TLM home to that chunk
+		- `<optional-chunkpos>` is two integers of the ChunkPos
+			- If left out, it uses the command-runner's current chunk (only if they're in TLM)
+
+### Changed
+
+- Mobius "Unstable/Stable" Ingots can now stack to 64 (#88)
+	- Rather, the default is now 64, and unstable ones have the component to stack to 1
+- Overhauled the Quantum Quarry to generate chunks with the specified biome, rather than searching a copy of the Overworld for that biome (#97)
+	- Without a Biome Marker, it uses a random biome from the dimension the QQ is in
+	- It now uses 3 new dimensions that are not saved to disk
+		- Overworld, Nether, and End (#95)
+		- Server owners are encouraged to delete `<world>/dimensions/excessive_utilities/quantum_quarry` to reclaim disk space
+- The Quantum Quarry will not randomly target biomes with the `#excessive_utilities:quantum_quarry_random_blacklist` biome tag
+	- Currently only includes the Void biome
+	- Biome Markers ignore this tag
+- The Quantum Quarry is also now much more stable in general
+- The Soul Rending attribute now has a max of 1,000,000
+	- Doesn't really matter but looks better
+- Added a localization for Soul Rending's description (#101)
+- Rings use a bar to show the remaining charge, rather than a number next to the crosshair (#102)
+
+### Fixed
+
+- The Healing Axe now works when in either hand, not only the mainhand (#96)
+- Fix the Crusher's completion percentage being multiplied by 100 (#94)
+- Fixed The Last Millennium saving unsafely (#92)
+- Fixed the Ender Quarry upgrade item tag referencing itself (#90)
+- Marked machines etc as Clearable, to prevent an item dupe (98)
+- Hopefully fixed Opinium Cores being confused about what tier they are, in AE2 etc (#85)
+	- It was using the hashcodes of the itemstack objects, which were different per identical itemstack
+- Fixed the Squid and Chicken Rings working while the grid is overloaded (#99)
+
 # 1.11.0
 
 ### Changed

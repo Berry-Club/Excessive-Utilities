@@ -50,6 +50,11 @@ class FluidTransferNodeBlockEntity(
 		return listOf(upgradeContainer, filterContainer)
 	}
 
+	override fun clearContent() {
+		super.clearContent()
+		bufferTank.drain(Int.MAX_VALUE)
+	}
+
 	private fun passesFilter(stack: ItemStack): Boolean {
 		val filterStack = filterContainer.getItem(0)
 		if (filterStack.isEmpty) return true

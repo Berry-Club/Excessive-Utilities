@@ -12,6 +12,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.server.level.ServerLevel
+import net.minecraft.world.Clearable
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler
@@ -21,10 +22,15 @@ import java.util.*
 class WirelessFeBatteryBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState) {
+) : BlockEntity(ModBlockEntityTypes.WIRELESS_FE_BATTERY.get(), pos, blockState), Clearable {
 
 	val energyStorage = SimpleEnergyHandler(15_000)
 	var ownerUuid: UUID? = null
+
+	override fun clearContent() {
+		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+		setChanged()
+	}
 
 	override fun onLoad() {
 		super.onLoad()

@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.block_entity
 
+import dev.aaronhowser.mods.aaron.container.ContainerContainer
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.excessive_utilities.item.FluidFilterItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModBlockEntityTypes
@@ -10,6 +11,7 @@ import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.level.storage.ValueInput
 import net.minecraft.world.level.storage.ValueOutput
 import net.minecraft.network.chat.Component
+import net.minecraft.world.Container
 import net.minecraft.world.ContainerHelper
 import net.minecraft.world.MenuProvider
 import net.minecraft.world.entity.player.Inventory
@@ -27,18 +29,22 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 class FluidTrashCanBlockEntity(
 	pos: BlockPos,
 	state: BlockState
-) : BlockEntity(ModBlockEntityTypes.FLUID_TRASH_CAN.get(), pos, state), MenuProvider {
+) : BlockEntity(ModBlockEntityTypes.FLUID_TRASH_CAN.get(), pos, state), ContainerContainer, MenuProvider {
 
 	private val filterContainer = ImprovedSimpleContainer(this, 1)
 	val filterStack: ItemStack get() = filterContainer.getItem(FILTER_SLOT)
 
-    private val fluidHandler = object : VoidingResourceHandler<FluidResource>(FluidResource.EMPTY) {
-        override fun isValid(index: Int, resource: FluidResource): Boolean = passesFilter(resource.toStack(1))
-        override fun insert(index: Int, resource: FluidResource, amount: Int, transaction: TransactionContext): Int {
-            return if (isValid(index, resource)) super.insert(index, resource, amount, transaction) else 0
-        }
-    }
-    fun getFluidHandler(direction: Direction?): ResourceHandler<FluidResource> = fluidHandler
+	override fun getContainers(): List<Container> = listOf(filterContainer)
+
+	private val fluidHandler = object : VoidingResourceHandler<FluidResource>(FluidResource.EMPTY) {
+		override fun isValid(index: Int, resource: FluidResource): Boolean = passesFilter(resource.toStack(1))
+
+		override fun insert(index: Int, resource: FluidResource, amount: Int, transaction: TransactionContext): Int {
+			return if (isValid(index, resource)) super.insert(index, resource, amount, transaction) else 0
+		}
+	}
+
+	fun getFluidHandler(direction: Direction?): ResourceHandler<FluidResource> = fluidHandler
 
 	override fun getDisplayName(): Component {
 		return blockState.block.name

@@ -5,6 +5,7 @@ import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.chance
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isNotEmpty
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadEnergy
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveEnergy
@@ -52,6 +53,11 @@ class CrusherBlockEntity(
 
 	private val container = CrusherContainer()
 	override fun getContainers(): List<Container> = listOf(container)
+
+	override fun clearContent() {
+		super<ContainerContainer>.clearContent()
+		energyStorage.extractEnergy(energyStorage.getAmountAsInt(), false)
+	}
 
 	private val itemHandler: ResourceHandler<ItemResource> = CrusherItemHandler()
 
@@ -139,7 +145,7 @@ class CrusherBlockEntity(
 
 			if (stackInSecondaryOutput.isEmpty) {
 				container.setItem(SECONDARY_OUTPUT_SLOT, secondaryOutputStack)
-			} else if (ItemStack.isSameItemSameComponents(stackInSecondaryOutput, secondaryOutputStack)) {
+			} else if (stackInSecondaryOutput.isSameItemSameComponents(secondaryOutputStack)) {
 				val amountCanFit = stackInSecondaryOutput.maxStackSize - stackInSecondaryOutput.count
 				if (amountCanFit > 0) {
 					val amountToAdd = secondaryOutputStack.count.coerceAtMost(amountCanFit)
@@ -173,7 +179,7 @@ class CrusherBlockEntity(
 			val stackInPrimaryOutput = container.getItem(PRIMARY_OUTPUT_SLOT)
 			val recipeOutput = recipe.value.getPrimaryOutput()
 
-			if (stackInPrimaryOutput.isNotEmpty() && ItemStack.isSameItemSameComponents(stackInPrimaryOutput, recipeOutput)) {
+			if (stackInPrimaryOutput.isNotEmpty() && stackInPrimaryOutput.isSameItemSameComponents(recipeOutput)) {
 				val canFit = stackInPrimaryOutput.count + recipeOutput.count <= stackInPrimaryOutput.maxStackSize
 				if (!canFit) recipe = null
 			}

@@ -18,12 +18,12 @@ import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.component.ItemAttributeModifiers
 import net.minecraft.world.item.ItemStack
-import net.minecraft.world.level.Level
 
 class HealingAxeItem(properties: Properties) : Item(properties) {
 
 	override fun inventoryTick(stack: ItemStack, level: ServerLevel, entity: Entity, slot: EquipmentSlot?) {
-		if (slot != EquipmentSlot.MAINHAND || entity !is Player) return
+		if (slot != EquipmentSlot.MAINHAND && slot != EquipmentSlot.OFFHAND) return
+		if (entity !is Player) return
 		val chance = ServerConfig.CONFIG.healingAxeChancePerTick.get()
 		if (!level.random.chance(chance)) return
 
@@ -68,7 +68,3 @@ class HealingAxeItem(properties: Properties) : Item(properties) {
 	}
 
 }
-
-
-
-

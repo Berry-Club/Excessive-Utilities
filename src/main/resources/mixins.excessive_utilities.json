@@ -6,6 +6,7 @@
 		"AbstractFurnaceBlockEntityMixin",
 		"DiggingMixin",
 		"EntityMixin",
+		"IOWorkerMixin",
 		"LevelMixin"
 	],
 	"injectors": {

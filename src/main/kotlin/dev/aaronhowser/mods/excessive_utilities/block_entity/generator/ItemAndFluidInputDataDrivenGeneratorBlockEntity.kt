@@ -55,6 +55,11 @@ open class ItemAndFluidInputDataDrivenGeneratorBlockEntity(
 			}
 		}
 
+	override fun clearContent() {
+		super.clearContent()
+		tank.drain(Int.MAX_VALUE)
+	}
+
 	protected fun getRecipe(itemStack: ItemStack, fluidStack: FluidStack): ItemAndFluidFuelRecipe? {
 		val level = level ?: return null
 		return ItemAndFluidFuelRecipe.getRecipe(level, specificType.fuelRecipeType, itemStack, fluidStack)

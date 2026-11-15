@@ -19,6 +19,7 @@ import net.minecraft.nbt.Tag
 import net.minecraft.resources.RegistryOps
 import net.minecraft.resources.ResourceKey
 import net.minecraft.resources.Identifier
+import net.minecraft.world.Clearable
 import net.minecraft.world.item.Item
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.level.block.Block
@@ -32,7 +33,7 @@ import net.neoforged.neoforge.transfer.transaction.TransactionContext
 class FilingCabinetBlockEntity(
 	pos: BlockPos,
 	blockState: BlockState
-) : BlockEntity(ModBlockEntityTypes.FILING_CABINET.get(), pos, blockState) {
+) : BlockEntity(ModBlockEntityTypes.FILING_CABINET.get(), pos, blockState), Clearable {
 
 	private var storedItem: Item? = null
 	private val storedEntries: MutableMap<DataComponentPatch, Int> = mutableMapOf()
@@ -73,6 +74,10 @@ class FilingCabinetBlockEntity(
 			}
 		}
 
+		clearContent()
+	}
+
+	override fun clearContent() {
 		storedItem = null
 		storedEntries.clear()
 		setChanged()

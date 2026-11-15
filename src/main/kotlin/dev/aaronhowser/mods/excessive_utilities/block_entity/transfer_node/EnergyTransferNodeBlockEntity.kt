@@ -28,6 +28,11 @@ class EnergyTransferNodeBlockEntity(
 
 	private val bufferEnergyStorage: SimpleEnergyHandler = SimpleEnergyHandler(1_000_000)
 
+	override fun clearContent() {
+		super.clearContent()
+		bufferEnergyStorage.extractEnergy(bufferEnergyStorage.getAmountAsInt(), false)
+	}
+
 	private fun getParentSimpleEnergyHandler(level: ServerLevel): EnergyHandler? {
 		return level.getCapability(Capabilities.Energy.BLOCK, placedOnPos, placedOnDirection.opposite)
 	}

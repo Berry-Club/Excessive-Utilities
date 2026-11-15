@@ -3,6 +3,7 @@ package dev.aaronhowser.mods.excessive_utilities.block_entity.transfer_node
 import dev.aaronhowser.mods.aaron.container.ImprovedSimpleContainer
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isFull
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
+import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isSameItemSameComponents
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.loadItems
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.saveItems
 import dev.aaronhowser.mods.excessive_utilities.block_entity.base.TransferNodeBlockEntity
@@ -120,7 +121,7 @@ class ItemTransferNodeBlockEntity(
 		if (!passesFilter(stack)) return 0
 
 		val current = bufferContainer.getItem(0)
-		if (!current.isEmpty && !ItemStack.isSameItemSameComponents(current, stack)) return 0
+		if (!current.isEmpty && !current.isSameItemSameComponents(stack)) return 0
 
 		val capacity = if (current.isEmpty) stack.maxStackSize else current.maxStackSize - current.count
 		val accepted = stack.count.coerceAtMost(capacity)
@@ -205,7 +206,7 @@ class ItemTransferNodeBlockEntity(
 				return true
 			}
 
-			if (!ItemStack.isSameItemSameComponents(stackInBuffer, entityStack)) continue
+			if (!stackInBuffer.isSameItemSameComponents(entityStack)) continue
 
 			val amountThatFits = stackInBuffer.maxStackSize - stackInBuffer.count
 			val amountToAdd = entityStack.count
@@ -255,7 +256,7 @@ class ItemTransferNodeBlockEntity(
 			return true
 		}
 
-		if (!ItemStack.isSameItemSameComponents(stackInBuffer, output)) return false
+		if (!stackInBuffer.isSameItemSameComponents(output)) return false
 
 		val amountThatFits = stackInBuffer.maxStackSize - stackInBuffer.count
 		val amountToAdd = output.count.coerceAtMost(amountThatFits)
