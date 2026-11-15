@@ -1,5 +1,6 @@
 package dev.aaronhowser.mods.excessive_utilities.event
 
+import com.google.common.reflect.TypeToken
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.isItem
 import dev.aaronhowser.mods.aaron.misc.AaronExtensions.toComponent
 import dev.aaronhowser.mods.excessive_utilities.ExcessiveUtilities
@@ -18,21 +19,23 @@ import dev.aaronhowser.mods.excessive_utilities.client.render.entity.FlatTransfe
 import dev.aaronhowser.mods.excessive_utilities.client.render.entity.MagicalBoomerangEntityRenderer
 import dev.aaronhowser.mods.excessive_utilities.config.ClientConfig
 import dev.aaronhowser.mods.excessive_utilities.datagen.language.ModMenuLang
-import dev.aaronhowser.mods.excessive_utilities.datagen.model.ModItemModelProvider
 import dev.aaronhowser.mods.excessive_utilities.datagen.tag.ModItemTagsProvider
+import dev.aaronhowser.mods.excessive_utilities.handler.CurseHandler
 import dev.aaronhowser.mods.excessive_utilities.handler.key_handler.ClientKeyHandler
-import dev.aaronhowser.mods.excessive_utilities.item.*
-import dev.aaronhowser.mods.excessive_utilities.registry.*
+import dev.aaronhowser.mods.excessive_utilities.item.UnstableIngotItem
 import dev.aaronhowser.mods.excessive_utilities.recipe.base.ModRecipes
+import dev.aaronhowser.mods.excessive_utilities.registry.*
 import net.minecraft.ChatFormatting
-import net.minecraft.client.particle.ParticleProvider
-import net.minecraft.core.particles.SimpleParticleType
-import net.minecraft.resources.Identifier
-import net.minecraft.world.item.DyeColor
 import net.minecraft.client.color.block.BlockTintSource
 import net.minecraft.client.color.block.BlockTintSources
+import net.minecraft.client.particle.ParticleProvider
 import net.minecraft.client.renderer.block.BlockAndTintGetter
+import net.minecraft.client.renderer.entity.LivingEntityRenderer
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState
 import net.minecraft.core.BlockPos
+import net.minecraft.core.particles.SimpleParticleType
+import net.minecraft.world.entity.LivingEntity
+import net.minecraft.world.item.DyeColor
 import net.minecraft.world.level.block.state.BlockState
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.bus.api.SubscribeEvent
@@ -41,6 +44,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent
 import net.neoforged.neoforge.client.event.*
 import net.neoforged.neoforge.client.event.sound.PlaySoundEvent
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers
+import net.neoforged.neoforge.client.renderstate.RegisterRenderStateModifiersEvent
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent
 import top.theillusivec4.curios.api.client.ICurioRenderer
 
@@ -51,33 +55,44 @@ import top.theillusivec4.curios.api.client.ICurioRenderer
 object ClientEvents {
 
 	@SubscribeEvent
+	fun registerRenderStateModifiers(event: RegisterRenderStateModifiersEvent) {
+		val livingEntityRenderer = object : TypeToken<LivingEntityRenderer<LivingEntity, LivingEntityRenderState, *>>() {}
+
+		event.registerEntityModifier(livingEntityRenderer) { entity, state ->
+			state.setRenderData(CurseHandler.IS_CURSED, CurseHandler.isCursed(entity))
+		}
+	}
+
+	@SubscribeEvent
 	fun onClientSetup(event: FMLClientSetupEvent) {
 
 	}
 
-    @SubscribeEvent
-    fun registerItemProperties(event: RegisterRangeSelectItemModelPropertyEvent) {
-        event.register(ExcessiveUtilities.modResource("item_predicate"), dev.aaronhowser.mods.excessive_utilities.client.item.ItemVariantProperty.CODEC)
-    }
+	@SubscribeEvent
+	fun registerItemProperties(event: RegisterRangeSelectItemModelPropertyEvent) {
+		event.register(ExcessiveUtilities.modResource("item_predicate"), dev.aaronhowser.mods.excessive_utilities.client.item.ItemVariantProperty.CODEC)
+	}
 
-    @SubscribeEvent
-    fun registerItemColors(event: RegisterColorHandlersEvent.ItemTintSources) {
-        event.register(ExcessiveUtilities.modResource("item_color"), dev.aaronhowser.mods.excessive_utilities.client.item.ItemColorSource.CODEC)
-    }
+	@SubscribeEvent
+	fun registerItemColors(event: RegisterColorHandlersEvent.ItemTintSources) {
+		event.register(ExcessiveUtilities.modResource("item_color"), dev.aaronhowser.mods.excessive_utilities.client.item.ItemColorSource.CODEC)
+	}
 
-    @SubscribeEvent
-    fun registerBlockColors(event: RegisterColorHandlersEvent.BlockTintSources) {
-        val fluidTint = object : BlockTintSource {
-            override fun color(state: BlockState): Int = -1
-            override fun colorInWorld(state: BlockState, level: BlockAndTintGetter, pos: BlockPos): Int = DrumBlockEntity.getBlockColor(state, level, pos, 1)
-        }
-        event.register(listOf(BlockTintSources.constant(-1), fluidTint),
-            ModBlocks.STONE_DRUM.get(), ModBlocks.IRON_DRUM.get(), ModBlocks.REINFORCED_LARGE_DRUM.get(),
-            ModBlocks.DEMONICALLY_GARGANTUAN_DRUM.get(), ModBlocks.BEDROCKIUM_DRUM.get(), ModBlocks.CREATIVE_DRUM.get())
-        for (color in DyeColor.entries) {
-            event.register(listOf(BlockTintSources.constant(color.textureDiffuseColor)), ModBlocks.getLapisCaelestis(color).get())
-        }
-    }
+	@SubscribeEvent
+	fun registerBlockColors(event: RegisterColorHandlersEvent.BlockTintSources) {
+		val fluidTint = object : BlockTintSource {
+			override fun color(state: BlockState): Int = -1
+			override fun colorInWorld(state: BlockState, level: BlockAndTintGetter, pos: BlockPos): Int = DrumBlockEntity.getBlockColor(state, level, pos, 1)
+		}
+		event.register(
+			listOf(BlockTintSources.constant(-1), fluidTint),
+			ModBlocks.STONE_DRUM.get(), ModBlocks.IRON_DRUM.get(), ModBlocks.REINFORCED_LARGE_DRUM.get(),
+			ModBlocks.DEMONICALLY_GARGANTUAN_DRUM.get(), ModBlocks.BEDROCKIUM_DRUM.get(), ModBlocks.CREATIVE_DRUM.get()
+		)
+		for (color in DyeColor.entries) {
+			event.register(listOf(BlockTintSources.constant(color.textureDiffuseColor)), ModBlocks.getLapisCaelestis(color).get())
+		}
+	}
 
 	@SubscribeEvent
 	fun recipesReceived(event: RecipesReceivedEvent) {
@@ -99,19 +114,19 @@ object ClientEvents {
 		)
 	}
 
-    @SubscribeEvent
-    fun registerSpecialModels(event: RegisterSpecialModelRendererEvent) {
-        event.register(ExcessiveUtilities.modResource("manual_mill"), ManualMillBEWLR.Unbaked.CODEC)
-        event.register(ExcessiveUtilities.modResource("opinium_core"), OpiniumCoreBEWLR.Unbaked.CODEC)
-        event.register(ExcessiveUtilities.modResource("tesseract"), TesseractBEWLR.Unbaked.CODEC)
-    }
+	@SubscribeEvent
+	fun registerSpecialModels(event: RegisterSpecialModelRendererEvent) {
+		event.register(ExcessiveUtilities.modResource("manual_mill"), ManualMillBEWLR.Unbaked.CODEC)
+		event.register(ExcessiveUtilities.modResource("opinium_core"), OpiniumCoreBEWLR.Unbaked.CODEC)
+		event.register(ExcessiveUtilities.modResource("tesseract"), TesseractBEWLR.Unbaked.CODEC)
+	}
 
 	@SubscribeEvent
 	fun registerEntityRenderer(event: EntityRenderersEvent.RegisterRenderers) {
 		event.registerEntityRenderer(ModEntityTypes.FLAT_TRANSFER_NODE.get(), ::FlatTransferNodeEntityRenderer)
 		event.registerEntityRenderer(ModEntityTypes.MAGICAL_BOOMERANG.get(), ::MagicalBoomerangEntityRenderer)
 
-		event.registerBlockEntityRenderer(ModBlockEntityTypes.ENDER_QUARRY.get()) { _ -> EnderQuarryBER() } 
+		event.registerBlockEntityRenderer(ModBlockEntityTypes.ENDER_QUARRY.get()) { _ -> EnderQuarryBER() }
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.MANUAL_MILL.get(), ::ManualMillBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.RESTURBED_MOB_SPAWNER.get(), ::ResturbedMobSpawnerBER)
 		event.registerBlockEntityRenderer(ModBlockEntityTypes.RAINBOW_GENERATOR.get(), ::RainbowGeneratorBER)
