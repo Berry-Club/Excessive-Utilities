@@ -28,7 +28,8 @@ class ResturbedMobSpawnerBER(
 		camera: Vec3,
 		overlay: ModelFeatureRenderer.CrumblingOverlay?
 	) {
-		BlockEntityRenderState.extractBase(blockEntity, state, overlay)
+		super.extractRenderState(blockEntity, state, partial, camera, overlay)
+
 		val level = blockEntity.level ?: return
 		val entity = blockEntity.spawner.getOrCreateDisplayEntity(level, blockEntity.blockPos) ?: return
 
