@@ -52,12 +52,22 @@ class AngelWingRenderer : ICurioRenderer {
 
 			poseStack.withPose {
 				poseStack.mulPose(Axis.YP.rotationDegrees(angle))
-				submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(texture)) { pose, consumer -> renderQuad(pose, consumer, light, isFlipped = false) }
+				submitNodeCollector.submitCustomGeometry(
+					poseStack,
+					RenderTypes.entityCutout(texture)
+				) { pose, consumer ->
+					renderQuad(pose, consumer, light, isFlipped = false)
+				}
 			}
 
 			poseStack.withPose {
 				poseStack.mulPose(Axis.YP.rotationDegrees(-angle))
-				submitNodeCollector.submitCustomGeometry(poseStack, RenderTypes.entityCutout(texture)) { pose, consumer -> renderQuad(pose, consumer, light, isFlipped = true) }
+				submitNodeCollector.submitCustomGeometry(
+					poseStack,
+					RenderTypes.entityCutout(texture)
+				) { pose, consumer ->
+					renderQuad(pose, consumer, light, isFlipped = true)
+				}
 			}
 		}
 	}
