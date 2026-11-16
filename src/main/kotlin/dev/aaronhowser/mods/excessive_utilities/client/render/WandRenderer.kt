@@ -11,8 +11,6 @@ import dev.aaronhowser.mods.excessive_utilities.item.DestructionWandItem
 import dev.aaronhowser.mods.excessive_utilities.registry.ModDataComponents
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.client.renderer.MultiBufferSource
-import net.minecraft.client.renderer.state.level.BlockOutlineRenderState
-import net.minecraft.client.renderer.state.level.LevelRenderState
 import net.minecraft.core.BlockPos
 import net.minecraft.core.Direction
 import net.minecraft.world.entity.player.Player
@@ -20,7 +18,6 @@ import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 import net.minecraft.world.level.Level
 import net.minecraft.world.phys.Vec3
-import net.neoforged.neoforge.client.CustomBlockOutlineRenderer
 import net.neoforged.neoforge.client.event.ExtractBlockOutlineRenderStateEvent
 import java.util.function.Predicate
 
@@ -37,13 +34,33 @@ object WandRenderer {
 		val level = player.level()
 		val pos = event.blockPos
 		val face = player.getPovResult().direction
-		event.addCustomRenderer(CustomBlockOutlineRenderer { state: BlockOutlineRenderState, buffer: MultiBufferSource.BufferSource, poseStack: PoseStack, _, levelState: LevelRenderState ->
+		event.addCustomRenderer { state, buffer, poseStack, _, levelState ->
 			val cameraPos = levelState.cameraRenderState.pos
-			var rendered = false
-			if (builderWand != null) rendered = renderBuilderWand(level, pos, face, builderWand, player, poseStack, buffer, cameraPos) || rendered
-			if (destructionWand != null) rendered = renderDestructionWand(level, pos, face, destructionWand, player, poseStack, buffer, cameraPos) || rendered
-			rendered
-		})
+
+			val renderedBuilder = builderWand != null && renderBuilderWand(
+				level,
+				pos,
+				face,
+				builderWand,
+				player,
+				poseStack,
+				buffer,
+				cameraPos
+			)
+
+			val renderedDestruction = destructionWand != null && renderDestructionWand(
+				level,
+				pos,
+				face,
+				destructionWand,
+				player,
+				poseStack,
+				buffer,
+				cameraPos
+			)
+
+			renderedBuilder || renderedDestruction
+		}
 
 	}
 
