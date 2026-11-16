@@ -9,17 +9,19 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer
 import net.minecraft.client.renderer.item.ItemModelResolver
+import net.minecraft.client.renderer.item.ItemStackRenderState
 import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemDisplayContext
 import net.minecraft.world.phys.Vec3
 
-class CreativeHarvestBER(context: BlockEntityRendererProvider.Context) : BlockEntityRenderer<CreativeHarvestBlockEntity, CreativeHarvestRenderState> {
+class CreativeHarvestBER(
+	context: BlockEntityRendererProvider.Context
+) : BlockEntityRenderer<CreativeHarvestBlockEntity, CreativeHarvestBER.State> {
 	private val itemResolver: ItemModelResolver = context.itemModelResolver
 
-	override fun createRenderState() = CreativeHarvestRenderState()
-
-	override fun extractRenderState(blockEntity: CreativeHarvestBlockEntity, state: CreativeHarvestRenderState, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+	override fun createRenderState() = State()
+	override fun extractRenderState(blockEntity: CreativeHarvestBlockEntity, state: State, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
 		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
 		itemResolver.updateForTopItem(state.item, blockEntity.mimicStack.copy(), ItemDisplayContext.GUI, blockEntity.level, null, 0)
 		state.directions.clear()
@@ -29,7 +31,7 @@ class CreativeHarvestBER(context: BlockEntityRendererProvider.Context) : BlockEn
 		}
 	}
 
-	override fun submit(state: CreativeHarvestRenderState, poseStack: PoseStack, collector: SubmitNodeCollector, camera: CameraRenderState) {
+	override fun submit(state: State, poseStack: PoseStack, collector: SubmitNodeCollector, camera: CameraRenderState) {
 		for ((direction, light) in state.directions) {
 			poseStack.pushPose()
 			val flattening = 0.0001
@@ -55,5 +57,10 @@ class CreativeHarvestBER(context: BlockEntityRendererProvider.Context) : BlockEn
 			state.item.submit(poseStack, collector, light, 0, 0xFFFFFF)
 			poseStack.popPose()
 		}
+	}
+
+	class State : BlockEntityRenderState() {
+		val item = ItemStackRenderState()
+		val directions = mutableListOf<Pair<Direction, Int>>()
 	}
 }

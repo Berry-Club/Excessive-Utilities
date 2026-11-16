@@ -16,16 +16,23 @@ import net.minecraft.world.phys.AABB
 import net.minecraft.world.phys.Vec3
 
 class ChandelierBER(
-	val context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<ChandelierBlockEntity, LegacyBlockEntityRenderState<ChandelierBlockEntity>> {
-	override fun createRenderState() = LegacyBlockEntityRenderState<ChandelierBlockEntity>()
-	override fun extractRenderState(blockEntity: ChandelierBlockEntity, state: LegacyBlockEntityRenderState<ChandelierBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+	context: BlockEntityRendererProvider.Context
+) : BlockEntityRenderer<ChandelierBlockEntity, BlockEntityRenderState> {
+
+	override fun createRenderState() = BlockEntityRenderState()
+	override fun extractRenderState(
+		blockEntity: ChandelierBlockEntity,
+		state: BlockEntityRenderState,
+		partialTick: Float,
+		cameraPosition: Vec3,
+		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
+	) {
 		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
 		state.blockPos = blockEntity.blockPos
 	}
 
 	override fun submit(
-		state: LegacyBlockEntityRenderState<ChandelierBlockEntity>,
+		state: BlockEntityRenderState,
 		poseStack: PoseStack,
 		collector: SubmitNodeCollector,
 		camera: CameraRenderState

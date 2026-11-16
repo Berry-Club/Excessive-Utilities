@@ -13,13 +13,21 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer
 import net.minecraft.client.renderer.state.level.CameraRenderState
+import net.minecraft.core.Vec3i
 import net.minecraft.world.phys.Vec3
 
 class EnderPorcupineBER(
-	val context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<EnderPorcupineBlockEntity, LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>> {
-	override fun createRenderState() = LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>()
-	override fun extractRenderState(blockEntity: EnderPorcupineBlockEntity, state: LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+	context: BlockEntityRendererProvider.Context
+) : BlockEntityRenderer<EnderPorcupineBlockEntity, EnderPorcupineBER.State> {
+
+	override fun createRenderState() = State()
+	override fun extractRenderState(
+		blockEntity: EnderPorcupineBlockEntity,
+		state: State,
+		partialTick: Float,
+		cameraPosition: Vec3,
+		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
+	) {
 		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
 		state.currentOffset = blockEntity.getCurrentOffset()
 		state.minimumOffset = blockEntity.minimumOffset
@@ -27,7 +35,7 @@ class EnderPorcupineBER(
 	}
 
 	override fun submit(
-		state: LegacyBlockEntityRenderState<EnderPorcupineBlockEntity>,
+		state: State,
 		poseStack: PoseStack,
 		collector: SubmitNodeCollector,
 		camera: CameraRenderState
@@ -62,6 +70,13 @@ class EnderPorcupineBER(
 			searchVolumeColor
 		)
 
+	}
+
+	class State : BlockEntityRenderState() {
+		var radius = 0.0
+		var currentOffset = Vec3i.ZERO
+		var minimumOffset = Vec3i.ZERO
+		var maximumOffset = Vec3i.ZERO
 	}
 
 }

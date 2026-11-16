@@ -14,23 +14,43 @@ import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.util.Mth
 import net.minecraft.world.phys.Vec3
 
-class ResturbedMobSpawnerBER(context: BlockEntityRendererProvider.Context) : BlockEntityRenderer<ResturbedMobSpawnerBlockEntity, SpawnerRenderState> {
+class ResturbedMobSpawnerBER(
+	context: BlockEntityRendererProvider.Context
+) : BlockEntityRenderer<ResturbedMobSpawnerBlockEntity, SpawnerRenderState> {
+
 	private val dispatcher: EntityRenderDispatcher = context.entityRenderer
 	override fun createRenderState() = SpawnerRenderState()
-	override fun extractRenderState(be: ResturbedMobSpawnerBlockEntity, s: SpawnerRenderState, partial: Float, camera: Vec3, overlay: ModelFeatureRenderer.CrumblingOverlay?) {
-		BlockEntityRenderState.extractBase(be, s, overlay)
-		val level = be.level ?: return
-		val entity = be.spawner.getOrCreateDisplayEntity(level, be.blockPos) ?: return
-		s.displayEntity = dispatcher.extractEntity(entity, partial)
-		s.displayEntity!!.lightCoords = s.lightCoords
-		s.spin = Mth.lerp(partial.toDouble(), be.spawner.getOSpin(), be.spawner.getSpin()).toFloat() * 10f
-		s.scale = 0.53125f
+
+	override fun extractRenderState(
+		blockEntity: ResturbedMobSpawnerBlockEntity,
+		state: SpawnerRenderState,
+		partial: Float,
+		camera: Vec3,
+		overlay: ModelFeatureRenderer.CrumblingOverlay?
+	) {
+		BlockEntityRenderState.extractBase(blockEntity, state, overlay)
+		val level = blockEntity.level ?: return
+		val entity = blockEntity.spawner.getOrCreateDisplayEntity(level, blockEntity.blockPos) ?: return
+
+		val entityState = dispatcher.extractEntity(entity, partial)
+		entityState.lightCoords = state.lightCoords
+		state.displayEntity = entityState
+
+		state.spin = Mth.lerp(partial.toDouble(), blockEntity.spawner.getOSpin(), blockEntity.spawner.getSpin()).toFloat() * 10f
+		state.scale = 0.53125f
 		val maxLength = maxOf(entity.bbWidth, entity.bbHeight)
-		if (maxLength > 1f) s.scale /= maxLength
+		if (maxLength > 1f) {
+			state.scale /= maxLength
+		}
 	}
 
-	override fun submit(s: SpawnerRenderState, p: PoseStack, c: SubmitNodeCollector, camera: CameraRenderState) {
-		val displayEntity = s.displayEntity ?: return
-		SpawnerRenderer.submitEntityInSpawner(p, c, displayEntity, dispatcher, s.spin, s.scale, camera)
+	override fun submit(
+		state: SpawnerRenderState,
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		camera: CameraRenderState
+	) {
+		val displayEntity = state.displayEntity ?: return
+		SpawnerRenderer.submitEntityInSpawner(poseStack, collector, displayEntity, dispatcher, state.spin, state.scale, camera)
 	}
 }

@@ -10,22 +10,17 @@ import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider
 import net.minecraft.client.renderer.blockentity.state.BlockEntityRenderState
-import net.minecraft.client.renderer.feature.ModelFeatureRenderer
 import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.world.phys.AABB
-import net.minecraft.world.phys.Vec3
 
 class QedBER(
-	val context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<QedBlockEntity, LegacyBlockEntityRenderState<QedBlockEntity>> {
-	override fun createRenderState() = LegacyBlockEntityRenderState<QedBlockEntity>()
-	override fun extractRenderState(blockEntity: QedBlockEntity, state: LegacyBlockEntityRenderState<QedBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
-		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
-		state.blockPos = blockEntity.blockPos
-	}
+	context: BlockEntityRendererProvider.Context
+) : BlockEntityRenderer<QedBlockEntity, BlockEntityRenderState> {
+
+	override fun createRenderState() = BlockEntityRenderState()
 
 	override fun submit(
-		state: LegacyBlockEntityRenderState<QedBlockEntity>,
+		state: BlockEntityRenderState,
 		poseStack: PoseStack,
 		collector: SubmitNodeCollector,
 		camera: CameraRenderState
@@ -47,7 +42,6 @@ class QedBER(
 			maxX, maxY, maxZ,
 			color = 0xFF12BCA3.toInt()
 		)
-
 	}
 
 	override fun getRenderBoundingBox(blockEntity: QedBlockEntity): AABB {

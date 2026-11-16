@@ -17,25 +17,39 @@ import org.joml.Quaternionf
 import org.joml.Vector3f
 import java.awt.Color
 
-class RainbowGeneratorBER(context: BlockEntityRendererProvider.Context) : BlockEntityRenderer<RainbowGeneratorBlockEntity, RainbowGeneratorBER.State> {
-	class State : BlockEntityRenderState() {
-		var time = 0f
-		var width = 0f
-		var length = 0f
-		var active = false
-	}
+class RainbowGeneratorBER(
+	context: BlockEntityRendererProvider.Context
+) : BlockEntityRenderer<RainbowGeneratorBlockEntity, RainbowGeneratorBER.State> {
 
 	override fun createRenderState() = State()
-	override fun extractRenderState(be: RainbowGeneratorBlockEntity, s: State, partial: Float, camera: Vec3, overlay: ModelFeatureRenderer.CrumblingOverlay?) {
-		BlockEntityRenderState.extractBase(be, s, overlay); s.active = be.blockState.getValue(GeneratorBlock.LIT); s.width = ClientConfig.CONFIG.rainbowGeneratorRayWidth.get().toFloat(); s.length = ClientConfig.CONFIG.rainbowGeneratorRayLength.get().toFloat(); s.time = ((be.level?.gameTime ?: 0L) + partial) * ClientConfig.CONFIG.rainbowGeneratorTimeFactor.get().toFloat()
+
+	override fun extractRenderState(
+		blockEntity: RainbowGeneratorBlockEntity,
+		state: State,
+		partial: Float,
+		camera: Vec3,
+		overlay: ModelFeatureRenderer.CrumblingOverlay?
+	) {
+		BlockEntityRenderState.extractBase(blockEntity, state, overlay)
+		state.active = blockEntity.blockState.getValue(GeneratorBlock.LIT)
+		state.width = ClientConfig.CONFIG.rainbowGeneratorRayWidth.get().toFloat()
+		state.length = ClientConfig.CONFIG.rainbowGeneratorRayLength.get().toFloat()
+		val tick = blockEntity.level?.gameTime ?: 0L
+		state.time = (tick + partial) * ClientConfig.CONFIG.rainbowGeneratorTimeFactor.get().toFloat()
 	}
 
-	override fun submit(s: State, p: PoseStack, c: SubmitNodeCollector, camera: CameraRenderState) {
-		if (!s.active || s.width <= 0 || s.length <= 0) return
-		val center = Color.HSBtoRGB((s.time % 1f), 1f, 1f)
-		p.pushPose()
-		p.translate(.5, .5, .5)
-		c.submitCustomGeometry(p, RenderTypes.dragonRays()) { pose, vertexConsumer ->
+	override fun submit(
+		state: State,
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		camera: CameraRenderState
+	) {
+		if (!state.active || state.width <= 0 || state.length <= 0) return
+		val centerColor = Color.HSBtoRGB((state.time % 1f), 1f, 1f)
+
+		poseStack.pushPose()
+		poseStack.translate(.5, .5, .5)
+		collector.submitCustomGeometry(poseStack, RenderTypes.dragonRays()) { pose, vertexConsumer ->
 			val random = RandomSource.create(432L)
 			val zero = Vector3f()
 			val first = Vector3f()
@@ -44,25 +58,43 @@ class RainbowGeneratorBER(context: BlockEntityRendererProvider.Context) : BlockE
 			val rotation = Quaternionf()
 			for (rayIndex in 0 until 15) {
 				rotation.identity()
-					.rotateXYZ(random.nextFloat() * (Math.PI * 2).toFloat(), random.nextFloat() * (Math.PI * 2).toFloat(), random.nextFloat() * (Math.PI * 2).toFloat())
-					.rotateXYZ(random.nextFloat() * (Math.PI * 2).toFloat(), random.nextFloat() * (Math.PI * 2).toFloat(), random.nextFloat() * (Math.PI * 2).toFloat() + s.time * (Math.PI / 2).toFloat())
-				first.set(-0.8660254f * s.width, s.length, -0.5f * s.width)
-				second.set(0.8660254f * s.width, s.length, -0.5f * s.width)
-				third.set(0f, s.length, s.width)
+					.rotateXYZ(
+						random.nextFloat() * (Math.PI * 2).toFloat(),
+						random.nextFloat() * (Math.PI * 2).toFloat(),
+						random.nextFloat() * (Math.PI * 2).toFloat()
+					)
+					.rotateXYZ(
+						random.nextFloat() * (Math.PI * 2).toFloat(),
+						random.nextFloat() * (Math.PI * 2).toFloat(),
+						random.nextFloat() * (Math.PI * 2).toFloat() + state.time * (Math.PI / 2).toFloat()
+					)
+
+				first.set(-0.8660254f * state.width, state.length, -0.5f * state.width)
+				second.set(0.8660254f * state.width, state.length, -0.5f * state.width)
+				third.set(0f, state.length, state.width)
+
 				rotation.transform(first)
 				rotation.transform(second)
 				rotation.transform(third)
-				vertexConsumer.addVertex(pose, zero).setColor(center)
-				vertexConsumer.addVertex(pose, first).setColor(center and 0x00FFFFFF)
-				vertexConsumer.addVertex(pose, second).setColor(center and 0x00FFFFFF)
-				vertexConsumer.addVertex(pose, zero).setColor(center)
-				vertexConsumer.addVertex(pose, second).setColor(center and 0x00FFFFFF)
-				vertexConsumer.addVertex(pose, third).setColor(center and 0x00FFFFFF)
-				vertexConsumer.addVertex(pose, zero).setColor(center)
-				vertexConsumer.addVertex(pose, third).setColor(center and 0x00FFFFFF)
-				vertexConsumer.addVertex(pose, first).setColor(center and 0x00FFFFFF)
+
+				vertexConsumer.addVertex(pose, zero).setColor(centerColor)
+				vertexConsumer.addVertex(pose, first).setColor(centerColor and 0x00FFFFFF)
+				vertexConsumer.addVertex(pose, second).setColor(centerColor and 0x00FFFFFF)
+				vertexConsumer.addVertex(pose, zero).setColor(centerColor)
+				vertexConsumer.addVertex(pose, second).setColor(centerColor and 0x00FFFFFF)
+				vertexConsumer.addVertex(pose, third).setColor(centerColor and 0x00FFFFFF)
+				vertexConsumer.addVertex(pose, zero).setColor(centerColor)
+				vertexConsumer.addVertex(pose, third).setColor(centerColor and 0x00FFFFFF)
+				vertexConsumer.addVertex(pose, first).setColor(centerColor and 0x00FFFFFF)
 			}
 		}
-		p.popPose()
+		poseStack.popPose()
+	}
+
+	class State : BlockEntityRenderState() {
+		var time = 0f
+		var width = 0f
+		var length = 0f
+		var active = false
 	}
 }

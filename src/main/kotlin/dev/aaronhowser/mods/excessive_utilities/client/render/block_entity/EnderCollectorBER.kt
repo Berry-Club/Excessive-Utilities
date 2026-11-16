@@ -15,17 +15,24 @@ import net.minecraft.world.entity.ai.attributes.Attributes
 import net.minecraft.world.phys.Vec3
 
 class EnderCollectorBER(
-	val context: BlockEntityRendererProvider.Context
-) : BlockEntityRenderer<EnderCollectorBlockEntity, LegacyBlockEntityRenderState<EnderCollectorBlockEntity>> {
-	override fun createRenderState() = LegacyBlockEntityRenderState<EnderCollectorBlockEntity>()
-	override fun extractRenderState(blockEntity: EnderCollectorBlockEntity, state: LegacyBlockEntityRenderState<EnderCollectorBlockEntity>, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
+	context: BlockEntityRendererProvider.Context
+) : BlockEntityRenderer<EnderCollectorBlockEntity, EnderCollectorBER.State> {
+
+	override fun createRenderState() = State()
+	override fun extractRenderState(
+		blockEntity: EnderCollectorBlockEntity,
+		state: State,
+		partialTick: Float,
+		cameraPosition: Vec3,
+		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
+	) {
 		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
 		state.blockPos = blockEntity.blockPos
 		state.radius = blockEntity.radius
 	}
 
 	override fun submit(
-		state: LegacyBlockEntityRenderState<EnderCollectorBlockEntity>,
+		state: State,
 		poseStack: PoseStack,
 		collector: SubmitNodeCollector,
 		camera: CameraRenderState
@@ -44,7 +51,10 @@ class EnderCollectorBER(
 			radius + 1.0, radius + 1.0, radius + 1.0,
 			0xFFFFFFFF.toInt()
 		)
+	}
 
+	class State : BlockEntityRenderState() {
+		var radius = 0.0
 	}
 
 }
