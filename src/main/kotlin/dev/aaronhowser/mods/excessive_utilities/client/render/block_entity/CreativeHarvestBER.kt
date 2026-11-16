@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.client.render.block_entity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import dev.aaronhowser.mods.excessive_utilities.block_entity.CreativeHarvestBlockEntity
 import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer
@@ -21,46 +22,84 @@ class CreativeHarvestBER(
 	private val itemResolver: ItemModelResolver = context.itemModelResolver
 
 	override fun createRenderState() = State()
-	override fun extractRenderState(blockEntity: CreativeHarvestBlockEntity, state: State, partialTick: Float, cameraPosition: Vec3, crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?) {
-		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
-		itemResolver.updateForTopItem(state.item, blockEntity.mimicStack.copy(), ItemDisplayContext.GUI, blockEntity.level, null, 0)
+	override fun extractRenderState(
+		blockEntity: CreativeHarvestBlockEntity,
+		state: State,
+		partialTick: Float,
+		cameraPosition: Vec3,
+		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
+	) {
+		super.extractRenderState(blockEntity, state, partialTick, cameraPosition, crumblingOverlay)
+
+		itemResolver.updateForTopItem(
+			state.item,
+			blockEntity.mimicStack.copy(),
+			ItemDisplayContext.GUI,
+			blockEntity.level,
+			null,
+			0
+		)
+
 		state.directions.clear()
-		val level = blockEntity.level ?: return
 		for (direction in blockEntity.visibleDirections) {
-			state.directions += direction to 0xF000F0
+			state.directions[direction] = 0xF000F0
 		}
 	}
 
-	override fun submit(state: State, poseStack: PoseStack, collector: SubmitNodeCollector, camera: CameraRenderState) {
+	override fun submit(
+		state: State,
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		camera: CameraRenderState
+	) {
 		for ((direction, light) in state.directions) {
-			poseStack.pushPose()
-			val flattening = 0.0001
-			when (direction) {
-				Direction.NORTH -> {
-					poseStack.translate(0.71, 0.7, -flattening); poseStack.mulPose(Axis.YP.rotationDegrees(180f))
-				}
-
-				Direction.SOUTH -> poseStack.translate(0.29, 0.7, 1.0 + flattening)
-				Direction.WEST -> {
-					poseStack.translate(-flattening, 0.7, 0.29); poseStack.mulPose(Axis.YP.rotationDegrees(-90f))
-				}
-
-				Direction.EAST -> {
-					poseStack.translate(1.0 + flattening, 0.7, 0.71); poseStack.mulPose(Axis.YP.rotationDegrees(90f))
-				}
-
-				else -> {}
+			poseStack.withPose {
+				submitThing(state, poseStack, collector, direction, light)
 			}
-			poseStack.scale(0.025f, 0.025f, flattening.toFloat())
-			poseStack.translate(8.0, -8.0, 8.0)
-			poseStack.scale(16f, 16f, 16f)
-			state.item.submit(poseStack, collector, light, 0, 0xFFFFFF)
-			poseStack.popPose()
 		}
+	}
+
+	private fun submitThing(
+		state: State,
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		direction: Direction,
+		light: Int
+	) {
+		val flattening = 0.0001
+
+		when (direction) {
+			Direction.NORTH -> {
+				poseStack.translate(0.71, 0.7, -flattening)
+				poseStack.mulPose(Axis.YP.rotationDegrees(180f))
+			}
+
+			Direction.SOUTH -> {
+				poseStack.translate(0.29, 0.7, 1.0 + flattening)
+			}
+
+			Direction.WEST -> {
+				poseStack.translate(-flattening, 0.7, 0.29)
+				poseStack.mulPose(Axis.YP.rotationDegrees(-90f))
+			}
+
+			Direction.EAST -> {
+				poseStack.translate(1.0 + flattening, 0.7, 0.71)
+				poseStack.mulPose(Axis.YP.rotationDegrees(90f))
+			}
+
+			else -> {}
+		}
+
+		poseStack.scale(0.025f, 0.025f, flattening.toFloat())
+		poseStack.translate(8.0, -8.0, 8.0)
+		poseStack.scale(16f, 16f, 16f)
+
+		state.item.submit(poseStack, collector, light, 0, 0xFFFFFF)
 	}
 
 	class State : BlockEntityRenderState() {
 		val item = ItemStackRenderState()
-		val directions = mutableListOf<Pair<Direction, Int>>()
+		val directions: MutableMap<Direction, Int> = mutableMapOf()
 	}
 }

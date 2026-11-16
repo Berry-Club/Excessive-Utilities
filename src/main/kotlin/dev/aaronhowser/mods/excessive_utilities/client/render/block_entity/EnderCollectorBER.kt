@@ -26,8 +26,7 @@ class EnderCollectorBER(
 		cameraPosition: Vec3,
 		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
 	) {
-		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
-		state.blockPos = blockEntity.blockPos
+		super.extractRenderState(blockEntity, state, partialTick, cameraPosition, crumblingOverlay)
 		state.radius = blockEntity.radius
 	}
 

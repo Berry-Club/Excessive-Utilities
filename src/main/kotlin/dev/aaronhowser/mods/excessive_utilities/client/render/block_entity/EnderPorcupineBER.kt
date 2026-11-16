@@ -28,7 +28,7 @@ class EnderPorcupineBER(
 		cameraPosition: Vec3,
 		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
 	) {
-		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
+		super.extractRenderState(blockEntity, state, partialTick, cameraPosition, crumblingOverlay)
 		state.currentOffset = blockEntity.getCurrentOffset()
 		state.minimumOffset = blockEntity.minimumOffset
 		state.maximumOffset = blockEntity.maximumOffset
@@ -73,7 +73,6 @@ class EnderPorcupineBER(
 	}
 
 	class State : BlockEntityRenderState() {
-		var radius = 0.0
 		var currentOffset = Vec3i.ZERO
 		var minimumOffset = Vec3i.ZERO
 		var maximumOffset = Vec3i.ZERO
