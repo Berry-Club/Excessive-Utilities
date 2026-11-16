@@ -24,7 +24,7 @@ class EnderQuarryBER(
 		cameraPosition: Vec3,
 		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
 	) {
-		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
+		super.extractRenderState(blockEntity, state, partialTick, cameraPosition, crumblingOverlay)
 
 		val target = blockEntity.targetPos
 		state.active = target != null
