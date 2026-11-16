@@ -2,6 +2,7 @@ package dev.aaronhowser.mods.excessive_utilities.client.render.block_entity
 
 import com.mojang.blaze3d.vertex.PoseStack
 import com.mojang.math.Axis
+import dev.aaronhowser.mods.aaron.misc.AaronDsls.withPose
 import dev.aaronhowser.mods.excessive_utilities.block_entity.mill.ManualMillBlockEntity
 import dev.aaronhowser.mods.excessive_utilities.registry.ModItems
 import net.minecraft.client.renderer.SubmitNodeCollector
@@ -32,7 +33,7 @@ class ManualMillBER(
 		cameraPosition: Vec3,
 		crumblingOverlay: ModelFeatureRenderer.CrumblingOverlay?
 	) {
-		BlockEntityRenderState.extractBase(blockEntity, state, crumblingOverlay)
+		super.extractRenderState(blockEntity, state, partialTick, cameraPosition, crumblingOverlay)
 
 		itemResolver.updateForTopItem(
 			state.gear,
@@ -47,12 +48,19 @@ class ManualMillBER(
 	}
 
 	override fun submit(state: State, poseStack: PoseStack, collector: SubmitNodeCollector, camera: CameraRenderState) {
-		poseStack.pushPose()
-		poseStack.translate(0.5, 0.4, 0.5)
-		poseStack.mulPose(Axis.YP.rotationDegrees(state.turnDegrees))
-		poseStack.mulPose(Axis.XP.rotationDegrees(90f))
-		state.gear.submit(poseStack, collector, state.lightCoords, 0, 0)
-		poseStack.popPose()
+		poseStack.withPose {
+			poseStack.translate(0.5, 0.4, 0.5)
+			poseStack.mulPose(Axis.YP.rotationDegrees(state.turnDegrees))
+			poseStack.mulPose(Axis.XP.rotationDegrees(90f))
+
+			state.gear.submit(
+				poseStack,
+				collector,
+				state.lightCoords,
+				0,
+				0
+			)
+		}
 	}
 
 	class State : BlockEntityRenderState() {
