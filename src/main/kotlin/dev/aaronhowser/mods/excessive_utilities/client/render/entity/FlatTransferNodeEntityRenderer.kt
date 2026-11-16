@@ -7,18 +7,20 @@ import dev.aaronhowser.mods.excessive_utilities.entity.FlatTransferNodeEntity
 import net.minecraft.client.renderer.SubmitNodeCollector
 import net.minecraft.client.renderer.entity.EntityRenderer
 import net.minecraft.client.renderer.entity.EntityRendererProvider
+import net.minecraft.client.renderer.entity.state.EntityRenderState
+import net.minecraft.client.renderer.item.ItemStackRenderState
 import net.minecraft.client.renderer.state.level.CameraRenderState
 import net.minecraft.core.Direction
 import net.minecraft.world.item.ItemDisplayContext
 
 class FlatTransferNodeEntityRenderer(
 	context: EntityRendererProvider.Context
-) : EntityRenderer<FlatTransferNodeEntity, ItemEntityRenderState>(context) {
+) : EntityRenderer<FlatTransferNodeEntity, FlatTransferNodeEntityRenderer.State>(context) {
 
 	private val itemModelResolver = context.itemModelResolver
-	override fun createRenderState() = ItemEntityRenderState()
+	override fun createRenderState() = State()
 
-	override fun extractRenderState(entity: FlatTransferNodeEntity, state: ItemEntityRenderState, partialTick: Float) {
+	override fun extractRenderState(entity: FlatTransferNodeEntity, state: State, partialTick: Float) {
 		super.extractRenderState(entity, state, partialTick)
 
 		itemModelResolver.updateForNonLiving(
@@ -32,26 +34,40 @@ class FlatTransferNodeEntityRenderer(
 		state.yaw = entity.yRot
 	}
 
-	override fun submit(state: ItemEntityRenderState, poseStack: PoseStack, collector: SubmitNodeCollector, camera: CameraRenderState) {
+	override fun submit(
+		state: State,
+		poseStack: PoseStack,
+		collector: SubmitNodeCollector,
+		camera: CameraRenderState
+	) {
 		super.submit(state, poseStack, collector, camera)
 
 		poseStack.withPose {
 			when (state.direction) {
 				Direction.DOWN -> {
-					poseStack.translate(0.0, 0.0, -0.225); poseStack.mulPose(Axis.XP.rotationDegrees(90f))
+					poseStack.translate(0.0, 0.0, -0.225)
+					poseStack.mulPose(Axis.XP.rotationDegrees(90f))
 				}
 
 				Direction.UP -> {
-					poseStack.translate(0.0, 1.0, -0.225); poseStack.mulPose(Axis.XP.rotationDegrees(90f))
+					poseStack.translate(0.0, 1.0, -0.225)
+					poseStack.mulPose(Axis.XP.rotationDegrees(90f))
 				}
 
 				else -> {
-					poseStack.mulPose(Axis.YP.rotationDegrees(-state.yaw)); poseStack.translate(0.0, 0.25, 0.5)
+					poseStack.mulPose(Axis.YP.rotationDegrees(-state.yaw))
+					poseStack.translate(0.0, 0.25, 0.5)
 				}
 			}
 
 			poseStack.scale(1.8f, 1.8f, 1.8f)
 			state.item.submit(poseStack, collector, state.lightCoords, 0, state.outlineColor)
 		}
+	}
+
+	class State : EntityRenderState() {
+		val item = ItemStackRenderState()
+		var direction = Direction.NORTH
+		var yaw = 0f
 	}
 }
